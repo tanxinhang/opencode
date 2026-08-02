@@ -42,6 +42,7 @@ python scripts/run_deflection_calibration_study.py --config config/demo.yaml
 python scripts/run_correlated_erasure_study.py --config config/demo.yaml
 python scripts/run_failure_diversity_audit.py
 python scripts/run_real_network_headroom_study.py --config config/demo.yaml
+python scripts/run_physical_failure_domain_study.py --config config/demo.yaml
 python -m pytest -q
 ```
 
@@ -95,6 +96,15 @@ target; it diagnoses intrinsic target headroom, not a jointly attainable
 multi-target allocation. Consequently, a target-level use ratio can be
 negative when the shared-budget optimizer deliberately trades that target for
 larger system-level benefit.
+For system reporting, the study also provides a weighted aggregate headroom
+capture rate, a nonnegative gain-capture rate, and the harmed-target fraction;
+these are more stable than averaging ratios from targets with tiny headroom.
+The physical-domain study compares result-independent, target-aware geometric
+groupings while preserving each reporting link's marginal success probability.
+Owner-centered angle/path clustering is the primary physical proxy. Formation
+position and straight-link midpoint clustering are both reported, but their
+equivalence is checked explicitly and they are not counted as independent
+robustness evidence when they induce the same partition.
 
 ## What is deliberately not claimed
 

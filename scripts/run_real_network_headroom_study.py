@@ -69,6 +69,7 @@ def main() -> None:
                     "seed": seed,
                     "budget_bits": budget,
                     "target": q,
+                    "target_weight": float(cfg.qos_weights[q]),
                     "minimum_successful_reports": attribution.minimum_successful_reports,
                     "supporting_failure_domains": attribution.supporting_failure_domains,
                     "classification": attribution.classification,
@@ -96,6 +97,19 @@ def main() -> None:
         ]
         by_classification = {}
         total_headroom = sum(row["recoverable_headroom"] for row in group)
+        weighted_headroom = sum(
+            row["target_weight"] * row["recoverable_headroom"] for row in group
+        )
+        weighted_net_gain = sum(
+            row["target_weight"] * (
+                row["independent_violation"] - row["aware_violation"]
+            ) for row in group
+        )
+        weighted_positive_gain = sum(
+            row["target_weight"] * max(
+                row["independent_violation"] - row["aware_violation"], 0.0
+            ) for row in group
+        )
         for name in sorted(counts):
             classified = [row for row in group if row["classification"] == name]
             classified_positive = [
@@ -143,6 +157,14 @@ def main() -> None:
             ),
             "median_headroom_use_ratio_when_defined": (
                 float(np.median(ratios)) if ratios else None
+            ),
+            "aggregate_headroom_capture_rate": (
+                weighted_net_gain / weighted_headroom
+                if weighted_headroom > 1e-12 else None
+            ),
+            "positive_gain_capture_rate": (
+                weighted_positive_gain / weighted_headroom
+                if weighted_headroom > 1e-12 else None
             ),
             "fraction_aware_worse_than_independent": float(np.mean([
                 row["aware_violation"] > row["independent_violation"] + 1e-12

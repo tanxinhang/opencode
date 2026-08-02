@@ -151,6 +151,126 @@ def alternating_failure_groups(models: Sequence[TargetEvidenceModel], num_groups
     return [np.arange(model.num_uavs, dtype=int) % num_groups for model in models]
 
 
+def _deterministic_kmeans(features: np.ndarray, num_groups: int) -> np.ndarray:
+    """Small dependency-free clustering fixed entirely by physical features."""
+    features = np.asarray(features, dtype=float)
+    if features.ndim != 2 or features.shape[0] < num_groups:
+        raise ValueError("features must contain at least num_groups rows")
+    if num_groups < 2:
+        raise ValueError("num_groups must be at least two")
+    centroid = features.mean(axis=0)
+    center_indices = [int(np.argmax(np.linalg.norm(features - centroid, axis=1)))]
+    while len(center_indices) < num_groups:
+        distance = np.min(
+            np.stack([
+                np.linalg.norm(features - features[index], axis=1)
+                for index in center_indices
+            ]),
+            axis=0,
+        )
+        distance[center_indices] = -1.0
+        center_indices.append(int(np.argmax(distance)))
+    centers = features[center_indices].copy()
+    labels = np.zeros(features.shape[0], dtype=int)
+    for _ in range(100):
+        new_labels = np.argmin(
+            np.linalg.norm(features[:, None, :] - centers[None, :, :], axis=2),
+            axis=1,
+        )
+        if np.array_equal(new_labels, labels) and _ > 0:
+            break
+        labels = new_labels
+        for group in range(num_groups):
+            members = features[labels == group]
+            if members.size:
+                centers[group] = members.mean(axis=0)
+    if len(set(labels.tolist())) != num_groups:
+        raise RuntimeError("physical-feature clustering produced an empty group")
+    return labels
+
+
+def physical_failure_groups(
+    models: Sequence[TargetEvidenceModel],
+    positions: np.ndarray,
+    scheme: str,
+    num_groups: int = 2,
+) -> list[np.ndarray]:
+    """Generate target-aware proxy failure domains from geometry only.
+
+    Schemes never inspect sensing quality, link success probability, or an
+    optimizer result.  Therefore the grouping cannot be tuned retrospectively
+    to improve scheduling performance.
+    """
+    positions = np.asarray(positions, dtype=float)
+    if positions.ndim != 2 or positions.shape[1] != 3:
+        raise ValueError("positions must have shape [num_uavs, 3]")
+    result = []
+    for model in models:
+        if positions.shape[0] != model.num_uavs:
+            raise ValueError("positions must match model.num_uavs")
+        candidates = [i for i in range(model.num_uavs) if i != model.owner]
+        owner_position = positions[model.owner]
+        if scheme == "formation_position":
+            features = positions[candidates]
+        elif scheme == "link_midpoint":
+            features = (positions[candidates] + owner_position) / 2.0
+        elif scheme == "owner_angle_path":
+            link = positions[candidates] - owner_position
+            distance = np.linalg.norm(link, axis=1)
+            horizontal = np.linalg.norm(link[:, :2], axis=1)
+            azimuth = np.arctan2(link[:, 1], link[:, 0])
+            elevation = np.arctan2(link[:, 2], horizontal)
+            features = np.column_stack((
+                np.cos(azimuth), np.sin(azimuth), elevation,
+                distance / max(float(distance.max()), 1e-12),
+            ))
+        else:
+            raise ValueError(
+                "scheme must be 'formation_position', 'link_midpoint', or "
+                "'owner_angle_path'"
+            )
+        candidate_labels = _deterministic_kmeans(features, num_groups)
+        labels = np.full(model.num_uavs, -1, dtype=int)
+        labels[candidates] = candidate_labels
+        result.append(labels)
+    return result
+
+
+def grouped_failure_correlation(
+    model: TargetEvidenceModel, groups: Sequence[int]
+) -> tuple[float, float]:
+    """Return mean within-domain and between-domain failure correlation."""
+    if model.reception_patterns is None:
+        return 0.0, 0.0
+    labels = np.asarray(groups, dtype=int)
+    if labels.shape != (model.num_uavs,):
+        raise ValueError("groups must have one entry per UAV")
+    candidates = [i for i in range(model.num_uavs) if i != model.owner]
+    patterns = np.asarray(model.reception_patterns)[:, candidates]
+    probabilities = np.asarray(model.pattern_probabilities)
+    failures = 1.0 - patterns
+    means = probabilities @ failures
+    centered = failures - means
+    covariance = (centered * probabilities[:, None]).T @ centered
+    variance = np.diag(covariance)
+    within = []; between = []
+    for left in range(len(candidates)):
+        for right in range(left + 1, len(candidates)):
+            denominator = np.sqrt(variance[left] * variance[right])
+            if denominator <= 1e-14:
+                continue
+            correlation = covariance[left, right] / denominator
+            target = (
+                within if labels[candidates[left]] == labels[candidates[right]]
+                else between
+            )
+            target.append(correlation)
+    return (
+        float(np.mean(within)) if within else 0.0,
+        float(np.mean(between)) if between else 0.0,
+    )
+
+
 def mean_off_diagonal_failure_correlation(model: TargetEvidenceModel) -> float:
     if model.reception_patterns is None:
         return 0.0

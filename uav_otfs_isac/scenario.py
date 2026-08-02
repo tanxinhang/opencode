@@ -9,21 +9,21 @@ from .models import TargetEvidenceModel
 from .reporting import post_bsc_moments, quantizer_from_gaussian_range
 
 
-def _uav_geometry(n: int) -> np.ndarray:
+def uav_geometry(n: int) -> np.ndarray:
     angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
     radii = 180.0 + 35.0 * np.sin(3.0 * angles)
     return np.column_stack((radii * np.cos(angles), radii * np.sin(angles), 100 + 15 * np.cos(angles)))
 
 
-def _target_geometry(q: int) -> np.ndarray:
+def target_geometry(q: int) -> np.ndarray:
     return np.array([45.0 * np.cos(1.7 * q), 55.0 * np.sin(1.3 * q), 0.0])
 
 
 def build_models(cfg: ExperimentConfig, rng: np.random.Generator) -> list[TargetEvidenceModel]:
-    positions = _uav_geometry(cfg.num_uavs)
+    positions = uav_geometry(cfg.num_uavs)
     models: list[TargetEvidenceModel] = []
     for q in range(cfg.num_targets):
-        target = _target_geometry(q)
+        target = target_geometry(q)
         distance = np.linalg.norm(positions - target, axis=1)
         snr_lo, snr_hi = cfg.otfs.snr_db_range
         base_snr_db = snr_hi - (snr_hi - snr_lo) * (distance - distance.min()) / max(np.ptp(distance), 1e-9)
