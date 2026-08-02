@@ -81,3 +81,17 @@ def test_dual_layer_cross_domain_copy_beats_same_domain_with_shared_path_risk():
         **common, replication_mode="same_domain", maximum_copies=2
     )
     assert cross.violation_probability_per_target[0] < same.violation_probability_per_target[0]
+
+
+def test_resource_access_mask_blocks_unavailable_second_domain():
+    model = symmetric_diversity_model(
+        np.array([1.4, 0.1, 0.1, 0.1]), success_probability=0.6
+    )
+    access = np.ones((model.num_uavs, 2), dtype=bool)
+    access[1, 1] = False
+    result = optimize_dual_layer_chance_portfolio(
+        [model], 2, [0.17], [1.0], [0.0], [DOMAINS], [DOMAINS],
+        1.0, 0.5, [2, 2], replication_mode="cross_domain",
+        maximum_copies=2, resource_access=[access],
+    )
+    assert result.copy_counts[0][1] < 2

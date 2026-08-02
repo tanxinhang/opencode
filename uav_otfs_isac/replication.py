@@ -193,6 +193,7 @@ def enumerate_dual_layer_options(
     *,
     replication_mode: str,
     maximum_copies: int,
+    resource_access: np.ndarray | None = None,
     false_alarm_rate: float = 0.05,
     beta: float = 0.9,
     tail_weight: float = 1.0,
@@ -200,6 +201,12 @@ def enumerate_dual_layer_options(
     candidates = [i for i in range(model.num_uavs) if i != model.owner]
     native = np.asarray(native_resources, dtype=int)
     capacities = np.asarray(domain_capacities, dtype=int)
+    access = (
+        np.ones((model.num_uavs, capacities.size), dtype=bool)
+        if resource_access is None else np.asarray(resource_access, dtype=bool)
+    )
+    if access.shape != (model.num_uavs, capacities.size):
+        raise ValueError("resource_access must have shape [num_uavs, num_domains]")
     quality_cache: dict[frozenset[int], float] = {}
     options = []
     for candidate_counts in product(range(maximum_copies + 1), repeat=len(candidates)):
@@ -207,9 +214,15 @@ def enumerate_dual_layer_options(
         domain_cost = np.zeros(capacities.size, dtype=int)
         for i in candidates:
             if counts[i] >= 1:
+                if not access[i, native[i]]:
+                    domain_cost[:] = capacities + 1
+                    break
                 domain_cost[native[i]] += int(model.report_bits[i])
             if counts[i] == 2:
                 second = native[i] if replication_mode == "same_domain" else (native[i] + 1) % capacities.size
+                if not access[i, second]:
+                    domain_cost[:] = capacities + 1
+                    break
                 domain_cost[second] += int(model.report_bits[i])
         cost = int(domain_cost.sum())
         if cost > maximum_cost_bits or np.any(domain_cost > capacities):
@@ -244,14 +257,22 @@ def optimize_dual_layer_chance_portfolio(
     native_resources: Sequence[Sequence[int]], strength: float,
     path_failure_fraction: float, domain_capacities: Sequence[int], *,
     replication_mode: str = "cross_domain", maximum_copies: int = 2,
+    resource_access: Sequence[np.ndarray] | None = None,
     false_alarm_rate: float = 0.05, beta: float = 0.9,
     tail_weight: float = 1.0,
 ) -> ReplicationChanceResult:
     weights = np.asarray(target_weights, dtype=float); limits = np.asarray(violation_limits, dtype=float)
+    if resource_access is None:
+        access_per_target = [None] * len(models)
+    else:
+        access_per_target = list(resource_access)
+        if len(access_per_target) != len(models):
+            raise ValueError("resource_access must provide one mask per target")
     groups = [enumerate_dual_layer_options(
         model, minimum_pd[q], weights[q], path_groups[q], native_resources[q],
         strength, path_failure_fraction, budget_bits, domain_capacities,
         replication_mode=replication_mode, maximum_copies=maximum_copies,
+        resource_access=access_per_target[q],
         false_alarm_rate=false_alarm_rate, beta=beta, tail_weight=tail_weight,
     ) for q, model in enumerate(models)]
     capacity = tuple(int(x) for x in domain_capacities)

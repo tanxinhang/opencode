@@ -47,6 +47,7 @@ python scripts/run_real_network_headroom_study.py --config config/demo.yaml
 python scripts/run_physical_failure_domain_study.py --config config/demo.yaml
 python scripts/run_replication_repair_study.py --config config/demo.yaml
 python scripts/run_replication_realism_study.py --config config/demo.yaml
+python scripts/run_replication_access_study.py --config config/demo.yaml
 python -m pytest -q
 ```
 
