@@ -1,0 +1,123 @@
+{
+  "scheduled": [
+    [
+      0,
+      1,
+      2,
+      7
+    ],
+    [
+      2,
+      3,
+      4
+    ],
+    [
+      2,
+      4,
+      5,
+      6
+    ]
+  ],
+  "expected_deflection": [
+    21.4408638202265,
+    12.325116471202898,
+    6.4781961699934705
+  ],
+  "normalized_qos_gap": 0.0,
+  "used_bits": 40,
+  "selected_reports": 8,
+  "pd_per_target": [
+    0.9596,
+    0.8884,
+    0.7642
+  ],
+  "pfa_per_target": [
+    0.0514,
+    0.0514,
+    0.0496
+  ],
+  "mean_pd": 0.8707333333333332,
+  "worst_pd": 0.7642,
+  "trace": [
+    {
+      "stage": "qos",
+      "target": 2,
+      "uav": 5,
+      "cost_bits": 5,
+      "score": 0.24200646670641537,
+      "expected_gain": 2.991060623717261,
+      "first_order_gain": 2.991060623717261,
+      "expected_deflection": 3.1986783155663145
+    },
+    {
+      "stage": "performance",
+      "target": 0,
+      "uav": 7,
+      "cost_bits": 5,
+      "score": 1.6782224191641082,
+      "expected_gain": 8.39111209582054,
+      "first_order_gain": 8.391112095820544,
+      "expected_deflection": 20.280076526479096
+    },
+    {
+      "stage": "performance",
+      "target": 1,
+      "uav": 2,
+      "cost_bits": 5,
+      "score": 0.9766955924723316,
+      "expected_gain": 4.883477962361658,
+      "first_order_gain": 4.883477962361658,
+      "expected_deflection": 11.680473661367524
+    },
+    {
+      "stage": "performance",
+      "target": 2,
+      "uav": 2,
+      "cost_bits": 5,
+      "score": 0.37913398921853114,
+      "expected_gain": 1.8956699460926556,
+      "first_order_gain": 1.8956699460926556,
+      "expected_deflection": 5.09434826165897
+    },
+    {
+      "stage": "performance",
+      "target": 2,
+      "uav": 4,
+      "cost_bits": 5,
+      "score": 0.2767695816669001,
+      "expected_gain": 1.3838479083345003,
+      "first_order_gain": 1.3585050359881907,
+      "expected_deflection": 6.4781961699934705
+    },
+    {
+      "stage": "performance",
+      "target": 0,
+      "uav": 2,
+      "cost_bits": 5,
+      "score": 0.1483559175831303,
+      "expected_gain": 0.7417795879156515,
+      "first_order_gain": 0.7418092773947604,
+      "expected_deflection": 21.021856114394748
+    },
+    {
+      "stage": "performance",
+      "target": 1,
+      "uav": 4,
+      "cost_bits": 5,
+      "score": 0.12892856196707497,
+      "expected_gain": 0.6446428098353749,
+      "first_order_gain": 0.6424254439551761,
+      "expected_deflection": 12.325116471202898
+    },
+    {
+      "stage": "performance",
+      "target": 0,
+      "uav": 1,
+      "cost_bits": 5,
+      "score": 0.08380154116635055,
+      "expected_gain": 0.41900770583175273,
+      "first_order_gain": 0.4082832302456727,
+      "expected_deflection": 21.4408638202265
+    }
+  ]
+}

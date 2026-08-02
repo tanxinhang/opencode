@@ -1,0 +1,3973 @@
+{
+  "summary": {
+    "instances": 120,
+    "qos_optimal_fraction": 1.0,
+    "exact_set_match_fraction": 1.0,
+    "mean_relative_utility_gap_when_qos_optimal": 0.0,
+    "max_relative_utility_gap_when_qos_optimal": 0.0,
+    "mean_greedy_seconds": 0.0008097833449331423,
+    "mean_oracle_seconds": 0.0023386191731939714
+  },
+  "instances": [
+    {
+      "seed": 20260802,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 30.477193308727,
+      "oracle_utility": 30.477193308727,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00048709986731410027,
+      "oracle_seconds": 0.00039089983329176903,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 34.430495592613056,
+      "oracle_utility": 34.430495592613056,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.000627400353550911,
+      "oracle_seconds": 0.001312900334596634,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 34.46344873497483,
+      "oracle_utility": 34.46344873497483,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0013867001980543137,
+      "oracle_seconds": 0.004539600107818842,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 34.47956408131165,
+      "oracle_utility": 34.47956408131165,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0018806997686624527,
+      "oracle_seconds": 0.005279699806123972,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 51.3848781268316,
+      "oracle_utility": 51.3848781268316,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004195999354124069,
+      "oracle_seconds": 0.0003744000568985939,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 54.890054188873194,
+      "oracle_utility": 54.890054188873194,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006296997889876366,
+      "oracle_seconds": 0.0011982000432908535,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 54.92409216607383,
+      "oracle_utility": 54.92409216607383,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.001019500195980072,
+      "oracle_seconds": 0.0026914002373814583,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 54.93559200808074,
+      "oracle_utility": 54.93559200808074,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0011626002378761768,
+      "oracle_seconds": 0.004810099955648184,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 45.0208286269294,
+      "oracle_utility": 45.0208286269294,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00042430032044649124,
+      "oracle_seconds": 0.0003658002242445946,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 46.0185572585637,
+      "oracle_utility": 46.0185572585637,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006224000826478004,
+      "oracle_seconds": 0.0011896002106368542,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 46.13572714059401,
+      "oracle_utility": 46.13572714059401,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0009832000359892845,
+      "oracle_seconds": 0.002800299786031246,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 46.14818369015657,
+      "oracle_utility": 46.14818369015657,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0012261997908353806,
+      "oracle_seconds": 0.004913900047540665,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 46.8952036615983,
+      "oracle_utility": 46.8952036615983,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00040829973295331,
+      "oracle_seconds": 0.0003566998057067394,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 49.92491604923881,
+      "oracle_utility": 49.92491604923881,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.000614700373262167,
+      "oracle_seconds": 0.0011682002805173397,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 49.95947608492315,
+      "oracle_utility": 49.95947608492315,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0010418002493679523,
+      "oracle_seconds": 0.002720099873840809,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 49.9660372267808,
+      "oracle_utility": 49.9660372267808,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0011233002878725529,
+      "oracle_seconds": 0.004480800125747919,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 71.84371262760042,
+      "oracle_utility": 71.84371262760042,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004000002518296242,
+      "oracle_seconds": 0.00039609987288713455,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.38582930176017,
+      "oracle_utility": 73.38582930176017,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006352001801133156,
+      "oracle_seconds": 0.0011765998788177967,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.54545357355015,
+      "oracle_utility": 73.54545357355015,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0009259996004402637,
+      "oracle_seconds": 0.002836800180375576,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.54932998131002,
+      "oracle_utility": 73.54932998131002,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0012815999798476696,
+      "oracle_seconds": 0.004544300027191639,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 55.532796232299674,
+      "oracle_utility": 55.532796232299674,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004059998318552971,
+      "oracle_seconds": 0.00036509986966848373,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 57.68560530261847,
+      "oracle_utility": 57.68560530261847,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006316001527011395,
+      "oracle_seconds": 0.0011649001389741898,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 57.72668214246738,
+      "oracle_utility": 57.72668214246738,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008798004128038883,
+      "oracle_seconds": 0.002828999888151884,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 57.73776234114212,
+      "oracle_utility": 57.73776234114212,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0011987998150289059,
+      "oracle_seconds": 0.004578799940645695,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 50.042026609821065,
+      "oracle_utility": 50.042026609821065,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00042579974979162216,
+      "oracle_seconds": 0.00037849973887205124,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 52.02263469503326,
+      "oracle_utility": 52.02263469503326,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.000653399620205164,
+      "oracle_seconds": 0.0019430997781455517,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 52.13744568997524,
+      "oracle_utility": 52.13744568997524,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.001485500019043684,
+      "oracle_seconds": 0.003903899807482958,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 52.14957246827011,
+      "oracle_utility": 52.14957246827011,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0012043002061545849,
+      "oracle_seconds": 0.0046316999942064285,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 58.31167100117628,
+      "oracle_utility": 58.31167100117628,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004254002124071121,
+      "oracle_seconds": 0.00035979971289634705,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 60.152611302769614,
+      "oracle_utility": 60.152611302769614,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006154999136924744,
+      "oracle_seconds": 0.0011716000735759735,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 60.19854010489138,
+      "oracle_utility": 60.19854010489138,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0009232000447809696,
+      "oracle_seconds": 0.0026620998978614807,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 60.20828611102555,
+      "oracle_utility": 60.20828611102555,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0013337000273168087,
+      "oracle_seconds": 0.0044697001576423645,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 59.05365377821389,
+      "oracle_utility": 59.05365377821389,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004375996068120003,
+      "oracle_seconds": 0.00037209969013929367,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 61.53198889755951,
+      "oracle_utility": 61.53198889755951,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006569004617631435,
+      "oracle_seconds": 0.0012134001590311527,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 61.66139178309208,
+      "oracle_utility": 61.66139178309208,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0009169997647404671,
+      "oracle_seconds": 0.00317799998447299,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 61.67140756153054,
+      "oracle_utility": 61.67140756153054,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.001860199961811304,
+      "oracle_seconds": 0.004964899737387896,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 51.38226547330921,
+      "oracle_utility": 51.38226547330921,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00035370001569390297,
+      "oracle_seconds": 0.0004257000982761383,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 53.544240842206484,
+      "oracle_utility": 53.544240842206484,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0005451999604701996,
+      "oracle_seconds": 0.0014211996458470821,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 53.590973119092595,
+      "oracle_utility": 53.590973119092595,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0009961999021470547,
+      "oracle_seconds": 0.002759399823844433,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 53.614034892144495,
+      "oracle_utility": 53.614034892144495,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0011034002527594566,
+      "oracle_seconds": 0.004445199854671955,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 21.028802891064483,
+      "oracle_utility": 21.028802891064483,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0003541996702551842,
+      "oracle_seconds": 0.00037289969623088837,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 22.629125579412648,
+      "oracle_utility": 22.629125579412648,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0005199001170694828,
+      "oracle_seconds": 0.0013142996467649937,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 22.783164147589858,
+      "oracle_utility": 22.783164147589858,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008955998346209526,
+      "oracle_seconds": 0.0027382001280784607,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 22.79785005683165,
+      "oracle_utility": 22.79785005683165,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0010781995952129364,
+      "oracle_seconds": 0.0043530999682843685,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 25.065515869602713,
+      "oracle_utility": 25.065515869602713,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0005743000656366348,
+      "oracle_seconds": 0.0003823000006377697,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 26.677053245055568,
+      "oracle_utility": 26.677053245055568,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006925999186933041,
+      "oracle_seconds": 0.0012432998046278954,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 26.862830825922266,
+      "oracle_utility": 26.862830825922266,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0009532002732157707,
+      "oracle_seconds": 0.0033276001922786236,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 26.874876434246907,
+      "oracle_utility": 26.874876434246907,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0019237999804317951,
+      "oracle_seconds": 0.0058801001869142056,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 48.67916459383418,
+      "oracle_utility": 48.67916459383418,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00043349992483854294,
+      "oracle_seconds": 0.00048269983381032944,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 49.883085726724794,
+      "oracle_utility": 49.883085726724794,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006780000403523445,
+      "oracle_seconds": 0.0012192996218800545,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 49.92601743108753,
+      "oracle_utility": 49.92601743108753,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008874000050127506,
+      "oracle_seconds": 0.002706000115722418,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 49.93950898376089,
+      "oracle_utility": 49.93950898376089,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0013102004304528236,
+      "oracle_seconds": 0.004455899819731712,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 70.90254781200677,
+      "oracle_utility": 70.90254781200677,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004520001821219921,
+      "oracle_seconds": 0.000368600245565176,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.01184082680666,
+      "oracle_utility": 73.01184082680666,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006598997861146927,
+      "oracle_seconds": 0.0016433000564575195,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.07512471767623,
+      "oracle_utility": 73.07512471767623,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.001186099834740162,
+      "oracle_seconds": 0.003248200286179781,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.08853551045077,
+      "oracle_utility": 73.08853551045077,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0013335999101400375,
+      "oracle_seconds": 0.004688400309532881,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 33.36451422418454,
+      "oracle_utility": 33.36451422418454,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00032319966703653336,
+      "oracle_seconds": 0.0005088998004794121,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 36.20520456682663,
+      "oracle_utility": 36.20520456682663,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006711999885737896,
+      "oracle_seconds": 0.0012713000178337097,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 36.338639080873826,
+      "oracle_utility": 36.338639080873826,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008397996425628662,
+      "oracle_seconds": 0.003245200030505657,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 36.35261999791289,
+      "oracle_utility": 36.35261999791289,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0012536998838186264,
+      "oracle_seconds": 0.004659700207412243,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 43.199843985401614,
+      "oracle_utility": 43.199843985401614,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00031429994851350784,
+      "oracle_seconds": 0.00035900017246603966,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 46.17930679160591,
+      "oracle_utility": 46.17930679160591,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006419001147150993,
+      "oracle_seconds": 0.0011992002837359905,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 46.20061202674523,
+      "oracle_utility": 46.20061202674523,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0007885000668466091,
+      "oracle_seconds": 0.002656899858266115,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 46.20309778536864,
+      "oracle_utility": 46.20309778536864,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.001099300105124712,
+      "oracle_seconds": 0.004761400166898966,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 68.15759546607936,
+      "oracle_utility": 68.15759546607936,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004902002401649952,
+      "oracle_seconds": 0.0003828001208603382,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 70.49657654142575,
+      "oracle_utility": 70.49657654142575,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006275000050663948,
+      "oracle_seconds": 0.0012094001285731792,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 70.64426656227067,
+      "oracle_utility": 70.64426656227067,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008966000750660896,
+      "oracle_seconds": 0.002947899978607893,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 70.64783026710063,
+      "oracle_utility": 70.64783026710063,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00118720019236207,
+      "oracle_seconds": 0.0049172998405992985,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 64.66881685568178,
+      "oracle_utility": 64.66881685568178,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004281001165509224,
+      "oracle_seconds": 0.0003736000508069992,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 67.30500093642215,
+      "oracle_utility": 67.30500093642215,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006257002241909504,
+      "oracle_seconds": 0.0012918999418616295,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 67.35969785867343,
+      "oracle_utility": 67.35969785867343,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.000916600227355957,
+      "oracle_seconds": 0.002771299798041582,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 67.3634985978395,
+      "oracle_utility": 67.3634985978395,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0011846995912492275,
+      "oracle_seconds": 0.007022799924015999,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 61.67463168597956,
+      "oracle_utility": 61.67463168597956,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00042300019413232803,
+      "oracle_seconds": 0.00035430025309324265,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 62.79579250985475,
+      "oracle_utility": 62.79579250985475,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006269998848438263,
+      "oracle_seconds": 0.0012342999689280987,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 62.83541690954179,
+      "oracle_utility": 62.83541690954179,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.000906399916857481,
+      "oracle_seconds": 0.0026976000517606735,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 62.84566100689113,
+      "oracle_utility": 62.84566100689113,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0011859000660479069,
+      "oracle_seconds": 0.004499599803239107,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 34.08845784978108,
+      "oracle_utility": 34.08845784978108,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004151999019086361,
+      "oracle_seconds": 0.00043029990047216415,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 36.34943194112263,
+      "oracle_utility": 36.34943194112263,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006523998454213142,
+      "oracle_seconds": 0.0012036003172397614,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 36.41352237926341,
+      "oracle_utility": 36.41352237926341,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00096180010586977,
+      "oracle_seconds": 0.00268390029668808,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 36.42529031140266,
+      "oracle_utility": 36.42529031140266,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0012255995534360409,
+      "oracle_seconds": 0.0043230000883340836,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 71.3224611027,
+      "oracle_utility": 71.3224611027,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004253997467458248,
+      "oracle_seconds": 0.0003531002439558506,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.37250985501251,
+      "oracle_utility": 73.37250985501251,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006217001937329769,
+      "oracle_seconds": 0.001175600104033947,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.40452937317178,
+      "oracle_utility": 73.40452937317178,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008864002302289009,
+      "oracle_seconds": 0.0028662001714110374,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 73.41338294341648,
+      "oracle_utility": 73.41338294341648,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.001201000064611435,
+      "oracle_seconds": 0.00448250025510788,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 23.977003840674385,
+      "oracle_utility": 23.977003840674385,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004414999857544899,
+      "oracle_seconds": 0.00036170007660984993,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 26.446186160238703,
+      "oracle_utility": 26.446186160238703,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.000654399860650301,
+      "oracle_seconds": 0.001345600001513958,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 26.491588798034762,
+      "oracle_utility": 26.491588798034762,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0009186998941004276,
+      "oracle_seconds": 0.0027956999838352203,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 26.51468257300103,
+      "oracle_utility": 26.51468257300103,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0014641997404396534,
+      "oracle_seconds": 0.004511600360274315,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 31.430757907658386,
+      "oracle_utility": 31.430757907658386,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004676003009080887,
+      "oracle_seconds": 0.00039320020005106926,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 34.28782602571405,
+      "oracle_utility": 34.28782602571405,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0005633002147078514,
+      "oracle_seconds": 0.0012094001285731792,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 34.40195662797251,
+      "oracle_utility": 34.40195662797251,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0007927003316581249,
+      "oracle_seconds": 0.0028272001072764397,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 34.41430013744912,
+      "oracle_utility": 34.41430013744912,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0010696998797357082,
+      "oracle_seconds": 0.004278099630028009,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 47.881897217284575,
+      "oracle_utility": 47.881897217284575,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00031749997287988663,
+      "oracle_seconds": 0.0003844001330435276,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 50.413683110452276,
+      "oracle_utility": 50.413683110452276,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0005866000428795815,
+      "oracle_seconds": 0.0014252997934818268,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 50.464187225941615,
+      "oracle_utility": 50.464187225941615,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008970997296273708,
+      "oracle_seconds": 0.0026997998356819153,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 50.47915934339797,
+      "oracle_utility": 50.47915934339797,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.001037099864333868,
+      "oracle_seconds": 0.004425200168043375,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 39.576928339629816,
+      "oracle_utility": 39.576928339629816,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00041479989886283875,
+      "oracle_seconds": 0.00035399990156292915,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 42.34063164215367,
+      "oracle_utility": 42.34063164215367,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006205001845955849,
+      "oracle_seconds": 0.0012178001925349236,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 42.492942774100534,
+      "oracle_utility": 42.492942774100534,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0011937003582715988,
+      "oracle_seconds": 0.002834899816662073,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 42.506115996979446,
+      "oracle_utility": 42.506115996979446,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0011774003505706787,
+      "oracle_seconds": 0.0042097000405192375,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 64.87906954214199,
+      "oracle_utility": 64.87906954214199,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0004116999916732311,
+      "oracle_seconds": 0.00035350024700164795,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 67.76236402305513,
+      "oracle_utility": 67.76236402305513,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006264001131057739,
+      "oracle_seconds": 0.0011713998392224312,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 67.81539607626738,
+      "oracle_utility": 67.81539607626738,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008838996291160583,
+      "oracle_seconds": 0.0031447000801563263,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 67.82361756622517,
+      "oracle_utility": 67.82361756622517,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0012417999096214771,
+      "oracle_seconds": 0.004419600125402212,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 38.65324113986628,
+      "oracle_utility": 38.65324113986628,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00039980001747608185,
+      "oracle_seconds": 0.0003784000873565674,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 42.52021534124698,
+      "oracle_utility": 42.52021534124698,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0006250999867916107,
+      "oracle_seconds": 0.0012922999449074268,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 42.580928339735095,
+      "oracle_utility": 42.580928339735095,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.000923799816519022,
+      "oracle_seconds": 0.0028650998137891293,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 42.591728906265836,
+      "oracle_utility": 42.591728906265836,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00136970030143857,
+      "oracle_seconds": 0.004323599860072136,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 59.11244372767952,
+      "oracle_utility": 59.11244372767952,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0003055003471672535,
+      "oracle_seconds": 0.0003603999502956867,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 62.36477598187791,
+      "oracle_utility": 62.36477598187791,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0005124001763761044,
+      "oracle_seconds": 0.0011682999320328236,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 62.507910672856596,
+      "oracle_utility": 62.507910672856596,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0007601999677717686,
+      "oracle_seconds": 0.0026817000471055508,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 62.52117427945292,
+      "oracle_utility": 62.52117427945292,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.001017299946397543,
+      "oracle_seconds": 0.004560100380331278,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 37.05211028915683,
+      "oracle_utility": 37.05211028915683,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0002863002009689808,
+      "oracle_seconds": 0.00036010006442666054,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 41.001599227233704,
+      "oracle_utility": 41.001599227233704,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0005239997990429401,
+      "oracle_seconds": 0.001181699801236391,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 41.0594632722109,
+      "oracle_utility": 41.0594632722109,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0008217999711632729,
+      "oracle_seconds": 0.0027088001370429993,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 41.07023122978636,
+      "oracle_utility": 41.07023122978636,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0010822000913321972,
+      "oracle_seconds": 0.004522699862718582,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 5,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 36.94495554384173,
+      "oracle_utility": 36.94495554384173,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.00029479991644620895,
+      "oracle_seconds": 0.0003562998026609421,
+      "greedy_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 10,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 39.7227571098852,
+      "oracle_utility": 39.7227571098852,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0005362997762858868,
+      "oracle_seconds": 0.0011934000067412853,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 15,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 39.81354212001649,
+      "oracle_utility": 39.81354212001649,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0007845000363886356,
+      "oracle_seconds": 0.0027022003196179867,
+      "greedy_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 20,
+      "greedy_qos_gap": 0.0,
+      "oracle_qos_gap": 0.0,
+      "same_minimum_qos_gap": true,
+      "greedy_utility": 39.82185485377707,
+      "oracle_utility": 39.82185485377707,
+      "relative_utility_gap": 0.0,
+      "greedy_seconds": 0.0010434002615511417,
+      "oracle_seconds": 0.006525099743157625,
+      "greedy_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "oracle_scheduled": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    }
+  ]
+}

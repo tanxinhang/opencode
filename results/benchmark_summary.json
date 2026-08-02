@@ -1,0 +1,273 @@
+{
+  "proposed": {
+    "scheduled": [
+      [
+        0,
+        1,
+        2,
+        7
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        4,
+        5,
+        6
+      ]
+    ],
+    "expected_deflection": [
+      21.4408638202265,
+      12.325116471202898,
+      6.4781961699934705
+    ],
+    "weighted_expected_deflection": 40.24417646142287,
+    "qos_gap": 0.0,
+    "used_bits": 40,
+    "selected_reports": 8,
+    "mean_pd": 0.8604666666666668,
+    "worst_pd": 0.7438,
+    "pd_per_target": [
+      0.958,
+      0.8796,
+      0.7438
+    ],
+    "mean_pfa": 0.05266666666666667
+  },
+  "no_cooperation": {
+    "scheduled": [
+      [
+        0
+      ],
+      [
+        3
+      ],
+      [
+        6
+      ]
+    ],
+    "expected_deflection": [
+      11.888964430658556,
+      6.7969956990058655,
+      0.20761769184905354
+    ],
+    "weighted_expected_deflection": 18.893577821513475,
+    "qos_gap": 1.2100323335320768,
+    "used_bits": 0,
+    "selected_reports": 0,
+    "mean_pd": 0.5698,
+    "worst_pd": 0.1488,
+    "pd_per_target": [
+      0.8416,
+      0.719,
+      0.1488
+    ],
+    "mean_pfa": 0.0516
+  },
+  "sensing_top": {
+    "scheduled": [
+      [
+        0,
+        2,
+        7
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    ],
+    "expected_deflection": [
+      21.021856114394748,
+      12.325116471202898,
+      6.88305114693942
+    ],
+    "weighted_expected_deflection": 40.23002373253707,
+    "qos_gap": 0.0,
+    "used_bits": 40,
+    "selected_reports": 8,
+    "mean_pd": 0.8710666666666667,
+    "worst_pd": 0.7754,
+    "pd_per_target": [
+      0.9556,
+      0.8822,
+      0.7754
+    ],
+    "mean_pfa": 0.04986666666666666
+  },
+  "communication_top": {
+    "scheduled": [
+      [
+        0,
+        1,
+        2,
+        7
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        5,
+        6,
+        7
+      ]
+    ],
+    "expected_deflection": [
+      21.4408638202265,
+      12.568775054670922,
+      3.3210576307728643
+    ],
+    "weighted_expected_deflection": 37.33069650567028,
+    "qos_gap": 0.0,
+    "used_bits": 40,
+    "selected_reports": 8,
+    "mean_pd": 0.7923333333333332,
+    "worst_pd": 0.5294,
+    "pd_per_target": [
+      0.958,
+      0.8896,
+      0.5294
+    ],
+    "mean_pfa": 0.052866666666666666
+  },
+  "independent_post": {
+    "scheduled": [
+      [
+        0,
+        2,
+        7
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    ],
+    "expected_deflection": [
+      21.021856114394748,
+      12.325116471202898,
+      6.88305114693942
+    ],
+    "weighted_expected_deflection": 40.23002373253707,
+    "qos_gap": 0.0,
+    "used_bits": 40,
+    "selected_reports": 8,
+    "mean_pd": 0.8710666666666667,
+    "worst_pd": 0.7754,
+    "pd_per_target": [
+      0.9556,
+      0.8822,
+      0.7754
+    ],
+    "mean_pfa": 0.04986666666666666
+  },
+  "random": {
+    "scheduled": [
+      [
+        0,
+        3,
+        4,
+        6
+      ],
+      [
+        3
+      ],
+      [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    ],
+    "expected_deflection": [
+      11.934155834143542,
+      6.7969956990058655,
+      5.151081168708883
+    ],
+    "weighted_expected_deflection": 23.882232701858293,
+    "qos_gap": 0.0,
+    "used_bits": 40,
+    "selected_reports": 8,
+    "mean_pd": 0.7439999999999999,
+    "worst_pd": 0.691,
+    "pd_per_target": [
+      0.8302,
+      0.7108,
+      0.691
+    ],
+    "mean_pfa": 0.0478
+  },
+  "all_scheduled": {
+    "scheduled": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    ],
+    "expected_deflection": [
+      21.656878035991074,
+      12.895072121065109,
+      7.035040173976563
+    ],
+    "weighted_expected_deflection": 41.586990331032744,
+    "qos_gap": 0.0,
+    "used_bits": 105,
+    "selected_reports": 21,
+    "mean_pd": 0.8804,
+    "worst_pd": 0.7772,
+    "pd_per_target": [
+      0.9616,
+      0.9024,
+      0.7772
+    ],
+    "mean_pfa": 0.0492
+  }
+}

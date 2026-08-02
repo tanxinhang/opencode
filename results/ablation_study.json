@@ -1,0 +1,7042 @@
+{
+  "seeds": 50,
+  "summary": {
+    "full": {
+      "mean_truth_utility": 49.9902531095539,
+      "mean_utility_loss_vs_full": 0.0,
+      "worst_utility_loss_vs_full": 0.0,
+      "qos_violation_rate": 0.0,
+      "schedule_change_rate": 0.0
+    },
+    "no_correlation": {
+      "mean_truth_utility": 49.96168605316193,
+      "mean_utility_loss_vs_full": 0.02856705639196136,
+      "worst_utility_loss_vs_full": 0.3726990845961211,
+      "qos_violation_rate": 0.0,
+      "schedule_change_rate": 0.28
+    },
+    "deterministic_links": {
+      "mean_truth_utility": 49.988166885321846,
+      "mean_utility_loss_vs_full": 0.002086224232051279,
+      "worst_utility_loss_vs_full": 0.049722077171075796,
+      "qos_violation_rate": 0.0,
+      "schedule_change_rate": 0.06
+    },
+    "first_order": {
+      "mean_truth_utility": 49.98904104644207,
+      "mean_utility_loss_vs_full": 0.0012120631118209247,
+      "worst_utility_loss_vs_full": 0.05000449744087376,
+      "qos_violation_rate": 0.0,
+      "schedule_change_rate": 0.06
+    },
+    "single_stage": {
+      "mean_truth_utility": 49.9902531095539,
+      "mean_utility_loss_vs_full": 0.0,
+      "worst_utility_loss_vs_full": 0.0,
+      "qos_violation_rate": 0.0,
+      "schedule_change_rate": 0.0
+    }
+  },
+  "instances": [
+    {
+      "seed": 20260802,
+      "method": "full",
+      "utility": 40.24417646142287,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260802,
+      "method": "no_correlation",
+      "utility": 40.23002373253707,
+      "utility_loss_vs_full": 0.014152728885797217,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260802,
+      "method": "deterministic_links",
+      "utility": 40.23002373253707,
+      "utility_loss_vs_full": 0.014152728885797217,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260802,
+      "method": "first_order",
+      "utility": 40.24417646142287,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260802,
+      "method": "single_stage",
+      "utility": 40.24417646142287,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "method": "full",
+      "utility": 50.95099050816582,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "method": "no_correlation",
+      "utility": 50.938983128504475,
+      "utility_loss_vs_full": 0.012007379661348239,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "method": "deterministic_links",
+      "utility": 50.95099050816582,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "method": "first_order",
+      "utility": 50.95099050816582,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260803,
+      "method": "single_stage",
+      "utility": 50.95099050816582,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "method": "full",
+      "utility": 46.039927153824934,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "method": "no_correlation",
+      "utility": 46.039927153824934,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "method": "deterministic_links",
+      "utility": 46.039927153824934,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "method": "first_order",
+      "utility": 46.039927153824934,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260804,
+      "method": "single_stage",
+      "utility": 46.039927153824934,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "method": "full",
+      "utility": 48.065483475220475,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "method": "no_correlation",
+      "utility": 48.065483475220475,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "method": "deterministic_links",
+      "utility": 48.065483475220475,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "method": "first_order",
+      "utility": 48.065483475220475,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260805,
+      "method": "single_stage",
+      "utility": 48.065483475220475,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "method": "full",
+      "utility": 54.212022843105814,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "method": "no_correlation",
+      "utility": 54.212022843105814,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "method": "deterministic_links",
+      "utility": 54.212022843105814,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "method": "first_order",
+      "utility": 54.212022843105814,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260806,
+      "method": "single_stage",
+      "utility": 54.212022843105814,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "method": "full",
+      "utility": 55.843950611284534,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "method": "no_correlation",
+      "utility": 55.843950611284534,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "method": "deterministic_links",
+      "utility": 55.843950611284534,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "method": "first_order",
+      "utility": 55.843950611284534,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260807,
+      "method": "single_stage",
+      "utility": 55.843950611284534,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "method": "full",
+      "utility": 50.3152165999748,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "method": "no_correlation",
+      "utility": 50.25861348521197,
+      "utility_loss_vs_full": 0.05660311476282942,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "method": "deterministic_links",
+      "utility": 50.3152165999748,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "method": "first_order",
+      "utility": 50.3152165999748,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260808,
+      "method": "single_stage",
+      "utility": 50.3152165999748,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "method": "full",
+      "utility": 60.24112639119622,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "method": "no_correlation",
+      "utility": 60.24112639119622,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "method": "deterministic_links",
+      "utility": 60.24112639119622,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "method": "first_order",
+      "utility": 60.24112639119622,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260809,
+      "method": "single_stage",
+      "utility": 60.24112639119622,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "method": "full",
+      "utility": 55.69253702284972,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "method": "no_correlation",
+      "utility": 55.58489920477662,
+      "utility_loss_vs_full": 0.10763781807310124,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "method": "deterministic_links",
+      "utility": 55.69253702284972,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "method": "first_order",
+      "utility": 55.69253702284972,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260810,
+      "method": "single_stage",
+      "utility": 55.69253702284972,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "method": "full",
+      "utility": 53.00092101174879,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "method": "no_correlation",
+      "utility": 53.00092101174879,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "method": "deterministic_links",
+      "utility": 53.00092101174879,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "method": "first_order",
+      "utility": 53.00092101174879,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260811,
+      "method": "single_stage",
+      "utility": 53.00092101174879,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "method": "full",
+      "utility": 32.34497846187148,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "method": "no_correlation",
+      "utility": 32.34497846187148,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "method": "deterministic_links",
+      "utility": 32.34497846187148,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "method": "first_order",
+      "utility": 32.34497846187148,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260812,
+      "method": "single_stage",
+      "utility": 32.34497846187148,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "method": "full",
+      "utility": 40.55147766833242,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "method": "no_correlation",
+      "utility": 40.55147766833242,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "method": "deterministic_links",
+      "utility": 40.55147766833242,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "method": "first_order",
+      "utility": 40.55147766833242,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260813,
+      "method": "single_stage",
+      "utility": 40.55147766833242,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "method": "full",
+      "utility": 43.22437400798702,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "method": "no_correlation",
+      "utility": 43.22437400798702,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "method": "deterministic_links",
+      "utility": 43.22437400798702,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "method": "first_order",
+      "utility": 43.22437400798702,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260814,
+      "method": "single_stage",
+      "utility": 43.22437400798702,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "method": "full",
+      "utility": 64.32649930199922,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "method": "no_correlation",
+      "utility": 64.32649930199922,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "method": "deterministic_links",
+      "utility": 64.32649930199922,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "method": "first_order",
+      "utility": 64.32649930199922,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260815,
+      "method": "single_stage",
+      "utility": 64.32649930199922,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "method": "full",
+      "utility": 47.26361420129885,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "method": "no_correlation",
+      "utility": 47.26361420129885,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "method": "deterministic_links",
+      "utility": 47.26361420129885,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "method": "first_order",
+      "utility": 47.26361420129885,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260816,
+      "method": "single_stage",
+      "utility": 47.26361420129885,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "method": "full",
+      "utility": 45.234552038344056,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "method": "no_correlation",
+      "utility": 45.234552038344056,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "method": "deterministic_links",
+      "utility": 45.234552038344056,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "method": "first_order",
+      "utility": 45.234552038344056,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260817,
+      "method": "single_stage",
+      "utility": 45.234552038344056,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "method": "full",
+      "utility": 62.591064269913026,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "method": "no_correlation",
+      "utility": 62.54236864079949,
+      "utility_loss_vs_full": 0.04869562911353853,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "method": "deterministic_links",
+      "utility": 62.591064269913026,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "method": "first_order",
+      "utility": 62.591064269913026,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260818,
+      "method": "single_stage",
+      "utility": 62.591064269913026,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "method": "full",
+      "utility": 56.62666344863431,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "method": "no_correlation",
+      "utility": 56.62666344863431,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "method": "deterministic_links",
+      "utility": 56.62666344863431,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "method": "first_order",
+      "utility": 56.62666344863431,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260819,
+      "method": "single_stage",
+      "utility": 56.62666344863431,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "method": "full",
+      "utility": 51.94073266506753,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "method": "no_correlation",
+      "utility": 51.838392582129444,
+      "utility_loss_vs_full": 0.10234008293808472,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "method": "deterministic_links",
+      "utility": 51.94073266506753,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "method": "first_order",
+      "utility": 51.94073266506753,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260820,
+      "method": "single_stage",
+      "utility": 51.94073266506753,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "method": "full",
+      "utility": 40.483888731980464,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "method": "no_correlation",
+      "utility": 40.483888731980464,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "method": "deterministic_links",
+      "utility": 40.43416665480939,
+      "utility_loss_vs_full": 0.049722077171075796,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "method": "first_order",
+      "utility": 40.483888731980464,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260821,
+      "method": "single_stage",
+      "utility": 40.483888731980464,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "method": "full",
+      "utility": 65.07210680506452,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "method": "no_correlation",
+      "utility": 65.07210680506452,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "method": "deterministic_links",
+      "utility": 65.07210680506452,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "method": "first_order",
+      "utility": 65.07210680506452,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260822,
+      "method": "single_stage",
+      "utility": 65.07210680506452,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "method": "full",
+      "utility": 38.01414201293588,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "method": "no_correlation",
+      "utility": 38.01414201293588,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "method": "deterministic_links",
+      "utility": 38.01414201293588,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "method": "first_order",
+      "utility": 38.01414201293588,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260823,
+      "method": "single_stage",
+      "utility": 38.01414201293588,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "method": "full",
+      "utility": 46.502731697931075,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "method": "no_correlation",
+      "utility": 46.502731697931075,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "method": "deterministic_links",
+      "utility": 46.502731697931075,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "method": "first_order",
+      "utility": 46.502731697931075,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260824,
+      "method": "single_stage",
+      "utility": 46.502731697931075,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "method": "full",
+      "utility": 46.9027921501136,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "method": "no_correlation",
+      "utility": 46.8064790665715,
+      "utility_loss_vs_full": 0.09631308354209978,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "method": "deterministic_links",
+      "utility": 46.9027921501136,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "method": "first_order",
+      "utility": 46.9027921501136,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260825,
+      "method": "single_stage",
+      "utility": 46.9027921501136,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "method": "full",
+      "utility": 44.847821669880766,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "method": "no_correlation",
+      "utility": 44.847821669880766,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "method": "deterministic_links",
+      "utility": 44.847821669880766,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "method": "first_order",
+      "utility": 44.847821669880766,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260826,
+      "method": "single_stage",
+      "utility": 44.847821669880766,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "method": "full",
+      "utility": 64.85535226160646,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "method": "no_correlation",
+      "utility": 64.85535226160646,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "method": "deterministic_links",
+      "utility": 64.85535226160646,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "method": "first_order",
+      "utility": 64.85535226160646,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260827,
+      "method": "single_stage",
+      "utility": 64.85535226160646,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "method": "full",
+      "utility": 42.57769749375804,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "method": "no_correlation",
+      "utility": 42.57769749375804,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "method": "deterministic_links",
+      "utility": 42.57769749375804,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "method": "first_order",
+      "utility": 42.57769749375804,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260828,
+      "method": "single_stage",
+      "utility": 42.57769749375804,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "method": "full",
+      "utility": 61.028088703533335,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          5,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "method": "no_correlation",
+      "utility": 61.010373134124514,
+      "utility_loss_vs_full": 0.017715569408821352,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "method": "deterministic_links",
+      "utility": 61.028088703533335,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          5,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "method": "first_order",
+      "utility": 61.028088703533335,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          5,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260829,
+      "method": "single_stage",
+      "utility": 61.028088703533335,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          5,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "method": "full",
+      "utility": 44.426216924636904,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "method": "no_correlation",
+      "utility": 44.426216924636904,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "method": "deterministic_links",
+      "utility": 44.426216924636904,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "method": "first_order",
+      "utility": 44.426216924636904,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260830,
+      "method": "single_stage",
+      "utility": 44.426216924636904,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "method": "full",
+      "utility": 45.99696023791513,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "method": "no_correlation",
+      "utility": 45.99696023791513,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "method": "deterministic_links",
+      "utility": 45.99696023791513,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "method": "first_order",
+      "utility": 45.99696023791513,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260831,
+      "method": "single_stage",
+      "utility": 45.99696023791513,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260832,
+      "method": "full",
+      "utility": 62.40181628487177,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260832,
+      "method": "no_correlation",
+      "utility": 62.02911720027565,
+      "utility_loss_vs_full": 0.3726990845961211,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260832,
+      "method": "deterministic_links",
+      "utility": 62.40181628487177,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260832,
+      "method": "first_order",
+      "utility": 62.40181628487177,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260832,
+      "method": "single_stage",
+      "utility": 62.40181628487177,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260833,
+      "method": "full",
+      "utility": 54.077550116967046,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260833,
+      "method": "no_correlation",
+      "utility": 54.077550116967046,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260833,
+      "method": "deterministic_links",
+      "utility": 54.077550116967046,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260833,
+      "method": "first_order",
+      "utility": 54.077550116967046,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260833,
+      "method": "single_stage",
+      "utility": 54.077550116967046,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260834,
+      "method": "full",
+      "utility": 49.31608004120777,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260834,
+      "method": "no_correlation",
+      "utility": 49.10043226691876,
+      "utility_loss_vs_full": 0.21564777428901039,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260834,
+      "method": "deterministic_links",
+      "utility": 49.31608004120777,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260834,
+      "method": "first_order",
+      "utility": 49.31608004120777,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260834,
+      "method": "single_stage",
+      "utility": 49.31608004120777,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260835,
+      "method": "full",
+      "utility": 62.39878486290098,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260835,
+      "method": "no_correlation",
+      "utility": 62.38986753175038,
+      "utility_loss_vs_full": 0.008917331150598784,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260835,
+      "method": "deterministic_links",
+      "utility": 62.39878486290098,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260835,
+      "method": "first_order",
+      "utility": 62.38986753175038,
+      "utility_loss_vs_full": 0.008917331150598784,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260835,
+      "method": "single_stage",
+      "utility": 62.39878486290098,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260836,
+      "method": "full",
+      "utility": 32.81672922241968,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260836,
+      "method": "no_correlation",
+      "utility": 32.81672922241968,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260836,
+      "method": "deterministic_links",
+      "utility": 32.81672922241968,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260836,
+      "method": "first_order",
+      "utility": 32.76672472497881,
+      "utility_loss_vs_full": 0.05000449744087376,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260836,
+      "method": "single_stage",
+      "utility": 32.81672922241968,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260837,
+      "method": "full",
+      "utility": 34.463190490842685,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260837,
+      "method": "no_correlation",
+      "utility": 34.463190490842685,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260837,
+      "method": "deterministic_links",
+      "utility": 34.463190490842685,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260837,
+      "method": "first_order",
+      "utility": 34.463190490842685,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260837,
+      "method": "single_stage",
+      "utility": 34.463190490842685,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260838,
+      "method": "full",
+      "utility": 60.975298130283306,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260838,
+      "method": "no_correlation",
+      "utility": 60.94928694986908,
+      "utility_loss_vs_full": 0.026011180414229784,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260838,
+      "method": "deterministic_links",
+      "utility": 60.975298130283306,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260838,
+      "method": "first_order",
+      "utility": 60.975298130283306,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260838,
+      "method": "single_stage",
+      "utility": 60.975298130283306,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260839,
+      "method": "full",
+      "utility": 57.729919542256546,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260839,
+      "method": "no_correlation",
+      "utility": 57.729919542256546,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260839,
+      "method": "deterministic_links",
+      "utility": 57.729919542256546,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260839,
+      "method": "first_order",
+      "utility": 57.729919542256546,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260839,
+      "method": "single_stage",
+      "utility": 57.729919542256546,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260840,
+      "method": "full",
+      "utility": 39.5598318319052,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260840,
+      "method": "no_correlation",
+      "utility": 39.5598318319052,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260840,
+      "method": "deterministic_links",
+      "utility": 39.51939542635951,
+      "utility_loss_vs_full": 0.040436405545690945,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260840,
+      "method": "first_order",
+      "utility": 39.558150504905626,
+      "utility_loss_vs_full": 0.0016813269995736846,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260840,
+      "method": "single_stage",
+      "utility": 39.5598318319052,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260841,
+      "method": "full",
+      "utility": 33.19051795871276,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260841,
+      "method": "no_correlation",
+      "utility": 33.19051795871276,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260841,
+      "method": "deterministic_links",
+      "utility": 33.19051795871276,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260841,
+      "method": "first_order",
+      "utility": 33.19051795871276,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260841,
+      "method": "single_stage",
+      "utility": 33.19051795871276,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260842,
+      "method": "full",
+      "utility": 53.58728814810438,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260842,
+      "method": "no_correlation",
+      "utility": 53.58728814810438,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260842,
+      "method": "deterministic_links",
+      "utility": 53.58728814810438,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260842,
+      "method": "first_order",
+      "utility": 53.58728814810438,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260842,
+      "method": "single_stage",
+      "utility": 53.58728814810438,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260843,
+      "method": "full",
+      "utility": 63.2084814513314,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260843,
+      "method": "no_correlation",
+      "utility": 63.2084814513314,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260843,
+      "method": "deterministic_links",
+      "utility": 63.2084814513314,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260843,
+      "method": "first_order",
+      "utility": 63.2084814513314,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260843,
+      "method": "single_stage",
+      "utility": 63.2084814513314,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260844,
+      "method": "full",
+      "utility": 51.055433167922615,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260844,
+      "method": "no_correlation",
+      "utility": 51.055433167922615,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260844,
+      "method": "deterministic_links",
+      "utility": 51.055433167922615,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260844,
+      "method": "first_order",
+      "utility": 51.055433167922615,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260844,
+      "method": "single_stage",
+      "utility": 51.055433167922615,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260845,
+      "method": "full",
+      "utility": 47.49788626371138,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260845,
+      "method": "no_correlation",
+      "utility": 47.49788626371138,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260845,
+      "method": "deterministic_links",
+      "utility": 47.49788626371138,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260845,
+      "method": "first_order",
+      "utility": 47.49788626371138,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260845,
+      "method": "single_stage",
+      "utility": 47.49788626371138,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260846,
+      "method": "full",
+      "utility": 52.90491832401382,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260846,
+      "method": "no_correlation",
+      "utility": 52.90491832401382,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260846,
+      "method": "deterministic_links",
+      "utility": 52.90491832401382,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260846,
+      "method": "first_order",
+      "utility": 52.90491832401382,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260846,
+      "method": "single_stage",
+      "utility": 52.90491832401382,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260847,
+      "method": "full",
+      "utility": 35.17934289095122,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260847,
+      "method": "no_correlation",
+      "utility": 35.17934289095122,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260847,
+      "method": "deterministic_links",
+      "utility": 35.17934289095122,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260847,
+      "method": "first_order",
+      "utility": 35.17934289095122,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260847,
+      "method": "single_stage",
+      "utility": 35.17934289095122,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260848,
+      "method": "full",
+      "utility": 56.001917211178736,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260848,
+      "method": "no_correlation",
+      "utility": 55.76612891122376,
+      "utility_loss_vs_full": 0.23578829995497586,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260848,
+      "method": "deterministic_links",
+      "utility": 56.001917211178736,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260848,
+      "method": "first_order",
+      "utility": 56.001917211178736,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260848,
+      "method": "single_stage",
+      "utility": 56.001917211178736,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260849,
+      "method": "full",
+      "utility": 63.907892677031626,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260849,
+      "method": "no_correlation",
+      "utility": 63.907892677031626,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260849,
+      "method": "deterministic_links",
+      "utility": 63.907892677031626,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260849,
+      "method": "first_order",
+      "utility": 63.907892677031626,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260849,
+      "method": "single_stage",
+      "utility": 63.907892677031626,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260850,
+      "method": "full",
+      "utility": 52.81289744706925,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260850,
+      "method": "no_correlation",
+      "utility": 52.699073704261735,
+      "utility_loss_vs_full": 0.11382374280751151,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": true,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260850,
+      "method": "deterministic_links",
+      "utility": 52.81289744706925,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260850,
+      "method": "first_order",
+      "utility": 52.81289744706925,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260850,
+      "method": "single_stage",
+      "utility": 52.81289744706925,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260851,
+      "method": "full",
+      "utility": 37.00877258241453,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260851,
+      "method": "no_correlation",
+      "utility": 37.00877258241453,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260851,
+      "method": "deterministic_links",
+      "utility": 37.00877258241453,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260851,
+      "method": "first_order",
+      "utility": 37.00877258241453,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "seed": 20260851,
+      "method": "single_stage",
+      "utility": 37.00877258241453,
+      "utility_loss_vs_full": 0.0,
+      "qos_gap": 0.0,
+      "qos_violated": false,
+      "schedule_changed": false,
+      "scheduled": [
+        [
+          0,
+          1,
+          2,
+          7
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ]
+      ]
+    }
+  ]
+}
