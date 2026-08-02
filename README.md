@@ -25,6 +25,8 @@ report selection, and linear deflection-optimal fusion.
     violation probability.
 11. Exact target-level evidence-set enumeration plus multiple-choice knapsack
     dynamic programming for mean-CVaR portfolio design.
+12. Cross-resource-domain replication of critical reports with exact effective
+    erasure distributions and equal-bit chance-constrained optimization.
 
 ## Run
 
@@ -43,6 +45,7 @@ python scripts/run_correlated_erasure_study.py --config config/demo.yaml
 python scripts/run_failure_diversity_audit.py
 python scripts/run_real_network_headroom_study.py --config config/demo.yaml
 python scripts/run_physical_failure_domain_study.py --config config/demo.yaml
+python scripts/run_replication_repair_study.py --config config/demo.yaml
 python -m pytest -q
 ```
 
