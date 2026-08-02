@@ -46,6 +46,7 @@ python scripts/run_failure_diversity_audit.py
 python scripts/run_real_network_headroom_study.py --config config/demo.yaml
 python scripts/run_physical_failure_domain_study.py --config config/demo.yaml
 python scripts/run_replication_repair_study.py --config config/demo.yaml
+python scripts/run_replication_realism_study.py --config config/demo.yaml
 python -m pytest -q
 ```
 
@@ -108,6 +109,16 @@ Owner-centered angle/path clustering is the primary physical proxy. Formation
 position and straight-link midpoint clustering are both reported, but their
 equivalence is checked explicitly and they are not counted as independent
 robustness evidence when they induce the same partition.
+
+The original replication study is an ideal upper bound in which a second copy
+can avoid the entire common failure state. The realism study supersedes that
+interpretation by separating a physical-path availability shared by all copies
+from schedulable resource-domain states. It applies equal per-domain capacity
+limits and compares selection only, same-domain retransmission, and
+cross-domain duplication under the same two-layer risk law. Replication is not
+claimed to overcome physical-path failure: its benefit declines as the shared
+path-risk fraction increases, and the exact optimizer is an offline small-scale
+Oracle rather than a scalable online scheduler.
 
 ## What is deliberately not claimed
 

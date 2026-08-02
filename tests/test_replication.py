@@ -3,6 +3,8 @@ import numpy as np
 from uav_otfs_isac.controlled import symmetric_diversity_model
 from uav_otfs_isac.fusion import gaussian_detection_probability
 from uav_otfs_isac.replication import (
+    dual_layer_reception_model,
+    optimize_dual_layer_chance_portfolio,
     optimize_replication_chance_portfolio,
     replicated_reception_model,
 )
@@ -48,3 +50,34 @@ def test_c5_replication_beats_selection_when_only_same_domain_reports_clear_thre
         selection.portfolio.violation_probability_per_target[0], 0.32
     )
     assert np.isclose(result.violation_probability_per_target[0], 0.16)
+
+
+def test_dual_layer_model_reduces_to_no_replication_gain_when_path_risk_is_total():
+    model = symmetric_diversity_model(success_probability=0.6)
+    one = dual_layer_reception_model(
+        model, [0, 1, 0, 0, 0], DOMAINS, DOMAINS, 1.0, 1.0
+    )
+    two = dual_layer_reception_model(
+        model, [0, 2, 0, 0, 0], DOMAINS, DOMAINS, 1.0, 1.0
+    )
+    assert np.isclose(one.success_prob[1], 0.6)
+    assert np.isclose(two.success_prob[1], 0.6)
+
+
+def test_dual_layer_cross_domain_copy_beats_same_domain_with_shared_path_risk():
+    model = symmetric_diversity_model(
+        np.array([1.4, 0.1, 0.1, 0.1]), success_probability=0.6
+    )
+    common = dict(
+        models=[model], budget_bits=2, minimum_pd=[0.17],
+        target_weights=[1.0], violation_limits=[0.0],
+        path_groups=[DOMAINS], native_resources=[DOMAINS], strength=1.0,
+        path_failure_fraction=0.5, domain_capacities=[2, 2],
+    )
+    cross = optimize_dual_layer_chance_portfolio(
+        **common, replication_mode="cross_domain", maximum_copies=2
+    )
+    same = optimize_dual_layer_chance_portfolio(
+        **common, replication_mode="same_domain", maximum_copies=2
+    )
+    assert cross.violation_probability_per_target[0] < same.violation_probability_per_target[0]
