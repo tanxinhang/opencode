@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from itertools import product
+from itertools import combinations, product
 from collections.abc import Iterable, Sequence
 
 import numpy as np
@@ -81,6 +81,24 @@ class ReachabilityDiagnosis:
 class FairChancePortfolioResult:
     chance: ChancePortfolioResult
     maximum_relative_violation_excess: float
+
+
+@dataclass(frozen=True)
+class FailureDiversityAttribution:
+    """Target-level structural and recoverable-headroom diagnostics."""
+
+    minimum_successful_reports: int | None
+    supporting_failure_domains: int
+    classification: str
+    independent_violation: float
+    aware_violation: float
+    oracle_violation: float
+    all_scheduled_violation: float
+    oracle_all_scheduled_gap: float
+    near_all_scheduled_boundary: bool
+    recoverable_headroom: float
+    headroom_use_ratio: float | None
+    oracle_scheduled: frozenset[int]
 
 
 def evaluate_portfolio_schedule(
@@ -333,6 +351,112 @@ def diagnose_target_reachability(
         minimum_unlimited_violation_probability=float(unlimited_violation),
         minimum_budgeted_violation_probability=float(budgeted_violation),
         violation_limit=float(violation_limit),
+    )
+
+
+def attribute_failure_diversity_headroom(
+    independent_model: TargetEvidenceModel,
+    truth_model: TargetEvidenceModel,
+    independent_scheduled: Iterable[int],
+    aware_scheduled: Iterable[int],
+    budget_bits: int,
+    minimum_pd: float,
+    failure_groups: Sequence[int],
+    *,
+    false_alarm_rate: float = 0.05,
+    tolerance: float = 1e-12,
+) -> FailureDiversityAttribution:
+    """Explain target-level headroom without assuming set monotonicity.
+
+    The deterministic structural metrics use the evidence moments only.  The
+    violation and Oracle metrics use ``truth_model`` and therefore include the
+    supplied correlated-erasure law.  ``budget_bits`` is the target-local cost
+    ceiling used for the exact Oracle.
+    """
+    if independent_model.num_uavs != truth_model.num_uavs:
+        raise ValueError("independent and truth models must have matching UAVs")
+    groups = np.asarray(failure_groups, dtype=int)
+    if groups.shape != (truth_model.num_uavs,):
+        raise ValueError("failure_groups must have one entry per UAV")
+    candidates = [i for i in range(truth_model.num_uavs) if i != truth_model.owner]
+
+    minimum_reports = None
+    for count in range(len(candidates) + 1):
+        qualities = []
+        for subset in combinations(candidates, count):
+            received = {truth_model.owner, *subset}
+            qualities.append(_received_quality(
+                truth_model, received, "gaussian_pd", false_alarm_rate
+            ))
+        if any(value >= minimum_pd - tolerance for value in qualities):
+            minimum_reports = count
+            break
+
+    supporting_domains = {
+        int(groups[i]) for i in candidates
+        if _received_quality(
+            truth_model, {truth_model.owner, i}, "gaussian_pd", false_alarm_rate
+        ) >= minimum_pd - tolerance
+    }
+    if minimum_reports is None:
+        classification = "sensing_limited"
+    elif minimum_reports == 0:
+        classification = "owner_sufficient"
+    elif minimum_reports == 1 and len(supporting_domains) >= 2:
+        classification = "diversifiable_substitute"
+    elif minimum_reports == 1:
+        classification = "single_domain_substitute"
+    else:
+        classification = "complementary_evidence"
+
+    options = enumerate_target_portfolios(
+        truth_model, minimum_pd, 1.0, beta=0.9, tail_weight=0.0,
+        quality_mode="gaussian_pd", false_alarm_rate=false_alarm_rate,
+    )
+    affordable = [option for option in options if option.cost_bits <= budget_bits]
+    if not affordable:
+        raise RuntimeError("target-local budget admits no portfolio")
+    oracle = min(
+        affordable,
+        key=lambda option: (
+            option.violation_probability,
+            option.mean_loss,
+            option.cost_bits,
+            sorted(option.scheduled),
+        ),
+    )
+    independent_violation = gaussian_pd_loss_distribution(
+        truth_model, independent_scheduled, minimum_pd, false_alarm_rate
+    ).violation_probability()
+    aware_violation = gaussian_pd_loss_distribution(
+        truth_model, aware_scheduled, minimum_pd, false_alarm_rate
+    ).violation_probability()
+    all_scheduled = frozenset(range(truth_model.num_uavs))
+    all_violation = gaussian_pd_loss_distribution(
+        truth_model, all_scheduled, minimum_pd, false_alarm_rate
+    ).violation_probability()
+    headroom = max(independent_violation - oracle.violation_probability, 0.0)
+    use_ratio = (
+        None if headroom <= tolerance
+        else (independent_violation - aware_violation) / headroom
+    )
+    return FailureDiversityAttribution(
+        minimum_successful_reports=minimum_reports,
+        supporting_failure_domains=len(supporting_domains),
+        classification=classification,
+        independent_violation=float(independent_violation),
+        aware_violation=float(aware_violation),
+        oracle_violation=float(oracle.violation_probability),
+        all_scheduled_violation=float(all_violation),
+        oracle_all_scheduled_gap=float(
+            oracle.violation_probability - all_violation
+        ),
+        near_all_scheduled_boundary=bool(
+            abs(oracle.violation_probability - all_violation) <= 1e-6
+        ),
+        recoverable_headroom=float(headroom),
+        headroom_use_ratio=None if use_ratio is None else float(use_ratio),
+        oracle_scheduled=oracle.scheduled,
     )
 
 

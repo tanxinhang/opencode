@@ -48,6 +48,34 @@ def best_two_report_violation(model, minimum_pd, alpha=0.05):
     return min(options, key=lambda item: (item[0], sorted(item[1])))
 
 
+def tied_two_report_truth_range(prediction_model, truth_model, minimum_pd, alpha=0.05):
+    candidates = [1, 2, 3, 4]
+    rows = []
+    for i in range(len(candidates)):
+        for j in range(i + 1, len(candidates)):
+            scheduled = frozenset({0, candidates[i], candidates[j]})
+            rows.append({
+                "scheduled": sorted(scheduled),
+                "predicted_violation": violation(
+                    prediction_model, scheduled, minimum_pd, alpha
+                ),
+                "truth_violation": violation(truth_model, scheduled, minimum_pd, alpha),
+            })
+    best_prediction = min(row["predicted_violation"] for row in rows)
+    tied = [
+        row for row in rows
+        if np.isclose(row["predicted_violation"], best_prediction, atol=1e-12)
+    ]
+    truth = [row["truth_violation"] for row in tied]
+    return {
+        "number_of_tied_optima": len(tied),
+        "truth_best": min(truth),
+        "truth_worst": max(truth),
+        "truth_random_tie_mean": float(np.mean(truth)),
+        "tied_schedules": tied,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="results/failure_diversity_audit.json")
@@ -68,6 +96,9 @@ def main() -> None:
     independent_cross = violation(base, CROSS, one_of_threshold)
     correlated_same = violation(correlated, SAME, one_of_threshold)
     correlated_cross = violation(correlated, CROSS, one_of_threshold)
+    c0_tie_audit = tied_two_report_truth_range(
+        base, correlated, one_of_threshold
+    )
     chance = optimize_chance_constrained_portfolio(
         [correlated], 2, [one_of_threshold], [1.0], [0.0],
         quality_mode="gaussian_pd", false_alarm_rate=0.05,
@@ -107,6 +138,8 @@ def main() -> None:
         cross_expected_pd = (
             1.0 - gaussian_pd_loss_distribution(truth, CROSS, 1.0, 0.05).mean
         )
+        same_all_received_pd = received_pd(controlled, [1, 2])
+        cross_all_received_pd = received_pd(controlled, [1, 3])
         oracle_value, oracle_set = best_two_report_violation(truth, one_of_threshold)
         solution = optimize_chance_constrained_portfolio(
             [truth], 2, [one_of_threshold], [1.0], [0.0],
@@ -124,7 +157,10 @@ def main() -> None:
             "cross_group_violation": cross_violation,
             "same_group_expected_pd": same_expected_pd,
             "cross_group_expected_pd": cross_expected_pd,
-            "cross_group_sensing_cost": same_expected_pd - cross_expected_pd,
+            "cross_group_expected_pd_gap": same_expected_pd - cross_expected_pd,
+            "cross_group_all_received_pd_gap": (
+                same_all_received_pd - cross_all_received_pd
+            ),
             "selected": sorted(selected_set),
             "oracle": sorted(oracle_set),
             "recoverable_headroom": headroom,
@@ -142,6 +178,7 @@ def main() -> None:
             "correlated_cross": correlated_cross,
             "optimizer_schedule": sorted(selected),
             "oracle_schedule": sorted(oracle_schedule),
+            "independent_tie_audit_under_correlated_truth": c0_tie_audit,
         },
         "C1": {
             "passed": c1_pass,

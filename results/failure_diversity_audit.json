@@ -23,7 +23,69 @@
       0,
       1,
       3
-    ]
+    ],
+    "independent_tie_audit_under_correlated_truth": {
+      "number_of_tied_optima": 6,
+      "truth_best": 0.16000000000000003,
+      "truth_worst": 0.32000000000000006,
+      "truth_random_tie_mean": 0.21333333333333337,
+      "tied_schedules": [
+        {
+          "scheduled": [
+            0,
+            1,
+            2
+          ],
+          "predicted_violation": 0.16000000000000003,
+          "truth_violation": 0.32000000000000006
+        },
+        {
+          "scheduled": [
+            0,
+            1,
+            3
+          ],
+          "predicted_violation": 0.16000000000000003,
+          "truth_violation": 0.16000000000000003
+        },
+        {
+          "scheduled": [
+            0,
+            1,
+            4
+          ],
+          "predicted_violation": 0.16000000000000003,
+          "truth_violation": 0.16000000000000003
+        },
+        {
+          "scheduled": [
+            0,
+            2,
+            3
+          ],
+          "predicted_violation": 0.16000000000000003,
+          "truth_violation": 0.16000000000000003
+        },
+        {
+          "scheduled": [
+            0,
+            2,
+            4
+          ],
+          "predicted_violation": 0.16000000000000003,
+          "truth_violation": 0.16000000000000003
+        },
+        {
+          "scheduled": [
+            0,
+            3,
+            4
+          ],
+          "predicted_violation": 0.16000000000000003,
+          "truth_violation": 0.32000000000000006
+        }
+      ]
+    }
   },
   "C1": {
     "passed": true,
@@ -39,7 +101,8 @@
       "cross_group_violation": 0.16000000000000003,
       "same_group_expected_pd": 0.28173663326733234,
       "cross_group_expected_pd": 0.2886832549317867,
-      "cross_group_sensing_cost": -0.006946621664454367,
+      "cross_group_expected_pd_gap": -0.006946621664454367,
+      "cross_group_all_received_pd_gap": 0.0,
       "selected": [
         0,
         1,
@@ -59,7 +122,8 @@
       "cross_group_violation": 0.16000000000000003,
       "same_group_expected_pd": 0.2986429527944927,
       "cross_group_expected_pd": 0.28905440592593823,
-      "cross_group_sensing_cost": 0.009588546868554482,
+      "cross_group_expected_pd_gap": 0.009588546868554482,
+      "cross_group_all_received_pd_gap": 0.026800618493301398,
       "selected": [
         0,
         1,
@@ -79,7 +143,8 @@
       "cross_group_violation": 0.16000000000000003,
       "same_group_expected_pd": 0.3157884896551637,
       "cross_group_expected_pd": 0.29016588088319484,
-      "cross_group_sensing_cost": 0.02562260877196887,
+      "cross_group_expected_pd_gap": 0.02562260877196887,
+      "cross_group_all_received_pd_gap": 0.052548169290556945,
       "selected": [
         0,
         1,
@@ -99,7 +164,8 @@
       "cross_group_violation": 0.16000000000000003,
       "same_group_expected_pd": 0.3504911868509808,
       "cross_group_expected_pd": 0.2945822357383976,
-      "cross_group_sensing_cost": 0.055908951112583205,
+      "cross_group_expected_pd_gap": 0.055908951112583205,
+      "cross_group_all_received_pd_gap": 0.10038145165855272,
       "selected": [
         0,
         1,
@@ -119,7 +185,8 @@
       "cross_group_violation": 0.16000000000000003,
       "same_group_expected_pd": 0.3852221941663564,
       "cross_group_expected_pd": 0.30183876565530066,
-      "cross_group_sensing_cost": 0.08338342851105573,
+      "cross_group_expected_pd_gap": 0.08338342851105573,
+      "cross_group_all_received_pd_gap": 0.14255197903806915,
       "selected": [
         0,
         1,
@@ -139,7 +206,8 @@
       "cross_group_violation": 0.16000000000000003,
       "same_group_expected_pd": 0.39211715531097036,
       "cross_group_expected_pd": 0.30361846065806297,
-      "cross_group_sensing_cost": 0.08849869465290738,
+      "cross_group_expected_pd_gap": 0.08849869465290738,
+      "cross_group_all_received_pd_gap": 0.15023203704619442,
       "selected": [
         0,
         1,
@@ -159,7 +227,8 @@
       "cross_group_violation": 0.4,
       "same_group_expected_pd": 0.3989837338037895,
       "cross_group_expected_pd": 0.3055043482531392,
-      "cross_group_sensing_cost": 0.09347938555065027,
+      "cross_group_expected_pd_gap": 0.09347938555065027,
+      "cross_group_all_received_pd_gap": 0.15764683372716926,
       "selected": [
         0,
         1,
@@ -179,7 +248,8 @@
       "cross_group_violation": 0.4,
       "same_group_expected_pd": 0.40581722356803385,
       "cross_group_expected_pd": 0.3074948563235631,
-      "cross_group_sensing_cost": 0.09832236724447074,
+      "cross_group_expected_pd_gap": 0.09832236724447074,
+      "cross_group_all_received_pd_gap": 0.16479104738851302,
       "selected": [
         0,
         1,
@@ -199,7 +269,8 @@
       "cross_group_violation": 0.4,
       "same_group_expected_pd": 0.41261300577383486,
       "cross_group_expected_pd": 0.30958833208748837,
-      "cross_group_sensing_cost": 0.10302467368634649,
+      "cross_group_expected_pd_gap": 0.10302467368634649,
+      "cross_group_all_received_pd_gap": 0.17165970864715158,
       "selected": [
         0,
         1,
@@ -219,7 +290,8 @@
       "cross_group_violation": 0.4,
       "same_group_expected_pd": 0.4193665584695693,
       "cross_group_expected_pd": 0.311783045142514,
-      "cross_group_sensing_cost": 0.10758351332705529,
+      "cross_group_expected_pd_gap": 0.10758351332705529,
+      "cross_group_all_received_pd_gap": 0.17824821692048776,
       "selected": [
         0,
         1,
@@ -239,7 +311,8 @@
       "cross_group_violation": 0.4,
       "same_group_expected_pd": 0.4523505219244295,
       "cross_group_expected_pd": 0.3242096397519545,
-      "cross_group_sensing_cost": 0.128140882172475,
+      "cross_group_expected_pd_gap": 0.128140882172475,
+      "cross_group_all_received_pd_gap": 0.20685513956826834,
       "selected": [
         0,
         1,
@@ -259,7 +332,8 @@
       "cross_group_violation": 0.4,
       "same_group_expected_pd": 0.48367107356026307,
       "cross_group_expected_pd": 0.33887041734528944,
-      "cross_group_sensing_cost": 0.14480065621497362,
+      "cross_group_expected_pd_gap": 0.14480065621497362,
+      "cross_group_all_received_pd_gap": 0.228004492264947,
       "selected": [
         0,
         1,

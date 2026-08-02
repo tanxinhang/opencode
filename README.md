@@ -41,6 +41,7 @@ python scripts/run_pd_diagnosis_study.py --config config/demo.yaml
 python scripts/run_deflection_calibration_study.py --config config/demo.yaml
 python scripts/run_correlated_erasure_study.py --config config/demo.yaml
 python scripts/run_failure_diversity_audit.py
+python scripts/run_real_network_headroom_study.py --config config/demo.yaml
 python -m pytest -q
 ```
 
@@ -82,6 +83,18 @@ failure-group labels. It verifies that equal-quality One-of-2 evidence should
 diversify across groups, while a Two-of-2 threshold can favor positively
 dependent reports. A quality-gap sweep identifies when sensing quality
 outweighs recoverable failure-diversity headroom.
+
+`run_real_network_headroom_study.py` attributes the small real-network gain
+target by target. It reports the minimum number of successful reports needed
+to clear the deterministic detection threshold, the number of distinct
+failure domains containing a single-report substitute, the exact recoverable
+headroom relative to a target-local correlated Oracle, and the fraction of
+that headroom used by correlation-aware scheduling.
+The Oracle is target-local and may spend up to the stated system budget on one
+target; it diagnoses intrinsic target headroom, not a jointly attainable
+multi-target allocation. Consequently, a target-level use ratio can be
+negative when the shared-budget optimizer deliberately trades that target for
+larger system-level benefit.
 
 ## What is deliberately not claimed
 
