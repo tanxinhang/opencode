@@ -1,7 +1,9 @@
 import numpy as np
+from scipy.stats import norm
 
 from uav_otfs_isac.fusion import (
     conditional_marginal_deflection,
+    gaussian_detection_probability,
     optimal_deflection,
     optimal_weights,
 )
@@ -31,3 +33,13 @@ def test_correlation_reduces_redundant_gain():
     independent = conditional_marginal_deflection(delta, sigma, {0}, 2)
     assert independent > redundant
 
+
+def test_gaussian_pd_reduces_to_equal_covariance_formula():
+    mu0 = np.zeros(2); mu1 = np.array([1.0, 0.5]); covariance = np.eye(2)
+    alpha = 0.05
+    pd = gaussian_detection_probability(
+        mu0, mu1, covariance, covariance, {0, 1}, alpha
+    )
+    deflection = optimal_deflection(mu1 - mu0, covariance, {0, 1})
+    expected = norm.sf(norm.ppf(1.0 - alpha) - np.sqrt(deflection))
+    assert np.isclose(pd, expected)

@@ -36,6 +36,8 @@ python scripts/run_ablation_study.py --config config/demo.yaml
 python scripts/run_sensitivity_study.py --config config/demo.yaml
 python scripts/run_risk_portfolio_study.py --config config/demo.yaml
 python scripts/run_chance_portfolio_study.py --config config/demo.yaml
+python scripts/run_pd_proxy_study.py --config config/demo.yaml
+python scripts/run_pd_diagnosis_study.py --config config/demo.yaml
 python -m pytest -q
 ```
 
@@ -54,6 +56,12 @@ chance constraint on the probability of violating the detection threshold.
 `run_chance_portfolio_study.py` adds per-target chance constraints and returns
 the minimum weighted reliability relaxation when the requested reliability is
 not attainable under the available reporting budget.
+
+The detection-level studies use a moment-matched Gaussian linear-score
+probability of detection at fixed false-alarm rate. This is called
+`gaussian_pd_chance`; it is not an exact discrete likelihood-ratio detector.
+The diagnosis searches all deterministic received subsets and all scheduled
+portfolios, so it does not assume that Gaussian-score P_D is set-monotone.
 
 ## What is deliberately not claimed
 

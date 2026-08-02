@@ -6,10 +6,13 @@ from uav_otfs_isac.models import TargetEvidenceModel
 from uav_otfs_isac.risk import (
     LossDistribution,
     deflection_loss_distribution,
+    diagnose_target_reachability,
     evaluate_portfolio_schedule,
+    gaussian_pd_loss_distribution,
     enumerate_target_portfolios,
     optimize_risk_portfolio,
     optimize_chance_constrained_portfolio,
+    optimize_fair_chance_constrained_portfolio,
 )
 
 
@@ -33,6 +36,15 @@ def test_discrete_cvar_and_loss_distribution():
     loss = deflection_loss_distribution(model, {0, 1}, minimum_deflection=1.5)
     assert np.isclose(loss.mean, 0.125)
     assert np.isclose(loss.violation_probability(), 0.25)
+
+
+def test_gaussian_pd_loss_distribution_tracks_erasure_mixture():
+    model = make_model(0, 0, [0.2, 2.0], [1.0, 0.75])
+    loss = gaussian_pd_loss_distribution(
+        model, {0, 1}, minimum_pd=0.5, false_alarm_rate=0.05
+    )
+    assert loss.violation_probability() >= 0.25 - 1e-12
+    assert loss.mean > 0.0
 
 
 def test_portfolio_dp_matches_direct_product_enumeration():
@@ -91,3 +103,54 @@ def test_infeasible_chance_constraint_returns_minimum_slack():
     )
     assert not result.feasible
     assert result.weighted_violation_excess > 0.0
+
+
+def test_reachability_diagnosis_distinguishes_limit_types():
+    sensing = make_model(0, 0, [0.1, 0.1], [1.0, 1.0])
+    assert diagnose_target_reachability(
+        sensing, 1, 2.0, 0.1
+    ).classification == "sensing_limited"
+
+    reliability = make_model(0, 0, [0.5, 2.0], [1.0, 0.5])
+    assert diagnose_target_reachability(
+        reliability, 1, 1.0, 0.1
+    ).classification == "reliability_limited"
+
+    budget = make_model(0, 0, [0.5, 2.0], [1.0, 1.0])
+    assert diagnose_target_reachability(
+        budget, 0, 1.0, 0.1
+    ).classification == "budget_limited"
+    assert diagnose_target_reachability(
+        budget, 1, 1.0, 0.1
+    ).classification == "feasible"
+
+
+def test_fair_chance_dp_matches_three_level_direct_enumeration():
+    models = [
+        make_model(0, 0, [0.6, 1.2, 0.8], [1.0, 0.55, 0.85]),
+        make_model(1, 1, [0.7, 0.9, 1.1], [0.7, 1.0, 0.50]),
+    ]
+    limits = np.array([0.2, 0.3]); weights = np.array([1.0, 1.4])
+    result = optimize_fair_chance_constrained_portfolio(
+        models, 2, [1.2, 1.2], weights, limits, beta=0.8, tail_weight=1.0
+    )
+    groups = [
+        enumerate_target_portfolios(model, 1.2, weights[q], 0.8, 1.0)
+        for q, model in enumerate(models)
+    ]
+    pairs = [pair for pair in itertools.product(*groups)
+             if sum(option.cost_bits for option in pair) <= 2]
+    def key(pair):
+        excess = np.array([
+            max(option.violation_probability - limits[q], 0.0)
+            for q, option in enumerate(pair)
+        ])
+        return (float(np.max(excess / limits)), float(weights @ excess),
+                sum(option.risk_objective for option in pair))
+    direct = min(key(pair) for pair in pairs)
+    actual = (
+        result.maximum_relative_violation_excess,
+        result.chance.weighted_violation_excess,
+        result.chance.portfolio.objective,
+    )
+    assert np.allclose(actual, direct)

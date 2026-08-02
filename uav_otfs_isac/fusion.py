@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 
 import numpy as np
+from scipy.stats import norm
 from numpy.typing import ArrayLike, NDArray
 
 from .linalg import stable_solve
@@ -55,3 +56,29 @@ def conditional_marginal_deflection(
         return 0.0
     return float(residual_mean**2 / conditional_variance)
 
+
+def gaussian_detection_probability(
+    mu0: ArrayLike,
+    mu1: ArrayLike,
+    sigma0: ArrayLike,
+    sigma1: ArrayLike,
+    indices: Iterable[int],
+    false_alarm_rate: float,
+) -> float:
+    """Moment-matched Gaussian P_D for the deflection-optimal linear score."""
+    if not 0.0 < false_alarm_rate < 1.0:
+        raise ValueError("false_alarm_rate must lie in (0, 1)")
+    idx = _indices(indices)
+    m0 = np.asarray(mu0, dtype=float)[idx]
+    m1 = np.asarray(mu1, dtype=float)[idx]
+    cov0 = np.asarray(sigma0, dtype=float)[np.ix_(idx, idx)]
+    cov1 = np.asarray(sigma1, dtype=float)[np.ix_(idx, idx)]
+    weights = optimal_weights(np.asarray(mu1) - np.asarray(mu0), sigma0, idx)
+    mean0 = float(weights @ m0)
+    mean1 = float(weights @ m1)
+    variance0 = float(weights @ cov0 @ weights)
+    variance1 = float(weights @ cov1 @ weights)
+    if variance0 <= 1e-14 or variance1 <= 1e-14:
+        return float(mean1 > mean0)
+    threshold = mean0 + np.sqrt(variance0) * norm.ppf(1.0 - false_alarm_rate)
+    return float(norm.sf((threshold - mean1) / np.sqrt(variance1)))

@@ -1,0 +1,5466 @@
+{
+  "minimum_pd": [
+    0.8,
+    0.75,
+    0.7
+  ],
+  "epsilon": 0.1,
+  "summary": [
+    {
+      "budget_bits": 10,
+      "mean_weighted_max_relative_excess": 6.382398991203269,
+      "mean_fair_max_relative_excess": 6.382398991203269,
+      "mean_weighted_sum_excess": 0.8320217442568407,
+      "mean_fair_sum_excess": 0.8320217442568407,
+      "diagnosis_fraction": {
+        "sensing_limited": 0.0,
+        "reliability_limited": 0.35555555555555557,
+        "budget_limited": 0.07777777777777778,
+        "feasible": 0.5666666666666667
+      }
+    },
+    {
+      "budget_bits": 20,
+      "mean_weighted_max_relative_excess": 1.544184981561236,
+      "mean_fair_max_relative_excess": 1.544184981561236,
+      "mean_weighted_sum_excess": 0.22038006631007181,
+      "mean_fair_sum_excess": 0.22038006631007181,
+      "diagnosis_fraction": {
+        "sensing_limited": 0.0,
+        "reliability_limited": 0.35555555555555557,
+        "budget_limited": 0.011111111111111112,
+        "feasible": 0.6333333333333333
+      }
+    },
+    {
+      "budget_bits": 30,
+      "mean_weighted_max_relative_excess": 0.9049848941807696,
+      "mean_fair_max_relative_excess": 0.8954016162987457,
+      "mean_weighted_sum_excess": 0.11942442504507515,
+      "mean_fair_sum_excess": 0.12131514515498565,
+      "diagnosis_fraction": {
+        "sensing_limited": 0.0,
+        "reliability_limited": 0.35555555555555557,
+        "budget_limited": 0.0,
+        "feasible": 0.6444444444444445
+      }
+    },
+    {
+      "budget_bits": 40,
+      "mean_weighted_max_relative_excess": 0.7801296395477919,
+      "mean_fair_max_relative_excess": 0.7801296395477919,
+      "mean_weighted_sum_excess": 0.10513560788561521,
+      "mean_fair_sum_excess": 0.10513560788561521,
+      "diagnosis_fraction": {
+        "sensing_limited": 0.0,
+        "reliability_limited": 0.35555555555555557,
+        "budget_limited": 0.0,
+        "feasible": 0.6444444444444445
+      }
+    }
+  ],
+  "instances": [
+    {
+      "seed": 20260802,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.150829562587335,
+      "fair_sum_excess": 1.150829562587335,
+      "weighted_violation": [
+        0.0,
+        1.0,
+        0.29294581737487313
+      ],
+      "fair_violation": [
+        0.0,
+        1.0,
+        0.29294581737487313
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.6607900036310232,
+      "fair_max_relative_excess": 0.6607900036310232,
+      "weighted_sum_excess": 0.09817475665511957,
+      "fair_sum_excess": 0.09817475665511957,
+      "weighted_violation": [
+        0.0,
+        0.11227205618308655,
+        0.16607900036310233
+      ],
+      "fair_violation": [
+        0.0,
+        0.11227205618308655,
+        0.16607900036310233
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.17633121663245377,
+      "fair_max_relative_excess": 0.17633121663245377,
+      "weighted_sum_excess": 0.02292305816221899,
+      "fair_sum_excess": 0.02292305816221899,
+      "weighted_violation": [
+        0.0,
+        0.01786113489870611,
+        0.11763312166324538
+      ],
+      "fair_violation": [
+        0.0,
+        0.01786113489870611,
+        0.11763312166324538
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.17633121663245363,
+      "fair_max_relative_excess": 0.17633121663245363,
+      "weighted_sum_excess": 0.022923058162218974,
+      "fair_sum_excess": 0.022923058162218974,
+      "weighted_violation": [
+        0.0,
+        0.01786113489870611,
+        0.11763312166324537
+      ],
+      "fair_violation": [
+        0.0,
+        0.01786113489870611,
+        0.11763312166324537
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.118382449584465,
+      "fair_sum_excess": 1.118382449584465,
+      "weighted_violation": [
+        0.0,
+        1.0,
+        0.2679864996803577
+      ],
+      "fair_violation": [
+        0.0,
+        1.0,
+        0.2679864996803577
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.0,
+      "fair_max_relative_excess": 0.0,
+      "weighted_sum_excess": 0.0,
+      "fair_sum_excess": 0.0,
+      "weighted_violation": [
+        0.0,
+        0.0985894690707737,
+        0.08649183674823821
+      ],
+      "fair_violation": [
+        0.0,
+        0.0985894690707737,
+        0.08649183674823821
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.0,
+      "fair_max_relative_excess": 0.0,
+      "weighted_sum_excess": 0.0,
+      "fair_sum_excess": 0.0,
+      "weighted_violation": [
+        0.0,
+        0.0985894690707737,
+        0.0682154528695441
+      ],
+      "fair_violation": [
+        0.0,
+        0.0985894690707737,
+        0.0682154528695441
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.0,
+      "fair_max_relative_excess": 0.0,
+      "weighted_sum_excess": 0.0,
+      "fair_sum_excess": 0.0,
+      "weighted_violation": [
+        0.0,
+        0.0985894690707737,
+        0.0682154528695441
+      ],
+      "fair_violation": [
+        0.0,
+        0.0985894690707737,
+        0.0682154528695441
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1700000000000002,
+      "fair_sum_excess": 1.1700000000000002,
+      "weighted_violation": [
+        0.0,
+        0.019444009368947947,
+        1.0
+      ],
+      "fair_violation": [
+        0.0,
+        0.019444009368947947,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 2.0633292840097557,
+      "fair_max_relative_excess": 2.0633292840097557,
+      "weighted_sum_excess": 0.29016391827476684,
+      "fair_sum_excess": 0.29016391827476684,
+      "weighted_violation": [
+        0.0,
+        0.12193111135349854,
+        0.3063329284009756
+      ],
+      "fair_violation": [
+        0.0,
+        0.12193111135349854,
+        0.3063329284009756
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.7623430183046356,
+      "fair_max_relative_excess": 0.7623430183046356,
+      "weighted_sum_excess": 0.09910459237960263,
+      "fair_sum_excess": 0.09910459237960263,
+      "weighted_violation": [
+        0.0,
+        0.019444009368947947,
+        0.17623430183046357
+      ],
+      "fair_violation": [
+        0.0,
+        0.019444009368947947,
+        0.17623430183046357
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.7623430183046354,
+      "fair_max_relative_excess": 0.7623430183046354,
+      "weighted_sum_excess": 0.0991045923796026,
+      "fair_sum_excess": 0.0991045923796026,
+      "weighted_violation": [
+        0.0,
+        0.004037633980235838,
+        0.17623430183046354
+      ],
+      "fair_violation": [
+        0.0,
+        0.004037633980235838,
+        0.17623430183046354
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 2.7746491689433728,
+      "fair_max_relative_excess": 2.7746491689433728,
+      "weighted_sum_excess": 0.3607043919626385,
+      "fair_sum_excess": 0.3607043919626385,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.37746491689433725
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.37746491689433725
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.5357201137369307,
+      "fair_max_relative_excess": 0.5357201137369307,
+      "weighted_sum_excess": 0.069643614785801,
+      "fair_sum_excess": 0.069643614785801,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.5357201137369307,
+      "fair_max_relative_excess": 0.5357201137369307,
+      "weighted_sum_excess": 0.069643614785801,
+      "fair_sum_excess": 0.069643614785801,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.5357201137369307,
+      "fair_max_relative_excess": 0.5357201137369307,
+      "weighted_sum_excess": 0.069643614785801,
+      "fair_sum_excess": 0.069643614785801,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1638147897733702,
+      "fair_sum_excess": 1.1638147897733702,
+      "weighted_violation": [
+        0.0,
+        1.0,
+        0.30293445367182326
+      ],
+      "fair_violation": [
+        0.0,
+        1.0,
+        0.30293445367182326
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 2.0293445367182326,
+      "fair_max_relative_excess": 2.0293445367182326,
+      "weighted_sum_excess": 0.41904517026457333,
+      "fair_sum_excess": 0.41904517026457333,
+      "weighted_violation": [
+        0.0,
+        0.25523038049120306,
+        0.30293445367182326
+      ],
+      "fair_violation": [
+        0.0,
+        0.25523038049120306,
+        0.30293445367182326
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.5523038049120303,
+      "fair_max_relative_excess": 1.2648054684513215,
+      "weighted_sum_excess": 0.1726970004644274,
+      "fair_sum_excess": 0.22941860376174264,
+      "weighted_violation": [
+        0.0,
+        0.25523038049120306,
+        0.11343586151786489
+      ],
+      "fair_violation": [
+        0.0,
+        0.16499389286307084,
+        0.22648054684513216
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.649938928630708,
+      "fair_max_relative_excess": 0.649938928630708,
+      "weighted_sum_excess": 0.08246051283629516,
+      "fair_sum_excess": 0.08246051283629516,
+      "weighted_violation": [
+        0.0,
+        0.1649938928630708,
+        0.11343586151786489
+      ],
+      "fair_violation": [
+        0.0,
+        0.1649938928630708,
+        0.11343586151786489
+      ]
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 2.6238009186293696,
+      "fair_max_relative_excess": 2.6238009186293696,
+      "weighted_sum_excess": 0.3410941194218181,
+      "fair_sum_excess": 0.3410941194218181,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.36238009186293696
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.36238009186293696
+      ]
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 1.8764260458874562,
+      "fair_max_relative_excess": 1.8764260458874562,
+      "weighted_sum_excess": 0.24393538596536932,
+      "fair_sum_excess": 0.24393538596536932,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.28764260458874563
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.28764260458874563
+      ]
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.7007695137577608,
+      "fair_max_relative_excess": 0.7007695137577608,
+      "weighted_sum_excess": 0.0911000367885089,
+      "fair_sum_excess": 0.0911000367885089,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.17007695137577608
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.17007695137577608
+      ]
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.6111269906255881,
+      "fair_max_relative_excess": 0.6111269906255881,
+      "weighted_sum_excess": 0.07944650878132646,
+      "fair_sum_excess": 0.07944650878132646,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.16111269906255882
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.16111269906255882
+      ]
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.2128308852644727,
+      "fair_sum_excess": 1.2128308852644727,
+      "weighted_violation": [
+        0.0,
+        1.0,
+        0.3406391425111329
+      ],
+      "fair_violation": [
+        0.0,
+        1.0,
+        0.3406391425111329
+      ]
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 1.0946100625495403,
+      "fair_max_relative_excess": 1.0946100625495403,
+      "weighted_sum_excess": 0.20622369094029958,
+      "fair_sum_excess": 0.20622369094029958,
+      "weighted_violation": [
+        0.0,
+        0.16392438280885935,
+        0.20946100625495404
+      ],
+      "fair_violation": [
+        0.0,
+        0.16392438280885935,
+        0.20946100625495404
+      ]
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.6392438280885934,
+      "fair_max_relative_excess": 0.6392438280885934,
+      "weighted_sum_excess": 0.07443168708382102,
+      "fair_sum_excess": 0.07443168708382102,
+      "weighted_violation": [
+        0.0,
+        0.16392438280885935,
+        0.10808254174997052
+      ],
+      "fair_violation": [
+        0.0,
+        0.16392438280885935,
+        0.10808254174997052
+      ]
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.08082541749970515,
+      "fair_max_relative_excess": 0.08082541749970515,
+      "weighted_sum_excess": 0.01050730427496167,
+      "fair_sum_excess": 0.01050730427496167,
+      "weighted_violation": [
+        0.0,
+        0.04672757603766481,
+        0.10808254174997052
+      ],
+      "fair_violation": [
+        0.0,
+        0.04672757603766481,
+        0.10808254174997052
+      ]
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 1.841834076447101,
+      "fair_max_relative_excess": 1.841834076447101,
+      "weighted_sum_excess": 0.23943842993812314,
+      "fair_sum_excess": 0.23943842993812314,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.2841834076447101
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.2841834076447101
+      ]
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.0,
+      "fair_max_relative_excess": 0.0,
+      "weighted_sum_excess": 0.0,
+      "fair_sum_excess": 0.0,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.0971076217348946
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.0971076217348946
+      ]
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.0,
+      "fair_max_relative_excess": 0.0,
+      "weighted_sum_excess": 0.0,
+      "fair_sum_excess": 0.0,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.09710762173489461
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.09710762173489461
+      ]
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.0,
+      "fair_max_relative_excess": 0.0,
+      "weighted_sum_excess": 0.0,
+      "fair_sum_excess": 0.0,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.09710762173489461
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.09710762173489461
+      ]
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 1.8744179084074215,
+      "fair_max_relative_excess": 1.8744179084074215,
+      "weighted_sum_excess": 0.24367432809296483,
+      "fair_sum_excess": 0.24367432809296483,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.2874417908407422
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.2874417908407422
+      ]
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.928140846299891,
+      "fair_max_relative_excess": 0.928140846299891,
+      "weighted_sum_excess": 0.12065831001898585,
+      "fair_sum_excess": 0.12065831001898585,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.1928140846299891
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.1928140846299891
+      ]
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.9281408462998908,
+      "fair_max_relative_excess": 0.9281408462998908,
+      "weighted_sum_excess": 0.1206583100189858,
+      "fair_sum_excess": 0.1206583100189858,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.19281408462998909
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.19281408462998909
+      ]
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.9281408462998908,
+      "fair_max_relative_excess": 0.9281408462998908,
+      "weighted_sum_excess": 0.1206583100189858,
+      "fair_sum_excess": 0.1206583100189858,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.19281408462998909
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.19281408462998909
+      ]
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1603119640559714,
+      "fair_sum_excess": 1.1603119640559714,
+      "weighted_violation": [
+        0.0,
+        1.0,
+        0.30023997235074723
+      ],
+      "fair_violation": [
+        0.0,
+        1.0,
+        0.30023997235074723
+      ]
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 2.002399723507472,
+      "fair_max_relative_excess": 2.002399723507472,
+      "weighted_sum_excess": 0.40360851654195673,
+      "fair_sum_excess": 0.40360851654195673,
+      "weighted_violation": [
+        0.0,
+        0.24329655248598536,
+        0.30023997235074723
+      ],
+      "fair_violation": [
+        0.0,
+        0.24329655248598536,
+        0.30023997235074723
+      ]
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.4329655248598534,
+      "fair_max_relative_excess": 1.4329655248598534,
+      "weighted_sum_excess": 0.14329655248598536,
+      "fair_sum_excess": 0.14329655248598536,
+      "weighted_violation": [
+        0.0,
+        0.24329655248598536,
+        0.09724303354983746
+      ],
+      "fair_violation": [
+        0.0,
+        0.24329655248598536,
+        0.09724303354983746
+      ]
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.5642660165153329,
+      "fair_max_relative_excess": 0.5642660165153329,
+      "weighted_sum_excess": 0.05642660165153329,
+      "fair_sum_excess": 0.05642660165153329,
+      "weighted_violation": [
+        0.0,
+        0.1564266016515333,
+        0.09724303354983745
+      ],
+      "fair_violation": [
+        0.0,
+        0.1564266016515333,
+        0.09724303354983745
+      ]
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.2226933960703477,
+      "fair_sum_excess": 1.2226933960703477,
+      "weighted_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        1.0
+      ],
+      "fair_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 3.067508668554517,
+      "fair_max_relative_excess": 3.067508668554517,
+      "weighted_sum_excess": 0.4514695229824348,
+      "fair_sum_excess": 0.4514695229824348,
+      "weighted_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.4067508668554517
+      ],
+      "fair_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.4067508668554517
+      ]
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.7830794958966814,
+      "fair_max_relative_excess": 1.7830794958966814,
+      "weighted_sum_excess": 0.2844937305369162,
+      "fair_sum_excess": 0.2844937305369162,
+      "weighted_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.27830794958966815
+      ],
+      "fair_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.27830794958966815
+      ]
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.628728826371809,
+      "fair_max_relative_excess": 0.628728826371809,
+      "weighted_sum_excess": 0.13442814349868276,
+      "fair_sum_excess": 0.13442814349868276,
+      "weighted_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.16287288263718092
+      ],
+      "fair_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.16287288263718092
+      ]
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1700000000000002,
+      "fair_sum_excess": 1.1700000000000002,
+      "weighted_violation": [
+        0.015642459702543597,
+        0.0,
+        1.0
+      ],
+      "fair_violation": [
+        0.015642459702543597,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.9329701264664799,
+      "fair_max_relative_excess": 0.9329701264664799,
+      "weighted_sum_excess": 0.13850428155239736,
+      "fair_sum_excess": 0.13850428155239736,
+      "weighted_violation": [
+        0.11721816511175498,
+        0.0,
+        0.193297012646648
+      ],
+      "fair_violation": [
+        0.11721816511175498,
+        0.0,
+        0.193297012646648
+      ]
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.17218165111754974,
+      "fair_max_relative_excess": 0.17218165111754974,
+      "weighted_sum_excess": 0.017218165111754974,
+      "fair_sum_excess": 0.017218165111754974,
+      "weighted_violation": [
+        0.11721816511175498,
+        0.0,
+        0.08013213126557554
+      ],
+      "fair_violation": [
+        0.11721816511175498,
+        0.0,
+        0.08013213126557554
+      ]
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.0,
+      "fair_max_relative_excess": 0.0,
+      "weighted_sum_excess": 0.0,
+      "fair_sum_excess": 0.0,
+      "weighted_violation": [
+        0.0026232964381263206,
+        0.0,
+        0.08013213126557554
+      ],
+      "fair_violation": [
+        0.0026232964381263206,
+        0.0,
+        0.08013213126557554
+      ]
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1700000000000002,
+      "fair_sum_excess": 1.1700000000000002,
+      "weighted_violation": [
+        0.0,
+        0.044027682403124935,
+        1.0
+      ],
+      "fair_violation": [
+        0.0,
+        0.044027682403124935,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 3.2661939619545,
+      "fair_max_relative_excess": 3.2661939619545,
+      "weighted_sum_excess": 0.424605215054085,
+      "fair_sum_excess": 0.424605215054085,
+      "weighted_violation": [
+        0.0,
+        0.044027682403124935,
+        0.42661939619545003
+      ],
+      "fair_violation": [
+        0.0,
+        0.044027682403124935,
+        0.42661939619545003
+      ]
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.9327942241157061,
+      "fair_max_relative_excess": 0.9327942241157061,
+      "weighted_sum_excess": 0.1212632491350418,
+      "fair_sum_excess": 0.1212632491350418,
+      "weighted_violation": [
+        0.0,
+        0.044027682403124935,
+        0.19327942241157062
+      ],
+      "fair_violation": [
+        0.0,
+        0.044027682403124935,
+        0.19327942241157062
+      ]
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.9327942241157058,
+      "fair_max_relative_excess": 0.9327942241157058,
+      "weighted_sum_excess": 0.12126324913504176,
+      "fair_sum_excess": 0.12126324913504176,
+      "weighted_violation": [
+        0.0,
+        0.044027682403124935,
+        0.1932794224115706
+      ],
+      "fair_violation": [
+        0.0,
+        0.044027682403124935,
+        0.1932794224115706
+      ]
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 3.286294302557714,
+      "fair_max_relative_excess": 3.286294302557714,
+      "weighted_sum_excess": 0.42721825933250285,
+      "fair_sum_excess": 0.42721825933250285,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.4286294302557714
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.4286294302557714
+      ]
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.9454786413052335,
+      "fair_max_relative_excess": 0.9454786413052335,
+      "weighted_sum_excess": 0.12291222336968036,
+      "fair_sum_excess": 0.12291222336968036,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ]
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.9454786413052335,
+      "fair_max_relative_excess": 0.9454786413052335,
+      "weighted_sum_excess": 0.12291222336968036,
+      "fair_sum_excess": 0.12291222336968036,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ]
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.9454786413052335,
+      "fair_max_relative_excess": 0.9454786413052335,
+      "weighted_sum_excess": 0.12291222336968036,
+      "fair_sum_excess": 0.12291222336968036,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ]
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 2.036717288172116,
+      "fair_max_relative_excess": 2.036717288172116,
+      "weighted_sum_excess": 0.26477324746237507,
+      "fair_sum_excess": 0.26477324746237507,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.3036717288172116
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.3036717288172116
+      ]
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.03185804645723961,
+      "fair_max_relative_excess": 0.03185804645723961,
+      "weighted_sum_excess": 0.004141546039441149,
+      "fair_sum_excess": 0.004141546039441149,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ]
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.03185804645723961,
+      "fair_max_relative_excess": 0.03185804645723961,
+      "weighted_sum_excess": 0.004141546039441149,
+      "fair_sum_excess": 0.004141546039441149,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ]
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.03185804645723961,
+      "fair_max_relative_excess": 0.03185804645723961,
+      "weighted_sum_excess": 0.004141546039441149,
+      "fair_sum_excess": 0.004141546039441149,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ]
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 2.448860765465266,
+      "fair_max_relative_excess": 2.448860765465266,
+      "weighted_sum_excess": 0.31835189951048465,
+      "fair_sum_excess": 0.31835189951048465,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.34488607654652664
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.34488607654652664
+      ]
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 1.732159014310232,
+      "fair_max_relative_excess": 1.732159014310232,
+      "weighted_sum_excess": 0.22518067186033017,
+      "fair_sum_excess": 0.22518067186033017,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.2732159014310232
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.2732159014310232
+      ]
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.7321590143102312,
+      "fair_max_relative_excess": 1.7321590143102312,
+      "weighted_sum_excess": 0.22518067186033008,
+      "fair_sum_excess": 0.22518067186033008,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.27321590143102314
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.27321590143102314
+      ]
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 1.7321590143102312,
+      "fair_max_relative_excess": 1.7321590143102312,
+      "weighted_sum_excess": 0.22518067186033008,
+      "fair_sum_excess": 0.22518067186033008,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.27321590143102314
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.27321590143102314
+      ]
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 3.398398696397633,
+      "fair_max_relative_excess": 3.398398696397633,
+      "weighted_sum_excess": 0.4417918305316923,
+      "fair_sum_excess": 0.4417918305316923,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.4398398696397633
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.4398398696397633
+      ]
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 2.2813645586761586,
+      "fair_max_relative_excess": 2.2813645586761586,
+      "weighted_sum_excess": 0.2965773926279006,
+      "fair_sum_excess": 0.2965773926279006,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ]
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 2.2813645586761586,
+      "fair_max_relative_excess": 2.2813645586761586,
+      "weighted_sum_excess": 0.2965773926279006,
+      "fair_sum_excess": 0.2965773926279006,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ]
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 2.2813645586761586,
+      "fair_max_relative_excess": 2.2813645586761586,
+      "weighted_sum_excess": 0.2965773926279006,
+      "fair_sum_excess": 0.2965773926279006,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ]
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 1.9659024297308543,
+      "fair_max_relative_excess": 1.9659024297308543,
+      "weighted_sum_excess": 0.2555673158650111,
+      "fair_sum_excess": 0.2555673158650111,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.29659024297308545
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.29659024297308545
+      ]
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.6070727556419714,
+      "fair_max_relative_excess": 0.6070727556419714,
+      "weighted_sum_excess": 0.07891945823345628,
+      "fair_sum_excess": 0.07891945823345628,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ]
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.6070727556419714,
+      "fair_max_relative_excess": 0.6070727556419714,
+      "weighted_sum_excess": 0.07891945823345628,
+      "fair_sum_excess": 0.07891945823345628,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ]
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.6070727556419714,
+      "fair_max_relative_excess": 0.6070727556419714,
+      "weighted_sum_excess": 0.07891945823345628,
+      "fair_sum_excess": 0.07891945823345628,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ]
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.212188290842528,
+      "fair_sum_excess": 1.212188290842528,
+      "weighted_violation": [
+        0.0,
+        1.0,
+        0.3401448391096369
+      ],
+      "fair_violation": [
+        0.0,
+        1.0,
+        0.3401448391096369
+      ]
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 1.6388565853146115,
+      "fair_max_relative_excess": 1.6388565853146115,
+      "weighted_sum_excess": 0.25771247011187903,
+      "fair_sum_excess": 0.25771247011187903,
+      "weighted_violation": [
+        0.0,
+        0.14466111402097948,
+        0.2638856585314612
+      ],
+      "fair_violation": [
+        0.0,
+        0.14466111402097948,
+        0.2638856585314612
+      ]
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.4466111402097947,
+      "fair_max_relative_excess": 0.4466111402097947,
+      "weighted_sum_excess": 0.06716992361328941,
+      "fair_sum_excess": 0.06716992361328941,
+      "weighted_violation": [
+        0.0,
+        0.14466111402097948,
+        0.1173144689171615
+      ],
+      "fair_violation": [
+        0.0,
+        0.14466111402097948,
+        0.1173144689171615
+      ]
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.4466111402097947,
+      "fair_max_relative_excess": 0.4466111402097947,
+      "weighted_sum_excess": 0.06716992361328941,
+      "fair_sum_excess": 0.06716992361328941,
+      "weighted_violation": [
+        0.0,
+        0.14466111402097948,
+        0.1173144689171615
+      ],
+      "fair_violation": [
+        0.0,
+        0.14466111402097948,
+        0.1173144689171615
+      ]
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1747882993412293,
+      "fair_sum_excess": 1.1747882993412293,
+      "weighted_violation": [
+        0.0,
+        0.10478829934122913,
+        1.0
+      ],
+      "fair_violation": [
+        0.0,
+        0.10478829934122913,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 3.1957630948930857,
+      "fair_max_relative_excess": 3.1957630948930857,
+      "weighted_sum_excess": 0.4202375016773303,
+      "fair_sum_excess": 0.4202375016773303,
+      "weighted_violation": [
+        0.0,
+        0.10478829934122913,
+        0.41957630948930863
+      ],
+      "fair_violation": [
+        0.0,
+        0.10478829934122913,
+        0.41957630948930863
+      ]
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.597156667948217,
+      "fair_max_relative_excess": 1.597156667948217,
+      "weighted_sum_excess": 0.21241866617449737,
+      "fair_sum_excess": 0.21241866617449737,
+      "weighted_violation": [
+        0.0,
+        0.10478829934122913,
+        0.2597156667948217
+      ],
+      "fair_violation": [
+        0.0,
+        0.10478829934122913,
+        0.2597156667948217
+      ]
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 1.597156667948217,
+      "fair_max_relative_excess": 1.597156667948217,
+      "weighted_sum_excess": 0.21241866617449734,
+      "fair_sum_excess": 0.21241866617449734,
+      "weighted_violation": [
+        0.0,
+        0.10478829934122912,
+        0.2597156667948217
+      ],
+      "fair_violation": [
+        0.0,
+        0.10478829934122912,
+        0.2597156667948217
+      ]
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 3.0266013363238042,
+      "fair_max_relative_excess": 3.0266013363238042,
+      "weighted_sum_excess": 0.3934581737220946,
+      "fair_sum_excess": 0.3934581737220946,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.40266013363238046
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.40266013363238046
+      ]
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 1.9557793611493937,
+      "fair_max_relative_excess": 1.9557793611493937,
+      "weighted_sum_excess": 0.2542513169494212,
+      "fair_sum_excess": 0.2542513169494212,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ]
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.9557793611493937,
+      "fair_max_relative_excess": 1.9557793611493937,
+      "weighted_sum_excess": 0.2542513169494212,
+      "fair_sum_excess": 0.2542513169494212,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ]
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 1.9557793611493937,
+      "fair_max_relative_excess": 1.9557793611493937,
+      "weighted_sum_excess": 0.2542513169494212,
+      "fair_sum_excess": 0.2542513169494212,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ]
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1589682803431742,
+      "fair_sum_excess": 1.1589682803431742,
+      "weighted_violation": [
+        1.0,
+        0.0,
+        0.2992063694947493
+      ],
+      "fair_violation": [
+        1.0,
+        0.0,
+        0.2992063694947493
+      ]
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 1.5556943148794846,
+      "fair_max_relative_excess": 1.5556943148794846,
+      "weighted_sum_excess": 0.202240260934333,
+      "fair_sum_excess": 0.202240260934333,
+      "weighted_violation": [
+        0.09701917426694262,
+        0.0,
+        0.2555694314879485
+      ],
+      "fair_violation": [
+        0.09701917426694262,
+        0.0,
+        0.2555694314879485
+      ]
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.491354613144094,
+      "fair_max_relative_excess": 1.491354613144094,
+      "weighted_sum_excess": 0.19387609970873224,
+      "fair_sum_excess": 0.19387609970873224,
+      "weighted_violation": [
+        0.09701917426694262,
+        0.0,
+        0.24913546131440942
+      ],
+      "fair_violation": [
+        0.09701917426694262,
+        0.0,
+        0.24913546131440942
+      ]
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 1.4913546131440938,
+      "fair_max_relative_excess": 1.4913546131440938,
+      "weighted_sum_excess": 0.1938760997087322,
+      "fair_sum_excess": 0.1938760997087322,
+      "weighted_violation": [
+        0.019436011348280983,
+        0.0,
+        0.2491354613144094
+      ],
+      "fair_violation": [
+        0.019436011348280983,
+        0.0,
+        0.2491354613144094
+      ]
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 2.197930180399227,
+      "fair_max_relative_excess": 2.197930180399227,
+      "weighted_sum_excess": 0.28573092345189954,
+      "fair_sum_excess": 0.28573092345189954,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.3197930180399227
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.3197930180399227
+      ]
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.17628945858070608,
+      "fair_max_relative_excess": 0.17628945858070608,
+      "weighted_sum_excess": 0.02291762961549179,
+      "fair_sum_excess": 0.02291762961549179,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ]
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.17628945858070608,
+      "fair_max_relative_excess": 0.17628945858070608,
+      "weighted_sum_excess": 0.02291762961549179,
+      "fair_sum_excess": 0.02291762961549179,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ]
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.17628945858070608,
+      "fair_max_relative_excess": 0.17628945858070608,
+      "weighted_sum_excess": 0.02291762961549179,
+      "fair_sum_excess": 0.02291762961549179,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ]
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.2340312360869183,
+      "fair_sum_excess": 1.2340312360869183,
+      "weighted_violation": [
+        0.0,
+        0.16403123608691816,
+        1.0
+      ],
+      "fair_violation": [
+        0.0,
+        0.16403123608691816,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 3.3584793146807446,
+      "fair_max_relative_excess": 3.3584793146807446,
+      "weighted_sum_excess": 0.500633546995415,
+      "fair_sum_excess": 0.500633546995415,
+      "weighted_violation": [
+        0.0,
+        0.16403123608691816,
+        0.43584793146807443
+      ],
+      "fair_violation": [
+        0.0,
+        0.16403123608691816,
+        0.43584793146807443
+      ]
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 2.178890960040579,
+      "fair_max_relative_excess": 2.178890960040579,
+      "weighted_sum_excess": 0.3472870608921934,
+      "fair_sum_excess": 0.3472870608921934,
+      "weighted_violation": [
+        0.0,
+        0.16403123608691816,
+        0.3178890960040579
+      ],
+      "fair_violation": [
+        0.0,
+        0.16403123608691816,
+        0.3178890960040579
+      ]
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 2.178890960040578,
+      "fair_max_relative_excess": 2.178890960040578,
+      "weighted_sum_excess": 0.34728706089219336,
+      "fair_sum_excess": 0.34728706089219336,
+      "weighted_violation": [
+        0.0,
+        0.16403123608691814,
+        0.31788909600405785
+      ],
+      "fair_violation": [
+        0.0,
+        0.16403123608691814,
+        0.31788909600405785
+      ]
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1700000000000002,
+      "fair_sum_excess": 1.1700000000000002,
+      "weighted_violation": [
+        0.0,
+        0.09400078302790149,
+        1.0
+      ],
+      "fair_violation": [
+        0.0,
+        0.09400078302790149,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 1.7599071061126288,
+      "fair_max_relative_excess": 1.7599071061126288,
+      "weighted_sum_excess": 0.22878792379464177,
+      "fair_sum_excess": 0.22878792379464177,
+      "weighted_violation": [
+        0.0,
+        0.09400078302790149,
+        0.2759907106112629
+      ],
+      "fair_violation": [
+        0.0,
+        0.09400078302790149,
+        0.2759907106112629
+      ]
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.329676209950783,
+      "fair_max_relative_excess": 0.329676209950783,
+      "weighted_sum_excess": 0.04285790729360179,
+      "fair_sum_excess": 0.04285790729360179,
+      "weighted_violation": [
+        0.0,
+        0.09400078302790149,
+        0.1329676209950783
+      ],
+      "fair_violation": [
+        0.0,
+        0.09400078302790149,
+        0.1329676209950783
+      ]
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.32967620995078273,
+      "fair_max_relative_excess": 0.32967620995078273,
+      "weighted_sum_excess": 0.042857907293601755,
+      "fair_sum_excess": 0.042857907293601755,
+      "weighted_violation": [
+        0.0,
+        0.09400078302790149,
+        0.13296762099507828
+      ],
+      "fair_violation": [
+        0.0,
+        0.09400078302790149,
+        0.13296762099507828
+      ]
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1700000000000002,
+      "fair_sum_excess": 1.1700000000000002,
+      "weighted_violation": [
+        0.0,
+        0.014929666269430838,
+        1.0
+      ],
+      "fair_violation": [
+        0.0,
+        0.014929666269430838,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 2.8475342283792404,
+      "fair_max_relative_excess": 2.8475342283792404,
+      "weighted_sum_excess": 0.3701794496893013,
+      "fair_sum_excess": 0.3701794496893013,
+      "weighted_violation": [
+        0.0,
+        0.014929666269430838,
+        0.384753422837924
+      ],
+      "fair_violation": [
+        0.0,
+        0.014929666269430838,
+        0.384753422837924
+      ]
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.5050137744171628,
+      "fair_max_relative_excess": 1.5050137744171628,
+      "weighted_sum_excess": 0.1956517906742312,
+      "fair_sum_excess": 0.1956517906742312,
+      "weighted_violation": [
+        0.0,
+        0.014929666269430838,
+        0.2505013774417163
+      ],
+      "fair_violation": [
+        0.0,
+        0.014929666269430838,
+        0.2505013774417163
+      ]
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 1.5050137744171617,
+      "fair_max_relative_excess": 1.5050137744171617,
+      "weighted_sum_excess": 0.19565179067423105,
+      "fair_sum_excess": 0.19565179067423105,
+      "weighted_violation": [
+        0.0,
+        0.014929666269430838,
+        0.2505013774417162
+      ],
+      "fair_violation": [
+        0.0,
+        0.014929666269430838,
+        0.2505013774417162
+      ]
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1786964133551838,
+      "fair_sum_excess": 1.1786964133551838,
+      "weighted_violation": [
+        0.0,
+        0.10869641335518365,
+        1.0
+      ],
+      "fair_violation": [
+        0.0,
+        0.10869641335518365,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 3.4591115082174104,
+      "fair_max_relative_excess": 3.4591115082174104,
+      "weighted_sum_excess": 0.458380909423447,
+      "fair_sum_excess": 0.458380909423447,
+      "weighted_violation": [
+        0.0,
+        0.10869641335518365,
+        0.44591115082174104
+      ],
+      "fair_violation": [
+        0.0,
+        0.10869641335518365,
+        0.44591115082174104
+      ]
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.0608439288528462,
+      "fair_max_relative_excess": 1.0608439288528462,
+      "weighted_sum_excess": 0.14660612410605367,
+      "fair_sum_excess": 0.14660612410605367,
+      "weighted_violation": [
+        0.0,
+        0.10869641335518365,
+        0.20608439288528463
+      ],
+      "fair_violation": [
+        0.0,
+        0.10869641335518365,
+        0.20608439288528463
+      ]
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 1.0608439288528464,
+      "fair_max_relative_excess": 1.0608439288528464,
+      "weighted_sum_excess": 0.13790971075087005,
+      "fair_sum_excess": 0.13790971075087005,
+      "weighted_violation": [
+        0.0,
+        0.053507568022999635,
+        0.20608439288528466
+      ],
+      "fair_violation": [
+        0.0,
+        0.053507568022999635,
+        0.20608439288528466
+      ]
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 1.9965626646242047,
+      "fair_max_relative_excess": 1.9965626646242047,
+      "weighted_sum_excess": 0.25955314640114663,
+      "fair_sum_excess": 0.25955314640114663,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.2996562664624205
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.2996562664624205
+      ]
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.01311122202911602,
+      "fair_max_relative_excess": 0.01311122202911602,
+      "weighted_sum_excess": 0.0017044588637850828,
+      "fair_sum_excess": 0.0017044588637850828,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ]
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.01311122202911602,
+      "fair_max_relative_excess": 0.01311122202911602,
+      "weighted_sum_excess": 0.0017044588637850828,
+      "fair_sum_excess": 0.0017044588637850828,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ]
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.01311122202911602,
+      "fair_max_relative_excess": 0.01311122202911602,
+      "weighted_sum_excess": 0.0017044588637850828,
+      "fair_sum_excess": 0.0017044588637850828,
+      "weighted_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "fair_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ]
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1217606947074716,
+      "fair_sum_excess": 1.1217606947074716,
+      "weighted_violation": [
+        0.0,
+        1.0,
+        0.27058514977497816
+      ],
+      "fair_violation": [
+        0.0,
+        1.0,
+        0.27058514977497816
+      ]
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.9132678467479851,
+      "fair_max_relative_excess": 0.9132678467479851,
+      "weighted_sum_excess": 0.11906227398152634,
+      "fair_sum_excess": 0.11906227398152634,
+      "weighted_violation": [
+        0.0,
+        0.10033745390428828,
+        0.19132678467479852
+      ],
+      "fair_violation": [
+        0.0,
+        0.10033745390428828,
+        0.19132678467479852
+      ]
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 0.003374539042882707,
+      "fair_max_relative_excess": 0.003374539042882707,
+      "weighted_sum_excess": 0.0003374539042882707,
+      "fair_sum_excess": 0.0003374539042882707,
+      "weighted_violation": [
+        0.0,
+        0.10033745390428828,
+        0.0897015394226266
+      ],
+      "fair_violation": [
+        0.0,
+        0.10033745390428828,
+        0.0897015394226266
+      ]
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 0.003374539042882707,
+      "fair_max_relative_excess": 0.003374539042882707,
+      "weighted_sum_excess": 0.0003374539042882707,
+      "fair_sum_excess": 0.0003374539042882707,
+      "weighted_violation": [
+        0.0,
+        0.10033745390428828,
+        0.0897015394226266
+      ],
+      "fair_violation": [
+        0.0,
+        0.10033745390428828,
+        0.0897015394226266
+      ]
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 10,
+      "weighted_max_relative_excess": 9.0,
+      "fair_max_relative_excess": 9.0,
+      "weighted_sum_excess": 1.1700000000000002,
+      "fair_sum_excess": 1.1700000000000002,
+      "weighted_violation": [
+        0.0,
+        0.0823373899829748,
+        1.0
+      ],
+      "fair_violation": [
+        0.0,
+        0.0823373899829748,
+        1.0
+      ]
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 1.3963890161460397,
+      "fair_max_relative_excess": 1.3963890161460397,
+      "weighted_sum_excess": 0.18153057209898518,
+      "fair_sum_excess": 0.18153057209898518,
+      "weighted_violation": [
+        0.0,
+        0.0823373899829748,
+        0.239638901614604
+      ],
+      "fair_violation": [
+        0.0,
+        0.0823373899829748,
+        0.239638901614604
+      ]
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 30,
+      "weighted_max_relative_excess": 1.1776386959445875,
+      "fair_max_relative_excess": 1.1776386959445875,
+      "weighted_sum_excess": 0.15309303047279638,
+      "fair_sum_excess": 0.15309303047279638,
+      "weighted_violation": [
+        0.0,
+        0.0823373899829748,
+        0.21776386959445876
+      ],
+      "fair_violation": [
+        0.0,
+        0.0823373899829748,
+        0.21776386959445876
+      ]
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 40,
+      "weighted_max_relative_excess": 1.1776386959445875,
+      "fair_max_relative_excess": 1.1776386959445875,
+      "weighted_sum_excess": 0.15309303047279638,
+      "fair_sum_excess": 0.15309303047279638,
+      "weighted_violation": [
+        0.0,
+        0.08233738998297478,
+        0.21776386959445876
+      ],
+      "fair_violation": [
+        0.0,
+        0.08233738998297478,
+        0.21776386959445876
+      ]
+    }
+  ],
+  "diagnoses": [
+    {
+      "seed": 20260802,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9725995345674813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9173151537850275,
+      "minimum_unlimited_violation_probability": 0.007164920329241294,
+      "minimum_budgeted_violation_probability": 0.01786113489870611
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8626594510409324,
+      "minimum_unlimited_violation_probability": 0.11763312166324537,
+      "minimum_budgeted_violation_probability": 0.29294581737487313
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9725995345674813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9173151537850275,
+      "minimum_unlimited_violation_probability": 0.007164920329241294,
+      "minimum_budgeted_violation_probability": 0.01786113489870611
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8626594510409324,
+      "minimum_unlimited_violation_probability": 0.11763312166324537,
+      "minimum_budgeted_violation_probability": 0.11763312166324538
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9725995345674813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9173151537850275,
+      "minimum_unlimited_violation_probability": 0.007164920329241294,
+      "minimum_budgeted_violation_probability": 0.007164920329241294
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8626594510409324,
+      "minimum_unlimited_violation_probability": 0.11763312166324537,
+      "minimum_budgeted_violation_probability": 0.11763312166324537
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9725995345674813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9173151537850275,
+      "minimum_unlimited_violation_probability": 0.007164920329241294,
+      "minimum_budgeted_violation_probability": 0.007164920329241294
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8626594510409324,
+      "minimum_unlimited_violation_probability": 0.11763312166324537,
+      "minimum_budgeted_violation_probability": 0.11763312166324537
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882336011958781,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8639763526010213,
+      "minimum_unlimited_violation_probability": 0.09858946907077368,
+      "minimum_budgeted_violation_probability": 0.0985894690707737
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "budget_limited",
+      "maximum_deterministic_pd": 0.9075777189311429,
+      "minimum_unlimited_violation_probability": 0.0682154528695441,
+      "minimum_budgeted_violation_probability": 0.2679864996803577
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882336011958781,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8639763526010213,
+      "minimum_unlimited_violation_probability": 0.09858946907077368,
+      "minimum_budgeted_violation_probability": 0.0985894690707737
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9075777189311429,
+      "minimum_unlimited_violation_probability": 0.0682154528695441,
+      "minimum_budgeted_violation_probability": 0.0682154528695441
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882336011958781,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8639763526010213,
+      "minimum_unlimited_violation_probability": 0.09858946907077368,
+      "minimum_budgeted_violation_probability": 0.09858946907077368
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9075777189311429,
+      "minimum_unlimited_violation_probability": 0.0682154528695441,
+      "minimum_budgeted_violation_probability": 0.0682154528695441
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882336011958781,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8639763526010213,
+      "minimum_unlimited_violation_probability": 0.09858946907077368,
+      "minimum_budgeted_violation_probability": 0.09858946907077368
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9075777189311429,
+      "minimum_unlimited_violation_probability": 0.0682154528695441,
+      "minimum_budgeted_violation_probability": 0.0682154528695441
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9717615866065757,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9072474368094112,
+      "minimum_unlimited_violation_probability": 0.00020116234339101602,
+      "minimum_budgeted_violation_probability": 0.019444009368947947
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8570326194339952,
+      "minimum_unlimited_violation_probability": 0.17623430183046354,
+      "minimum_budgeted_violation_probability": 0.3806018898676282
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9717615866065757,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9072474368094112,
+      "minimum_unlimited_violation_probability": 0.00020116234339101602,
+      "minimum_budgeted_violation_probability": 0.0008615808712023878
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8570326194339952,
+      "minimum_unlimited_violation_probability": 0.17623430183046354,
+      "minimum_budgeted_violation_probability": 0.17623430183046357
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9717615866065757,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9072474368094112,
+      "minimum_unlimited_violation_probability": 0.00020116234339101602,
+      "minimum_budgeted_violation_probability": 0.00020116234339101604
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8570326194339952,
+      "minimum_unlimited_violation_probability": 0.17623430183046354,
+      "minimum_budgeted_violation_probability": 0.17623430183046354
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9717615866065757,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9072474368094112,
+      "minimum_unlimited_violation_probability": 0.00020116234339101602,
+      "minimum_budgeted_violation_probability": 0.00020116234339101602
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8570326194339952,
+      "minimum_unlimited_violation_probability": 0.17623430183046354,
+      "minimum_budgeted_violation_probability": 0.17623430183046354
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9749346379157771,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9253328533778592,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8630738336960002,
+      "minimum_unlimited_violation_probability": 0.15357201137369308,
+      "minimum_budgeted_violation_probability": 0.37746491689433725
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9749346379157771,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9253328533778592,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8630738336960002,
+      "minimum_unlimited_violation_probability": 0.15357201137369308,
+      "minimum_budgeted_violation_probability": 0.15357201137369308
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9749346379157771,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9253328533778592,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8630738336960002,
+      "minimum_unlimited_violation_probability": 0.15357201137369308,
+      "minimum_budgeted_violation_probability": 0.15357201137369308
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9749346379157771,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9253328533778592,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8630738336960002,
+      "minimum_unlimited_violation_probability": 0.15357201137369308,
+      "minimum_budgeted_violation_probability": 0.15357201137369308
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9835643315528823,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8164852669171934,
+      "minimum_unlimited_violation_probability": 0.15633061085600392,
+      "minimum_budgeted_violation_probability": 0.25523038049120306
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8858392586996058,
+      "minimum_unlimited_violation_probability": 0.11343586151786487,
+      "minimum_budgeted_violation_probability": 0.30293445367182326
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9835643315528823,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8164852669171934,
+      "minimum_unlimited_violation_probability": 0.15633061085600392,
+      "minimum_budgeted_violation_probability": 0.1649938928630708
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8858392586996058,
+      "minimum_unlimited_violation_probability": 0.11343586151786487,
+      "minimum_budgeted_violation_probability": 0.11343586151786489
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9835643315528823,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8164852669171934,
+      "minimum_unlimited_violation_probability": 0.15633061085600392,
+      "minimum_budgeted_violation_probability": 0.15633061085600394
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8858392586996058,
+      "minimum_unlimited_violation_probability": 0.11343586151786487,
+      "minimum_budgeted_violation_probability": 0.11343586151786487
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9835643315528823,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8164852669171934,
+      "minimum_unlimited_violation_probability": 0.15633061085600392,
+      "minimum_budgeted_violation_probability": 0.15633061085600392
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8858392586996058,
+      "minimum_unlimited_violation_probability": 0.11343586151786487,
+      "minimum_budgeted_violation_probability": 0.11343586151786487
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882597760471483,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9231429222277231,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8630006536860111,
+      "minimum_unlimited_violation_probability": 0.16111269906255882,
+      "minimum_budgeted_violation_probability": 0.36238009186293696
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882597760471483,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9231429222277231,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8630006536860111,
+      "minimum_unlimited_violation_probability": 0.16111269906255882,
+      "minimum_budgeted_violation_probability": 0.28764260458874563
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882597760471483,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9231429222277231,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8630006536860111,
+      "minimum_unlimited_violation_probability": 0.16111269906255882,
+      "minimum_budgeted_violation_probability": 0.17007695137577608
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882597760471483,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9231429222277231,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8630006536860111,
+      "minimum_unlimited_violation_probability": 0.16111269906255882,
+      "minimum_budgeted_violation_probability": 0.16111269906255882
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9867967868520006,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "budget_limited",
+      "maximum_deterministic_pd": 0.8766477186152345,
+      "minimum_unlimited_violation_probability": 0.0068240491666912255,
+      "minimum_budgeted_violation_probability": 0.16392438280885935
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8862410422570325,
+      "minimum_unlimited_violation_probability": 0.10808254174997052,
+      "minimum_budgeted_violation_probability": 0.3406391425111329
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9867967868520006,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8766477186152345,
+      "minimum_unlimited_violation_probability": 0.0068240491666912255,
+      "minimum_budgeted_violation_probability": 0.03420737066559899
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8862410422570325,
+      "minimum_unlimited_violation_probability": 0.10808254174997052,
+      "minimum_budgeted_violation_probability": 0.10808254174997052
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9867967868520006,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8766477186152345,
+      "minimum_unlimited_violation_probability": 0.0068240491666912255,
+      "minimum_budgeted_violation_probability": 0.007843179136385483
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8862410422570325,
+      "minimum_unlimited_violation_probability": 0.10808254174997052,
+      "minimum_budgeted_violation_probability": 0.10808254174997052
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9867967868520006,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8766477186152345,
+      "minimum_unlimited_violation_probability": 0.0068240491666912255,
+      "minimum_budgeted_violation_probability": 0.0068240491666912255
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8862410422570325,
+      "minimum_unlimited_violation_probability": 0.10808254174997052,
+      "minimum_budgeted_violation_probability": 0.10808254174997052
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9859156564859674,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9467850495586205,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "budget_limited",
+      "maximum_deterministic_pd": 0.8912714822496033,
+      "minimum_unlimited_violation_probability": 0.0971076217348946,
+      "minimum_budgeted_violation_probability": 0.2841834076447101
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9859156564859674,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9467850495586205,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8912714822496033,
+      "minimum_unlimited_violation_probability": 0.0971076217348946,
+      "minimum_budgeted_violation_probability": 0.0971076217348946
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9859156564859674,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9467850495586205,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8912714822496033,
+      "minimum_unlimited_violation_probability": 0.0971076217348946,
+      "minimum_budgeted_violation_probability": 0.0971076217348946
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9859156564859674,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9467850495586205,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8912714822496033,
+      "minimum_unlimited_violation_probability": 0.0971076217348946,
+      "minimum_budgeted_violation_probability": 0.0971076217348946
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9894419074224299,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8922096414631657,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8252294890284059,
+      "minimum_unlimited_violation_probability": 0.19281408462998909,
+      "minimum_budgeted_violation_probability": 0.2874417908407422
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9894419074224299,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8922096414631657,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8252294890284059,
+      "minimum_unlimited_violation_probability": 0.19281408462998909,
+      "minimum_budgeted_violation_probability": 0.1928140846299891
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9894419074224299,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8922096414631657,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8252294890284059,
+      "minimum_unlimited_violation_probability": 0.19281408462998909,
+      "minimum_budgeted_violation_probability": 0.19281408462998909
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9894419074224299,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8922096414631657,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8252294890284059,
+      "minimum_unlimited_violation_probability": 0.19281408462998909,
+      "minimum_budgeted_violation_probability": 0.19281408462998909
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9918068285472561,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.7983035496194983,
+      "minimum_unlimited_violation_probability": 0.14843361487304502,
+      "minimum_budgeted_violation_probability": 0.24329655248598536
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "budget_limited",
+      "maximum_deterministic_pd": 0.9004087713365139,
+      "minimum_unlimited_violation_probability": 0.09724303354983745,
+      "minimum_budgeted_violation_probability": 0.30023997235074723
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9918068285472561,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.7983035496194983,
+      "minimum_unlimited_violation_probability": 0.14843361487304502,
+      "minimum_budgeted_violation_probability": 0.1689781447402483
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9004087713365139,
+      "minimum_unlimited_violation_probability": 0.09724303354983745,
+      "minimum_budgeted_violation_probability": 0.09724303354983745
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9918068285472561,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.7983035496194983,
+      "minimum_unlimited_violation_probability": 0.14843361487304502,
+      "minimum_budgeted_violation_probability": 0.14843361487304502
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9004087713365139,
+      "minimum_unlimited_violation_probability": 0.09724303354983745,
+      "minimum_budgeted_violation_probability": 0.09724303354983745
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9918068285472561,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.7983035496194983,
+      "minimum_unlimited_violation_probability": 0.14843361487304502,
+      "minimum_budgeted_violation_probability": 0.14843361487304502
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9004087713365139,
+      "minimum_unlimited_violation_probability": 0.09724303354983745,
+      "minimum_budgeted_violation_probability": 0.09724303354983745
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9554303041510936,
+      "minimum_unlimited_violation_probability": 0.0009146647718331993,
+      "minimum_budgeted_violation_probability": 0.01521381522683711
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8327527065319744,
+      "minimum_unlimited_violation_probability": 0.15269339607034757,
+      "minimum_budgeted_violation_probability": 0.1526933960703476
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8795742704329882,
+      "minimum_unlimited_violation_probability": 0.16287288263718092,
+      "minimum_budgeted_violation_probability": 0.4067508668554517
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9554303041510936,
+      "minimum_unlimited_violation_probability": 0.0009146647718331993,
+      "minimum_budgeted_violation_probability": 0.0031548423789593315
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8327527065319744,
+      "minimum_unlimited_violation_probability": 0.15269339607034757,
+      "minimum_budgeted_violation_probability": 0.1526933960703476
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8795742704329882,
+      "minimum_unlimited_violation_probability": 0.16287288263718092,
+      "minimum_budgeted_violation_probability": 0.27830794958966815
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9554303041510936,
+      "minimum_unlimited_violation_probability": 0.0009146647718331993,
+      "minimum_budgeted_violation_probability": 0.0009146647718331995
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8327527065319744,
+      "minimum_unlimited_violation_probability": 0.15269339607034757,
+      "minimum_budgeted_violation_probability": 0.15269339607034757
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8795742704329882,
+      "minimum_unlimited_violation_probability": 0.16287288263718092,
+      "minimum_budgeted_violation_probability": 0.16287288263718092
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9554303041510936,
+      "minimum_unlimited_violation_probability": 0.0009146647718331993,
+      "minimum_budgeted_violation_probability": 0.0009146647718331993
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8327527065319744,
+      "minimum_unlimited_violation_probability": 0.15269339607034757,
+      "minimum_budgeted_violation_probability": 0.15269339607034757
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8795742704329882,
+      "minimum_unlimited_violation_probability": 0.16287288263718092,
+      "minimum_budgeted_violation_probability": 0.16287288263718092
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9584291726869383,
+      "minimum_unlimited_violation_probability": 0.00262329643812632,
+      "minimum_budgeted_violation_probability": 0.015642459702543597
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9417186158982811,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "budget_limited",
+      "maximum_deterministic_pd": 0.8810634219168498,
+      "minimum_unlimited_violation_probability": 0.08013213126557553,
+      "minimum_budgeted_violation_probability": 0.3406839275845063
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9584291726869383,
+      "minimum_unlimited_violation_probability": 0.00262329643812632,
+      "minimum_budgeted_violation_probability": 0.00262329643812632
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9417186158982811,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "budget_limited",
+      "maximum_deterministic_pd": 0.8810634219168498,
+      "minimum_unlimited_violation_probability": 0.08013213126557553,
+      "minimum_budgeted_violation_probability": 0.12090952364931135
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9584291726869383,
+      "minimum_unlimited_violation_probability": 0.00262329643812632,
+      "minimum_budgeted_violation_probability": 0.00262329643812632
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9417186158982811,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8810634219168498,
+      "minimum_unlimited_violation_probability": 0.08013213126557553,
+      "minimum_budgeted_violation_probability": 0.08013213126557554
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9584291726869383,
+      "minimum_unlimited_violation_probability": 0.00262329643812632,
+      "minimum_budgeted_violation_probability": 0.00262329643812632
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9417186158982811,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8810634219168498,
+      "minimum_unlimited_violation_probability": 0.08013213126557553,
+      "minimum_budgeted_violation_probability": 0.08013213126557553
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9637491066783958,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8875429104971497,
+      "minimum_unlimited_violation_probability": 0.04402768240312493,
+      "minimum_budgeted_violation_probability": 0.044027682403124935
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8649330375565522,
+      "minimum_unlimited_violation_probability": 0.1932794224115706,
+      "minimum_budgeted_violation_probability": 0.42661939619545003
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9637491066783958,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8875429104971497,
+      "minimum_unlimited_violation_probability": 0.04402768240312493,
+      "minimum_budgeted_violation_probability": 0.044027682403124935
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8649330375565522,
+      "minimum_unlimited_violation_probability": 0.1932794224115706,
+      "minimum_budgeted_violation_probability": 0.19327942241157062
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9637491066783958,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8875429104971497,
+      "minimum_unlimited_violation_probability": 0.04402768240312493,
+      "minimum_budgeted_violation_probability": 0.04402768240312493
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8649330375565522,
+      "minimum_unlimited_violation_probability": 0.1932794224115706,
+      "minimum_budgeted_violation_probability": 0.1932794224115706
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9637491066783958,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8875429104971497,
+      "minimum_unlimited_violation_probability": 0.04402768240312493,
+      "minimum_budgeted_violation_probability": 0.04402768240312493
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8649330375565522,
+      "minimum_unlimited_violation_probability": 0.1932794224115706,
+      "minimum_budgeted_violation_probability": 0.1932794224115706
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9925093370480977,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9086209752160036,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8710957978508457,
+      "minimum_unlimited_violation_probability": 0.19454786413052336,
+      "minimum_budgeted_violation_probability": 0.4286294302557714
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9925093370480977,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9086209752160036,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8710957978508457,
+      "minimum_unlimited_violation_probability": 0.19454786413052336,
+      "minimum_budgeted_violation_probability": 0.19454786413052336
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9925093370480977,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9086209752160036,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8710957978508457,
+      "minimum_unlimited_violation_probability": 0.19454786413052336,
+      "minimum_budgeted_violation_probability": 0.19454786413052336
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9925093370480977,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9086209752160036,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8710957978508457,
+      "minimum_unlimited_violation_probability": 0.19454786413052336,
+      "minimum_budgeted_violation_probability": 0.19454786413052336
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9787438443408776,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9400450525357924,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8932938975946096,
+      "minimum_unlimited_violation_probability": 0.10318580464572397,
+      "minimum_budgeted_violation_probability": 0.3036717288172116
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9787438443408776,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9400450525357924,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8932938975946096,
+      "minimum_unlimited_violation_probability": 0.10318580464572397,
+      "minimum_budgeted_violation_probability": 0.10318580464572397
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9787438443408776,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9400450525357924,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8932938975946096,
+      "minimum_unlimited_violation_probability": 0.10318580464572397,
+      "minimum_budgeted_violation_probability": 0.10318580464572397
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9787438443408776,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9400450525357924,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8932938975946096,
+      "minimum_unlimited_violation_probability": 0.10318580464572397,
+      "minimum_budgeted_violation_probability": 0.10318580464572397
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9714975013603446,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9034794489584439,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8411103938171938,
+      "minimum_unlimited_violation_probability": 0.27321590143102314,
+      "minimum_budgeted_violation_probability": 0.34488607654652664
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9714975013603446,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9034794489584439,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8411103938171938,
+      "minimum_unlimited_violation_probability": 0.27321590143102314,
+      "minimum_budgeted_violation_probability": 0.2732159014310232
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9714975013603446,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9034794489584439,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8411103938171938,
+      "minimum_unlimited_violation_probability": 0.27321590143102314,
+      "minimum_budgeted_violation_probability": 0.27321590143102314
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9714975013603446,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9034794489584439,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8411103938171938,
+      "minimum_unlimited_violation_probability": 0.27321590143102314,
+      "minimum_budgeted_violation_probability": 0.27321590143102314
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9842048366354238,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9633850182040453,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.7964707580579855,
+      "minimum_unlimited_violation_probability": 0.32813645586761586,
+      "minimum_budgeted_violation_probability": 0.4398398696397633
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9842048366354238,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9633850182040453,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.7964707580579855,
+      "minimum_unlimited_violation_probability": 0.32813645586761586,
+      "minimum_budgeted_violation_probability": 0.32813645586761586
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9842048366354238,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9633850182040453,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.7964707580579855,
+      "minimum_unlimited_violation_probability": 0.32813645586761586,
+      "minimum_budgeted_violation_probability": 0.32813645586761586
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9842048366354238,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9633850182040453,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.7964707580579855,
+      "minimum_unlimited_violation_probability": 0.32813645586761586,
+      "minimum_budgeted_violation_probability": 0.32813645586761586
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9829126579533903,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9085747743897017,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8596189194391164,
+      "minimum_unlimited_violation_probability": 0.16070727556419714,
+      "minimum_budgeted_violation_probability": 0.29659024297308545
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9829126579533903,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9085747743897017,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8596189194391164,
+      "minimum_unlimited_violation_probability": 0.16070727556419714,
+      "minimum_budgeted_violation_probability": 0.16070727556419714
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9829126579533903,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9085747743897017,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8596189194391164,
+      "minimum_unlimited_violation_probability": 0.16070727556419714,
+      "minimum_budgeted_violation_probability": 0.16070727556419714
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9829126579533903,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9085747743897017,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8596189194391164,
+      "minimum_unlimited_violation_probability": 0.16070727556419714,
+      "minimum_budgeted_violation_probability": 0.16070727556419714
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9823191361203533,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8815161512470835,
+      "minimum_unlimited_violation_probability": 0.14466111402097948,
+      "minimum_budgeted_violation_probability": 0.14466111402097948
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8891475317277056,
+      "minimum_unlimited_violation_probability": 0.1173144689171615,
+      "minimum_budgeted_violation_probability": 0.3401448391096369
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9823191361203533,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8815161512470835,
+      "minimum_unlimited_violation_probability": 0.14466111402097948,
+      "minimum_budgeted_violation_probability": 0.14466111402097948
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8891475317277056,
+      "minimum_unlimited_violation_probability": 0.1173144689171615,
+      "minimum_budgeted_violation_probability": 0.12885072064520697
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9823191361203533,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8815161512470835,
+      "minimum_unlimited_violation_probability": 0.14466111402097948,
+      "minimum_budgeted_violation_probability": 0.14466111402097948
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8891475317277056,
+      "minimum_unlimited_violation_probability": 0.1173144689171615,
+      "minimum_budgeted_violation_probability": 0.1173144689171615
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9823191361203533,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8815161512470835,
+      "minimum_unlimited_violation_probability": 0.14466111402097948,
+      "minimum_budgeted_violation_probability": 0.14466111402097948
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8891475317277056,
+      "minimum_unlimited_violation_probability": 0.1173144689171615,
+      "minimum_budgeted_violation_probability": 0.1173144689171615
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9768717143657631,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.9112176748888903,
+      "minimum_unlimited_violation_probability": 0.1047882993412291,
+      "minimum_budgeted_violation_probability": 0.10478829934122913
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8557529466981162,
+      "minimum_unlimited_violation_probability": 0.2597156667948217,
+      "minimum_budgeted_violation_probability": 0.41957630948930863
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9768717143657631,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.9112176748888903,
+      "minimum_unlimited_violation_probability": 0.1047882993412291,
+      "minimum_budgeted_violation_probability": 0.10478829934122912
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8557529466981162,
+      "minimum_unlimited_violation_probability": 0.2597156667948217,
+      "minimum_budgeted_violation_probability": 0.2767266028669798
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9768717143657631,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.9112176748888903,
+      "minimum_unlimited_violation_probability": 0.1047882993412291,
+      "minimum_budgeted_violation_probability": 0.1047882993412291
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8557529466981162,
+      "minimum_unlimited_violation_probability": 0.2597156667948217,
+      "minimum_budgeted_violation_probability": 0.2597156667948217
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9768717143657631,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.9112176748888903,
+      "minimum_unlimited_violation_probability": 0.1047882993412291,
+      "minimum_budgeted_violation_probability": 0.1047882993412291
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8557529466981162,
+      "minimum_unlimited_violation_probability": 0.2597156667948217,
+      "minimum_budgeted_violation_probability": 0.2597156667948217
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9897817256883954,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9506188720859965,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8264097746461985,
+      "minimum_unlimited_violation_probability": 0.2955779361149394,
+      "minimum_budgeted_violation_probability": 0.40266013363238046
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9897817256883954,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9506188720859965,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8264097746461985,
+      "minimum_unlimited_violation_probability": 0.2955779361149394,
+      "minimum_budgeted_violation_probability": 0.2955779361149394
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9897817256883954,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9506188720859965,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8264097746461985,
+      "minimum_unlimited_violation_probability": 0.2955779361149394,
+      "minimum_budgeted_violation_probability": 0.2955779361149394
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9897817256883954,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9506188720859965,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8264097746461985,
+      "minimum_unlimited_violation_probability": 0.2955779361149394,
+      "minimum_budgeted_violation_probability": 0.2955779361149394
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9591587500018323,
+      "minimum_unlimited_violation_probability": 0.006352068124070702,
+      "minimum_budgeted_violation_probability": 0.019436011348280983
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9231983416616443,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8504104480226801,
+      "minimum_unlimited_violation_probability": 0.2491354613144094,
+      "minimum_budgeted_violation_probability": 0.2992063694947493
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9591587500018323,
+      "minimum_unlimited_violation_probability": 0.006352068124070702,
+      "minimum_budgeted_violation_probability": 0.006352068124070702
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9231983416616443,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8504104480226801,
+      "minimum_unlimited_violation_probability": 0.2491354613144094,
+      "minimum_budgeted_violation_probability": 0.2555694314879485
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9591587500018323,
+      "minimum_unlimited_violation_probability": 0.006352068124070702,
+      "minimum_budgeted_violation_probability": 0.006352068124070702
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9231983416616443,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8504104480226801,
+      "minimum_unlimited_violation_probability": 0.2491354613144094,
+      "minimum_budgeted_violation_probability": 0.2491354613144094
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9591587500018323,
+      "minimum_unlimited_violation_probability": 0.006352068124070702,
+      "minimum_budgeted_violation_probability": 0.006352068124070702
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9231983416616443,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8504104480226801,
+      "minimum_unlimited_violation_probability": 0.2491354613144094,
+      "minimum_budgeted_violation_probability": 0.2491354613144094
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.961435742694112,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9584983724630621,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8728129045147863,
+      "minimum_unlimited_violation_probability": 0.11762894585807061,
+      "minimum_budgeted_violation_probability": 0.3197930180399227
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.961435742694112,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9584983724630621,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8728129045147863,
+      "minimum_unlimited_violation_probability": 0.11762894585807061,
+      "minimum_budgeted_violation_probability": 0.11762894585807061
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.961435742694112,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9584983724630621,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8728129045147863,
+      "minimum_unlimited_violation_probability": 0.11762894585807061,
+      "minimum_budgeted_violation_probability": 0.11762894585807061
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.961435742694112,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9584983724630621,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8728129045147863,
+      "minimum_unlimited_violation_probability": 0.11762894585807061,
+      "minimum_budgeted_violation_probability": 0.11762894585807061
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9793258984067843,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8972520324088615,
+      "minimum_unlimited_violation_probability": 0.16403123608691814,
+      "minimum_budgeted_violation_probability": 0.16403123608691816
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.847445456897336,
+      "minimum_unlimited_violation_probability": 0.31788909600405785,
+      "minimum_budgeted_violation_probability": 0.43584793146807443
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9793258984067843,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8972520324088615,
+      "minimum_unlimited_violation_probability": 0.16403123608691814,
+      "minimum_budgeted_violation_probability": 0.16403123608691814
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.847445456897336,
+      "minimum_unlimited_violation_probability": 0.31788909600405785,
+      "minimum_budgeted_violation_probability": 0.3178890960040579
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9793258984067843,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8972520324088615,
+      "minimum_unlimited_violation_probability": 0.16403123608691814,
+      "minimum_budgeted_violation_probability": 0.16403123608691814
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.847445456897336,
+      "minimum_unlimited_violation_probability": 0.31788909600405785,
+      "minimum_budgeted_violation_probability": 0.31788909600405785
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9793258984067843,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8972520324088615,
+      "minimum_unlimited_violation_probability": 0.16403123608691814,
+      "minimum_budgeted_violation_probability": 0.16403123608691814
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.847445456897336,
+      "minimum_unlimited_violation_probability": 0.31788909600405785,
+      "minimum_budgeted_violation_probability": 0.31788909600405785
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9813416015424128,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9155299754567987,
+      "minimum_unlimited_violation_probability": 0.09400078302790149,
+      "minimum_budgeted_violation_probability": 0.09400078302790149
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.876766980157504,
+      "minimum_unlimited_violation_probability": 0.13296762099507828,
+      "minimum_budgeted_violation_probability": 0.40764161732504445
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9813416015424128,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9155299754567987,
+      "minimum_unlimited_violation_probability": 0.09400078302790149,
+      "minimum_budgeted_violation_probability": 0.09400078302790149
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.876766980157504,
+      "minimum_unlimited_violation_probability": 0.13296762099507828,
+      "minimum_budgeted_violation_probability": 0.17071412080223727
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9813416015424128,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9155299754567987,
+      "minimum_unlimited_violation_probability": 0.09400078302790149,
+      "minimum_budgeted_violation_probability": 0.09400078302790149
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.876766980157504,
+      "minimum_unlimited_violation_probability": 0.13296762099507828,
+      "minimum_budgeted_violation_probability": 0.13296762099507828
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9813416015424128,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9155299754567987,
+      "minimum_unlimited_violation_probability": 0.09400078302790149,
+      "minimum_budgeted_violation_probability": 0.09400078302790149
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.876766980157504,
+      "minimum_unlimited_violation_probability": 0.13296762099507828,
+      "minimum_budgeted_violation_probability": 0.13296762099507828
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9934460813082813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9352484354469831,
+      "minimum_unlimited_violation_probability": 9.703788476071517e-05,
+      "minimum_budgeted_violation_probability": 0.014929666269430838
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8495751926337298,
+      "minimum_unlimited_violation_probability": 0.2505013774417162,
+      "minimum_budgeted_violation_probability": 0.384753422837924
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9934460813082813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9352484354469831,
+      "minimum_unlimited_violation_probability": 9.703788476071517e-05,
+      "minimum_budgeted_violation_probability": 0.0007196093732255215
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8495751926337298,
+      "minimum_unlimited_violation_probability": 0.2505013774417162,
+      "minimum_budgeted_violation_probability": 0.2505013774417163
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9934460813082813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9352484354469831,
+      "minimum_unlimited_violation_probability": 9.703788476071517e-05,
+      "minimum_budgeted_violation_probability": 0.00020149062450314605
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8495751926337298,
+      "minimum_unlimited_violation_probability": 0.2505013774417162,
+      "minimum_budgeted_violation_probability": 0.2505013774417162
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9934460813082813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9352484354469831,
+      "minimum_unlimited_violation_probability": 9.703788476071517e-05,
+      "minimum_budgeted_violation_probability": 9.703788476071517e-05
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8495751926337298,
+      "minimum_unlimited_violation_probability": 0.2505013774417162,
+      "minimum_budgeted_violation_probability": 0.2505013774417162
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9652899671090063,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "budget_limited",
+      "maximum_deterministic_pd": 0.9283456675645951,
+      "minimum_unlimited_violation_probability": 0.040594717592516004,
+      "minimum_budgeted_violation_probability": 0.10869641335518365
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8671090944023403,
+      "minimum_unlimited_violation_probability": 0.20608439288528463,
+      "minimum_budgeted_violation_probability": 0.44591115082174104
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9652899671090063,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9283456675645951,
+      "minimum_unlimited_violation_probability": 0.040594717592516004,
+      "minimum_budgeted_violation_probability": 0.05208646894977198
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8671090944023403,
+      "minimum_unlimited_violation_probability": 0.20608439288528463,
+      "minimum_budgeted_violation_probability": 0.20608439288528466
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9652899671090063,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9283456675645951,
+      "minimum_unlimited_violation_probability": 0.040594717592516004,
+      "minimum_budgeted_violation_probability": 0.040594717592516004
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8671090944023403,
+      "minimum_unlimited_violation_probability": 0.20608439288528463,
+      "minimum_budgeted_violation_probability": 0.20608439288528463
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9652899671090063,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9283456675645951,
+      "minimum_unlimited_violation_probability": 0.040594717592516004,
+      "minimum_budgeted_violation_probability": 0.040594717592516004
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8671090944023403,
+      "minimum_unlimited_violation_probability": 0.20608439288528463,
+      "minimum_budgeted_violation_probability": 0.20608439288528463
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9864204077723778,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9436077925302905,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8839120168536592,
+      "minimum_unlimited_violation_probability": 0.10131112220291161,
+      "minimum_budgeted_violation_probability": 0.2996562664624205
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9864204077723778,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9436077925302905,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8839120168536592,
+      "minimum_unlimited_violation_probability": 0.10131112220291161,
+      "minimum_budgeted_violation_probability": 0.10131112220291161
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9864204077723778,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9436077925302905,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8839120168536592,
+      "minimum_unlimited_violation_probability": 0.10131112220291161,
+      "minimum_budgeted_violation_probability": 0.10131112220291161
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9864204077723778,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9436077925302905,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8839120168536592,
+      "minimum_unlimited_violation_probability": 0.10131112220291161,
+      "minimum_budgeted_violation_probability": 0.10131112220291161
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9798602380987577,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8831744741658459,
+      "minimum_unlimited_violation_probability": 0.10033745390428826,
+      "minimum_budgeted_violation_probability": 0.10033745390428828
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "budget_limited",
+      "maximum_deterministic_pd": 0.8966399183968412,
+      "minimum_unlimited_violation_probability": 0.0897015394226266,
+      "minimum_budgeted_violation_probability": 0.27058514977497816
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9798602380987577,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8831744741658459,
+      "minimum_unlimited_violation_probability": 0.10033745390428826,
+      "minimum_budgeted_violation_probability": 0.10033745390428828
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8966399183968412,
+      "minimum_unlimited_violation_probability": 0.0897015394226266,
+      "minimum_budgeted_violation_probability": 0.0897015394226266
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9798602380987577,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8831744741658459,
+      "minimum_unlimited_violation_probability": 0.10033745390428826,
+      "minimum_budgeted_violation_probability": 0.10033745390428826
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8966399183968412,
+      "minimum_unlimited_violation_probability": 0.0897015394226266,
+      "minimum_budgeted_violation_probability": 0.0897015394226266
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9798602380987577,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8831744741658459,
+      "minimum_unlimited_violation_probability": 0.10033745390428826,
+      "minimum_budgeted_violation_probability": 0.10033745390428826
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8966399183968412,
+      "minimum_unlimited_violation_probability": 0.0897015394226266,
+      "minimum_budgeted_violation_probability": 0.0897015394226266
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 10,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9821558247720235,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 10,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9156114610112638,
+      "minimum_unlimited_violation_probability": 0.08233738998297478,
+      "minimum_budgeted_violation_probability": 0.0823373899829748
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 10,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.847902025867318,
+      "minimum_unlimited_violation_probability": 0.21776386959445876,
+      "minimum_budgeted_violation_probability": 0.32785698930878815
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9821558247720235,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9156114610112638,
+      "minimum_unlimited_violation_probability": 0.08233738998297478,
+      "minimum_budgeted_violation_probability": 0.08233738998297478
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.847902025867318,
+      "minimum_unlimited_violation_probability": 0.21776386959445876,
+      "minimum_budgeted_violation_probability": 0.21776386959445876
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 30,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9821558247720235,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 30,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9156114610112638,
+      "minimum_unlimited_violation_probability": 0.08233738998297478,
+      "minimum_budgeted_violation_probability": 0.08233738998297478
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 30,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.847902025867318,
+      "minimum_unlimited_violation_probability": 0.21776386959445876,
+      "minimum_budgeted_violation_probability": 0.21776386959445876
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 40,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9821558247720235,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 40,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9156114610112638,
+      "minimum_unlimited_violation_probability": 0.08233738998297478,
+      "minimum_budgeted_violation_probability": 0.08233738998297478
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 40,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.847902025867318,
+      "minimum_unlimited_violation_probability": 0.21776386959445876,
+      "minimum_budgeted_violation_probability": 0.21776386959445876
+    }
+  ]
+}

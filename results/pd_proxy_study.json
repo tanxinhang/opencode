@@ -1,0 +1,3646 @@
+{
+  "minimum_pd": [
+    0.8,
+    0.75,
+    0.7
+  ],
+  "epsilon": 0.1,
+  "monotonicity": {
+    "tested_addition_edges": 67200,
+    "decreasing_edges": 211,
+    "decreasing_edge_rate": 0.0031398809523809526,
+    "maximum_pd_drop": 7.664368926829646e-05
+  },
+  "summary": [
+    {
+      "budget_bits": 10,
+      "schedule_match_rate": 0.48,
+      "pd_chance_feasible_rate": 0.0,
+      "mean_worst_pd_violation_deflection_proxy": 0.7734182976810118,
+      "mean_worst_pd_violation_pd_objective": 0.7463346521719157
+    },
+    {
+      "budget_bits": 20,
+      "schedule_match_rate": 0.38,
+      "pd_chance_feasible_rate": 0.12,
+      "mean_worst_pd_violation_deflection_proxy": 0.6189850570369024,
+      "mean_worst_pd_violation_pd_objective": 0.25517346231150334
+    },
+    {
+      "budget_bits": 30,
+      "schedule_match_rate": 0.2,
+      "pd_chance_feasible_rate": 0.12,
+      "mean_worst_pd_violation_deflection_proxy": 0.5711377309256712,
+      "mean_worst_pd_violation_pd_objective": 0.19306920843963923
+    },
+    {
+      "budget_bits": 40,
+      "schedule_match_rate": 0.18,
+      "pd_chance_feasible_rate": 0.14,
+      "mean_worst_pd_violation_deflection_proxy": 0.5669099628482593,
+      "mean_worst_pd_violation_pd_objective": 0.18464408623000886
+    }
+  ],
+  "instances": [
+    {
+      "seed": 20260802,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.36405417149813785
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.29294581737487313
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11763312166324538
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.11227205618308655,
+        0.16607900036310233
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.16607900036310233,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11763312166324538
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.01786113489870611,
+        0.11763312166324538
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.11763312166324538,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11763312166324538
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.01786113489870611,
+        0.11763312166324537
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.11763312166324537,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.39549713597158687
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.2679864996803577
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.0682154528695441
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0985894690707737,
+        0.08649183674823821
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.0985894690707737,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.0682154528695441
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0985894690707737,
+        0.0682154528695441
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.0985894690707737,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.0682154528695441
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0985894690707737,
+        0.0682154528695441
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.0985894690707737,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3806018898676282
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.019444009368947947,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.17623430183046357
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.12193111135349854,
+        0.3063329284009756
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.3063329284009756,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.17623430183046357
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.019444009368947947,
+        0.17623430183046357
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.17623430183046357,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.1762343018304636
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.004037633980235838,
+        0.17623430183046354
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.17623430183046354,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.37746491689433725
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.37746491689433725,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ],
+      "deflection_schedule_worst_pd_violation": 0.15357201137369308,
+      "pd_schedule_worst_pd_violation": 0.15357201137369308,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ],
+      "deflection_schedule_worst_pd_violation": 0.15357201137369308,
+      "pd_schedule_worst_pd_violation": 0.15357201137369308,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1535720113736931
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.15357201137369308
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1535720113736931,
+      "pd_schedule_worst_pd_violation": 0.15357201137369308,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.4007120954698896
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.30293445367182326
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11343586151786489
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.25523038049120306,
+        0.30293445367182326
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.30293445367182326,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11343586151786487
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.25523038049120306,
+        0.11343586151786489
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.25523038049120306,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11343586151786487
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.1649938928630708,
+        0.11343586151786489
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.1649938928630708,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.36238009186293696
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.36238009186293696
+      ],
+      "deflection_schedule_worst_pd_violation": 0.36238009186293696,
+      "pd_schedule_worst_pd_violation": 0.36238009186293696,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.28764260458874563
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.28764260458874563
+      ],
+      "deflection_schedule_worst_pd_violation": 0.28764260458874563,
+      "pd_schedule_worst_pd_violation": 0.28764260458874563,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.17007695137577616
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.17007695137577608
+      ],
+      "deflection_schedule_worst_pd_violation": 0.17007695137577616,
+      "pd_schedule_worst_pd_violation": 0.17007695137577608,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260807,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.16111269906255882
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.16111269906255882
+      ],
+      "deflection_schedule_worst_pd_violation": 0.16111269906255882,
+      "pd_schedule_worst_pd_violation": 0.16111269906255882,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3406391425111329
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3406391425111329
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.10808254174997052
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.16392438280885935,
+        0.20946100625495404
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.20946100625495404,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.10808254174997052
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.16392438280885935,
+        0.10808254174997052
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.16392438280885935,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260808,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.10808254174997053
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.04672757603766481,
+        0.10808254174997052
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.10808254174997052,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.39168501655841925
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2841834076447101
+      ],
+      "deflection_schedule_worst_pd_violation": 0.39168501655841925,
+      "pd_schedule_worst_pd_violation": 0.2841834076447101,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.0971076217348946
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.0971076217348946
+      ],
+      "deflection_schedule_worst_pd_violation": 0.0971076217348946,
+      "pd_schedule_worst_pd_violation": 0.0971076217348946,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09710762173489461
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09710762173489461
+      ],
+      "deflection_schedule_worst_pd_violation": 0.09710762173489461,
+      "pd_schedule_worst_pd_violation": 0.09710762173489461,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260809,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09710762173489461
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09710762173489461
+      ],
+      "deflection_schedule_worst_pd_violation": 0.09710762173489461,
+      "pd_schedule_worst_pd_violation": 0.09710762173489461,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2874417908407422
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2874417908407422
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2874417908407422,
+      "pd_schedule_worst_pd_violation": 0.2874417908407422,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1928140846299891
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1928140846299891
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1928140846299891,
+      "pd_schedule_worst_pd_violation": 0.1928140846299891,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1928140846299891
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.19281408462998909
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1928140846299891,
+      "pd_schedule_worst_pd_violation": 0.19281408462998909,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260810,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1928140846299891
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.19281408462998909
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1928140846299891,
+      "pd_schedule_worst_pd_violation": 0.19281408462998909,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.30023997235074723
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.24329655248598536,
+        0.45520192259551184
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.24329655248598536,
+        0.30023997235074723
+      ],
+      "deflection_schedule_worst_pd_violation": 0.45520192259551184,
+      "pd_schedule_worst_pd_violation": 0.30023997235074723,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.24329655248598536,
+        0.09724303354983746
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.24329655248598536,
+        0.09724303354983746
+      ],
+      "deflection_schedule_worst_pd_violation": 0.24329655248598536,
+      "pd_schedule_worst_pd_violation": 0.24329655248598536,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260811,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.24329655248598536,
+        0.09724303354983746
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.1564266016515333,
+        0.09724303354983745
+      ],
+      "deflection_schedule_worst_pd_violation": 0.24329655248598536,
+      "pd_schedule_worst_pd_violation": 0.1564266016515333,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        1.0,
+        0.4067508668554517
+      ],
+      "pd_schedule_pd_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        1.0,
+        0.27830794958966815
+      ],
+      "pd_schedule_pd_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.4067508668554517
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.4067508668554517,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        1.0,
+        0.16287288263718092
+      ],
+      "pd_schedule_pd_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.27830794958966815
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.27830794958966815,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260812,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        1.0,
+        0.16287288263718092
+      ],
+      "pd_schedule_pd_violation": [
+        0.0914160239910855,
+        0.1526933960703476,
+        0.16287288263718092
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.16287288263718092,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.36975668758730085
+      ],
+      "pd_schedule_pd_violation": [
+        0.015642459702543597,
+        0.0,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.13600547506473126
+      ],
+      "pd_schedule_pd_violation": [
+        0.11721816511175498,
+        0.0,
+        0.193297012646648
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.193297012646648,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.08013213126557556
+      ],
+      "pd_schedule_pd_violation": [
+        0.11721816511175498,
+        0.0,
+        0.08013213126557554
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.11721816511175498,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260813,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.08013213126557553
+      ],
+      "pd_schedule_pd_violation": [
+        0.0026232964381263206,
+        0.0,
+        0.08013213126557554
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.08013213126557554,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.044027682403124935,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.044027682403124935,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.044027682403124935,
+        0.42661939619545003
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.044027682403124935,
+        0.42661939619545003
+      ],
+      "deflection_schedule_worst_pd_violation": 0.42661939619545003,
+      "pd_schedule_worst_pd_violation": 0.42661939619545003,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.044027682403124935,
+        0.19327942241157062
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.044027682403124935,
+        0.19327942241157062
+      ],
+      "deflection_schedule_worst_pd_violation": 0.19327942241157062,
+      "pd_schedule_worst_pd_violation": 0.19327942241157062,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260814,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.044027682403124935,
+        0.19327942241157062
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.044027682403124935,
+        0.1932794224115706
+      ],
+      "deflection_schedule_worst_pd_violation": 0.19327942241157062,
+      "pd_schedule_worst_pd_violation": 0.1932794224115706,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.4286294302557714
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.4286294302557714
+      ],
+      "deflection_schedule_worst_pd_violation": 0.4286294302557714,
+      "pd_schedule_worst_pd_violation": 0.4286294302557714,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ],
+      "deflection_schedule_worst_pd_violation": 0.19454786413052336,
+      "pd_schedule_worst_pd_violation": 0.19454786413052336,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1945478641305234
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1945478641305234,
+      "pd_schedule_worst_pd_violation": 0.19454786413052336,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260815,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.19454786413052338
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.19454786413052336
+      ],
+      "deflection_schedule_worst_pd_violation": 0.19454786413052338,
+      "pd_schedule_worst_pd_violation": 0.19454786413052336,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3676571818924078
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3036717288172116
+      ],
+      "deflection_schedule_worst_pd_violation": 0.3676571818924078,
+      "pd_schedule_worst_pd_violation": 0.3036717288172116,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10318580464572398
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ],
+      "deflection_schedule_worst_pd_violation": 0.10318580464572398,
+      "pd_schedule_worst_pd_violation": 0.10318580464572397,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.103185804645724
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ],
+      "deflection_schedule_worst_pd_violation": 0.103185804645724,
+      "pd_schedule_worst_pd_violation": 0.10318580464572397,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260816,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.103185804645724
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10318580464572397
+      ],
+      "deflection_schedule_worst_pd_violation": 0.103185804645724,
+      "pd_schedule_worst_pd_violation": 0.10318580464572397,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.34488607654652664
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.34488607654652664
+      ],
+      "deflection_schedule_worst_pd_violation": 0.34488607654652664,
+      "pd_schedule_worst_pd_violation": 0.34488607654652664,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2732159014310232
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2732159014310232
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2732159014310232,
+      "pd_schedule_worst_pd_violation": 0.2732159014310232,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2732159014310232
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.27321590143102314
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2732159014310232,
+      "pd_schedule_worst_pd_violation": 0.27321590143102314,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260817,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2732159014310232
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.27321590143102314
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2732159014310232,
+      "pd_schedule_worst_pd_violation": 0.27321590143102314,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.4398398696397633
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.4398398696397633,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ],
+      "deflection_schedule_worst_pd_violation": 0.32813645586761586,
+      "pd_schedule_worst_pd_violation": 0.32813645586761586,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ],
+      "deflection_schedule_worst_pd_violation": 0.32813645586761586,
+      "pd_schedule_worst_pd_violation": 0.32813645586761586,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260818,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3281364558676159
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.32813645586761586
+      ],
+      "deflection_schedule_worst_pd_violation": 0.3281364558676159,
+      "pd_schedule_worst_pd_violation": 0.32813645586761586,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.29659024297308545
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.29659024297308545
+      ],
+      "deflection_schedule_worst_pd_violation": 0.29659024297308545,
+      "pd_schedule_worst_pd_violation": 0.29659024297308545,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ],
+      "deflection_schedule_worst_pd_violation": 0.16070727556419714,
+      "pd_schedule_worst_pd_violation": 0.16070727556419714,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.16070727556419717
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ],
+      "deflection_schedule_worst_pd_violation": 0.16070727556419717,
+      "pd_schedule_worst_pd_violation": 0.16070727556419714,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260819,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.16070727556419717
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.16070727556419714
+      ],
+      "deflection_schedule_worst_pd_violation": 0.16070727556419717,
+      "pd_schedule_worst_pd_violation": 0.16070727556419714,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.14466111402097948,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3401448391096369
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.14466111402097948,
+        0.38355984859037595
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.14466111402097948,
+        0.2638856585314612
+      ],
+      "deflection_schedule_worst_pd_violation": 0.38355984859037595,
+      "pd_schedule_worst_pd_violation": 0.2638856585314612,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.14466111402097948,
+        0.12885072064520697
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.14466111402097948,
+        0.1173144689171615
+      ],
+      "deflection_schedule_worst_pd_violation": 0.14466111402097948,
+      "pd_schedule_worst_pd_violation": 0.14466111402097948,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260820,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.14466111402097948,
+        0.1173144689171615
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.14466111402097948,
+        0.1173144689171615
+      ],
+      "deflection_schedule_worst_pd_violation": 0.14466111402097948,
+      "pd_schedule_worst_pd_violation": 0.14466111402097948,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.10478829934122913,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10478829934122913,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.10478829934122913,
+        0.4195763094893087
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10478829934122913,
+        0.41957630948930863
+      ],
+      "deflection_schedule_worst_pd_violation": 0.4195763094893087,
+      "pd_schedule_worst_pd_violation": 0.41957630948930863,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.10478829934122913,
+        0.4195763094893087
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10478829934122913,
+        0.2597156667948217
+      ],
+      "deflection_schedule_worst_pd_violation": 0.4195763094893087,
+      "pd_schedule_worst_pd_violation": 0.2597156667948217,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260821,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.10478829934122913,
+        0.2597156667948217
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10478829934122912,
+        0.2597156667948217
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2597156667948217,
+      "pd_schedule_worst_pd_violation": 0.2597156667948217,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.40266013363238046
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.40266013363238046
+      ],
+      "deflection_schedule_worst_pd_violation": 0.40266013363238046,
+      "pd_schedule_worst_pd_violation": 0.40266013363238046,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2955779361149394,
+      "pd_schedule_worst_pd_violation": 0.2955779361149394,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2955779361149394,
+      "pd_schedule_worst_pd_violation": 0.2955779361149394,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260822,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.29557793611493943
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2955779361149394
+      ],
+      "deflection_schedule_worst_pd_violation": 0.29557793611493943,
+      "pd_schedule_worst_pd_violation": 0.2955779361149394,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.2992063694947493
+      ],
+      "pd_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.2992063694947493
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.25556943148794853
+      ],
+      "pd_schedule_pd_violation": [
+        0.09701917426694262,
+        0.0,
+        0.2555694314879485
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.2555694314879485,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.24913546131440945
+      ],
+      "pd_schedule_pd_violation": [
+        0.09701917426694262,
+        0.0,
+        0.24913546131440942
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.24913546131440942,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260823,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.24913546131440942
+      ],
+      "pd_schedule_pd_violation": [
+        0.019436011348280983,
+        0.0,
+        0.2491354613144094
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.2491354613144094,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3197930180399227
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3197930180399227
+      ],
+      "deflection_schedule_worst_pd_violation": 0.3197930180399227,
+      "pd_schedule_worst_pd_violation": 0.3197930180399227,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ],
+      "deflection_schedule_worst_pd_violation": 0.11762894585807061,
+      "pd_schedule_worst_pd_violation": 0.11762894585807061,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ],
+      "deflection_schedule_worst_pd_violation": 0.11762894585807061,
+      "pd_schedule_worst_pd_violation": 0.11762894585807061,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260824,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.11762894585807064
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.11762894585807061
+      ],
+      "deflection_schedule_worst_pd_violation": 0.11762894585807064,
+      "pd_schedule_worst_pd_violation": 0.11762894585807061,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.43584793146807443
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.16403123608691816,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3178890960040579
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.16403123608691816,
+        0.43584793146807443
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.43584793146807443,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3178890960040579
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.16403123608691816,
+        0.3178890960040579
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.3178890960040579,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260825,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.31788909600405796
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.16403123608691814,
+        0.31788909600405785
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.31788909600405785,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.40764161732504445
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09400078302790149,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.17071412080223727
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09400078302790149,
+        0.2759907106112629
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.2759907106112629,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.13296762099507828
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09400078302790149,
+        0.1329676209950783
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.1329676209950783,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260826,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.1329676209950783
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09400078302790149,
+        0.13296762099507828
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.13296762099507828,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.384753422837924
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.014929666269430838,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.2505013774417163
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.014929666269430838,
+        0.384753422837924
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.384753422837924,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.25050137744171624
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.014929666269430838,
+        0.2505013774417163
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.2505013774417163,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260827,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.25050137744171624
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.014929666269430838,
+        0.2505013774417162
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.2505013774417162,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10869641335518365,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.20608439288528466
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10869641335518365,
+        0.44591115082174104
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.44591115082174104,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.20608439288528463
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10869641335518365,
+        0.20608439288528463
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.20608439288528463,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260828,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.20608439288528468
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.053507568022999635,
+        0.20608439288528466
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.20608439288528466,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2996562664624205
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2996562664624205
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2996562664624205,
+      "pd_schedule_worst_pd_violation": 0.2996562664624205,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "deflection_schedule_worst_pd_violation": 0.10131112220291161,
+      "pd_schedule_worst_pd_violation": 0.10131112220291161,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "deflection_schedule_worst_pd_violation": 0.10131112220291161,
+      "pd_schedule_worst_pd_violation": 0.10131112220291161,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260829,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10131112220291161
+      ],
+      "deflection_schedule_worst_pd_violation": 0.10131112220291161,
+      "pd_schedule_worst_pd_violation": 0.10131112220291161,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.27058514977497816
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.27058514977497816
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.0897015394226266
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10033745390428828,
+        0.19132678467479852
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.19132678467479852,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.0897015394226266
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10033745390428828,
+        0.0897015394226266
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.10033745390428828,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260830,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.08970153942262661
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10033745390428828,
+        0.0897015394226266
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.10033745390428828,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.32785698930878815
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0823373899829748,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.21776386959445876
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0823373899829748,
+        0.239638901614604
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.239638901614604,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.2177638695944588
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0823373899829748,
+        0.21776386959445876
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.21776386959445876,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260831,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.21776386959445876
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.08233738998297478,
+        0.21776386959445876
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.21776386959445876,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260832,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.12459261393992105,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260832,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.4033575819589902
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.12459261393992105,
+        0.4033575819589901
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.4033575819589901,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260832,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3148905564997823
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.12459261393992105,
+        0.3228719641948366
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.3228719641948366,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260832,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.31291946691145794
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.12459261393992105,
+        0.31291946691145794
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.31291946691145794,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260833,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0656792875568174,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0656792875568174,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260833,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0656792875568174,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0656792875568174,
+        0.9999999999999999
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.9999999999999999,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260833,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0656792875568174,
+        0.620404044644243
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0656792875568174,
+        0.6204040446442429
+      ],
+      "deflection_schedule_worst_pd_violation": 0.620404044644243,
+      "pd_schedule_worst_pd_violation": 0.6204040446442429,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260833,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0656792875568174,
+        0.620404044644243
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0656792875568174,
+        0.6204040446442429
+      ],
+      "deflection_schedule_worst_pd_violation": 0.620404044644243,
+      "pd_schedule_worst_pd_violation": 0.6204040446442429,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260834,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.09265874120611939,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.2869064400060729
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260834,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.09265874120611939,
+        0.1501521209492271
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09265874120611939,
+        0.14331625135950596
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1501521209492271,
+      "pd_schedule_worst_pd_violation": 0.14331625135950596,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260834,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.09265874120611939,
+        0.1501521209492271
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09265874120611939,
+        0.10994686812818835
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1501521209492271,
+      "pd_schedule_worst_pd_violation": 0.10994686812818835,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260834,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.09265874120611939,
+        0.10994686812818835
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09265874120611939,
+        0.10994686812818834
+      ],
+      "deflection_schedule_worst_pd_violation": 0.10994686812818835,
+      "pd_schedule_worst_pd_violation": 0.10994686812818834,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260835,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2510141081528359
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.2510141081528359
+      ],
+      "deflection_schedule_worst_pd_violation": 0.2510141081528359,
+      "pd_schedule_worst_pd_violation": 0.2510141081528359,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260835,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.06693206189290271
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.06693206189290271
+      ],
+      "deflection_schedule_worst_pd_violation": 0.06693206189290271,
+      "pd_schedule_worst_pd_violation": 0.06693206189290271,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260835,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.0669320618929027
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.0669320618929027
+      ],
+      "deflection_schedule_worst_pd_violation": 0.0669320618929027,
+      "pd_schedule_worst_pd_violation": 0.0669320618929027,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260835,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.06693206189290271
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.06693206189290271
+      ],
+      "deflection_schedule_worst_pd_violation": 0.06693206189290271,
+      "pd_schedule_worst_pd_violation": 0.06693206189290271,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260836,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3868685775830527
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3292301269819242
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260836,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11487425780467458
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.12918388000148429,
+        0.11487425780467458
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.12918388000148429,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260836,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11487425780467458
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.12918388000148429,
+        0.11487425780467456
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.12918388000148429,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260836,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.1148742578046746
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.12918388000148429,
+        0.11487425780467456
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.12918388000148429,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260837,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        1.0,
+        0.3888590623166037
+      ],
+      "pd_schedule_pd_violation": [
+        0.14927694277676795,
+        0.16553269575041862,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260837,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        1.0,
+        0.09124826836642067
+      ],
+      "pd_schedule_pd_violation": [
+        0.14927694277676795,
+        0.16553269575041862,
+        0.28959658883889944
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.28959658883889944,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260837,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        1.0,
+        0.09124826836642065
+      ],
+      "pd_schedule_pd_violation": [
+        0.03160534832652365,
+        0.16553269575041862,
+        0.09124826836642067
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.16553269575041862,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260837,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        1.0,
+        0.09124826836642067
+      ],
+      "pd_schedule_pd_violation": [
+        0.03160534832652365,
+        0.16553269575041862,
+        0.09124826836642067
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.16553269575041862,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260838,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09426620794123619,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260838,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.30083476911878315
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09426620794123619,
+        0.41194853216446614
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.41194853216446614,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260838,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.3008347691187831
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09426620794123619,
+        0.3008347691187831
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.3008347691187831,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260838,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.30083476911878315
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09426620794123619,
+        0.3008347691187831
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.3008347691187831,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260839,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.4408713853839002
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.29663502375180356
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260839,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.13384583543719536
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.11523033272878169,
+        0.2562672646607553
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.2562672646607553,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260839,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.1338458354371954
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.014929515594101954,
+        0.13384583543719536
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.13384583543719536,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260839,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.13384583543719536
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.014929515594101954,
+        0.13384583543719536
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.13384583543719536,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260840,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260840,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.32139270624507144
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.32139270624507144,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260840,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.47321817870637084
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.32139270624507144
+      ],
+      "deflection_schedule_worst_pd_violation": 0.47321817870637084,
+      "pd_schedule_worst_pd_violation": 0.32139270624507144,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260840,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.47321817870637084
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.32139270624507144
+      ],
+      "deflection_schedule_worst_pd_violation": 0.47321817870637084,
+      "pd_schedule_worst_pd_violation": 0.32139270624507144,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260841,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.10950378542121209,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10950378542121209,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260841,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.10950378542121209,
+        1.0
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10950378542121209,
+        0.4754595502546763
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.4754595502546763,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260841,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.10950378542121209,
+        0.34875046859176967
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10950378542121209,
+        0.33171025132710774
+      ],
+      "deflection_schedule_worst_pd_violation": 0.34875046859176967,
+      "pd_schedule_worst_pd_violation": 0.33171025132710774,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260841,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.10950378542121209,
+        0.34875046859176967
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.10950378542121209,
+        0.33171025132710774
+      ],
+      "deflection_schedule_worst_pd_violation": 0.34875046859176967,
+      "pd_schedule_worst_pd_violation": 0.33171025132710774,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260842,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.35530558639940824
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.14929560321990143,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260842,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.1442386699971718
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.14929560321990143,
+        0.294927099022208
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.294927099022208,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260842,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.14423866999717183
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.14929560321990143,
+        0.14423866999717178
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.14929560321990143,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260842,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.14423866999717183
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.05043075900384658,
+        0.14423866999717178
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.14423866999717178,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260843,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3259475947949541
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3259475947949541
+      ],
+      "deflection_schedule_worst_pd_violation": 0.3259475947949541,
+      "pd_schedule_worst_pd_violation": 0.3259475947949541,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260843,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12801628816667238
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12801628816667238
+      ],
+      "deflection_schedule_worst_pd_violation": 0.12801628816667238,
+      "pd_schedule_worst_pd_violation": 0.12801628816667238,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260843,
+      "budget_bits": 30,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12801628816667238
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12801628816667238
+      ],
+      "deflection_schedule_worst_pd_violation": 0.12801628816667238,
+      "pd_schedule_worst_pd_violation": 0.12801628816667238,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260843,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12801628816667238
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12801628816667238
+      ],
+      "deflection_schedule_worst_pd_violation": 0.12801628816667238,
+      "pd_schedule_worst_pd_violation": 0.12801628816667238,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260844,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.28413258361077487
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.28413258361077487
+      ],
+      "deflection_schedule_worst_pd_violation": 0.28413258361077487,
+      "pd_schedule_worst_pd_violation": 0.28413258361077487,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260844,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.07188571511254775
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.07188571511254775
+      ],
+      "deflection_schedule_worst_pd_violation": 0.07188571511254775,
+      "pd_schedule_worst_pd_violation": 0.07188571511254775,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260844,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.07188571511254775
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.07188571511254775
+      ],
+      "deflection_schedule_worst_pd_violation": 0.07188571511254775,
+      "pd_schedule_worst_pd_violation": 0.07188571511254775,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260844,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.07188571511254777
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.07188571511254777
+      ],
+      "deflection_schedule_worst_pd_violation": 0.07188571511254777,
+      "pd_schedule_worst_pd_violation": 0.07188571511254777,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260845,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.33140298568181326
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.33140298568181326
+      ],
+      "deflection_schedule_worst_pd_violation": 0.33140298568181326,
+      "pd_schedule_worst_pd_violation": 0.33140298568181326,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260845,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.15788227326024573
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.15788227326024573
+      ],
+      "deflection_schedule_worst_pd_violation": 0.15788227326024573,
+      "pd_schedule_worst_pd_violation": 0.15788227326024573,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260845,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1248530074320737
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12485300743207368
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1248530074320737,
+      "pd_schedule_worst_pd_violation": 0.12485300743207368,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260845,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12249475139022202
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.12249475139022202
+      ],
+      "deflection_schedule_worst_pd_violation": 0.12249475139022202,
+      "pd_schedule_worst_pd_violation": 0.12249475139022202,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260846,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.29188433068409997
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.29188433068409997
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260846,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.07350098996605647
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.08295578126625802,
+        0.09710811045106203
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.09710811045106203,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260846,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.07350098996605647
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.08295578126625802,
+        0.07350098996605647
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.08295578126625802,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260846,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.07350098996605647
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.007822251144609155,
+        0.07350098996605647
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.07350098996605647,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260847,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.38948401868039484
+      ],
+      "pd_schedule_pd_violation": [
+        0.0243024386905836,
+        0.0,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260847,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.38948401868039484
+      ],
+      "pd_schedule_pd_violation": [
+        0.0243024386905836,
+        0.0,
+        0.38948401868039484
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.38948401868039484,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260847,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.38948401868039484
+      ],
+      "pd_schedule_pd_violation": [
+        0.0243024386905836,
+        0.0,
+        0.38948401868039484
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.38948401868039484,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260847,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        1.0,
+        0.0,
+        0.38948401868039484
+      ],
+      "pd_schedule_pd_violation": [
+        0.0243024386905836,
+        0.0,
+        0.3894840186803948
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.3894840186803948,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260848,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.37217318584026887
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.37217318584026887
+      ],
+      "deflection_schedule_worst_pd_violation": 0.37217318584026887,
+      "pd_schedule_worst_pd_violation": 0.37217318584026887,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260848,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.187879032672821
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.187879032672821
+      ],
+      "deflection_schedule_worst_pd_violation": 0.187879032672821,
+      "pd_schedule_worst_pd_violation": 0.187879032672821,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260848,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.187879032672821
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.18787903267282097
+      ],
+      "deflection_schedule_worst_pd_violation": 0.187879032672821,
+      "pd_schedule_worst_pd_violation": 0.18787903267282097,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260848,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.187879032672821
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.18787903267282097
+      ],
+      "deflection_schedule_worst_pd_violation": 0.187879032672821,
+      "pd_schedule_worst_pd_violation": 0.18787903267282097,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260849,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3033404488009326
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.3033404488009326
+      ],
+      "deflection_schedule_worst_pd_violation": 0.3033404488009326,
+      "pd_schedule_worst_pd_violation": 0.3033404488009326,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260849,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09569268946635459
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09569268946635459
+      ],
+      "deflection_schedule_worst_pd_violation": 0.09569268946635459,
+      "pd_schedule_worst_pd_violation": 0.09569268946635459,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260849,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09569268946635459
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09569268946635459
+      ],
+      "deflection_schedule_worst_pd_violation": 0.09569268946635459,
+      "pd_schedule_worst_pd_violation": 0.09569268946635459,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260849,
+      "budget_bits": 40,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09569268946635459
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.09569268946635459
+      ],
+      "deflection_schedule_worst_pd_violation": 0.09569268946635459,
+      "pd_schedule_worst_pd_violation": 0.09569268946635459,
+      "pd_chance_feasible": true
+    },
+    {
+      "seed": 20260850,
+      "budget_bits": 10,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.301524728104395
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.301524728104395
+      ],
+      "deflection_schedule_worst_pd_violation": 0.301524728104395,
+      "pd_schedule_worst_pd_violation": 0.301524728104395,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260850,
+      "budget_bits": 20,
+      "same_schedule": true,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1004075653113743
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.1004075653113743
+      ],
+      "deflection_schedule_worst_pd_violation": 0.1004075653113743,
+      "pd_schedule_worst_pd_violation": 0.1004075653113743,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260850,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10040756531137432
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10040756531137429
+      ],
+      "deflection_schedule_worst_pd_violation": 0.10040756531137432,
+      "pd_schedule_worst_pd_violation": 0.10040756531137429,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260850,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10040756531137432
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0,
+        0.10040756531137429
+      ],
+      "deflection_schedule_worst_pd_violation": 0.10040756531137432,
+      "pd_schedule_worst_pd_violation": 0.10040756531137429,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260851,
+      "budget_bits": 10,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.33159043886155437
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09022158397251623,
+        1.0
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 1.0,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260851,
+      "budget_bits": 20,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.10968387056535567
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09022158397251623,
+        0.10968387056535565
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.10968387056535565,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260851,
+      "budget_bits": 30,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.10968387056535567
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09022158397251623,
+        0.10968387056535564
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.10968387056535564,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260851,
+      "budget_bits": 40,
+      "same_schedule": false,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.10968387056535564
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.09022158397251623,
+        0.10968387056535564
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.10968387056535564,
+      "pd_chance_feasible": false
+    }
+  ]
+}
