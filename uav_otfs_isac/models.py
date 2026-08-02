@@ -55,6 +55,8 @@ class SelectionResult:
     used_bits: int
     normalized_qos_gap: float
     trace: tuple[dict[str, float | int | str], ...]
+    quality_mode: str = "deflection"
+    expected_quality: NDArray[np.float64] | None = None
 
 
 @dataclass(frozen=True)
@@ -65,4 +67,3 @@ class DetectionMetrics:
     worst_pd: float
     used_bits: int
     selected_reports: int
-

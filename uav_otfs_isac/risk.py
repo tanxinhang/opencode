@@ -359,6 +359,8 @@ def optimize_risk_portfolio(
         used_bits=used,
         normalized_qos_gap=normalized_gap,
         trace=tuple(),
+        quality_mode="deflection",
+        expected_quality=quality.copy(),
     )
     return PortfolioResult(
         selection=selection,
@@ -427,7 +429,8 @@ def optimize_chance_constrained_portfolio(
     used, (key, chosen) = min(
         states.items(), key=lambda item: (item[1][0][0], item[1][0][1], item[0])
     )
-    quality = np.asarray([option.expected_deflection for option in chosen])
+    deflection = np.asarray([option.expected_deflection for option in chosen])
+    quality = np.asarray([option.expected_quality for option in chosen])
     mean_loss = np.asarray([option.mean_loss for option in chosen])
     cvar_loss = np.asarray([option.cvar_loss for option in chosen])
     violation = np.asarray([option.violation_probability for option in chosen])
@@ -437,10 +440,12 @@ def optimize_chance_constrained_portfolio(
     ))
     selection = SelectionResult(
         scheduled=tuple(option.scheduled for option in chosen),
-        expected_deflection=quality,
+        expected_deflection=deflection,
         used_bits=used,
         normalized_qos_gap=normalized_gap,
         trace=tuple(),
+        quality_mode=quality_mode,
+        expected_quality=quality,
     )
     portfolio = PortfolioResult(
         selection=selection,
@@ -525,19 +530,22 @@ def optimize_fair_chance_constrained_portfolio(
     if best is None or chosen_threshold is None:
         raise RuntimeError("no feasible budget allocation")
     used, key, selected = best
-    quality = np.asarray([option.expected_deflection for option in selected])
+    deflection = np.asarray([option.expected_deflection for option in selected])
+    quality = np.asarray([option.expected_quality for option in selected])
     mean_loss = np.asarray([option.mean_loss for option in selected])
     cvar_loss = np.asarray([option.cvar_loss for option in selected])
     violation = np.asarray([option.violation_probability for option in selected])
     excess = np.maximum(violation - limits, 0.0)
     selection = SelectionResult(
         scheduled=tuple(option.scheduled for option in selected),
-        expected_deflection=quality,
+        expected_deflection=deflection,
         used_bits=used,
         normalized_qos_gap=float(np.sum(
             weights * mean_loss / np.maximum(np.asarray(minimum_quality), 1e-12)
         )),
         trace=tuple(),
+        quality_mode=quality_mode,
+        expected_quality=quality,
     )
     portfolio = PortfolioResult(
         selection=selection,

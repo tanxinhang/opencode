@@ -79,6 +79,8 @@ def gaussian_detection_probability(
     variance0 = float(weights @ cov0 @ weights)
     variance1 = float(weights @ cov1 @ weights)
     if variance0 <= 1e-14 or variance1 <= 1e-14:
-        return float(mean1 > mean0)
+        raise FloatingPointError(
+            "Gaussian detection probability is undefined for a degenerate score variance"
+        )
     threshold = mean0 + np.sqrt(variance0) * norm.ppf(1.0 - false_alarm_rate)
     return float(norm.sf((threshold - mean1) / np.sqrt(variance1)))

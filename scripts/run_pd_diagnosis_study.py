@@ -69,6 +69,19 @@ def main() -> None:
         counts = {name: 0 for name in ("sensing_limited", "reliability_limited", "budget_limited", "feasible")}
         for row in diagnosis_group:
             counts[row["classification"]] += 1
+        system_counts = {name: 0 for name in (
+            "system_sensing_limited", "system_reliability_limited",
+            "system_budget_limited", "system_feasible")}
+        for seed in sorted({row["seed"] for row in diagnosis_group}):
+            labels = {row["classification"] for row in diagnosis_group if row["seed"] == seed}
+            if "sensing_limited" in labels:
+                system_counts["system_sensing_limited"] += 1
+            elif "reliability_limited" in labels:
+                system_counts["system_reliability_limited"] += 1
+            elif "budget_limited" in labels:
+                system_counts["system_budget_limited"] += 1
+            else:
+                system_counts["system_feasible"] += 1
         summary.append({
             "budget_bits": budget,
             "mean_weighted_max_relative_excess": float(np.mean([x["weighted_max_relative_excess"] for x in group])),
@@ -76,6 +89,9 @@ def main() -> None:
             "mean_weighted_sum_excess": float(np.mean([x["weighted_sum_excess"] for x in group])),
             "mean_fair_sum_excess": float(np.mean([x["fair_sum_excess"] for x in group])),
             "diagnosis_fraction": {name: count / len(diagnosis_group) for name, count in counts.items()},
+            "system_diagnosis_fraction": {
+                name: count / args.seeds for name, count in system_counts.items()
+            },
         })
     payload = {"minimum_pd": args.minimum_pd, "epsilon": args.epsilon,
                "summary": summary, "instances": rows, "diagnoses": diagnosis_rows}

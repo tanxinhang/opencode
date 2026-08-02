@@ -38,6 +38,7 @@ python scripts/run_risk_portfolio_study.py --config config/demo.yaml
 python scripts/run_chance_portfolio_study.py --config config/demo.yaml
 python scripts/run_pd_proxy_study.py --config config/demo.yaml
 python scripts/run_pd_diagnosis_study.py --config config/demo.yaml
+python scripts/run_deflection_calibration_study.py --config config/demo.yaml
 python -m pytest -q
 ```
 
@@ -62,6 +63,10 @@ probability of detection at fixed false-alarm rate. This is called
 `gaussian_pd_chance`; it is not an exact discrete likelihood-ratio detector.
 The diagnosis searches all deterministic received subsets and all scheduled
 portfolios, so it does not assume that Gaussian-score P_D is set-monotone.
+The calibration study checks the equal-covariance theoretical mapping and a
+train/test-separated isotonic deflection calibration before comparing either
+surrogate with direct Gaussian-P_D chance optimization. Proxy studies report
+exact schedule matches separately from target and global-pair Jaccard overlap.
 
 ## What is deliberately not claimed
 

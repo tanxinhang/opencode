@@ -94,6 +94,24 @@ def test_chance_constrained_dp_matches_lexicographic_enumeration():
     )
     assert np.isclose(result.weighted_violation_excess, direct_key[0])
     assert np.isclose(result.portfolio.objective, direct_key[1])
+    assert result.portfolio.selection.quality_mode == "deflection"
+    assert np.allclose(
+        result.portfolio.selection.expected_quality,
+        result.portfolio.selection.expected_deflection,
+    )
+
+
+def test_pd_portfolio_reports_pd_quality_without_overwriting_deflection():
+    model = make_model(0, 0, [0.4, 1.4], [1.0, 0.8])
+    result = optimize_chance_constrained_portfolio(
+        [model], 1, [0.5], [1.0], [0.2],
+        quality_mode="gaussian_pd", false_alarm_rate=0.05,
+    )
+    selection = result.portfolio.selection
+    assert selection.quality_mode == "gaussian_pd"
+    assert selection.expected_quality is not None
+    assert np.all((selection.expected_quality >= 0.0) & (selection.expected_quality <= 1.0))
+    assert not np.allclose(selection.expected_quality, selection.expected_deflection)
 
 
 def test_infeasible_chance_constraint_returns_minimum_slack():
