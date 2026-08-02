@@ -39,6 +39,7 @@ python scripts/run_chance_portfolio_study.py --config config/demo.yaml
 python scripts/run_pd_proxy_study.py --config config/demo.yaml
 python scripts/run_pd_diagnosis_study.py --config config/demo.yaml
 python scripts/run_deflection_calibration_study.py --config config/demo.yaml
+python scripts/run_correlated_erasure_study.py --config config/demo.yaml
 python -m pytest -q
 ```
 
@@ -67,6 +68,13 @@ The calibration study checks the equal-covariance theoretical mapping and a
 train/test-separated isotonic deflection calibration before comparing either
 surrogate with direct Gaussian-P_D chance optimization. Proxy studies report
 exact schedule matches separately from target and global-pair Jaccard overlap.
+
+The correlated-erasure study supports global and grouped common-state link
+failures while preserving every link's marginal success probability exactly.
+This isolates dependence misspecification from average-link degradation. The
+current experiments show that common failures make an independent-link model
+optimistic; correlation-aware scheduling is evaluated without assuming that
+it must recover the lost feasibility.
 
 ## What is deliberately not claimed
 

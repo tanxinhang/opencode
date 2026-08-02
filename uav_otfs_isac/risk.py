@@ -151,6 +151,36 @@ def gaussian_pd_loss_distribution(
 
 
 def _received_patterns(model: TargetEvidenceModel, scheduled: Iterable[int]):
+    if model.reception_state_probabilities is not None:
+        reports = sorted(set(scheduled) - {model.owner})
+        aggregated: dict[frozenset[int], float] = {}
+        for state_weight, conditional in zip(
+            model.reception_state_probabilities,
+            model.conditional_success_probabilities,
+        ):
+            for pattern in product((0, 1), repeat=len(reports)):
+                probability = float(state_weight)
+                received = {model.owner}
+                for uav, success in zip(reports, pattern):
+                    p = float(conditional[uav])
+                    probability *= p if success else 1.0 - p
+                    if success:
+                        received.add(uav)
+                key = frozenset(received)
+                aggregated[key] = aggregated.get(key, 0.0) + probability
+        yield from aggregated.items()
+        return
+    if model.reception_patterns is not None:
+        scheduled_set = set(scheduled)
+        for pattern, probability in zip(
+            model.reception_patterns, model.pattern_probabilities
+        ):
+            received = {model.owner}
+            received.update(
+                i for i in scheduled_set if i != model.owner and pattern[i] == 1
+            )
+            yield received, float(probability)
+        return
     reports = sorted(set(scheduled) - {model.owner})
     for pattern in product((0, 1), repeat=len(reports)):
         probability = 1.0

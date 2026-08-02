@@ -21,6 +21,10 @@ class TargetEvidenceModel:
     bit_flip_prob: NDArray[np.float64]
     quantizer_edges: NDArray[np.float64]
     quantizer_values: NDArray[np.float64]
+    reception_patterns: NDArray[np.int8] | None = None
+    pattern_probabilities: NDArray[np.float64] | None = None
+    reception_state_probabilities: NDArray[np.float64] | None = None
+    conditional_success_probabilities: NDArray[np.float64] | None = None
 
     @property
     def num_uavs(self) -> int:
@@ -46,6 +50,36 @@ class TargetEvidenceModel:
             raise ValueError("sigma0 must be symmetric")
         if np.linalg.eigvalsh(self.sigma0).min() <= 0:
             raise ValueError("sigma0 must be positive definite after regularization")
+        if (self.reception_patterns is None) != (self.pattern_probabilities is None):
+            raise ValueError("reception patterns and probabilities must be provided together")
+        if self.reception_patterns is not None:
+            patterns = np.asarray(self.reception_patterns)
+            probabilities = np.asarray(self.pattern_probabilities)
+            if patterns.ndim != 2 or patterns.shape[1] != n:
+                raise ValueError("reception_patterns must have shape [patterns, num_uavs]")
+            if probabilities.shape != (patterns.shape[0],):
+                raise ValueError("pattern_probabilities has an incompatible shape")
+            if np.any((patterns != 0) & (patterns != 1)):
+                raise ValueError("reception patterns must be binary")
+            if np.any(probabilities < 0) or not np.isclose(probabilities.sum(), 1.0):
+                raise ValueError("pattern probabilities must be nonnegative and sum to one")
+            marginals = probabilities @ patterns
+            if not np.allclose(marginals, self.success_prob, atol=1e-10):
+                raise ValueError("reception-pattern marginals must match success_prob")
+        if ((self.reception_state_probabilities is None) !=
+                (self.conditional_success_probabilities is None)):
+            raise ValueError("state probabilities and conditional successes must be provided together")
+        if self.reception_state_probabilities is not None:
+            state_probabilities = np.asarray(self.reception_state_probabilities)
+            conditional = np.asarray(self.conditional_success_probabilities)
+            if conditional.shape != (state_probabilities.size, n):
+                raise ValueError("conditional success probabilities have an incompatible shape")
+            if np.any(state_probabilities < 0) or not np.isclose(state_probabilities.sum(), 1.0):
+                raise ValueError("state probabilities must be nonnegative and sum to one")
+            if np.any((conditional < 0.0) | (conditional > 1.0)):
+                raise ValueError("conditional success probabilities must lie in [0, 1]")
+            if not np.allclose(state_probabilities @ conditional, self.success_prob, atol=1e-10):
+                raise ValueError("conditional-state marginals must match success_prob")
 
 
 @dataclass(frozen=True)
