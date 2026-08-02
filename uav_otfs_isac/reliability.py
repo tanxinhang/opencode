@@ -105,15 +105,23 @@ def grouped_common_state_parameters(
 
 
 def with_grouped_common_state_erasures(
-    models: Sequence[TargetEvidenceModel], strength: float, num_groups: int = 2
+    models: Sequence[TargetEvidenceModel],
+    strength: float,
+    failure_groups: Sequence[np.ndarray] | np.ndarray,
 ) -> list[TargetEvidenceModel]:
-    if num_groups < 2:
-        raise ValueError("num_groups must be at least two")
+    if isinstance(failure_groups, np.ndarray) and failure_groups.ndim == 1:
+        groups_per_model = [failure_groups for _ in models]
+    else:
+        groups_per_model = list(failure_groups)
+    if len(groups_per_model) != len(models):
+        raise ValueError("failure_groups must provide labels for every model")
     result = []
-    for model in models:
-        # Alternating labels create spatially/interference-diverse failure groups
-        # without changing any marginal reporting reliability.
-        groups = np.arange(model.num_uavs, dtype=int) % num_groups
+    for model, groups in zip(models, groups_per_model):
+        groups = np.asarray(groups, dtype=int)
+        if groups.shape != (model.num_uavs,):
+            raise ValueError("each failure-group vector must match model.num_uavs")
+        if len(set(groups[i] for i in range(model.num_uavs) if i != model.owner)) < 2:
+            raise ValueError("each model must contain at least two reporting failure groups")
         state_probabilities, conditional = grouped_common_state_parameters(
             model.success_prob, model.owner, groups, strength
         )
@@ -135,6 +143,12 @@ def with_grouped_common_state_erasures(
         )
         grouped.validate(); result.append(grouped)
     return result
+
+
+def alternating_failure_groups(models: Sequence[TargetEvidenceModel], num_groups: int = 2) -> list[np.ndarray]:
+    if num_groups < 2:
+        raise ValueError("num_groups must be at least two")
+    return [np.arange(model.num_uavs, dtype=int) % num_groups for model in models]
 
 
 def mean_off_diagonal_failure_correlation(model: TargetEvidenceModel) -> float:

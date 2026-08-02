@@ -88,7 +88,9 @@ def test_grouped_model_validates_and_preserves_marginals():
     cfg = ExperimentConfig(num_uavs=5, num_targets=1, owners=(0,), target_present=(True,),
                            qos_min_deflection=(3.0,), qos_weights=(1.0,), performance_weights=(1.0,))
     base = build_models(cfg, np.random.default_rng(15))
-    grouped = with_grouped_common_state_erasures(base, 0.7, num_groups=2)[0]
+    grouped = with_grouped_common_state_erasures(
+        base, 0.7, np.array([0, 0, 1, 0, 1])
+    )[0]
     assert np.allclose(
         grouped.pattern_probabilities @ grouped.reception_patterns,
         grouped.success_prob,

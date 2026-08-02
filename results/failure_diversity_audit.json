@@ -1,0 +1,277 @@
+{
+  "received_pd": {
+    "owner": 0.07424950211491328,
+    "one_report": 0.2659692117498263,
+    "two_reports": 0.4142725359819
+  },
+  "thresholds": {
+    "one_of_two": 0.17010935693236978,
+    "two_of_two": 0.34012087386586315
+  },
+  "C0": {
+    "passed": true,
+    "independent_same": 0.16000000000000003,
+    "independent_cross": 0.16000000000000003,
+    "correlated_same": 0.32000000000000006,
+    "correlated_cross": 0.16000000000000003,
+    "optimizer_schedule": [
+      0,
+      1,
+      3
+    ],
+    "oracle_schedule": [
+      0,
+      1,
+      3
+    ]
+  },
+  "C1": {
+    "passed": true,
+    "one_of_two_same": 0.32000000000000006,
+    "one_of_two_cross": 0.16000000000000003,
+    "two_of_two_same": 0.48,
+    "two_of_two_cross": 0.64
+  },
+  "C2": [
+    {
+      "quality_delta": 0.0,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.16000000000000003,
+      "same_group_expected_pd": 0.28173663326733234,
+      "cross_group_expected_pd": 0.2886832549317867,
+      "cross_group_sensing_cost": -0.006946621664454367,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "oracle": [
+        0,
+        1,
+        3
+      ],
+      "recoverable_headroom": 0.16000000000000003,
+      "headroom_use_ratio": 1.0
+    },
+    {
+      "quality_delta": 0.05,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.16000000000000003,
+      "same_group_expected_pd": 0.2986429527944927,
+      "cross_group_expected_pd": 0.28905440592593823,
+      "cross_group_sensing_cost": 0.009588546868554482,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "oracle": [
+        0,
+        1,
+        3
+      ],
+      "recoverable_headroom": 0.16000000000000003,
+      "headroom_use_ratio": 1.0
+    },
+    {
+      "quality_delta": 0.1,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.16000000000000003,
+      "same_group_expected_pd": 0.3157884896551637,
+      "cross_group_expected_pd": 0.29016588088319484,
+      "cross_group_sensing_cost": 0.02562260877196887,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "oracle": [
+        0,
+        1,
+        3
+      ],
+      "recoverable_headroom": 0.16000000000000003,
+      "headroom_use_ratio": 1.0
+    },
+    {
+      "quality_delta": 0.2,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.16000000000000003,
+      "same_group_expected_pd": 0.3504911868509808,
+      "cross_group_expected_pd": 0.2945822357383976,
+      "cross_group_sensing_cost": 0.055908951112583205,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "oracle": [
+        0,
+        1,
+        3
+      ],
+      "recoverable_headroom": 0.16000000000000003,
+      "headroom_use_ratio": 1.0
+    },
+    {
+      "quality_delta": 0.3,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.16000000000000003,
+      "same_group_expected_pd": 0.3852221941663564,
+      "cross_group_expected_pd": 0.30183876565530066,
+      "cross_group_sensing_cost": 0.08338342851105573,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "oracle": [
+        0,
+        1,
+        3
+      ],
+      "recoverable_headroom": 0.16000000000000003,
+      "headroom_use_ratio": 1.0
+    },
+    {
+      "quality_delta": 0.32,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.16000000000000003,
+      "same_group_expected_pd": 0.39211715531097036,
+      "cross_group_expected_pd": 0.30361846065806297,
+      "cross_group_sensing_cost": 0.08849869465290738,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "oracle": [
+        0,
+        1,
+        3
+      ],
+      "recoverable_headroom": 0.16000000000000003,
+      "headroom_use_ratio": 1.0
+    },
+    {
+      "quality_delta": 0.34,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.4,
+      "same_group_expected_pd": 0.3989837338037895,
+      "cross_group_expected_pd": 0.3055043482531392,
+      "cross_group_sensing_cost": 0.09347938555065027,
+      "selected": [
+        0,
+        1,
+        2
+      ],
+      "oracle": [
+        0,
+        1,
+        2
+      ],
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null
+    },
+    {
+      "quality_delta": 0.36,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.4,
+      "same_group_expected_pd": 0.40581722356803385,
+      "cross_group_expected_pd": 0.3074948563235631,
+      "cross_group_sensing_cost": 0.09832236724447074,
+      "selected": [
+        0,
+        1,
+        2
+      ],
+      "oracle": [
+        0,
+        1,
+        2
+      ],
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null
+    },
+    {
+      "quality_delta": 0.38,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.4,
+      "same_group_expected_pd": 0.41261300577383486,
+      "cross_group_expected_pd": 0.30958833208748837,
+      "cross_group_sensing_cost": 0.10302467368634649,
+      "selected": [
+        0,
+        1,
+        2
+      ],
+      "oracle": [
+        0,
+        1,
+        2
+      ],
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null
+    },
+    {
+      "quality_delta": 0.4,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.4,
+      "same_group_expected_pd": 0.4193665584695693,
+      "cross_group_expected_pd": 0.311783045142514,
+      "cross_group_sensing_cost": 0.10758351332705529,
+      "selected": [
+        0,
+        1,
+        2
+      ],
+      "oracle": [
+        0,
+        1,
+        2
+      ],
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null
+    },
+    {
+      "quality_delta": 0.5,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.4,
+      "same_group_expected_pd": 0.4523505219244295,
+      "cross_group_expected_pd": 0.3242096397519545,
+      "cross_group_sensing_cost": 0.128140882172475,
+      "selected": [
+        0,
+        1,
+        2
+      ],
+      "oracle": [
+        0,
+        1,
+        2
+      ],
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null
+    },
+    {
+      "quality_delta": 0.6,
+      "same_group_violation": 0.32000000000000006,
+      "cross_group_violation": 0.4,
+      "same_group_expected_pd": 0.48367107356026307,
+      "cross_group_expected_pd": 0.33887041734528944,
+      "cross_group_sensing_cost": 0.14480065621497362,
+      "selected": [
+        0,
+        1,
+        2
+      ],
+      "oracle": [
+        0,
+        1,
+        2
+      ],
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null
+    }
+  ]
+}

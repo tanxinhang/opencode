@@ -16,6 +16,7 @@ from uav_otfs_isac.reliability import (
     mean_off_diagonal_failure_correlation,
     with_common_state_erasures,
     with_grouped_common_state_erasures,
+    alternating_failure_groups,
 )
 from uav_otfs_isac.risk import (
     gaussian_pd_loss_distribution,
@@ -62,7 +63,10 @@ def main() -> None:
             truth_models = (
                 with_common_state_erasures(independent_models, strength)
                 if args.failure_structure == "global"
-                else with_grouped_common_state_erasures(independent_models, strength, num_groups=2)
+                else with_grouped_common_state_erasures(
+                    independent_models, strength,
+                    alternating_failure_groups(independent_models, num_groups=2),
+                )
             )
             marginal_error = max(
                 float(np.max(np.abs(model.pattern_probabilities @ model.reception_patterns - model.success_prob)))

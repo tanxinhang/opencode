@@ -40,6 +40,7 @@ python scripts/run_pd_proxy_study.py --config config/demo.yaml
 python scripts/run_pd_diagnosis_study.py --config config/demo.yaml
 python scripts/run_deflection_calibration_study.py --config config/demo.yaml
 python scripts/run_correlated_erasure_study.py --config config/demo.yaml
+python scripts/run_failure_diversity_audit.py
 python -m pytest -q
 ```
 
@@ -75,6 +76,12 @@ This isolates dependence misspecification from average-link degradation. The
 current experiments show that common failures make an independent-link model
 optimistic; correlation-aware scheduling is evaluated without assuming that
 it must recover the lost feasibility.
+
+`run_failure_diversity_audit.py` is a controlled mechanism gate with explicit
+failure-group labels. It verifies that equal-quality One-of-2 evidence should
+diversify across groups, while a Two-of-2 threshold can favor positively
+dependent reports. A quality-gap sweep identifies when sensing quality
+outweighs recoverable failure-diversity headroom.
 
 ## What is deliberately not claimed
 
