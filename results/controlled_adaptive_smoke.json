@@ -1,0 +1,61 @@
+{
+  "controlled_only": true,
+  "hard_worst_case_transmissions": 3,
+  "rows": [
+    {
+      "case": "independent",
+      "p": 0.3,
+      "static_success_probability": 0.153,
+      "static_expected_transmissions": 3.0,
+      "adaptive_success_probability": 0.216,
+      "adaptive_expected_transmissions": 2.42,
+      "clairvoyant_success_probability": 0.216,
+      "clairvoyant_expected_transmissions": 2.42
+    },
+    {
+      "case": "independent",
+      "p": 0.5,
+      "static_success_probability": 0.375,
+      "static_expected_transmissions": 3.0,
+      "adaptive_success_probability": 0.5,
+      "adaptive_expected_transmissions": 2.5,
+      "clairvoyant_success_probability": 0.5,
+      "clairvoyant_expected_transmissions": 2.5
+    },
+    {
+      "case": "independent",
+      "p": 0.7,
+      "static_success_probability": 0.6369999999999999,
+      "static_expected_transmissions": 3.0,
+      "adaptive_success_probability": 0.7839999999999999,
+      "adaptive_expected_transmissions": 2.42,
+      "clairvoyant_success_probability": 0.7839999999999999,
+      "clairvoyant_expected_transmissions": 2.42
+    },
+    {
+      "case": "independent",
+      "p": 0.9,
+      "static_success_probability": 0.891,
+      "static_expected_transmissions": 3.0,
+      "adaptive_success_probability": 0.972,
+      "adaptive_expected_transmissions": 2.18,
+      "clairvoyant_success_probability": 0.972,
+      "clairvoyant_expected_transmissions": 2.18
+    },
+    {
+      "case": "persistent_shared_state",
+      "static_success_probability": 0.46624999999999994,
+      "static_expected_transmissions": 3.0,
+      "adaptive_success_probability": 0.5449999999999999,
+      "adaptive_expected_transmissions": 2.5,
+      "clairvoyant_success_probability": 0.5449999999999999,
+      "clairvoyant_expected_transmissions": 2.5,
+      "adaptive_policy_by_ack_00_01_10_11": [
+        "none",
+        "repair_a",
+        "repair_b",
+        "none"
+      ]
+    }
+  ]
+}

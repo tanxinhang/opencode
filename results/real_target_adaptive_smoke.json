@@ -1,0 +1,110 @@
+{
+  "seeds": 3,
+  "target": 2,
+  "summary": [
+    {
+      "first_stage_fraction": 0.5,
+      "mean_static_success": 0.9342086206548706,
+      "mean_adaptive_success": 0.975677565119506,
+      "mean_clairvoyant_success": 0.9760139521275314,
+      "mean_adaptive_expected_bits": 13.124576059589375,
+      "mean_relative_violation_reduction": 0.6469724779694407,
+      "mean_seconds": 21.060736566626776
+    },
+    {
+      "first_stage_fraction": 0.75,
+      "mean_static_success": 0.9342086206548706,
+      "mean_adaptive_success": 0.9516048980633767,
+      "mean_clairvoyant_success": 0.9516048980633767,
+      "mean_adaptive_expected_bits": 15.897799521128311,
+      "mean_relative_violation_reduction": 0.33508728628015433,
+      "mean_seconds": 25.67425943321238
+    }
+  ],
+  "instances": [
+    {
+      "seed": 20260802,
+      "target": 2,
+      "first_stage_fraction": 0.5,
+      "seconds": 21.01659999974072,
+      "selection_success_probability": 0.8790699635741157,
+      "selection_expected_bits": 20.0,
+      "static_success_probability": 0.9446421807640821,
+      "static_expected_bits": 20.0,
+      "adaptive_success_probability": 0.9820619413370077,
+      "adaptive_expected_bits": 12.917317500453915,
+      "clairvoyant_success_probability": 0.9822908038060821,
+      "clairvoyant_expected_bits": 12.917317500453912
+    },
+    {
+      "seed": 20260802,
+      "target": 2,
+      "first_stage_fraction": 0.75,
+      "seconds": 25.674866099841893,
+      "selection_success_probability": 0.8790699635741157,
+      "selection_expected_bits": 20.0,
+      "static_success_probability": 0.9446421807640821,
+      "static_expected_bits": 20.0,
+      "adaptive_success_probability": 0.9672778761248546,
+      "adaptive_expected_bits": 15.79714192873176,
+      "clairvoyant_success_probability": 0.9672778761248545,
+      "clairvoyant_expected_bits": 15.797141928731762
+    },
+    {
+      "seed": 20260803,
+      "target": 2,
+      "first_stage_fraction": 0.5,
+      "seconds": 21.05251169996336,
+      "selection_success_probability": 0.9285056778812076,
+      "selection_expected_bits": 20.0,
+      "static_success_probability": 0.9582083514695929,
+      "static_expected_bits": 20.0,
+      "adaptive_success_probability": 0.9866683352462375,
+      "adaptive_expected_bits": 12.669325498600623,
+      "clairvoyant_success_probability": 0.9868083677426954,
+      "clairvoyant_expected_bits": 12.669325498600621
+    },
+    {
+      "seed": 20260803,
+      "target": 2,
+      "first_stage_fraction": 0.75,
+      "seconds": 25.660794499795884,
+      "selection_success_probability": 0.9285056778812076,
+      "selection_expected_bits": 20.0,
+      "static_success_probability": 0.9582083514695929,
+      "static_expected_bits": 20.0,
+      "adaptive_success_probability": 0.979819907153012,
+      "adaptive_expected_bits": 15.42755938134158,
+      "clairvoyant_success_probability": 0.979819907153012,
+      "clairvoyant_expected_bits": 15.427559381341577
+    },
+    {
+      "seed": 20260804,
+      "target": 2,
+      "first_stage_fraction": 0.5,
+      "seconds": 21.11309800017625,
+      "selection_success_probability": 0.8200261246464701,
+      "selection_expected_bits": 20.0,
+      "static_success_probability": 0.899775329730937,
+      "static_expected_bits": 20.0,
+      "adaptive_success_probability": 0.9583024187752724,
+      "adaptive_expected_bits": 13.787085179713587,
+      "clairvoyant_success_probability": 0.9589426848338166,
+      "clairvoyant_expected_bits": 13.787085179713593
+    },
+    {
+      "seed": 20260804,
+      "target": 2,
+      "first_stage_fraction": 0.75,
+      "seconds": 25.687117699999362,
+      "selection_success_probability": 0.8200261246464701,
+      "selection_expected_bits": 20.0,
+      "static_success_probability": 0.899775329730937,
+      "static_expected_bits": 20.0,
+      "adaptive_success_probability": 0.9077169109122634,
+      "adaptive_expected_bits": 16.468697253311593,
+      "clairvoyant_success_probability": 0.9077169109122635,
+      "clairvoyant_expected_bits": 16.468697253311586
+    }
+  ]
+}
