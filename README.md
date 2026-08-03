@@ -132,6 +132,31 @@ conservative familywise false-alarm upper bound rather than exact equality.
 The noise-only audit falls back in every frame, so the reported 20.86% saving
 is conditional on a supplied two-source candidate cluster; network-wide
 energy saving additionally depends on the prevalence of such H1 clusters.
+
+The subsequent Gate-A fairness audit calibrates every complete policy to the
+same empirical 1% false-alarm point and compares paired scenes at matched mean
+energy.  It is negative for the present confidence rule: fixed equal energy
+E=1.5828 reaches 99.93% conditional exact-support recovery, random fallback
+99.73%, confidence fallback 99.60%, and the label-aided oracle 100%.  The
+confidence-minus-random difference is -0.13 pp with a 95% interval crossing
+zero.  Peak power, peak margin, residual ratio, and estimated-support Gram
+diagnostics do not separate the remaining correct and incorrect supports.
+Thus partial-energy confirmation remains a useful mechanism result, but the
+current confidence-driven allocation is not an algorithmic contribution and
+should not replace the stronger fixed-equal-energy baseline.
+
+Gate B then introduces three physical incremental observations, target-wise
+CFO, phase noise, and correlated complex fading in a non-saturated 5-degree
+same-DD collision with 6 dB near-far imbalance.  The E=1.5828 scheme retains
+loss within 2 pp on only 9.4%--23.4% of the tested mismatch grid, depending on
+the assumed decoder.  Even at the ideal no-mismatch point it recovers 86.5%
+versus 92.0% at E=2, a 5.5 pp loss.  Hence the failure is already caused by
+insufficient energy in the non-saturated regime, not primarily by CFO or an
+ill-conditioned inverse.  An exploratory energy curve suggests roughly
+E=1.8 is needed at the ideal point, but its independently sampled 300-trial
+points are not a precise minimum-energy estimate.  The physical robustness
+gate therefore fails: the earlier 20.86% saving is limited to the saturated,
+ideal-coherence experiment.
 The benchmark script compares the proposed selector against no cooperation,
 sensing-only Top-K, communication-only Top-K, independent post-report ranking,
 random selection, and all-scheduled fusion. `exhaustive_oracle` is provided for

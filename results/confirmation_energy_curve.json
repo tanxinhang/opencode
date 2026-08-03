@@ -1,0 +1,609 @@
+{
+  "scope": "non-saturated 5-degree same-DD, 6-dB near-far energy curve; known two-source coarse cluster",
+  "trials_per_point": 300,
+  "rows": [
+    {
+      "case": "ideal",
+      "total_energy": 1.3,
+      "energy_saving_vs_full": 0.35,
+      "exact_support_probability": {
+        "oracle": 0.7366666666666667,
+        "oracle_ridge": 0.7366666666666667,
+        "cfo_compensated": 0.7366666666666667,
+        "nominal": 0.7366666666666667
+      },
+      "full_energy_probability": {
+        "oracle": 0.95,
+        "oracle_ridge": 0.95,
+        "cfo_compensated": 0.95,
+        "nominal": 0.95
+      },
+      "loss_vs_full": {
+        "oracle": 0.21333333333333326,
+        "oracle_ridge": 0.21333333333333326,
+        "cfo_compensated": 0.21333333333333326,
+        "nominal": 0.21333333333333326
+      },
+      "mean_probe_condition_number": 1.8257418583505534
+    },
+    {
+      "case": "ideal",
+      "total_energy": 1.5,
+      "energy_saving_vs_full": 0.25,
+      "exact_support_probability": {
+        "oracle": 0.8233333333333334,
+        "oracle_ridge": 0.82,
+        "cfo_compensated": 0.8233333333333334,
+        "nominal": 0.8233333333333334
+      },
+      "full_energy_probability": {
+        "oracle": 0.8833333333333333,
+        "oracle_ridge": 0.8833333333333333,
+        "cfo_compensated": 0.8833333333333333,
+        "nominal": 0.8833333333333333
+      },
+      "loss_vs_full": {
+        "oracle": 0.05999999999999994,
+        "oracle_ridge": 0.06333333333333335,
+        "cfo_compensated": 0.05999999999999994,
+        "nominal": 0.05999999999999994
+      },
+      "mean_probe_condition_number": 1.4142135623730943
+    },
+    {
+      "case": "ideal",
+      "total_energy": 1.6,
+      "energy_saving_vs_full": 0.19999999999999996,
+      "exact_support_probability": {
+        "oracle": 0.89,
+        "oracle_ridge": 0.8933333333333333,
+        "cfo_compensated": 0.89,
+        "nominal": 0.89
+      },
+      "full_energy_probability": {
+        "oracle": 0.9566666666666667,
+        "oracle_ridge": 0.9566666666666667,
+        "cfo_compensated": 0.9566666666666667,
+        "nominal": 0.9566666666666667
+      },
+      "loss_vs_full": {
+        "oracle": 0.06666666666666665,
+        "oracle_ridge": 0.06333333333333335,
+        "cfo_compensated": 0.06666666666666665,
+        "nominal": 0.06666666666666665
+      },
+      "mean_probe_condition_number": 1.2909944487358056
+    },
+    {
+      "case": "ideal",
+      "total_energy": 1.7,
+      "energy_saving_vs_full": 0.15000000000000002,
+      "exact_support_probability": {
+        "oracle": 0.9,
+        "oracle_ridge": 0.9,
+        "cfo_compensated": 0.9,
+        "nominal": 0.9
+      },
+      "full_energy_probability": {
+        "oracle": 0.92,
+        "oracle_ridge": 0.92,
+        "cfo_compensated": 0.92,
+        "nominal": 0.92
+      },
+      "loss_vs_full": {
+        "oracle": 0.020000000000000018,
+        "oracle_ridge": 0.020000000000000018,
+        "cfo_compensated": 0.020000000000000018,
+        "nominal": 0.020000000000000018
+      },
+      "mean_probe_condition_number": 1.1952286093343936
+    },
+    {
+      "case": "ideal",
+      "total_energy": 1.8,
+      "energy_saving_vs_full": 0.09999999999999998,
+      "exact_support_probability": {
+        "oracle": 0.9533333333333334,
+        "oracle_ridge": 0.9533333333333334,
+        "cfo_compensated": 0.9533333333333334,
+        "nominal": 0.9533333333333334
+      },
+      "full_energy_probability": {
+        "oracle": 0.9333333333333333,
+        "oracle_ridge": 0.9333333333333333,
+        "cfo_compensated": 0.9333333333333333,
+        "nominal": 0.9333333333333333
+      },
+      "loss_vs_full": {
+        "oracle": -0.020000000000000018,
+        "oracle_ridge": -0.020000000000000018,
+        "cfo_compensated": -0.020000000000000018,
+        "nominal": -0.020000000000000018
+      },
+      "mean_probe_condition_number": 1.1180339887498947
+    },
+    {
+      "case": "ideal",
+      "total_energy": 2.0,
+      "energy_saving_vs_full": 0.0,
+      "exact_support_probability": {
+        "oracle": 0.9433333333333334,
+        "oracle_ridge": 0.9433333333333334,
+        "cfo_compensated": 0.9433333333333334,
+        "nominal": 0.9433333333333334
+      },
+      "full_energy_probability": {
+        "oracle": 0.91,
+        "oracle_ridge": 0.91,
+        "cfo_compensated": 0.91,
+        "nominal": 0.91
+      },
+      "loss_vs_full": {
+        "oracle": -0.033333333333333326,
+        "oracle_ridge": -0.033333333333333326,
+        "cfo_compensated": -0.033333333333333326,
+        "nominal": -0.033333333333333326
+      },
+      "mean_probe_condition_number": 1.0000000000000002
+    },
+    {
+      "case": "mild",
+      "total_energy": 1.3,
+      "energy_saving_vs_full": 0.35,
+      "exact_support_probability": {
+        "oracle": 0.69,
+        "oracle_ridge": 0.6933333333333334,
+        "cfo_compensated": 0.66,
+        "nominal": 0.6666666666666666
+      },
+      "full_energy_probability": {
+        "oracle": 0.9366666666666666,
+        "oracle_ridge": 0.9366666666666666,
+        "cfo_compensated": 0.94,
+        "nominal": 0.9266666666666666
+      },
+      "loss_vs_full": {
+        "oracle": 0.2466666666666667,
+        "oracle_ridge": 0.2433333333333333,
+        "cfo_compensated": 0.2799999999999999,
+        "nominal": 0.26
+      },
+      "mean_probe_condition_number": 1.881111218876921
+    },
+    {
+      "case": "mild",
+      "total_energy": 1.5,
+      "energy_saving_vs_full": 0.25,
+      "exact_support_probability": {
+        "oracle": 0.8466666666666667,
+        "oracle_ridge": 0.8466666666666667,
+        "cfo_compensated": 0.8533333333333334,
+        "nominal": 0.8633333333333333
+      },
+      "full_energy_probability": {
+        "oracle": 0.9366666666666666,
+        "oracle_ridge": 0.94,
+        "cfo_compensated": 0.9266666666666666,
+        "nominal": 0.9366666666666666
+      },
+      "loss_vs_full": {
+        "oracle": 0.08999999999999997,
+        "oracle_ridge": 0.09333333333333327,
+        "cfo_compensated": 0.07333333333333325,
+        "nominal": 0.07333333333333336
+      },
+      "mean_probe_condition_number": 1.4705892505304539
+    },
+    {
+      "case": "mild",
+      "total_energy": 1.6,
+      "energy_saving_vs_full": 0.19999999999999996,
+      "exact_support_probability": {
+        "oracle": 0.8366666666666667,
+        "oracle_ridge": 0.8366666666666667,
+        "cfo_compensated": 0.83,
+        "nominal": 0.84
+      },
+      "full_energy_probability": {
+        "oracle": 0.9133333333333333,
+        "oracle_ridge": 0.91,
+        "cfo_compensated": 0.9,
+        "nominal": 0.9133333333333333
+      },
+      "loss_vs_full": {
+        "oracle": 0.07666666666666666,
+        "oracle_ridge": 0.07333333333333336,
+        "cfo_compensated": 0.07000000000000006,
+        "nominal": 0.07333333333333336
+      },
+      "mean_probe_condition_number": 1.3628550132116806
+    },
+    {
+      "case": "mild",
+      "total_energy": 1.7,
+      "energy_saving_vs_full": 0.15000000000000002,
+      "exact_support_probability": {
+        "oracle": 0.89,
+        "oracle_ridge": 0.89,
+        "cfo_compensated": 0.9066666666666666,
+        "nominal": 0.9066666666666666
+      },
+      "full_energy_probability": {
+        "oracle": 0.9233333333333333,
+        "oracle_ridge": 0.9233333333333333,
+        "cfo_compensated": 0.9266666666666666,
+        "nominal": 0.92
+      },
+      "loss_vs_full": {
+        "oracle": 0.033333333333333326,
+        "oracle_ridge": 0.033333333333333326,
+        "cfo_compensated": 0.020000000000000018,
+        "nominal": 0.01333333333333342
+      },
+      "mean_probe_condition_number": 1.286487446276612
+    },
+    {
+      "case": "mild",
+      "total_energy": 1.8,
+      "energy_saving_vs_full": 0.09999999999999998,
+      "exact_support_probability": {
+        "oracle": 0.8966666666666666,
+        "oracle_ridge": 0.8966666666666666,
+        "cfo_compensated": 0.8966666666666666,
+        "nominal": 0.8866666666666667
+      },
+      "full_energy_probability": {
+        "oracle": 0.9333333333333333,
+        "oracle_ridge": 0.9333333333333333,
+        "cfo_compensated": 0.9366666666666666,
+        "nominal": 0.9233333333333333
+      },
+      "loss_vs_full": {
+        "oracle": 0.036666666666666736,
+        "oracle_ridge": 0.036666666666666736,
+        "cfo_compensated": 0.040000000000000036,
+        "nominal": 0.036666666666666625
+      },
+      "mean_probe_condition_number": 1.2301109955002638
+    },
+    {
+      "case": "mild",
+      "total_energy": 2.0,
+      "energy_saving_vs_full": 0.0,
+      "exact_support_probability": {
+        "oracle": 0.9066666666666666,
+        "oracle_ridge": 0.9066666666666666,
+        "cfo_compensated": 0.91,
+        "nominal": 0.9033333333333333
+      },
+      "full_energy_probability": {
+        "oracle": 0.94,
+        "oracle_ridge": 0.9433333333333334,
+        "cfo_compensated": 0.9366666666666666,
+        "nominal": 0.9433333333333334
+      },
+      "loss_vs_full": {
+        "oracle": 0.033333333333333326,
+        "oracle_ridge": 0.036666666666666736,
+        "cfo_compensated": 0.026666666666666616,
+        "nominal": 0.040000000000000036
+      },
+      "mean_probe_condition_number": 1.1890688821303106
+    },
+    {
+      "case": "moderate",
+      "total_energy": 1.3,
+      "energy_saving_vs_full": 0.35,
+      "exact_support_probability": {
+        "oracle": 0.5466666666666666,
+        "oracle_ridge": 0.5633333333333334,
+        "cfo_compensated": 0.5466666666666666,
+        "nominal": 0.65
+      },
+      "full_energy_probability": {
+        "oracle": 0.8466666666666667,
+        "oracle_ridge": 0.8533333333333334,
+        "cfo_compensated": 0.8066666666666666,
+        "nominal": 0.83
+      },
+      "loss_vs_full": {
+        "oracle": 0.30000000000000004,
+        "oracle_ridge": 0.29000000000000004,
+        "cfo_compensated": 0.26,
+        "nominal": 0.17999999999999994
+      },
+      "mean_probe_condition_number": 2.4376358044552506
+    },
+    {
+      "case": "moderate",
+      "total_energy": 1.5,
+      "energy_saving_vs_full": 0.25,
+      "exact_support_probability": {
+        "oracle": 0.7033333333333334,
+        "oracle_ridge": 0.71,
+        "cfo_compensated": 0.7366666666666667,
+        "nominal": 0.7666666666666667
+      },
+      "full_energy_probability": {
+        "oracle": 0.8366666666666667,
+        "oracle_ridge": 0.8333333333333334,
+        "cfo_compensated": 0.8066666666666666,
+        "nominal": 0.83
+      },
+      "loss_vs_full": {
+        "oracle": 0.1333333333333333,
+        "oracle_ridge": 0.1233333333333334,
+        "cfo_compensated": 0.06999999999999995,
+        "nominal": 0.06333333333333324
+      },
+      "mean_probe_condition_number": 2.050737502985435
+    },
+    {
+      "case": "moderate",
+      "total_energy": 1.6,
+      "energy_saving_vs_full": 0.19999999999999996,
+      "exact_support_probability": {
+        "oracle": 0.7733333333333333,
+        "oracle_ridge": 0.7833333333333333,
+        "cfo_compensated": 0.77,
+        "nominal": 0.8
+      },
+      "full_energy_probability": {
+        "oracle": 0.8033333333333333,
+        "oracle_ridge": 0.8033333333333333,
+        "cfo_compensated": 0.8133333333333334,
+        "nominal": 0.8633333333333333
+      },
+      "loss_vs_full": {
+        "oracle": 0.030000000000000027,
+        "oracle_ridge": 0.020000000000000018,
+        "cfo_compensated": 0.043333333333333335,
+        "nominal": 0.06333333333333324
+      },
+      "mean_probe_condition_number": 1.9088022173577694
+    },
+    {
+      "case": "moderate",
+      "total_energy": 1.7,
+      "energy_saving_vs_full": 0.15000000000000002,
+      "exact_support_probability": {
+        "oracle": 0.7733333333333333,
+        "oracle_ridge": 0.7833333333333333,
+        "cfo_compensated": 0.7433333333333333,
+        "nominal": 0.8066666666666666
+      },
+      "full_energy_probability": {
+        "oracle": 0.8433333333333334,
+        "oracle_ridge": 0.85,
+        "cfo_compensated": 0.8333333333333334,
+        "nominal": 0.8533333333333334
+      },
+      "loss_vs_full": {
+        "oracle": 0.07000000000000006,
+        "oracle_ridge": 0.06666666666666665,
+        "cfo_compensated": 0.09000000000000008,
+        "nominal": 0.046666666666666745
+      },
+      "mean_probe_condition_number": 1.9073888528989293
+    },
+    {
+      "case": "moderate",
+      "total_energy": 1.8,
+      "energy_saving_vs_full": 0.09999999999999998,
+      "exact_support_probability": {
+        "oracle": 0.7966666666666666,
+        "oracle_ridge": 0.8066666666666666,
+        "cfo_compensated": 0.82,
+        "nominal": 0.82
+      },
+      "full_energy_probability": {
+        "oracle": 0.8233333333333334,
+        "oracle_ridge": 0.82,
+        "cfo_compensated": 0.8166666666666667,
+        "nominal": 0.85
+      },
+      "loss_vs_full": {
+        "oracle": 0.026666666666666727,
+        "oracle_ridge": 0.013333333333333308,
+        "cfo_compensated": -0.0033333333333332993,
+        "nominal": 0.030000000000000027
+      },
+      "mean_probe_condition_number": 1.9298716054230962
+    },
+    {
+      "case": "moderate",
+      "total_energy": 2.0,
+      "energy_saving_vs_full": 0.0,
+      "exact_support_probability": {
+        "oracle": 0.8566666666666667,
+        "oracle_ridge": 0.86,
+        "cfo_compensated": 0.8,
+        "nominal": 0.8466666666666667
+      },
+      "full_energy_probability": {
+        "oracle": 0.8133333333333334,
+        "oracle_ridge": 0.8133333333333334,
+        "cfo_compensated": 0.8066666666666666,
+        "nominal": 0.8266666666666667
+      },
+      "loss_vs_full": {
+        "oracle": -0.043333333333333335,
+        "oracle_ridge": -0.046666666666666634,
+        "cfo_compensated": 0.006666666666666599,
+        "nominal": -0.020000000000000018
+      },
+      "mean_probe_condition_number": 1.917412515126421
+    },
+    {
+      "case": "severe",
+      "total_energy": 1.3,
+      "energy_saving_vs_full": 0.35,
+      "exact_support_probability": {
+        "oracle": 0.36,
+        "oracle_ridge": 0.36,
+        "cfo_compensated": 0.33666666666666667,
+        "nominal": 0.5533333333333333
+      },
+      "full_energy_probability": {
+        "oracle": 0.64,
+        "oracle_ridge": 0.6533333333333333,
+        "cfo_compensated": 0.52,
+        "nominal": 0.7266666666666667
+      },
+      "loss_vs_full": {
+        "oracle": 0.28,
+        "oracle_ridge": 0.29333333333333333,
+        "cfo_compensated": 0.18333333333333335,
+        "nominal": 0.17333333333333334
+      },
+      "mean_probe_condition_number": 3.572657404408836
+    },
+    {
+      "case": "severe",
+      "total_energy": 1.5,
+      "energy_saving_vs_full": 0.25,
+      "exact_support_probability": {
+        "oracle": 0.5133333333333333,
+        "oracle_ridge": 0.55,
+        "cfo_compensated": 0.43666666666666665,
+        "nominal": 0.6733333333333333
+      },
+      "full_energy_probability": {
+        "oracle": 0.6766666666666666,
+        "oracle_ridge": 0.69,
+        "cfo_compensated": 0.5366666666666666,
+        "nominal": 0.7766666666666666
+      },
+      "loss_vs_full": {
+        "oracle": 0.16333333333333333,
+        "oracle_ridge": 0.1399999999999999,
+        "cfo_compensated": 0.09999999999999998,
+        "nominal": 0.10333333333333328
+      },
+      "mean_probe_condition_number": 2.991204804564369
+    },
+    {
+      "case": "severe",
+      "total_energy": 1.6,
+      "energy_saving_vs_full": 0.19999999999999996,
+      "exact_support_probability": {
+        "oracle": 0.6066666666666667,
+        "oracle_ridge": 0.6133333333333333,
+        "cfo_compensated": 0.5,
+        "nominal": 0.72
+      },
+      "full_energy_probability": {
+        "oracle": 0.6333333333333333,
+        "oracle_ridge": 0.6433333333333333,
+        "cfo_compensated": 0.53,
+        "nominal": 0.7333333333333333
+      },
+      "loss_vs_full": {
+        "oracle": 0.026666666666666616,
+        "oracle_ridge": 0.030000000000000027,
+        "cfo_compensated": 0.030000000000000027,
+        "nominal": 0.013333333333333308
+      },
+      "mean_probe_condition_number": 2.874661589759368
+    },
+    {
+      "case": "severe",
+      "total_energy": 1.7,
+      "energy_saving_vs_full": 0.15000000000000002,
+      "exact_support_probability": {
+        "oracle": 0.57,
+        "oracle_ridge": 0.5833333333333334,
+        "cfo_compensated": 0.49,
+        "nominal": 0.7166666666666667
+      },
+      "full_energy_probability": {
+        "oracle": 0.6133333333333333,
+        "oracle_ridge": 0.6333333333333333,
+        "cfo_compensated": 0.5,
+        "nominal": 0.7433333333333333
+      },
+      "loss_vs_full": {
+        "oracle": 0.043333333333333335,
+        "oracle_ridge": 0.04999999999999993,
+        "cfo_compensated": 0.010000000000000009,
+        "nominal": 0.026666666666666616
+      },
+      "mean_probe_condition_number": 3.079619452177832
+    },
+    {
+      "case": "severe",
+      "total_energy": 1.8,
+      "energy_saving_vs_full": 0.09999999999999998,
+      "exact_support_probability": {
+        "oracle": 0.5666666666666667,
+        "oracle_ridge": 0.5833333333333334,
+        "cfo_compensated": 0.4866666666666667,
+        "nominal": 0.74
+      },
+      "full_energy_probability": {
+        "oracle": 0.6033333333333334,
+        "oracle_ridge": 0.6233333333333333,
+        "cfo_compensated": 0.5166666666666667,
+        "nominal": 0.7633333333333333
+      },
+      "loss_vs_full": {
+        "oracle": 0.036666666666666736,
+        "oracle_ridge": 0.039999999999999925,
+        "cfo_compensated": 0.030000000000000027,
+        "nominal": 0.023333333333333317
+      },
+      "mean_probe_condition_number": 3.0260583203137137
+    },
+    {
+      "case": "severe",
+      "total_energy": 2.0,
+      "energy_saving_vs_full": 0.0,
+      "exact_support_probability": {
+        "oracle": 0.64,
+        "oracle_ridge": 0.6566666666666666,
+        "cfo_compensated": 0.5666666666666667,
+        "nominal": 0.8166666666666667
+      },
+      "full_energy_probability": {
+        "oracle": 0.6366666666666667,
+        "oracle_ridge": 0.66,
+        "cfo_compensated": 0.49666666666666665,
+        "nominal": 0.8133333333333334
+      },
+      "loss_vs_full": {
+        "oracle": -0.0033333333333332993,
+        "oracle_ridge": 0.0033333333333334103,
+        "cfo_compensated": -0.07,
+        "nominal": -0.0033333333333332993
+      },
+      "mean_probe_condition_number": 2.8674462316764266
+    }
+  ],
+  "minimum_total_energy_for_loss_at_most_2pp": {
+    "ideal": {
+      "oracle": 1.8,
+      "oracle_ridge": 1.8,
+      "cfo_compensated": 1.8,
+      "nominal": 1.8
+    },
+    "mild": {
+      "oracle": null,
+      "oracle_ridge": null,
+      "cfo_compensated": null,
+      "nominal": 1.7
+    },
+    "moderate": {
+      "oracle": 2.0,
+      "oracle_ridge": 1.8,
+      "cfo_compensated": 1.8,
+      "nominal": 2.0
+    },
+    "severe": {
+      "oracle": 2.0,
+      "oracle_ridge": 2.0,
+      "cfo_compensated": 1.7,
+      "nominal": 1.6
+    }
+  },
+  "gate_requires_energy_at_most_1.7": true
+}

@@ -1,0 +1,118 @@
+{
+  "scope": "paired two-source coarse-cluster fairness audit under ideal coherent incremental snapshots",
+  "policy_false_alarm_target": 0.01,
+  "h0_calibration_trials": 10000,
+  "h1_training_scenarios": 1500,
+  "h1_validation_scenarios": 1500,
+  "partial_energy": 0.3,
+  "target_fallback_rate": 0.404,
+  "confidence_cutoff_from_unlabeled_training_scores": 0.8758755426129211,
+  "validation_confidence_fallback_rate": 0.398,
+  "policies": {
+    "fixed_partial": {
+      "mean_normalized_probe_energy": 1.3,
+      "conditional_exact_support_probability": 0.9933333333333333,
+      "conditional_exact_support_95ci": [
+        0.9877713792517346,
+        0.9963748233802445
+      ],
+      "calibrated_policy_threshold": 0.1536668447378558,
+      "empirical_policy_false_alarm_probability": 0.01
+    },
+    "fixed_equal_energy": {
+      "mean_normalized_probe_energy": 1.5828,
+      "conditional_exact_support_probability": 0.9993333333333333,
+      "conditional_exact_support_95ci": [
+        0.9962332380438313,
+        0.9998823102958342
+      ],
+      "calibrated_policy_threshold": 0.09100579894956187,
+      "empirical_policy_false_alarm_probability": 0.01
+    },
+    "random_fallback": {
+      "mean_normalized_probe_energy": 1.5828,
+      "conditional_exact_support_probability": 0.9973333333333333,
+      "conditional_exact_support_95ci": [
+        0.9931632379046889,
+        0.9989625285324146
+      ],
+      "calibrated_policy_threshold": 0.14489534285379463,
+      "empirical_policy_false_alarm_probability": 0.01
+    },
+    "confidence_fallback": {
+      "mean_normalized_probe_energy": 1.5786,
+      "conditional_exact_support_probability": 0.996,
+      "conditional_exact_support_95ci": [
+        0.9913003729609919,
+        0.9981655388744035
+      ],
+      "calibrated_policy_threshold": 0.06567307009755481,
+      "empirical_policy_false_alarm_probability": 0.01
+    },
+    "oracle_fallback": {
+      "mean_normalized_probe_energy": 1.5828,
+      "conditional_exact_support_probability": 1.0,
+      "conditional_exact_support_95ci": [
+        0.9974454756405194,
+        0.9999999999999999
+      ],
+      "calibrated_policy_threshold": 0.14489534285379463,
+      "empirical_policy_false_alarm_probability": 0.01
+    },
+    "full_energy": {
+      "mean_normalized_probe_energy": 2.0,
+      "conditional_exact_support_probability": 1.0,
+      "conditional_exact_support_95ci": [
+        0.9974454756405194,
+        0.9999999999999999
+      ],
+      "calibrated_policy_threshold": 0.06567307009755481,
+      "empirical_policy_false_alarm_probability": 0.01
+    }
+  },
+  "paired_advantages": {
+    "confidence_minus_random": {
+      "mean": -0.0013333333333333333,
+      "95ci": [
+        -0.004534355777655142,
+        0.0018676891109884752
+      ]
+    },
+    "confidence_minus_fixed_equal_energy": {
+      "mean": -0.0033333333333333335,
+      "95ci": [
+        -0.006787481888762992,
+        0.00012081522209632508
+      ]
+    },
+    "oracle_minus_confidence": {
+      "mean": 0.004,
+      "95ci": [
+        0.0008046758645033742,
+        0.0071953241354966255
+      ]
+    }
+  },
+  "gate": {
+    "confidence_beats_fixed_equal_energy": false,
+    "confidence_significantly_beats_random": false
+  },
+  "partial_stage_diagnostic_separation": {
+    "score": {
+      "correct_median": 0.9178213939145227,
+      "incorrect_median": 0.9247657398619343
+    },
+    "minimum_peak_margin": {
+      "correct_median": 1.0051613212061405,
+      "incorrect_median": 1.004646210199943
+    },
+    "maximum_residual_ratio": {
+      "correct_median": 0.8582386650169258,
+      "incorrect_median": 0.863015374379878
+    },
+    "estimated_support_lambda_min": {
+      "correct_median": 0.4801286522940913,
+      "incorrect_median": 0.6660676880959595
+    }
+  }
+}
