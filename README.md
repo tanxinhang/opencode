@@ -106,6 +106,32 @@ two-snapshot probing in the current stratified audit while reducing the mean
 probe length.  This remains a known-coarse-support mechanism result: the
 trigger has not yet been driven by estimated clusters from the full 3D
 detector, and corner sampling is not a continuous-box robustness guarantee.
+
+An initial end-to-end local-cluster audit now adds fine-grid off-grid
+refinement and compares one- versus two-source joint-LS fits before deciding
+whether to request a second orthogonal probe snapshot.  The current trigger
+does not pass the joint gate: its default rule saves 34.4% of snapshots but
+loses 8.17 percentage points of joint detection relative to fixed P=2.  Even a
+label-aided threshold reachability sweep finds no raw-statistic threshold that
+simultaneously saves 20% and limits loss to 1 percentage point (the nearest
+points are 20% saving with 1.33 pp loss, or 18.5% saving within 1 pp).  This is
+a negative result, not an end-to-end algorithm claim; support-confidence or
+sequential evidence is still required.
+
+A follow-up partial-confirmation gate replaces unreliable one-snapshot early
+stopping with a full-energy sum observation and a sign-reversed difference
+observation at energy fraction delta.  Decoding explicitly divides the
+difference by sqrt(delta), so the corresponding noise amplification is
+included.  On paired independent validation, delta=0.3 reaches 99.13% joint
+detection versus 100% at full difference energy while saving 35% probing
+energy.  A three-stage policy supplements the remaining energy for the lowest
+40% confidence cases; on its held-out half it saves 20.86% energy and reaches
+99.73% versus 100%.  These are energy—not latency or symbol-count—savings, the
+coarse collision cluster is still supplied, and the thresholds impose a
+conservative familywise false-alarm upper bound rather than exact equality.
+The noise-only audit falls back in every frame, so the reported 20.86% saving
+is conditional on a supplied two-source candidate cluster; network-wide
+energy saving additionally depends on the prevalence of such H1 clusters.
 The benchmark script compares the proposed selector against no cooperation,
 sensing-only Top-K, communication-only Top-K, independent post-report ranking,
 random selection, and all-scheduled fusion. `exhaustive_oracle` is provided for
