@@ -302,6 +302,212 @@ def optimize_dual_layer_chance_portfolio(
     )
 
 
+def _experimental_enumerate_threshold_bundle_options(
+    model: TargetEvidenceModel,
+    minimum_pd: float,
+    target_weight: float,
+    path_groups: Sequence[int],
+    native_resources: Sequence[int],
+    strength: float,
+    path_failure_fraction: float,
+    maximum_cost_bits: int,
+    domain_capacities: Sequence[int],
+    *,
+    baseline_copy_counts: Sequence[int],
+    maximum_bundle_actions: int = 3,
+    resource_access: np.ndarray | None = None,
+    false_alarm_rate: float = 0.05,
+    beta: float = 0.9,
+    tail_weight: float = 1.0,
+) -> list[ReplicationOption]:
+    """Enumerate bounded action bundles and retain their local Pareto frontier.
+
+    The neighborhood starts at a selection-only solution. Each local action
+    adds or removes one report copy, so swaps, paired additions, and replication
+    repairs are scored only after the complete bundle is formed. For fixed
+    depth K the candidate count is O(N**K), rather than the O(3**N)
+    configurations used by the exact oracle.
+    """
+    if maximum_bundle_actions < 0:
+        raise ValueError("maximum_bundle_actions must be nonnegative")
+    candidates = [i for i in range(model.num_uavs) if i != model.owner]
+    baseline = tuple(int(x) for x in baseline_copy_counts)
+    if len(baseline) != model.num_uavs or baseline[model.owner] != 0:
+        raise ValueError("baseline_copy_counts must match the model")
+    native = np.asarray(native_resources, dtype=int)
+    capacities = np.asarray(domain_capacities, dtype=int)
+    access = (
+        np.ones((model.num_uavs, capacities.size), dtype=bool)
+        if resource_access is None else np.asarray(resource_access, dtype=bool)
+    )
+    if access.shape != (model.num_uavs, capacities.size):
+        raise ValueError("resource_access must have shape [num_uavs, num_domains]")
+
+    quality_cache: dict[frozenset[int], float] = {}
+    neighborhoods = {baseline}
+    frontier_states = {baseline}
+    for _ in range(maximum_bundle_actions):
+        next_states = set()
+        for state in frontier_states:
+            for i in candidates:
+                for delta in (-1, 1):
+                    value = state[i] + delta
+                    if value < 0 or value > 2:
+                        continue
+                    updated = list(state)
+                    updated[i] = value
+                    next_states.add(tuple(updated))
+        next_states -= neighborhoods
+        neighborhoods |= next_states
+        frontier_states = next_states
+
+    options = []
+    for state in neighborhoods:
+        counts = np.asarray(state, dtype=int)
+        domain_cost = np.zeros(capacities.size, dtype=int)
+        valid = True
+        for i in candidates:
+            if counts[i] >= 1:
+                domain = int(native[i])
+                valid &= bool(access[i, domain])
+                domain_cost[domain] += int(model.report_bits[i])
+            if counts[i] == 2:
+                domain = (int(native[i]) + 1) % capacities.size
+                valid &= bool(access[i, domain])
+                domain_cost[domain] += int(model.report_bits[i])
+        cost = int(domain_cost.sum())
+        if (not valid or cost > maximum_cost_bits
+                or np.any(domain_cost > capacities)):
+            continue
+        repaired = dual_layer_reception_model(
+            model, counts, path_groups, native_resources, strength,
+            path_failure_fraction, replication_mode="cross_domain",
+            num_resources=capacities.size,
+        )
+        scheduled = {model.owner, *[i for i in candidates if counts[i] > 0]}
+        values = []
+        probabilities = []
+        for received, probability in _received_patterns(repaired, scheduled):
+            key = frozenset(received)
+            if key not in quality_cache:
+                quality_cache[key] = _received_quality(
+                    model, key, "gaussian_pd", false_alarm_rate
+                )
+            values.append(max(minimum_pd - quality_cache[key], 0.0))
+            probabilities.append(probability)
+        distribution = LossDistribution(
+            np.asarray(values), np.asarray(probabilities)
+        )
+        options.append(ReplicationOption(
+            target=model.target_id,
+            copy_counts=tuple(int(x) for x in counts),
+            cost_bits=cost,
+            violation_probability=distribution.violation_probability(),
+            mean_loss=distribution.mean,
+            cvar_loss=distribution.cvar(beta),
+            risk_objective=float(target_weight) * (
+                distribution.mean + tail_weight * distribution.cvar(beta)
+            ),
+            domain_cost_bits=tuple(int(x) for x in domain_cost),
+        ))
+
+    frontier = []
+    for option in options:
+        dominated = any(
+            all(a <= b for a, b in zip(other.domain_cost_bits, option.domain_cost_bits))
+            and other.violation_probability <= option.violation_probability + 1e-12
+            and other.risk_objective <= option.risk_objective + 1e-12
+            and (
+                other.domain_cost_bits != option.domain_cost_bits
+                or other.violation_probability < option.violation_probability - 1e-12
+                or other.risk_objective < option.risk_objective - 1e-12
+            )
+            for other in options if other is not option
+        )
+        if not dominated:
+            frontier.append(option)
+    return frontier
+
+
+def _experimental_optimize_threshold_bundle_portfolio(
+    models: Sequence[TargetEvidenceModel], budget_bits: int,
+    minimum_pd: Sequence[float], target_weights: Sequence[float],
+    violation_limits: Sequence[float], path_groups: Sequence[Sequence[int]],
+    native_resources: Sequence[Sequence[int]], strength: float,
+    path_failure_fraction: float, domain_capacities: Sequence[int], *,
+    maximum_bundle_actions: int = 3,
+    resource_access: Sequence[np.ndarray] | None = None,
+    false_alarm_rate: float = 0.05, beta: float = 0.9,
+    tail_weight: float = 1.0,
+) -> ReplicationChanceResult:
+    """Solve the two-domain multiple-choice DP over threshold-aware bundles."""
+    weights = np.asarray(target_weights, dtype=float)
+    limits = np.asarray(violation_limits, dtype=float)
+    access_per_target = (
+        [None] * len(models) if resource_access is None else list(resource_access)
+    )
+    if len(access_per_target) != len(models):
+        raise ValueError("resource_access must provide one mask per target")
+    baseline = optimize_dual_layer_chance_portfolio(
+        models, budget_bits, minimum_pd, target_weights, violation_limits,
+        path_groups, native_resources, strength, path_failure_fraction,
+        domain_capacities, replication_mode="cross_domain", maximum_copies=1,
+        resource_access=resource_access, false_alarm_rate=false_alarm_rate,
+        beta=beta, tail_weight=tail_weight,
+    )
+    groups = [
+        _experimental_enumerate_threshold_bundle_options(
+            model, minimum_pd[q], weights[q], path_groups[q],
+            native_resources[q], strength, path_failure_fraction, budget_bits,
+            domain_capacities, baseline_copy_counts=baseline.copy_counts[q],
+            maximum_bundle_actions=maximum_bundle_actions,
+            resource_access=access_per_target[q],
+            false_alarm_rate=false_alarm_rate, beta=beta,
+            tail_weight=tail_weight,
+        )
+        for q, model in enumerate(models)
+    ]
+    capacity = tuple(int(x) for x in domain_capacities)
+    states = {(0, tuple(0 for _ in capacity)): ((0.0, 0.0), tuple())}
+    for q, options in enumerate(groups):
+        next_states = {}
+        for (prior_cost, prior_domains), (prior_key, chosen) in states.items():
+            for option in options:
+                cost = prior_cost + option.cost_bits
+                domains = tuple(
+                    a + b for a, b in zip(prior_domains, option.domain_cost_bits)
+                )
+                if cost > budget_bits or any(
+                    value > capacity[j] for j, value in enumerate(domains)
+                ):
+                    continue
+                excess = weights[q] * max(
+                    option.violation_probability - limits[q], 0.0
+                )
+                key = (prior_key[0] + excess,
+                       prior_key[1] + option.risk_objective)
+                state_key = (cost, domains)
+                incumbent = next_states.get(state_key)
+                if incumbent is None or key < incumbent[0]:
+                    next_states[state_key] = (key, chosen + (option,))
+        states = next_states
+    (used, _), (key, chosen) = min(
+        states.items(), key=lambda item: (item[1][0], item[0][0])
+    )
+    violation = np.asarray([
+        option.violation_probability for option in chosen
+    ])
+    excess = np.maximum(violation - limits, 0.0)
+    return ReplicationChanceResult(
+        copy_counts=tuple(option.copy_counts for option in chosen),
+        violation_probability_per_target=violation,
+        violation_excess_per_target=excess,
+        weighted_violation_excess=float(weights @ excess),
+        risk_objective=float(key[1]), used_bits=used,
+        feasible=bool(np.all(excess <= 1e-12)),
+    )
+
+
 def enumerate_replication_options(
     model: TargetEvidenceModel,
     minimum_pd: float,

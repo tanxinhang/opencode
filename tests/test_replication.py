@@ -6,6 +6,7 @@ from uav_otfs_isac.replication import (
     dual_layer_reception_model,
     optimize_dual_layer_chance_portfolio,
     optimize_replication_chance_portfolio,
+    _experimental_optimize_threshold_bundle_portfolio,
     replicated_reception_model,
 )
 from uav_otfs_isac.reliability import with_grouped_common_state_erasures
@@ -95,3 +96,26 @@ def test_resource_access_mask_blocks_unavailable_second_domain():
         maximum_copies=2, resource_access=[access],
     )
     assert result.copy_counts[0][1] < 2
+
+
+def test_threshold_bundle_matches_oracle_when_depth_covers_budget():
+    model = symmetric_diversity_model(
+        np.array([1.4, 0.1, 0.1, 0.1]), success_probability=0.6
+    )
+    common = dict(
+        models=[model], budget_bits=3, minimum_pd=[0.17],
+        target_weights=[1.0], violation_limits=[0.0],
+        path_groups=[DOMAINS], native_resources=[DOMAINS], strength=1.0,
+        path_failure_fraction=0.5, domain_capacities=[2, 2],
+    )
+    oracle = optimize_dual_layer_chance_portfolio(
+        **common, replication_mode="cross_domain", maximum_copies=2
+    )
+    bundle = _experimental_optimize_threshold_bundle_portfolio(
+        **common, maximum_bundle_actions=3
+    )
+    assert np.allclose(
+        bundle.violation_probability_per_target,
+        oracle.violation_probability_per_target,
+    )
+    assert bundle.risk_objective <= oracle.risk_objective + 1e-12
