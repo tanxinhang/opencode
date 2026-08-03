@@ -33,6 +33,119 @@ class ReplicationChanceResult:
     feasible: bool
 
 
+_OBJECTIVE_TOLERANCE = 1e-12
+
+
+def _lexicographically_less(left, right) -> bool:
+    for a, b in zip(left, right):
+        if a < b - _OBJECTIVE_TOLERANCE:
+            return True
+        if a > b + _OBJECTIVE_TOLERANCE:
+            return False
+    return False
+
+
+def _objectives_equal(left, right) -> bool:
+    return all(
+        abs(a - b) <= _OBJECTIVE_TOLERANCE for a, b in zip(left, right)
+    )
+
+
+def _fair_label_dominates(left, right) -> bool:
+    """Return whether one partial fair-objective label safely dominates another."""
+    return all(
+        a <= b + _OBJECTIVE_TOLERANCE for a, b in zip(left, right)
+    ) and any(
+        a < b - _OBJECTIVE_TOLERANCE for a, b in zip(left, right)
+    )
+
+
+def _solve_dual_domain_groups(
+    groups: Sequence[Sequence[ReplicationOption]], budget_bits: int,
+    domain_capacities: Sequence[int], weights: np.ndarray, limits: np.ndarray,
+    objective_mode: str,
+) -> tuple[int, tuple[float, ...], tuple[ReplicationOption, ...]]:
+    """Multiple-choice DP with Pareto labels for the non-additive fair maximum."""
+    if objective_mode not in ("weighted", "fair"):
+        raise ValueError("objective_mode must be weighted or fair")
+    if objective_mode == "fair" and np.any(limits <= 0.0):
+        raise ValueError("fair objective requires strictly positive violation limits")
+    capacity = tuple(int(x) for x in domain_capacities)
+    zero_key = (0.0, 0.0, 0.0) if objective_mode == "fair" else (0.0, 0.0)
+    states = {(0, tuple(0 for _ in capacity)): [(zero_key, tuple())]}
+    for q, options in enumerate(groups):
+        next_states: dict[
+            tuple[int, tuple[int, ...]],
+            list[tuple[tuple[float, ...], tuple[ReplicationOption, ...]]],
+        ] = {}
+        for (prior_cost, prior_domains), labels in states.items():
+            for prior_key, chosen in labels:
+                for option in options:
+                    cost = prior_cost + option.cost_bits
+                    domains = tuple(
+                        a + b for a, b in zip(
+                            prior_domains, option.domain_cost_bits
+                        )
+                    )
+                    if cost > budget_bits or any(
+                        value > capacity[j] for j, value in enumerate(domains)
+                    ):
+                        continue
+                    raw_excess = max(
+                        option.violation_probability - limits[q], 0.0
+                    )
+                    weighted_excess = weights[q] * raw_excess
+                    if objective_mode == "fair":
+                        key = (
+                            max(prior_key[0], raw_excess / limits[q]),
+                            prior_key[1] + weighted_excess,
+                            prior_key[2] + option.risk_objective,
+                        )
+                    else:
+                        key = (
+                            prior_key[0] + weighted_excess,
+                            prior_key[1] + option.risk_objective,
+                        )
+                    state_key = (cost, domains)
+                    candidate = (key, chosen + (option,))
+                    labels_at_state = next_states.setdefault(state_key, [])
+                    if objective_mode == "weighted":
+                        if (not labels_at_state or _lexicographically_less(
+                                key, labels_at_state[0][0])):
+                            labels_at_state[:] = [candidate]
+                        continue
+                    if any(
+                        _objectives_equal(existing[0], key)
+                        for existing in labels_at_state
+                    ):
+                        continue
+                    if any(
+                        _fair_label_dominates(existing[0], key)
+                        for existing in labels_at_state
+                    ):
+                        continue
+                    labels_at_state[:] = [
+                        existing for existing in labels_at_state
+                        if not _fair_label_dominates(key, existing[0])
+                    ]
+                    labels_at_state.append(candidate)
+        states = next_states
+    candidates = [
+        (key, used, chosen)
+        for (used, _), labels in states.items()
+        for key, chosen in labels
+    ]
+    key, used, chosen = candidates[0]
+    for candidate_key, candidate_used, candidate_chosen in candidates[1:]:
+        if (_lexicographically_less(candidate_key, key)
+                or (_objectives_equal(candidate_key, key)
+                    and candidate_used < used)):
+            key, used, chosen = (
+                candidate_key, candidate_used, candidate_chosen
+            )
+    return used, key, chosen
+
+
 def replicated_reception_model(
     model: TargetEvidenceModel,
     copy_counts: Sequence[int],
@@ -258,6 +371,7 @@ def optimize_dual_layer_chance_portfolio(
     path_failure_fraction: float, domain_capacities: Sequence[int], *,
     replication_mode: str = "cross_domain", maximum_copies: int = 2,
     resource_access: Sequence[np.ndarray] | None = None,
+    objective_mode: str = "weighted",
     false_alarm_rate: float = 0.05, beta: float = 0.9,
     tail_weight: float = 1.0,
 ) -> ReplicationChanceResult:
@@ -275,29 +389,17 @@ def optimize_dual_layer_chance_portfolio(
         resource_access=access_per_target[q],
         false_alarm_rate=false_alarm_rate, beta=beta, tail_weight=tail_weight,
     ) for q, model in enumerate(models)]
-    capacity = tuple(int(x) for x in domain_capacities)
-    states = {(0, tuple(0 for _ in capacity)): ((0.0, 0.0), tuple())}
-    for q, options in enumerate(groups):
-        next_states = {}
-        for (prior_cost, prior_domains), (prior_key, chosen) in states.items():
-            for option in options:
-                cost = prior_cost + option.cost_bits
-                domains = tuple(a + b for a, b in zip(prior_domains, option.domain_cost_bits))
-                if cost > budget_bits or any(value > capacity[j] for j, value in enumerate(domains)):
-                    continue
-                excess = weights[q] * max(option.violation_probability - limits[q], 0.0)
-                key = (prior_key[0] + excess, prior_key[1] + option.risk_objective)
-                state_key = (cost, domains); incumbent = next_states.get(state_key)
-                if incumbent is None or key < incumbent[0]:
-                    next_states[state_key] = (key, chosen + (option,))
-        states = next_states
-    (used, _), (key, chosen) = min(states.items(), key=lambda item: (item[1][0], item[0][0]))
+    used, key, chosen = _solve_dual_domain_groups(
+        groups, budget_bits, domain_capacities, weights, limits, objective_mode
+    )
     violation = np.asarray([option.violation_probability for option in chosen]); excess = np.maximum(violation - limits, 0.0)
+    risk_index = 2 if objective_mode == "fair" else 1
     return ReplicationChanceResult(
         copy_counts=tuple(option.copy_counts for option in chosen),
         violation_probability_per_target=violation,
         violation_excess_per_target=excess,
-        weighted_violation_excess=float(weights @ excess), risk_objective=float(key[1]),
+        weighted_violation_excess=float(weights @ excess),
+        risk_objective=float(key[risk_index]),
         used_bits=used, feasible=bool(np.all(excess <= 1e-12)),
     )
 
@@ -437,6 +539,7 @@ def _experimental_optimize_threshold_bundle_portfolio(
     path_failure_fraction: float, domain_capacities: Sequence[int], *,
     maximum_bundle_actions: int = 3,
     resource_access: Sequence[np.ndarray] | None = None,
+    objective_mode: str = "fair",
     false_alarm_rate: float = 0.05, beta: float = 0.9,
     tail_weight: float = 1.0,
 ) -> ReplicationChanceResult:
@@ -448,11 +551,14 @@ def _experimental_optimize_threshold_bundle_portfolio(
     )
     if len(access_per_target) != len(models):
         raise ValueError("resource_access must provide one mask per target")
+    if objective_mode not in ("weighted", "fair"):
+        raise ValueError("objective_mode must be weighted or fair")
     baseline = optimize_dual_layer_chance_portfolio(
         models, budget_bits, minimum_pd, target_weights, violation_limits,
         path_groups, native_resources, strength, path_failure_fraction,
         domain_capacities, replication_mode="cross_domain", maximum_copies=1,
-        resource_access=resource_access, false_alarm_rate=false_alarm_rate,
+        resource_access=resource_access, objective_mode=objective_mode,
+        false_alarm_rate=false_alarm_rate,
         beta=beta, tail_weight=tail_weight,
     )
     groups = [
@@ -467,43 +573,20 @@ def _experimental_optimize_threshold_bundle_portfolio(
         )
         for q, model in enumerate(models)
     ]
-    capacity = tuple(int(x) for x in domain_capacities)
-    states = {(0, tuple(0 for _ in capacity)): ((0.0, 0.0), tuple())}
-    for q, options in enumerate(groups):
-        next_states = {}
-        for (prior_cost, prior_domains), (prior_key, chosen) in states.items():
-            for option in options:
-                cost = prior_cost + option.cost_bits
-                domains = tuple(
-                    a + b for a, b in zip(prior_domains, option.domain_cost_bits)
-                )
-                if cost > budget_bits or any(
-                    value > capacity[j] for j, value in enumerate(domains)
-                ):
-                    continue
-                excess = weights[q] * max(
-                    option.violation_probability - limits[q], 0.0
-                )
-                key = (prior_key[0] + excess,
-                       prior_key[1] + option.risk_objective)
-                state_key = (cost, domains)
-                incumbent = next_states.get(state_key)
-                if incumbent is None or key < incumbent[0]:
-                    next_states[state_key] = (key, chosen + (option,))
-        states = next_states
-    (used, _), (key, chosen) = min(
-        states.items(), key=lambda item: (item[1][0], item[0][0])
+    used, key, chosen = _solve_dual_domain_groups(
+        groups, budget_bits, domain_capacities, weights, limits, objective_mode
     )
     violation = np.asarray([
         option.violation_probability for option in chosen
     ])
     excess = np.maximum(violation - limits, 0.0)
+    risk_index = 2 if objective_mode == "fair" else 1
     return ReplicationChanceResult(
         copy_counts=tuple(option.copy_counts for option in chosen),
         violation_probability_per_target=violation,
         violation_excess_per_target=excess,
         weighted_violation_excess=float(weights @ excess),
-        risk_objective=float(key[1]), used_bits=used,
+        risk_objective=float(key[risk_index]), used_bits=used,
         feasible=bool(np.all(excess <= 1e-12)),
     )
 

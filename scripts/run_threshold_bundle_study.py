@@ -19,7 +19,7 @@ from uav_otfs_isac.replication import (
     _experimental_optimize_threshold_bundle_portfolio,
 )
 from uav_otfs_isac.scenario import build_models, uav_geometry
-from scripts.run_replication_realism_study import native_resource_labels
+from scripts.run_replication_realism_study import bootstrap_ci, native_resource_labels
 
 
 def timed(function):
@@ -31,7 +31,9 @@ def timed(function):
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="config/demo.yaml")
-    parser.add_argument("--output", default="results/threshold_bundle_smoke.json")
+    parser.add_argument(
+        "--output", default="results/threshold_bundle_fair_audited_smoke.json"
+    )
     parser.add_argument("--seeds", type=int, default=20)
     parser.add_argument("--budgets", type=int, nargs="+", default=[20, 30])
     parser.add_argument("--bundle-depths", type=int, nargs="+", default=[2, 3])
@@ -60,11 +62,13 @@ def main() -> None:
                 false_alarm_rate=cfg.false_alarm_rate,
             )
             selection, _ = timed(lambda: optimize_dual_layer_chance_portfolio(
-                **common, replication_mode="cross_domain", maximum_copies=1
+                **common, replication_mode="cross_domain", maximum_copies=1,
+                objective_mode="fair",
             ))
             oracle, oracle_seconds = timed(
                 lambda: optimize_dual_layer_chance_portfolio(
-                    **common, replication_mode="cross_domain", maximum_copies=2
+                    **common, replication_mode="cross_domain", maximum_copies=2,
+                    objective_mode="fair",
                 )
             )
             selection_worst = float(np.max(
@@ -75,7 +79,8 @@ def main() -> None:
             for depth in args.bundle_depths:
                 bundle, bundle_seconds = timed(
                     lambda depth=depth: _experimental_optimize_threshold_bundle_portfolio(
-                        **common, maximum_bundle_actions=depth
+                        **common, maximum_bundle_actions=depth,
+                        objective_mode="fair",
                     )
                 )
                 bundle_worst = float(np.max(
@@ -89,6 +94,28 @@ def main() -> None:
                     "bundle_worst_violation": bundle_worst,
                     "oracle_gain": oracle_gain,
                     "bundle_gain": selection_worst - bundle_worst,
+                    "selection_max_normalized_excess": float(np.max(
+                        selection.violation_excess_per_target / limits
+                    )),
+                    "oracle_max_normalized_excess": float(np.max(
+                        oracle.violation_excess_per_target / limits
+                    )),
+                    "bundle_max_normalized_excess": float(np.max(
+                        bundle.violation_excess_per_target / limits
+                    )),
+                    "selection_weighted_excess": selection.weighted_violation_excess,
+                    "oracle_weighted_excess": oracle.weighted_violation_excess,
+                    "bundle_weighted_excess": bundle.weighted_violation_excess,
+                    "normalized_weighted_excess_regret": (
+                        (bundle.weighted_violation_excess
+                         - oracle.weighted_violation_excess)
+                        / (selection.weighted_violation_excess
+                           - oracle.weighted_violation_excess)
+                        if selection.weighted_violation_excess
+                        - oracle.weighted_violation_excess > 1e-12 else None
+                    ),
+                    "oracle_risk": oracle.risk_objective,
+                    "bundle_risk": bundle.risk_objective,
                     "oracle_feasible": oracle.feasible,
                     "bundle_feasible": bundle.feasible,
                     "oracle_seconds": oracle_seconds,
@@ -123,10 +150,96 @@ def main() -> None:
                     row["oracle_seconds"] / max(row["bundle_seconds"], 1e-12)
                     for row in group
                 ])),
+                "mean_max_normalized_excess_regret": float(np.mean([
+                    row["bundle_max_normalized_excess"]
+                    - row["oracle_max_normalized_excess"] for row in group
+                ])),
+                "median_max_normalized_excess_regret": float(np.median([
+                    row["bundle_max_normalized_excess"]
+                    - row["oracle_max_normalized_excess"] for row in group
+                ])),
+                "max_normalized_excess_regret_ci95": bootstrap_ci([
+                    row["bundle_max_normalized_excess"]
+                    - row["oracle_max_normalized_excess"] for row in group
+                ]),
+                "p95_max_normalized_excess_regret": float(np.quantile([
+                    row["bundle_max_normalized_excess"]
+                    - row["oracle_max_normalized_excess"] for row in group
+                ], 0.95, method="higher")),
+                "worst_max_normalized_excess_regret": float(np.max([
+                    row["bundle_max_normalized_excess"]
+                    - row["oracle_max_normalized_excess"] for row in group
+                ])),
+                "mean_weighted_excess_regret": float(np.mean([
+                    row["bundle_weighted_excess"]
+                    - row["oracle_weighted_excess"] for row in group
+                ])),
+                "weighted_excess_regret_ci95": bootstrap_ci([
+                    row["bundle_weighted_excess"]
+                    - row["oracle_weighted_excess"] for row in group
+                ]),
+                "mean_normalized_weighted_excess_regret": (
+                    float(np.mean([
+                        row["normalized_weighted_excess_regret"] for row in group
+                        if row["normalized_weighted_excess_regret"] is not None
+                    ])) if any(
+                        row["normalized_weighted_excess_regret"] is not None
+                        for row in group
+                    ) else None
+                ),
+                "normalized_weighted_regret_gate_pass_rate": (
+                    float(np.mean([
+                        row["normalized_weighted_excess_regret"] <= 0.15 + 1e-12
+                        for row in group
+                        if row["normalized_weighted_excess_regret"] is not None
+                    ])) if any(
+                        row["normalized_weighted_excess_regret"] is not None
+                        for row in group
+                    ) else None
+                ),
+                "feasibility_rate_gap": float(np.mean([
+                    row["bundle_feasible"] for row in group
+                ]) - np.mean([row["oracle_feasible"] for row in group])),
+                "feasibility_gap_ci95": bootstrap_ci([
+                    int(row["bundle_feasible"]) - int(row["oracle_feasible"])
+                    for row in group
+                ]),
+                "instance_jmax_gate_pass_rate": float(np.mean([
+                    row["bundle_max_normalized_excess"]
+                    - row["oracle_max_normalized_excess"] <= 0.05 + 1e-12
+                    for row in group
+                ])),
+                "mean_risk_regret_when_higher_priorities_tie": (
+                    float(np.mean([
+                        row["bundle_risk"] - row["oracle_risk"] for row in group
+                        if abs(row["bundle_max_normalized_excess"]
+                               - row["oracle_max_normalized_excess"]) <= 1e-12
+                        and abs(row["bundle_weighted_excess"]
+                                - row["oracle_weighted_excess"]) <= 1e-12
+                    ])) if any(
+                        abs(row["bundle_max_normalized_excess"]
+                            - row["oracle_max_normalized_excess"]) <= 1e-12
+                        and abs(row["bundle_weighted_excess"]
+                                - row["oracle_weighted_excess"]) <= 1e-12
+                        for row in group
+                    ) else None
+                ),
             })
     payload = {
         "seeds": args.seeds,
         "path_risk_allocation_factor": args.path_fraction,
+        "objective": [
+            "maximum_normalized_violation_excess",
+            "weighted_total_violation_excess",
+            "mean_cvar_risk",
+            "used_bits",
+        ],
+        "audit": {
+            "fair_dp": "Pareto multi-label per capacity state",
+            "objective_tolerance": 1e-12,
+            "p95_method": "higher",
+            "risk_regret_conditioning": "reported only when higher priorities tie",
+        },
         "summary": summary,
         "instances": rows,
     }
