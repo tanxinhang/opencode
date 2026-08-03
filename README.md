@@ -95,6 +95,17 @@ signatures require resolvable per-element or orthogonal probing observations,
 their resource cost is not yet modeled, fractional refinement is absent, and
 CAZAC signatures have not shown a material advantage over the strongest
 random spatial-code baseline.
+
+The next mechanism gate uses the normalized joint probe-angle-DD Gram matrix
+to decide whether a coarse two-source collision cluster needs extra probing.
+On an independent continuous validation set, the minimum eigenvalue predicts
+conditional joint-LS resolution and sharply separates hard from easy cases.
+Under sampled corners of a deterministic parameter-uncertainty box, the
+minimum-over-samples Gram rule matches the scenario reliability of fixed
+two-snapshot probing in the current stratified audit while reducing the mean
+probe length.  This remains a known-coarse-support mechanism result: the
+trigger has not yet been driven by estimated clusters from the full 3D
+detector, and corner sampling is not a continuous-box robustness guarantee.
 The benchmark script compares the proposed selector against no cooperation,
 sensing-only Top-K, communication-only Top-K, independent post-report ranking,
 random selection, and all-scheduled fusion. `exhaustive_oracle` is provided for

@@ -1,0 +1,5218 @@
+{
+  "scope": "two-source known-coarse-support policy audit; 32 sampled box corners per length are used for selection, and the actual realization is sampled independently",
+  "lambda_threshold": 0.26409570321722925,
+  "uncertainty_radii": {
+    "angle": 1.5,
+    "delay": 0.075,
+    "doppler": 0.075,
+    "phase": 0.3141592653589793,
+    "cfo": 0.025
+  },
+  "scenarios": 180,
+  "policies": {
+    "nominal_length": {
+      "mean_resolution_probability": 0.9825055555555555,
+      "scenario_reliability_rate_at_0.8": 0.9777777777777777,
+      "mean_probe_length": 1.3611111111111112,
+      "probe_length_counts": {
+        "1": 115,
+        "2": 65,
+        "3": 0,
+        "4": 0
+      },
+      "by_stratum": {
+        "easy": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9991208333333332,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 1.0
+        },
+        "hard": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9793999999999999,
+          "reliability_rate_at_0.8": 0.9666666666666667,
+          "mean_probe_length": 1.9333333333333333
+        },
+        "medium": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9689958333333336,
+          "reliability_rate_at_0.8": 0.9666666666666667,
+          "mean_probe_length": 1.15
+        }
+      }
+    },
+    "robust_length": {
+      "mean_resolution_probability": 0.9971958333333333,
+      "scenario_reliability_rate_at_0.8": 1.0,
+      "mean_probe_length": 1.5166666666666666,
+      "probe_length_counts": {
+        "1": 89,
+        "2": 89,
+        "3": 2,
+        "4": 0
+      },
+      "by_stratum": {
+        "easy": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9991208333333332,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 1.0
+        },
+        "hard": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9974625,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 2.033333333333333
+        },
+        "medium": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9950041666666666,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 1.5166666666666666
+        }
+      }
+    },
+    "fixed_2": {
+      "mean_resolution_probability": 0.9982333333333333,
+      "scenario_reliability_rate_at_0.8": 1.0,
+      "mean_probe_length": 2.0,
+      "probe_length_counts": {
+        "1": 0,
+        "2": 180,
+        "3": 0,
+        "4": 0
+      },
+      "by_stratum": {
+        "easy": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9993666666666667,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 2.0
+        },
+        "hard": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9969791666666665,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 2.0
+        },
+        "medium": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9983541666666668,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 2.0
+        }
+      }
+    },
+    "fixed_4": {
+      "mean_resolution_probability": 0.9992680555555555,
+      "scenario_reliability_rate_at_0.8": 1.0,
+      "mean_probe_length": 4.0,
+      "probe_length_counts": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 180
+      },
+      "by_stratum": {
+        "easy": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9993875000000002,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 4.0
+        },
+        "hard": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9991708333333335,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 4.0
+        },
+        "medium": {
+          "scenarios": 60,
+          "mean_resolution_probability": 0.9992458333333333,
+          "reliability_rate_at_0.8": 1.0,
+          "mean_probe_length": 4.0
+        }
+      }
+    }
+  },
+  "paired_comparisons": {
+    "robust_minus_fixed_2": {
+      "resolution_probability_difference": {
+        "mean": -0.0010375000000000048,
+        "95ci": [
+          -0.0017025614635583497,
+          -0.00037243853644166
+        ]
+      },
+      "probe_length_difference": {
+        "mean": -0.48333333333333334,
+        "95ci": [
+          -0.5597291629373204,
+          -0.4069375037293462
+        ]
+      },
+      "first_has_lower_resolution_scenarios": 8,
+      "first_fails_0.8_while_second_passes": 0
+    },
+    "robust_minus_nominal": {
+      "resolution_probability_difference": {
+        "mean": 0.014690277777777778,
+        "95ci": [
+          0.006067040140939419,
+          0.023313515414616136
+        ]
+      },
+      "probe_length_difference": {
+        "mean": 0.15555555555555556,
+        "95ci": [
+          0.10246003776693223,
+          0.20865107334417887
+        ]
+      },
+      "first_has_lower_resolution_scenarios": 0,
+      "first_fails_0.8_while_second_passes": 0
+    }
+  },
+  "rows": [
+    {
+      "scenario": 0,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 11.596443964743838,
+        "delay_gap": 0.31708542254118144,
+        "doppler_gap": 0.4514663113787697,
+        "phase_step": 0.9001044508772637,
+        "cfo": 0.018102305322860425
+      },
+      "actual": {
+        "angle_gap": 10.458117558823592,
+        "delay_gap": 0.3734473329940199,
+        "doppler_gap": 0.4526950261737447,
+        "phase_step": 0.975035126756894,
+        "cfo": 0.019491033890509546
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99825,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 1,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.75125832908636,
+        "delay_gap": 0.23124990065220566,
+        "doppler_gap": 0.1139746127106468,
+        "phase_step": 0.18723764784204974,
+        "cfo": 0.05394616134244626
+      },
+      "actual": {
+        "angle_gap": 6.038980910053702,
+        "delay_gap": 0.18790859198204435,
+        "doppler_gap": 0.09792935770642901,
+        "phase_step": 0.34001527224803063,
+        "cfo": 0.035200457593452576
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.92025,
+        "2": 0.999,
+        "3": 0.99875,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 2,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.5562788292218999,
+        "delay_gap": 0.07364002924464036,
+        "doppler_gap": 0.05232511981523678,
+        "phase_step": 1.362087943984523,
+        "cfo": 0.07817926344311765
+      },
+      "actual": {
+        "angle_gap": 2.305813880680067,
+        "delay_gap": 0.03727848870038272,
+        "doppler_gap": 0.08177892997688985,
+        "phase_step": 1.1029695144429463,
+        "cfo": 0.09843029032631503
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.079,
+        "2": 0.99925,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 3,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 19.505077343344208,
+        "delay_gap": 0.35167227262270806,
+        "doppler_gap": 0.39614304073623796,
+        "phase_step": 1.3062808208200456,
+        "cfo": 0.07240337137581213
+      },
+      "actual": {
+        "angle_gap": 18.57364236718851,
+        "delay_gap": 0.35891217121324254,
+        "doppler_gap": 0.4226843817172733,
+        "phase_step": 1.036319668566844,
+        "cfo": 0.08742288951739824
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.99925,
+        "3": 0.999,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 4,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 7.232035235790491,
+        "delay_gap": 0.2350094050367925,
+        "doppler_gap": 0.17596963493011444,
+        "phase_step": 0.9164357330964873,
+        "cfo": 0.06378835175748862
+      },
+      "actual": {
+        "angle_gap": 7.895440195558935,
+        "delay_gap": 0.28968857203677106,
+        "doppler_gap": 0.13656383706317685,
+        "phase_step": 0.8961745641300357,
+        "cfo": 0.07004730631365462
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9935,
+        "2": 0.99925,
+        "3": 0.99925,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 5,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.6833377029807275,
+        "delay_gap": 0.07771536999902606,
+        "doppler_gap": 0.019920533672525657,
+        "phase_step": 0.9365654609144523,
+        "cfo": 0.0035297428972183246
+      },
+      "actual": {
+        "angle_gap": 0.7608179570571549,
+        "delay_gap": 0.06833997896937687,
+        "doppler_gap": 0.06621609007391946,
+        "phase_step": 1.2414729864741583,
+        "cfo": 0.011174422769959206
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.0235,
+        "2": 0.99975,
+        "3": 0.99825,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 6,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.512305413570019,
+        "delay_gap": 0.3647370740578408,
+        "doppler_gap": 0.47106892533796557,
+        "phase_step": 0.42089741620115995,
+        "cfo": 0.09600494513999704
+      },
+      "actual": {
+        "angle_gap": 10.374692009925798,
+        "delay_gap": 0.3331229891365995,
+        "doppler_gap": 0.49489897643485903,
+        "phase_step": 0.47691528794236426,
+        "cfo": 0.1184906119428891
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.99925,
+        "3": 0.9985,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 7,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.118981294333196,
+        "delay_gap": 0.1036685353010559,
+        "doppler_gap": 0.27528225516566684,
+        "phase_step": 0.701787484912618,
+        "cfo": 0.03685906389743924
+      },
+      "actual": {
+        "angle_gap": 8.005902265975786,
+        "delay_gap": 0.0833086965596988,
+        "doppler_gap": 0.2093865347999055,
+        "phase_step": 0.7785879366352496,
+        "cfo": 0.042706050380823174
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.98475,
+        "2": 0.99925,
+        "3": 0.99825,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 8,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.295760998323493,
+        "delay_gap": 0.03377086473702779,
+        "doppler_gap": 0.02584355795486235,
+        "phase_step": 0.1968422647530923,
+        "cfo": 0.09605807739113865
+      },
+      "actual": {
+        "angle_gap": 4.383090588970988,
+        "delay_gap": 0.0681294643703039,
+        "doppler_gap": 0.017720767361554732,
+        "phase_step": 0.46342256789912717,
+        "cfo": 0.08634308538141627
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.474,
+        "2": 0.9985,
+        "3": 0.9995,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 9,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.899635549991606,
+        "delay_gap": 0.4285849418896854,
+        "doppler_gap": 0.39273752303245335,
+        "phase_step": 0.4618650000124495,
+        "cfo": 0.047032327195277834
+      },
+      "actual": {
+        "angle_gap": 9.580735786196785,
+        "delay_gap": 0.3629380888752664,
+        "doppler_gap": 0.33208048788850547,
+        "phase_step": 0.4057315545632251,
+        "cfo": 0.044049637239562386
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.99925,
+        "3": 0.99925,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 10,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.196168716112641,
+        "delay_gap": 0.198480825933747,
+        "doppler_gap": 0.13251591730295864,
+        "phase_step": 1.3458531092473924,
+        "cfo": 0.05974553395881147
+      },
+      "actual": {
+        "angle_gap": 7.89430521791941,
+        "delay_gap": 0.1857847222056114,
+        "doppler_gap": 0.17016564662820882,
+        "phase_step": 1.4481055931761277,
+        "cfo": 0.08153673014490515
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.988,
+        "2": 0.999,
+        "3": 0.999,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 11,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 3.8720519314812494,
+        "delay_gap": 0.012195701722932184,
+        "doppler_gap": 0.09906746654637415,
+        "phase_step": 1.3221978248264756,
+        "cfo": 0.03447660539164149
+      },
+      "actual": {
+        "angle_gap": 4.3448005921605635,
+        "delay_gap": 0.04964242852937952,
+        "doppler_gap": 0.04512629029647833,
+        "phase_step": 1.0449284157837215,
+        "cfo": 0.016179982297532685
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.45725,
+        "2": 0.99975,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 12,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 16.260062639136763,
+        "delay_gap": 0.2554118124829057,
+        "doppler_gap": 0.22675445360542854,
+        "phase_step": 0.9360650252274073,
+        "cfo": 0.0974517865752552
+      },
+      "actual": {
+        "angle_gap": 17.18077756910327,
+        "delay_gap": 0.2058028604136349,
+        "doppler_gap": 0.2584461437117412,
+        "phase_step": 1.0922480967188735,
+        "cfo": 0.07332343924903273
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.99975,
+        "3": 0.9995,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 13,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.728514137465211,
+        "delay_gap": 0.24988271417039132,
+        "doppler_gap": 0.16847256359959,
+        "phase_step": 0.6192979774391815,
+        "cfo": 0.04515089101142153
+      },
+      "actual": {
+        "angle_gap": 9.319376770892795,
+        "delay_gap": 0.19089067420819125,
+        "doppler_gap": 0.15808514387346911,
+        "phase_step": 0.38907944092648516,
+        "cfo": 0.06991221477614307
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99625,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 14,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.193520636909623,
+        "delay_gap": 0.005272801343637295,
+        "doppler_gap": 0.11630644584760033,
+        "phase_step": 1.3200781918095712,
+        "cfo": 0.042862890702073865
+      },
+      "actual": {
+        "angle_gap": 1.3569519055288768,
+        "delay_gap": 0.05547528519386488,
+        "doppler_gap": 0.12069129868766253,
+        "phase_step": 1.2964252204926345,
+        "cfo": 0.031062051563558568
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.05675,
+        "2": 0.99925,
+        "3": 0.99825,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 15,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.911153711583854,
+        "delay_gap": 0.322974728287455,
+        "doppler_gap": 0.2515820439470801,
+        "phase_step": 0.18418113825655247,
+        "cfo": 0.02869577002399434
+      },
+      "actual": {
+        "angle_gap": 11.168897286080139,
+        "delay_gap": 0.29048235446292675,
+        "doppler_gap": 0.19799462183596978,
+        "phase_step": 0.2813897443212149,
+        "cfo": 0.0039034994813207206
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99725,
+        "2": 0.99975,
+        "3": 0.99925,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 16,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 7.120426070774721,
+        "delay_gap": 0.20044366340683023,
+        "doppler_gap": 0.13332821919053228,
+        "phase_step": 0.07432855269363718,
+        "cfo": 0.013214406610498565
+      },
+      "actual": {
+        "angle_gap": 8.248017953725832,
+        "delay_gap": 0.16570116754660222,
+        "doppler_gap": 0.20268101754589724,
+        "phase_step": 0.0,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.991,
+        "2": 0.999,
+        "3": 0.99875,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 17,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.6532783843776855,
+        "delay_gap": 0.09552113658959512,
+        "doppler_gap": 0.12681391189271235,
+        "phase_step": 0.42337108385540606,
+        "cfo": 0.058736861787202214
+      },
+      "actual": {
+        "angle_gap": 6.814898971473237,
+        "delay_gap": 0.07896199501522497,
+        "doppler_gap": 0.1362148306255028,
+        "phase_step": 0.6412959327840282,
+        "cfo": 0.044397840063892885
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.94875,
+        "2": 0.99925,
+        "3": 0.99975,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 18,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 17.538739294810554,
+        "delay_gap": 0.3970848049900815,
+        "doppler_gap": 0.31889352362954865,
+        "phase_step": 0.5861044730459218,
+        "cfo": 0.060989916551569025
+      },
+      "actual": {
+        "angle_gap": 17.299202010352975,
+        "delay_gap": 0.47158063119248395,
+        "doppler_gap": 0.3136068766345965,
+        "phase_step": 0.8555232095900324,
+        "cfo": 0.054823615111711146
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.9995,
+        "3": 0.99875,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 19,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.424656270792275,
+        "delay_gap": 0.12218899372010457,
+        "doppler_gap": 0.24577514200323886,
+        "phase_step": 1.0952154394199012,
+        "cfo": 0.09491089775842593
+      },
+      "actual": {
+        "angle_gap": 6.613632943107653,
+        "delay_gap": 0.1590325399810064,
+        "doppler_gap": 0.17823092439678762,
+        "phase_step": 1.1916132759978646,
+        "cfo": 0.09325867727783209
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.95875,
+        "2": 0.999,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 20,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 3.1287430726715733,
+        "delay_gap": 0.10892793284312725,
+        "doppler_gap": 0.10013798534655004,
+        "phase_step": 0.46169398258175626,
+        "cfo": 0.01908686692560796
+      },
+      "actual": {
+        "angle_gap": 2.5976199314590533,
+        "delay_gap": 0.14814784548478357,
+        "doppler_gap": 0.14071394407753401,
+        "phase_step": 0.526421601010366,
+        "cfo": 0.015499580074843922
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.27925,
+        "2": 0.995,
+        "3": 0.9985,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 21,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.437415562709857,
+        "delay_gap": 0.2126423603380372,
+        "doppler_gap": 0.37996632070278846,
+        "phase_step": 0.2574963500441314,
+        "cfo": 0.04272987478701713
+      },
+      "actual": {
+        "angle_gap": 9.95251156961474,
+        "delay_gap": 0.2742332932751272,
+        "doppler_gap": 0.3833875444541936,
+        "phase_step": 0.07451722356539586,
+        "cfo": 0.033878482252684
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.9995,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 22,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.445031107293046,
+        "delay_gap": 0.16078922817580207,
+        "doppler_gap": 0.21382092963113614,
+        "phase_step": 0.2653011701272538,
+        "cfo": 0.03768188230245693
+      },
+      "actual": {
+        "angle_gap": 10.909781060743986,
+        "delay_gap": 0.18335514368672118,
+        "doppler_gap": 0.2377874433986675,
+        "phase_step": 0.0,
+        "cfo": 0.015795636627348886
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.9995,
+        "3": 0.9985,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 23,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.2504403507820918,
+        "delay_gap": 0.019491709497362,
+        "doppler_gap": 0.13142948319810582,
+        "phase_step": 0.8315488302555132,
+        "cfo": 0.09085579056134908
+      },
+      "actual": {
+        "angle_gap": 0.7977845486488362,
+        "delay_gap": 0.05481853155941744,
+        "doppler_gap": 0.16065447260431961,
+        "phase_step": 0.9692704273871605,
+        "cfo": 0.08791555346634883
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.0865,
+        "2": 0.99925,
+        "3": 0.99825,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 24,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 15.792233857827048,
+        "delay_gap": 0.27518679429270276,
+        "doppler_gap": 0.42224105935744877,
+        "phase_step": 1.4244508546665258,
+        "cfo": 0.06730333393030163
+      },
+      "actual": {
+        "angle_gap": 15.143489948152483,
+        "delay_gap": 0.2032053410669537,
+        "doppler_gap": 0.4225890789695704,
+        "phase_step": 1.403099403447305,
+        "cfo": 0.07197076003133662
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.99975,
+        "3": 0.99975,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 25,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.831638959718144,
+        "delay_gap": 0.11678613379499687,
+        "doppler_gap": 0.2186541245918106,
+        "phase_step": 0.13791428824238247,
+        "cfo": 0.0908948135350065
+      },
+      "actual": {
+        "angle_gap": 3.60549299520438,
+        "delay_gap": 0.055403395226664,
+        "doppler_gap": 0.24482541871122016,
+        "phase_step": 0.4401122611764898,
+        "cfo": 0.10929249320039919
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.64225,
+        "2": 0.99925,
+        "3": 0.999,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 26,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.96933057773894,
+        "delay_gap": 0.039022387709954684,
+        "doppler_gap": 0.13335519390855793,
+        "phase_step": 0.028377217580048644,
+        "cfo": 0.058455104950522134
+      },
+      "actual": {
+        "angle_gap": 1.3916814604662022,
+        "delay_gap": 0.08853722228369487,
+        "doppler_gap": 0.17809550304173033,
+        "phase_step": 0.0,
+        "cfo": 0.07670813585325911
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.14525,
+        "2": 0.992,
+        "3": 0.9995,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 27,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.833996745763685,
+        "delay_gap": 0.39356458379013576,
+        "doppler_gap": 0.2201878919002867,
+        "phase_step": 1.1123505771923052,
+        "cfo": 0.0815677124313674
+      },
+      "actual": {
+        "angle_gap": 13.776896986887628,
+        "delay_gap": 0.33221386787757146,
+        "doppler_gap": 0.16929678740604145,
+        "phase_step": 0.8009410583237844,
+        "cfo": 0.10195942366236357
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.999,
+        "3": 1.0,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 28,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.365010746530729,
+        "delay_gap": 0.2250452222440125,
+        "doppler_gap": 0.2772578020514078,
+        "phase_step": 0.9731564249233968,
+        "cfo": 0.004087372087570907
+      },
+      "actual": {
+        "angle_gap": 7.620717665702609,
+        "delay_gap": 0.22112099721792733,
+        "doppler_gap": 0.20579941473971758,
+        "phase_step": 1.2585089852764981,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99,
+        "2": 0.9995,
+        "3": 1.0,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 29,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.063956577086455,
+        "delay_gap": 0.03532464561795673,
+        "doppler_gap": 0.1202091962122786,
+        "phase_step": 1.2674902514793378,
+        "cfo": 0.07851450026626439
+      },
+      "actual": {
+        "angle_gap": 5.004609404326477,
+        "delay_gap": 0.031355477621113126,
+        "doppler_gap": 0.12331758096178075,
+        "phase_step": 0.9821782138219783,
+        "cfo": 0.05380408620309232
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.7155,
+        "2": 0.9995,
+        "3": 0.99925,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 30,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 11.597608285285053,
+        "delay_gap": 0.2924071744170745,
+        "doppler_gap": 0.3910823274604367,
+        "phase_step": 1.1620033606750673,
+        "cfo": 0.0907978578395006
+      },
+      "actual": {
+        "angle_gap": 10.389577910739554,
+        "delay_gap": 0.36140443703795083,
+        "doppler_gap": 0.4608247866515652,
+        "phase_step": 1.1245654960736111,
+        "cfo": 0.07613745048065396
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 31,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.869125367995706,
+        "delay_gap": 0.15723072283349726,
+        "doppler_gap": 0.13252693372557994,
+        "phase_step": 1.3629877887832136,
+        "cfo": 0.0890877234175627
+      },
+      "actual": {
+        "angle_gap": 7.850792167363364,
+        "delay_gap": 0.1786991466065272,
+        "doppler_gap": 0.09659500042212203,
+        "phase_step": 1.4794961803418403,
+        "cfo": 0.11261501147253472
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9865,
+        "2": 0.99875,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 32,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.610269744241307,
+        "delay_gap": 0.021597300803640244,
+        "doppler_gap": 0.01075505026033774,
+        "phase_step": 1.2441322701579471,
+        "cfo": 0.022886789472294413
+      },
+      "actual": {
+        "angle_gap": 0.0,
+        "delay_gap": 0.046388652750762045,
+        "doppler_gap": 0.022436111296726208,
+        "phase_step": 1.12252508226406,
+        "cfo": 0.0141062110598369
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.00825,
+        "2": 0.99775,
+        "3": 0.9975,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 33,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.790054875460244,
+        "delay_gap": 0.2555092094423817,
+        "doppler_gap": 0.2854392961843969,
+        "phase_step": 0.039522567464245435,
+        "cfo": 0.07586683268001254
+      },
+      "actual": {
+        "angle_gap": 12.157878854156491,
+        "delay_gap": 0.30308352052922616,
+        "doppler_gap": 0.27436287094415474,
+        "phase_step": 0.0,
+        "cfo": 0.07538583634776418
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99925,
+        "3": 0.99925,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 34,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.5365780516026275,
+        "delay_gap": 0.19698619314822935,
+        "doppler_gap": 0.2814416071288861,
+        "phase_step": 0.10156634184352546,
+        "cfo": 0.09692059161544893
+      },
+      "actual": {
+        "angle_gap": 6.603787105109315,
+        "delay_gap": 0.21886819539600502,
+        "doppler_gap": 0.25431034462150776,
+        "phase_step": 0.013761466746030057,
+        "cfo": 0.07672257723910125
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.97575,
+        "2": 0.999,
+        "3": 0.999,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 35,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 4.0169168139428315,
+        "delay_gap": 0.03442626466667897,
+        "doppler_gap": 0.04110373066882971,
+        "phase_step": 0.5623166464340675,
+        "cfo": 0.04708836582694079
+      },
+      "actual": {
+        "angle_gap": 5.018154859483763,
+        "delay_gap": 0.01176857243494768,
+        "doppler_gap": 0.07940440314400915,
+        "phase_step": 0.4969360902678015,
+        "cfo": 0.03163464395643393
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.6615,
+        "2": 0.99825,
+        "3": 1.0,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 36,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 19.204888663008205,
+        "delay_gap": 0.4150203173764324,
+        "doppler_gap": 0.27715622868178463,
+        "phase_step": 1.1782854869870973,
+        "cfo": 0.029019211193745065
+      },
+      "actual": {
+        "angle_gap": 18.042180864122916,
+        "delay_gap": 0.4201415263799152,
+        "doppler_gap": 0.24658286806035476,
+        "phase_step": 0.9921260481166803,
+        "cfo": 0.021419627328816415
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.99975,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 37,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.953356309672136,
+        "delay_gap": 0.10902433879737877,
+        "doppler_gap": 0.14801464489504068,
+        "phase_step": 1.1070210121423996,
+        "cfo": 0.09181665498290989
+      },
+      "actual": {
+        "angle_gap": 6.358872678817703,
+        "delay_gap": 0.0997230559103164,
+        "doppler_gap": 0.1854449845798876,
+        "phase_step": 1.0482649629359804,
+        "cfo": 0.10859260431042642
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.93725,
+        "2": 0.999,
+        "3": 0.9995,
+        "4": 1.0
+      }
+    },
+    {
+      "scenario": 38,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.692297204405565,
+        "delay_gap": 0.1397052931166057,
+        "doppler_gap": 0.13105718927887477,
+        "phase_step": 0.7012688881694931,
+        "cfo": 0.02282281321998766
+      },
+      "actual": {
+        "angle_gap": 6.222767405895118,
+        "delay_gap": 0.14002051763573833,
+        "doppler_gap": 0.10205695177883392,
+        "phase_step": 0.41915004861629546,
+        "cfo": 0.0460366815343405
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.91525,
+        "2": 0.999,
+        "3": 0.9995,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 39,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.53644746601459,
+        "delay_gap": 0.3675678539557521,
+        "doppler_gap": 0.2700903022634206,
+        "phase_step": 1.3399622622213347,
+        "cfo": 0.02604188346046972
+      },
+      "actual": {
+        "angle_gap": 13.366618304649135,
+        "delay_gap": 0.4144188627173112,
+        "doppler_gap": 0.26429344400032406,
+        "phase_step": 1.4766121846158713,
+        "cfo": 0.011238021725389666
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99875,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 40,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.081505018786682,
+        "delay_gap": 0.22017855789969884,
+        "doppler_gap": 0.10206189199290827,
+        "phase_step": 0.7776318228282895,
+        "cfo": 0.029891045852603604
+      },
+      "actual": {
+        "angle_gap": 7.3690216413020835,
+        "delay_gap": 0.14624574232082724,
+        "doppler_gap": 0.1381074421996221,
+        "phase_step": 0.6937138871481595,
+        "cfo": 0.015399739938092615
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.975,
+        "2": 0.99825,
+        "3": 0.99975,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 41,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 4.306805572170295,
+        "delay_gap": 0.060754730363830056,
+        "doppler_gap": 0.037293558132944306,
+        "phase_step": 0.03685155976899565,
+        "cfo": 0.06459968870134465
+      },
+      "actual": {
+        "angle_gap": 5.28177325936306,
+        "delay_gap": 0.07730065729430585,
+        "doppler_gap": 0.08456801730066227,
+        "phase_step": 0.0,
+        "cfo": 0.05504421983918897
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.7465,
+        "2": 0.99275,
+        "3": 0.999,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 42,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 14.743977625667739,
+        "delay_gap": 0.2045130907181198,
+        "doppler_gap": 0.25088342511847933,
+        "phase_step": 1.5380185418321524,
+        "cfo": 0.08018669433874472
+      },
+      "actual": {
+        "angle_gap": 15.169517917904276,
+        "delay_gap": 0.19713925874904628,
+        "doppler_gap": 0.22074244391912695,
+        "phase_step": 1.7830483542249627,
+        "cfo": 0.07535999593305674
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 43,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.016699829853503,
+        "delay_gap": 0.1178671589532233,
+        "doppler_gap": 0.16265045334494507,
+        "phase_step": 0.4526078553286957,
+        "cfo": 0.0971172528475837
+      },
+      "actual": {
+        "angle_gap": 4.739471969388906,
+        "delay_gap": 0.13640185037223312,
+        "doppler_gap": 0.10753258853410123,
+        "phase_step": 0.3524071630262039,
+        "cfo": 0.10207946296281989
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.69825,
+        "2": 0.99925,
+        "3": 0.99875,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 44,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.7390398212149827,
+        "delay_gap": 0.050975289555872695,
+        "doppler_gap": 0.05341662884332936,
+        "phase_step": 1.392043946024792,
+        "cfo": 0.012036251778103014
+      },
+      "actual": {
+        "angle_gap": 0.6764615332474588,
+        "delay_gap": 0.08947915309948623,
+        "doppler_gap": 0.09437257105486895,
+        "phase_step": 1.1173519048481393,
+        "cfo": 0.029668940391688447
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.04,
+        "2": 1.0,
+        "3": 0.999,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 45,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 18.738239846905323,
+        "delay_gap": 0.20215227021528626,
+        "doppler_gap": 0.20700314801761827,
+        "phase_step": 0.10337677662597114,
+        "cfo": 0.004892073847699386
+      },
+      "actual": {
+        "angle_gap": 19.289269140121057,
+        "delay_gap": 0.12928472540592462,
+        "doppler_gap": 0.20166819606132297,
+        "phase_step": 0.04403469054270856,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9985,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 46,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.469993464881982,
+        "delay_gap": 0.2339551540820152,
+        "doppler_gap": 0.28575759770155695,
+        "phase_step": 1.2423714107697692,
+        "cfo": 0.031465214774116956
+      },
+      "actual": {
+        "angle_gap": 6.623278010926564,
+        "delay_gap": 0.21617903784282336,
+        "doppler_gap": 0.3581318239941757,
+        "phase_step": 1.2737151362592019,
+        "cfo": 0.048766403981828035
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9885,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 47,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 4.060718230824859,
+        "delay_gap": 0.08813822573211637,
+        "doppler_gap": 0.11659910294469054,
+        "phase_step": 1.22023431439516,
+        "cfo": 0.005395623668602578
+      },
+      "actual": {
+        "angle_gap": 4.178147851006134,
+        "delay_gap": 0.12248511336857668,
+        "doppler_gap": 0.06664035782278317,
+        "phase_step": 1.310083544539094,
+        "cfo": 0.006539384070457004
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.5185,
+        "2": 0.9985,
+        "3": 0.9985,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 48,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 15.513914059191864,
+        "delay_gap": 0.4016413978048648,
+        "doppler_gap": 0.3106075962205023,
+        "phase_step": 0.7360509523379831,
+        "cfo": 0.03047499710203995
+      },
+      "actual": {
+        "angle_gap": 14.718054057230722,
+        "delay_gap": 0.3829678853693294,
+        "doppler_gap": 0.29732147377217294,
+        "phase_step": 0.5069823321009455,
+        "cfo": 0.04549889233553502
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.99975,
+        "3": 0.99975,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 49,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.992043738434255,
+        "delay_gap": 0.297211568644671,
+        "doppler_gap": 0.23724917384067576,
+        "phase_step": 0.25074928491123144,
+        "cfo": 0.041646293204948226
+      },
+      "actual": {
+        "angle_gap": 9.052439969061169,
+        "delay_gap": 0.3578452745600578,
+        "doppler_gap": 0.24401199764085385,
+        "phase_step": 0.1614150132032939,
+        "cfo": 0.05737938964035868
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.999,
+        "3": 0.99975,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 50,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.846022908698909,
+        "delay_gap": 0.07406922552483439,
+        "doppler_gap": 0.09153566034585527,
+        "phase_step": 1.2703854841936895,
+        "cfo": 0.04378371158265938
+      },
+      "actual": {
+        "angle_gap": 0.7981528387406018,
+        "delay_gap": 0.048020728724789706,
+        "doppler_gap": 0.024233146277565787,
+        "phase_step": 1.5526367888467338,
+        "cfo": 0.02779793172305591
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.01125,
+        "2": 0.99975,
+        "3": 0.9985,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 51,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.13066128076664,
+        "delay_gap": 0.3852050932247294,
+        "doppler_gap": 0.3545137762196868,
+        "phase_step": 0.15121658215597406,
+        "cfo": 0.002658903485861519
+      },
+      "actual": {
+        "angle_gap": 10.714612902142377,
+        "delay_gap": 0.3237311209649866,
+        "doppler_gap": 0.41815243977074645,
+        "phase_step": 0.1574970690322005,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.9995,
+        "3": 0.99875,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 52,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.291138686422015,
+        "delay_gap": 0.124444353502968,
+        "doppler_gap": 0.24509047144404647,
+        "phase_step": 1.271002690975605,
+        "cfo": 0.03865349869567546
+      },
+      "actual": {
+        "angle_gap": 6.5206423062438,
+        "delay_gap": 0.13079622444683286,
+        "doppler_gap": 0.31940992783711303,
+        "phase_step": 1.3895609427957207,
+        "cfo": 0.028811677287313868
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.97575,
+        "2": 0.99975,
+        "3": 0.99925,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 53,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.654768512943881,
+        "delay_gap": 0.0019136276702197085,
+        "doppler_gap": 0.10084994886757663,
+        "phase_step": 1.1617925153495392,
+        "cfo": 0.01870917291465232
+      },
+      "actual": {
+        "angle_gap": 6.290307417459694,
+        "delay_gap": 0.07311774253689197,
+        "doppler_gap": 0.1023345822901331,
+        "phase_step": 1.1098157189603708,
+        "cfo": 0.01618635037569104
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9005,
+        "2": 0.9995,
+        "3": 0.998,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 54,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 17.7773230455994,
+        "delay_gap": 0.239128914446434,
+        "doppler_gap": 0.27018254976778733,
+        "phase_step": 0.23858170413956564,
+        "cfo": 0.07490764901572908
+      },
+      "actual": {
+        "angle_gap": 17.644675398441635,
+        "delay_gap": 0.1723877720016675,
+        "doppler_gap": 0.2260483168525842,
+        "phase_step": 0.4992524085328301,
+        "cfo": 0.07219698535989424
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9985,
+        "2": 0.99925,
+        "3": 0.999,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 55,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.560325738482009,
+        "delay_gap": 0.27694521588620813,
+        "doppler_gap": 0.11272250332575218,
+        "phase_step": 1.071131219166185,
+        "cfo": 0.027660449470224405
+      },
+      "actual": {
+        "angle_gap": 10.061623311219519,
+        "delay_gap": 0.32597422957276867,
+        "doppler_gap": 0.07303952784745205,
+        "phase_step": 1.097166043523275,
+        "cfo": 0.022381464083174533
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99825,
+        "2": 0.99925,
+        "3": 0.99925,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 56,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 3.592247560833068,
+        "delay_gap": 0.08842306337463288,
+        "doppler_gap": 0.08370182494504834,
+        "phase_step": 0.9960293816965577,
+        "cfo": 0.09556204220945935
+      },
+      "actual": {
+        "angle_gap": 4.215707180131044,
+        "delay_gap": 0.15795534107263837,
+        "doppler_gap": 0.05758827456328339,
+        "phase_step": 0.758695023169933,
+        "cfo": 0.08878717660341567
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.5795,
+        "2": 0.999,
+        "3": 0.9995,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 57,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 11.099202622975952,
+        "delay_gap": 0.3136259180414316,
+        "doppler_gap": 0.44149057319836804,
+        "phase_step": 1.0182622411480589,
+        "cfo": 0.033053371323327675
+      },
+      "actual": {
+        "angle_gap": 11.58717524383744,
+        "delay_gap": 0.32548065770967977,
+        "doppler_gap": 0.5090041429445756,
+        "phase_step": 0.7803768727550113,
+        "cfo": 0.04396103443637578
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.99975,
+        "3": 1.0,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 58,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.306693890150937,
+        "delay_gap": 0.2336433927538571,
+        "doppler_gap": 0.10547823802974887,
+        "phase_step": 0.3004977801334396,
+        "cfo": 0.008840688417675513
+      },
+      "actual": {
+        "angle_gap": 3.3171852473388483,
+        "delay_gap": 0.17973568302861678,
+        "doppler_gap": 0.04707168339755525,
+        "phase_step": 0.17737960363988964,
+        "cfo": 0.01719496374802266
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.374,
+        "2": 0.984,
+        "3": 0.9995,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 59,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.1980987188645944,
+        "delay_gap": 0.0011496878195059012,
+        "doppler_gap": 0.12853348129805658,
+        "phase_step": 1.4216051166059365,
+        "cfo": 0.0681229626022483
+      },
+      "actual": {
+        "angle_gap": 1.481694914506575,
+        "delay_gap": 0.0,
+        "doppler_gap": 0.10015554048132863,
+        "phase_step": 1.4836245263746561,
+        "cfo": 0.07884001373232524
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.046,
+        "2": 0.99875,
+        "3": 0.99875,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 60,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 17.18670702307527,
+        "delay_gap": 0.4169851751533007,
+        "doppler_gap": 0.2684507582762892,
+        "phase_step": 0.8429644987302453,
+        "cfo": 0.023888482881679707
+      },
+      "actual": {
+        "angle_gap": 15.891841557886009,
+        "delay_gap": 0.3660455068933104,
+        "doppler_gap": 0.3219085806434788,
+        "phase_step": 0.87415194691706,
+        "cfo": 0.019495579037831248
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.999,
+        "3": 0.99975,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 61,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.168423238780885,
+        "delay_gap": 0.21787354470009618,
+        "doppler_gap": 0.2983193877023228,
+        "phase_step": 1.4512934826785917,
+        "cfo": 0.007555382056270344
+      },
+      "actual": {
+        "angle_gap": 5.278027774852966,
+        "delay_gap": 0.25694664949663654,
+        "doppler_gap": 0.3057742027160683,
+        "phase_step": 1.6024503910602295,
+        "cfo": 0.019544266677986748
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.96725,
+        "2": 0.99925,
+        "3": 0.99975,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 62,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.308376862609929,
+        "delay_gap": 0.08665176636396271,
+        "doppler_gap": 0.1286508037455852,
+        "phase_step": 1.039961253097518,
+        "cfo": 0.09785873216892278
+      },
+      "actual": {
+        "angle_gap": 6.545458604703991,
+        "delay_gap": 0.03890790905007542,
+        "doppler_gap": 0.16616603838160082,
+        "phase_step": 1.0958250868809682,
+        "cfo": 0.09896576248707442
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.93925,
+        "2": 0.99875,
+        "3": 0.9995,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 63,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 16.908128315319786,
+        "delay_gap": 0.44683231939724466,
+        "doppler_gap": 0.459833571918138,
+        "phase_step": 0.9931088581566655,
+        "cfo": 0.0678645863227889
+      },
+      "actual": {
+        "angle_gap": 16.258625242291544,
+        "delay_gap": 0.49315894329104604,
+        "doppler_gap": 0.4826340244876939,
+        "phase_step": 1.0623090884604673,
+        "cfo": 0.07172360529612298
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99975,
+        "3": 0.99925,
+        "4": 1.0
+      }
+    },
+    {
+      "scenario": 64,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.802721435666705,
+        "delay_gap": 0.29594677294244864,
+        "doppler_gap": 0.12624227690613862,
+        "phase_step": 0.6637141436363178,
+        "cfo": 0.07621798520688892
+      },
+      "actual": {
+        "angle_gap": 9.456374104957526,
+        "delay_gap": 0.3490843347435905,
+        "doppler_gap": 0.18235429422423094,
+        "phase_step": 0.9307855734998053,
+        "cfo": 0.09980104298001179
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9985,
+        "2": 0.999,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 65,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.7244935197909563,
+        "delay_gap": 0.08978725166596302,
+        "doppler_gap": 0.002896338885937083,
+        "phase_step": 1.5476547883345724,
+        "cfo": 0.06720979380245558
+      },
+      "actual": {
+        "angle_gap": 3.8579888515675393,
+        "delay_gap": 0.15210031507280053,
+        "doppler_gap": 0.06617074244016413,
+        "phase_step": 1.7845432151263394,
+        "cfo": 0.0791032059671028
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.468,
+        "2": 0.99775,
+        "3": 0.99875,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 66,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.132134044192606,
+        "delay_gap": 0.3386774037763868,
+        "doppler_gap": 0.43960642759305246,
+        "phase_step": 0.8281758908829752,
+        "cfo": 0.022538657528946394
+      },
+      "actual": {
+        "angle_gap": 13.405872095651711,
+        "delay_gap": 0.3114482842528338,
+        "doppler_gap": 0.41878465530017556,
+        "phase_step": 0.9535692831133202,
+        "cfo": 0.041918834712743894
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.9995,
+        "3": 0.99975,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 67,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.728944797164833,
+        "delay_gap": 0.2051341676128311,
+        "doppler_gap": 0.27610660240624174,
+        "phase_step": 0.3897232062919011,
+        "cfo": 0.030891602894945983
+      },
+      "actual": {
+        "angle_gap": 5.555687149721747,
+        "delay_gap": 0.17443140668393328,
+        "doppler_gap": 0.2735077107290061,
+        "phase_step": 0.2013184850707378,
+        "cfo": 0.05432616666725129
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9475,
+        "2": 0.99725,
+        "3": 0.99925,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 68,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.5908217506658973,
+        "delay_gap": 0.05540988026531677,
+        "doppler_gap": 0.07168748233477705,
+        "phase_step": 1.4227879374745067,
+        "cfo": 0.06749099353500014
+      },
+      "actual": {
+        "angle_gap": 0.6794684170682361,
+        "delay_gap": 0.027216728493216172,
+        "doppler_gap": 0.09114461045610875,
+        "phase_step": 1.1651871915680085,
+        "cfo": 0.07349975637508707
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.0255,
+        "2": 0.99925,
+        "3": 0.99675,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 69,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 15.744830127399283,
+        "delay_gap": 0.24407991367789036,
+        "doppler_gap": 0.3230489760921287,
+        "phase_step": 0.2165933957691672,
+        "cfo": 0.08714534381355647
+      },
+      "actual": {
+        "angle_gap": 15.342252738493945,
+        "delay_gap": 0.17352139329088062,
+        "doppler_gap": 0.3184603826213983,
+        "phase_step": 0.2768846001767572,
+        "cfo": 0.08200599931081222
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.99925,
+        "3": 0.99975,
+        "4": 1.0
+      }
+    },
+    {
+      "scenario": 70,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.922636261582372,
+        "delay_gap": 0.2961509077439628,
+        "doppler_gap": 0.20514124833038883,
+        "phase_step": 1.5364454572789663,
+        "cfo": 0.00438103415313057
+      },
+      "actual": {
+        "angle_gap": 8.277854247690122,
+        "delay_gap": 0.3666427017525315,
+        "doppler_gap": 0.27828121404343326,
+        "phase_step": 1.7822185676077602,
+        "cfo": 0.00028388159712662217
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.997,
+        "2": 0.99925,
+        "3": 0.99925,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 71,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 4.4420454112476175,
+        "delay_gap": 0.1435209008929763,
+        "doppler_gap": 0.062131888565776346,
+        "phase_step": 0.788393990740253,
+        "cfo": 0.0070392473117593226
+      },
+      "actual": {
+        "angle_gap": 4.849345903110732,
+        "delay_gap": 0.10211423079170001,
+        "doppler_gap": 0.03403338435393666,
+        "phase_step": 0.5285916684901548,
+        "cfo": 0.0013798674209831658
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.64925,
+        "2": 0.99625,
+        "3": 0.999,
+        "4": 1.0
+      }
+    },
+    {
+      "scenario": 72,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 13.86632578745415,
+        "delay_gap": 0.3528498787385745,
+        "doppler_gap": 0.4412694018034935,
+        "phase_step": 0.1705092566235559,
+        "cfo": 0.032014470181309
+      },
+      "actual": {
+        "angle_gap": 15.16817658955711,
+        "delay_gap": 0.37105999236023085,
+        "doppler_gap": 0.39312262926322544,
+        "phase_step": 0.0,
+        "cfo": 0.05595704349302611
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.9995,
+        "3": 0.99975,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 73,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.05942617300121,
+        "delay_gap": 0.13966386155880225,
+        "doppler_gap": 0.1545562864798671,
+        "phase_step": 1.4432817165877145,
+        "cfo": 0.05326961231076513
+      },
+      "actual": {
+        "angle_gap": 9.003649755598575,
+        "delay_gap": 0.07146783809886922,
+        "doppler_gap": 0.11713385057945166,
+        "phase_step": 1.6874553885913994,
+        "cfo": 0.031816914993324605
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99475,
+        "2": 0.99975,
+        "3": 0.99925,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 74,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.0981967960782333,
+        "delay_gap": 0.037926776637289224,
+        "doppler_gap": 0.0646176231892683,
+        "phase_step": 0.11140002075130065,
+        "cfo": 0.006970072921251591
+      },
+      "actual": {
+        "angle_gap": 3.3717360121929243,
+        "delay_gap": 0.08916279784094577,
+        "doppler_gap": 0.051505416761205666,
+        "phase_step": 0.13387395660219273,
+        "cfo": 0.019917026210257656
+      },
+      "nominal_length": 2,
+      "robust_length": 3,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.242,
+        "2": 0.98225,
+        "3": 0.9995,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 75,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 11.822605697013927,
+        "delay_gap": 0.47553836227036944,
+        "doppler_gap": 0.296294496544472,
+        "phase_step": 0.9603672763666908,
+        "cfo": 0.00010726609926967612
+      },
+      "actual": {
+        "angle_gap": 10.728093010407637,
+        "delay_gap": 0.4443819995787457,
+        "doppler_gap": 0.2744737674296838,
+        "phase_step": 0.7442839357412592,
+        "cfo": 0.01078543547600976
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99925,
+        "3": 0.99975,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 76,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.6768191101598315,
+        "delay_gap": 0.10642921375137637,
+        "doppler_gap": 0.25023964278371746,
+        "phase_step": 1.09304132542266,
+        "cfo": 0.032777484717854376
+      },
+      "actual": {
+        "angle_gap": 3.6948551107623024,
+        "delay_gap": 0.1782826558970254,
+        "doppler_gap": 0.24734641990433565,
+        "phase_step": 0.9994860706359439,
+        "cfo": 0.019045124281297524
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.7705,
+        "2": 0.99925,
+        "3": 0.99875,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 77,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.9305270680701221,
+        "delay_gap": 0.008792948424457598,
+        "doppler_gap": 0.07005419846091274,
+        "phase_step": 0.7827105227271739,
+        "cfo": 0.010052062237724736
+      },
+      "actual": {
+        "angle_gap": 0.3803458198146462,
+        "delay_gap": 0.0,
+        "doppler_gap": 0.06532616393963028,
+        "phase_step": 1.0899038322820942,
+        "cfo": 0.031806787659085616
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.01025,
+        "2": 0.9995,
+        "3": 0.99825,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 78,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 18.926173356677104,
+        "delay_gap": 0.2904082270364168,
+        "doppler_gap": 0.47839880742474244,
+        "phase_step": 0.6943585088203577,
+        "cfo": 0.03628700919424165
+      },
+      "actual": {
+        "angle_gap": 20.410115640661946,
+        "delay_gap": 0.32317430543928094,
+        "doppler_gap": 0.45655102833794853,
+        "phase_step": 0.9594610120775579,
+        "cfo": 0.028522351216925503
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.9985,
+        "3": 0.9995,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 79,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.414447389660045,
+        "delay_gap": 0.11395657510259363,
+        "doppler_gap": 0.22639318850916024,
+        "phase_step": 0.10705684400021825,
+        "cfo": 0.03125899090454141
+      },
+      "actual": {
+        "angle_gap": 6.004759710202182,
+        "delay_gap": 0.11650144399579522,
+        "doppler_gap": 0.1900731894316525,
+        "phase_step": 0.3363199298997764,
+        "cfo": 0.015268365975046234
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.92025,
+        "2": 0.99625,
+        "3": 0.99975,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 80,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.8682637774925333,
+        "delay_gap": 0.02554144669160383,
+        "doppler_gap": 0.10137203437399214,
+        "phase_step": 0.4616841398635693,
+        "cfo": 0.09403277287015555
+      },
+      "actual": {
+        "angle_gap": 4.005511216294334,
+        "delay_gap": 0.0,
+        "doppler_gap": 0.03461597543665944,
+        "phase_step": 0.7549561310980328,
+        "cfo": 0.0945559360864641
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.31825,
+        "2": 0.99975,
+        "3": 0.999,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 81,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 14.741477836992658,
+        "delay_gap": 0.45301211332956437,
+        "doppler_gap": 0.31919515837788803,
+        "phase_step": 0.5942491149176456,
+        "cfo": 0.05204491839873923
+      },
+      "actual": {
+        "angle_gap": 14.672631299790671,
+        "delay_gap": 0.4293320599908498,
+        "doppler_gap": 0.26167787441640744,
+        "phase_step": 0.7492241782972795,
+        "cfo": 0.031863383906936216
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.9995,
+        "3": 0.99975,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 82,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.506863787880569,
+        "delay_gap": 0.2474230084070565,
+        "doppler_gap": 0.26908807762812403,
+        "phase_step": 0.2785396486595102,
+        "cfo": 0.021450496523703434
+      },
+      "actual": {
+        "angle_gap": 5.630117196560834,
+        "delay_gap": 0.3141572337234457,
+        "doppler_gap": 0.2522283681107175,
+        "phase_step": 0.34473744089636943,
+        "cfo": 4.213880525907182e-05
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.97675,
+        "2": 0.99775,
+        "3": 0.99875,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 83,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.103202641714719,
+        "delay_gap": 0.08762200719108261,
+        "doppler_gap": 0.051872779824977004,
+        "phase_step": 0.11572537027134576,
+        "cfo": 0.03526225624866163
+      },
+      "actual": {
+        "angle_gap": 5.129409381884373,
+        "delay_gap": 0.1102073832245027,
+        "doppler_gap": 0.07599951134725871,
+        "phase_step": 0.0,
+        "cfo": 0.010523969086674197
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.74025,
+        "2": 0.98475,
+        "3": 0.99875,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 84,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.673239246991972,
+        "delay_gap": 0.4681920083970691,
+        "doppler_gap": 0.43353469590407445,
+        "phase_step": 0.9082980819082533,
+        "cfo": 0.05515176444208754
+      },
+      "actual": {
+        "angle_gap": 11.780016572338686,
+        "delay_gap": 0.4032416575723765,
+        "doppler_gap": 0.4039670604484749,
+        "phase_step": 1.1200506058403712,
+        "cfo": 0.07485132725313368
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.9985,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 85,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.847787255487484,
+        "delay_gap": 0.14007081017939635,
+        "doppler_gap": 0.14828163618465584,
+        "phase_step": 0.7406426358584426,
+        "cfo": 0.022172226558281705
+      },
+      "actual": {
+        "angle_gap": 5.292979561785556,
+        "delay_gap": 0.21060099210023603,
+        "doppler_gap": 0.08563570092850001,
+        "phase_step": 0.7867373335129689,
+        "cfo": 0.026724724901598086
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.859,
+        "2": 0.99925,
+        "3": 0.99875,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 86,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.809865950928279,
+        "delay_gap": 0.049211319520386494,
+        "doppler_gap": 0.044020669635280306,
+        "phase_step": 0.22646481606415972,
+        "cfo": 0.024423642098499745
+      },
+      "actual": {
+        "angle_gap": 5.855087259195654,
+        "delay_gap": 0.03774904345881596,
+        "doppler_gap": 0.05379747248348351,
+        "phase_step": 0.16703567227640856,
+        "cfo": 0.014985090244603184
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.8185,
+        "2": 0.99175,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 87,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 19.826633698675366,
+        "delay_gap": 0.41404459786099396,
+        "doppler_gap": 0.4599042892747327,
+        "phase_step": 0.4955605710246309,
+        "cfo": 0.031945517845369586
+      },
+      "actual": {
+        "angle_gap": 21.14787750457689,
+        "delay_gap": 0.36202325356403753,
+        "doppler_gap": 0.45747098595928154,
+        "phase_step": 0.5394589814069677,
+        "cfo": 0.027085089378303846
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.998,
+        "2": 0.999,
+        "3": 0.99875,
+        "4": 1.0
+      }
+    },
+    {
+      "scenario": 88,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.290919106903933,
+        "delay_gap": 0.1276552051268015,
+        "doppler_gap": 0.1059651902593946,
+        "phase_step": 0.1712072553567259,
+        "cfo": 0.06180860126372222
+      },
+      "actual": {
+        "angle_gap": 5.575469630312641,
+        "delay_gap": 0.20131757878618195,
+        "doppler_gap": 0.17682140612332076,
+        "phase_step": 0.24047097140537602,
+        "cfo": 0.07005441368089974
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.91775,
+        "2": 0.9975,
+        "3": 0.9995,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 89,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.188391473712499,
+        "delay_gap": 0.027270954581445933,
+        "doppler_gap": 0.0586683150831342,
+        "phase_step": 0.4671398487050922,
+        "cfo": 0.03601814322680973
+      },
+      "actual": {
+        "angle_gap": 1.0199695125952581,
+        "delay_gap": 0.0,
+        "doppler_gap": 0.06201773349260362,
+        "phase_step": 0.7286247679022826,
+        "cfo": 0.046962737291842034
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.0145,
+        "2": 0.99775,
+        "3": 0.99775,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 90,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 15.348787702491183,
+        "delay_gap": 0.38990157042014684,
+        "doppler_gap": 0.21451778723309672,
+        "phase_step": 1.2566378416049229,
+        "cfo": 0.05023064609484876
+      },
+      "actual": {
+        "angle_gap": 15.469676114972234,
+        "delay_gap": 0.4197535123552224,
+        "doppler_gap": 0.2508471634363054,
+        "phase_step": 1.3686603256835164,
+        "cfo": 0.07313390220177303
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.9995,
+        "3": 0.9985,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 91,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.402280371313395,
+        "delay_gap": 0.183863459398115,
+        "doppler_gap": 0.1737683260757788,
+        "phase_step": 0.17298029132531123,
+        "cfo": 0.03297568959554183
+      },
+      "actual": {
+        "angle_gap": 3.6517458777556713,
+        "delay_gap": 0.21031909177411778,
+        "doppler_gap": 0.14764012767106138,
+        "phase_step": 0.0,
+        "cfo": 0.030270479619106193
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.6565,
+        "2": 0.9895,
+        "3": 0.99875,
+        "4": 1.0
+      }
+    },
+    {
+      "scenario": 92,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.9206914792672989,
+        "delay_gap": 0.04305387086357734,
+        "doppler_gap": 0.11324566066006095,
+        "phase_step": 0.17148963246385399,
+        "cfo": 0.017695229616669785
+      },
+      "actual": {
+        "angle_gap": 2.0282656288827505,
+        "delay_gap": 0.11132078652903481,
+        "doppler_gap": 0.061162053293958324,
+        "phase_step": 0.41441635719498593,
+        "cfo": 0.0
+      },
+      "nominal_length": 2,
+      "robust_length": 3,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.084,
+        "2": 0.98775,
+        "3": 0.9995,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 93,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 17.11618610443317,
+        "delay_gap": 0.41245878969808236,
+        "doppler_gap": 0.32883943206984223,
+        "phase_step": 0.4690084412831382,
+        "cfo": 0.05711560302365577
+      },
+      "actual": {
+        "angle_gap": 16.219069810935277,
+        "delay_gap": 0.44154801503064156,
+        "doppler_gap": 0.3349149167468123,
+        "phase_step": 0.29540375254488266,
+        "cfo": 0.04410102130969787
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 1.0,
+        "3": 0.9995,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 94,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.321408040746585,
+        "delay_gap": 0.20642830770536422,
+        "doppler_gap": 0.16913772796862042,
+        "phase_step": 1.4371964612892973,
+        "cfo": 0.07490976848758489
+      },
+      "actual": {
+        "angle_gap": 6.779652674427323,
+        "delay_gap": 0.13969478045195743,
+        "doppler_gap": 0.10382839794538745,
+        "phase_step": 1.5222620673041318,
+        "cfo": 0.09735540925284099
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.94525,
+        "2": 0.9985,
+        "3": 0.99925,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 95,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.068584085496785,
+        "delay_gap": 0.14970184572956075,
+        "doppler_gap": 0.07765399506805501,
+        "phase_step": 1.523002496699488,
+        "cfo": 0.022377254219528266
+      },
+      "actual": {
+        "angle_gap": 2.256834475836186,
+        "delay_gap": 0.17070514661365677,
+        "doppler_gap": 0.13395660003071042,
+        "phase_step": 1.5917996588214482,
+        "cfo": 0.039161275213638366
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.26975,
+        "2": 0.9995,
+        "3": 0.9975,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 96,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.758191369372659,
+        "delay_gap": 0.49988537001505085,
+        "doppler_gap": 0.4094542239838347,
+        "phase_step": 1.366124660725487,
+        "cfo": 0.08764972907797194
+      },
+      "actual": {
+        "angle_gap": 11.341562689605505,
+        "delay_gap": 0.448401118613648,
+        "doppler_gap": 0.3588362551301307,
+        "phase_step": 1.2620892985446255,
+        "cfo": 0.07006622371233902
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.9985,
+        "3": 0.9995,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 97,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.759382980751925,
+        "delay_gap": 0.22257784361030447,
+        "doppler_gap": 0.16574065890753736,
+        "phase_step": 0.1947749858959432,
+        "cfo": 0.046202814442340395
+      },
+      "actual": {
+        "angle_gap": 6.680934028858534,
+        "delay_gap": 0.24435170793473993,
+        "doppler_gap": 0.17210112368849934,
+        "phase_step": 0.45902500008312186,
+        "cfo": 0.024552236007219074
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.975,
+        "2": 0.9985,
+        "3": 1.0,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 98,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.508909034715446,
+        "delay_gap": 0.061529424668361254,
+        "doppler_gap": 0.05892218154169111,
+        "phase_step": 0.5598169523361356,
+        "cfo": 0.03265654669208622
+      },
+      "actual": {
+        "angle_gap": 7.007460466992308,
+        "delay_gap": 0.10212966187649111,
+        "doppler_gap": 0.09287630197615294,
+        "phase_step": 0.35783631099416136,
+        "cfo": 0.03939332324330547
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9525,
+        "2": 0.9985,
+        "3": 0.99975,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 99,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 19.310033592860623,
+        "delay_gap": 0.4595597328345576,
+        "doppler_gap": 0.2051258986671129,
+        "phase_step": 1.1056374064590488,
+        "cfo": 0.06641921639431712
+      },
+      "actual": {
+        "angle_gap": 19.841754425412066,
+        "delay_gap": 0.466682912833002,
+        "doppler_gap": 0.1852429842565747,
+        "phase_step": 1.2253457630637112,
+        "cfo": 0.07856937632402716
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.999,
+        "3": 0.99975,
+        "4": 1.0
+      }
+    },
+    {
+      "scenario": 100,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.867957531501979,
+        "delay_gap": 0.23626858949100418,
+        "doppler_gap": 0.24981077993949555,
+        "phase_step": 0.6988577050802409,
+        "cfo": 0.0786538861735073
+      },
+      "actual": {
+        "angle_gap": 3.3769710482521336,
+        "delay_gap": 0.17736040719676627,
+        "doppler_gap": 0.26569122377651144,
+        "phase_step": 0.4172051365335677,
+        "cfo": 0.08446548047756652
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.77425,
+        "2": 0.99925,
+        "3": 1.0,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 101,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.757272981416076,
+        "delay_gap": 0.14512584695201117,
+        "doppler_gap": 0.03045813665674968,
+        "phase_step": 0.2758826931110056,
+        "cfo": 0.07053566979207679
+      },
+      "actual": {
+        "angle_gap": 4.390212874514335,
+        "delay_gap": 0.12031666981557931,
+        "doppler_gap": 0.0,
+        "phase_step": 0.1127782136707971,
+        "cfo": 0.04772081695784548
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.54325,
+        "2": 0.994,
+        "3": 0.9995,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 102,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 18.334689533233572,
+        "delay_gap": 0.2672652305517784,
+        "doppler_gap": 0.38893608662852697,
+        "phase_step": 0.9956443033098982,
+        "cfo": 0.024920029785624954
+      },
+      "actual": {
+        "angle_gap": 18.204635678099663,
+        "delay_gap": 0.31603271218692913,
+        "doppler_gap": 0.45054737497421554,
+        "phase_step": 1.1536034761779825,
+        "cfo": 0.00897388559326968
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99975,
+        "3": 0.9995,
+        "4": 0.99825
+      }
+    },
+    {
+      "scenario": 103,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.768727347047601,
+        "delay_gap": 0.12247378160721974,
+        "doppler_gap": 0.22673834696256584,
+        "phase_step": 1.4473995443993635,
+        "cfo": 0.04895998806535176
+      },
+      "actual": {
+        "angle_gap": 10.031974672535496,
+        "delay_gap": 0.13758364366682502,
+        "doppler_gap": 0.2755197391827141,
+        "phase_step": 1.5184553753172763,
+        "cfo": 0.047518679085289894
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99925,
+        "3": 0.99875,
+        "4": 0.99825
+      }
+    },
+    {
+      "scenario": 104,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.624919847607636,
+        "delay_gap": 0.14603637879310746,
+        "doppler_gap": 0.06866618775161817,
+        "phase_step": 0.21426882332005445,
+        "cfo": 0.05074058569423622
+      },
+      "actual": {
+        "angle_gap": 6.832921103635922,
+        "delay_gap": 0.10519493802537369,
+        "doppler_gap": 0.04311488504664458,
+        "phase_step": 0.10981852900318251,
+        "cfo": 0.03750201582603522
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.94075,
+        "2": 0.99475,
+        "3": 0.99925,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 105,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.35901620419756,
+        "delay_gap": 0.2542633236173538,
+        "doppler_gap": 0.341336910786937,
+        "phase_step": 1.4704983734118693,
+        "cfo": 0.0024583771553608803
+      },
+      "actual": {
+        "angle_gap": 12.979186993443943,
+        "delay_gap": 0.18004057190340172,
+        "doppler_gap": 0.33963211698315177,
+        "phase_step": 1.550820268637331,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.9995,
+        "3": 1.0,
+        "4": 1.0
+      }
+    },
+    {
+      "scenario": 106,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.1740542849021764,
+        "delay_gap": 0.23673915129254564,
+        "doppler_gap": 0.294630564198048,
+        "phase_step": 0.8160213917034425,
+        "cfo": 0.049719563713342574
+      },
+      "actual": {
+        "angle_gap": 4.650444317089313,
+        "delay_gap": 0.21100073339453518,
+        "doppler_gap": 0.32226710735707986,
+        "phase_step": 0.9840886941414255,
+        "cfo": 0.02625329882259727
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.937,
+        "2": 0.99825,
+        "3": 0.999,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 107,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.769573194381935,
+        "delay_gap": 0.09920953730196726,
+        "doppler_gap": 0.019038683513836686,
+        "phase_step": 0.04681183354960579,
+        "cfo": 0.08094337708563344
+      },
+      "actual": {
+        "angle_gap": 2.758495247089545,
+        "delay_gap": 0.049514499201797846,
+        "doppler_gap": 0.07258150522571788,
+        "phase_step": 0.1979101310276445,
+        "cfo": 0.10038776697298853
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.1355,
+        "2": 0.997,
+        "3": 0.99975,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 108,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 15.275877331467992,
+        "delay_gap": 0.2537994588618918,
+        "doppler_gap": 0.23939835011384383,
+        "phase_step": 0.8564294854730401,
+        "cfo": 0.019426371736855897
+      },
+      "actual": {
+        "angle_gap": 14.668429880732914,
+        "delay_gap": 0.27971604256774274,
+        "doppler_gap": 0.16601852889228352,
+        "phase_step": 0.5782469571880964,
+        "cfo": 0.011370317930290308
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99975,
+        "3": 0.99975,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 109,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.407602434286332,
+        "delay_gap": 0.21924123279857877,
+        "doppler_gap": 0.19266426656142654,
+        "phase_step": 1.2033030113908787,
+        "cfo": 0.06762082009340406
+      },
+      "actual": {
+        "angle_gap": 8.855880091922462,
+        "delay_gap": 0.1784871565435629,
+        "doppler_gap": 0.1267620958664989,
+        "phase_step": 1.288648938271668,
+        "cfo": 0.06630327236818707
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9945,
+        "2": 0.999,
+        "3": 0.999,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 110,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 4.067064581548589,
+        "delay_gap": 0.06855117116802292,
+        "doppler_gap": 0.09514638209857834,
+        "phase_step": 0.2539578208769743,
+        "cfo": 0.006169415860214267
+      },
+      "actual": {
+        "angle_gap": 3.9448825361360114,
+        "delay_gap": 0.1313195004454505,
+        "doppler_gap": 0.09969528655121634,
+        "phase_step": 0.24051980153773017,
+        "cfo": 0.01563668950209856
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.497,
+        "2": 0.99075,
+        "3": 1.0,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 111,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 16.717413266414397,
+        "delay_gap": 0.4316100856718469,
+        "doppler_gap": 0.2493962493822633,
+        "phase_step": 1.2654856414874411,
+        "cfo": 0.049104147200832254
+      },
+      "actual": {
+        "angle_gap": 17.799531715674597,
+        "delay_gap": 0.4763449354164284,
+        "doppler_gap": 0.24420920825995523,
+        "phase_step": 1.248778418105189,
+        "cfo": 0.03527888678954606
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.99925,
+        "3": 0.99925,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 112,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 7.711379870702144,
+        "delay_gap": 0.17602493522733426,
+        "doppler_gap": 0.24477261594437003,
+        "phase_step": 0.23237660797560442,
+        "cfo": 0.009800919140021869
+      },
+      "actual": {
+        "angle_gap": 6.671038832926524,
+        "delay_gap": 0.21563761372331075,
+        "doppler_gap": 0.28152783097150147,
+        "phase_step": 0.3905103743276923,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.981,
+        "2": 0.998,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 113,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 3.4586000288443617,
+        "delay_gap": 0.08296960759015798,
+        "doppler_gap": 0.008988872531897679,
+        "phase_step": 1.4656791191760197,
+        "cfo": 0.00941291574207902
+      },
+      "actual": {
+        "angle_gap": 3.652451483011818,
+        "delay_gap": 0.020804237760724438,
+        "doppler_gap": 0.04796596669194674,
+        "phase_step": 1.1817071935600358,
+        "cfo": 0.02008137041456849
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.24975,
+        "2": 0.999,
+        "3": 0.99875,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 114,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 14.267612751577634,
+        "delay_gap": 0.4393289079258501,
+        "doppler_gap": 0.49292974490608943,
+        "phase_step": 0.30379550586413023,
+        "cfo": 0.0002207032106871343
+      },
+      "actual": {
+        "angle_gap": 15.154820614048099,
+        "delay_gap": 0.45053756060308453,
+        "doppler_gap": 0.4982288204499579,
+        "phase_step": 0.4791231039399956,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.999,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 115,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.760100931213838,
+        "delay_gap": 0.1407396770632423,
+        "doppler_gap": 0.24252280571416757,
+        "phase_step": 0.025115067411875868,
+        "cfo": 0.08130747835231693
+      },
+      "actual": {
+        "angle_gap": 9.27931780162048,
+        "delay_gap": 0.14584206821515977,
+        "doppler_gap": 0.2502314920390939,
+        "phase_step": 0.0,
+        "cfo": 0.06864479018131255
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.997,
+        "2": 0.99825,
+        "3": 0.99925,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 116,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 3.8515288146997797,
+        "delay_gap": 0.08689406702290076,
+        "doppler_gap": 0.0827508467854617,
+        "phase_step": 0.516883422549097,
+        "cfo": 0.074680831808623
+      },
+      "actual": {
+        "angle_gap": 3.998685152165388,
+        "delay_gap": 0.15087429551198112,
+        "doppler_gap": 0.022103682797850084,
+        "phase_step": 0.466096943862089,
+        "cfo": 0.06932781361611805
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.455,
+        "2": 0.9985,
+        "3": 0.9985,
+        "4": 0.99825
+      }
+    },
+    {
+      "scenario": 117,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 14.298325375735619,
+        "delay_gap": 0.3127191319955239,
+        "doppler_gap": 0.4073276505353143,
+        "phase_step": 0.4373733981353976,
+        "cfo": 0.08292800848082299
+      },
+      "actual": {
+        "angle_gap": 14.364058446418813,
+        "delay_gap": 0.3858148050101635,
+        "doppler_gap": 0.4322781113027684,
+        "phase_step": 0.7307785778432281,
+        "cfo": 0.07612253339103048
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.9995,
+        "3": 0.999,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 118,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.344409728764099,
+        "delay_gap": 0.11930805597457808,
+        "doppler_gap": 0.2315453490776223,
+        "phase_step": 0.8542481717008954,
+        "cfo": 0.09682781538062026
+      },
+      "actual": {
+        "angle_gap": 9.218729991539503,
+        "delay_gap": 0.13512258730769972,
+        "doppler_gap": 0.20161043822140892,
+        "phase_step": 0.7536154355819844,
+        "cfo": 0.0825750883230648
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99475,
+        "2": 0.99925,
+        "3": 0.99875,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 119,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.49843615376116723,
+        "delay_gap": 0.1070249295746664,
+        "doppler_gap": 0.14138208717214032,
+        "phase_step": 0.651700394492455,
+        "cfo": 0.0013252994669642028
+      },
+      "actual": {
+        "angle_gap": 0.0,
+        "delay_gap": 0.09356933877220702,
+        "doppler_gap": 0.21398757273241809,
+        "phase_step": 0.7209358367535412,
+        "cfo": 0.0
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.1765,
+        "2": 0.99725,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 120,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 15.114493505090003,
+        "delay_gap": 0.2078559088273156,
+        "doppler_gap": 0.25847510982340827,
+        "phase_step": 0.6699672864655191,
+        "cfo": 0.0076353609176726955
+      },
+      "actual": {
+        "angle_gap": 15.190388972535942,
+        "delay_gap": 0.17948177687612848,
+        "doppler_gap": 0.18763841209086446,
+        "phase_step": 0.8706803587119788,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.99875,
+        "3": 0.99925,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 121,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.669666784283958,
+        "delay_gap": 0.2815216748763486,
+        "doppler_gap": 0.17565829199499078,
+        "phase_step": 1.159298652218351,
+        "cfo": 0.08169324100449181
+      },
+      "actual": {
+        "angle_gap": 10.051995052249204,
+        "delay_gap": 0.3246590547085718,
+        "doppler_gap": 0.12748643850304436,
+        "phase_step": 1.3682787803926126,
+        "cfo": 0.06417829355381227
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9985,
+        "2": 0.99925,
+        "3": 0.99975,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 122,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 3.523924728533862,
+        "delay_gap": 0.10473714301975154,
+        "doppler_gap": 0.13918880591446506,
+        "phase_step": 1.1391866409311109,
+        "cfo": 0.06966725598646495
+      },
+      "actual": {
+        "angle_gap": 3.4548486563487772,
+        "delay_gap": 0.06390018653017082,
+        "doppler_gap": 0.1621327561991353,
+        "phase_step": 1.1159468872135097,
+        "cfo": 0.04595232156915884
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.3925,
+        "2": 0.999,
+        "3": 0.9985,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 123,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.737823844619149,
+        "delay_gap": 0.3531530120689491,
+        "doppler_gap": 0.38494446951190464,
+        "phase_step": 0.9981128773248141,
+        "cfo": 0.01708019373198735
+      },
+      "actual": {
+        "angle_gap": 10.028016284488166,
+        "delay_gap": 0.28058369272067674,
+        "doppler_gap": 0.35794431228083495,
+        "phase_step": 0.7383860820186856,
+        "cfo": 0.038077426516857055
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 124,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.465334055909698,
+        "delay_gap": 0.17466534452685462,
+        "doppler_gap": 0.277010990796474,
+        "phase_step": 1.411197122119807,
+        "cfo": 0.028467796078702125
+      },
+      "actual": {
+        "angle_gap": 4.475717794477617,
+        "delay_gap": 0.19122039960728934,
+        "doppler_gap": 0.28181995275224997,
+        "phase_step": 1.4104276591694682,
+        "cfo": 0.022436019665643066
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.902,
+        "2": 0.999,
+        "3": 0.999,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 125,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.717379908315322,
+        "delay_gap": 0.06303722306884439,
+        "doppler_gap": 0.037502071624956945,
+        "phase_step": 1.084412697260385,
+        "cfo": 0.08617896109812807
+      },
+      "actual": {
+        "angle_gap": 4.380979153506939,
+        "delay_gap": 0.05285354491691127,
+        "doppler_gap": 0.04662476111820543,
+        "phase_step": 1.0417309827217545,
+        "cfo": 0.06136497813680512
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.463,
+        "2": 0.99925,
+        "3": 0.99875,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 126,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 11.79458172235886,
+        "delay_gap": 0.30995190466446854,
+        "doppler_gap": 0.24954805276956152,
+        "phase_step": 0.7772246570299309,
+        "cfo": 0.01967012294587438
+      },
+      "actual": {
+        "angle_gap": 11.178566708150353,
+        "delay_gap": 0.26638307653022425,
+        "doppler_gap": 0.19521255961320663,
+        "phase_step": 0.7702181824629601,
+        "cfo": 0.03334821632302787
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.9995,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 127,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.840998577991965,
+        "delay_gap": 0.20023448892018456,
+        "doppler_gap": 0.22459727919706604,
+        "phase_step": 0.0969123275167546,
+        "cfo": 0.028062932943094546
+      },
+      "actual": {
+        "angle_gap": 5.693464566591483,
+        "delay_gap": 0.24738913036229326,
+        "doppler_gap": 0.2965058638687988,
+        "phase_step": 0.2914735470364521,
+        "cfo": 0.024842815381997237
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9675,
+        "2": 0.9975,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 128,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 4.120148116840096,
+        "delay_gap": 0.07767714313810561,
+        "doppler_gap": 0.012166262597130172,
+        "phase_step": 0.9252897396474739,
+        "cfo": 0.0034435894237285995
+      },
+      "actual": {
+        "angle_gap": 4.491612708128239,
+        "delay_gap": 0.11672107800043864,
+        "doppler_gap": 0.0,
+        "phase_step": 1.02427284124028,
+        "cfo": 0.0
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.54925,
+        "2": 0.99875,
+        "3": 0.99825,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 129,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 17.983238130334158,
+        "delay_gap": 0.24796568493860432,
+        "doppler_gap": 0.4036563117441616,
+        "phase_step": 0.2136258824148378,
+        "cfo": 0.082264788935416
+      },
+      "actual": {
+        "angle_gap": 19.095640950868944,
+        "delay_gap": 0.29212812892722406,
+        "doppler_gap": 0.4252342747971771,
+        "phase_step": 0.0,
+        "cfo": 0.08388311150337277
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.99975,
+        "3": 0.9995,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 130,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.921542362048077,
+        "delay_gap": 0.1306580855956528,
+        "doppler_gap": 0.2722166994685017,
+        "phase_step": 0.39103664184885184,
+        "cfo": 0.02730342558125314
+      },
+      "actual": {
+        "angle_gap": 8.693500198443632,
+        "delay_gap": 0.10051467439110237,
+        "doppler_gap": 0.26619200867051557,
+        "phase_step": 0.30603637862295724,
+        "cfo": 0.0065839256508032455
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99525,
+        "2": 0.9975,
+        "3": 0.9995,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 131,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.9812201536508187,
+        "delay_gap": 0.08602846767580294,
+        "doppler_gap": 0.03271908849105192,
+        "phase_step": 1.1015160830613622,
+        "cfo": 0.01726576326351339
+      },
+      "actual": {
+        "angle_gap": 2.244284779597111,
+        "delay_gap": 0.030786929898713095,
+        "doppler_gap": 0.0,
+        "phase_step": 0.848971850644982,
+        "cfo": 0.02094801974322301
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.0525,
+        "2": 0.99875,
+        "3": 0.99925,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 132,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 19.60883767964841,
+        "delay_gap": 0.3659010882969488,
+        "doppler_gap": 0.49371500516817457,
+        "phase_step": 1.2888195884814657,
+        "cfo": 0.0771641525209307
+      },
+      "actual": {
+        "angle_gap": 19.526501122708577,
+        "delay_gap": 0.4099107530102585,
+        "doppler_gap": 0.44200285894895364,
+        "phase_step": 1.3660488181248382,
+        "cfo": 0.05404202102286654
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.9995,
+        "3": 0.999,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 133,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.6969773212218415,
+        "delay_gap": 0.16890682733679147,
+        "doppler_gap": 0.19805497926777546,
+        "phase_step": 0.0318310324533917,
+        "cfo": 0.004056149479706672
+      },
+      "actual": {
+        "angle_gap": 5.653559921645126,
+        "delay_gap": 0.2352088149763369,
+        "doppler_gap": 0.18811960360597954,
+        "phase_step": 0.14807129147622494,
+        "cfo": 0.0
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.93175,
+        "2": 0.9945,
+        "3": 0.999,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 134,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.7123257708193058,
+        "delay_gap": 0.06366662904256226,
+        "doppler_gap": 0.02653849587903523,
+        "phase_step": 0.7723801653016288,
+        "cfo": 0.007471005348901394
+      },
+      "actual": {
+        "angle_gap": 0.7712244762109494,
+        "delay_gap": 0.040669626556523196,
+        "doppler_gap": 0.06291488228956092,
+        "phase_step": 0.46846792463909226,
+        "cfo": 0.02670410782149021
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.01675,
+        "2": 0.996,
+        "3": 0.9995,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 135,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 18.301148593356466,
+        "delay_gap": 0.3178670828660286,
+        "doppler_gap": 0.3905650594279454,
+        "phase_step": 1.0658841071459386,
+        "cfo": 0.010125191156377012
+      },
+      "actual": {
+        "angle_gap": 17.079512871286532,
+        "delay_gap": 0.2654600404075109,
+        "doppler_gap": 0.3827643030870716,
+        "phase_step": 1.0365747391696938,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.9995,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 136,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.9435616911311655,
+        "delay_gap": 0.20066863661628492,
+        "doppler_gap": 0.1831142352079602,
+        "phase_step": 1.42086807015113,
+        "cfo": 0.020210773817895922
+      },
+      "actual": {
+        "angle_gap": 6.8078036027361115,
+        "delay_gap": 0.14880118650942947,
+        "doppler_gap": 0.20197475930106465,
+        "phase_step": 1.3675916533043013,
+        "cfo": 0.004392474117910935
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.96775,
+        "2": 0.99875,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 137,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.581348453410068,
+        "delay_gap": 0.04787731864813944,
+        "doppler_gap": 0.09265312174108468,
+        "phase_step": 0.7507754708293204,
+        "cfo": 0.0663049845869016
+      },
+      "actual": {
+        "angle_gap": 2.6755544341395825,
+        "delay_gap": 0.0511923499020308,
+        "doppler_gap": 0.06962589381575582,
+        "phase_step": 0.5219799092669432,
+        "cfo": 0.08647369242311811
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.11025,
+        "2": 0.998,
+        "3": 0.99875,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 138,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 18.620269949535952,
+        "delay_gap": 0.29555523212054247,
+        "doppler_gap": 0.2959081661099902,
+        "phase_step": 0.33685735948227086,
+        "cfo": 0.08683460297641826
+      },
+      "actual": {
+        "angle_gap": 19.005321740453116,
+        "delay_gap": 0.24427609981286208,
+        "doppler_gap": 0.3213016427582388,
+        "phase_step": 0.07917752096125757,
+        "cfo": 0.10239970745982083
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.9995,
+        "3": 0.99875,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 139,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.733518163912754,
+        "delay_gap": 0.127887305923534,
+        "doppler_gap": 0.2081327554440457,
+        "phase_step": 0.8008801912059509,
+        "cfo": 0.004891004170877633
+      },
+      "actual": {
+        "angle_gap": 10.659711412357396,
+        "delay_gap": 0.15187712995154692,
+        "doppler_gap": 0.24842607227795832,
+        "phase_step": 1.0955517461897815,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 0.99975,
+        "3": 0.9995,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 140,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 4.503998553653597,
+        "delay_gap": 0.0582683652098334,
+        "doppler_gap": 0.0033608903618907613,
+        "phase_step": 0.13790321917191742,
+        "cfo": 0.05299977217160691
+      },
+      "actual": {
+        "angle_gap": 3.1094604546771585,
+        "delay_gap": 0.09190990882631575,
+        "doppler_gap": 0.04557235885942036,
+        "phase_step": 0.0769521618481572,
+        "cfo": 0.0652623099343338
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.18675,
+        "2": 0.994,
+        "3": 0.999,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 141,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.679087822591377,
+        "delay_gap": 0.2670819227123842,
+        "doppler_gap": 0.34377867227367,
+        "phase_step": 1.020025911265433,
+        "cfo": 0.0559620727154945
+      },
+      "actual": {
+        "angle_gap": 11.388222970687035,
+        "delay_gap": 0.28333108309500443,
+        "doppler_gap": 0.27488335143139586,
+        "phase_step": 1.1754135570796644,
+        "cfo": 0.06315128044401155
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.999,
+        "3": 1.0,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 142,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 7.516962687558588,
+        "delay_gap": 0.15635053733457369,
+        "doppler_gap": 0.18721870041063354,
+        "phase_step": 0.5895802850135425,
+        "cfo": 0.020877147377909435
+      },
+      "actual": {
+        "angle_gap": 6.837561539036221,
+        "delay_gap": 0.14828184954307144,
+        "doppler_gap": 0.1977306590920257,
+        "phase_step": 0.7341512913816308,
+        "cfo": 0.017168872467215053
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.967,
+        "2": 0.9995,
+        "3": 0.99975,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 143,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.5507371285277394,
+        "delay_gap": 0.11110220185053009,
+        "doppler_gap": 0.03944951375877122,
+        "phase_step": 0.01010920757931339,
+        "cfo": 0.06277688319203087
+      },
+      "actual": {
+        "angle_gap": 3.041592634716852,
+        "delay_gap": 0.1330480399459199,
+        "doppler_gap": 0.007214505578703484,
+        "phase_step": 0.0,
+        "cfo": 0.06249431948117952
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.2155,
+        "2": 0.991,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 144,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 13.966984927595215,
+        "delay_gap": 0.4893561691916948,
+        "doppler_gap": 0.47975640869574215,
+        "phase_step": 0.06236150812915805,
+        "cfo": 0.03680094365950726
+      },
+      "actual": {
+        "angle_gap": 12.689837046578377,
+        "delay_gap": 0.5173358830585664,
+        "doppler_gap": 0.5086049127925677,
+        "phase_step": 0.14119274087184366,
+        "cfo": 0.03459248723269797
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 145,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.57712456326301,
+        "delay_gap": 0.2099832254348743,
+        "doppler_gap": 0.2241441465371033,
+        "phase_step": 0.10462508042331618,
+        "cfo": 0.005423154592133628
+      },
+      "actual": {
+        "angle_gap": 9.22811607085075,
+        "delay_gap": 0.17863392411189094,
+        "doppler_gap": 0.20859920167699336,
+        "phase_step": 0.36676060304812896,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99525,
+        "2": 0.99825,
+        "3": 0.99975,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 146,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 3.7004652000775273,
+        "delay_gap": 0.04507273708678634,
+        "doppler_gap": 0.13009102682757587,
+        "phase_step": 1.3193253024219491,
+        "cfo": 0.08907181090952204
+      },
+      "actual": {
+        "angle_gap": 4.136338968628511,
+        "delay_gap": 0.0187325042790732,
+        "doppler_gap": 0.18664234563919607,
+        "phase_step": 1.153939671513684,
+        "cfo": 0.08960540200746651
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.6075,
+        "2": 0.99975,
+        "3": 0.99775,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 147,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 15.719544658580404,
+        "delay_gap": 0.4039537495911543,
+        "doppler_gap": 0.20473899863695846,
+        "phase_step": 0.4039440185875272,
+        "cfo": 0.07042473821503033
+      },
+      "actual": {
+        "angle_gap": 15.368101025231068,
+        "delay_gap": 0.3842334134826434,
+        "doppler_gap": 0.2687834882348168,
+        "phase_step": 0.5374652342721119,
+        "cfo": 0.08941761527735592
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.99925,
+        "3": 0.99975,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 148,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.198878964770543,
+        "delay_gap": 0.25958944170367515,
+        "doppler_gap": 0.23192502172572407,
+        "phase_step": 0.32354979925649446,
+        "cfo": 0.01809101735134434
+      },
+      "actual": {
+        "angle_gap": 10.513404533373421,
+        "delay_gap": 0.24229132882742624,
+        "doppler_gap": 0.20959273708742032,
+        "phase_step": 0.010057537243090775,
+        "cfo": 0.03141657894632943
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9985,
+        "2": 0.9985,
+        "3": 0.99925,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 149,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.5635317225327494,
+        "delay_gap": 0.09958160959829572,
+        "doppler_gap": 0.06953644544391395,
+        "phase_step": 0.9779746111427894,
+        "cfo": 0.005678389467443668
+      },
+      "actual": {
+        "angle_gap": 3.0079202239387643,
+        "delay_gap": 0.16932731742318444,
+        "doppler_gap": 0.1384192786684823,
+        "phase_step": 0.817294818230283,
+        "cfo": 0.012913911863926411
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.41225,
+        "2": 0.99875,
+        "3": 0.999,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 150,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.84350405633289,
+        "delay_gap": 0.29106573538344405,
+        "doppler_gap": 0.3044829237870306,
+        "phase_step": 1.3246978242379899,
+        "cfo": 0.06124715162514793
+      },
+      "actual": {
+        "angle_gap": 10.03146369116657,
+        "delay_gap": 0.3471888095368806,
+        "doppler_gap": 0.2916935244131063,
+        "phase_step": 1.5675588438293842,
+        "cfo": 0.04963770875055986
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.9995,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 151,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 4.005953860821931,
+        "delay_gap": 0.11769280941253411,
+        "doppler_gap": 0.15261045293465764,
+        "phase_step": 0.408695280718471,
+        "cfo": 0.015509263270505348
+      },
+      "actual": {
+        "angle_gap": 3.6870426824929634,
+        "delay_gap": 0.09793733718885256,
+        "doppler_gap": 0.22758138081667034,
+        "phase_step": 0.11445085624039253,
+        "cfo": 0.035478831668250665
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.6465,
+        "2": 0.99425,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 152,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 4.171192311163861,
+        "delay_gap": 0.13100598733005228,
+        "doppler_gap": 0.012855087988556307,
+        "phase_step": 1.5543826328656378,
+        "cfo": 0.03191173647972572
+      },
+      "actual": {
+        "angle_gap": 4.19051873932302,
+        "delay_gap": 0.1360763769934703,
+        "doppler_gap": 0.028535676874724678,
+        "phase_step": 1.2439160265756843,
+        "cfo": 0.013794932375533885
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.491,
+        "2": 0.9995,
+        "3": 0.999,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 153,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 16.96161603401749,
+        "delay_gap": 0.28183070934395466,
+        "doppler_gap": 0.32367484479667047,
+        "phase_step": 1.1822757882440231,
+        "cfo": 0.017420241734008215
+      },
+      "actual": {
+        "angle_gap": 15.675483991192683,
+        "delay_gap": 0.2762016425395537,
+        "doppler_gap": 0.3183840613677006,
+        "phase_step": 1.3991551118318675,
+        "cfo": 0.015976821009763
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99925,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 154,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.119259878547759,
+        "delay_gap": 0.18369872742865867,
+        "doppler_gap": 0.26020465912266577,
+        "phase_step": 0.1610874921074574,
+        "cfo": 0.07877137015143054
+      },
+      "actual": {
+        "angle_gap": 5.546099989656339,
+        "delay_gap": 0.13604317663530135,
+        "doppler_gap": 0.187406327925275,
+        "phase_step": 0.0,
+        "cfo": 0.09993944682245152
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.88975,
+        "2": 0.998,
+        "3": 0.99925,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 155,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.9241326665416447,
+        "delay_gap": 0.144969082619446,
+        "doppler_gap": 0.09648839776247055,
+        "phase_step": 0.46825418856951295,
+        "cfo": 0.03983413210974948
+      },
+      "actual": {
+        "angle_gap": 1.6437714498574387,
+        "delay_gap": 0.08314963716351764,
+        "doppler_gap": 0.05271493530127298,
+        "phase_step": 0.4713321632236807,
+        "cfo": 0.051548788848593055
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.05275,
+        "2": 0.9965,
+        "3": 0.9995,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 156,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 10.335309907001896,
+        "delay_gap": 0.4424104888936311,
+        "doppler_gap": 0.48719446491536217,
+        "phase_step": 0.027403066345623055,
+        "cfo": 0.08108853441997838
+      },
+      "actual": {
+        "angle_gap": 10.848526193549347,
+        "delay_gap": 0.46364331493502037,
+        "doppler_gap": 0.48551708344769207,
+        "phase_step": 0.1358472977147126,
+        "cfo": 0.08430346786165452
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99875,
+        "2": 0.999,
+        "3": 0.99975,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 157,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.921744617152104,
+        "delay_gap": 0.1953771273890884,
+        "doppler_gap": 0.16624749877069264,
+        "phase_step": 0.24261089355914636,
+        "cfo": 0.0007355498088563507
+      },
+      "actual": {
+        "angle_gap": 9.6633301093093,
+        "delay_gap": 0.170783329537307,
+        "doppler_gap": 0.21447748767203462,
+        "phase_step": 0.48774808936883407,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9975,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 158,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 5.889716973962727,
+        "delay_gap": 0.011850608400166773,
+        "doppler_gap": 0.12032696490978795,
+        "phase_step": 0.5100486152405158,
+        "cfo": 0.0002612732910179494
+      },
+      "actual": {
+        "angle_gap": 4.424938374135069,
+        "delay_gap": 0.06915001545204817,
+        "doppler_gap": 0.08780422738974944,
+        "phase_step": 0.5978213424939628,
+        "cfo": 0.0
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.526,
+        "2": 0.99575,
+        "3": 0.999,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 159,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 19.869484627780604,
+        "delay_gap": 0.23026989198719555,
+        "doppler_gap": 0.45081810568734926,
+        "phase_step": 0.5178594106459257,
+        "cfo": 0.09332310824417957
+      },
+      "actual": {
+        "angle_gap": 19.73993792812229,
+        "delay_gap": 0.21248181109594855,
+        "doppler_gap": 0.4565325910096004,
+        "phase_step": 0.4967753003838139,
+        "cfo": 0.07958520317727033
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.999,
+        "2": 0.9995,
+        "3": 0.9995,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 160,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.630797201953104,
+        "delay_gap": 0.13472585476128246,
+        "doppler_gap": 0.11739543420824597,
+        "phase_step": 0.4475833269971949,
+        "cfo": 0.04264357236993768
+      },
+      "actual": {
+        "angle_gap": 10.891565775029413,
+        "delay_gap": 0.1940131890231347,
+        "doppler_gap": 0.15277041685576143,
+        "phase_step": 0.6106633820888097,
+        "cfo": 0.046365252469967366
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.99975,
+        "3": 0.99925,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 161,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.9367003851887654,
+        "delay_gap": 0.07260429823908555,
+        "doppler_gap": 0.008064717634273227,
+        "phase_step": 1.3727017983028589,
+        "cfo": 0.028106996582039113
+      },
+      "actual": {
+        "angle_gap": 2.7520618757345745,
+        "delay_gap": 0.04890840307537844,
+        "doppler_gap": 0.035661654840247275,
+        "phase_step": 1.4268331521254398,
+        "cfo": 0.033041612027398484
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.105,
+        "2": 0.99975,
+        "3": 0.997,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 162,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.939476054361798,
+        "delay_gap": 0.46483066541573337,
+        "doppler_gap": 0.33797061791354954,
+        "phase_step": 1.0223804843571902,
+        "cfo": 0.020646206271511803
+      },
+      "actual": {
+        "angle_gap": 12.046678898094022,
+        "delay_gap": 0.47541558635732933,
+        "doppler_gap": 0.3891387012646795,
+        "phase_step": 0.9137003164663724,
+        "cfo": 0.01109524866453523
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.9995,
+        "3": 1.0,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 163,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 9.640610513607463,
+        "delay_gap": 0.24473667713947736,
+        "doppler_gap": 0.26841443491990813,
+        "phase_step": 0.259028862537931,
+        "cfo": 0.04324812356637917
+      },
+      "actual": {
+        "angle_gap": 9.226021500479268,
+        "delay_gap": 0.26585687101786026,
+        "doppler_gap": 0.31293655216025373,
+        "phase_step": 0.21867713491366292,
+        "cfo": 0.04652061385761766
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99825,
+        "2": 0.9995,
+        "3": 0.999,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 164,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.7858379909107611,
+        "delay_gap": 0.09500792073511324,
+        "doppler_gap": 0.013148074831155225,
+        "phase_step": 0.2161955148315985,
+        "cfo": 0.041596655006061904
+      },
+      "actual": {
+        "angle_gap": 2.1462871473164915,
+        "delay_gap": 0.11518070904232088,
+        "doppler_gap": 0.07597918195922157,
+        "phase_step": 0.46678056113337185,
+        "cfo": 0.036083534559344765
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.1115,
+        "2": 0.996,
+        "3": 0.99975,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 165,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 17.98075196753428,
+        "delay_gap": 0.318446996379218,
+        "doppler_gap": 0.28953301359954103,
+        "phase_step": 0.9353814472534894,
+        "cfo": 0.005326836161485638
+      },
+      "actual": {
+        "angle_gap": 17.58992062444581,
+        "delay_gap": 0.3762768459346316,
+        "doppler_gap": 0.34269374357557886,
+        "phase_step": 0.7166642852585757,
+        "cfo": 0.023996722013805385
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.9995,
+        "3": 0.99975,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 166,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 7.357246757344933,
+        "delay_gap": 0.10402517215000938,
+        "doppler_gap": 0.1758736253245041,
+        "phase_step": 1.362405804968473,
+        "cfo": 0.06067330865255358
+      },
+      "actual": {
+        "angle_gap": 8.8527561402356,
+        "delay_gap": 0.03805535805462902,
+        "doppler_gap": 0.18927702590580917,
+        "phase_step": 1.1911932859456102,
+        "cfo": 0.04035231422473419
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.994,
+        "2": 0.99925,
+        "3": 0.999,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 167,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.7181481376739685,
+        "delay_gap": 0.0015010401570713426,
+        "doppler_gap": 0.10075860045330534,
+        "phase_step": 0.40287957214630804,
+        "cfo": 0.08277293325069132
+      },
+      "actual": {
+        "angle_gap": 3.3463358422762086,
+        "delay_gap": 0.06269661253356949,
+        "doppler_gap": 0.09840156630273522,
+        "phase_step": 0.6954815487941264,
+        "cfo": 0.08048967611697824
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.2425,
+        "2": 0.99975,
+        "3": 0.99825,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 168,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 12.852436398929466,
+        "delay_gap": 0.39817087526019157,
+        "doppler_gap": 0.47620354794398684,
+        "phase_step": 1.140584842192323,
+        "cfo": 0.03912735301908909
+      },
+      "actual": {
+        "angle_gap": 11.757958816667243,
+        "delay_gap": 0.43692828262417954,
+        "doppler_gap": 0.5268870707740915,
+        "phase_step": 1.011206556094553,
+        "cfo": 0.024220666865472626
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9995,
+        "2": 1.0,
+        "3": 0.99975,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 169,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 7.9901487613170765,
+        "delay_gap": 0.21931956260022212,
+        "doppler_gap": 0.24137872381733397,
+        "phase_step": 0.8105724916787341,
+        "cfo": 0.07609837727128776
+      },
+      "actual": {
+        "angle_gap": 6.603243817959686,
+        "delay_gap": 0.2376324205334221,
+        "doppler_gap": 0.21505437367211114,
+        "phase_step": 0.579430243264001,
+        "cfo": 0.05874212242493614
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.98125,
+        "2": 0.999,
+        "3": 0.99875,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 170,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 1.9010024039985074,
+        "delay_gap": 0.07817383370500992,
+        "doppler_gap": 0.11641012533714508,
+        "phase_step": 0.26927866305276127,
+        "cfo": 0.045246577579777236
+      },
+      "actual": {
+        "angle_gap": 0.5491902695451736,
+        "delay_gap": 0.06004871135613727,
+        "doppler_gap": 0.08366413071251794,
+        "phase_step": 0.5417762071852933,
+        "cfo": 0.059638479368169184
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.02325,
+        "2": 0.998,
+        "3": 0.99925,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 171,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 15.05717847668089,
+        "delay_gap": 0.2654065829651496,
+        "doppler_gap": 0.2551503791368856,
+        "phase_step": 0.21634147430717707,
+        "cfo": 0.008703587423819593
+      },
+      "actual": {
+        "angle_gap": 14.188538149399445,
+        "delay_gap": 0.2317434366939769,
+        "doppler_gap": 0.2034116867223599,
+        "phase_step": 0.03590183391672916,
+        "cfo": 0.01480227578740705
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99925,
+        "2": 0.9985,
+        "3": 1.0,
+        "4": 0.99925
+      }
+    },
+    {
+      "scenario": 172,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 5.273232683343512,
+        "delay_gap": 0.11374631666961017,
+        "doppler_gap": 0.1329813405804669,
+        "phase_step": 0.8127290643813035,
+        "cfo": 0.07519906983017303
+      },
+      "actual": {
+        "angle_gap": 5.63124625040566,
+        "delay_gap": 0.13609525783934318,
+        "doppler_gap": 0.1605869499269485,
+        "phase_step": 1.0483645192111855,
+        "cfo": 0.055444892157042264
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.8905,
+        "2": 1.0,
+        "3": 0.999,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 173,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 0.8915984548620208,
+        "delay_gap": 0.1375396828263928,
+        "doppler_gap": 0.05995015131386583,
+        "phase_step": 1.1673376552256847,
+        "cfo": 0.09268160925983526
+      },
+      "actual": {
+        "angle_gap": 0.5302372597691531,
+        "delay_gap": 0.18986102088052154,
+        "doppler_gap": 0.037988073377330865,
+        "phase_step": 0.8623529963296424,
+        "cfo": 0.07336010304422046
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.097,
+        "2": 0.99975,
+        "3": 0.99825,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 174,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 19.26667923531664,
+        "delay_gap": 0.4453654785787172,
+        "doppler_gap": 0.3530933246162969,
+        "phase_step": 0.12716617752321893,
+        "cfo": 0.021015269170804596
+      },
+      "actual": {
+        "angle_gap": 19.284291435960803,
+        "delay_gap": 0.45656695961868154,
+        "doppler_gap": 0.2786665827598235,
+        "phase_step": 0.31043017532189987,
+        "cfo": 0.017811438206003734
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.9985,
+        "2": 0.99975,
+        "3": 0.99925,
+        "4": 0.9995
+      }
+    },
+    {
+      "scenario": 175,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 8.077244060299076,
+        "delay_gap": 0.20547850358160677,
+        "doppler_gap": 0.2439081454557482,
+        "phase_step": 0.6896593511305191,
+        "cfo": 0.060760534253345405
+      },
+      "actual": {
+        "angle_gap": 7.012503130889613,
+        "delay_gap": 0.26951313926576925,
+        "doppler_gap": 0.22556327995934278,
+        "phase_step": 0.8475663127867665,
+        "cfo": 0.08070318042653779
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.98425,
+        "2": 0.99975,
+        "3": 0.999,
+        "4": 0.99975
+      }
+    },
+    {
+      "scenario": 176,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 2.4675273879291346,
+        "delay_gap": 0.03805247112539786,
+        "doppler_gap": 0.08587678945712743,
+        "phase_step": 0.196521529691226,
+        "cfo": 0.08246006621815992
+      },
+      "actual": {
+        "angle_gap": 3.6902395371629177,
+        "delay_gap": 0.01944726977183677,
+        "doppler_gap": 0.05684402071672743,
+        "phase_step": 0.0,
+        "cfo": 0.10106738818062033
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.2535,
+        "2": 0.9965,
+        "3": 0.99925,
+        "4": 0.9985
+      }
+    },
+    {
+      "scenario": 177,
+      "stratum": "easy",
+      "estimate": {
+        "angle_gap": 14.225379117537624,
+        "delay_gap": 0.43074394255631604,
+        "doppler_gap": 0.3943592809397566,
+        "phase_step": 1.3404091063452581,
+        "cfo": 0.08969437573703044
+      },
+      "actual": {
+        "angle_gap": 13.81767939501006,
+        "delay_gap": 0.43042375257264953,
+        "doppler_gap": 0.46096108479513576,
+        "phase_step": 1.446894148923344,
+        "cfo": 0.0922098881444385
+      },
+      "nominal_length": 1,
+      "robust_length": 1,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.99975,
+        "2": 0.99925,
+        "3": 0.9995,
+        "4": 0.999
+      }
+    },
+    {
+      "scenario": 178,
+      "stratum": "medium",
+      "estimate": {
+        "angle_gap": 6.504638389401666,
+        "delay_gap": 0.14178865363629803,
+        "doppler_gap": 0.10751916710423073,
+        "phase_step": 1.2097602583675182,
+        "cfo": 0.032116346999951965
+      },
+      "actual": {
+        "angle_gap": 5.715030231204232,
+        "delay_gap": 0.08238744323112693,
+        "doppler_gap": 0.15667556927299642,
+        "phase_step": 1.3221338372522768,
+        "cfo": 0.011357317029200838
+      },
+      "nominal_length": 1,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.853,
+        "2": 0.9995,
+        "3": 0.9985,
+        "4": 0.99875
+      }
+    },
+    {
+      "scenario": 179,
+      "stratum": "hard",
+      "estimate": {
+        "angle_gap": 3.2895366021761134,
+        "delay_gap": 0.004073248158865761,
+        "doppler_gap": 0.09291641706772644,
+        "phase_step": 0.7235757834994053,
+        "cfo": 0.03817149378139886
+      },
+      "actual": {
+        "angle_gap": 2.8564520315253317,
+        "delay_gap": 0.07109247223168035,
+        "doppler_gap": 0.13574276071375746,
+        "phase_step": 0.5823882123460216,
+        "cfo": 0.017859012563333436
+      },
+      "nominal_length": 2,
+      "robust_length": 2,
+      "fixed_2": 2,
+      "fixed_4": 4,
+      "probability_by_length": {
+        "1": 0.217,
+        "2": 0.9945,
+        "3": 0.99925,
+        "4": 0.99775
+      }
+    }
+  ]
+}
