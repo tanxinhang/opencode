@@ -1,0 +1,262 @@
+{
+  "model": "8-element half-wavelength ULA; same DD cell; noiseless",
+  "array_only": [
+    {
+      "angle_gap_degrees": 2.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -21.0,
+        0.0
+      ],
+      "resolved": false,
+      "valley_to_weaker_peak_ratio": 0.0040268039761837005,
+      "mean_desired_to_other_angle_ratio": null,
+      "spatial_peak_to_midpoint_ratio": 1.0
+    },
+    {
+      "angle_gap_degrees": 5.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        0.0,
+        21.5
+      ],
+      "resolved": false,
+      "valley_to_weaker_peak_ratio": 0.1882269580816211,
+      "mean_desired_to_other_angle_ratio": null,
+      "spatial_peak_to_midpoint_ratio": 1.0
+    },
+    {
+      "angle_gap_degrees": 10.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -4.0,
+        4.0
+      ],
+      "resolved": false,
+      "valley_to_weaker_peak_ratio": 0.9853231918032059,
+      "mean_desired_to_other_angle_ratio": null,
+      "spatial_peak_to_midpoint_ratio": 1.0148954254998652
+    },
+    {
+      "angle_gap_degrees": 15.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -10.0,
+        10.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": 0.021923163523545158,
+      "mean_desired_to_other_angle_ratio": null,
+      "spatial_peak_to_midpoint_ratio": 45.613854904015774
+    },
+    {
+      "angle_gap_degrees": 20.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -10.5,
+        10.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": 0.04534955682967877,
+      "mean_desired_to_other_angle_ratio": null,
+      "spatial_peak_to_midpoint_ratio": 22.05093213492123
+    },
+    {
+      "angle_gap_degrees": 30.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -16.5,
+        16.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": 0.004016609476810293,
+      "mean_desired_to_other_angle_ratio": null,
+      "spatial_peak_to_midpoint_ratio": 248.96620041690716
+    },
+    {
+      "angle_gap_degrees": 40.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -19.5,
+        19.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": 0.011870273051437674,
+      "mean_desired_to_other_angle_ratio": null,
+      "spatial_peak_to_midpoint_ratio": 8.179373619012443
+    }
+  ],
+  "cazac_spatial_codes": [
+    {
+      "angle_gap_degrees": 2.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -1.0,
+        1.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 1.0660723990102752,
+      "spatial_peak_to_midpoint_ratio": 7.092847711853939
+    },
+    {
+      "angle_gap_degrees": 5.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -1.5,
+        1.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 1.2717826714185552,
+      "spatial_peak_to_midpoint_ratio": 29.435115356471663
+    },
+    {
+      "angle_gap_degrees": 10.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -3.0,
+        3.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 2.4750323206668,
+      "spatial_peak_to_midpoint_ratio": 74.0616587434225
+    },
+    {
+      "angle_gap_degrees": 15.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -7.5,
+        7.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 3.6854324884360823,
+      "spatial_peak_to_midpoint_ratio": 36.85614896619238
+    },
+    {
+      "angle_gap_degrees": 20.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -10.5,
+        10.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 2.600356859875088,
+      "spatial_peak_to_midpoint_ratio": 202.6900618729024
+    },
+    {
+      "angle_gap_degrees": 30.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -15.5,
+        15.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 8.860798871608186,
+      "spatial_peak_to_midpoint_ratio": 1.9184653891797845
+    },
+    {
+      "angle_gap_degrees": 40.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -19.5,
+        19.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 2.903758678615465,
+      "spatial_peak_to_midpoint_ratio": 2.6598413236803786
+    }
+  ],
+  "random_spatial_codes": [
+    {
+      "angle_gap_degrees": 2.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        0.0,
+        0.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 1.0074342904808926,
+      "spatial_peak_to_midpoint_ratio": 12.76503880366505
+    },
+    {
+      "angle_gap_degrees": 5.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -1.0,
+        1.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 1.1444607535887525,
+      "spatial_peak_to_midpoint_ratio": 29.264068577450647
+    },
+    {
+      "angle_gap_degrees": 10.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -4.0,
+        4.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 2.5393637429643743,
+      "spatial_peak_to_midpoint_ratio": 16.243924886110346
+    },
+    {
+      "angle_gap_degrees": 15.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -8.0,
+        8.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 3.981085611463431,
+      "spatial_peak_to_midpoint_ratio": 10.949492014911932
+    },
+    {
+      "angle_gap_degrees": 20.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -9.5,
+        9.5
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 1.4851513091847477,
+      "spatial_peak_to_midpoint_ratio": 191.33863053566824
+    },
+    {
+      "angle_gap_degrees": 30.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -15.0,
+        15.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 2.893875417623637,
+      "spatial_peak_to_midpoint_ratio": 3.6197838634341992
+    },
+    {
+      "angle_gap_degrees": 40.0,
+      "two_dimensional_peak_count": 1,
+      "estimated_angles": [
+        -17.0,
+        17.0
+      ],
+      "resolved": true,
+      "valley_to_weaker_peak_ratio": null,
+      "mean_desired_to_other_angle_ratio": 1.6107780797022357,
+      "spatial_peak_to_midpoint_ratio": 3.8978471383432165
+    }
+  ],
+  "interpretation_warning": "Distinct spatial codes require resolved per-element or orthogonal probing observations; elementwise coding changes the effective array manifold and is not free array gain."
+}

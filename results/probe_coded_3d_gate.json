@@ -1,0 +1,104 @@
+{
+  "model": "Codes on an independent resolved probe-snapshot dimension",
+  "cases": {
+    "cazac_p2": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 2,
+      "code_kind": "cazac",
+      "probe_code_squared_coherence": 3.7493994566546427e-33,
+      "threshold": 0.23390331645483903,
+      "joint_identity_correct_probability": 1.0,
+      "extra_candidate_peaks_per_h1_frame": 2.72,
+      "trials": 1000,
+      "resource_warning": "Uses 2 resolved probing snapshots at fixed total template energy."
+    },
+    "dft_p2": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 2,
+      "code_kind": "dft",
+      "probe_code_squared_coherence": 3.7493994566546427e-33,
+      "threshold": 0.2367752651615723,
+      "joint_identity_correct_probability": 1.0,
+      "extra_candidate_peaks_per_h1_frame": 2.632,
+      "trials": 1000,
+      "resource_warning": "Uses 2 resolved probing snapshots at fixed total template energy."
+    },
+    "random_qpsk_p2": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 2,
+      "code_kind": "random_qpsk",
+      "probe_code_squared_coherence": 3.7493994566546427e-33,
+      "threshold": 0.2367752651615723,
+      "joint_identity_correct_probability": 1.0,
+      "extra_candidate_peaks_per_h1_frame": 2.675,
+      "trials": 1000,
+      "resource_warning": "Uses 2 resolved probing snapshots at fixed total template energy."
+    },
+    "cazac_p4": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 4,
+      "code_kind": "cazac",
+      "probe_code_squared_coherence": 1.8767779762237997e-32,
+      "threshold": 0.23719451382495374,
+      "joint_identity_correct_probability": 1.0,
+      "extra_candidate_peaks_per_h1_frame": 2.604,
+      "trials": 1000,
+      "resource_warning": "Uses 4 resolved probing snapshots at fixed total template energy."
+    },
+    "dft_p4": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 4,
+      "code_kind": "dft",
+      "probe_code_squared_coherence": 5.190525105387814e-33,
+      "threshold": 0.23747770288529588,
+      "joint_identity_correct_probability": 0.999,
+      "extra_candidate_peaks_per_h1_frame": 2.596,
+      "trials": 1000,
+      "resource_warning": "Uses 4 resolved probing snapshots at fixed total template energy."
+    },
+    "random_qpsk_p4": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 4,
+      "code_kind": "random_qpsk",
+      "probe_code_squared_coherence": 3.749399456654644e-33,
+      "threshold": 0.23748762604068221,
+      "joint_identity_correct_probability": 1.0,
+      "extra_candidate_peaks_per_h1_frame": 2.643,
+      "trials": 1000,
+      "resource_warning": "Uses 4 resolved probing snapshots at fixed total template energy."
+    },
+    "cazac_p8": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 8,
+      "code_kind": "cazac",
+      "probe_code_squared_coherence": 6.172605471761092e-32,
+      "threshold": 0.23639874275527858,
+      "joint_identity_correct_probability": 1.0,
+      "extra_candidate_peaks_per_h1_frame": 2.671,
+      "trials": 1000,
+      "resource_warning": "Uses 8 resolved probing snapshots at fixed total template energy."
+    },
+    "dft_p8": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 8,
+      "code_kind": "dft",
+      "probe_code_squared_coherence": 1.9259299443872362e-33,
+      "threshold": 0.23992741750647878,
+      "joint_identity_correct_probability": 1.0,
+      "extra_candidate_peaks_per_h1_frame": 2.581,
+      "trials": 1000,
+      "resource_warning": "Uses 8 resolved probing snapshots at fixed total template energy."
+    },
+    "random_qpsk_p8": {
+      "angle_gap_degrees": 5.0,
+      "probe_length": 8,
+      "code_kind": "random_qpsk",
+      "probe_code_squared_coherence": 0.031249999999999976,
+      "threshold": 0.23389149150071195,
+      "joint_identity_correct_probability": 0.999,
+      "extra_candidate_peaks_per_h1_frame": 2.757,
+      "trials": 1000,
+      "resource_warning": "Uses 8 resolved probing snapshots at fixed total template energy."
+    }
+  }
+}

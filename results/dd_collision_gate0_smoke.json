@@ -1,0 +1,101 @@
+{
+  "grid": [
+    8,
+    16
+  ],
+  "fractional_offset_support": [
+    -0.45,
+    0.45
+  ],
+  "monte_carlo_trials": 200,
+  "noise_variance": 0.02,
+  "detector_assumption": "known targets per assigned code; cyclic NMS",
+  "max_same_pattern_collision": 0.5958656534205607,
+  "max_distinct_pattern_collision": 0.013359436318268712,
+  "assignments": {
+    "same": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "uniform": [
+      0,
+      1,
+      2,
+      0
+    ],
+    "random": [
+      2,
+      2,
+      1,
+      1
+    ],
+    "greedy": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "oracle": [
+      1,
+      1,
+      2,
+      2
+    ]
+  },
+  "weighted_collision_cost": {
+    "same": 0.029229977306008827,
+    "uniform": 0.08529674561587469,
+    "random": 0.06680803272383314,
+    "greedy": 0.029229977306008827,
+    "oracle": 0.009039604385696384
+  },
+  "waveform_detection_map": {
+    "same": {
+      "mean_true_to_strongest_false_ratio": 0.7857807926218129,
+      "localization_hit_rate": 0.89,
+      "localization_hit_rate_95ci": [
+        0.8622901211309997,
+        0.9177098788690004
+      ],
+      "localization_bin_rmse": 1.1863810517704672
+    },
+    "uniform": {
+      "mean_true_to_strongest_false_ratio": 1.6639102194204158,
+      "localization_hit_rate": 0.8325,
+      "localization_hit_rate_95ci": [
+        0.8057945425561285,
+        0.8592054574438716
+      ],
+      "localization_bin_rmse": 1.9477551180782455
+    },
+    "random": {
+      "mean_true_to_strongest_false_ratio": 1.0879651100585894,
+      "localization_hit_rate": 0.8375,
+      "localization_hit_rate_95ci": [
+        0.8108759894137173,
+        0.8641240105862827
+      ],
+      "localization_bin_rmse": 1.680773631397161
+    },
+    "greedy": {
+      "mean_true_to_strongest_false_ratio": 0.7857807926218129,
+      "localization_hit_rate": 0.89,
+      "localization_hit_rate_95ci": [
+        0.8622901211309997,
+        0.9177098788690004
+      ],
+      "localization_bin_rmse": 1.1863810517704672
+    },
+    "oracle": {
+      "mean_true_to_strongest_false_ratio": 1.082234660381645,
+      "localization_hit_rate": 0.8425,
+      "localization_hit_rate_95ci": [
+        0.8142148129041856,
+        0.8707851870958144
+      ],
+      "localization_bin_rmse": 1.7923448328934921
+    }
+  }
+}

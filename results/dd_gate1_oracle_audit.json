@@ -1,0 +1,456 @@
+{
+  "separated": {
+    "true_bins": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        4,
+        7
+      ],
+      [
+        6,
+        10
+      ]
+    ],
+    "trials": 120,
+    "noise_variance": 0.02,
+    "frame_false_alarm_probability": 0.01,
+    "thresholds_by_active_code_set": {
+      "0": 0.19060424807974605,
+      "1": 0.18666661301019744,
+      "2": 0.18872042194409036,
+      "0,1": 0.20354381258921606,
+      "0,2": 0.20509871301602012,
+      "1,2": 0.202833484155034,
+      "0,1,2": 0.21135724936318612
+    },
+    "same": {
+      "assignment": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "collision_cost": 0.029229977306008827,
+      "detection_probability": 0.90625,
+      "miss_or_merge_rate": 0.09375,
+      "false_peaks_per_frame": 0.6583333333333333,
+      "doppler_rmse_on_matches": 0.3457459036417604
+    },
+    "uniform": {
+      "assignment": [
+        0,
+        1,
+        2,
+        0
+      ],
+      "collision_cost": 0.08529674561587469,
+      "detection_probability": 0.8604166666666667,
+      "miss_or_merge_rate": 0.13958333333333328,
+      "false_peaks_per_frame": 2.066666666666667,
+      "doppler_rmse_on_matches": 0.23598744169812338
+    },
+    "detection_oracle": {
+      "assignment": [
+        2,
+        1,
+        2,
+        1
+      ],
+      "collision_cost": 0.029789009258481085,
+      "detection_probability": 0.91875,
+      "miss_or_merge_rate": 0.08125000000000004,
+      "false_peaks_per_frame": 1.6583333333333334,
+      "doppler_rmse_on_matches": 0.2380952380952381
+    },
+    "collision_surrogate_oracle": {
+      "assignment": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "collision_cost": 0.009039604385696384,
+      "detection_probability": 0.9145833333333333,
+      "miss_or_merge_rate": 0.0854166666666667,
+      "false_peaks_per_frame": 1.9,
+      "doppler_rmse_on_matches": 0.22386133032839975
+    },
+    "collision_detection_rank_correlation": 0.39135049683830175,
+    "top_detection_assignments": [
+      {
+        "assignment": [
+          2,
+          1,
+          2,
+          1
+        ],
+        "collision_cost": 0.029789009258481085,
+        "detection_probability": 0.91875,
+        "miss_or_merge_rate": 0.08125000000000004,
+        "false_peaks_per_frame": 1.6583333333333334,
+        "doppler_rmse_on_matches": 0.2380952380952381
+      },
+      {
+        "assignment": [
+          1,
+          1,
+          2,
+          2
+        ],
+        "collision_cost": 0.009039604385696384,
+        "detection_probability": 0.9145833333333333,
+        "miss_or_merge_rate": 0.0854166666666667,
+        "false_peaks_per_frame": 1.9,
+        "doppler_rmse_on_matches": 0.22386133032839975
+      },
+      {
+        "assignment": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "collision_cost": 0.07784791094813391,
+        "detection_probability": 0.9104166666666667,
+        "miss_or_merge_rate": 0.08958333333333335,
+        "false_peaks_per_frame": 1.1333333333333333,
+        "doppler_rmse_on_matches": 0.21921432414070668
+      },
+      {
+        "assignment": [
+          1,
+          1,
+          2,
+          1
+        ],
+        "collision_cost": 0.02546742685536721,
+        "detection_probability": 0.9104166666666667,
+        "miss_or_merge_rate": 0.08958333333333335,
+        "false_peaks_per_frame": 1.7583333333333333,
+        "doppler_rmse_on_matches": 0.24856567949974837
+      },
+      {
+        "assignment": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "collision_cost": 0.029229977306008827,
+        "detection_probability": 0.90625,
+        "miss_or_merge_rate": 0.09375,
+        "false_peaks_per_frame": 0.6583333333333333,
+        "doppler_rmse_on_matches": 0.3457459036417604
+      }
+    ],
+    "independent_validation_trials": 2000,
+    "independent_validation": {
+      "same": {
+        "assignment": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "collision_cost": 0.029229977306008827,
+        "detection_probability": 0.92375,
+        "miss_or_merge_rate": 0.07625000000000004,
+        "false_peaks_per_frame": 0.6515,
+        "doppler_rmse_on_matches": 0.32550574784620956,
+        "pd_difference_vs_uniform": 0.0665,
+        "pd_difference_vs_uniform_95ci": [
+          0.05794568352437306,
+          0.07505431647562695
+        ]
+      },
+      "uniform": {
+        "assignment": [
+          0,
+          1,
+          2,
+          0
+        ],
+        "collision_cost": 0.08529674561587469,
+        "detection_probability": 0.85725,
+        "miss_or_merge_rate": 0.14275000000000004,
+        "false_peaks_per_frame": 2.0085,
+        "doppler_rmse_on_matches": 0.2303838074735073,
+        "pd_difference_vs_uniform": 0.0,
+        "pd_difference_vs_uniform_95ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_oracle_selected_on_training": {
+        "assignment": [
+          2,
+          1,
+          2,
+          1
+        ],
+        "collision_cost": 0.029789009258481085,
+        "detection_probability": 0.89775,
+        "miss_or_merge_rate": 0.10224999999999995,
+        "false_peaks_per_frame": 1.7915,
+        "doppler_rmse_on_matches": 0.2503130871608794,
+        "pd_difference_vs_uniform": 0.0405,
+        "pd_difference_vs_uniform_95ci": [
+          0.03120215440188518,
+          0.04979784559811482
+        ]
+      },
+      "collision_surrogate_oracle": {
+        "assignment": [
+          1,
+          1,
+          2,
+          2
+        ],
+        "collision_cost": 0.009039604385696384,
+        "detection_probability": 0.908875,
+        "miss_or_merge_rate": 0.09112500000000001,
+        "false_peaks_per_frame": 1.782,
+        "doppler_rmse_on_matches": 0.27049468987781883,
+        "pd_difference_vs_uniform": 0.051625,
+        "pd_difference_vs_uniform_95ci": [
+          0.04248938822033278,
+          0.06076061177966721
+        ]
+      }
+    }
+  },
+  "close_collision": {
+    "true_bins": [
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        5,
+        8
+      ],
+      [
+        6,
+        11
+      ]
+    ],
+    "trials": 120,
+    "noise_variance": 0.02,
+    "frame_false_alarm_probability": 0.01,
+    "thresholds_by_active_code_set": {
+      "0": 0.19060424807974605,
+      "1": 0.18666661301019744,
+      "2": 0.18872042194409036,
+      "0,1": 0.20354381258921606,
+      "0,2": 0.20509871301602012,
+      "1,2": 0.202833484155034,
+      "0,1,2": 0.21135724936318612
+    },
+    "same": {
+      "assignment": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "collision_cost": 0.42716131780121375,
+      "detection_probability": 0.7,
+      "miss_or_merge_rate": 0.30000000000000004,
+      "false_peaks_per_frame": 0.7833333333333333,
+      "doppler_rmse_on_matches": 0.36596252735569995
+    },
+    "uniform": {
+      "assignment": [
+        0,
+        1,
+        2,
+        0
+      ],
+      "collision_cost": 0.056357889111185146,
+      "detection_probability": 0.8270833333333333,
+      "miss_or_merge_rate": 0.17291666666666672,
+      "false_peaks_per_frame": 2.1416666666666666,
+      "doppler_rmse_on_matches": 0.34039538426988375
+    },
+    "detection_oracle": {
+      "assignment": [
+        2,
+        0,
+        0,
+        2
+      ],
+      "collision_cost": 0.0635689192252607,
+      "detection_probability": 0.8979166666666667,
+      "miss_or_merge_rate": 0.1020833333333333,
+      "false_peaks_per_frame": 1.4166666666666667,
+      "doppler_rmse_on_matches": 0.3883452909012767
+    },
+    "collision_surrogate_oracle": {
+      "assignment": [
+        0,
+        2,
+        1,
+        2
+      ],
+      "collision_cost": 0.017735722497661744,
+      "detection_probability": 0.8645833333333334,
+      "miss_or_merge_rate": 0.13541666666666663,
+      "false_peaks_per_frame": 1.9416666666666667,
+      "doppler_rmse_on_matches": 0.33653084858329524
+    },
+    "collision_detection_rank_correlation": 0.6807813911472448,
+    "top_detection_assignments": [
+      {
+        "assignment": [
+          2,
+          0,
+          0,
+          2
+        ],
+        "collision_cost": 0.0635689192252607,
+        "detection_probability": 0.8979166666666667,
+        "miss_or_merge_rate": 0.1020833333333333,
+        "false_peaks_per_frame": 1.4166666666666667,
+        "doppler_rmse_on_matches": 0.3883452909012767
+      },
+      {
+        "assignment": [
+          0,
+          2,
+          0,
+          0
+        ],
+        "collision_cost": 0.06404213397020393,
+        "detection_probability": 0.89375,
+        "miss_or_merge_rate": 0.10624999999999996,
+        "false_peaks_per_frame": 1.5,
+        "doppler_rmse_on_matches": 0.39519255582204
+      },
+      {
+        "assignment": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "collision_cost": 0.06038193019869621,
+        "detection_probability": 0.89375,
+        "miss_or_merge_rate": 0.10624999999999996,
+        "false_peaks_per_frame": 1.6083333333333334,
+        "doppler_rmse_on_matches": 0.38321423101595126
+      },
+      {
+        "assignment": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "collision_cost": 0.034342478844195265,
+        "detection_probability": 0.88125,
+        "miss_or_merge_rate": 0.11875000000000002,
+        "false_peaks_per_frame": 1.35,
+        "doppler_rmse_on_matches": 0.4067980255234039
+      },
+      {
+        "assignment": [
+          1,
+          2,
+          2,
+          1
+        ],
+        "collision_cost": 0.12196425482392724,
+        "detection_probability": 0.88125,
+        "miss_or_merge_rate": 0.11875000000000002,
+        "false_peaks_per_frame": 1.7833333333333334,
+        "doppler_rmse_on_matches": 0.39500426427359775
+      }
+    ],
+    "independent_validation_trials": 2000,
+    "independent_validation": {
+      "same": {
+        "assignment": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "collision_cost": 0.42716131780121375,
+        "detection_probability": 0.67875,
+        "miss_or_merge_rate": 0.32125000000000004,
+        "false_peaks_per_frame": 0.764,
+        "doppler_rmse_on_matches": 0.33324123958013674,
+        "pd_difference_vs_uniform": -0.141625,
+        "pd_difference_vs_uniform_95ci": [
+          -0.15035535901161778,
+          -0.13289464098838222
+        ]
+      },
+      "uniform": {
+        "assignment": [
+          0,
+          1,
+          2,
+          0
+        ],
+        "collision_cost": 0.056357889111185146,
+        "detection_probability": 0.820375,
+        "miss_or_merge_rate": 0.17962500000000003,
+        "false_peaks_per_frame": 1.899,
+        "doppler_rmse_on_matches": 0.34297103816275315,
+        "pd_difference_vs_uniform": 0.0,
+        "pd_difference_vs_uniform_95ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_oracle_selected_on_training": {
+        "assignment": [
+          2,
+          0,
+          0,
+          2
+        ],
+        "collision_cost": 0.0635689192252607,
+        "detection_probability": 0.881125,
+        "miss_or_merge_rate": 0.11887499999999995,
+        "false_peaks_per_frame": 1.5985,
+        "doppler_rmse_on_matches": 0.41465561875812484,
+        "pd_difference_vs_uniform": 0.06075,
+        "pd_difference_vs_uniform_95ci": [
+          0.04992865912841068,
+          0.07157134087158933
+        ]
+      },
+      "collision_surrogate_oracle": {
+        "assignment": [
+          0,
+          2,
+          1,
+          2
+        ],
+        "collision_cost": 0.017735722497661744,
+        "detection_probability": 0.849875,
+        "miss_or_merge_rate": 0.15012499999999995,
+        "false_peaks_per_frame": 2.024,
+        "doppler_rmse_on_matches": 0.3529548748743989,
+        "pd_difference_vs_uniform": 0.0295,
+        "pd_difference_vs_uniform_95ci": [
+          0.01749912151789832,
+          0.041500878482101676
+        ]
+      }
+    }
+  }
+}

@@ -52,6 +52,49 @@ python -m pytest -q
 ```
 
 The demo writes `results/demo_summary.json`.
+
+## OTFS physical-layer direction (Gate 0)
+
+The active physical-layer prototype is isolated in `otfs_physical.py` and
+`dd_patterns.py`.  It implements the standard unitary symplectic convention
+`X_TF = F_N^H X_DD F_M`, rectangular pulses, and a circular finite frame
+(ideal periodic extension or sufficient cyclic prefix).  Integer and
+fractional delay-Doppler paths are applied to time samples, and concurrent UAV
+echoes are evaluated with waveform-level matched-filter maps.
+
+Run `python scripts/run_dd_collision_gate0.py` for the current reproducible
+smoke experiment.  It uses random path phases, common noise across methods,
+cyclic non-maximum suppression, and one-to-one cyclic peak matching.  The
+detector is deliberately favorable: it knows how many targets use each code.
+
+Gate 0 confirms fractional leakage and concurrent waveform interference.
+Gate 1 has **not** passed: in the audited smoke setting, minimizing pairwise
+template collision does not improve localization over the same-code baseline.
+Cyclic shifts of one DD impulse are not distinct identity codes over an
+unknown full delay-Doppler search region, so the candidate set now uses
+unit-energy QPSK phase patterns.  Pairwise collision cost remains a diagnostic
+surrogate, not a validated detection objective or a claimed contribution.
+
+The subsequent Gate-1 audit fixes the frame-level false-alarm probability and
+does not give the detector the target count.  It also distinguishes the
+unconstrained detection Oracle from a three-code balanced baseline: with four
+UAVs and three codes, the latter uses all three codes and permits exactly one
+reuse pair.  This reduces, but does not eliminate, identity ambiguity for the
+reused pair.  An unconstrained two-code solution benefits from a lower
+multiple-testing threshold and cannot by itself establish UAV identity
+separation.  Current low-ambiguity QPSK screening and separable CAZAC tests do
+not deliver a five-percentage-point gain over the strongest balanced baseline;
+Gate 1 therefore remains open.
+
+A separate controlled three-dimensional prototype adds an eight-element ULA
+and searches angle, integer delay, and integer Doppler jointly.  It shows that
+known per-UAV spatial signatures can resolve targets occupying the same DD
+cell when their angular separation is below the array-only resolution.  This
+is currently a mechanism result, not a complete MIMO-OTFS claim: spatial
+signatures require resolvable per-element or orthogonal probing observations,
+their resource cost is not yet modeled, fractional refinement is absent, and
+CAZAC signatures have not shown a material advantage over the strongest
+random spatial-code baseline.
 The benchmark script compares the proposed selector against no cooperation,
 sensing-only Top-K, communication-only Top-K, independent post-report ranking,
 random selection, and all-scheduled fusion. `exhaustive_oracle` is provided for

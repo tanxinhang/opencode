@@ -1,0 +1,156 @@
+{
+  "cases": {
+    "dtau_0.25_dnu_0.15": {
+      "delay_gap_bins": 0.25,
+      "doppler_gap_bins": 0.15,
+      "selected_assignment": [
+        0,
+        2,
+        0,
+        0
+      ],
+      "uniform_pd": 0.8325,
+      "selected_pd": 0.88325,
+      "selected_gain_vs_uniform": 0.05075,
+      "selected_gain_95ci": [
+        0.03772578988386823,
+        0.06377421011613177
+      ],
+      "surrogate_gain_vs_uniform": 0.0475,
+      "best_balanced_assignment": [
+        1,
+        0,
+        2,
+        0
+      ],
+      "best_balanced_pd": 0.8675,
+      "selected_gain_vs_best_balanced": 0.01575,
+      "selected_gain_vs_best_balanced_95ci": [
+        0.0033376831852909624,
+        0.028162316814709036
+      ],
+      "best_same_code_assignment": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "best_same_code_pd": 0.655,
+      "rank_correlation": 0.7449412827461608
+    },
+    "dtau_0.50_dnu_0.30": {
+      "delay_gap_bins": 0.5,
+      "doppler_gap_bins": 0.3,
+      "selected_assignment": [
+        2,
+        0,
+        2,
+        0
+      ],
+      "uniform_pd": 0.83175,
+      "selected_pd": 0.8895,
+      "selected_gain_vs_uniform": 0.05775,
+      "selected_gain_95ci": [
+        0.04560577478362221,
+        0.0698942252163778
+      ],
+      "surrogate_gain_vs_uniform": 0.01925,
+      "best_balanced_assignment": [
+        1,
+        2,
+        2,
+        0
+      ],
+      "best_balanced_pd": 0.873,
+      "selected_gain_vs_best_balanced": 0.0165,
+      "selected_gain_vs_best_balanced_95ci": [
+        0.004139947601434078,
+        0.028860052398565924
+      ],
+      "best_same_code_assignment": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "best_same_code_pd": 0.681,
+      "rank_correlation": 0.673757904245709
+    },
+    "dtau_1.00_dnu_0.60": {
+      "delay_gap_bins": 1.0,
+      "doppler_gap_bins": 0.6,
+      "selected_assignment": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "uniform_pd": 0.8825,
+      "selected_pd": 0.8965,
+      "selected_gain_vs_uniform": 0.014,
+      "selected_gain_95ci": [
+        0.0036134641710276437,
+        0.024386535828972357
+      ],
+      "surrogate_gain_vs_uniform": 0.02825,
+      "best_balanced_assignment": [
+        1,
+        2,
+        0,
+        2
+      ],
+      "best_balanced_pd": 0.90875,
+      "selected_gain_vs_best_balanced": -0.01225,
+      "selected_gain_vs_best_balanced_95ci": [
+        -0.024264498244540557,
+        -0.0002355017554594458
+      ],
+      "best_same_code_assignment": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "best_same_code_pd": 0.70925,
+      "rank_correlation": 0.09412827461607948
+    },
+    "dtau_2.00_dnu_1.20": {
+      "delay_gap_bins": 2.0,
+      "doppler_gap_bins": 1.2,
+      "selected_assignment": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "uniform_pd": 0.85125,
+      "selected_pd": 0.91975,
+      "selected_gain_vs_uniform": 0.0685,
+      "selected_gain_95ci": [
+        0.05572608810014626,
+        0.08127391189985375
+      ],
+      "surrogate_gain_vs_uniform": 0.0685,
+      "best_balanced_assignment": [
+        1,
+        2,
+        2,
+        0
+      ],
+      "best_balanced_pd": 0.8915,
+      "selected_gain_vs_best_balanced": 0.02825,
+      "selected_gain_vs_best_balanced_95ci": [
+        0.018104992149619387,
+        0.038395007850380615
+      ],
+      "best_same_code_assignment": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "best_same_code_pd": 0.91975,
+      "rank_correlation": 0.3077009936766034
+    }
+  }
+}

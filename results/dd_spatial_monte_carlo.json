@@ -1,0 +1,197 @@
+{
+  "scope": "conditional spatial gate at a known DD cell; not yet a full unknown-delay/Doppler/angle detector",
+  "gaps": {
+    "2.0": {
+      "array_only": {
+        "angle_gap_degrees": 2.0,
+        "joint_resolution_probability": 0.0,
+        "joint_resolution_95ci": [
+          0.0,
+          0.0
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.15114336359309113
+      },
+      "cazac_codes": {
+        "angle_gap_degrees": 2.0,
+        "joint_resolution_probability": 0.7885,
+        "joint_resolution_95ci": [
+          0.7706023047796651,
+          0.8063976952203349
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.16453663979370955
+      },
+      "random_codes": {
+        "angle_gap_degrees": 2.0,
+        "joint_resolution_probability": 0.7075,
+        "joint_resolution_95ci": [
+          0.6875626592796331,
+          0.7274373407203669
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.1668005688695105
+      }
+    },
+    "5.0": {
+      "array_only": {
+        "angle_gap_degrees": 5.0,
+        "joint_resolution_probability": 0.0,
+        "joint_resolution_95ci": [
+          0.0,
+          0.0
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.15114336359309113
+      },
+      "cazac_codes": {
+        "angle_gap_degrees": 5.0,
+        "joint_resolution_probability": 0.7685,
+        "joint_resolution_95ci": [
+          0.75001418905755,
+          0.7869858109424499
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.16453663979370955
+      },
+      "random_codes": {
+        "angle_gap_degrees": 5.0,
+        "joint_resolution_probability": 0.6605,
+        "joint_resolution_95ci": [
+          0.639746212109593,
+          0.6812537878904069
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.1668005688695105
+      }
+    },
+    "10.0": {
+      "array_only": {
+        "angle_gap_degrees": 10.0,
+        "joint_resolution_probability": 0.0655,
+        "joint_resolution_95ci": [
+          0.05465695209823364,
+          0.07634304790176637
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.15114336359309113
+      },
+      "cazac_codes": {
+        "angle_gap_degrees": 10.0,
+        "joint_resolution_probability": 0.5455,
+        "joint_resolution_95ci": [
+          0.5236774551484021,
+          0.5673225448515978
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.16453663979370955
+      },
+      "random_codes": {
+        "angle_gap_degrees": 10.0,
+        "joint_resolution_probability": 0.5245,
+        "joint_resolution_95ci": [
+          0.5026128567464824,
+          0.5463871432535176
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.1668005688695105
+      }
+    },
+    "15.0": {
+      "array_only": {
+        "angle_gap_degrees": 15.0,
+        "joint_resolution_probability": 0.5665,
+        "joint_resolution_95ci": [
+          0.5447812122299609,
+          0.5882187877700391
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.15114336359309113
+      },
+      "cazac_codes": {
+        "angle_gap_degrees": 15.0,
+        "joint_resolution_probability": 0.559,
+        "joint_resolution_95ci": [
+          0.537239630168584,
+          0.5807603698314161
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.16453663979370955
+      },
+      "random_codes": {
+        "angle_gap_degrees": 15.0,
+        "joint_resolution_probability": 0.684,
+        "joint_resolution_95ci": [
+          0.6636242939950538,
+          0.7043757060049463
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.1668005688695105
+      }
+    },
+    "20.0": {
+      "array_only": {
+        "angle_gap_degrees": 20.0,
+        "joint_resolution_probability": 0.8895,
+        "joint_resolution_95ci": [
+          0.8757597324698534,
+          0.9032402675301465
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.15114336359309113
+      },
+      "cazac_codes": {
+        "angle_gap_degrees": 20.0,
+        "joint_resolution_probability": 0.6205,
+        "joint_resolution_95ci": [
+          0.5992324307030634,
+          0.6417675692969367
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.16453663979370955
+      },
+      "random_codes": {
+        "angle_gap_degrees": 20.0,
+        "joint_resolution_probability": 0.767,
+        "joint_resolution_95ci": [
+          0.7484725045189589,
+          0.7855274954810412
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.1668005688695105
+      }
+    },
+    "30.0": {
+      "array_only": {
+        "angle_gap_degrees": 30.0,
+        "joint_resolution_probability": 0.89,
+        "joint_resolution_95ci": [
+          0.876287001786626,
+          0.903712998213374
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.15114336359309113
+      },
+      "cazac_codes": {
+        "angle_gap_degrees": 30.0,
+        "joint_resolution_probability": 0.7185,
+        "joint_resolution_95ci": [
+          0.698789680717959,
+          0.7382103192820411
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.16453663979370955
+      },
+      "random_codes": {
+        "angle_gap_degrees": 30.0,
+        "joint_resolution_probability": 0.8965,
+        "joint_resolution_95ci": [
+          0.883149842315538,
+          0.909850157684462
+        ],
+        "frame_false_alarm_probability": 0.01,
+        "threshold": 0.1668005688695105
+      }
+    }
+  }
+}

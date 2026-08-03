@@ -1,0 +1,192 @@
+{
+  "screening": [
+    {
+      "seed": 200,
+      "joint_position": 0.795,
+      "joint_identity": 0.53
+    },
+    {
+      "seed": 201,
+      "joint_position": 0.78,
+      "joint_identity": 0.53
+    },
+    {
+      "seed": 202,
+      "joint_position": 0.81,
+      "joint_identity": 0.475
+    },
+    {
+      "seed": 203,
+      "joint_position": 0.745,
+      "joint_identity": 0.615
+    },
+    {
+      "seed": 204,
+      "joint_position": 0.785,
+      "joint_identity": 0.495
+    },
+    {
+      "seed": 205,
+      "joint_position": 0.87,
+      "joint_identity": 0.46
+    },
+    {
+      "seed": 206,
+      "joint_position": 0.785,
+      "joint_identity": 0.475
+    },
+    {
+      "seed": 207,
+      "joint_position": 0.74,
+      "joint_identity": 0.43
+    },
+    {
+      "seed": 208,
+      "joint_position": 0.805,
+      "joint_identity": 0.405
+    },
+    {
+      "seed": 209,
+      "joint_position": 0.86,
+      "joint_identity": 0.455
+    },
+    {
+      "seed": 210,
+      "joint_position": 0.8,
+      "joint_identity": 0.335
+    },
+    {
+      "seed": 211,
+      "joint_position": 0.785,
+      "joint_identity": 0.545
+    },
+    {
+      "seed": 212,
+      "joint_position": 0.735,
+      "joint_identity": 0.62
+    },
+    {
+      "seed": 213,
+      "joint_position": 0.82,
+      "joint_identity": 0.54
+    },
+    {
+      "seed": 214,
+      "joint_position": 0.825,
+      "joint_identity": 0.46
+    },
+    {
+      "seed": 215,
+      "joint_position": 0.81,
+      "joint_identity": 0.515
+    },
+    {
+      "seed": 216,
+      "joint_position": 0.77,
+      "joint_identity": 0.505
+    },
+    {
+      "seed": 217,
+      "joint_position": 0.735,
+      "joint_identity": 0.3
+    },
+    {
+      "seed": 218,
+      "joint_position": 0.765,
+      "joint_identity": 0.32
+    },
+    {
+      "seed": 219,
+      "joint_position": 0.755,
+      "joint_identity": 0.41
+    }
+  ],
+  "selected_random_seeds": {
+    "worst": 217,
+    "median": 206,
+    "best": 212
+  },
+  "independent_validation": {
+    "worst": {
+      "mode": "cazac_codes",
+      "angle_gap_degrees": 5.0,
+      "true_dd_bins": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "threshold": 0.23248333403964902,
+      "frame_false_alarm_probability": 0.01,
+      "joint_position_resolution_probability": 0.721,
+      "joint_identity_correct_probability": 0.303,
+      "false_peaks_per_frame": 5.203,
+      "trials": 1000
+    },
+    "median": {
+      "mode": "cazac_codes",
+      "angle_gap_degrees": 5.0,
+      "true_dd_bins": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "threshold": 0.23848712808936248,
+      "frame_false_alarm_probability": 0.01,
+      "joint_position_resolution_probability": 0.737,
+      "joint_identity_correct_probability": 0.436,
+      "false_peaks_per_frame": 4.942,
+      "trials": 1000
+    },
+    "best": {
+      "mode": "cazac_codes",
+      "angle_gap_degrees": 5.0,
+      "true_dd_bins": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "threshold": 0.23710243900316025,
+      "frame_false_alarm_probability": 0.01,
+      "joint_position_resolution_probability": 0.76,
+      "joint_identity_correct_probability": 0.574,
+      "false_peaks_per_frame": 5.177,
+      "trials": 1000
+    }
+  },
+  "cazac_reference": {
+    "mode": "cazac_codes",
+    "angle_gap_degrees": 5.0,
+    "true_dd_bins": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "threshold": 0.23676254948211778,
+    "frame_false_alarm_probability": 0.01,
+    "joint_position_resolution_probability": 0.767,
+    "joint_identity_correct_probability": 0.591,
+    "false_peaks_per_frame": 5.086,
+    "trials": 1000
+  },
+  "warning": "Best/median/worst labels are selected on a small screening set; only independent validation values are used for comparison."
+}
