@@ -1,0 +1,121 @@
+{
+  "scope": "paired unknown-N path-to-target association comparison on the same synthetic imperfect candidates; not an OTFS front-end comparison",
+  "M": 10,
+  "N": 6,
+  "trials": 30,
+  "scenario": "separated",
+  "clutter_model": "correlated_sidelobes",
+  "view_false_target_probability": 0.02,
+  "summaries": [
+    {
+      "method": "position_dbscan",
+      "target_count_accuracy": 0.8666666666666667,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.8666666666666667,
+      "identity_association_accuracy": 0.9974538510502864,
+      "position_rmse_m": 1.1822854942749692,
+      "mean_velocity_error_mps": 0.06701938298307684,
+      "mean_time_ms": 2.6781400510420403,
+      "p95_time_ms": 3.673549857921898,
+      "over_count_rate": 0.13333333333333333,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "angle_position_dbscan",
+      "target_count_accuracy": 0.8333333333333334,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.8333333333333334,
+      "identity_association_accuracy": 0.9968152866242038,
+      "position_rmse_m": 1.1720552719971704,
+      "mean_velocity_error_mps": 0.06678361964447144,
+      "mean_time_ms": 2.2175232879817486,
+      "p95_time_ms": 3.100444888696074,
+      "over_count_rate": 0.16666666666666666,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "identity_dbscan",
+      "target_count_accuracy": 0.9,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.9,
+      "identity_association_accuracy": 0.9980867346938775,
+      "position_rmse_m": 1.1683030282861253,
+      "mean_velocity_error_mps": 0.037113728050424684,
+      "mean_time_ms": 2.392766655733188,
+      "p95_time_ms": 3.483820031397044,
+      "over_count_rate": 0.1,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "conflict_aware_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.7412364563416188,
+      "position_rmse_m": 1.1287452580915367,
+      "mean_velocity_error_mps": 0.07340032033297969,
+      "mean_time_ms": 6.031523365527391,
+      "p95_time_ms": 8.255839953199029,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "bic_conflict",
+      "target_count_accuracy": 0.9333333333333333,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.9333333333333333,
+      "identity_association_accuracy": 0.9987253027405991,
+      "position_rmse_m": 1.180309451766452,
+      "mean_velocity_error_mps": 0.037107095310084624,
+      "mean_time_ms": 3.6967833526432514,
+      "p95_time_ms": 5.408035218715666,
+      "over_count_rate": 0.06666666666666667,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "geometry_doppler",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.9097888675623801,
+      "position_rmse_m": 0.9303573090936154,
+      "mean_velocity_error_mps": 0.12886011178015425,
+      "mean_time_ms": 17.938646705200277,
+      "p95_time_ms": 23.74973995611071,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    }
+  ],
+  "paired_proposed_bic_minus_baseline": {
+    "position_dbscan": {
+      "mean_scene_exact_gain_pp": 6.666666666666667,
+      "proposed_wins": 2,
+      "baseline_wins": 0,
+      "ties": 28
+    },
+    "angle_position_dbscan": {
+      "mean_scene_exact_gain_pp": 10.0,
+      "proposed_wins": 3,
+      "baseline_wins": 0,
+      "ties": 27
+    },
+    "identity_dbscan": {
+      "mean_scene_exact_gain_pp": 3.3333333333333335,
+      "proposed_wins": 1,
+      "baseline_wins": 0,
+      "ties": 29
+    },
+    "conflict_aware_dbscan": {
+      "mean_scene_exact_gain_pp": 93.33333333333333,
+      "proposed_wins": 28,
+      "baseline_wins": 0,
+      "ties": 2
+    },
+    "geometry_doppler": {
+      "mean_scene_exact_gain_pp": 93.33333333333333,
+      "proposed_wins": 28,
+      "baseline_wins": 0,
+      "ties": 2
+    }
+  }
+}

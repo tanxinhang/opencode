@@ -1,0 +1,80 @@
+{
+  "scope": "paired unknown-N path-to-target association comparison on the same synthetic imperfect candidates; not an OTFS front-end comparison",
+  "M": 8,
+  "N": 6,
+  "trials": 100,
+  "summaries": [
+    {
+      "method": "position_dbscan",
+      "target_count_accuracy": 1.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 1.0,
+      "identity_association_accuracy": 1.0,
+      "position_rmse_m": 1.2037653660688483,
+      "mean_velocity_error_mps": 0.03864445486348072,
+      "mean_time_ms": 1.2372439913451672,
+      "p95_time_ms": 1.7067798180505631,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "angle_position_dbscan",
+      "target_count_accuracy": 1.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 1.0,
+      "identity_association_accuracy": 1.0,
+      "position_rmse_m": 1.1861357598140063,
+      "mean_velocity_error_mps": 0.03864043912969047,
+      "mean_time_ms": 1.3733569998294115,
+      "p95_time_ms": 1.935770129784941,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "identity_dbscan",
+      "target_count_accuracy": 1.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 1.0,
+      "identity_association_accuracy": 1.0,
+      "position_rmse_m": 1.1861357598140063,
+      "mean_velocity_error_mps": 0.03864043912969047,
+      "mean_time_ms": 1.2387229828163981,
+      "p95_time_ms": 1.5353799099102614,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "geometry_doppler",
+      "target_count_accuracy": 0.83,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.83,
+      "identity_association_accuracy": 0.987387824399709,
+      "position_rmse_m": 1.0563018732707519,
+      "mean_velocity_error_mps": 0.03987698019472102,
+      "mean_time_ms": 7.594467997550964,
+      "p95_time_ms": 9.406829788349569,
+      "over_count_rate": 0.17,
+      "under_count_rate": 0.0
+    }
+  ],
+  "paired_against_geometry_doppler": {
+    "position_dbscan": {
+      "mean_scene_exact_gain_pp": -17.0,
+      "proposed_wins": 0,
+      "baseline_wins": 17,
+      "ties": 83
+    },
+    "angle_position_dbscan": {
+      "mean_scene_exact_gain_pp": -17.0,
+      "proposed_wins": 0,
+      "baseline_wins": 17,
+      "ties": 83
+    },
+    "identity_dbscan": {
+      "mean_scene_exact_gain_pp": -17.0,
+      "proposed_wins": 0,
+      "baseline_wins": 17,
+      "ties": 83
+    }
+  }
+}

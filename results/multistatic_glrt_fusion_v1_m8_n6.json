@@ -1,0 +1,25 @@
+{
+  "scope": "split empirical-CDF max fusion; truth labels select offline normal calibration components only and are unavailable online",
+  "seeds": {
+    "marginal_training": 20261071,
+    "frame_threshold": 20261072,
+    "collision_evaluation": 20261073,
+    "normal_evaluation": 20261074
+  },
+  "sample_sizes": {
+    "training_frames": 300,
+    "coarse_normal_components": 312,
+    "refined_normal_components": 312,
+    "threshold_frames": 500,
+    "finite_threshold_maxima": 391,
+    "evaluation_frames_per_scenario": 300
+  },
+  "fusion_threshold": 1.0,
+  "normal_frame_false_trigger_rate": 0.0,
+  "collision_component_auc": 0.9372061938802763,
+  "collision_component_detection_rate": 0.0,
+  "collision_frame_all_three_rate": 0.0,
+  "collision_trigger_count_distribution": {
+    "0": 300
+  }
+}

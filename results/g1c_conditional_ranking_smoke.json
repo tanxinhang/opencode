@@ -1,0 +1,30 @@
+{
+  "gate": "G1-C",
+  "degeneracy": {
+    "greedy": [
+      2,
+      3
+    ],
+    "static_id_topk": [
+      2,
+      3
+    ],
+    "identical": true
+  },
+  "correlation_penetration": {
+    "first_report": 0,
+    "conditional_gain_uav2": 0.2105263157894732,
+    "conditional_gain_uav3": 3.431077694235589,
+    "pd_uav2_set": 0.975339202858772,
+    "pd_uav3_set": 0.9960932246829373,
+    "static_choice": [
+      0,
+      1
+    ],
+    "greedy_choice": [
+      0,
+      2
+    ],
+    "prefers_low_correlation": true
+  }
+}

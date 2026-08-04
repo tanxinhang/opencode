@@ -1,0 +1,32 @@
+{
+  "scope": "offline truth-labeled component complementarity audit",
+  "seeds": {
+    "collision": 20261061,
+    "normal": 20261062
+  },
+  "frames": 300,
+  "component_counts": {
+    "collision": 904,
+    "normal": 866
+  },
+  "thresholds": {
+    "coarse": 64.92287911375547,
+    "refined": 55.95774430087211
+  },
+  "spearman_rank_correlation": 0.9345306543691236,
+  "auc": {
+    "coarse": 0.9160275603425371,
+    "refined": 0.9247097835639396
+  },
+  "collision_detection": {
+    "coarse_only": 5,
+    "refined_only": 17,
+    "both": 816,
+    "neither": 66
+  },
+  "normal_false_trigger": {
+    "coarse_only": 2,
+    "refined_only": 2,
+    "both": 0
+  }
+}

@@ -1,0 +1,1652 @@
+{
+  "seeds": 5,
+  "strength": 0.5,
+  "path_failure_fractions": [
+    0.0,
+    0.5,
+    0.75
+  ],
+  "resource_model": "two equal-capacity schedulable resource domains; all reporters dual-connectivity capable",
+  "summary": [
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "mean_worst_violation": 0.22983859954519192,
+      "mean_worst_improvement_vs_selection": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_of_means": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "mean_worst_violation": 0.19866010026694353,
+      "mean_worst_improvement_vs_selection": 0.031178499278248395,
+      "improvement_paired_bootstrap_ci95": [
+        0.01100663847001086,
+        0.05567223190349133
+      ],
+      "mean_seed_relative_reduction": 0.14065569963090707,
+      "relative_reduction_of_means": 0.13565388642266737,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.05684257460111921,
+        0.22577902652005663
+      ],
+      "system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 1.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "mean_worst_violation": 0.17951159484040435,
+      "mean_worst_improvement_vs_selection": 0.050327004704787556,
+      "improvement_paired_bootstrap_ci95": [
+        0.01882213723170742,
+        0.07842671956506868
+      ],
+      "mean_seed_relative_reduction": 0.23463302555560892,
+      "relative_reduction_of_means": 0.21896672188385846,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.09643544926467434,
+        0.34288552846249676
+      ],
+      "system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.2,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.6
+      ],
+      "mean_replicated_reports": 0.8,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": true
+    },
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "mean_worst_violation": 0.22789153256312464,
+      "mean_worst_improvement_vs_selection": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_of_means": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "mean_worst_violation": 0.2231775758089884,
+      "mean_worst_improvement_vs_selection": 0.004713956754136217,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.014141870262408651
+      ],
+      "mean_seed_relative_reduction": 0.015402350306618084,
+      "relative_reduction_of_means": 0.02068508952973265,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.046207050919854255
+      ],
+      "system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.2,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "mean_worst_violation": 0.22108061302264206,
+      "mean_worst_improvement_vs_selection": 0.006810919540482624,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.018365161417021
+      ],
+      "mean_seed_relative_reduction": 0.023984953988051345,
+      "relative_reduction_of_means": 0.029886672242181875,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.06173720548117097
+      ],
+      "system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.4,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "mean_worst_violation": 0.22888345864167947,
+      "mean_worst_improvement_vs_selection": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_of_means": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "mean_worst_violation": 0.22888345864167947,
+      "mean_worst_improvement_vs_selection": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_of_means": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "mean_worst_violation": 0.22888345864167947,
+      "mean_worst_improvement_vs_selection": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_of_means": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "mean_worst_violation": 0.1656777556816239,
+      "mean_worst_improvement_vs_selection": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_of_means": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "mean_worst_violation": 0.12215478477464665,
+      "mean_worst_improvement_vs_selection": 0.043522970906977244,
+      "improvement_paired_bootstrap_ci95": [
+        0.009589761393684776,
+        0.07745618042026972
+      ],
+      "mean_seed_relative_reduction": 0.2761643677799788,
+      "relative_reduction_of_means": 0.262696526325559,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0670615578640926,
+        0.485267177695865
+      ],
+      "system_feasible_rate": 0.6,
+      "feasibility_rate_gain": 0.4,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.8
+      ],
+      "mean_replicated_reports": 1.2,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "mean_worst_violation": 0.08620533932580768,
+      "mean_worst_improvement_vs_selection": 0.07947241635581623,
+      "improvement_paired_bootstrap_ci95": [
+        0.06760486752086996,
+        0.08906610872560958
+      ],
+      "mean_seed_relative_reduction": 0.5043924183800953,
+      "relative_reduction_of_means": 0.47968066702047246,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.43043844782496976,
+        0.5740744601402268
+      ],
+      "system_feasible_rate": 0.8,
+      "feasibility_rate_gain": 0.6,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.2,
+        1.0
+      ],
+      "mean_replicated_reports": 2.6,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": true
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "mean_worst_violation": 0.16392157969344887,
+      "mean_worst_improvement_vs_selection": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_of_means": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "mean_worst_violation": 0.137176654738204,
+      "mean_worst_improvement_vs_selection": 0.02674492495524484,
+      "improvement_paired_bootstrap_ci95": [
+        0.002552090192656414,
+        0.05093775971783328
+      ],
+      "mean_seed_relative_reduction": 0.1638896347591611,
+      "relative_reduction_of_means": 0.1631568278274328,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.02041141340682567,
+        0.308436510865231
+      ],
+      "system_feasible_rate": 0.4,
+      "feasibility_rate_gain": 0.2,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.6
+      ],
+      "mean_replicated_reports": 0.8,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "mean_worst_violation": 0.13661081397170635,
+      "mean_worst_improvement_vs_selection": 0.027310765721742486,
+      "improvement_paired_bootstrap_ci95": [
+        0.00923727828357846,
+        0.04770321083950462
+      ],
+      "mean_seed_relative_reduction": 0.19847276443066036,
+      "relative_reduction_of_means": 0.16660872700724688,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.06571937761020015,
+        0.34142584692392236
+      ],
+      "system_feasible_rate": 0.4,
+      "feasibility_rate_gain": 0.2,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.6
+      ],
+      "mean_replicated_reports": 1.2,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "mean_worst_violation": 0.16654475188655432,
+      "mean_worst_improvement_vs_selection": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_of_means": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "mean_worst_violation": 0.15064510563674854,
+      "mean_worst_improvement_vs_selection": 0.015899646249805804,
+      "improvement_paired_bootstrap_ci95": [
+        0.002852491262561102,
+        0.028946801237050505
+      ],
+      "mean_seed_relative_reduction": 0.09741742847950449,
+      "relative_reduction_of_means": 0.09546771104883692,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.02241916623881618,
+        0.1724156907201928
+      ],
+      "system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.8,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    },
+    {
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "mean_worst_violation": 0.15622569974063455,
+      "mean_worst_improvement_vs_selection": 0.010319052145919771,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.02497218148471242
+      ],
+      "mean_seed_relative_reduction": 0.06810224610327346,
+      "relative_reduction_of_means": 0.061959635647653576,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.15726780424940964
+      ],
+      "system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.6,
+      "equal_bit_and_domain_capacity_respected": true,
+      "realism_gate_passed": false
+    }
+  ],
+  "instances": [
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.1784132742392467,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.16068124002688214,
+      "worst_improvement_vs_selection": 0.01773203421236455,
+      "relative_reduction_vs_selection": 0.09938741547103967,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.1507318638683043,
+      "worst_improvement_vs_selection": 0.027681410370942378,
+      "relative_reduction_vs_selection": 0.1551533118204112,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.17082510234964016,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.17082510234964016,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.17082510234964016,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.17117484894810003,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.17117484894810003,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.17117484894810003,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.133617752617008,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.08566894564858413,
+      "worst_improvement_vs_selection": 0.04794880696842388,
+      "relative_reduction_vs_selection": 0.3588505720932216,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 1,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.05257869706085749,
+      "worst_improvement_vs_selection": 0.08103905555615051,
+      "relative_reduction_vs_selection": 0.6064991662330591,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 1,
+      "used_bits": 30,
+      "replicated_reports": 3
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.1250325071463686,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.11227205618308653,
+      "worst_improvement_vs_selection": 0.012760450963282072,
+      "relative_reduction_vs_selection": 0.10205706703412835,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.11227205618308653,
+      "worst_improvement_vs_selection": 0.012760450963282072,
+      "relative_reduction_vs_selection": 0.10205706703412835,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.12723449356570385,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.11297203725289834,
+      "worst_improvement_vs_selection": 0.01426245631280551,
+      "relative_reduction_vs_selection": 0.1120958311940809,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.11227205618308661,
+      "worst_improvement_vs_selection": 0.014962437382617239,
+      "relative_reduction_vs_selection": 0.1175973351510268,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.2065612692174561,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.1869921452921309,
+      "worst_improvement_vs_selection": 0.0195691239253252,
+      "relative_reduction_vs_selection": 0.0947376243351987,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.14013199342986138,
+      "worst_improvement_vs_selection": 0.06642927578759472,
+      "relative_reduction_vs_selection": 0.32159598960278324,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.20235532559450806,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.20235532559450806,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.19718633258344087,
+      "worst_improvement_vs_selection": 0.0051689930110671856,
+      "relative_reduction_vs_selection": 0.02554414120745766,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.20225781533622939,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.20225781533622939,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.20225781533622939,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.0985894690707737,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.0985894690707737,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.042230540675975904,
+      "worst_improvement_vs_selection": 0.0563589283947978,
+      "relative_reduction_vs_selection": 0.5716526209745569,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.0985894690707737,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.0985894690707737,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.06516352861616348,
+      "worst_improvement_vs_selection": 0.033425940454610226,
+      "relative_reduction_vs_selection": 0.3390416924815265,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.09858946907077372,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.09858946907077372,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.09858946907077372,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.3037727825842141,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.224031812028612,
+      "worst_improvement_vs_selection": 0.07974097055560209,
+      "relative_reduction_vs_selection": 0.26250202495839375,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.204431812028612,
+      "worst_improvement_vs_selection": 0.09934097055560209,
+      "relative_reduction_vs_selection": 0.3270239345029605,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.30605437873405095,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.28248459496336986,
+      "worst_improvement_vs_selection": 0.023569783770681085,
+      "relative_reduction_vs_selection": 0.07701175153309042,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.277168774042705,
+      "worst_improvement_vs_selection": 0.028885604691345934,
+      "relative_reduction_vs_selection": 0.09438062873279907,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.3069869715239212,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.3069869715239212,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.3069869715239212,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.18343995821591516,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.12193111135349854,
+      "worst_improvement_vs_selection": 0.061508846862416616,
+      "relative_reduction_vs_selection": 0.335307789320463,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.09553146135210924,
+      "worst_improvement_vs_selection": 0.08790849686380592,
+      "relative_reduction_vs_selection": 0.4792221810273996,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 1,
+      "used_bits": 30,
+      "replicated_reports": 3
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.18214052504214914,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.1265885058508429,
+      "worst_improvement_vs_selection": 0.05555201919130626,
+      "relative_reduction_vs_selection": 0.30499538297943835,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.15946717087303947,
+      "worst_improvement_vs_selection": 0.022673354169109677,
+      "relative_reduction_vs_selection": 0.12448275398274401,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.18733321246753779,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.15791704289260192,
+      "worst_improvement_vs_selection": 0.02941616957493587,
+      "relative_reduction_vs_selection": 0.15702591754803372,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.18733321246753779,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.15751121801321946,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.11866085031526934,
+      "worst_improvement_vs_selection": 0.038850367697950125,
+      "relative_reduction_vs_selection": 0.24665143338990322,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.09932785120342087,
+      "worst_improvement_vs_selection": 0.05818336680979859,
+      "relative_reduction_vs_selection": 0.36939189185188975,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 1,
+      "used_bits": 20,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.1586150167167497,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.1586150167167497,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.1586150167167497,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.16433620383755326,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.16433620383755326,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.16433620383755326,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.15751121801321943,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.049354017309173714,
+      "worst_improvement_vs_selection": 0.10815720070404572,
+      "relative_reduction_vs_selection": 0.6866634774862094,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 1,
+      "used_bits": 30,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.07915217322171669,
+      "worst_improvement_vs_selection": 0.07835904479150274,
+      "relative_reduction_vs_selection": 0.49748231129116344,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 1,
+      "used_bits": 30,
+      "replicated_reports": 3
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.15861501671674968,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.09320286209511379,
+      "worst_improvement_vs_selection": 0.0654121546216359,
+      "relative_reduction_vs_selection": 0.4123957237822388,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 1,
+      "used_bits": 30,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.09092093369503923,
+      "worst_improvement_vs_selection": 0.06769408302171045,
+      "relative_reduction_vs_selection": 0.42678230865490296,
+      "system_feasible": true,
+      "feasibility_gain_vs_selection": 1,
+      "used_bits": 30,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.16433620383755326,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.12851659847626562,
+      "worst_improvement_vs_selection": 0.03581960536128764,
+      "relative_reduction_vs_selection": 0.21796539365540785,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.12770338049057164,
+      "worst_improvement_vs_selection": 0.03663282334698162,
+      "relative_reduction_vs_selection": 0.2229138953653405,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.30293445367182326,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.30293445367182326,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.30293445367182326,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.3016078394206744,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.3016078394206744,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.3016078394206744,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.29966145356259344,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.29966145356259344,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.29966145356259344,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 20,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "selection_only",
+      "worst_violation": 0.25523038049120317,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "same_domain_replication",
+      "worst_violation": 0.25523038049120317,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.0,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.161533824318379,
+      "worst_improvement_vs_selection": 0.09369655617282416,
+      "relative_reduction_vs_selection": 0.36710581237429735,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "selection_only",
+      "worst_violation": 0.2552303804912031,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "same_domain_replication",
+      "worst_violation": 0.2552303804912031,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.5,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.2552303804912031,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "selection_only",
+      "worst_violation": 0.2552303804912031,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "same_domain_replication",
+      "worst_violation": 0.2552303804912031,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "path_failure_fraction": 0.75,
+      "method": "cross_domain_replication",
+      "worst_violation": 0.2552303804912031,
+      "worst_improvement_vs_selection": 0.0,
+      "relative_reduction_vs_selection": 0.0,
+      "system_feasible": false,
+      "feasibility_gain_vs_selection": 0,
+      "used_bits": 30,
+      "replicated_reports": 0
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "scope": "paired multi-seed candidate-level audit; robust Huber velocity refinement uses identical target count, paths, and positions",
+  "fixed_gate_thresholds": [
+    131.0861801613106,
+    44.310108377660086,
+    28.568327319836385,
+    18.546340585674386
+  ],
+  "records": [
+    {
+      "scenario": "separated",
+      "seed": 20261001,
+      "trials": 100,
+      "position_recovery": 0.99,
+      "ordinary_state_recovery": 0.99,
+      "robust_state_recovery": 0.99,
+      "robust_minus_ordinary_state_pp": 0.0,
+      "robust_wins": 0,
+      "ordinary_wins": 0,
+      "ordinary_mean_velocity_error_mps": 0.08147954546330852,
+      "robust_mean_velocity_error_mps": 0.08147954546330852
+    },
+    {
+      "scenario": "separated",
+      "seed": 20261002,
+      "trials": 100,
+      "position_recovery": 0.96,
+      "ordinary_state_recovery": 0.96,
+      "robust_state_recovery": 0.96,
+      "robust_minus_ordinary_state_pp": 0.0,
+      "robust_wins": 0,
+      "ordinary_wins": 0,
+      "ordinary_mean_velocity_error_mps": 0.08647773674860387,
+      "robust_mean_velocity_error_mps": 0.08647773674860387
+    },
+    {
+      "scenario": "separated",
+      "seed": 20261003,
+      "trials": 100,
+      "position_recovery": 0.98,
+      "ordinary_state_recovery": 0.98,
+      "robust_state_recovery": 0.98,
+      "robust_minus_ordinary_state_pp": 0.0,
+      "robust_wins": 0,
+      "ordinary_wins": 0,
+      "ordinary_mean_velocity_error_mps": 0.08543226266694733,
+      "robust_mean_velocity_error_mps": 0.08543226266694733
+    },
+    {
+      "scenario": "paired_collision",
+      "seed": 20261001,
+      "trials": 100,
+      "position_recovery": 0.77,
+      "ordinary_state_recovery": 0.63,
+      "robust_state_recovery": 0.75,
+      "robust_minus_ordinary_state_pp": 12.0,
+      "robust_wins": 12,
+      "ordinary_wins": 0,
+      "ordinary_mean_velocity_error_mps": 0.2619714692092658,
+      "robust_mean_velocity_error_mps": 0.2062627849261094
+    },
+    {
+      "scenario": "paired_collision",
+      "seed": 20261002,
+      "trials": 100,
+      "position_recovery": 0.77,
+      "ordinary_state_recovery": 0.63,
+      "robust_state_recovery": 0.77,
+      "robust_minus_ordinary_state_pp": 14.000000000000002,
+      "robust_wins": 14,
+      "ordinary_wins": 0,
+      "ordinary_mean_velocity_error_mps": 0.3010680467319884,
+      "robust_mean_velocity_error_mps": 0.20737893996907408
+    },
+    {
+      "scenario": "paired_collision",
+      "seed": 20261003,
+      "trials": 100,
+      "position_recovery": 0.81,
+      "ordinary_state_recovery": 0.6,
+      "robust_state_recovery": 0.81,
+      "robust_minus_ordinary_state_pp": 21.0,
+      "robust_wins": 21,
+      "ordinary_wins": 0,
+      "ordinary_mean_velocity_error_mps": 0.3212845623340606,
+      "robust_mean_velocity_error_mps": 0.19277587784457906
+    }
+  ]
+}

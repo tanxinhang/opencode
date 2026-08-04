@@ -1,0 +1,120 @@
+{
+  "scope": "paired unknown-N path-to-target association comparison on the same synthetic imperfect candidates; not an OTFS front-end comparison",
+  "M": 10,
+  "N": 12,
+  "trials": 30,
+  "scenario": "separated",
+  "clutter_model": "correlated_sidelobes",
+  "summaries": [
+    {
+      "method": "position_dbscan",
+      "target_count_accuracy": 0.6666666666666666,
+      "target_recall": 0.9944444444444444,
+      "scene_exact_recovery": 0.6666666666666666,
+      "identity_association_accuracy": 0.9923444976076555,
+      "position_rmse_m": 1.2694766913035014,
+      "mean_velocity_error_mps": 0.09283840281754979,
+      "mean_time_ms": 4.270803323015571,
+      "p95_time_ms": 6.2614248599857065,
+      "over_count_rate": 0.26666666666666666,
+      "under_count_rate": 0.06666666666666667
+    },
+    {
+      "method": "angle_position_dbscan",
+      "target_count_accuracy": 0.7666666666666667,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.7666666666666667,
+      "identity_association_accuracy": 0.997444089456869,
+      "position_rmse_m": 1.1837546379593993,
+      "mean_velocity_error_mps": 0.06406888860097347,
+      "mean_time_ms": 3.8163766575356326,
+      "p95_time_ms": 5.7910098228603575,
+      "over_count_rate": 0.23333333333333334,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "identity_dbscan",
+      "target_count_accuracy": 0.7666666666666667,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.7666666666666667,
+      "identity_association_accuracy": 0.997444089456869,
+      "position_rmse_m": 1.2000212292560053,
+      "mean_velocity_error_mps": 0.03691257665460487,
+      "mean_time_ms": 3.660623310133815,
+      "p95_time_ms": 5.40563496761024,
+      "over_count_rate": 0.23333333333333334,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "conflict_aware_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.763317384370016,
+      "position_rmse_m": 1.1311727203916118,
+      "mean_velocity_error_mps": 0.0708425508940738,
+      "mean_time_ms": 9.584229998290539,
+      "p95_time_ms": 15.328180021606386,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "bic_conflict",
+      "target_count_accuracy": 0.7333333333333333,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.7333333333333333,
+      "identity_association_accuracy": 0.9971282705807275,
+      "position_rmse_m": 1.2058278899163057,
+      "mean_velocity_error_mps": 0.0368558415056856,
+      "mean_time_ms": 5.17700994387269,
+      "p95_time_ms": 8.882025093771507,
+      "over_count_rate": 0.26666666666666666,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "geometry_doppler",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.8867500802053256,
+      "position_rmse_m": 1.0067552125553065,
+      "mean_velocity_error_mps": 0.10466800128123427,
+      "mean_time_ms": 27.43399001968404,
+      "p95_time_ms": 31.545440107584,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    }
+  ],
+  "paired_proposed_bic_minus_baseline": {
+    "position_dbscan": {
+      "mean_scene_exact_gain_pp": 6.666666666666667,
+      "proposed_wins": 2,
+      "baseline_wins": 0,
+      "ties": 28
+    },
+    "angle_position_dbscan": {
+      "mean_scene_exact_gain_pp": -3.3333333333333335,
+      "proposed_wins": 0,
+      "baseline_wins": 1,
+      "ties": 29
+    },
+    "identity_dbscan": {
+      "mean_scene_exact_gain_pp": -3.3333333333333335,
+      "proposed_wins": 0,
+      "baseline_wins": 1,
+      "ties": 29
+    },
+    "conflict_aware_dbscan": {
+      "mean_scene_exact_gain_pp": 73.33333333333333,
+      "proposed_wins": 22,
+      "baseline_wins": 0,
+      "ties": 8
+    },
+    "geometry_doppler": {
+      "mean_scene_exact_gain_pp": 73.33333333333333,
+      "proposed_wins": 22,
+      "baseline_wins": 0,
+      "ties": 8
+    }
+  }
+}

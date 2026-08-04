@@ -1,0 +1,123 @@
+{
+  "minimum_pd": [
+    0.8,
+    0.75,
+    0.7
+  ],
+  "epsilon": 0.1,
+  "summary": [
+    {
+      "budget_bits": 20,
+      "mean_weighted_max_relative_excess": 0.3303950018155116,
+      "mean_fair_max_relative_excess": 0.3303950018155116,
+      "mean_weighted_sum_excess": 0.049087378327559786,
+      "mean_fair_sum_excess": 0.049087378327559786,
+      "diagnosis_fraction": {
+        "sensing_limited": 0.0,
+        "reliability_limited": 0.16666666666666666,
+        "budget_limited": 0.0,
+        "feasible": 0.8333333333333334
+      },
+      "system_diagnosis_fraction": {
+        "system_sensing_limited": 0.0,
+        "system_reliability_limited": 0.5,
+        "system_budget_limited": 0.0,
+        "system_feasible": 0.5
+      }
+    }
+  ],
+  "instances": [
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.6607900036310232,
+      "fair_max_relative_excess": 0.6607900036310232,
+      "weighted_sum_excess": 0.09817475665511957,
+      "fair_sum_excess": 0.09817475665511957,
+      "weighted_violation": [
+        0.0,
+        0.11227205618308655,
+        0.16607900036310233
+      ],
+      "fair_violation": [
+        0.0,
+        0.11227205618308655,
+        0.16607900036310233
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "weighted_max_relative_excess": 0.0,
+      "fair_max_relative_excess": 0.0,
+      "weighted_sum_excess": 0.0,
+      "fair_sum_excess": 0.0,
+      "weighted_violation": [
+        0.0,
+        0.0985894690707737,
+        0.08649183674823821
+      ],
+      "fair_violation": [
+        0.0,
+        0.0985894690707737,
+        0.08649183674823821
+      ]
+    }
+  ],
+  "diagnoses": [
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9725995345674813,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9173151537850275,
+      "minimum_unlimited_violation_probability": 0.007164920329241294,
+      "minimum_budgeted_violation_probability": 0.01786113489870611
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "reliability_limited",
+      "maximum_deterministic_pd": 0.8626594510409324,
+      "minimum_unlimited_violation_probability": 0.11763312166324537,
+      "minimum_budgeted_violation_probability": 0.11763312166324538
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 0,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9882336011958781,
+      "minimum_unlimited_violation_probability": 0.0,
+      "minimum_budgeted_violation_probability": 0.0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 1,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.8639763526010213,
+      "minimum_unlimited_violation_probability": 0.09858946907077368,
+      "minimum_budgeted_violation_probability": 0.0985894690707737
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 2,
+      "classification": "feasible",
+      "maximum_deterministic_pd": 0.9075777189311429,
+      "minimum_unlimited_violation_probability": 0.0682154528695441,
+      "minimum_budgeted_violation_probability": 0.0682154528695441
+    }
+  ]
+}

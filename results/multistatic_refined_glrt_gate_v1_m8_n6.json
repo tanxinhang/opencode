@@ -1,0 +1,128 @@
+{
+  "scope": "paired coarse versus three-iteration physical GLRT; each statistic uses its own finite-sample ordered global-null thresholds",
+  "seeds": {
+    "null": 20261031,
+    "evaluation": 20261032
+  },
+  "sample_sizes": {
+    "null_frames_per_method": 500,
+    "trials_per_scenario": 50
+  },
+  "joint_refinement_iterations": {
+    "coarse": 0,
+    "refined": 3
+  },
+  "ordered_thresholds": {
+    "coarse": [
+      133.3460278309267,
+      41.1815620048301,
+      30.418615283556107,
+      22.771325686757194
+    ],
+    "refined": [
+      133.3460278309267,
+      38.217238892167956,
+      34.829443567255794,
+      21.664211947583865
+    ]
+  },
+  "strong_fwer_claimed": false,
+  "results": {
+    "separated": {
+      "coarse": {
+        "trials": 50,
+        "position_set_exact_15m": 0.98,
+        "position_velocity_state_exact": 0.98,
+        "over_count_rate": 0.02,
+        "under_count_rate": 0.0,
+        "mean_gospa_15m_p2": 3.4318535828483747,
+        "mean_path_f1": 0.9438970242147785,
+        "mean_velocity_error_mps": 0.063893535922068,
+        "mean_time_ms": 28.794117979705334
+      },
+      "refined": {
+        "trials": 50,
+        "position_set_exact_15m": 1.0,
+        "position_velocity_state_exact": 1.0,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.0,
+        "mean_gospa_15m_p2": 3.2666602236641147,
+        "mean_path_f1": 0.9454799119153132,
+        "mean_velocity_error_mps": 0.06363394987548533,
+        "mean_time_ms": 36.00367997772992
+      }
+    },
+    "single_pair_collision": {
+      "coarse": {
+        "trials": 50,
+        "position_set_exact_15m": 0.68,
+        "position_velocity_state_exact": 0.68,
+        "over_count_rate": 0.1,
+        "under_count_rate": 0.22,
+        "mean_gospa_15m_p2": 5.71541236267652,
+        "mean_path_f1": 0.9057248881812737,
+        "mean_velocity_error_mps": 0.16763558023371625,
+        "mean_time_ms": 32.136658020317554
+      },
+      "refined": {
+        "trials": 50,
+        "position_set_exact_15m": 0.56,
+        "position_velocity_state_exact": 0.56,
+        "over_count_rate": 0.12,
+        "under_count_rate": 0.32,
+        "mean_gospa_15m_p2": 6.5216252104275245,
+        "mean_path_f1": 0.8910994286748095,
+        "mean_velocity_error_mps": 0.1990739235882607,
+        "mean_time_ms": 46.66649803519249
+      }
+    },
+    "two_pair_collision": {
+      "coarse": {
+        "trials": 50,
+        "position_set_exact_15m": 0.64,
+        "position_velocity_state_exact": 0.64,
+        "over_count_rate": 0.06,
+        "under_count_rate": 0.3,
+        "mean_gospa_15m_p2": 5.836225316057397,
+        "mean_path_f1": 0.8971473849652272,
+        "mean_velocity_error_mps": 0.2240197032776376,
+        "mean_time_ms": 37.53046601079404
+      },
+      "refined": {
+        "trials": 50,
+        "position_set_exact_15m": 0.62,
+        "position_velocity_state_exact": 0.62,
+        "over_count_rate": 0.1,
+        "under_count_rate": 0.26,
+        "mean_gospa_15m_p2": 6.495862401350681,
+        "mean_path_f1": 0.8880252827091225,
+        "mean_velocity_error_mps": 0.2855187224249188,
+        "mean_time_ms": 50.994842015206814
+      }
+    },
+    "three_pair_collision": {
+      "coarse": {
+        "trials": 50,
+        "position_set_exact_15m": 0.64,
+        "position_velocity_state_exact": 0.64,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.36,
+        "mean_gospa_15m_p2": 6.223448955719798,
+        "mean_path_f1": 0.8755375269666013,
+        "mean_velocity_error_mps": 0.30915849860803546,
+        "mean_time_ms": 38.13458999618888
+      },
+      "refined": {
+        "trials": 50,
+        "position_set_exact_15m": 0.78,
+        "position_velocity_state_exact": 0.78,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.22,
+        "mean_gospa_15m_p2": 4.931533965164285,
+        "mean_path_f1": 0.8972460969822232,
+        "mean_velocity_error_mps": 0.28297400333091466,
+        "mean_time_ms": 57.285577952861786
+      }
+    }
+  }
+}

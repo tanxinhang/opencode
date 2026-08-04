@@ -1,0 +1,754 @@
+{
+  "seeds": 5,
+  "path_risk_allocation_factor": 0.5,
+  "strength": 0.5,
+  "access_assignment": "nested seed-paired random masks independent of sensing and optimization",
+  "summary": [
+    {
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "mean_worst_improvement": 0.0,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_seed_relative_reduction": 0.0,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "selection_system_feasible_rate": 0.0,
+      "repair_system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.0
+    },
+    {
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "mean_worst_improvement": 0.0057771209382691865,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.01733136281480756
+      ],
+      "mean_seed_relative_reduction": 0.018876125746559815,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.05662837723967944
+      ],
+      "selection_system_feasible_rate": 0.0,
+      "repair_system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.2
+    },
+    {
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "mean_worst_improvement": 0.006810919540482624,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.018365161417021
+      ],
+      "mean_seed_relative_reduction": 0.023984953988051345,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.06173720548117097
+      ],
+      "selection_system_feasible_rate": 0.0,
+      "repair_system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.4
+    },
+    {
+      "budget_bits": 20,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "mean_worst_improvement": 0.006810919540482624,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.018365161417021
+      ],
+      "mean_seed_relative_reduction": 0.023984953988051345,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.06173720548117097
+      ],
+      "selection_system_feasible_rate": 0.0,
+      "repair_system_feasible_rate": 0.0,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.4
+    },
+    {
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "mean_worst_improvement": 0.005947024170704601,
+      "improvement_paired_bootstrap_ci95": [
+        0.0,
+        0.012736892126800976
+      ],
+      "mean_seed_relative_reduction": 0.041815023533543785,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.0,
+        0.08462224378698002
+      ],
+      "selection_system_feasible_rate": 0.2,
+      "repair_system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.4
+    },
+    {
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "mean_worst_improvement": 0.010481695004526536,
+      "improvement_paired_bootstrap_ci95": [
+        0.002552090192656414,
+        0.018411299816396658
+      ],
+      "mean_seed_relative_reduction": 0.06671157433009259,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.02041141340682567,
+        0.1130117352533595
+      ],
+      "selection_system_feasible_rate": 0.2,
+      "repair_system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.6
+    },
+    {
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "mean_worst_improvement": 0.011397501436827223,
+      "improvement_paired_bootstrap_ci95": [
+        0.002552090192656414,
+        0.02024291268099803
+      ],
+      "mean_seed_relative_reduction": 0.07248534311477273,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.02041141340682567,
+        0.12455927282271977
+      ],
+      "selection_system_feasible_rate": 0.2,
+      "repair_system_feasible_rate": 0.2,
+      "feasibility_rate_gain": 0.0,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_replicated_reports": 0.8
+    },
+    {
+      "budget_bits": 30,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "mean_worst_improvement": 0.027310765721742486,
+      "improvement_paired_bootstrap_ci95": [
+        0.00923727828357846,
+        0.04770321083950462
+      ],
+      "mean_seed_relative_reduction": 0.19847276443066036,
+      "relative_reduction_paired_bootstrap_ci95": [
+        0.06571937761020015,
+        0.34142584692392236
+      ],
+      "selection_system_feasible_rate": 0.2,
+      "repair_system_feasible_rate": 0.4,
+      "feasibility_rate_gain": 0.2,
+      "feasibility_gain_paired_bootstrap_ci95": [
+        0.0,
+        0.6
+      ],
+      "mean_replicated_reports": 1.2
+    }
+  ],
+  "instances": [
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.17082510234964016,
+      "repair_worst_violation": 0.17082510234964016,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.17082510234964016,
+      "repair_worst_violation": 0.17082510234964016,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.17082510234964016,
+      "repair_worst_violation": 0.17082510234964016,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.17082510234964016,
+      "repair_worst_violation": 0.17082510234964016,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.1250325071463686,
+      "repair_worst_violation": 0.11227205618308653,
+      "worst_improvement": 0.012760450963282072,
+      "relative_reduction": 0.10205706703412835,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.1250325071463686,
+      "repair_worst_violation": 0.11227205618308653,
+      "worst_improvement": 0.012760450963282072,
+      "relative_reduction": 0.10205706703412835,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.1250325071463686,
+      "repair_worst_violation": 0.11227205618308653,
+      "worst_improvement": 0.012760450963282072,
+      "relative_reduction": 0.10205706703412835,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.1250325071463686,
+      "repair_worst_violation": 0.11227205618308653,
+      "worst_improvement": 0.012760450963282072,
+      "relative_reduction": 0.10205706703412835,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.20235532559450806,
+      "repair_worst_violation": 0.20235532559450806,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.20235532559450806,
+      "repair_worst_violation": 0.20235532559450806,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.20235532559450806,
+      "repair_worst_violation": 0.19718633258344087,
+      "worst_improvement": 0.0051689930110671856,
+      "relative_reduction": 0.02554414120745766,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.20235532559450806,
+      "repair_worst_violation": 0.19718633258344087,
+      "worst_improvement": 0.0051689930110671856,
+      "relative_reduction": 0.02554414120745766,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.0985894690707737,
+      "repair_worst_violation": 0.0985894690707737,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": true,
+      "repair_feasible": true,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.0985894690707737,
+      "repair_worst_violation": 0.0985894690707737,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": true,
+      "repair_feasible": true,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.0985894690707737,
+      "repair_worst_violation": 0.0985894690707737,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": true,
+      "repair_feasible": true,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.0985894690707737,
+      "repair_worst_violation": 0.06516352861616348,
+      "worst_improvement": 0.033425940454610226,
+      "relative_reduction": 0.3390416924815265,
+      "selection_feasible": true,
+      "repair_feasible": true,
+      "feasibility_gain": 0,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.30605437873405095,
+      "repair_worst_violation": 0.30605437873405095,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.30605437873405095,
+      "repair_worst_violation": 0.277168774042705,
+      "worst_improvement": 0.028885604691345934,
+      "relative_reduction": 0.09438062873279907,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.30605437873405095,
+      "repair_worst_violation": 0.277168774042705,
+      "worst_improvement": 0.028885604691345934,
+      "relative_reduction": 0.09438062873279907,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.30605437873405095,
+      "repair_worst_violation": 0.277168774042705,
+      "worst_improvement": 0.028885604691345934,
+      "relative_reduction": 0.09438062873279907,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.18214052504214914,
+      "repair_worst_violation": 0.18214052504214914,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.18214052504214914,
+      "repair_worst_violation": 0.15946717087303947,
+      "worst_improvement": 0.022673354169109677,
+      "relative_reduction": 0.12448275398274401,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.18214052504214914,
+      "repair_worst_violation": 0.15946717087303947,
+      "worst_improvement": 0.022673354169109677,
+      "relative_reduction": 0.12448275398274401,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.18214052504214914,
+      "repair_worst_violation": 0.15946717087303947,
+      "worst_improvement": 0.022673354169109677,
+      "relative_reduction": 0.12448275398274401,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.1586150167167497,
+      "repair_worst_violation": 0.1586150167167497,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.1586150167167497,
+      "repair_worst_violation": 0.1586150167167497,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.1586150167167497,
+      "repair_worst_violation": 0.1586150167167497,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.1586150167167497,
+      "repair_worst_violation": 0.1586150167167497,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.15861501671674968,
+      "repair_worst_violation": 0.14164034682650875,
+      "worst_improvement": 0.016974669890240934,
+      "relative_reduction": 0.10701805063359059,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.15861501671674968,
+      "repair_worst_violation": 0.14164034682650875,
+      "worst_improvement": 0.016974669890240934,
+      "relative_reduction": 0.10701805063359059,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.15861501671674968,
+      "repair_worst_violation": 0.13706131466500532,
+      "worst_improvement": 0.021553702051744367,
+      "relative_reduction": 0.13588689455699124,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 1
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.15861501671674968,
+      "repair_worst_violation": 0.09092093369503923,
+      "worst_improvement": 0.06769408302171045,
+      "relative_reduction": 0.42678230865490296,
+      "selection_feasible": false,
+      "repair_feasible": true,
+      "feasibility_gain": 1,
+      "replicated_reports": 2
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.3016078394206744,
+      "repair_worst_violation": 0.3016078394206744,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.3016078394206744,
+      "repair_worst_violation": 0.3016078394206744,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.3016078394206744,
+      "repair_worst_violation": 0.3016078394206744,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.3016078394206744,
+      "repair_worst_violation": 0.3016078394206744,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.25,
+      "realized_dual_fraction": 0.14285714285714285,
+      "selection_worst_violation": 0.2552303804912031,
+      "repair_worst_violation": 0.2552303804912031,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.5,
+      "realized_dual_fraction": 0.42857142857142855,
+      "selection_worst_violation": 0.2552303804912031,
+      "repair_worst_violation": 0.2552303804912031,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "requested_dual_fraction": 0.75,
+      "realized_dual_fraction": 0.7142857142857143,
+      "selection_worst_violation": 0.2552303804912031,
+      "repair_worst_violation": 0.2552303804912031,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "requested_dual_fraction": 1.0,
+      "realized_dual_fraction": 1.0,
+      "selection_worst_violation": 0.2552303804912031,
+      "repair_worst_violation": 0.2552303804912031,
+      "worst_improvement": 0.0,
+      "relative_reduction": 0.0,
+      "selection_feasible": false,
+      "repair_feasible": false,
+      "feasibility_gain": 0,
+      "replicated_reports": 0
+    }
+  ]
+}

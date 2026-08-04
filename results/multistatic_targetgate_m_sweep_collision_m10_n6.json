@@ -1,0 +1,120 @@
+{
+  "scope": "paired unknown-N path-to-target association comparison on the same synthetic imperfect candidates; not an OTFS front-end comparison",
+  "M": 10,
+  "N": 6,
+  "trials": 50,
+  "scenario": "paired_collision",
+  "clutter_model": "correlated_sidelobes",
+  "summaries": [
+    {
+      "method": "position_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 0.5,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.5141456054319125,
+      "position_rmse_m": 3.0185906685372745,
+      "mean_velocity_error_mps": 4.015388972677425,
+      "mean_time_ms": 2.570315981283784,
+      "p95_time_ms": 3.8535248255357146,
+      "over_count_rate": 0.0,
+      "under_count_rate": 1.0
+    },
+    {
+      "method": "angle_position_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 0.5,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.5147615442846328,
+      "position_rmse_m": 3.015473254294628,
+      "mean_velocity_error_mps": 4.025600465095167,
+      "mean_time_ms": 2.675449950620532,
+      "p95_time_ms": 3.5803951090201727,
+      "over_count_rate": 0.0,
+      "under_count_rate": 1.0
+    },
+    {
+      "method": "identity_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 0.5,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.6225761772853186,
+      "position_rmse_m": 2.605210531747785,
+      "mean_velocity_error_mps": 3.2971262804781505,
+      "mean_time_ms": 2.3212079890072346,
+      "p95_time_ms": 4.325655032880604,
+      "over_count_rate": 0.0,
+      "under_count_rate": 1.0
+    },
+    {
+      "method": "conflict_aware_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.764750378214826,
+      "position_rmse_m": 1.2535911896669305,
+      "mean_velocity_error_mps": 0.1961605561441535,
+      "mean_time_ms": 5.562866032123566,
+      "p95_time_ms": 8.578025037422774,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "bic_conflict",
+      "target_count_accuracy": 1.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 1.0,
+      "identity_association_accuracy": 0.9899884482094725,
+      "position_rmse_m": 1.1290928319719018,
+      "mean_velocity_error_mps": 0.2273471244810157,
+      "mean_time_ms": 36.66653597727418,
+      "p95_time_ms": 54.18748995289206,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "geometry_doppler",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.8016717325227963,
+      "position_rmse_m": 1.058576064482557,
+      "mean_velocity_error_mps": 0.41982187143510646,
+      "mean_time_ms": 24.504442056640983,
+      "p95_time_ms": 37.37592520192264,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    }
+  ],
+  "paired_proposed_bic_minus_baseline": {
+    "position_dbscan": {
+      "mean_scene_exact_gain_pp": 100.0,
+      "proposed_wins": 50,
+      "baseline_wins": 0,
+      "ties": 0
+    },
+    "angle_position_dbscan": {
+      "mean_scene_exact_gain_pp": 100.0,
+      "proposed_wins": 50,
+      "baseline_wins": 0,
+      "ties": 0
+    },
+    "identity_dbscan": {
+      "mean_scene_exact_gain_pp": 100.0,
+      "proposed_wins": 50,
+      "baseline_wins": 0,
+      "ties": 0
+    },
+    "conflict_aware_dbscan": {
+      "mean_scene_exact_gain_pp": 100.0,
+      "proposed_wins": 50,
+      "baseline_wins": 0,
+      "ties": 0
+    },
+    "geometry_doppler": {
+      "mean_scene_exact_gain_pp": 100.0,
+      "proposed_wins": 50,
+      "baseline_wins": 0,
+      "ties": 0
+    }
+  }
+}

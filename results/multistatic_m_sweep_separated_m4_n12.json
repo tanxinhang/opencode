@@ -1,0 +1,120 @@
+{
+  "scope": "paired unknown-N path-to-target association comparison on the same synthetic imperfect candidates; not an OTFS front-end comparison",
+  "M": 4,
+  "N": 12,
+  "trials": 30,
+  "scenario": "separated",
+  "clutter_model": "correlated_sidelobes",
+  "summaries": [
+    {
+      "method": "position_dbscan",
+      "target_count_accuracy": 0.9666666666666667,
+      "target_recall": 0.9944444444444444,
+      "scene_exact_recovery": 0.9333333333333333,
+      "identity_association_accuracy": 0.996059889676911,
+      "position_rmse_m": 1.6264573038117607,
+      "mean_velocity_error_mps": 0.11178815118339878,
+      "mean_time_ms": 2.6282166596502066,
+      "p95_time_ms": 3.8200650364160533,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.03333333333333333
+    },
+    {
+      "method": "angle_position_dbscan",
+      "target_count_accuracy": 1.0,
+      "target_recall": 0.9972222222222221,
+      "scene_exact_recovery": 0.9666666666666667,
+      "identity_association_accuracy": 0.9992119779353822,
+      "position_rmse_m": 1.6035094718398997,
+      "mean_velocity_error_mps": 0.10554387108112008,
+      "mean_time_ms": 2.7932634266714254,
+      "p95_time_ms": 4.009715188294648,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "identity_dbscan",
+      "target_count_accuracy": 0.9666666666666667,
+      "target_recall": 0.9972222222222221,
+      "scene_exact_recovery": 0.9666666666666667,
+      "identity_association_accuracy": 1.0,
+      "position_rmse_m": 1.5955049386952045,
+      "mean_velocity_error_mps": 0.05977865224719713,
+      "mean_time_ms": 1.9361133066316445,
+      "p95_time_ms": 2.7639948995783925,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.03333333333333333
+    },
+    {
+      "method": "conflict_aware_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 0.9972222222222221,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.8424821002386634,
+      "position_rmse_m": 1.3964422123133549,
+      "mean_velocity_error_mps": 0.11499337723846408,
+      "mean_time_ms": 4.336599974582593,
+      "p95_time_ms": 5.681054992601275,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "bic_conflict",
+      "target_count_accuracy": 0.9666666666666667,
+      "target_recall": 0.9972222222222221,
+      "scene_exact_recovery": 0.9666666666666667,
+      "identity_association_accuracy": 1.0,
+      "position_rmse_m": 1.5955049386952045,
+      "mean_velocity_error_mps": 0.05977865224719713,
+      "mean_time_ms": 3.3685399995495873,
+      "p95_time_ms": 5.7582100387662605,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.03333333333333333
+    },
+    {
+      "method": "geometry_doppler",
+      "target_count_accuracy": 0.0,
+      "target_recall": 0.9972222222222221,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.946993670886076,
+      "position_rmse_m": 1.4844566601222218,
+      "mean_velocity_error_mps": 0.10094409844851407,
+      "mean_time_ms": 10.048076650127769,
+      "p95_time_ms": 15.99459988065063,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    }
+  ],
+  "paired_proposed_bic_minus_baseline": {
+    "position_dbscan": {
+      "mean_scene_exact_gain_pp": 3.3333333333333335,
+      "proposed_wins": 1,
+      "baseline_wins": 0,
+      "ties": 29
+    },
+    "angle_position_dbscan": {
+      "mean_scene_exact_gain_pp": 0.0,
+      "proposed_wins": 0,
+      "baseline_wins": 0,
+      "ties": 30
+    },
+    "identity_dbscan": {
+      "mean_scene_exact_gain_pp": 0.0,
+      "proposed_wins": 0,
+      "baseline_wins": 0,
+      "ties": 30
+    },
+    "conflict_aware_dbscan": {
+      "mean_scene_exact_gain_pp": 96.66666666666667,
+      "proposed_wins": 29,
+      "baseline_wins": 0,
+      "ties": 1
+    },
+    "geometry_doppler": {
+      "mean_scene_exact_gain_pp": 96.66666666666667,
+      "proposed_wins": 29,
+      "baseline_wins": 0,
+      "ties": 1
+    }
+  }
+}

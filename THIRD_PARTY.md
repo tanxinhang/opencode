@@ -48,3 +48,11 @@ the supplied document: exact/SAA expected deflection, Schur-complement marginal
 gain, covariance regularization, BSC quantization moments, detectable-erasure
 sets, two-stage QoS-aware selection, fusion, and Monte Carlo detection.
 
+The later receiver-chain components are also independent implementations:
+toy MF/CFAR front end with sidelobe-aware CFAR and noncoherent integration,
+per-path Fisher-type covariance from matched-filter curvature, multistatic
+association gates, evidence-moment calibration (G1-A), report-channel closure
+(G1-B), conditional-ranking and greedy-vs-Oracle gates (G1-C/D), and the
+system-level sweep (G2).  These use only the repository's own modules and the
+declared dependencies (NumPy, SciPy, PyYAML, pytest); no third-party source
+code is copied.

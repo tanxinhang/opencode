@@ -1,0 +1,121 @@
+{
+  "scope": "paired unknown-N path-to-target association comparison on the same synthetic imperfect candidates; not an OTFS front-end comparison",
+  "M": 8,
+  "N": 6,
+  "trials": 30,
+  "scenario": "separated",
+  "clutter_model": "correlated_sidelobes",
+  "view_false_target_probability": 0.02,
+  "summaries": [
+    {
+      "method": "position_dbscan",
+      "target_count_accuracy": 0.9333333333333333,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.9333333333333333,
+      "identity_association_accuracy": 0.9991928974979822,
+      "position_rmse_m": 1.2554245650660396,
+      "mean_velocity_error_mps": 0.07660161907539598,
+      "mean_time_ms": 2.1525199369837837,
+      "p95_time_ms": 3.347794944420456,
+      "over_count_rate": 0.06666666666666667,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "angle_position_dbscan",
+      "target_count_accuracy": 0.9333333333333333,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.9333333333333333,
+      "identity_association_accuracy": 0.9991928974979822,
+      "position_rmse_m": 1.2554245650660396,
+      "mean_velocity_error_mps": 0.07660161907539598,
+      "mean_time_ms": 2.4854266239951053,
+      "p95_time_ms": 3.534960024990141,
+      "over_count_rate": 0.06666666666666667,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "identity_dbscan",
+      "target_count_accuracy": 0.9333333333333333,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.9333333333333333,
+      "identity_association_accuracy": 0.9991928974979822,
+      "position_rmse_m": 1.2410999752503558,
+      "mean_velocity_error_mps": 0.03956098019916407,
+      "mean_time_ms": 1.666706707328558,
+      "p95_time_ms": 2.5035098427906632,
+      "over_count_rate": 0.06666666666666667,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "conflict_aware_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.7560581583198708,
+      "position_rmse_m": 1.1436743968887866,
+      "mean_velocity_error_mps": 0.08333598555537922,
+      "mean_time_ms": 3.8359366512546935,
+      "p95_time_ms": 5.083194747567177,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "bic_conflict",
+      "target_count_accuracy": 0.9333333333333333,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.9333333333333333,
+      "identity_association_accuracy": 0.9991928974979822,
+      "position_rmse_m": 1.2410999752503558,
+      "mean_velocity_error_mps": 0.03956098019916407,
+      "mean_time_ms": 2.419213314230243,
+      "p95_time_ms": 3.7774649681523425,
+      "over_count_rate": 0.06666666666666667,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "geometry_doppler",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.9334415584415584,
+      "position_rmse_m": 0.9762336292625737,
+      "mean_velocity_error_mps": 0.09386253488562794,
+      "mean_time_ms": 10.503240038330357,
+      "p95_time_ms": 13.851279998198152,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    }
+  ],
+  "paired_proposed_bic_minus_baseline": {
+    "position_dbscan": {
+      "mean_scene_exact_gain_pp": 0.0,
+      "proposed_wins": 0,
+      "baseline_wins": 0,
+      "ties": 30
+    },
+    "angle_position_dbscan": {
+      "mean_scene_exact_gain_pp": 0.0,
+      "proposed_wins": 0,
+      "baseline_wins": 0,
+      "ties": 30
+    },
+    "identity_dbscan": {
+      "mean_scene_exact_gain_pp": 0.0,
+      "proposed_wins": 0,
+      "baseline_wins": 0,
+      "ties": 30
+    },
+    "conflict_aware_dbscan": {
+      "mean_scene_exact_gain_pp": 93.33333333333333,
+      "proposed_wins": 28,
+      "baseline_wins": 0,
+      "ties": 2
+    },
+    "geometry_doppler": {
+      "mean_scene_exact_gain_pp": 93.33333333333333,
+      "proposed_wins": 28,
+      "baseline_wins": 0,
+      "ties": 2
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "scope": "Gate G0-B target-level geometry association with unknown N, conditioned on a synthetic imperfect path-candidate front end; not end-to-end OTFS detection performance",
+  "candidate_model": {
+    "path_miss_probability": 0.08,
+    "poisson_false_candidates_mean": 0.4,
+    "range_error_std_m": 1.5,
+    "angle_error_std_deg": 0.4,
+    "doppler_error_std_hz": 1.5
+  },
+  "receiver": {
+    "known_target_count": false,
+    "minimum_distinct_transmitters_per_group": 2,
+    "angle_tolerance_deg": 2.5,
+    "position_tolerance_m": 14.0,
+    "doppler_tolerance_hz": 7.0
+  },
+  "rows": [
+    {
+      "transmitters_M": 2,
+      "targets_N": 1,
+      "trials": 10,
+      "path_candidate_recall": 1.0,
+      "target_count_accuracy": 0.9,
+      "target_recall": 0.9,
+      "scene_exact_recovery": 0.9,
+      "identity_association_accuracy": 0.9,
+      "mean_grouped_false_candidates": 0.0,
+      "position_rmse_m": 1.9949479139990496,
+      "mean_velocity_error_mps": 0.09154539777909677
+    },
+    {
+      "transmitters_M": 2,
+      "targets_N": 2,
+      "trials": 10,
+      "path_candidate_recall": 0.925,
+      "target_count_accuracy": 0.5,
+      "target_recall": 0.75,
+      "scene_exact_recovery": 0.5,
+      "identity_association_accuracy": 1.0,
+      "mean_grouped_false_candidates": 0.0,
+      "position_rmse_m": 2.457697801546872,
+      "mean_velocity_error_mps": 0.11244329469345558
+    },
+    {
+      "transmitters_M": 2,
+      "targets_N": 3,
+      "trials": 10,
+      "path_candidate_recall": 0.9000000000000001,
+      "target_count_accuracy": 0.3,
+      "target_recall": 0.7,
+      "scene_exact_recovery": 0.3,
+      "identity_association_accuracy": 1.0,
+      "mean_grouped_false_candidates": 0.0,
+      "position_rmse_m": 3.700422194418364,
+      "mean_velocity_error_mps": 0.08101004401507578
+    },
+    {
+      "transmitters_M": 4,
+      "targets_N": 1,
+      "trials": 10,
+      "path_candidate_recall": 0.9,
+      "target_count_accuracy": 1.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 1.0,
+      "identity_association_accuracy": 1.0,
+      "mean_grouped_false_candidates": 0.0,
+      "position_rmse_m": 1.9453904165865745,
+      "mean_velocity_error_mps": 0.052356295934571806
+    },
+    {
+      "transmitters_M": 4,
+      "targets_N": 2,
+      "trials": 10,
+      "path_candidate_recall": 0.875,
+      "target_count_accuracy": 0.9,
+      "target_recall": 0.95,
+      "scene_exact_recovery": 0.9,
+      "identity_association_accuracy": 1.0,
+      "mean_grouped_false_candidates": 0.0,
+      "position_rmse_m": 1.9340692738206156,
+      "mean_velocity_error_mps": 0.05586668329372375
+    },
+    {
+      "transmitters_M": 4,
+      "targets_N": 3,
+      "trials": 10,
+      "path_candidate_recall": 0.9666666666666666,
+      "target_count_accuracy": 1.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 1.0,
+      "identity_association_accuracy": 1.0,
+      "mean_grouped_false_candidates": 0.0,
+      "position_rmse_m": 2.1565812400722186,
+      "mean_velocity_error_mps": 0.05857003073130686
+    }
+  ],
+  "warning": "Path candidates already contain transmitter identity, angle, delay, and Doppler. Gate G0-B validates only path-to-target association and cannot establish the value of an OTFS front end or of the fixed identity codebook."
+}

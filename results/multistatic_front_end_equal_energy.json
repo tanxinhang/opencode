@@ -1,0 +1,145 @@
+{
+  "model": "8-element ULA; per-UAV unit-energy QPSK identity signatures; toy DD grid with declared delay/Doppler resolutions",
+  "grid": {
+    "doppler_bins": 16,
+    "delay_bins": 32,
+    "delay_resolution_m": 8.0,
+    "doppler_resolution_hz": 20.0
+  },
+  "path_gain_amplitude": 2.0,
+  "noise_variance": 0.02,
+  "frame_false_alarm_probability": 0.002,
+  "threshold": 0.31761595035988593,
+  "calibration": {
+    "confidence_calibrator_blocks": 14,
+    "confidence_calibration_frames": 60,
+    "threshold_calibration_frames": 300
+  },
+  "association_settings": {
+    "position_tolerance_m": 12.0,
+    "position_sigma_m": 6.0,
+    "doppler_sigma_hz": 15.0,
+    "view_false_target_probability": 0.1
+  },
+  "noise_only": {
+    "trials": 20,
+    "frame_false_alarm_rate": 0.0,
+    "mean_false_candidates_per_frame": 0.0
+  },
+  "equal_total_energy": {
+    "total_pilot_energy": 16.0,
+    "target_count": 2,
+    "transmitters": {
+      "4": {
+        "per_uav_amplitude": 2.0,
+        "summary": {
+          "2": {
+            "trials": 30,
+            "path_recall": 0.925,
+            "false_candidates_per_frame": 7.433333333333334,
+            "scene_exact_recovery": 0.6333333333333333,
+            "target_count_accuracy": 0.6333333333333333,
+            "mean_gospa": 5.442351244454997,
+            "mean_position_error_m": 1.0659286827260808,
+            "mean_front_end_seconds": 0.09395914336976906,
+            "mean_association_seconds": 0.0010311999979118506
+          }
+        }
+      },
+      "2": {
+        "per_uav_amplitude": 2.8284271247461903,
+        "summary": {
+          "2": {
+            "trials": 30,
+            "path_recall": 0.9166666666666666,
+            "false_candidates_per_frame": 7.466666666666667,
+            "scene_exact_recovery": 0.16666666666666666,
+            "target_count_accuracy": 0.3333333333333333,
+            "mean_gospa": 10.854207382282803,
+            "mean_position_error_m": 2.0783707617115033,
+            "mean_front_end_seconds": 0.031224430010964473,
+            "mean_association_seconds": 0.0006323399487882852
+          }
+        }
+      }
+    }
+  },
+  "summary": {
+    "1": {
+      "trials": 2,
+      "path_recall": 1.0,
+      "false_candidates_per_frame": 5.0,
+      "scene_exact_recovery": 1.0,
+      "target_count_accuracy": 1.0,
+      "mean_gospa": 1.764043449772069,
+      "mean_position_error_m": 1.764043449772069,
+      "mean_front_end_seconds": 0.03455379977822304,
+      "mean_association_seconds": 0.000737450085580349
+    },
+    "2": {
+      "trials": 2,
+      "path_recall": 0.9375,
+      "false_candidates_per_frame": 14.5,
+      "scene_exact_recovery": 1.0,
+      "target_count_accuracy": 1.0,
+      "mean_gospa": 1.5973019088248077,
+      "mean_position_error_m": 0.9701726214525466,
+      "mean_front_end_seconds": 0.03170929988846183,
+      "mean_association_seconds": 0.0009476002305746078
+    }
+  },
+  "instances": [
+    {
+      "target_count": 1,
+      "path_recall": 1.0,
+      "candidate_count": 7,
+      "false_candidates": 3,
+      "estimated_targets": 1,
+      "target_count_correct": 1.0,
+      "scene_exact_recovery": 1.0,
+      "gospa_15m": 3.4749946178999456,
+      "mean_position_error": 3.4749946178999456,
+      "front_end_seconds": 0.02649219986051321,
+      "association_seconds": 0.000817399937659502
+    },
+    {
+      "target_count": 1,
+      "path_recall": 1.0,
+      "candidate_count": 11,
+      "false_candidates": 7,
+      "estimated_targets": 1,
+      "target_count_correct": 1.0,
+      "scene_exact_recovery": 1.0,
+      "gospa_15m": 0.05309228164419238,
+      "mean_position_error": 0.05309228164419238,
+      "front_end_seconds": 0.042615399695932865,
+      "association_seconds": 0.0006575002335011959
+    },
+    {
+      "target_count": 2,
+      "path_recall": 1.0,
+      "candidate_count": 25,
+      "false_candidates": 17,
+      "estimated_targets": 2,
+      "target_count_correct": 1.0,
+      "scene_exact_recovery": 1.0,
+      "gospa_15m": 2.1101843177283586,
+      "mean_position_error": 1.1748480753290647,
+      "front_end_seconds": 0.0300976000726223,
+      "association_seconds": 0.0008865003474056721
+    },
+    {
+      "target_count": 2,
+      "path_recall": 0.875,
+      "candidate_count": 19,
+      "false_candidates": 12,
+      "estimated_targets": 2,
+      "target_count_correct": 1.0,
+      "scene_exact_recovery": 1.0,
+      "gospa_15m": 1.0844194999212566,
+      "mean_position_error": 0.7654971675760284,
+      "front_end_seconds": 0.03332099970430136,
+      "association_seconds": 0.0010087001137435436
+    }
+  ]
+}

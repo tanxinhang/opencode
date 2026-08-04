@@ -1,0 +1,37 @@
+{
+  "scope": "Gate G0-B target-level geometry association with unknown N, conditioned on a synthetic imperfect path-candidate front end; not end-to-end OTFS detection performance",
+  "candidate_model": {
+    "path_miss_probability": 0.08,
+    "poisson_false_candidates_mean": 0.4,
+    "range_error_std_m": 1.5,
+    "angle_error_std_deg": 0.4,
+    "doppler_error_std_hz": 1.5
+  },
+  "receiver": {
+    "known_target_count": false,
+    "minimum_distinct_transmitters_per_group": 2,
+    "angle_tolerance_deg": 2.5,
+    "position_tolerance_m": 14.0,
+    "doppler_tolerance_hz": 7.0,
+    "spatial_index": true
+  },
+  "rows": [
+    {
+      "transmitters_M": 8,
+      "targets_N": 6,
+      "trials": 100,
+      "path_candidate_recall": 0.9197916666666666,
+      "mean_path_candidates": 44.66,
+      "mean_association_time_ms": 8.307952024042606,
+      "p95_association_time_ms": 11.363669694401324,
+      "target_count_accuracy": 0.83,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.83,
+      "identity_association_accuracy": 0.987387824399709,
+      "mean_grouped_false_candidates": 0.0,
+      "position_rmse_m": 1.0563018732707519,
+      "mean_velocity_error_mps": 0.03987698019472102
+    }
+  ],
+  "warning": "Path candidates already contain transmitter identity, angle, delay, and Doppler. Gate G0-B validates only path-to-target association and cannot establish the value of an OTFS front end or of the fixed identity codebook."
+}

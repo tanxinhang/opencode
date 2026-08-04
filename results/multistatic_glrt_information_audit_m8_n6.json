@@ -1,0 +1,75 @@
+{
+  "scope": "candidate-level separability audit of the frame-maximum physical order GLRT; this is not an end-to-end OTFS result",
+  "seeds": {
+    "probability": 20260951,
+    "null": 20260952,
+    "collision": 20260953
+  },
+  "sample_sizes": {
+    "probability_scenes": 500,
+    "null_frames": 2000,
+    "collision_frames": 1000
+  },
+  "frame_false_trigger_target": 0.01,
+  "finite_sample_threshold": 132.94709234021443,
+  "calibration_false_trigger_rate": 0.009,
+  "collision_trigger_rate_at_one_percent": 0.973,
+  "collision_component_trigger_count": {
+    "mean": 2.119,
+    "distribution": {
+      "0": 27,
+      "1": 185,
+      "2": 430,
+      "3": 358
+    },
+    "at_least_three_rate": 0.358
+  },
+  "empirical_auc": 0.9990602836879432,
+  "null_statistics": {
+    "count": 1974,
+    "mean": 32.59624587818515,
+    "quantiles": {
+      "0.01": -9.081182406671568,
+      "0.1": 6.9841896783987565,
+      "0.5": 25.00723061217251,
+      "0.9": 47.29539796211071,
+      "0.99": 130.4695685934305
+    }
+  },
+  "collision_statistics": {
+    "count": 1000,
+    "mean": 7493.824341514202,
+    "quantiles": {
+      "0.01": 115.04846070782487,
+      "0.1": 630.7315462674889,
+      "0.5": 5308.487926242589,
+      "0.9": 18095.092166764927,
+      "0.99": 31207.949490119976
+    }
+  },
+  "nonfinite_frame_counts": {
+    "null": 26,
+    "collision": 0
+  },
+  "probability_calibrator": {
+    "thresholds": [
+      0.44998058911449623,
+      0.452140067600862,
+      0.47219094943710327,
+      0.7626971427329798,
+      0.7932714854808165,
+      0.7999810960510332,
+      0.8999939705409941
+    ],
+    "probabilities": [
+      0.0,
+      0.7580645161290323,
+      0.7868217054263565,
+      0.7916087029102443,
+      0.8025372311086597,
+      0.8168674698795181,
+      1.0
+    ],
+    "clip": 0.0001
+  }
+}

@@ -1,0 +1,1087 @@
+{
+  "seeds": 5,
+  "strength": 1.0,
+  "num_groups": 2,
+  "minimum_pd": [
+    0.8,
+    0.75,
+    0.7
+  ],
+  "epsilon": 0.1,
+  "summary": [
+    {
+      "budget_bits": 20,
+      "targets": 15,
+      "classification_fraction": {
+        "complementary_evidence": 0.4,
+        "diversifiable_substitute": 0.06666666666666667,
+        "owner_sufficient": 0.4,
+        "single_domain_substitute": 0.13333333333333333
+      },
+      "headroom_by_classification": {
+        "complementary_evidence": {
+          "targets": 6,
+          "positive_headroom_fraction": 0.8333333333333334,
+          "mean_recoverable_headroom": 0.06051715871621433,
+          "total_headroom_share": 0.6505617970908555,
+          "mean_headroom_use_ratio_when_defined": 0.0
+        },
+        "diversifiable_substitute": {
+          "targets": 1,
+          "positive_headroom_fraction": 1.0,
+          "mean_recoverable_headroom": 0.11848478786868899,
+          "total_headroom_share": 0.2122860087920008,
+          "mean_headroom_use_ratio_when_defined": 0.0
+        },
+        "owner_sufficient": {
+          "targets": 6,
+          "positive_headroom_fraction": 0.0,
+          "mean_recoverable_headroom": 0.0,
+          "total_headroom_share": 0.0,
+          "mean_headroom_use_ratio_when_defined": null
+        },
+        "single_domain_substitute": {
+          "targets": 2,
+          "positive_headroom_fraction": 0.5,
+          "mean_recoverable_headroom": 0.038274893192837174,
+          "total_headroom_share": 0.13715219411714388,
+          "mean_headroom_use_ratio_when_defined": 0.0
+        }
+      },
+      "near_all_scheduled_boundary_fraction": 0.8,
+      "positive_headroom_fraction": 0.4666666666666667,
+      "mean_recoverable_headroom": 0.037209168436776616,
+      "mean_positive_headroom": 0.07973393236452132,
+      "mean_headroom_use_ratio_when_defined": 0.0,
+      "median_headroom_use_ratio_when_defined": 0.0,
+      "aggregate_headroom_capture_rate": 0.0,
+      "positive_gain_capture_rate": 0.0,
+      "fraction_aware_worse_than_independent": 0.0,
+      "mean_independent_violation": 0.11179689309238974,
+      "mean_aware_violation": 0.11179689309238974,
+      "mean_oracle_violation": 0.07458772465561311
+    },
+    {
+      "budget_bits": 30,
+      "targets": 15,
+      "classification_fraction": {
+        "complementary_evidence": 0.4,
+        "diversifiable_substitute": 0.06666666666666667,
+        "owner_sufficient": 0.4,
+        "single_domain_substitute": 0.13333333333333333
+      },
+      "headroom_by_classification": {
+        "complementary_evidence": {
+          "targets": 6,
+          "positive_headroom_fraction": 0.16666666666666666,
+          "mean_recoverable_headroom": 0.012870107135748814,
+          "total_headroom_share": 0.5636284209207915,
+          "mean_headroom_use_ratio_when_defined": 0.0
+        },
+        "diversifiable_substitute": {
+          "targets": 1,
+          "positive_headroom_fraction": 1.0,
+          "mean_recoverable_headroom": 0.03727871999076777,
+          "total_headroom_share": 0.2720949388212207,
+          "mean_headroom_use_ratio_when_defined": 0.3639740773614546
+        },
+        "owner_sufficient": {
+          "targets": 6,
+          "positive_headroom_fraction": 0.0,
+          "mean_recoverable_headroom": 0.0,
+          "total_headroom_share": 0.0,
+          "mean_headroom_use_ratio_when_defined": null
+        },
+        "single_domain_substitute": {
+          "targets": 2,
+          "positive_headroom_fraction": 0.5,
+          "mean_recoverable_headroom": 0.01125346707978532,
+          "total_headroom_share": 0.16427664025798783,
+          "mean_headroom_use_ratio_when_defined": 0.0
+        }
+      },
+      "near_all_scheduled_boundary_fraction": 1.0,
+      "positive_headroom_fraction": 0.2,
+      "mean_recoverable_headroom": 0.009133753130988752,
+      "mean_positive_headroom": 0.04566876565494371,
+      "mean_headroom_use_ratio_when_defined": 0.1213246924538182,
+      "median_headroom_use_ratio_when_defined": 0.0,
+      "aggregate_headroom_capture_rate": 0.09903550431217614,
+      "positive_gain_capture_rate": 0.09903550431217614,
+      "fraction_aware_worse_than_independent": 0.0,
+      "mean_independent_violation": 0.08194003943978782,
+      "mean_aware_violation": 0.08103547359219744,
+      "mean_oracle_violation": 0.07280628630879908
+    }
+  ],
+  "instances": [
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 1,
+      "supporting_failure_domains": 1,
+      "classification": "single_domain_substitute",
+      "independent_violation": 0.11227205618308655,
+      "aware_violation": 0.11227205618308655,
+      "oracle_violation": 0.03572226979741222,
+      "all_scheduled_violation": 0.013215335637841594,
+      "oracle_all_scheduled_gap": 0.022506934159570627,
+      "near_all_scheduled_boundary": false,
+      "recoverable_headroom": 0.07654978638567433,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        2,
+        3
+      ],
+      "aware_scheduled": [
+        2,
+        3
+      ],
+      "oracle_scheduled": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.2154160958676799,
+      "aware_violation": 0.2154160958676799,
+      "oracle_violation": 0.1829410508351507,
+      "all_scheduled_violation": 0.18294105083515072,
+      "oracle_all_scheduled_gap": -2.7755575615628914e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.03247504503252921,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 1,
+      "supporting_failure_domains": 1,
+      "classification": "single_domain_substitute",
+      "independent_violation": 0.03572226979741222,
+      "aware_violation": 0.03572226979741222,
+      "oracle_violation": 0.013215335637841594,
+      "all_scheduled_violation": 0.013215335637841594,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.022506934159570627,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        2,
+        3,
+        4
+      ],
+      "aware_scheduled": [
+        2,
+        3,
+        4
+      ],
+      "oracle_scheduled": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ]
+    },
+    {
+      "seed": 20260802,
+      "budget_bits": 30,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.1829410508351507,
+      "aware_violation": 0.1829410508351507,
+      "oracle_violation": 0.18294105083515066,
+      "all_scheduled_violation": 0.18294105083515072,
+      "oracle_all_scheduled_gap": -5.551115123125783e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 2.7755575615628914e-17,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 1,
+      "supporting_failure_domains": 1,
+      "classification": "single_domain_substitute",
+      "independent_violation": 0.0985894690707737,
+      "aware_violation": 0.0985894690707737,
+      "oracle_violation": 0.09858946907077369,
+      "all_scheduled_violation": 0.0985894690707737,
+      "oracle_all_scheduled_gap": -1.3877787807814457e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 1.3877787807814457e-17,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        2,
+        3
+      ],
+      "aware_scheduled": [
+        2,
+        3
+      ],
+      "oracle_scheduled": [
+        1,
+        2,
+        3,
+        4,
+        7
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.12243598034335508,
+      "aware_violation": 0.12243598034335508,
+      "oracle_violation": 0.11361144344449872,
+      "all_scheduled_violation": 0.11361144344449872,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.008824536898856358,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 1,
+      "supporting_failure_domains": 1,
+      "classification": "single_domain_substitute",
+      "independent_violation": 0.0985894690707737,
+      "aware_violation": 0.0985894690707737,
+      "oracle_violation": 0.09858946907077369,
+      "all_scheduled_violation": 0.0985894690707737,
+      "oracle_all_scheduled_gap": -1.3877787807814457e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 1.3877787807814457e-17,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        2,
+        3,
+        4
+      ],
+      "aware_scheduled": [
+        2,
+        3
+      ],
+      "oracle_scheduled": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ]
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 30,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.11361144344449872,
+      "aware_violation": 0.11361144344449871,
+      "oracle_violation": 0.11361144344449871,
+      "all_scheduled_violation": 0.11361144344449872,
+      "oracle_all_scheduled_gap": -1.3877787807814457e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 1.3877787807814457e-17,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "oracle_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 1,
+      "supporting_failure_domains": 2,
+      "classification": "diversifiable_substitute",
+      "independent_violation": 0.12193111135349854,
+      "aware_violation": 0.12193111135349854,
+      "oracle_violation": 0.0034463234848095513,
+      "all_scheduled_violation": 0.0016092987471281284,
+      "oracle_all_scheduled_gap": 0.001837024737681423,
+      "near_all_scheduled_boundary": false,
+      "recoverable_headroom": 0.11848478786868899,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        3,
+        4
+      ],
+      "aware_scheduled": [
+        3,
+        4
+      ],
+      "oracle_scheduled": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 20,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.2960923451339295,
+      "aware_violation": 0.2960923451339295,
+      "oracle_violation": 0.20711832583029874,
+      "all_scheduled_violation": 0.20711832583029877,
+      "oracle_all_scheduled_gap": -2.7755575615628914e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.08897401930363077,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 1,
+      "supporting_failure_domains": 2,
+      "classification": "diversifiable_substitute",
+      "independent_violation": 0.038888018737895894,
+      "aware_violation": 0.025319531024040182,
+      "oracle_violation": 0.0016092987471281284,
+      "all_scheduled_violation": 0.0016092987471281284,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.03727871999076777,
+      "headroom_use_ratio": 0.3639740773614546,
+      "independent_scheduled": [
+        2,
+        3,
+        4
+      ],
+      "aware_scheduled": [
+        1,
+        3,
+        4
+      ],
+      "oracle_scheduled": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ]
+    },
+    {
+      "seed": 20260804,
+      "budget_bits": 30,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.20711832583029874,
+      "aware_violation": 0.20711832583029874,
+      "oracle_violation": 0.2071183258302987,
+      "all_scheduled_violation": 0.20711832583029877,
+      "oracle_all_scheduled_gap": -5.551115123125783e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 2.7755575615628914e-17,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        3
+      ],
+      "aware_scheduled": [
+        3
+      ],
+      "oracle_scheduled": [
+        3
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 20,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.17073118283295072,
+      "aware_violation": 0.17073118283295072,
+      "oracle_violation": 0.17073118283295072,
+      "all_scheduled_violation": 0.17073118283295075,
+      "oracle_all_scheduled_gap": -2.7755575615628914e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        3
+      ],
+      "aware_scheduled": [
+        3
+      ],
+      "oracle_scheduled": [
+        3
+      ]
+    },
+    {
+      "seed": 20260805,
+      "budget_bits": 30,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.1707311828329508,
+      "aware_violation": 0.17073118283295072,
+      "oracle_violation": 0.17073118283295072,
+      "all_scheduled_violation": 0.17073118283295075,
+      "oracle_all_scheduled_gap": -2.7755575615628914e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 8.326672684688674e-17,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "aware_scheduled": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.23655070192874877,
+      "aware_violation": 0.23655070192874877,
+      "oracle_violation": 0.16170767541921438,
+      "all_scheduled_violation": 0.15933005911425602,
+      "oracle_all_scheduled_gap": 0.002377616304958363,
+      "near_all_scheduled_boundary": false,
+      "recoverable_headroom": 0.0748430265095344,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        2,
+        3,
+        4
+      ],
+      "aware_scheduled": [
+        2,
+        3,
+        4
+      ],
+      "oracle_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        7
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 20,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.30293445367182326,
+      "aware_violation": 0.30293445367182326,
+      "oracle_violation": 0.144948129119088,
+      "all_scheduled_violation": 0.144948129119088,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.15798632455273526,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "target": 0,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 0,
+      "supporting_failure_domains": 2,
+      "classification": "owner_sufficient",
+      "independent_violation": 0.0,
+      "aware_violation": 0.0,
+      "oracle_violation": 0.0,
+      "all_scheduled_violation": 0.0,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        0
+      ],
+      "aware_scheduled": [
+        0
+      ],
+      "oracle_scheduled": [
+        0
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "target": 1,
+      "target_weight": 1.0,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.23655070192874877,
+      "aware_violation": 0.23655070192874877,
+      "oracle_violation": 0.15933005911425605,
+      "all_scheduled_violation": 0.15933005911425602,
+      "oracle_all_scheduled_gap": 2.7755575615628914e-17,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.07722064281449273,
+      "headroom_use_ratio": 0.0,
+      "independent_scheduled": [
+        2,
+        3,
+        4
+      ],
+      "aware_scheduled": [
+        2,
+        3,
+        4
+      ],
+      "oracle_scheduled": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ]
+    },
+    {
+      "seed": 20260806,
+      "budget_bits": 30,
+      "target": 2,
+      "target_weight": 1.3,
+      "minimum_successful_reports": 2,
+      "supporting_failure_domains": 0,
+      "classification": "complementary_evidence",
+      "independent_violation": 0.144948129119088,
+      "aware_violation": 0.144948129119088,
+      "oracle_violation": 0.144948129119088,
+      "all_scheduled_violation": 0.144948129119088,
+      "oracle_all_scheduled_gap": 0.0,
+      "near_all_scheduled_boundary": true,
+      "recoverable_headroom": 0.0,
+      "headroom_use_ratio": null,
+      "independent_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "aware_scheduled": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "oracle_scheduled": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  ]
+}

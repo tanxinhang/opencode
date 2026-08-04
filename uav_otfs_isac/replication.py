@@ -146,6 +146,225 @@ def _solve_dual_domain_groups(
     return used, key, chosen
 
 
+def _experimental_evaluate_dual_layer_configuration(
+    model: TargetEvidenceModel, copy_counts: Sequence[int], minimum_pd: float,
+    path_groups: Sequence[int], native_resources: Sequence[int], strength: float,
+    path_failure_fraction: float, *, replication_mode: str,
+    false_alarm_rate: float, beta: float, target_weight: float,
+    tail_weight: float,
+) -> ReplicationOption:
+    repaired = dual_layer_reception_model(
+        model, copy_counts, path_groups, native_resources, strength,
+        path_failure_fraction, replication_mode=replication_mode,
+    )
+    scheduled = {model.owner, *[
+        i for i, count in enumerate(copy_counts)
+        if i != model.owner and count > 0
+    ]}
+    values = []; probabilities = []
+    for received, probability in _received_patterns(repaired, scheduled):
+        quality = _received_quality(model, received, "gaussian_pd", false_alarm_rate)
+        values.append(max(minimum_pd - quality, 0.0)); probabilities.append(probability)
+    distribution = LossDistribution(np.asarray(values), np.asarray(probabilities))
+    return ReplicationOption(
+        target=model.target_id, copy_counts=tuple(int(x) for x in copy_counts),
+        cost_bits=0, violation_probability=distribution.violation_probability(),
+        mean_loss=distribution.mean, cvar_loss=distribution.cvar(beta),
+        risk_objective=float(target_weight) * (
+            distribution.mean + tail_weight * distribution.cvar(beta)
+        ),
+    )
+
+
+def _experimental_greedy_dual_layer_repair(
+    models: Sequence[TargetEvidenceModel], budget_bits: int,
+    minimum_pd: Sequence[float], target_weights: Sequence[float],
+    violation_limits: Sequence[float], path_groups: Sequence[Sequence[int]],
+    native_resources: Sequence[Sequence[int]], strength: float,
+    path_failure_fraction: float, domain_capacities: Sequence[int], *,
+    resource_access: Sequence[np.ndarray] | None = None,
+    false_alarm_rate: float = 0.05, beta: float = 0.9,
+    tail_weight: float = 1.0,
+) -> ReplicationChanceResult:
+    """Scalable add-or-replicate repair using exact one-action risk changes.
+
+    Each iteration compares adding an unscheduled report with replicating an
+    already selected report into its alternate accessible resource. The action
+    that gives the largest lexicographic reduction in weighted chance excess
+    and then mean-CVaR risk per bit is accepted.
+    """
+    weights = np.asarray(target_weights, dtype=float)
+    limits = np.asarray(violation_limits, dtype=float)
+    capacities = np.asarray(domain_capacities, dtype=int)
+    access = (
+        [np.ones((model.num_uavs, capacities.size), dtype=bool) for model in models]
+        if resource_access is None else [np.asarray(mask, dtype=bool) for mask in resource_access]
+    )
+    counts = [np.zeros(model.num_uavs, dtype=int) for model in models]
+    domain_used = np.zeros(capacities.size, dtype=int); used = 0
+    current = [
+        _experimental_evaluate_dual_layer_configuration(
+            model, counts[q], minimum_pd[q], path_groups[q], native_resources[q],
+            strength, path_failure_fraction, replication_mode="cross_domain",
+            false_alarm_rate=false_alarm_rate, beta=beta,
+            target_weight=weights[q], tail_weight=tail_weight,
+        ) for q, model in enumerate(models)
+    ]
+    while True:
+        best = None
+        for q, model in enumerate(models):
+            native = np.asarray(native_resources[q], dtype=int)
+            for i in range(model.num_uavs):
+                if i == model.owner or counts[q][i] >= 2:
+                    continue
+                domain = native[i] if counts[q][i] == 0 else (native[i] + 1) % capacities.size
+                cost = int(model.report_bits[i])
+                if not access[q][i, domain] or used + cost > budget_bits or domain_used[domain] + cost > capacities[domain]:
+                    continue
+                candidate_counts = counts[q].copy(); candidate_counts[i] += 1
+                option = _experimental_evaluate_dual_layer_configuration(
+                    model, candidate_counts, minimum_pd[q], path_groups[q],
+                    native_resources[q], strength, path_failure_fraction,
+                    replication_mode="cross_domain", false_alarm_rate=false_alarm_rate,
+                    beta=beta, target_weight=weights[q], tail_weight=tail_weight,
+                )
+                candidate_options = list(current); candidate_options[q] = option
+                relative = sorted((
+                    max(value.violation_probability - limits[j], 0.0)
+                    / max(limits[j], 1e-12)
+                    for j, value in enumerate(candidate_options)
+                ), reverse=True)
+                sum_excess = sum(
+                    weights[j] * max(value.violation_probability - limits[j], 0.0)
+                    for j, value in enumerate(candidate_options)
+                )
+                risk = sum(value.risk_objective for value in candidate_options)
+                key = (*relative, sum_excess, risk, q, i)
+                if best is None or key < best[0]:
+                    best = (key, q, i, domain, cost, option, candidate_counts)
+        if best is None:
+            break
+        _, q, _, domain, cost, option, candidate_counts = best
+        counts[q] = candidate_counts; current[q] = option
+        domain_used[domain] += cost; used += cost
+    violation = np.asarray([option.violation_probability for option in current])
+    excess = np.maximum(violation - limits, 0.0)
+    return ReplicationChanceResult(
+        copy_counts=tuple(tuple(int(x) for x in value) for value in counts),
+        violation_probability_per_target=violation,
+        violation_excess_per_target=excess,
+        weighted_violation_excess=float(weights @ excess),
+        risk_objective=float(sum(option.risk_objective for option in current)),
+        used_bits=used, feasible=bool(np.all(excess <= 1e-12)),
+    )
+
+
+def _experimental_beam_dual_layer_repair(
+    models: Sequence[TargetEvidenceModel], budget_bits: int,
+    minimum_pd: Sequence[float], target_weights: Sequence[float],
+    violation_limits: Sequence[float], path_groups: Sequence[Sequence[int]],
+    native_resources: Sequence[Sequence[int]], strength: float,
+    path_failure_fraction: float, domain_capacities: Sequence[int], *,
+    beam_width: int = 64, resource_access: Sequence[np.ndarray] | None = None,
+    false_alarm_rate: float = 0.05, beta: float = 0.9,
+    tail_weight: float = 1.0,
+) -> ReplicationChanceResult:
+    """Fixed-width add-or-replicate beam search for thresholded detection risk."""
+    if beam_width < 1:
+        raise ValueError("beam_width must be positive")
+    weights = np.asarray(target_weights, dtype=float)
+    limits = np.asarray(violation_limits, dtype=float)
+    capacities = np.asarray(domain_capacities, dtype=int)
+    access = (
+        [np.ones((model.num_uavs, capacities.size), dtype=bool) for model in models]
+        if resource_access is None else [np.asarray(mask, dtype=bool) for mask in resource_access]
+    )
+
+    evaluation_cache: dict[tuple[int, tuple[int, ...]], ReplicationOption] = {}
+
+    def evaluate(q, counts):
+        key = (q, tuple(int(x) for x in counts))
+        if key not in evaluation_cache:
+            evaluation_cache[key] = _experimental_evaluate_dual_layer_configuration(
+                models[q], key[1], minimum_pd[q], path_groups[q], native_resources[q],
+                strength, path_failure_fraction, replication_mode="cross_domain",
+                false_alarm_rate=false_alarm_rate, beta=beta,
+                target_weight=weights[q], tail_weight=tail_weight,
+            )
+        return evaluation_cache[key]
+
+    def objective(options):
+        relative = sorted((
+            max(option.violation_probability - limits[q], 0.0)
+            / max(limits[q], 1e-12)
+            for q, option in enumerate(options)
+        ), reverse=True)
+        return (
+            *relative,
+            sum(weights[q] * max(option.violation_probability - limits[q], 0.0)
+                for q, option in enumerate(options)),
+            sum(option.risk_objective for option in options),
+        )
+
+    initial_counts = tuple(
+        tuple(0 for _ in range(model.num_uavs)) for model in models
+    )
+    initial_options = tuple(
+        evaluate(q, initial_counts[q]) for q in range(len(models))
+    )
+    # (objective, used bits, domain usage, counts, evaluated target options)
+    beam = [(objective(initial_options), 0, tuple(0 for _ in capacities),
+             initial_counts, initial_options)]
+    best = beam[0]
+    max_actions = budget_bits // min(
+        int(model.report_bits[i]) for model in models
+        for i in range(model.num_uavs) if i != model.owner
+    )
+    for _ in range(max_actions):
+        candidates = {}
+        for _, used, domain_used, counts, options in beam:
+            for q, model in enumerate(models):
+                native = np.asarray(native_resources[q], dtype=int)
+                for i in range(model.num_uavs):
+                    if i == model.owner or counts[q][i] >= 2:
+                        continue
+                    domain = native[i] if counts[q][i] == 0 else (native[i] + 1) % capacities.size
+                    cost = int(model.report_bits[i])
+                    if (not access[q][i, domain] or used + cost > budget_bits
+                            or domain_used[domain] + cost > capacities[domain]):
+                        continue
+                    next_target = list(counts[q]); next_target[i] += 1
+                    next_counts = list(counts); next_counts[q] = tuple(next_target)
+                    next_counts = tuple(next_counts)
+                    next_options = list(options); next_options[q] = evaluate(q, next_counts[q])
+                    next_options = tuple(next_options)
+                    next_domains = list(domain_used); next_domains[domain] += cost
+                    state = (
+                        objective(next_options), used + cost, tuple(next_domains),
+                        next_counts, next_options,
+                    )
+                    signature = (tuple(next_domains), next_counts)
+                    incumbent = candidates.get(signature)
+                    if incumbent is None or state[0] < incumbent[0]:
+                        candidates[signature] = state
+        if not candidates:
+            break
+        beam = sorted(candidates.values(), key=lambda state: (state[0], state[1]))[:beam_width]
+        candidate_best = min(beam, key=lambda state: (state[0], state[1]))
+        if candidate_best[0] < best[0]:
+            best = candidate_best
+    _, used, _, counts, options = best
+    violation = np.asarray([option.violation_probability for option in options])
+    excess = np.maximum(violation - limits, 0.0)
+    return ReplicationChanceResult(
+        copy_counts=counts, violation_probability_per_target=violation,
+        violation_excess_per_target=excess,
+        weighted_violation_excess=float(weights @ excess),
+        risk_objective=float(sum(option.risk_objective for option in options)),
+        used_bits=used, feasible=bool(np.all(excess <= 1e-12)),
+    )
+
+
 def replicated_reception_model(
     model: TargetEvidenceModel,
     copy_counts: Sequence[int],

@@ -1,0 +1,74 @@
+{
+  "scope": "controlled M=4, N=2 known-path-count single-frame identity-angle-continuous-DD joint-LS mechanism gate with equal two-feature pilot energy; not the general unknown-target receiver",
+  "trials_per_case": 300,
+  "cases": [
+    "same_dd_near_angle",
+    "fractional_leakage",
+    "strong_near_far"
+  ],
+  "results": {
+    "shared": {
+      "mode": "shared",
+      "maximum_pilot_coherence": 0.9999999999999998,
+      "position_set_recovery": 0.5377777777777778,
+      "identity_exact_recovery": null,
+      "by_case": {
+        "same_dd_near_angle": {
+          "position_set_recovery": 0.59
+        },
+        "fractional_leakage": {
+          "position_set_recovery": 0.47333333333333333
+        },
+        "strong_near_far": {
+          "position_set_recovery": 0.55
+        }
+      }
+    },
+    "fixed_nonorthogonal": {
+      "mode": "fixed_nonorthogonal",
+      "maximum_pilot_coherence": 0.7071067811865475,
+      "position_set_recovery": 0.6588888888888889,
+      "identity_exact_recovery": 0.6233333333333333,
+      "by_case": {
+        "same_dd_near_angle": {
+          "position_set_recovery": 0.7
+        },
+        "fractional_leakage": {
+          "position_set_recovery": 0.6866666666666666
+        },
+        "strong_near_far": {
+          "position_set_recovery": 0.59
+        }
+      }
+    },
+    "ideal_orthogonal": {
+      "mode": "ideal_orthogonal",
+      "maximum_pilot_coherence": 0.0,
+      "position_set_recovery": 0.6888888888888889,
+      "identity_exact_recovery": 0.6711111111111111,
+      "by_case": {
+        "same_dd_near_angle": {
+          "position_set_recovery": 0.81
+        },
+        "fractional_leakage": {
+          "position_set_recovery": 0.8333333333333334
+        },
+        "strong_near_far": {
+          "position_set_recovery": 0.42333333333333334
+        }
+      }
+    }
+  },
+  "gate": {
+    "fixed_position_gain_over_shared_pp": 12.111111111111105,
+    "paired_fixed_minus_shared": {
+      "mean": 0.12111111111111111,
+      "95ci": [
+        0.07943605802027173,
+        0.1627861642019505
+      ]
+    },
+    "passes_10pp_position_gain": true
+  },
+  "warning": "Shared pilots do not identify transmitter labels, so their identity exact-recovery entry is intentionally null; position-set recovery provides the fair physical-separation comparison. A merge metric is omitted because known-Q joint LS always returns two atoms and the true sources may legitimately lie within one tolerance cell. Fixed identity signatures separate overlapping returns from different transmitters; they cannot resolve the fundamental same-transmitter, same-angle, same-DD ambiguity."
+}

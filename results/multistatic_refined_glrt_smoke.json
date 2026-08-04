@@ -1,0 +1,128 @@
+{
+  "scope": "paired coarse versus three-iteration physical GLRT; each statistic uses its own finite-sample ordered global-null thresholds",
+  "seeds": {
+    "null": 20261031,
+    "evaluation": 20261032
+  },
+  "sample_sizes": {
+    "null_frames_per_method": 200,
+    "trials_per_scenario": 20
+  },
+  "joint_refinement_iterations": {
+    "coarse": 0,
+    "refined": 3
+  },
+  "ordered_thresholds": {
+    "coarse": [
+      181.79564666345377,
+      45.50568708961346,
+      34.829443567255794,
+      Infinity
+    ],
+    "refined": [
+      181.79564666345377,
+      55.367347178020694,
+      46.85336280155819,
+      Infinity
+    ]
+  },
+  "strong_fwer_claimed": false,
+  "results": {
+    "separated": {
+      "coarse": {
+        "trials": 20,
+        "position_set_exact_15m": 1.0,
+        "position_velocity_state_exact": 1.0,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.0,
+        "mean_gospa_15m_p2": 3.0250229445420866,
+        "mean_path_f1": 0.9419601592006984,
+        "mean_velocity_error_mps": 0.06663386938099115,
+        "mean_time_ms": 28.98001007270068
+      },
+      "refined": {
+        "trials": 20,
+        "position_set_exact_15m": 1.0,
+        "position_velocity_state_exact": 1.0,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.0,
+        "mean_gospa_15m_p2": 3.0250229445420866,
+        "mean_path_f1": 0.9419601592006984,
+        "mean_velocity_error_mps": 0.06663386938099115,
+        "mean_time_ms": 39.012205111794174
+      }
+    },
+    "single_pair_collision": {
+      "coarse": {
+        "trials": 20,
+        "position_set_exact_15m": 0.6,
+        "position_velocity_state_exact": 0.6,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.4,
+        "mean_gospa_15m_p2": 6.389658068530607,
+        "mean_path_f1": 0.8861481912432365,
+        "mean_velocity_error_mps": 0.19558454568969097,
+        "mean_time_ms": 32.02547000255436
+      },
+      "refined": {
+        "trials": 20,
+        "position_set_exact_15m": 0.55,
+        "position_velocity_state_exact": 0.55,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.45,
+        "mean_gospa_15m_p2": 6.811301751558554,
+        "mean_path_f1": 0.8776191744445896,
+        "mean_velocity_error_mps": 0.2447761148487091,
+        "mean_time_ms": 45.52884502336383
+      }
+    },
+    "two_pair_collision": {
+      "coarse": {
+        "trials": 20,
+        "position_set_exact_15m": 0.55,
+        "position_velocity_state_exact": 0.55,
+        "over_count_rate": 0.05,
+        "under_count_rate": 0.4,
+        "mean_gospa_15m_p2": 6.8182427793839535,
+        "mean_path_f1": 0.8788333419363783,
+        "mean_velocity_error_mps": 0.2546777637708618,
+        "mean_time_ms": 39.07723992597312
+      },
+      "refined": {
+        "trials": 20,
+        "position_set_exact_15m": 0.65,
+        "position_velocity_state_exact": 0.65,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.35,
+        "mean_gospa_15m_p2": 6.326307184864534,
+        "mean_path_f1": 0.875973243564655,
+        "mean_velocity_error_mps": 0.33175831651782395,
+        "mean_time_ms": 54.76915496401489
+      }
+    },
+    "three_pair_collision": {
+      "coarse": {
+        "trials": 20,
+        "position_set_exact_15m": 0.5,
+        "position_velocity_state_exact": 0.5,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.5,
+        "mean_gospa_15m_p2": 7.331154674321716,
+        "mean_path_f1": 0.8724889789244539,
+        "mean_velocity_error_mps": 0.32924295440922785,
+        "mean_time_ms": 40.701534994877875
+      },
+      "refined": {
+        "trials": 20,
+        "position_set_exact_15m": 0.6,
+        "position_velocity_state_exact": 0.6,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.4,
+        "mean_gospa_15m_p2": 7.339444547761447,
+        "mean_path_f1": 0.8322707627061439,
+        "mean_velocity_error_mps": 0.4654538113583624,
+        "mean_time_ms": 58.54134501423687
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "scope": "known-state T=3 normal-frame multi-source joint-LS gate; fixed pilot codebook, energy, receiver, and short-window geometry",
+  "frames": 3,
+  "pilot_states": 3,
+  "fixed_signature": {
+    "lambda_min": 0.6112578090166294,
+    "lambda_max": 1.3887421909833715,
+    "condition_number": 2.2719418394302924,
+    "max_effective_coherence": 0.388742190983371,
+    "conditional_exact_resolution_probability": 0.9223333333333333,
+    "mean_switch_rate": 0.0,
+    "paths": [
+      [
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "simple_cycle": {
+    "lambda_min": 0.6112578090166287,
+    "lambda_max": 1.3887421909833708,
+    "condition_number": 2.271941839430294,
+    "max_effective_coherence": 0.38874219098337104,
+    "conditional_exact_resolution_probability": 0.9196666666666666,
+    "mean_switch_rate": 1.0,
+    "paths": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        0
+      ]
+    ]
+  },
+  "iid_switching": {
+    "mean_resolution_probability": 0.8900541666666666,
+    "mean_lambda_min": 0.6061447080347669,
+    "mean_switch_rate": 0.690625,
+    "realizations": 80
+  },
+  "best_sticky_markov": {
+    "stay_probabilities": [
+      0.75,
+      0.25
+    ],
+    "objective": 0.6519396027605766,
+    "mean_resolution_probability": 0.9288833333333333,
+    "mean_lambda_min": 0.6758458527605766,
+    "mean_switch_rate": 0.478125,
+    "realizations": 80
+  },
+  "independent_markov_validation": {
+    "mean_resolution_probability": 0.9198875,
+    "mean_lambda_min": 0.6590396357025913,
+    "mean_switch_rate": 0.48875,
+    "realizations": 400
+  },
+  "optimized_known_schedule": {
+    "objective": 0.75115027876044,
+    "lambda_min": 0.7761502787604401,
+    "lambda_max": 1.2238497212395612,
+    "condition_number": 1.5768205652056515,
+    "max_effective_coherence": 0.2238497212395604,
+    "conditional_exact_resolution_probability": 0.9526666666666667,
+    "mean_switch_rate": 0.5,
+    "paths": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        1
+      ]
+    ]
+  },
+  "gate": {
+    "optimized_gain_over_strongest_simple_pp": 3.300000000000003,
+    "passes_5pp_gain": false,
+    "best_markov_is_deterministic_boundary": false,
+    "validated_markov_gain_over_cycle_pp": 0.022083333333333677
+  },
+  "interpretation": "Deterministic schedules are permutation-transition Markov chains. If optimization lands on that boundary or fails to beat the simple cycle by 5 pp, Markov randomization is not retained as an innovation."
+}

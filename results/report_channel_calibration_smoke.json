@@ -1,0 +1,492 @@
+{
+  "gate": "G1-B",
+  "trials": 20000,
+  "summary": {
+    "mean_error_max": 0.051555898659255354,
+    "covariance_error_max": 0.07830751868436414,
+    "all_mean_pass": false,
+    "all_covariance_pass": true
+  },
+  "rows": [
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.0,
+      "mean_relative_error": 0.03990430975444347,
+      "covariance_relative_error": 0.025918824502836803,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.5,
+      "mean_relative_error": 0.01376292439108402,
+      "covariance_relative_error": 0.021445757963531993,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.9,
+      "mean_relative_error": 0.012419764564389391,
+      "covariance_relative_error": 0.011356842899134583,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.0,
+      "mean_relative_error": 0.051555898659255354,
+      "covariance_relative_error": 0.016435274864761512,
+      "mean_pass": false,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.5,
+      "mean_relative_error": 0.016550991508551976,
+      "covariance_relative_error": 0.025890999539556963,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.9,
+      "mean_relative_error": 0.04166032789556767,
+      "covariance_relative_error": 0.03141993565710185,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.0,
+      "mean_relative_error": 0.03657560856861962,
+      "covariance_relative_error": 0.014600273360523625,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.5,
+      "mean_relative_error": 0.041397194957618164,
+      "covariance_relative_error": 0.05359478537100125,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.9,
+      "mean_relative_error": 0.024490784436987476,
+      "covariance_relative_error": 0.007373096164200309,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.0,
+      "mean_relative_error": 0.033731127709501305,
+      "covariance_relative_error": 0.024348562118793292,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.5,
+      "mean_relative_error": 0.04888468493206816,
+      "covariance_relative_error": 0.06583774905300285,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 1,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.9,
+      "mean_relative_error": 0.03717511798735741,
+      "covariance_relative_error": 0.053489042511213926,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.0,
+      "mean_relative_error": 0.00924649483841984,
+      "covariance_relative_error": 0.01403406782813068,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.5,
+      "mean_relative_error": 0.010452669847117778,
+      "covariance_relative_error": 0.017777689895158832,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.9,
+      "mean_relative_error": 0.006559109649778037,
+      "covariance_relative_error": 0.01403406782813068,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.0,
+      "mean_relative_error": 0.0065191910183929344,
+      "covariance_relative_error": 0.017024013886744013,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.5,
+      "mean_relative_error": 0.018473295238020545,
+      "covariance_relative_error": 0.01807955384984175,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.9,
+      "mean_relative_error": 0.020407274492748338,
+      "covariance_relative_error": 0.030269279992277996,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.0,
+      "mean_relative_error": 0.0157867602865173,
+      "covariance_relative_error": 0.03141009960716933,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.5,
+      "mean_relative_error": 0.0157867602865173,
+      "covariance_relative_error": 0.040740819833293376,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.9,
+      "mean_relative_error": 0.0157867602865173,
+      "covariance_relative_error": 0.03141009960716933,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.0,
+      "mean_relative_error": 0.02089626967621243,
+      "covariance_relative_error": 0.03336649226099342,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.5,
+      "mean_relative_error": 0.02089626967621243,
+      "covariance_relative_error": 0.03336649226099342,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 2,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.9,
+      "mean_relative_error": 0.02089626967621243,
+      "covariance_relative_error": 0.051070636449005696,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.0,
+      "mean_relative_error": 0.0351485102061888,
+      "covariance_relative_error": 0.07488641606728624,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.5,
+      "mean_relative_error": 0.02679096954229644,
+      "covariance_relative_error": 0.01694240094347669,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.9,
+      "mean_relative_error": 0.021652492522803376,
+      "covariance_relative_error": 0.02467412539805441,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.0,
+      "mean_relative_error": 0.03333979274823342,
+      "covariance_relative_error": 0.018367900653292874,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.5,
+      "mean_relative_error": 0.03415479729159598,
+      "covariance_relative_error": 0.0624993344396294,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.9,
+      "mean_relative_error": 0.02094157067004207,
+      "covariance_relative_error": 0.03301682706096305,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.0,
+      "mean_relative_error": 0.011163175006602483,
+      "covariance_relative_error": 0.024863505392371425,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.5,
+      "mean_relative_error": 0.012585601276902501,
+      "covariance_relative_error": 0.027501135460065496,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.9,
+      "mean_relative_error": 0.004617591677479136,
+      "covariance_relative_error": 0.021517952166188698,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.0,
+      "mean_relative_error": 0.014132615548074361,
+      "covariance_relative_error": 0.026238181683849487,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.5,
+      "mean_relative_error": 0.023554778125476166,
+      "covariance_relative_error": 0.031197910690042782,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 3,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.9,
+      "mean_relative_error": 0.01171672597520342,
+      "covariance_relative_error": 0.053121405432430775,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.0,
+      "mean_relative_error": 0.0030608895375941717,
+      "covariance_relative_error": 0.02576781634595072,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.5,
+      "mean_relative_error": 0.0030499720223339144,
+      "covariance_relative_error": 0.021824867081901733,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.9,
+      "correlation": 0.9,
+      "mean_relative_error": 0.004851361095083302,
+      "covariance_relative_error": 0.021824867081901733,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.0,
+      "mean_relative_error": 0.008892350756346257,
+      "covariance_relative_error": 0.025214585521259526,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.5,
+      "mean_relative_error": 0.011640139032388063,
+      "covariance_relative_error": 0.018745084614727077,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.01,
+      "success_probability": 0.7,
+      "correlation": 0.9,
+      "mean_relative_error": 0.015196165570976203,
+      "covariance_relative_error": 0.03165878050488927,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.0,
+      "mean_relative_error": 0.014422201520576656,
+      "covariance_relative_error": 0.02917380412944058,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.5,
+      "mean_relative_error": 0.013967703159991093,
+      "covariance_relative_error": 0.04718700641454235,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.9,
+      "correlation": 0.9,
+      "mean_relative_error": 0.013967703159991093,
+      "covariance_relative_error": 0.05022449927472223,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.0,
+      "mean_relative_error": 0.022637265416807814,
+      "covariance_relative_error": 0.010745999986366292,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.5,
+      "mean_relative_error": 0.016005378825092197,
+      "covariance_relative_error": 0.018730071171263504,
+      "mean_pass": true,
+      "covariance_pass": true
+    },
+    {
+      "bits": 4,
+      "bit_flip_probability": 0.08,
+      "success_probability": 0.7,
+      "correlation": 0.9,
+      "mean_relative_error": 0.016005378825092197,
+      "covariance_relative_error": 0.07830751868436414,
+      "mean_pass": true,
+      "covariance_pass": true
+    }
+  ]
+}

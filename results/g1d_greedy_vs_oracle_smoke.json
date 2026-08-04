@@ -1,0 +1,273 @@
+{
+  "gate": "G1-D",
+  "summary": {
+    "first_order_oracle_match_rate": 0.5,
+    "exact_greedy_oracle_match_rate": 0.5,
+    "saa_greedy_oracle_match_rate": 0.5,
+    "mean_first_order_deflection_gap": 0.16115900735294122,
+    "mean_exact_greedy_deflection_gap": 0.16115900735294122,
+    "mean_first_order_vs_exact_spearman": 0.8999999999999999
+  },
+  "rows": [
+    {
+      "success_probability": 0.95,
+      "correlation": 0.0,
+      "heterogeneous_costs": false,
+      "oracle": [
+        2,
+        3,
+        4
+      ],
+      "first_order_set": [
+        2,
+        3,
+        4
+      ],
+      "exact_greedy_set": [
+        2,
+        3,
+        4
+      ],
+      "saa_greedy_set": [
+        2,
+        3,
+        4
+      ],
+      "oracle_deflection": 4.3149999999999995,
+      "first_order_deflection": 4.3149999999999995,
+      "exact_greedy_deflection": 4.3149999999999995,
+      "saa_greedy_deflection": 4.3158349609375,
+      "first_order_matches_oracle": true,
+      "exact_greedy_matches_oracle": true,
+      "saa_greedy_matches_oracle": true,
+      "first_order_vs_exact_spearman": 1.0
+    },
+    {
+      "success_probability": 0.95,
+      "correlation": 0.0,
+      "heterogeneous_costs": true,
+      "oracle": [
+        3,
+        4
+      ],
+      "first_order_set": [
+        1,
+        2,
+        4
+      ],
+      "exact_greedy_set": [
+        1,
+        2,
+        4
+      ],
+      "saa_greedy_set": [
+        1,
+        2,
+        4
+      ],
+      "oracle_deflection": 3.5455,
+      "first_order_deflection": 3.289,
+      "exact_greedy_deflection": 3.289,
+      "saa_greedy_deflection": 3.3015771484375005,
+      "first_order_matches_oracle": false,
+      "exact_greedy_matches_oracle": false,
+      "saa_greedy_matches_oracle": false,
+      "first_order_vs_exact_spearman": 0.7999999999999999
+    },
+    {
+      "success_probability": 0.95,
+      "correlation": 0.7,
+      "heterogeneous_costs": false,
+      "oracle": [
+        2,
+        3,
+        4
+      ],
+      "first_order_set": [
+        2,
+        3,
+        4
+      ],
+      "exact_greedy_set": [
+        2,
+        3,
+        4
+      ],
+      "saa_greedy_set": [
+        2,
+        3,
+        4
+      ],
+      "oracle_deflection": 4.3149999999999995,
+      "first_order_deflection": 4.3149999999999995,
+      "exact_greedy_deflection": 4.3149999999999995,
+      "saa_greedy_deflection": 4.3158349609375,
+      "first_order_matches_oracle": true,
+      "exact_greedy_matches_oracle": true,
+      "saa_greedy_matches_oracle": true,
+      "first_order_vs_exact_spearman": 1.0
+    },
+    {
+      "success_probability": 0.95,
+      "correlation": 0.7,
+      "heterogeneous_costs": true,
+      "oracle": [
+        3,
+        4
+      ],
+      "first_order_set": [
+        1,
+        2,
+        4
+      ],
+      "exact_greedy_set": [
+        1,
+        2,
+        4
+      ],
+      "saa_greedy_set": [
+        1,
+        2,
+        4
+      ],
+      "oracle_deflection": 3.5455,
+      "first_order_deflection": 2.9656926470588236,
+      "exact_greedy_deflection": 2.9656926470588236,
+      "saa_greedy_deflection": 2.9786756089154416,
+      "first_order_matches_oracle": false,
+      "exact_greedy_matches_oracle": false,
+      "saa_greedy_matches_oracle": false,
+      "first_order_vs_exact_spearman": 0.7999999999999999
+    },
+    {
+      "success_probability": 0.6,
+      "correlation": 0.0,
+      "heterogeneous_costs": false,
+      "oracle": [
+        2,
+        3,
+        4
+      ],
+      "first_order_set": [
+        2,
+        3,
+        4
+      ],
+      "exact_greedy_set": [
+        2,
+        3,
+        4
+      ],
+      "saa_greedy_set": [
+        2,
+        3,
+        4
+      ],
+      "oracle_deflection": 2.74,
+      "first_order_deflection": 2.74,
+      "exact_greedy_deflection": 2.74,
+      "saa_greedy_deflection": 2.748701171875,
+      "first_order_matches_oracle": true,
+      "exact_greedy_matches_oracle": true,
+      "saa_greedy_matches_oracle": true,
+      "first_order_vs_exact_spearman": 1.0
+    },
+    {
+      "success_probability": 0.6,
+      "correlation": 0.0,
+      "heterogeneous_costs": true,
+      "oracle": [
+        3,
+        4
+      ],
+      "first_order_set": [
+        1,
+        2,
+        4
+      ],
+      "exact_greedy_set": [
+        1,
+        2,
+        4
+      ],
+      "saa_greedy_set": [
+        1,
+        2,
+        4
+      ],
+      "oracle_deflection": 2.254,
+      "first_order_deflection": 2.0919999999999996,
+      "exact_greedy_deflection": 2.0919999999999996,
+      "saa_greedy_deflection": 2.092509765625,
+      "first_order_matches_oracle": false,
+      "exact_greedy_matches_oracle": false,
+      "saa_greedy_matches_oracle": false,
+      "first_order_vs_exact_spearman": 0.7999999999999999
+    },
+    {
+      "success_probability": 0.6,
+      "correlation": 0.7,
+      "heterogeneous_costs": false,
+      "oracle": [
+        2,
+        3,
+        4
+      ],
+      "first_order_set": [
+        2,
+        3,
+        4
+      ],
+      "exact_greedy_set": [
+        2,
+        3,
+        4
+      ],
+      "saa_greedy_set": [
+        2,
+        3,
+        4
+      ],
+      "oracle_deflection": 2.74,
+      "first_order_deflection": 2.74,
+      "exact_greedy_deflection": 2.74,
+      "saa_greedy_deflection": 2.748701171875,
+      "first_order_matches_oracle": true,
+      "exact_greedy_matches_oracle": true,
+      "saa_greedy_matches_oracle": true,
+      "first_order_vs_exact_spearman": 1.0
+    },
+    {
+      "success_probability": 0.6,
+      "correlation": 0.7,
+      "heterogeneous_costs": true,
+      "oracle": [
+        3,
+        4
+      ],
+      "first_order_set": [
+        1,
+        2,
+        4
+      ],
+      "exact_greedy_set": [
+        1,
+        2,
+        4
+      ],
+      "saa_greedy_set": [
+        1,
+        2,
+        4
+      ],
+      "oracle_deflection": 2.254,
+      "first_order_deflection": 1.963035294117647,
+      "exact_greedy_deflection": 1.963035294117647,
+      "saa_greedy_deflection": 1.959920726102941,
+      "first_order_matches_oracle": false,
+      "exact_greedy_matches_oracle": false,
+      "saa_greedy_matches_oracle": false,
+      "first_order_vs_exact_spearman": 0.7999999999999999
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "scope": "candidate-level mixed-null audit with exactly one true collision pair and four separated targets; paired candidate scenes",
+  "ordered_thresholds": [
+    131.0861801613106,
+    44.310108377660086,
+    28.568327319836385,
+    18.546340585674386
+  ],
+  "strong_fwer_claimed": false,
+  "records": [
+    {
+      "seed": 20261011,
+      "trials": 100,
+      "single_threshold": {
+        "position_recovery": 0.71,
+        "state_recovery": 0.71,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.29,
+        "mean_estimated_targets": 5.71,
+        "mean_gospa_15m_p2": 5.337317786636874,
+        "mean_path_f1": 0.9037225012310983
+      },
+      "weak_fwer_stepdown": {
+        "position_recovery": 0.67,
+        "state_recovery": 0.67,
+        "over_count_rate": 0.04,
+        "under_count_rate": 0.29,
+        "mean_estimated_targets": 5.75,
+        "mean_gospa_15m_p2": 5.614621950625354,
+        "mean_path_f1": 0.9020255348173981
+      }
+    },
+    {
+      "seed": 20261012,
+      "trials": 100,
+      "single_threshold": {
+        "position_recovery": 0.75,
+        "state_recovery": 0.75,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.25,
+        "mean_estimated_targets": 5.75,
+        "mean_gospa_15m_p2": 5.1280057891063136,
+        "mean_path_f1": 0.9014014237329164
+      },
+      "weak_fwer_stepdown": {
+        "position_recovery": 0.74,
+        "state_recovery": 0.74,
+        "over_count_rate": 0.01,
+        "under_count_rate": 0.25,
+        "mean_estimated_targets": 5.76,
+        "mean_gospa_15m_p2": 5.198938522722272,
+        "mean_path_f1": 0.9007301763756226
+      }
+    },
+    {
+      "seed": 20261013,
+      "trials": 100,
+      "single_threshold": {
+        "position_recovery": 0.74,
+        "state_recovery": 0.74,
+        "over_count_rate": 0.0,
+        "under_count_rate": 0.26,
+        "mean_estimated_targets": 5.74,
+        "mean_gospa_15m_p2": 5.1143303009477386,
+        "mean_path_f1": 0.9035123547076754
+      },
+      "weak_fwer_stepdown": {
+        "position_recovery": 0.69,
+        "state_recovery": 0.69,
+        "over_count_rate": 0.05,
+        "under_count_rate": 0.26,
+        "mean_estimated_targets": 5.79,
+        "mean_gospa_15m_p2": 5.494473417374361,
+        "mean_path_f1": 0.9015900007576191
+      }
+    }
+  ]
+}

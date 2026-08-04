@@ -1,0 +1,121 @@
+{
+  "scope": "paired unknown-N path-to-target association comparison on the same synthetic imperfect candidates; not an OTFS front-end comparison",
+  "M": 12,
+  "N": 6,
+  "trials": 30,
+  "scenario": "separated",
+  "clutter_model": "correlated_sidelobes",
+  "view_false_target_probability": 0.02,
+  "summaries": [
+    {
+      "method": "position_dbscan",
+      "target_count_accuracy": 0.8333333333333334,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.8333333333333334,
+      "identity_association_accuracy": 0.9967982924226254,
+      "position_rmse_m": 1.1011694011173807,
+      "mean_velocity_error_mps": 0.06023426037134115,
+      "mean_time_ms": 3.7617066719879704,
+      "p95_time_ms": 5.155365029349921,
+      "over_count_rate": 0.16666666666666666,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "angle_position_dbscan",
+      "target_count_accuracy": 0.8,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.8,
+      "identity_association_accuracy": 0.996262680192205,
+      "position_rmse_m": 1.0799598611408878,
+      "mean_velocity_error_mps": 0.06014855763050632,
+      "mean_time_ms": 3.3827633441736302,
+      "p95_time_ms": 5.006504827179013,
+      "over_count_rate": 0.2,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "identity_dbscan",
+      "target_count_accuracy": 0.8666666666666667,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.8666666666666667,
+      "identity_association_accuracy": 0.9978609625668449,
+      "position_rmse_m": 1.0470720287477369,
+      "mean_velocity_error_mps": 0.03229127901411147,
+      "mean_time_ms": 2.75093000382185,
+      "p95_time_ms": 3.440330224111676,
+      "over_count_rate": 0.13333333333333333,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "conflict_aware_dbscan",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.7264957264957265,
+      "position_rmse_m": 1.1156355520001493,
+      "mean_velocity_error_mps": 0.07150503926438358,
+      "mean_time_ms": 8.348556670049826,
+      "p95_time_ms": 10.73032987769693,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "bic_conflict",
+      "target_count_accuracy": 0.8666666666666667,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.8666666666666667,
+      "identity_association_accuracy": 0.9978632478632479,
+      "position_rmse_m": 1.059119637456252,
+      "mean_velocity_error_mps": 0.03229768796657151,
+      "mean_time_ms": 5.103946663439274,
+      "p95_time_ms": 7.757380022667348,
+      "over_count_rate": 0.13333333333333333,
+      "under_count_rate": 0.0
+    },
+    {
+      "method": "geometry_doppler",
+      "target_count_accuracy": 0.0,
+      "target_recall": 1.0,
+      "scene_exact_recovery": 0.0,
+      "identity_association_accuracy": 0.8660235798499464,
+      "position_rmse_m": 0.7910568444172142,
+      "mean_velocity_error_mps": 0.16581780680854205,
+      "mean_time_ms": 21.06189330418905,
+      "p95_time_ms": 27.581840171478685,
+      "over_count_rate": 1.0,
+      "under_count_rate": 0.0
+    }
+  ],
+  "paired_proposed_bic_minus_baseline": {
+    "position_dbscan": {
+      "mean_scene_exact_gain_pp": 3.3333333333333335,
+      "proposed_wins": 1,
+      "baseline_wins": 0,
+      "ties": 29
+    },
+    "angle_position_dbscan": {
+      "mean_scene_exact_gain_pp": 6.666666666666667,
+      "proposed_wins": 2,
+      "baseline_wins": 0,
+      "ties": 28
+    },
+    "identity_dbscan": {
+      "mean_scene_exact_gain_pp": 0.0,
+      "proposed_wins": 0,
+      "baseline_wins": 0,
+      "ties": 30
+    },
+    "conflict_aware_dbscan": {
+      "mean_scene_exact_gain_pp": 86.66666666666667,
+      "proposed_wins": 26,
+      "baseline_wins": 0,
+      "ties": 4
+    },
+    "geometry_doppler": {
+      "mean_scene_exact_gain_pp": 86.66666666666667,
+      "proposed_wins": 26,
+      "baseline_wins": 0,
+      "ties": 4
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "minimum_pd": [
+    0.8,
+    0.75,
+    0.7
+  ],
+  "epsilon": 0.1,
+  "monotonicity": {
+    "tested_addition_edges": 2688,
+    "decreasing_edges": 0,
+    "decreasing_edge_rate": 0.0,
+    "maximum_pd_drop": 0.0,
+    "drop_counts_by_threshold": {
+      "1e-08": 0,
+      "1e-06": 0,
+      "1e-05": 0,
+      "0.0001": 0
+    },
+    "maximum_sigma0_condition_on_decreasing_edges": 0.0,
+    "maximum_sigma1_condition_on_decreasing_edges": 0.0,
+    "minimum_sigma0_eigenvalue_on_decreasing_edges": 0.0
+  },
+  "summary": [
+    {
+      "budget_bits": 20,
+      "exact_schedule_match_rate": 0.0,
+      "mean_global_pair_jaccard": 0.6,
+      "mean_target_jaccard": 0.5833333333333334,
+      "mean_target_different_reports": 0.6666666666666666,
+      "pd_chance_feasible_rate": 0.5,
+      "mean_worst_pd_violation_deflection_proxy": 1.0,
+      "mean_worst_pd_violation_pd_objective": 0.132334234716938
+    }
+  ],
+  "instances": [
+    {
+      "seed": 20260802,
+      "budget_bits": 20,
+      "exact_schedule_match": false,
+      "global_pair_jaccard": 0.6,
+      "mean_target_jaccard": 0.5833333333333334,
+      "mean_target_different_reports": 0.6666666666666666,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.11763312166324538
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.11227205618308655,
+        0.16607900036310233
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.16607900036310233,
+      "pd_chance_feasible": false
+    },
+    {
+      "seed": 20260803,
+      "budget_bits": 20,
+      "exact_schedule_match": false,
+      "global_pair_jaccard": 0.6,
+      "mean_target_jaccard": 0.5833333333333334,
+      "mean_target_different_reports": 0.6666666666666666,
+      "deflection_schedule_pd_violation": [
+        0.0,
+        1.0,
+        0.0682154528695441
+      ],
+      "pd_schedule_pd_violation": [
+        0.0,
+        0.0985894690707737,
+        0.08649183674823821
+      ],
+      "deflection_schedule_worst_pd_violation": 1.0,
+      "pd_schedule_worst_pd_violation": 0.0985894690707737,
+      "pd_chance_feasible": true
+    }
+  ]
+}

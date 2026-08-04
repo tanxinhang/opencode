@@ -1,0 +1,59 @@
+{
+  "scope": "paired candidate-level audit; low step-down thresholds activate only after at least two components exceed the shared first threshold",
+  "seed": 20261023,
+  "trials_per_scenario": 100,
+  "activation_count": 2,
+  "thresholds": [
+    74.27931151736979,
+    43.29253779673368,
+    33.05964957922211,
+    32.33719563230392
+  ],
+  "strong_fwer_claimed": false,
+  "results": {
+    "separated": {
+      "trials": 100,
+      "position_set_exact_15m": 1.0,
+      "position_velocity_state_exact": 1.0,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.0,
+      "mean_gospa_15m_p2": 3.347092750885268,
+      "mean_path_f1": 0.9404307089277836,
+      "mean_velocity_error_mps": 0.0676190845305676,
+      "mean_time_ms": 27.939060018397868
+    },
+    "single_pair_collision": {
+      "trials": 100,
+      "position_set_exact_15m": 0.92,
+      "position_velocity_state_exact": 0.92,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.08,
+      "mean_gospa_15m_p2": 3.680182742044964,
+      "mean_path_f1": 0.9350479002993586,
+      "mean_velocity_error_mps": 0.08693489601169664,
+      "mean_time_ms": 37.7899040048942
+    },
+    "two_pair_collision": {
+      "trials": 100,
+      "position_set_exact_15m": 0.75,
+      "position_velocity_state_exact": 0.75,
+      "over_count_rate": 0.08,
+      "under_count_rate": 0.17,
+      "mean_gospa_15m_p2": 4.90800541082531,
+      "mean_path_f1": 0.9244073501811358,
+      "mean_velocity_error_mps": 0.13559337027591478,
+      "mean_time_ms": 41.803204007446766
+    },
+    "three_pair_collision": {
+      "trials": 100,
+      "position_set_exact_15m": 0.8,
+      "position_velocity_state_exact": 0.79,
+      "over_count_rate": 0.0,
+      "under_count_rate": 0.2,
+      "mean_gospa_15m_p2": 4.384585878526169,
+      "mean_path_f1": 0.9260688550511275,
+      "mean_velocity_error_mps": 0.15798557082166345,
+      "mean_time_ms": 47.351307990029454
+    }
+  }
+}
