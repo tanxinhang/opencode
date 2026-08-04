@@ -41,9 +41,10 @@ Audit date: 2026-08-04.
 ## Verified consistent
 
 - G0-C separated-scene recovery `96.7%` (README, paper outline, Word A.3).
-- G1-A saturation-robust Spearman `0.62` was a same-sample smoke; after
-  train/test geometry separation the held-out smoke is `0.47-0.49` (README,
-  paper outline, Word B.1) and the 10k formal run is pending.
+- G1-A saturation-robust Spearman `0.62` was a same-sample smoke; the 10k
+  formal run with train/test geometry separation gives `0.588` (CIs
+  `[0.23,0.83]` / `[0.21,0.84]`), below the `0.6` gate (README, paper
+  outline, Word B.1).
 - G1-B mean/covariance errors `4.08%` / `8.51%` (README, paper outline,
   Word B.2).
 - G1-D first-order vs exact Spearman `0.90` and Oracle match rate `50%`

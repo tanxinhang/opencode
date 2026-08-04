@@ -90,7 +90,7 @@ def add_chinese_appendix(doc) -> None:
     heading(doc, "B.1 G1-A 证据矩校准", 2)
     bullet(doc, "从 G0-C 前端按 H0/H1 导出每 UAV 证据 z_iq，估计 (mu_h, Sigma_h)，要求收缩后协方差正定；")
     bullet(doc, "验证预测单链路 deflection 与固定 P_FA 下实际 P_D 排序一致，建议 Spearman 相关不低于 0.6；")
-    bullet(doc, "逐步测试：协方差正定；训练/测试几何分离后的 200 帧 smoke 中，相对漏检缺口缩减 Spearman 0.47、logit 增益 0.49，均低于 0.6；此前同样本 0.62 为乐观估计，10,000 帧正式统计待运行。")
+    bullet(doc, "正式统计（5000 训练/5000 测试几何）：相对漏检缺口缩减与 logit 增益 Spearman 均为 0.588，bootstrap CI 约 [0.21,0.84]，点估计仍低于 0.6，G1-A 未通过正式门槛；同样本 0.62 为乐观估计。")
     heading(doc, "B.2 G1-B 量化与报告信道闭环", 2)
     bullet(doc, "对量化比特、BER/转移矩阵、可检测擦除和实际收到集合重新融合；")
     bullet(doc, "Monte Carlo 矩与精确公式的均值最大相对误差 4.08%、对角与主交叉协方差最大 8.51%，满足 5%/10% 目标；")

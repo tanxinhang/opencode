@@ -67,9 +67,9 @@ Communication-Corrupted Correlated Evidence
 ### G1-A evidence-moment calibration
 
 - Positive-definite covariance after shrinkage.
-- Held-out smoke (train/test geometry separated, 200 trials per hypothesis):
-  Spearman 0.47 with relative miss-deficit reduction and 0.49 with logit
-  gain; the earlier same-sample 0.62 was optimistic.  Formal 10k run pending.
+- Formal 10k run (5000 train / 5000 test geometry): Spearman 0.588 for
+  relative miss-deficit reduction and logit gain (CIs [0.23, 0.83] and
+  [0.21, 0.84]); below 0.6, so G1-A does not pass the formal gate yet.
 
 ### G1-B report-channel closure
 

@@ -267,11 +267,11 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   check whether predicted deflection orders actual fixed-`P_FA` `P_D`.  A
   smoke implementation is in `uav_otfs_isac/evidence_calibration.py` and
   `scripts/run_evidence_calibration_gate.py`.  Covariances are positive
-  definite.  A held-out smoke with 200 trials per hypothesis (train and test
-  geometry separated) gives Spearman 0.47 for relative miss-deficit reduction
-  (bootstrap CI [0.08, 0.74]) and 0.49 for logit gain (bootstrap CI
-  [0.11, 0.76]); the earlier same-sample 0.62 was optimistic and is not a
-  formal pass.  The 10 000-trial formal run is the required next experiment.
+  definite.  The 10 000-trial formal run (5000 train / 5000 test geometry)
+  gives Spearman 0.588 for relative miss-deficit reduction and logit gain
+  (bootstrap CI [0.23, 0.83] and [0.21, 0.84]); the point estimate is still
+  below the 0.6 gate, so G1-A does not pass the formal gate yet.  The earlier
+  same-sample 0.62 was optimistic.
 - G1-B: quantization/report-channel closure.  Verify Monte Carlo moments of
   quantized, erroneous, erased reports against the exact formulas, so
   communication loss is propagated into evidence moments rather than applied
