@@ -298,6 +298,7 @@ def delta_deflection_vs_delta_pd(
     seed: int = 20260804,
     actual_gain_mode: str = "relative_deficit_reduction",
     actual_moments: dict[str, np.ndarray] | None = None,
+    predicted_score_mode: str = "deflection",
 ) -> dict:
     mu0 = np.asarray(moments["means"]["h0"], dtype=float)
     mu1 = np.asarray(moments["means"]["h1"], dtype=float)
@@ -321,15 +322,6 @@ def delta_deflection_vs_delta_pd(
             for candidate in uav_ids:
                 if candidate in selected:
                     continue
-                if selected:
-                    predicted = conditional_marginal_deflection(
-                        delta, cov0, selected, candidate
-                    )
-                else:
-                    predicted = (
-                        float(delta[candidate]) ** 2
-                        / max(float(cov0[candidate, candidate]), 1e-12)
-                    )
                 base_pd = (
                     false_alarm_rate if not selected
                     else gaussian_detection_probability(
@@ -341,6 +333,49 @@ def delta_deflection_vs_delta_pd(
                     actual_mu0, actual_mu1, actual_cov0, actual_cov1,
                     tuple(selected) + (candidate,), false_alarm_rate,
                 )
+                if predicted_score_mode == "deflection":
+                    if selected:
+                        predicted = conditional_marginal_deflection(
+                            delta, cov0, selected, candidate
+                        )
+                    else:
+                        predicted = (
+                            float(delta[candidate]) ** 2
+                            / max(float(cov0[candidate, candidate]), 1e-12)
+                        )
+                else:
+                    predicted_base = (
+                        false_alarm_rate if not selected
+                        else gaussian_detection_probability(
+                            mu0, mu1, cov0, cov1,
+                            selected, false_alarm_rate,
+                        )
+                    )
+                    predicted_new = gaussian_detection_probability(
+                        mu0, mu1, cov0, cov1,
+                        tuple(selected) + (candidate,), false_alarm_rate,
+                    )
+                    if predicted_score_mode == "pd_gain":
+                        predicted = max(predicted_new - predicted_base, 0.0)
+                    elif predicted_score_mode == "logit_pd":
+                        clip = 1e-6
+                        predicted = max(
+                            np.log(
+                                np.clip(predicted_new, clip, 1.0 - clip)
+                                / np.clip(
+                                    1.0 - predicted_new, clip, 1.0 - clip
+                                )
+                            )
+                            - np.log(
+                                np.clip(predicted_base, clip, 1.0 - clip)
+                                / np.clip(
+                                    1.0 - predicted_base, clip, 1.0 - clip
+                                )
+                            ),
+                            0.0,
+                        )
+                    else:
+                        raise ValueError("unsupported predicted_score_mode")
                 deflection_pairs.append((predicted, base_pd, new_pd))
     if not deflection_pairs:
         return {"spearman": None, "pairs": 0}

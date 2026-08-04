@@ -40,6 +40,7 @@ def run_gate(
     seed: int,
     amplitude: float,
     gain_mode: str,
+    predicted_mode: str,
 ) -> None:
     config = FrontEndConfig(noise_variance=0.02)
     patterns = identity_patterns(config, 4)
@@ -69,6 +70,7 @@ def run_gate(
     correlation = delta_deflection_vs_delta_pd(
         moments, actual_gain_mode=gain_mode,
         actual_moments=test_moments,
+        predicted_score_mode=predicted_mode,
     )
     payload = {
         "gate": "G1-A",
@@ -84,6 +86,7 @@ def run_gate(
         "h1_covariance": moments["covariances"]["h1"].tolist(),
         "deflection_vs_pd": correlation,
         "actual_gain_mode": gain_mode,
+        "predicted_score_mode": predicted_mode,
         "test_moments": {
             "h0_mean": test_moments["means"]["h0"].tolist(),
             "h1_mean": test_moments["means"]["h1"].tolist(),
@@ -125,6 +128,11 @@ def main() -> None:
         choices=("pd_gain", "logit_gain", "relative_deficit_reduction"),
         default="relative_deficit_reduction",
     )
+    parser.add_argument(
+        "--predicted-mode",
+        choices=("deflection", "pd_gain", "logit_pd"),
+        default="deflection",
+    )
     args = parser.parse_args()
     run_gate(
         output=Path(args.output),
@@ -133,6 +141,7 @@ def main() -> None:
         seed=args.seed,
         amplitude=args.amplitude,
         gain_mode=args.gain_mode,
+        predicted_mode=args.predicted_mode,
     )
 
 

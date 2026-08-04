@@ -38,6 +38,13 @@ python scripts/run_evidence_calibration_gate.py `
   --amplitude 1.0 `
   --gain-mode relative_deficit_reduction `
   --output results/evidence_calibration_10k.json
+
+python scripts/run_evidence_calibration_gate.py `
+  --trials 10000 `
+  --amplitude 1.0 `
+  --gain-mode relative_deficit_reduction `
+  --predicted-mode pd_gain `
+  --output results/evidence_calibration_10k_pd_gain.json
 ```
 
 G1-B report-channel closure (50 000 Monte Carlo trials):

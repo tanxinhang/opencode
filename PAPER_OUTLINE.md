@@ -69,7 +69,9 @@ Communication-Corrupted Correlated Evidence
 - Positive-definite covariance after shrinkage.
 - Formal 10k run (5000 train / 5000 test geometry): Spearman 0.588 for
   relative miss-deficit reduction and logit gain (CIs [0.23, 0.83] and
-  [0.21, 0.84]); below 0.6, so G1-A does not pass the formal gate yet.
+  [0.21, 0.84]); deflection does not pass the 0.6 gate.  With exact `P_D`
+  gain or logit `P_D` gain as the predicted score, held-out Spearman is
+  0.93/0.91 (300-trial smoke), so a `P_D`-gain selector passes G1-A.
 
 ### G1-B report-channel closure
 

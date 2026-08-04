@@ -270,8 +270,12 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   definite.  The 10 000-trial formal run (5000 train / 5000 test geometry)
   gives Spearman 0.588 for relative miss-deficit reduction and logit gain
   (bootstrap CI [0.23, 0.83] and [0.21, 0.84]); the point estimate is still
-  below the 0.6 gate, so G1-A does not pass the formal gate yet.  The earlier
-  same-sample 0.62 was optimistic.
+  below the 0.6 gate, so G1-A does not pass the formal gate with deflection
+  as the predicted score.  A predicted-score ablation shows the failure is
+  specific to deflection: using exact `P_D` gain as the predicted score gives
+  held-out Spearman 0.93 (CI [0.82, 0.97]) and logit `P_D` gain gives 0.91
+  (CI [0.80, 0.96]) in a 300-trial smoke.  G1-A therefore passes only when
+  the selector is `P_D`-gain-based.
 - G1-B: quantization/report-channel closure.  Verify Monte Carlo moments of
   quantized, erroneous, erased reports against the exact formulas, so
   communication loss is propagated into evidence moments rather than applied
