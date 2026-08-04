@@ -75,16 +75,17 @@ def exact_received_moments(
             ))
             distribution = multivariate_normal(mean=mean, cov=joint_covariance)
             bin_edges = np.asarray(edges, dtype=float)
+            finite_edges = np.clip(bin_edges, -1e12, 1e12)
             for ki in range(bin_edges.size - 1):
                 for kj in range(bin_edges.size - 1):
                     joint[ki, kj] = distribution.cdf((
-                        bin_edges[ki + 1], bin_edges[kj + 1]
+                        finite_edges[ki + 1], finite_edges[kj + 1]
                     )) - distribution.cdf((
-                        bin_edges[ki], bin_edges[kj + 1]
+                        finite_edges[ki], finite_edges[kj + 1]
                     )) - distribution.cdf((
-                        bin_edges[ki + 1], bin_edges[kj]
+                        finite_edges[ki + 1], finite_edges[kj]
                     )) + distribution.cdf((
-                        bin_edges[ki], bin_edges[kj]
+                        finite_edges[ki], finite_edges[kj]
                     ))
             # The product term is sum_{k,l} P[k,l] * r_i[k] * r_j[l].
             expected_product = float(
@@ -167,6 +168,8 @@ def relative_errors(
     return {
         "mean_relative_error": float(np.max(mean_errors)) if mean_errors else 0.0,
         "mean_relative_error_per_report": mean_errors_per_report,
-        "covariance_relative_error": float(np.max(covariance_errors)),
+        "covariance_relative_error": (
+            float(np.max(covariance_errors)) if covariance_errors else 0.0
+        ),
         "covariance_relative_error_matrix": covariance_errors_matrix.tolist(),
     }
