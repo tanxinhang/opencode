@@ -60,12 +60,16 @@ Audit date: 2026-08-04.
   `0/0.3/0.5/0.7/0.85` with positive paired-diff CIs for `rho>=0.3`, and a
   non-saturated stress gate with gains `+0.172`/`+0.114` at `B=6/9` (README,
   paper outline, Word B.5).
+- Resource fairness first table: fixed per-frame energy `82% -> 96.7%` with 4x
+  energy; fixed total energy `82% -> 50%` (README, paper outline, Word A.4).
 - Documentation file list now includes PAPER_OUTLINE.md and all three Word
   appendices.
 
 ## Residual open items (not contradictions)
 
-- Equal bandwidth/frame-budget/communication-rate accounting.
+- Equal bandwidth/frame-budget/communication-rate accounting is started with
+  a first resource table; a same-scale formal rerun across all columns is
+  still required.
 - Formal G1-A run at 10 000 trials per hypothesis with bootstrap CI.
 - G2 correlated audit at 10-20 seeds with win-rate CI.
 - Same angle-DD collision decomposition and strong FWER.

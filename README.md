@@ -926,6 +926,14 @@ the gain at the toy front-end's fractional-leakage threshold, so time
 diversity remains exposed as an experimental script flag but is not claimed
 as a demonstrated fair gain.
 
+A first resource-fairness table confirms the gain is resource-driven:
+`L=4, A=2.0` (fixed per-frame energy) uses 64 sensing-energy units and four
+frames, reaching 96.7% scene-exact recovery, while `L=1, A=2.0` uses 16 units
+and one frame at 82%.  With fixed total sensing energy (`L=4, A=1.0`, same 16
+units), scene-exact recovery drops to 50% in a 20-trial smoke.  The three
+columns currently use different trial counts, so a same-scale formal rerun is
+required before submission.
+
 A first equal-total-pilot-energy audit fixes total pilot energy at `E=16`
 and scales per-UAV amplitude as `sqrt(E/M)` for `M=2` and `M=4`.  With the
 same target-existence gate (support two), 30 separated `N=2` trials give
