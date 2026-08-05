@@ -26,6 +26,9 @@ paper honestly claim novelty in either the scenario or the algorithm?
   `rho>=0.3` in most cells.
 - Exact-`P_D`-gain greedy passes G1-A formally (Spearman 0.996, CI
   [0.98, 1.00]) while deflection does not (0.588).
+- The `P_D`-gain advantage scales with system size: at `(M,Q)=(16,8)` it
+  reaches `+0.067` mean `P_D` over Static ID Top-K with `+0.127` worst-target
+  improvement, so the mechanism becomes more valuable as the system grows.
 
 ## Where the innovation is weak
 

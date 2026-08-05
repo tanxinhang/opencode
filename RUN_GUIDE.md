@@ -65,6 +65,7 @@ python scripts/run_g2_algorithm_negative_gates.py --seeds 20
 python scripts/run_g2_correlation_sweep_gate.py --seeds 20 --oracle-seeds 10
 python scripts/run_g2_nonsaturated_stress_gate.py --seeds 20
 python scripts/run_resource_fairness_gate.py
+python scripts/run_g2_scaling_gate.py --seeds 10
 ```
 
 ## Regression tests

@@ -59,7 +59,8 @@ Audit date: 2026-08-04.
   `0.870/0.855/83.1%/0.880`, plus a multi-rho sweep
   `0/0.3/0.5/0.7/0.85` with positive paired-diff CIs for `rho>=0.3`, and a
   non-saturated stress gate with gains `+0.172`/`+0.114` at `B=6/9` (README,
-  paper outline, Word B.5).
+  paper outline, Word B.5), and a scaling sweep where Exact-PD gains grow
+  from `+0.006` to `+0.067` as `(M,Q)` goes from `(8,3)` to `(16,8)`.
 - Resource fairness same-scale table: fixed per-frame energy
   `86.7% -> 100%` with 4x energy; fixed total energy `86.7% -> 50%`;
   time-bandwidth `2575` vs `4111` symbols; fixed-TB path requires grid scaling

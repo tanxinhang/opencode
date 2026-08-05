@@ -323,7 +323,12 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   for Static ID Top-K (`+0.172`, CI [0.161, 0.181], win rate 100%); at `B=9`,
   `0.813` versus `0.699` (`+0.114`, CI [0.105, 0.123]).  Worst-target `P_D`
   improves from 0.471 to 0.569 (`B=6`) and 0.577 to 0.782 (`B=9`).  At
-  `B=12` both methods saturate to All-scheduled, so the gain vanishes.
+  `B=12` both methods saturate to All-scheduled, so the gain vanishes.  A
+  scaling sweep (10 seeds, budget proportional to `Q`) shows the Exact-`P_D`
+  gains grow with `M` and `Q`: `(M,Q)=(8,3)` `+0.006`, `(12,5)` `+0.007`,
+  `(16,5)` `+0.015`, `(16,8)` `+0.067` mean `P_D` over Static ID Top-K, with
+  worst-target improvement `+0.127` at `(16,8)`.  Exact-`P_D` runtime is about
+  0.25 s at `(16,8)` versus 0.15 s for conditional greedy.
 
 Current documentation files:
 

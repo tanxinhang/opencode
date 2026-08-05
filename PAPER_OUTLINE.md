@@ -110,6 +110,9 @@ Communication-Corrupted Correlated Evidence
   (+0.172, CI [0.161,0.181], win 100%); at B=9 0.813 vs 0.699 (+0.114, CI
   [0.105,0.123]); worst-target P_D improves from 0.471 to 0.569 and 0.577 to
   0.782.  Saturation at B=12 removes the gain.
+- Scaling (10 seeds): Exact-P_D gains over Static ID Top-K grow with M/Q:
+  (8,3) +0.006, (12,5) +0.007, (16,5) +0.015, (16,8) +0.067 mean P_D;
+  worst-target +0.127 at (16,8).  Runtime 0.25 s vs 0.15 s at (16,8).
 
 ## 5. Boundaries and open items
 
