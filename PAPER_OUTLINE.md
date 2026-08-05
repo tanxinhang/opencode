@@ -71,7 +71,8 @@ Communication-Corrupted Correlated Evidence
   relative miss-deficit reduction and logit gain (CIs [0.23, 0.83] and
   [0.21, 0.84]); deflection does not pass the 0.6 gate.  With exact `P_D`
   gain or logit `P_D` gain as the predicted score, held-out Spearman is
-  0.93/0.91 (300-trial smoke), so a `P_D`-gain selector passes G1-A.
+  0.996/0.994 in the formal 10k run (CIs [0.98, 1.00] and [0.97, 1.00]),
+  so a `P_D`-gain selector passes G1-A formally.
 
 ### G1-B report-channel closure
 

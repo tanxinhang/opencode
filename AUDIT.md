@@ -44,9 +44,10 @@ Audit date: 2026-08-04.
 - G1-A saturation-robust Spearman `0.62` was a same-sample smoke; the 10k
   formal run with train/test geometry separation gives `0.588` (CIs
   `[0.23,0.83]` / `[0.21,0.84]`), below the `0.6` gate; predicted-score
-  ablation with exact `P_D` gain gives `0.93` and logit `P_D` gives `0.91`
-  (300-trial smoke), so the deflection proxy is the failure point (README,
-  paper outline, Word B.1).
+  ablation with exact `P_D` gain gives formal 10k `0.996` (CI
+  `[0.98,1.00]`) and logit/relative-deficit `0.994`, so the deflection proxy
+  is the failure point and a `P_D`-gain selector passes G1-A (README, paper
+  outline, Word B.1).
 - G1-B mean/covariance errors `4.08%` / `8.51%` (README, paper outline,
   Word B.2).
 - G1-D first-order vs exact Spearman `0.90` and Oracle match rate `50%`
