@@ -328,6 +328,8 @@ Current documentation files:
 - `AUDIT.md` -- cross-document consistency audit report.
 - `RUN_GUIDE.md` -- setup, smoke, and formal run commands for the target
   machine (7800X3D + 5070).
+- `INNOVATION_AUDIT.md` -- assessment of whether current performance supports
+  scenario/algorithm novelty claims.
 
 The Word documents contain Appendices A (Gate G0-C and optimization results),
 B (G1/G2 roadmap, results, and novelty positioning), and C (paper outline).
