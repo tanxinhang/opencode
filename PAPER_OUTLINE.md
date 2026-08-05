@@ -99,6 +99,10 @@ Communication-Corrupted Correlated Evidence
 - Multi-rho sweep (0/0.3/0.5/0.7/0.85): conditional beats Static ID Top-K
   with positive paired-diff CIs for rho>=0.3 in most cells; at rho=0.85,
   B=20 the CI crosses zero.  Exact-P_D greedy is strongest at every rho.
+- Non-saturated stress gate: at B=6 conditional mean P_D 0.692 vs 0.520
+  (+0.172, CI [0.161,0.181], win 100%); at B=9 0.813 vs 0.699 (+0.114, CI
+  [0.105,0.123]); worst-target P_D improves from 0.471 to 0.569 and 0.577 to
+  0.782.  Saturation at B=12 removes the gain.
 
 ## 5. Boundaries and open items
 

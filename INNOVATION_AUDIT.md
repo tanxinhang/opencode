@@ -32,9 +32,11 @@ paper honestly claim novelty in either the scenario or the algorithm?
 1. The algorithm has no formal selection property.  There is no submodularity,
    approximation ratio, or regret bound.  Exact-`P_D`-gain greedy is greedy on
    the actual objective, not a new algorithmic family.
-2. Absolute gains are small.  G2 mean `P_D` gains over the strongest static
-   baseline are about 0.01-0.02, and one cell (`rho=0.85`, `B=20`) has a
-   paired-diff CI that crosses zero.
+2. Absolute gains in the saturated default G2 are small (0.01-0.02), and one
+   cell (`rho=0.85`, `B=20`) has a paired-diff CI that crosses zero.  The
+   non-saturated stress gate now provides the large-gain evidence:
+   `+0.172` at `B=6` and `+0.114` at `B=9`, with 100% win rate and
+   significant paired-diff CIs.
 3. The front end is a toy-resolution model, not a bandwidth-consistent SDR.
    Physical realism can be challenged.
 4. Resource accounting is incomplete.  Equal bandwidth/frame/rate accounting
@@ -52,8 +54,8 @@ paper honestly claim novelty in either the scenario or the algorithm?
      deflection failure as a negative result.
   2. Add the unified resource accounting table.
   3. Add G1-A grouped consistency and scatter/calibration data.
-  4. Report G2 gains with paired CIs and be explicit that they are small but
-     consistent in correlated regimes.
+  4. Report G2 gains with paired CIs and be explicit that they are small in
+     saturated regimes but large and significant in non-saturated regimes.
 - If the venue requires algorithmic novelty, the current performance is not
   sufficient.  A new algorithm with a formal property, or a large consistent
   performance gain, is needed.

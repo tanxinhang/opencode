@@ -55,7 +55,8 @@ Audit date: 2026-08-04.
 - G2 20-seed fair-budget numbers `0.898/0.898/0.897/0.773/0.935` with
   exact-PD greedy `0.900`, and correlated-model
   `0.870/0.855/83.1%/0.880`, plus a multi-rho sweep
-  `0/0.3/0.5/0.7/0.85` with positive paired-diff CIs for `rho>=0.3` (README,
+  `0/0.3/0.5/0.7/0.85` with positive paired-diff CIs for `rho>=0.3`, and a
+  non-saturated stress gate with gains `+0.172`/`+0.114` at `B=6/9` (README,
   paper outline, Word B.5).
 - Documentation file list now includes PAPER_OUTLINE.md and all three Word
   appendices.

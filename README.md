@@ -313,7 +313,13 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   `rho>=0.3` with positive paired-diff CIs in most cells (e.g.,
   `rho=0.5`, `B=20`: `+0.0199`, CI `[0.013, 0.027]`); at `rho=0.85`, `B=20`
   the CI crosses zero.  Exact-`P_D`-gain greedy remains the strongest variant
-  at every `rho`, supporting it as the main method.
+  at every `rho`, supporting it as the main method.  A non-saturated stress
+  gate (three targets, top-SNR pair `rho=0.9`, controlled moderate SNR) shows
+  large significant gains: at `B=6`, conditional mean `P_D` 0.692 versus 0.520
+  for Static ID Top-K (`+0.172`, CI [0.161, 0.181], win rate 100%); at `B=9`,
+  `0.813` versus `0.699` (`+0.114`, CI [0.105, 0.123]).  Worst-target `P_D`
+  improves from 0.471 to 0.569 (`B=6`) and 0.577 to 0.782 (`B=9`).  At
+  `B=12` both methods saturate to All-scheduled, so the gain vanishes.
 
 Current documentation files:
 
