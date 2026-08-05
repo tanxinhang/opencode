@@ -65,7 +65,8 @@ Communication-Corrupted Correlated Evidence
 - Per-path covariance reduces GOSPA by roughly 30%.
 - Resource fairness (same-scale, 30 trials per column): fixed per-frame energy
   raises 86.7% to 100% with 4x energy; fixed total energy drops to 50%, so
-  the gain is resource-driven.
+  the gain is resource-driven.  Time-bandwidth: L=1 total 2575 symbols vs
+  L=4 4111; fixed-total-time-bandwidth path requires grid scaling.
 
 ### G1-A evidence-moment calibration
 

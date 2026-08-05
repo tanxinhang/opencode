@@ -61,8 +61,9 @@ Audit date: 2026-08-04.
   non-saturated stress gate with gains `+0.172`/`+0.114` at `B=6/9` (README,
   paper outline, Word B.5).
 - Resource fairness same-scale table: fixed per-frame energy
-  `86.7% -> 100%` with 4x energy; fixed total energy `86.7% -> 50%` (README,
-  paper outline, Word A.4).
+  `86.7% -> 100%` with 4x energy; fixed total energy `86.7% -> 50%`;
+  time-bandwidth `2575` vs `4111` symbols; fixed-TB path requires grid scaling
+  (README, paper outline, Word A.4).
 - Documentation file list now includes PAPER_OUTLINE.md and all three Word
   appendices.
 

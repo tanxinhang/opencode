@@ -29,14 +29,25 @@ def _scene_recovery(path: Path):
     }
 
 
-def _resources(amplitude, frames, num_uavs, report_count, bits_per_report):
+def _resources(
+    amplitude, frames, num_uavs, report_count, bits_per_report,
+    otfs_symbols_per_frame,
+):
     sensing_energy = frames * num_uavs * amplitude ** 2
     sensing_time = frames
     identity_resources = num_uavs
     report_bits = report_count * bits_per_report
     report_time = report_count
+    sensing_time_bandwidth = frames * otfs_symbols_per_frame
+    identity_time_bandwidth = num_uavs * otfs_symbols_per_frame
+    report_time_bandwidth = report_bits
     total_time = sensing_time + report_time
     total_occupation = sensing_energy + identity_resources + report_bits
+    total_time_bandwidth = (
+        sensing_time_bandwidth
+        + identity_time_bandwidth
+        + report_time_bandwidth
+    )
     return {
         "per_frame_amplitude": amplitude,
         "otfs_frames": frames,
@@ -47,6 +58,12 @@ def _resources(amplitude, frames, num_uavs, report_count, bits_per_report):
         "report_time": report_time,
         "total_time": total_time,
         "total_occupation": total_occupation,
+        "otfs_symbols_per_frame": otfs_symbols_per_frame,
+        "sensing_time_bandwidth": sensing_time_bandwidth,
+        "identity_time_bandwidth": identity_time_bandwidth,
+        "report_time_bandwidth": report_time_bandwidth,
+        "total_time_bandwidth": total_time_bandwidth,
+        "report_latency": report_time,
     }
 
 
@@ -58,27 +75,31 @@ def run_gate(*, output: Path, single_frame: Path, four_frame: Path,
     num_uavs = 4
     report_count = 3
     bits_per_report = 5
+    otfs_symbols_per_frame = 16 * 32
     rows = [
         {
             "label": "L=1, A=2.0",
-            "resources": _resources(
-                2.0, 1, num_uavs, report_count, bits_per_report
+        "resources": _resources(
+                2.0, 1, num_uavs, report_count, bits_per_report,
+                otfs_symbols_per_frame,
             ),
             "scene_exact_recovery": single["scene_exact_recovery"],
             "path_recall": single["path_recall"],
         },
         {
             "label": "L=4, A=2.0 (fixed per-frame energy)",
-            "resources": _resources(
-                2.0, 4, num_uavs, report_count, bits_per_report
+        "resources": _resources(
+                2.0, 4, num_uavs, report_count, bits_per_report,
+                otfs_symbols_per_frame,
             ),
             "scene_exact_recovery": four["scene_exact_recovery"],
             "path_recall": four["path_recall"],
         },
         {
             "label": "L=4, A=1.0 (fixed total sensing energy)",
-            "resources": _resources(
-                1.0, 4, num_uavs, report_count, bits_per_report
+        "resources": _resources(
+                1.0, 4, num_uavs, report_count, bits_per_report,
+                otfs_symbols_per_frame,
             ),
             "scene_exact_recovery": equal["scene_exact_recovery"],
             "path_recall": equal["path_recall"],
@@ -96,6 +117,9 @@ def run_gate(*, output: Path, single_frame: Path, four_frame: Path,
             "fixed_total_occupation": [
                 rows[0]["label"], rows[2]["label"],
             ],
+            "fixed_total_time_bandwidth": (
+                "requires OTFS grid scaling; not run with the toy grid"
+            ),
         },
         "rows": rows,
     }

@@ -931,7 +931,10 @@ calibration frames per column) confirms the gain is resource-driven: `L=4,
 A=2.0` (fixed per-frame energy) uses 64 sensing-energy units and four frames,
 reaching 100% scene-exact recovery, while `L=1, A=2.0` uses 16 units and one
 frame at 86.7%.  With fixed total sensing energy (`L=4, A=1.0`, same 16
-units), scene-exact recovery drops to 50%.
+units), scene-exact recovery drops to 50%.  Time-bandwidth accounting shows
+`L=1` uses 2575 total symbols (512 sensing, 2048 identity, 15 report) versus
+4111 for `L=4`; the fixed-total-time-bandwidth path requires OTFS grid
+scaling and is not run with the toy grid.
 
 A first equal-total-pilot-energy audit fixes total pilot energy at `E=16`
 and scales per-UAV amplitude as `sqrt(E/M)` for `M=2` and `M=4`.  With the
