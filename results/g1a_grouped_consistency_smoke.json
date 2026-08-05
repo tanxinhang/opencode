@@ -1,0 +1,72 @@
+{
+  "gate": "G1-A-grouped-consistency",
+  "summary": {
+    "deflection_all_above_0_6": false,
+    "pd_gain_all_above_0_6": true,
+    "rows": [
+      {
+        "amplitude": 0.8,
+        "train_trials_per_hypothesis": 60,
+        "test_trials_per_hypothesis": 60,
+        "moment_health": {
+          "h0_positive_definite": true,
+          "h1_positive_definite": true,
+          "h0_min_eigenvalue": 0.00031727218443486577,
+          "h1_min_eigenvalue": 0.06772285947547511
+        },
+        "deflection_spearman": 0.5491202346041054,
+        "deflection_ci95": [
+          0.23262235573113543,
+          0.77406727476302
+        ],
+        "pd_gain_spearman": 0.9743401759530791,
+        "pd_gain_ci95": [
+          0.9116632087055934,
+          0.9948466643314511
+        ]
+      },
+      {
+        "amplitude": 1.0,
+        "train_trials_per_hypothesis": 60,
+        "test_trials_per_hypothesis": 60,
+        "moment_health": {
+          "h0_positive_definite": true,
+          "h1_positive_definite": true,
+          "h0_min_eigenvalue": 0.000519672555911318,
+          "h1_min_eigenvalue": 0.15671334115572227
+        },
+        "deflection_spearman": 0.3313782991202346,
+        "deflection_ci95": [
+          -0.004852799358170892,
+          0.6136510627974701
+        ],
+        "pd_gain_spearman": 0.88534506833207,
+        "pd_gain_ci95": [
+          0.7410650631930722,
+          0.9536629331082489
+        ]
+      },
+      {
+        "amplitude": 1.3,
+        "train_trials_per_hypothesis": 60,
+        "test_trials_per_hypothesis": 60,
+        "moment_health": {
+          "h0_positive_definite": true,
+          "h1_positive_definite": true,
+          "h0_min_eigenvalue": 0.0005330854237992412,
+          "h1_min_eigenvalue": 0.3925814282106841
+        },
+        "deflection_spearman": 0.40011239597137854,
+        "deflection_ci95": [
+          -0.025997656254503867,
+          0.7274857692447935
+        ],
+        "pd_gain_spearman": 0.7709886380091867,
+        "pd_gain_ci95": [
+          0.545930453690663,
+          0.9098730006006662
+        ]
+      }
+    ]
+  }
+}

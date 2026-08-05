@@ -73,6 +73,9 @@ Communication-Corrupted Correlated Evidence
   gain or logit `P_D` gain as the predicted score, held-out Spearman is
   0.996/0.994 in the formal 10k run (CIs [0.98, 1.00] and [0.97, 1.00]),
   so a `P_D`-gain selector passes G1-A formally.
+- Grouped consistency (amplitudes 0.8/1.0/1.3): deflection Spearman
+  0.55/0.33/0.40, all below 0.6; `P_D`-gain predicted 0.97/0.89/0.77, all
+  above 0.6.
 
 ### G1-B report-channel closure
 

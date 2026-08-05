@@ -91,6 +91,7 @@ def add_chinese_appendix(doc) -> None:
     bullet(doc, "从 G0-C 前端按 H0/H1 导出每 UAV 证据 z_iq，估计 (mu_h, Sigma_h)，要求收缩后协方差正定；")
     bullet(doc, "验证预测单链路 deflection 与固定 P_FA 下实际 P_D 排序一致，建议 Spearman 相关不低于 0.6；")
     bullet(doc, "正式统计（5000 训练/5000 测试几何）：deflection 作为预测分时 Spearman 0.588，低于 0.6；改用精确 P_D 增益预测分后正式 10k Spearman 0.996（CI [0.98,1.00]），logit/相对漏检缺口 0.994，P_D 增益选择器正式通过 G1-A。")
+    bullet(doc, "分组一致性（幅度 0.8/1.0/1.3）：deflection Spearman 0.55/0.33/0.40，全部低于 0.6；P_D 增益预测分 0.97/0.89/0.77，全部高于 0.6。")
     heading(doc, "B.2 G1-B 量化与报告信道闭环", 2)
     bullet(doc, "对量化比特、BER/转移矩阵、可检测擦除和实际收到集合重新融合；")
     bullet(doc, "Monte Carlo 矩与精确公式的均值最大相对误差 4.08%、对角与主交叉协方差最大 8.51%，满足 5%/10% 目标；")

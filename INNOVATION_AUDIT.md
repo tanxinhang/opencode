@@ -42,8 +42,10 @@ paper honestly claim novelty in either the scenario or the algorithm?
 4. Resource accounting is incomplete.  Equal bandwidth/frame/rate accounting
    is not yet a unified table, so the four-frame integration gain is still
    open to the "you spent more resources" critique.
-5. G1-A grouped consistency (SNR/Doppler/leakage/correlation groups) and
-   scatter/calibration data are missing.
+5. G1-A grouped consistency is now covered for SNR/amplitude groups
+   (0.8/1.0/1.3): deflection 0.55/0.33/0.40, P_D-gain 0.97/0.89/0.77.
+   Doppler/leakage/correlation groups and scatter/calibration artifacts are
+   still optional.
 
 ## Verdict
 
@@ -53,7 +55,8 @@ paper honestly claim novelty in either the scenario or the algorithm?
   1. Switch the main selector to Exact-`P_D`-Gain Greedy and state the
      deflection failure as a negative result.
   2. Add the unified resource accounting table.
-  3. Add G1-A grouped consistency and scatter/calibration data.
+  3. Add Doppler/leakage/correlation grouped consistency and
+     scatter/calibration data if the venue asks for them.
   4. Report G2 gains with paired CIs and be explicit that they are small in
      saturated regimes but large and significant in non-saturated regimes.
 - If the venue requires algorithmic novelty, the current performance is not

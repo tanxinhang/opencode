@@ -46,8 +46,10 @@ Audit date: 2026-08-04.
   `[0.23,0.83]` / `[0.21,0.84]`), below the `0.6` gate; predicted-score
   ablation with exact `P_D` gain gives formal 10k `0.996` (CI
   `[0.98,1.00]`) and logit/relative-deficit `0.994`, so the deflection proxy
-  is the failure point and a `P_D`-gain selector passes G1-A (README, paper
-  outline, Word B.1).
+  is the failure point and a `P_D`-gain selector passes G1-A; grouped
+  consistency across amplitudes 0.8/1.0/1.3 confirms deflection
+  `0.55/0.33/0.40` (<0.6) and P_D-gain `0.97/0.89/0.77` (>0.6) (README,
+  paper outline, Word B.1).
 - G1-B mean/covariance errors `4.08%` / `8.51%` (README, paper outline,
   Word B.2).
 - G1-D first-order vs exact Spearman `0.90` and Oracle match rate `50%`

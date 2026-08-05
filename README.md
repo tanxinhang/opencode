@@ -275,7 +275,11 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   specific to deflection: using exact `P_D` gain as the predicted score gives
   held-out Spearman 0.996 (CI [0.98, 1.00]) and relative miss-deficit/logit
   gains give 0.994 in the formal 10 000-trial run.  G1-A therefore passes
-  formally only when the selector is `P_D`-gain-based.
+  formally only when the selector is `P_D`-gain-based.  A grouped-consistency
+  smoke across amplitudes 0.8/1.0/1.3 (60 train/60 test each) gives deflection
+  Spearman 0.55/0.33/0.40 (all below 0.6) and `P_D`-gain predicted
+  0.97/0.89/0.77 (all above 0.6), so the failure/pass pattern is consistent
+  across SNR groups.
 - G1-B: quantization/report-channel closure.  Verify Monte Carlo moments of
   quantized, erroneous, erased reports against the exact formulas, so
   communication loss is propagated into evidence moments rather than applied
