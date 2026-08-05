@@ -1,0 +1,67 @@
+{
+  "gate": "P2-resource-fairness",
+  "paths": {
+    "fixed_sensing_frame_structure": [
+      "L=1, A=2.0",
+      "L=4, A=2.0 (fixed per-frame energy)"
+    ],
+    "fixed_total_sensing_energy": [
+      "L=1, A=2.0",
+      "L=4, A=1.0 (fixed total sensing energy)"
+    ],
+    "fixed_total_occupation": [
+      "L=1, A=2.0",
+      "L=4, A=1.0 (fixed total sensing energy)"
+    ]
+  },
+  "rows": [
+    {
+      "label": "L=1, A=2.0",
+      "resources": {
+        "per_frame_amplitude": 2.0,
+        "otfs_frames": 1,
+        "sensing_energy": 16.0,
+        "sensing_time": 1,
+        "identity_resources": 4,
+        "report_bits": 15,
+        "report_time": 3,
+        "total_time": 4,
+        "total_occupation": 35.0
+      },
+      "scene_exact_recovery": 0.8666666666666667,
+      "path_recall": 0.8916666666666667
+    },
+    {
+      "label": "L=4, A=2.0 (fixed per-frame energy)",
+      "resources": {
+        "per_frame_amplitude": 2.0,
+        "otfs_frames": 4,
+        "sensing_energy": 64.0,
+        "sensing_time": 4,
+        "identity_resources": 4,
+        "report_bits": 15,
+        "report_time": 3,
+        "total_time": 7,
+        "total_occupation": 83.0
+      },
+      "scene_exact_recovery": 1.0,
+      "path_recall": 0.8875
+    },
+    {
+      "label": "L=4, A=1.0 (fixed total sensing energy)",
+      "resources": {
+        "per_frame_amplitude": 1.0,
+        "otfs_frames": 4,
+        "sensing_energy": 16.0,
+        "sensing_time": 4,
+        "identity_resources": 4,
+        "report_bits": 15,
+        "report_time": 3,
+        "total_time": 7,
+        "total_occupation": 35.0
+      },
+      "scene_exact_recovery": 0.5,
+      "path_recall": 0.8833333333333333
+    }
+  ]
+}

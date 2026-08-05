@@ -63,9 +63,9 @@ Communication-Corrupted Correlated Evidence
 - Separated-scene recovery 96.7% with four-frame integration and
   sidelobe-aware CFAR.
 - Per-path covariance reduces GOSPA by roughly 30%.
-- Resource fairness: fixed per-frame energy raises 82% to 96.7% with 4x
-  energy; fixed total energy drops to 50%, so the gain is resource-driven.
-  Same-scale formal rerun required.
+- Resource fairness (same-scale, 30 trials per column): fixed per-frame energy
+  raises 86.7% to 100% with 4x energy; fixed total energy drops to 50%, so
+  the gain is resource-driven.
 
 ### G1-A evidence-moment calibration
 

@@ -39,9 +39,9 @@ paper honestly claim novelty in either the scenario or the algorithm?
    significant paired-diff CIs.
 3. The front end is a toy-resolution model, not a bandwidth-consistent SDR.
    Physical realism can be challenged.
-4. Resource accounting now has a first table showing the integration gain is
-   resource-driven (fixed total energy drops 82% -> 50%).  A same-scale formal
-   rerun across all columns is still required before submission.
+4. Resource accounting now has a same-scale table showing the integration
+   gain is resource-driven (fixed total energy drops 86.7% -> 50%).  Full
+   time-bandwidth and latency accounting is still incomplete.
 5. G1-A grouped consistency is now covered for SNR/amplitude groups
    (0.8/1.0/1.3): deflection 0.55/0.33/0.40, P_D-gain 0.97/0.89/0.77.
    Doppler/leakage/correlation groups and scatter/calibration artifacts are

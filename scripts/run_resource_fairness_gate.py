@@ -125,15 +125,15 @@ def main() -> None:
     )
     parser.add_argument(
         "--single-frame",
-        default="results/multistatic_front_end_gate.json",
+        default="results/resource_l1_a2_same.json",
     )
     parser.add_argument(
         "--four-frame",
-        default="results/multistatic_front_end_integration.json",
+        default="results/resource_l4_a2_same.json",
     )
     parser.add_argument(
         "--equal-energy",
-        default="results/multistatic_front_end_equal_energy_L4_A1.json",
+        default="results/resource_l4_a1_same.json",
     )
     args = parser.parse_args()
     run_gate(
