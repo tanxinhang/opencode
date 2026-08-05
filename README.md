@@ -308,8 +308,12 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   heteroscedastic moments.  Under a strongly correlated model (top-SNR pair
   `rho=0.85`), the conditional greedy reaches mean `P_D` 0.870 versus 0.855
   for Independent-Deflection Top-K and wins in 83.1% of configurations, while
-  exact-`P_D`-gain greedy reaches 0.880.  This supports upgrading the
-  selector to `P_D`-gain greedy as the main method.
+  exact-`P_D`-gain greedy reaches 0.880.  A multi-`rho` sweep
+  (0/0.3/0.5/0.7/0.85) shows the conditional greedy beats Static ID Top-K for
+  `rho>=0.3` with positive paired-diff CIs in most cells (e.g.,
+  `rho=0.5`, `B=20`: `+0.0199`, CI `[0.013, 0.027]`); at `rho=0.85`, `B=20`
+  the CI crosses zero.  Exact-`P_D`-gain greedy remains the strongest variant
+  at every `rho`, supporting it as the main method.
 
 Current documentation files:
 

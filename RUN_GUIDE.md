@@ -60,6 +60,7 @@ G2 system sweep and algorithm negative audit (20 seeds):
 ```powershell
 python scripts/run_g2_system_sweep.py --seeds 20
 python scripts/run_g2_algorithm_negative_gates.py --seeds 20
+python scripts/run_g2_correlation_sweep_gate.py --seeds 20 --oracle-seeds 10
 ```
 
 ## Regression tests

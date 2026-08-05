@@ -96,6 +96,9 @@ Communication-Corrupted Correlated Evidence
   greedy 0.900 (best).
 - Strong-correlation model (20 seeds): proposed 0.870 vs Independent 0.855,
   wins in 83.1% of configurations; exact-P_D greedy 0.880.
+- Multi-rho sweep (0/0.3/0.5/0.7/0.85): conditional beats Static ID Top-K
+  with positive paired-diff CIs for rho>=0.3 in most cells; at rho=0.85,
+  B=20 the CI crosses zero.  Exact-P_D greedy is strongest at every rho.
 
 ## 5. Boundaries and open items
 
