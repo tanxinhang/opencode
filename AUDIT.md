@@ -52,8 +52,9 @@ Audit date: 2026-08-04.
   Word B.2).
 - G1-D first-order vs exact Spearman `0.90` and Oracle match rate `50%`
   (README, paper outline, Word B.4).
-- G2 fair-budget numbers `0.886/0.886/0.884/0.743/0.933` and correlated-model
-  `0.869/0.859/77.5%/0.880` (README, paper outline, Word B.5).
+- G2 20-seed fair-budget numbers `0.898/0.898/0.897/0.773/0.935` with
+  exact-PD greedy `0.900`, and correlated-model
+  `0.870/0.855/83.1%/0.880` (README, paper outline, Word B.5).
 - Documentation file list now includes PAPER_OUTLINE.md and all three Word
   appendices.
 

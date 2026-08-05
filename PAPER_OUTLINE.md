@@ -91,10 +91,11 @@ Communication-Corrupted Correlated Evidence
 
 ### G2 system-level sweep
 
-- Fair global-budget comparison: proposed 0.886 vs Sensing 0.886,
-  Independent 0.884, Communication 0.743, All-scheduled 0.933.
-- Strong-correlation model: proposed 0.869 vs Independent 0.859, wins in
-  77.5% of configurations; exact-P_D greedy 0.880.
+- 20-seed fair global-budget comparison: proposed 0.898 vs Sensing 0.898,
+  Independent 0.897, Communication 0.773, All-scheduled 0.935; exact-P_D
+  greedy 0.900 (best).
+- Strong-correlation model (20 seeds): proposed 0.870 vs Independent 0.855,
+  wins in 83.1% of configurations; exact-P_D greedy 0.880.
 
 ## 5. Boundaries and open items
 

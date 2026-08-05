@@ -299,24 +299,17 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   First-order, exact, and SAA greedy each match the exhaustive Oracle in 50%
   of configurations with a mean deflection gap of 0.161, so the first-order
   score ranks well but budget interactions still matter.
-- G2: system-level sweep.  The formal sweep should be run after G1 passes; a
-  five-seed smoke is already included to expose fairness and metric issues.
-  Sweep `N`, `Q`, `B_max`, weak and worst-target `P_D`, All-report baselines,
-  and BER/erasure/correlation robustness.  The five-seed `N=8/12`, `Q=3/5`,
-  `B_max=20/40` sweep gives
-  proposed mean `P_D` 0.886 under a fair global budget, statistically tied
-  with Sensing-SNR Top-K (0.886) and slightly above Independent-Deflection
-  Top-K (0.884), versus 0.743 for Communication Top-K and 0.933 for
-  All-scheduled.  An exact-`P_D`-gain greedy reaches 0.885 and does not beat
-  deflection greedy; a J-divergence surrogate was also tested and does not
-  align with `P_D` under heteroscedastic moments.  Full G2 should therefore
-  keep the conditional greedy as the mechanism and evaluate
-  correlation/reliability/cost value rather than mean-`P_D` dominance.  Under
-  a strongly correlated model (top-SNR pair `rho=0.85`), the conditional
-  greedy reaches mean `P_D` 0.869 versus 0.859 for Independent-Deflection
-  Top-K and wins in 77.5% of configurations, while an exact-`P_D`-gain greedy
-  reaches 0.880 and is the best greedy variant.  This is the system-level
-  correlation-penetration evidence, not universal Top-K dominance.
+- G2: system-level sweep.  A 20-seed `N=8/12`, `Q=3/5`, `B_max=20/40` sweep
+  gives proposed mean `P_D` 0.898 (worst 0.814) under a fair global budget,
+  Sensing-SNR Top-K 0.898, Independent-Deflection Top-K 0.897, Communication
+  Top-K 0.773, and All-scheduled 0.935.  Exact-`P_D`-gain greedy reaches 0.900
+  mean and 0.814 worst, the best among greedy variants; a J-divergence
+  surrogate was rejected because it does not align with `P_D` under
+  heteroscedastic moments.  Under a strongly correlated model (top-SNR pair
+  `rho=0.85`), the conditional greedy reaches mean `P_D` 0.870 versus 0.855
+  for Independent-Deflection Top-K and wins in 83.1% of configurations, while
+  exact-`P_D`-gain greedy reaches 0.880.  This supports upgrading the
+  selector to `P_D`-gain greedy as the main method.
 
 Current documentation files:
 
