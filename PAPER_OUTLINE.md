@@ -113,6 +113,9 @@ Communication-Corrupted Correlated Evidence
 - Scaling (10 seeds): Exact-P_D gains over Static ID Top-K grow with M/Q:
   (8,3) +0.006, (12,5) +0.007, (16,5) +0.015, (16,8) +0.067 mean P_D;
   worst-target +0.127 at (16,8).  Runtime 0.25 s vs 0.15 s at (16,8).
+- Non-saturated scaling-stress (20 seeds): conditional beats Static ID Top-K
+  by +0.114 mean P_D at Q=3/5/8; worst-target improvement grows from +0.205
+  to +0.272 with Q.
 
 ## 5. Boundaries and open items
 

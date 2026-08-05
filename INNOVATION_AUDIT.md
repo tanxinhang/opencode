@@ -29,6 +29,9 @@ paper honestly claim novelty in either the scenario or the algorithm?
 - The `P_D`-gain advantage scales with system size: at `(M,Q)=(16,8)` it
   reaches `+0.067` mean `P_D` over Static ID Top-K with `+0.127` worst-target
   improvement, so the mechanism becomes more valuable as the system grows.
+- In a non-saturated scaling-stress model the advantage is visible and
+  persistent: `+0.114` mean `P_D` at `Q=3/5/8`, with worst-target gains
+  growing from `+0.205` to `+0.272`.
 
 ## Where the innovation is weak
 

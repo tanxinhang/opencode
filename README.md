@@ -328,7 +328,11 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   gains grow with `M` and `Q`: `(M,Q)=(8,3)` `+0.006`, `(12,5)` `+0.007`,
   `(16,5)` `+0.015`, `(16,8)` `+0.067` mean `P_D` over Static ID Top-K, with
   worst-target improvement `+0.127` at `(16,8)`.  Exact-`P_D` runtime is about
-  0.25 s at `(16,8)` versus 0.15 s for conditional greedy.
+  0.25 s at `(16,8)` versus 0.15 s for conditional greedy.  A non-saturated
+  scaling-stress model (4 reports per target, budget 3 reports per target,
+  20 seeds) keeps the advantage visible and persistent: conditional greedy
+  beats Static ID Top-K by `+0.114` mean `P_D` at `Q=3/5/8`, while
+  worst-target improvement grows from `+0.205` (`Q=3`) to `+0.272` (`Q=8`).
 
 Current documentation files:
 
