@@ -1,0 +1,86 @@
+{
+  "gate": "G27-multi-ris-deployment",
+  "seeds": 3,
+  "qos_target": 0.85,
+  "total_elements": 256,
+  "aperture_scale": 0.01,
+  "phase_bits": 3,
+  "coherence_frames": 64,
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "no_ris_worst": 0.7557691503277129,
+      "no_ris_qos": 0.0,
+      "methods": {
+        "one_ris": {
+          "report_budget_bits": 8,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.9546784883972238,
+          "qos_rate": 1.0
+        },
+        "two_ris": {
+          "report_budget_bits": 8,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.8677616499781905,
+          "qos_rate": 0.6666666666666666
+        },
+        "three_ris": {
+          "report_budget_bits": 8,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.8626324282281935,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "no_ris_worst": 0.7845836237585235,
+      "no_ris_qos": 0.0,
+      "methods": {
+        "one_ris": {
+          "report_budget_bits": 16,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.9796255468392792,
+          "qos_rate": 1.0
+        },
+        "two_ris": {
+          "report_budget_bits": 16,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.9225894210693779,
+          "qos_rate": 1.0
+        },
+        "three_ris": {
+          "report_budget_bits": 16,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.926950406802158,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "no_ris_worst": 0.7968243947382199,
+      "no_ris_qos": 0.0,
+      "methods": {
+        "one_ris": {
+          "report_budget_bits": 28,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.9825494055624925,
+          "qos_rate": 1.0
+        },
+        "two_ris": {
+          "report_budget_bits": 28,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.9264264428648673,
+          "qos_rate": 1.0
+        },
+        "three_ris": {
+          "report_budget_bits": 28,
+          "control_overhead_bits": 12.0,
+          "worst_expected_pd": 0.9387797118306479,
+          "qos_rate": 1.0
+        }
+      }
+    }
+  ]
+}

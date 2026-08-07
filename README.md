@@ -1,11 +1,11 @@
-# UAV-OTFS-ISAC selective fusion simulator
+# UAV-ISAC exact selective soft-information fusion simulator
 
 This repository implements the system model in
-`UAV_OTFS_ISAC_论证与系统模型_revised_final.docx` as a reproducible Python
-simulation. The current release focuses on the paper's minimum publishable
-scope: fixed geometry/waveform parameters, correlated local evidence,
-multi-bit reporting over error-prone links, detectable erasures, target-wise
-report selection, and linear deflection-optimal fusion.
+`paper/submission.md` as a reproducible Python simulation. The current
+release focuses on the reviewed submission scope: correlated local evidence,
+multi-bit reporting over error-prone links, detectable correlated erasures,
+target-wise report selection, `P_D`-optimal linear fusion, and exact
+heterogeneous-cost budget/max-min selection.
 
 ## Implemented model chain
 
@@ -30,18 +30,15 @@ report selection, and linear deflection-optimal fusion.
 
 ## Novelty positioning
 
-The contribution is the integrated scenario and its end-to-end validation
-chain, not a new family of selection algorithms.  The conditional
-marginal-deflection greedy is an adaptation of established deflection-optimal
-linear fusion and greedy subset selection to communication-corrupted,
-correlated OTFS evidence; it is explicitly not claimed as a new algorithm or
-as universally better than Top-K.  What is new is the scenario: toy MF/CFAR
-front end -> per-path Fisher covariance -> evidence moments ->
-quantization/BSC/erasure reporting -> correlated selective fusion ->
-system-level `P_D`, together with gates G1-A/B/C/D that make every link
-auditable.  If a venue requires a new algorithm, the current greedy must be
-replaced or upgraded, for example by a logit-`P_D`-gain greedy with a formal
-selection property; the scenario alone does not supply algorithmic novelty.
+The core contribution is the post-communication correlated value model, the
+`P_D`-optimal one-parameter fusion family, and exact heterogeneous-cost
+budget/max-min selection with a stated branch-and-bound pruning bound.  The
+conditional marginal-deflection greedy is retained as a baseline/extension.
+What is new is the coupling: quantization/BSC/correlated-erasure statistics
+enter the H0/H1 moments before fusion, and the combinatorial selection layer
+is solved exactly under target-separable, additive-cost assumptions.  A
+geometry-aware normalized RIS power-gain model is an application instance,
+not a physical-layer claim.
 
 ## Run
 
@@ -50,6 +47,10 @@ python scripts/run_demo.py --config config/demo.yaml
 python scripts/run_benchmarks.py --config config/demo.yaml
 python scripts/run_oracle_study.py --config config/oracle_small.yaml
 python scripts/run_ablation_study.py --config config/demo.yaml
+python scripts/run_exact_maxmin_gate.py --seeds 50 --budgets 3 5 7 9 11 --grid 64
+python scripts/run_scaled_difficulty_gate.py --grid 96
+python scripts/run_factorial_ablation.py --seeds 50 --budget 20 --grid 64
+python scripts/audit_exact_selection_stats.py
 python scripts/run_sensitivity_study.py --config config/demo.yaml
 python scripts/run_risk_portfolio_study.py --config config/demo.yaml
 python scripts/run_chance_portfolio_study.py --config config/demo.yaml
@@ -71,7 +72,74 @@ python scripts/run_g1c_conditional_ranking_gate.py
 python scripts/run_g1d_greedy_vs_oracle_gate.py
 python scripts/run_g2_system_sweep.py --seeds 5
 python scripts/run_g2_algorithm_negative_gates.py --seeds 5
+python scripts/run_pd_optimal_fusion_gate.py
+python scripts/run_expected_pd_greedy_gate.py --seeds 5
+python scripts/run_ris_isac_gate.py --seeds 5
+python scripts/run_ris_phase_resolution_gate.py --seeds 5
+python scripts/run_ris_physics_gate.py --seeds 5
+python scripts/run_ris_joint_budget_gate.py --seeds 5
+python scripts/run_ris_placement_gate.py --seeds 5
+python scripts/run_ris_multigrid_gate.py --seeds 5
+python scripts/run_deployment_theory_gate.py --seeds 5
+python scripts/run_lipschitz_adaptive_deployment_gate.py --seeds 3
+python scripts/run_epsilon_closed_deployment_gate.py --seeds 1
+python scripts/run_g5_bootstrap_ci_gate.py
+python scripts/run_g5_deployment_ci_gate.py
+python scripts/run_global_resource_fairness_gate.py
+python scripts/run_ris_sensitivity_gate.py --seeds 6
+python scripts/run_sota_baseline_gate.py --seeds 12
+python scripts/run_budget_saturation_gate.py --seeds 6
+python scripts/run_ris_shared_phase_gate.py --seeds 6
+python scripts/run_exact_quota_gate.py --seeds 4
+python scripts/run_ris_subarray_gate.py --seeds 6
+python scripts/run_ris_subarray_steering_gate.py --seeds 6
+python scripts/run_ris_aperture_scaling_gate.py --seeds 4
+python scripts/run_derived_architecture_gate.py --seeds 4
+python scripts/run_waterfilling_architecture_gate.py --seeds 4
+python scripts/run_exact_allocation_gate.py --seeds 4
+python scripts/run_system_allocation_gate.py --seeds 4
+python scripts/run_single_move_certificate_gate.py --seeds 4
+python scripts/run_multi_move_certificate_gate.py --seeds 4
+python scripts/run_joint_placement_allocation_gate.py --seeds 4
+python scripts/run_progressive_decentralization_gate.py --seeds 4
+python scripts/run_amplified_distributed_gate.py --seeds 4
+python scripts/run_network_decentralization_gate.py --seeds 4
+python scripts/run_degraded_consensus_gate.py --seeds 4
+python scripts/run_correlated_consensus_gate.py --seeds 4
+python scripts/run_scalability_comparison_gate.py --seeds 3
+python scripts/run_scaled_g18_scalability_gate.py --seeds 2
+python scripts/run_mobility_blockage_gate.py --seeds 2 --frames 8
+python scripts/run_multi_ris_gate.py --seeds 3
+python scripts/run_multi_ris_split_optimization_gate.py --seeds 2
+python scripts/run_variable_rate_report_gate.py --seeds 2
+python scripts/run_global_rate_optimization_gate.py --seeds 2
+python scripts/run_hybrid_fusion_gate.py --seeds 2
+python scripts/run_interference_sensitivity_gate.py --seeds 2
+python scripts/run_spatial_interference_placement_gate.py --seeds 2
+python scripts/run_multi_interference_placement_gate.py --seeds 2
+python scripts/run_upd_vs_ula_gate.py --seeds 2
+python scripts/run_null_steering_gate.py --seeds 2
+python scripts/run_quantized_null_steering_gate.py --seeds 2
+python scripts/run_joint_null_placement_gate.py --seeds 2
+python scripts/run_distributed_relaxation_gate.py --seeds 2
+python scripts/run_low_budget_snr_distributed_gate.py --seeds 2
+python scripts/run_consensus_parity_boundary_gate.py --seeds 2
+python scripts/run_optimized_parity_boundary_gate.py --seeds 2
+python scripts/run_exact_parity_boundary_gate.py --seeds 2
+python scripts/run_fundamental_information_gate.py --seeds 4
+python scripts/run_resource_information_law_gate.py --seeds 2
+python scripts/run_exact_information_budget_gate.py --seeds 4
+python scripts/run_architecture_switch_gate.py --seeds 4
+python scripts/run_target_wise_architecture_switch_gate.py --seeds 4
+python scripts/run_soft_reallocation_gate.py --seeds 4
+python scripts/run_mode_ascent_gate.py --seeds 4
+python scripts/run_stochastic_mobility_gate.py --seeds 4 --frames 8
+python scripts/run_prediction_aware_ris_gate.py --seeds 4 --frames 8
+python scripts/run_multi_step_prediction_gate.py --seeds 4 --frames 8
+python scripts/run_covariance_aware_ris_gate.py --seeds 4 --frames 8
+python scripts/build_paper_tables.py
 python -m pytest -q
+python scripts/verify_paper_numbers.py
 ```
 
 The demo writes `results/demo_summary.json`.
@@ -333,6 +401,513 @@ candidate front end; the toy Gate G0-C front end is timed separately below.
   20 seeds) keeps the advantage visible and persistent: conditional greedy
   beats Static ID Top-K by `+0.114` mean `P_D` at `Q=3/5/8`, while
   worst-target improvement grows from `+0.205` (`Q=3`) to `+0.272` (`Q=8`).
+- G3: `P_D`-optimal linear fusion family.  The deflection-optimal score can
+  lower `P_D` when H1 covariance is not proportional to H0 covariance.  Gate
+  G3 replaces it with the KKT-optimal member of the one-parameter family
+  `w(mu) = L^-T (Q + mu I)^-1 L^-1 delta`, `mu >= 0`, where
+  `Sigma0 = L L^T` and `Q = L^-1 Sigma1 L^-T`.  The rule changes only the
+  fusion weights at the fusion center and adds no report overhead, and it
+  verifies that at operating points with `P_D >= 0.5` the resulting `P_D` is
+  set-monotone: the KKT guarantee is exact for `P_D > 0.5`, and the
+  inclusive boundary is audited numerically with 0 decreasing edges on 1318
+  audited edges, versus 258 decreasing edges (19.6%) and a maximum 16.1pp
+  drop for the deflection-optimal score.  In
+  this controlled deterministic-report model (`success_prob = 1`, unit
+  report cost), the family also gives a mean 0.63pp and maximum 21.2pp `P_D`
+  gain over deflection per addition edge, and it reduces exactly to the
+  closed-form deflection-optimal `P_D` when `Sigma1 = ratio * Sigma0`
+  (maximum absolute error `1.3e-15` over 960 checks).  At the greedy level,
+  applying the optimal rule to the deflection schedule gives +0.83pp mean
+  `P_D`; re-running the exact-`P_D` greedy under the optimal rule adds
+  +0.16pp mean on average (positive in 23.3% of instances), for a +0.99pp
+  total mean gain.  Each score evaluation costs `O(k^3 + G k)` for `k`
+  reports and `G` grid points; the formal contribution is the monotone
+  fusion rule, not a universal scheduling gain.
+- G4: expected-`P_D`-gain greedy under the exact reception law.  The existing
+  selectors optimize expected deflection or deterministic `P_D`, which does
+  not reflect the honest post-communication objective.  The new selector
+  maximizes expected `P_D` over the model's exact independent or correlated
+  reception law, using the Gate G3 monotone fusion family.  Because every
+  fixed-pattern `P_D` is set-monotone at operating points, the expected
+  objective is also set-monotone; in the proportional-covariance,
+  strong-evidence regime it is monotone submodular (0 diminishing-return
+  violations on 3040 audited edges for `Sigma1 = Sigma0` and
+  `Sigma1 = 0.5 Sigma0`), and the greedy matches an exhaustive single-target
+  oracle with ratio 1.0 on all 20 small instances.  Under a 20-seed
+  correlated-erasure audit (`strength=0.7`), the expected-`P_D` greedy gives
+  +1.14pp mean expected `P_D` (bootstrap CI `[0.47, 1.74]`, 85% win rate) and
+  +7.56pp worst-target gain over the current proposed selector at `B=20`; at
+  `B=30` the mean gain is +0.04pp with +3.05pp worst-target gain.  At high
+  budgets (`B=40`) the expected-`P_D` greedy alone is slightly worse in mean
+  (-0.91pp), so the audited system policy evaluates both candidate schedules
+  and keeps the better one: the hybrid is never worse in mean (+0.02pp at
+  `B=40`) and reaches +1.44pp mean and +6.50pp worst-target gain at `B=20`.
+  The formal contribution is the expected-`P_D` objective, its monotone
+  bounded-regime property, and the tight-budget gains, not universal
+  dominance at saturated budgets.
+- G5: RIS-assisted 6G UAV-OTFS-ISAC scenario and channel.  The sensing
+  channel is upgraded from a single-hop direct view to a direct plus
+  RIS-cascaded path.  The RIS phase profile steers an array gain toward the
+  weak target, and the evidence SNR gain matrix is injected before
+  quantization, BSC, and erasure reporting.  The channel model uses an
+  additive-power rule ``gain = 1 + (ris_strength * array_gain)^2`` so RIS
+  alignment is monotone in link quality and never degrades a link.  Under a
+  20-seed tight-budget audit, aligned RIS plus expected-`P_D` greedy raises
+  mean expected `P_D` by +12.3pp at `B=20` (worst-target +17.8pp) and
+  +10.9pp at `B=30` (worst-target +15.2pp) over no RIS, and by +9.0pp /
+  +8.0pp mean over random RIS phase; the QoS feasibility rate at the 0.85
+  target rises from 0% to 95% (`B=20`) and 100% (`B=30`).  The RIS phase
+  profile is the new physical degree of freedom: it turns a blocked weak
+  target into a controllable NLoS illumination, which is the 6G ISAC
+  mechanism this gate demonstrates.
+- G5-Q: finite-resolution RIS phase quantization and control overhead.  The
+  G5 audit used ideal continuous phases; this gate quantizes to 1/2/3 bits
+  and verifies the closed-form mean array-gain loss `sinc^2(1/2^b)`.
+  At `B=20`, 1-bit RIS still gives +10.8pp mean and +15.1pp worst-target
+  expected `P_D` over no RIS, 2-bit gives +11.9pp / +17.1pp, and 3-bit
+  +12.2pp / +17.6pp, close to the continuous-phase +12.3pp / +17.8pp.  The
+  amortized control-plane overhead is only 0.16/0.32/0.48 bits per frame for
+  16 elements over a 100-frame coherence block, so the 6G claim does not
+  assume free RIS control.
+- G5-P: physics-based RIS cascaded-channel audit.  The direct path follows
+  the two-way bistatic radar law `1 / (R_tx^2 R_rx^2)`, and the RIS path
+  follows the three-leg cascaded loss with an `N^2` coherent array gain.
+  With a 1024-element RIS and aperture scale `1e-2`, aligned RIS plus
+  expected-`P_D` greedy raises mean expected `P_D` by +16.3pp at `B=20`
+  (worst-target +24.8pp) and +13.9pp at `B=30` (worst-target +21.8pp) over
+  no RIS, with 100% QoS feasibility; aligned phase beats random phase by
+  +15.7pp / +13.3pp mean.  Even a 256-element RIS with aperture scale
+  `1e-2` retains +10.8pp mean and +13.3pp worst-target at `B=20`, so the
+  physics-based channel keeps the 6G mechanism meaningful without assuming
+  free or ideal channel gains.
+- G5-R: joint RIS control-bit and sensing report-bit allocation.  The RIS
+  control plane and report plane compete for one total budget:
+  `B_report = B_total - N * phase_bits / coherence_frames`.  Under a 12-seed
+  physics-channel audit, the best realizable allocation is 3-bit phase with
+  the remaining budget spent on reports: at total budget 40 and a 64-frame
+  coherence block this gives +9.3pp mean and +12.9pp worst-target expected
+  `P_D` over no RIS, within 0.3pp of the free-continuous-phase upper bound;
+  at total budget 60 the gains are +8.6pp / +13.4pp.  The gate therefore
+  shows that RIS control overhead can be charged honestly without erasing the
+  6G gain, and that phase resolution and report allocation should be
+  optimized jointly rather than separately.
+- G5-S: joint RIS placement, phase, and report/control allocation.  The
+  fixed G5 RIS position was far from the blocked weak target, so this gate
+  searches a small deployment candidate set.  Under a 12-seed audit with the
+  physics channel, the best position `(0, 20, 8)` raises worst-target
+  expected `P_D` to 0.952 at total budget 40 (64-frame coherence), versus
+  0.882 at the fixed position: +7.1pp over the fixed deployment and +16.7pp
+  over no RIS, with +11.7pp mean gain.  At total budget 60 the placement
+  gains are +6.6pp worst-target over fixed and +10.8pp mean over no RIS.
+  RIS placement is therefore not a fixed topology parameter; it is a
+  deployable degree of freedom that should be jointly optimized with phase
+  resolution and report allocation.
+- G5-T: coarse-to-fine multigrid RIS placement.  One local refinement around
+  the G5-S coarse optimum moves the deployment to `(0, 30, 6)` and raises
+  worst-target expected `P_D` from 0.952 to 0.980 at total budget 40
+  (64-frame coherence): +2.8pp over the finite candidate search, +9.8pp over
+  the original fixed position, and +19.5pp over no RIS, with +12.7pp mean
+  gain.  The multigrid search evaluates 7 coarse plus 27 fine deployments
+  (34 evaluations total), and each refinement halves the local grid spacing
+  in each axis at a bounded additive evaluation cost.
+- G5-U: Lipschitz grid-search suboptimality bound for deployment.  For an
+  `L`-Lipschitz deployment objective, a grid with spacing `h` has deployment
+  loss at most `L h sqrt(d)/2`.  Using the physics-channel worst-target
+  expected `P_D` as the objective, the empirical Lipschitz estimate is
+  `2.97e-3`; the second refinement to `(0, 35, 5)` improves worst-target
+  expected `P_D` from 0.983 to 0.988 (+0.46pp), which is inside the
+  `1.29pp` bound at spacing 5 and inside the `2.57pp` bound at spacing 10.
+  The lemma therefore gives a checkable certificate that further refinement
+  cannot yield more than the reported bound.
+- G5-V: Lipschitz-adaptive deployment search with a bounded certificate.
+  The search refines only boxes whose upper bound `f(c) + L||h||_2` can beat
+  the current best.  After 251 objective evaluations in a local deployment
+  box, it finds `(6.25, 39.375, 4.5)` with worst-target expected `P_D`
+  0.987 and a certificate upper bound 0.997, i.e. the deployment optimum is
+  certified within +1.03pp of the found deployment under the used Lipschitz
+  constant `3.43e-3`.  The certificate is not fully epsilon-closed at this
+  evaluation budget, which is reported honestly rather than claimed as
+  converged.
+- G5-W: practical epsilon-closed deployment search in a localized box.  In
+  the local box identified by the G5-T/G5-V audits, the adaptive search
+  closes the certificate to 0.10pp within 111 evaluations
+  (`epsilon_closed = true`), finding `(11.875, 34.21875, 6.5)` with
+  worst-target expected `P_D` 0.983.  A coordinate-wise Lipschitz box bound
+  is used for the 3-seed averaged objective: the original local-box
+  certificate remains bounded at 0.16pp after 3001 main-search and 400
+  corner-refinement evaluations, while a second run inside a 2 m box around
+  the best point closes to 0.09pp in 23 evaluations (`local_epsilon_closed =
+  true`).  Both outcomes are stored separately so the closure claim is not
+  over-stated.
+- G5-CI: paired bootstrap 95% CIs for the G5 series.  All primary gains are
+  statistically significant with 100% win rates: aligned RIS vs no RIS at
+  `B=20` gives +12.33pp mean (CI `[11.66, 13.02]`) and +17.79pp worst-target
+  (CI `[15.73, 20.03]`); physics RIS with 1024 elements at `B=20` gives
+  +16.26pp mean (CI `[14.82, 17.77]`) and +24.78pp worst-target (CI
+  `[23.24, 26.42]`); best placement vs fixed gives +7.06pp worst-target (CI
+  `[5.76, 8.33]`); joint 3-bit allocation vs no RIS gives +8.26pp mean (CI
+  `[7.28, 9.20]`) at total budget 40.
+- G5-DCI: paired bootstrap CIs for the deployment gains.  Per-seed rows for
+  the G5-S/T/V/W deployments give 100% win rates against both no-RIS and the
+  fixed position.  G5-T (multigrid) vs fixed: +4.42pp mean (CI
+  `[3.09, 5.85]`) and +9.85pp worst-target (CI `[7.52, 12.08]`); G5-V vs
+  fixed: +10.45pp worst-target (CI `[7.78, 13.08]`); G5-W vs fixed: +9.10pp
+  worst-target (CI `[7.20, 10.93]`).  This closes the previous CI gap for
+  the deployment search line.
+- G5-RF: global resource fairness ledger.  One table accounts for sensing
+  energy, identity resources, report bits, RIS control bits, and OTFS
+  time-bandwidth under the identity
+  `B_total = B_report + N * phase_bits / coherence_frames`, with a
+  conservative 1-symbol-per-bit ledger.  At total budget 40, the G5-T
+  deployment uses 25 report bits plus 12 control bits (37 total bits, 4645
+  time-bandwidth symbols) versus 40 report bits (4648 symbols) for no-RIS,
+  yet raises mean expected `P_D` from 0.863 to 0.990 (+12.7pp) and
+  worst-target from 0.785 to 0.980 (+19.5pp), with QoS feasibility rising
+  from 0% to 100%.  The RIS gain is therefore not bought with extra
+  time-bandwidth or energy: the RIS is passive, and the audited deployment
+  uses slightly less TB and total occupation than no-RIS.
+- G5-SEN: RIS parameter sensitivity.  At total budget 40, mean gain over no
+  RIS rises from +1.3pp to +11.0pp as aperture scale goes from `1e-3` to
+  `3e-2`, and from +1.1pp to +13.3pp as elements go from 64 to 1024 despite a
+  shrinking report budget.  Direct-path blockage is the regime condition: at
+  blockage 1.0 the worst-target gain CI crosses zero, so the claim is
+  weak-target NLoS illumination, not universal dominance.
+- G5-SOTA: literature-style baselines under the same G5-R budget.  The
+  proposed chain beats RIS deflection Top-K by +0.68pp mean and +1.63pp
+  worst-target, no-RIS deflection Top-K by +15.2pp/+27.5pp, random RIS by
+  +14.4pp/+25.4pp, uniform soft by +21.8pp/+46.1pp, and 1-bit counting fusion
+  by +75.7pp/+79.9pp (no RIS) and +52.1pp/+64.5pp (RIS), all with 100% win
+  rate and positive bootstrap CIs at 12 seeds.
+- G6: budget saturation frontier.  Without RIS, the worst-target expected
+  `P_D` saturates around 0.788 and no tested budget up to 44 reaches the 0.85
+  QoS target.  With the G5-T RIS deployment, `B_total=20` (only 8 report
+  bits after control overhead) already gives 100% QoS feasibility, so the
+  limiting resource is sensing architecture, not a high report budget.
+  Discrete coordinate ascent from the forward greedy schedule produced zero
+  additional gain in the audited cells, showing the current greedy is already
+  a single-move local optimum and motivating continuous gradient updates on
+  RIS phase/placement instead.
+- G7: continuous shared-phase RIS optimization.  A worst-array-power
+  surrogate gradient is a negative result (it improves the surrogate but
+  worsens system P_D), while system-level grid-plus-refine optimization
+  recovers the weak-target steering direction.  At `B_total=20`, the shared
+  system-optimized phase beats no-RIS by +7.6pp mean and +8.2pp worst-target
+  expected P_D and random shared phase by +20.4pp/+31.9pp, but remains
+  -5.9pp/-12.3pp below per-target ideal phase; QoS feasibility is 50% versus
+  100%, so a single shared beam has a physical limit that motivates
+  subarray-based shared-phase designs.
+- G8: exact quota-constrained selection.  Because all audited reports have
+  equal cost, every per-target report subset is evaluated and the best
+  subset of each size is selected; all per-target report quotas are then
+  searched globally.  In every audited budget/scenario cell the exact
+  selector matches forward greedy exactly (0.0pp difference), so the greedy
+  selection layer is already globally optimal for the audited cardinality
+  budget and the remaining gap to all-scheduled is architectural, not
+  selection headroom.
+- G8-K: exact budget-constrained selection under heterogeneous report costs.
+  Gate G29 makes per-UAV quantizer bits a design variable, so the equal-cost
+  assumption behind G8 no longer covers the feasible set; a communication-
+  budget exact selector must charge every report its true bit cost.  The
+  resulting multiple-choice knapsack DP over targets and total bits replaces
+  the equal-cost quota search: every per-target report subset is evaluated
+  exactly, charged its true bit cost, and pruned only by componentwise Pareto
+  dominance, so the returned schedule is the exact lexicographic optimum
+  (QoS gap, weighted expected `P_D`, worst target) under the bit budget.  On
+  the formal 20-seed x 5-budget audit, the DP matches the exhaustive global
+  oracle in 100% of 100 controlled cells and never loses to greedy on the
+  lexicographic score in the variable-rate demo.  Mean worst-target gains
+  over greedy are +1.27pp at `B=5` (p=0.015) and +2.57pp at `B=7`
+  (p=0.009), where greedy leaves cheaper spare bits unused; at `B=11` the
+  gain is +0.48pp (p=0.115), and at `B=9` the lexicographic selector is
+  -1.00pp worse on worst-target P_D (p=0.895), showing that its QoS/mean
+  priority can trade worst-target P_D.  Per-target
+  cost-value Pareto dominance removes subsets that are no cheaper and no
+  better than another subset, preserving exactness while shrinking the DP
+  option set.  The lexicographic objective can lower worst-target P_D
+  relative to greedy in controlled cells (e.g. `B=11` 0.3745 versus 0.4081);
+  the max-min variant G8-M is the selector for the system worst-target
+  objective.
+- G8-M: exact max-min budget selection under heterogeneous report costs.
+  The system objective is worst-target expected `P_D`, so the exact selector
+  must maximize the minimum rather than the lexicographic weighted sum.  For
+  a threshold `t`, feasibility is a multiple-choice knapsack problem over
+  enumerated subsets with value at least `t`; because feasibility is
+  monotone in `t`, the exact optimum is found by binary search over the
+  finite set of candidate values.  On the formal 20-seed x 5-budget audit
+  the selector matches an exhaustive max-min oracle in 100% of 100
+  controlled cells and is never worse than forward greedy in the
+  variable-rate demo.  Controlled mean worst-target gains are +5.37pp at
+  `B=5` (p<1e-6), +8.24pp at `B=7` (p<1e-6), +0.39pp at `B=9` (p=0.083),
+  and +3.33pp at `B=11` (p=3.9e-4); system gains are +1.27pp at `B=5`
+  (p=0.015), +2.57pp at `B=7` (p=0.009), +0.28pp at `B=9` (p=0.046), and
+  +1.09pp at `B=11` (p=0.014), all with 95% bootstrap CIs excluding zero
+  at the significant cells.  The same
+  cost-value dominance
+  rule is applied before threshold search.  Among schedules attaining the
+  optimal max-min threshold, the selector keeps the componentwise-Pareto
+  frontier and returns the lexicographic best QoS gap / weighted mean / worst
+  target.
+- G8-S: scaled max-min selection for larger report sets.  At operating points
+  with any `P_D`, the per-target minimum cost to reach a threshold is
+  solved by branch-and-bound using a closed-form Cauchy upper bound on the
+  `P_D`-optimal linear-score shift; a global schedule is feasible if and only
+  if the per-target minima sum to at most `B`.  Small low-`P_D` models fall
+  back to exact subset enumeration; models within `max_exhaustive_reports`
+  delegate directly to the exact selector, so the epsilon search runs only
+  when subset enumeration would already be infeasible.  The scaled selector
+  is verified against exhaustive enumeration on the formal 20-seed set with
+  zero absolute error at every budget, and on a synthetic 12-report model it
+  finds the minimum-cost subset without enumerating all 4096 subsets.
+  A report-count benchmark covers R=8/12/16/20/24/28/32/40 non-owner
+  reports: the exhaustive baseline grows to about $1.1\times 10^{12}$
+  subsets, while the certificate finishes in 24-60 ms and returns exact
+  minimum costs of 1-2 bits.
+  When the greedy upper bound is small, all subsets with cost below it are
+  enumerated to prove minimality before the branch-and-bound runs; this cuts
+  the 16-report threshold-0.9 case from about 60s to about 1.5s on the
+  current test machine.
+  The worst case remains exponential; G8-S is an exact pruning certificate,
+  not a polynomial-time guarantee.
+- G8-target: exact selection across target count.  At Q=3/4/5 and
+  B=8/12/16 (3 seeds, grid 32), the budget and max-min selectors match
+  their exhaustive oracles in 100% of all 27 cells and are never worse than
+  forward greedy; mean wall time grows from about 180 ms at Q=3 to about
+  300-360 ms at Q=5.
+- G9: aperture-conserved subarray multi-beam RIS.  The 256 elements are
+  partitioned into three target-aligned subarrays and the integer allocation
+  is optimized by discrete coordinate ascent (32/16/8-element moves).  At
+  `B_total=28`, the optimized subarray profile reaches 100% QoS feasibility
+  and worst-target expected `P_D` 0.913, improving single shared weak-aligned
+  phase by +5.2pp and no-RIS by +13.7pp; it remains 6.7pp below the
+  per-target ideal upper bound, now with a clearly identified aperture
+  allocation bottleneck.
+- G10: per-subarray steering-cosine optimization.  Fixing the G9 aperture
+  allocations and applying coordinate ascent over each block steering cosine
+  improves worst-target expected P_D by +0.14pp to +0.41pp across budgets,
+  reaching 0.858/0.916/0.935 at B=20/28/40 while preserving total aperture
+  and control overhead.  QoS remains 50% at B=20 and 100% at B=28/40; the
+  per-target ideal gap is 9.6/6.5/4.8pp worst at the three budgets.
+- G11: fixed-budget aperture scaling.  Under the exact control-overhead
+  ledger, increasing `N` and amortizing phase bits over a longer coherence
+  block closes the B=20 QoS gap without increasing total budget: `N=1024`,
+  3-bit phase, `C=256`, equal subarray allocation reaches 100% QoS with only
+  8 report bits and worst-target expected `P_D` 0.982.  This confirms the
+  proposed performance is architecture-limited, not algorithm-limited.
+- G12: model-driven architecture derivation.  Instead of a joint
+  four-variable exhaustive search, the weak-target deflection surrogate
+  `J(N) = beta (1 + kappa N^2)^2 (R - LN)` is derived from the subarray
+  array-gain approximation and the quadratic-in-SNR deflection law.  Its
+  first-order condition gives a closed-form `N*`.  For B=20, `b=1, C=64`
+  yields `N* = 1016 -> 1024` with 100% QoS, and `b=3, C=256` yields
+  `N* = 1363 -> 1344` with worst P_D 0.974, so the derived design matches
+  the exact evaluation without exhaustive search.
+- G13: max-min deflection water-filling for subarray allocation.  The
+  surrogate `D_q(a_q) = beta_q (1 + kappa_q a_q^2)^2` is monotone convex, so
+  aperture is moved from the current highest-D target to the lowest-D target
+  until the minimum stops improving.  At the G12-derived apertures this
+  raises worst-target P_D from 0.900 to 0.911 (`N=1024,b=1,C=64`), from
+  0.974 to 0.992 (`N=1344,b=3,C=256`), and from 0.999599 to 0.999995
+  (`N=2048,b=3,C=256,B=40`), all with 100% QoS.  A first marginal-equalizing
+  version was tested and rejected because it solves the wrong max-min KKT
+  and degrades exact performance.
+- G14: exact-array-factor allocation.  Including cross-block interference in
+  the surrogate raises the exact surrogate minimum, but exact system P_D does
+  not consistently improve over the separable allocation: at
+  `N=1024,b=1,C=64,B=20` exact-array allocation is 0.8pp worse, while at
+  `N=2048,b=3,C=256,B=40` it is 0.00008pp better.  This is a documented
+  negative/equivocal result: a more accurate surrogate is not automatically
+  a better system objective.
+- G15: greedy-aware system-level allocation.  Coordinate ascent on the exact
+  expected-P_D objective `F(a)` (including greedy scheduling and reporting)
+  corrects the surrogate mismatch in most configurations: worst P_D rises
+  from 0.911 to 0.924 (`N=1024,b=1,C=64`), 0.911 to 0.927
+  (`N=704,b=3,C=128`), and 0.981 to 0.985 (`N=960,b=3,C=128,B=28`).  At
+  `N=2048,b=3,C=256,B=40` the coarse 8-element local search is 0.0018pp below
+  the exact-surrogate allocation, which is reported as a local-search
+  limitation.
+- G16: single-element refinement and local optimality certificate.  Starting
+  from the G15 allocations, 4/2/1-element coordinate ascent improves every
+  configuration, and `exact_single_move_gradients` verifies
+  `local_optimal=true` with nonpositive maximum single-element gradient in
+  all five configurations: 0.924107 (`N=1024`), 0.927345 (`N=704`),
+  0.991896 (`N=1344`), 0.985738 (`N=960,B=28`), and 0.999986
+  (`N=2048,B=40`).
+- G17: bounded multi-block certificate.  All zero-sum reallocations moving
+  up to three elements in total are evaluated exactly on the system
+  objective.  Four configurations are already multi-block local optima, and
+  `N=2048,B=40` improves from 0.999986 to 0.999988 in 7 rounds; all five
+  final allocations satisfy `local_optimal=true` for the T<=3 neighborhood.
+- G18: joint RIS placement and allocation.  Alternating coordinate ascent
+  over position (2/1/0.5m steps) and allocation (T<=3 multi-block moves)
+  improves all three tested configurations and certifies both degrees of
+  freedom: `N=1024` reaches 0.925224 at `(-2,30,6)`, `N=1344` reaches
+  0.992907 at `(0.5,31,6)`, and `N=2048,B=40` reaches 0.999997 at
+  `(6.5,34,5)`, all with `local_optimal=true` for allocation and position.
+- G19: progressive decentralization.  At B=40, moving from global scheduling
+  to owner-only loses only 0.014pp worst P_D, while 1-bit hard decisions lose
+  18.8pp and QoS drops to 50%.  At B=20, however, 5-bit soft reports cannot
+  be sent under a 4-bit report budget, so centralized soft fusion equals
+  owner-only; 1-bit hard decisions can send three reports but cannot meet the
+  global P_FA=0.05 with one vote per target, so they are infeasible/worse
+  (QoS 0%), not a win.  The first version of this gate did not enforce P_FA
+  and was corrected.
+- G20: amplified distributed hard detection.  Local 1-bit thresholds are no
+  longer fixed at 0.1: each target optimizes local P_FA and the counting
+  threshold under the global P_FA constraint.  At B=40/N=2048 this raises
+  1-bit worst P_D from 0.812 to 0.944 (QoS 0% to 100%), still below
+  centralized 0.999997; at B=20 with one vote per target no feasible counting
+  rule exists, so distributed 1-bit remains infeasible.
+- G21: network-level decentralization.  Removing report links and owner
+  fusion entirely, optimized peer majority uses all `M=8` local UAV votes
+  and 0 report bits.  At B=20/N=1024 it reaches worst P_D 0.955 (vs
+  centralized soft 0.925), at B=20/N=1344 0.998 (vs 0.993), and at
+  B=40/N=2048 0.9999977 (vs centralized 0.9999967), all with 100% QoS.  This
+  is the strongest distributed result: consensus voting can match or beat
+  centralized soft fusion when architecture provides high local SNR.
+- G22: degraded multi-hop consensus.  With partial observability 0.75 or
+  link reliability 0.8, peer majority drops below centralized soft fusion
+  (e.g., B=40/N=2048: 0.966/0.977 vs 0.999997); with three hops at 0.8 per
+  hop (effective participation 0.992) it recovers to 0.9998, while severe
+  degradation (participation 0.546) drops to 0.877.
+- G23: correlated failure and heterogeneous observability.  A network-wide
+  common failure of 0.2/0.4 drops peer majority to 0.977/0.909 at
+  B=40/N=2048, geometry-based heterogeneous observability (participation
+  0.608) drops to 0.936, and the severe combination (participation 0.467)
+  drops to 0.858; centralized soft remains at 0.999997.
+- G24: scalability across target/UAV counts.  For Q=2/4/6 and M/Q=1/2/3,
+  RIS ideal phase is the most robust architecture (QoS 100% for all tested
+  cells except Q=6,M=6), peer majority approaches it when M/Q>=3, and no-RIS
+  is highly topology-sensitive (e.g., Q=2,M=4 drops to 0.460).
+- G25: scaled white-box G18 in the same matrix.  Using max-min water-filling
+  allocation plus exact position ascent, the scaled G18 keeps 100% QoS in
+  every tested cell except Q=6,M=6 (where ideal phase also fails), and
+  consistently outperforms peer majority; at Q=6,M=12 it reaches 0.922 vs
+  peer 0.792 and ideal 0.934.
+- G26: mobility and time-varying blockage.  With rotating UAVs and a
+  sinusoidally varying weak-target blockage, no-RIS QoS drops to 0%; RIS
+  ideal stays 100%; adaptive subarray allocation reaches 81.25% QoS and
+  worst P_D 0.847, versus 68.75% and 0.841 for static allocation.
+- G27: multi-RIS deployment.  With total aperture fixed at 256 elements,
+  splitting into two/three RISs lowers worst P_D (e.g., B=28: 0.980 for one
+  RIS vs 0.923/0.927 for two/three), so placement diversity only partially
+  compensates for the lost coherent aperture.
+- G28: multi-RIS split and placement optimization.  Equal split gives 0.924;
+  optimizing the split and second RIS position gives `(8, 248)` at
+  `(4,42,2)` and reaches 0.986, slightly exceeding the single-RIS 0.981.
+- G29: variable-rate soft/hard reporting.  Fixed 5-bit soft is best at
+  B=20/28; adaptive soft rates outperform it at B=40 (0.988 vs 0.981);
+  1-bit hard remains the weakest except where soft reports are infeasible.
+- G30: global rate-profile optimization.  Coordinate ascent over per-UAV
+  quantizer bits raises worst P_D to 0.988 at B=28 (fixed 5-bit 0.981) and
+  0.991 at B=40 (fixed 5-bit 0.987), with single-rate-change local
+  optimality certified.  G30-E re-checks the certificate with the exact
+  max-min selector on the same 2-seed/grid-256 audit as G30.  At B=28 the
+  G30 profile remains a single-rate exact local optimum at 0.9879 with zero
+  gain.  At B=40 the greedy certificate is false under the exact objective:
+  exact coordinate ascent improves worst P_D from 0.9911 to 0.9916 and
+  certifies the result as a single-rate exact local optimum.
+- G31: exact soft/hard hybrid fusion.  A Gaussian-plus-hard LLR score is
+  evaluated exactly; hybrid beats hard-only but does not beat pure 5-bit soft
+  in the tested budgets (0.977/0.969 vs 0.977/0.981), so hybrid scheduling
+  must be optimized rather than assumed beneficial.
+- G32: interference sensitivity.  With INR=0 dB only RIS ideal reaches 100%
+  QoS; INR=3 dB drops all architectures below the QoS target, and INR=10/20
+  dB drives worst P_D below 0.2.
+- G33: spatial interference and RIS placement.  Per-UAV INR follows
+  free-space path loss from an interference source; no-RIS fails all
+  strengths, fixed RIS keeps 100% QoS, and optimizing RIS position adds
+  +0.3pp worst P_D.
+- G34: multiple interference sources.  INR is the sum of path losses from
+  three sources (mean INR 0.087); no-RIS fails, fixed RIS keeps 100% QoS,
+  and optimized placement reaches 0.987 (+0.4pp).
+- G35: 1-D ULA vs 2-D UPA.  With the same 256 elements, UPA is almost
+  identical to ULA in clean and interference scenarios (e.g., B=40
+  interference: 0.98691 vs 0.98691); the 2-D benefit would require elevation
+  diversity or null-steering, not this geometry.
+- G36: UPA null-steering.  Optimized phases reduce reflected INR from 0.0267
+  to 0.0106 (-60%) while target gain drops only from 1.000 to 0.984; B=40
+  worst P_D rises from 0.98112 to 0.98216.
+- G37: directly quantized null-steering.  Discrete-phase coordinate ascent
+  slightly improves continuous-then-quantized nulling (B=40 0.982166 vs
+  0.982165) and keeps reflected INR near the continuous-quantized level.
+- G38: joint quantized nulling and placement.  Optimizing position with
+  per-position nulling raises B=40 worst P_D from 0.98217 to 0.98481, with
+  reflected INR rising from 0.0105 to 0.0296, showing an explicit
+  target-gain versus reflected-interference trade-off.
+- G39: distributed features under relaxed thresholds.  With QoS target
+  0.70-0.80 and budgets 20-28, centralized, peer clean, peer multi-hop, and
+  optimized hard all become feasible; peer multi-hop stays at 0.953 across
+  budgets.
+- G40: low-budget/low-SNR distributed.  With N=128, interference, and B=12,
+  centralized drops to 0.786 while peer clean 0.858 and peer multi-hop 0.855
+  outperform it; hard optimized 0.765 remains feasible at QoS 0.70.
+- G41: consensus parity boundary.  Theoretical `M_min` is 14-17; empirically
+  consensus wins at B=8/12 for M>=8 and at B=8 for M=6, while centralized
+  regains the lead at B>=16.
+- G42: optimized-local-threshold boundary.  Minimizing `M_min` over local
+  P_FA lowers it by 9-13% (e.g., M=16: 13.70 to 12.14), bringing the theory
+  closer to the exact wins.
+- G43: exact Poisson-binomial boundary.  Exact feasibility starts at M=6,
+  matching empirical wins, while the Gaussian approximation predicted
+  M_min=13.36; this closes the theory-empirics gap.
+- G43-B: exact minimum majority count and monotonicity audit.  For a voter
+  sequence the exact Poisson-binomial feasibility is evaluated on every
+  prefix, so `M_min` is exact rather than read off a coarse grid.  The audit
+  also checks whether feasibility is monotone in `M`; in the tested
+  homogeneous example it is not (`M=3` feasible, `M=4` infeasible), so a
+  binary search of `M_min` is not generally valid without a monotonicity
+  certificate.  In the audited G43-B run, feasibility is non-monotone at
+  `num_uavs=8/12/16`, and the exact minimum voter count is 14 at M=6, 17 at
+  M=8, 16 at M=12, and 19 at M=16; the system-level voter sequences
+  therefore fail the binary-search precondition.
+- G44: fundamental information budget.  Within the soft family, P_D rises
+  monotonically with normalized information `rho` (0.774 at 0.507 -> 0.933
+  at 0.946); consensus keeps `rho` nonzero when soft reports are
+  unaffordable.
+- G45: closed-form resource law (negative).  A simple
+  `Phi((sqrt(d0(1+n)g^2)-z)/sqrt(c))` law overestimates P_D by up to 30pp
+  (N=64) and saturates to 1 at N>=128; exact moment propagation is required,
+  so the closed form is rejected as a universal law.
+- G46: exact information budget.  Inverting the Gaussian detection relation
+  gives `rho_exact=D_eff/D_full`, where `D_eff=(Phi^{-1}(P_D)+z_FA)^2`.
+  Soft raw rho overestimates `rho_exact` by 2.38-2.78x because quantization
+  and correlation are ignored; soft P_D rises 0.774->0.933 as `rho_exact`
+  rises 0.205->0.351, while peer consensus (0.881 at `rho_exact=0.284`)
+  wins only in the scarce-report regime and hard fusion stays at
+  `rho_exact<=0.199`.
+- G47: exact architecture switch.  At B=8/12 the selector chooses peer
+  consensus and raises worst P_D from 0.774/0.824 to 0.881
+  (+10.68/+5.68pp), making the 0.85 QoS target feasible; at B>=16 it returns
+  to centralized soft.  The fixed `report_budget < 10` policy matches the
+  exact choice in this 4-seed audit and is explicitly a design parameter,
+  not a universal law.
+- G48: target-wise architecture switch.  Each target independently selects
+  `max(soft_q, peer_q)`; the order inequality guarantees no loss versus the
+  global switch and adds +0.49/+1.55/+1.55pp worst P_D at B=12/16/20.
+- G49: soft-report reallocation.  Bits freed by peer-selected targets are
+  greedily added to remaining centralized targets with exact expected-P_D
+  marginals; this adds +0.75pp at B=16/20 over G48 and +1.55/+0.85pp at
+  B=28/40, with a nondecreasing-worst-P_D certificate.
+- G50: two-sided mode ascent.  A limiting peer target can switch back to
+  centralized soft only if the upgrade strictly raises the worst P_D; this
+  adds +0.39pp at B=12 over G48 (0.8858 -> 0.8898) and matches G49 at B>=16.
+- G51: stochastic mobility with RIS reconfiguration latency.  AR(1)
+  random trajectories and blockage make no-RIS worst-over-time P_D 0.524;
+  static RIS mode ascent reaches 0.705, latency-1 RIS 0.722, ideal
+  target-wise 0.847, and ideal mode ascent 0.852 with 90.625% QoS over time.
+- G52: MMSE prediction-aware RIS.  The conditional-mean AR(1) predictor
+  raises latency-1 worst-over-time P_D from 0.7217 to 0.7283 (+0.65pp) and
+  QoS from 43.75% to 46.875%.
+- G53: multi-step MMSE prediction.  For horizon h, the predictor is
+  `rho^h p_{t-h}` plus nominal trend and error covariance
+  `(1-rho^{2h})sigma^2 I`; MMSE over stale-phase worst P_D gains
+  +0.65/+3.24/+5.24pp for h=1/2/3, and exact per-frame horizon selection
+  adds +0.86pp over the best fixed MMSE; hysteresis with delta=0.02 halves
+  architecture switches while keeping the oracle QoS, and per-switch costs
+  of 1/3/6 bits select delta 0.00/0.03/0.05 under a 6-bit control budget.
+- G54: covariance-aware phase (negative).  Expected-gain optimization is
+  monotone in its surrogate but degrades exact worst P_D from 0.7200 to
+  0.6557 under quantization at h=3; MMSE phase is kept.
 
 Current documentation files:
 
@@ -342,8 +917,44 @@ Current documentation files:
   document with the same Appendices A/B/C.
 - `UAV_OTFS_ISAC_System_Model_revised.docx` -- synchronized revised system
   model with the same Appendices A/B/C.
+- `SYSTEM_MODEL.md` -- unified notation, channel/evidence/reporting/fusion
+  model, resource identities, and formal claims for the G3-G5 results.
+- `RELATED_WORK.md` -- draft related-work survey with the five literature
+  lines and the paper's gap positioning.
+- `FORMAL_PROOFS.md` -- full proofs for the G3 KKT family and set
+  monotonicity, G4 expected-P_D/submodularity, and G5 quantization,
+  path-loss, grid, and branch-and-bound certificates.
+- `G18_THEORY.md` -- theory, explicit-information inventory, convergence,
+  complexity, and non-neural-network argument for the G18 architecture.
+- `SCENARIO_COMPLEXITY.md` -- current-scenario simplifications, 6G gaps, and
+  an incremental complexity upgrade ladder.
+- `FUNDAMENTAL_PRINCIPLE.md` -- unified information-budget view that explains
+  centralized, hard, consensus, and RIS architecture in one framework.
+- `PAPER_DRAFT.md` -- full draft manuscript assembled from the outline,
+  system model, related work, formal proofs, and audited results.
+- `paper/submission.md` -- submission-oriented manuscript with formal
+  sections, a selection-results table, and numbered references.
+- `paper/submission.docx` -- Word version generated from the manuscript by
+  `scripts/md_to_docx.py`; structural audit in
+  `scripts/audit_submission_docx.py`.
+- `paper/main.tex` -- IEEE-style LaTeX version generated by
+  `scripts/md_to_latex.py`; structural audit in
+  `scripts/audit_submission_latex.py`.
+- `paper/main.pdf` -- compiled IEEEtran PDF (7 pages, Tectonic 0.17.0).
+- `paper/references.bib` -- BibTeX reference library for the manuscript.
+- `scripts/audit_submission_completeness.py` -- manuscript completeness
+  audit (title/abstract/contributions/theorems/proofs/limitations/references/
+  tables/figures).
+- `SUBMISSION_CHECKLIST.md` -- pre-submission checklist with artifacts,
+  verification commands, and remaining environment-dependent steps.
+- `results/paper_results_table.md` and `paper_figures/` -- draft unified
+  result table and figures regenerated by `scripts/build_paper_tables.py`.
+- `paper_figures/algorithm_evolution.png` -- algorithm-evolution diagram
+  regenerated by `scripts/draw_algorithm_evolution.py`.
+- `paper_figures/scenario_evolution.png` -- scenario-evolution diagram
+  regenerated by `scripts/draw_scenario_evolution.py`.
 - `PAPER_OUTLINE.md` -- paper skeleton with novelty positioning, gate results,
-  and the three experiments still required before submission.
+  and the remaining paper-engineering tasks before submission.
 - `AUDIT.md` -- cross-document consistency audit report.
 - `RUN_GUIDE.md` -- setup, smoke, and formal run commands for the target
   machine (7800X3D + 5070).
@@ -1070,8 +1681,11 @@ Oracle rather than a scalable online scheduler.
 - `pi * Delta-D / bits` is only the document's open-loop first-order score;
   selection uses the true expected-deflection difference when exact
   enumeration is tractable.
-- The fusion direction is optimal only among linear fusion rules under the
-  null-hypothesis deflection criterion.
+- The deflection-optimal fusion direction is optimal only among linear fusion
+  rules under the null-hypothesis deflection criterion; the Gate G3
+  `P_D`-optimal family is instead the KKT-optimal member for detection
+  probability, and it guarantees set monotonicity at operating points with
+  `P_D >= 0.5`.
 - The built-in waveform calibration is a lightweight DD leakage model. It is
   not a complete SDR-grade OTFS transceiver.
 - The Gate G0-C front end uses an abstract DD grid with declared delay and

@@ -1,0 +1,245 @@
+{
+  "gate": "G25-scaled-g18-scalability",
+  "seeds": 2,
+  "qos_target": 0.85,
+  "ris_elements": 256,
+  "aperture_scale": 0.01,
+  "phase_bits": 3,
+  "coherence_frames": 64,
+  "summary": [
+    {
+      "num_targets": 2,
+      "num_uavs": 2,
+      "uav_to_target_ratio": 1,
+      "report_budget_bits": 40,
+      "total_budget_bits": 52,
+      "allocation": [
+        256,
+        0
+      ],
+      "position": [
+        3.0,
+        25.0,
+        8.0
+      ],
+      "scaled_g18_value": 0.9675108485255968,
+      "no_ris_worst": 0.9474048119101495,
+      "ris_ideal_worst": 0.9701395972281197,
+      "scaled_g18_worst": 0.9675108485255968,
+      "peer_majority_worst": 0.954775845929607,
+      "scaled_g18_qos": 1.0,
+      "ris_ideal_qos": 1.0,
+      "peer_majority_qos": 1.0
+    },
+    {
+      "num_targets": 2,
+      "num_uavs": 4,
+      "uav_to_target_ratio": 2,
+      "report_budget_bits": 40,
+      "total_budget_bits": 52,
+      "allocation": [
+        173,
+        83
+      ],
+      "position": [
+        4.0,
+        27.0,
+        6.0
+      ],
+      "scaled_g18_value": 0.9827311002214154,
+      "no_ris_worst": 0.4892224391071465,
+      "ris_ideal_worst": 0.9872506694629791,
+      "scaled_g18_worst": 0.9827311002214154,
+      "peer_majority_worst": 0.9683558350386856,
+      "scaled_g18_qos": 1.0,
+      "ris_ideal_qos": 1.0,
+      "peer_majority_qos": 1.0
+    },
+    {
+      "num_targets": 2,
+      "num_uavs": 6,
+      "uav_to_target_ratio": 3,
+      "report_budget_bits": 40,
+      "total_budget_bits": 52,
+      "allocation": [
+        168,
+        88
+      ],
+      "position": [
+        7.0,
+        24.0,
+        4.5
+      ],
+      "scaled_g18_value": 0.9837466001902804,
+      "no_ris_worst": 0.5738529763315351,
+      "ris_ideal_worst": 0.9874360908651061,
+      "scaled_g18_worst": 0.9837466001902804,
+      "peer_majority_worst": 0.9632586547062225,
+      "scaled_g18_qos": 1.0,
+      "ris_ideal_qos": 1.0,
+      "peer_majority_qos": 1.0
+    },
+    {
+      "num_targets": 4,
+      "num_uavs": 4,
+      "uav_to_target_ratio": 1,
+      "report_budget_bits": 80,
+      "total_budget_bits": 92,
+      "allocation": [
+        136,
+        0,
+        88,
+        32
+      ],
+      "position": [
+        -2.0,
+        28.0,
+        4.0
+      ],
+      "scaled_g18_value": 0.9516766289472298,
+      "no_ris_worst": 0.9306643328537143,
+      "ris_ideal_worst": 0.9752186684702943,
+      "scaled_g18_worst": 0.9516766289472298,
+      "peer_majority_worst": 0.9154466391563498,
+      "scaled_g18_qos": 1.0,
+      "ris_ideal_qos": 1.0,
+      "peer_majority_qos": 1.0
+    },
+    {
+      "num_targets": 4,
+      "num_uavs": 8,
+      "uav_to_target_ratio": 2,
+      "report_budget_bits": 80,
+      "total_budget_bits": 92,
+      "allocation": [
+        96,
+        64,
+        96,
+        0
+      ],
+      "position": [
+        -2.5,
+        36.5,
+        4.5
+      ],
+      "scaled_g18_value": 0.963873841328653,
+      "no_ris_worst": 0.9503386688121032,
+      "ris_ideal_worst": 0.9865857485793061,
+      "scaled_g18_worst": 0.963873841328653,
+      "peer_majority_worst": 0.9147681694742216,
+      "scaled_g18_qos": 1.0,
+      "ris_ideal_qos": 1.0,
+      "peer_majority_qos": 1.0
+    },
+    {
+      "num_targets": 4,
+      "num_uavs": 12,
+      "uav_to_target_ratio": 3,
+      "report_budget_bits": 80,
+      "total_budget_bits": 92,
+      "allocation": [
+        176,
+        64,
+        0,
+        16
+      ],
+      "position": [
+        2.0,
+        32.0,
+        6.0
+      ],
+      "scaled_g18_value": 0.9771178010728622,
+      "no_ris_worst": 0.9684779215607167,
+      "ris_ideal_worst": 0.9845734954742416,
+      "scaled_g18_worst": 0.9771178010728622,
+      "peer_majority_worst": 0.8407889772972916,
+      "scaled_g18_qos": 1.0,
+      "ris_ideal_qos": 1.0,
+      "peer_majority_qos": 0.5
+    },
+    {
+      "num_targets": 6,
+      "num_uavs": 6,
+      "uav_to_target_ratio": 1,
+      "report_budget_bits": 120,
+      "total_budget_bits": 132,
+      "allocation": [
+        43,
+        43,
+        0,
+        86,
+        42,
+        42
+      ],
+      "position": [
+        -2.0,
+        27.0,
+        4.0
+      ],
+      "scaled_g18_value": 0.7244972321298492,
+      "no_ris_worst": 0.6689336130694581,
+      "ris_ideal_worst": 0.750144183456064,
+      "scaled_g18_worst": 0.7244972321298492,
+      "peer_majority_worst": 0.6086617947396684,
+      "scaled_g18_qos": 0.0,
+      "ris_ideal_qos": 0.0,
+      "peer_majority_qos": 0.0
+    },
+    {
+      "num_targets": 6,
+      "num_uavs": 12,
+      "uav_to_target_ratio": 2,
+      "report_budget_bits": 120,
+      "total_budget_bits": 132,
+      "allocation": [
+        43,
+        43,
+        0,
+        43,
+        85,
+        42
+      ],
+      "position": [
+        1.0,
+        29.0,
+        6.0
+      ],
+      "scaled_g18_value": 0.9216797907581364,
+      "no_ris_worst": 0.8045069621418763,
+      "ris_ideal_worst": 0.9337448074164272,
+      "scaled_g18_worst": 0.9216797907581364,
+      "peer_majority_worst": 0.7917558626035621,
+      "scaled_g18_qos": 1.0,
+      "ris_ideal_qos": 1.0,
+      "peer_majority_qos": 0.0
+    },
+    {
+      "num_targets": 6,
+      "num_uavs": 18,
+      "uav_to_target_ratio": 3,
+      "report_budget_bits": 120,
+      "total_budget_bits": 132,
+      "allocation": [
+        43,
+        43,
+        43,
+        0,
+        85,
+        42
+      ],
+      "position": [
+        -1.5,
+        28.0,
+        2.5
+      ],
+      "scaled_g18_value": 0.9622819505606403,
+      "no_ris_worst": 0.8815268314897606,
+      "ris_ideal_worst": 0.9749072964908858,
+      "scaled_g18_worst": 0.9622819505606403,
+      "peer_majority_worst": 0.8818455308282827,
+      "scaled_g18_qos": 1.0,
+      "ris_ideal_qos": 1.0,
+      "peer_majority_qos": 1.0
+    }
+  ]
+}

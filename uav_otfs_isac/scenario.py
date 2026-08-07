@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 import numpy as np
 from scipy.stats import norm
 
@@ -19,18 +21,85 @@ def target_geometry(q: int) -> np.ndarray:
     return np.array([45.0 * np.cos(1.7 * q), 55.0 * np.sin(1.3 * q), 0.0])
 
 
-def build_models(cfg: ExperimentConfig, rng: np.random.Generator) -> list[TargetEvidenceModel]:
-    positions = uav_geometry(cfg.num_uavs)
+def build_models(
+    cfg: ExperimentConfig,
+    rng: np.random.Generator,
+    snr_gain: np.ndarray | None = None,
+    transmitter_positions: np.ndarray | None = None,
+    target_positions: Sequence | None = None,
+    quantizer_bits_per_uav: Sequence[int] | None = None,
+    interference_to_noise: np.ndarray | None = None,
+) -> list[TargetEvidenceModel]:
+    """Build the moment-matched system models.
+
+    ``snr_gain`` optionally supplies a per-target, per-UAV evidence SNR gain
+    matrix of shape ``(num_targets, num_uavs)``, e.g. the gain induced by a
+    RIS-assisted cascaded channel before quantization and reporting.
+
+    ``transmitter_positions`` and ``target_positions`` override the static
+    geometry for time-varying scenarios; the default is
+    :func:`uav_geometry` and :func:`target_geometry`.
+
+    ``quantizer_bits_per_uav`` overrides the uniform quantizer bit count and
+    gives each report its own rate, enabling variable-rate soft reporting.
+
+    ``interference_to_noise`` applies an interference-to-noise ratio per UAV,
+    reducing the effective SINR as ``SNR / (1 + INR)``.
+    """
+    positions = (
+        uav_geometry(cfg.num_uavs)
+        if transmitter_positions is None
+        else np.asarray(transmitter_positions, dtype=float)
+    )
+    if positions.shape != (cfg.num_uavs, 3):
+        raise ValueError("transmitter_positions must have shape (num_uavs, 3)")
+    if target_positions is None:
+        target_positions = [target_geometry(q) for q in range(cfg.num_targets)]
+    else:
+        target_positions = [
+            np.asarray(position, dtype=float) for position in target_positions
+        ]
+        if len(target_positions) != cfg.num_targets:
+            raise ValueError("one target position is required per target")
+    if any(position.shape != (3,) for position in target_positions):
+        raise ValueError("target positions must be 3-D")
+    if quantizer_bits_per_uav is None:
+        per_uav_bits = np.full(cfg.num_uavs, cfg.quantizer_bits, dtype=int)
+    else:
+        per_uav_bits = np.asarray(quantizer_bits_per_uav, dtype=int)
+        if per_uav_bits.shape != (cfg.num_uavs,):
+            raise ValueError("quantizer_bits_per_uav must have one entry per UAV")
+    if np.any(per_uav_bits <= 0):
+        raise ValueError("quantizer bits must be positive")
+    if interference_to_noise is not None:
+        interference_to_noise = np.asarray(interference_to_noise, dtype=float)
+        if interference_to_noise.shape != (cfg.num_uavs,):
+            raise ValueError("interference_to_noise must have one entry per UAV")
+        if np.any(interference_to_noise < 0.0):
+            raise ValueError("interference_to_noise entries must be nonnegative")
+    if snr_gain is not None:
+        gain = np.asarray(snr_gain, dtype=float)
+        if gain.shape != (cfg.num_targets, cfg.num_uavs):
+            raise ValueError("snr_gain must have shape (num_targets, num_uavs)")
+        if np.any(gain < 0.0):
+            raise ValueError("snr_gain entries must be nonnegative")
     models: list[TargetEvidenceModel] = []
     for q in range(cfg.num_targets):
-        target = target_geometry(q)
+        target = target_positions[q]
         distance = np.linalg.norm(positions - target, axis=1)
         snr_lo, snr_hi = cfg.otfs.snr_db_range
         base_snr_db = snr_hi - (snr_hi - snr_lo) * (distance - distance.min()) / max(np.ptp(distance), 1e-9)
         fractional = rng.uniform(*cfg.otfs.fractional_doppler_range, cfg.num_uavs)
         leakage = np.sinc(fractional) ** 2
         effective_snr = 10 ** (base_snr_db / 10.0) * np.clip(leakage, 0.12, 1.0)
-        effective_snr /= 1.0 + cfg.otfs.residual_interference
+        interference = (
+            cfg.otfs.residual_interference
+            if interference_to_noise is None
+            else interference_to_noise
+        )
+        effective_snr /= 1.0 + interference
+        if snr_gain is not None:
+            effective_snr *= gain[q]
 
         # Gamma/chi-square moment matching after L non-coherent accumulations.
         l_acc = cfg.otfs.accumulation
@@ -53,7 +122,8 @@ def build_models(cfg: ExperimentConfig, rng: np.random.Generator) -> list[Target
         sigma1_local = regularize_covariance(sigma1_local, cfg.covariance_shrinkage, cfg.covariance_epsilon)
 
         edges, values = quantizer_from_gaussian_range(
-            mu0_local, sigma0_local, mu1_local, sigma1_local, cfg.quantizer_bits
+            mu0_local, sigma0_local, mu1_local, sigma1_local,
+            int(per_uav_bits[0]),
         )
         owner = cfg.owners[q]
         # Air-to-air reporting quality is tied to reporter-to-owner distance.
@@ -78,11 +148,22 @@ def build_models(cfg: ExperimentConfig, rng: np.random.Generator) -> list[Target
         post_mu0 = np.empty(cfg.num_uavs); post_mu1 = np.empty(cfg.num_uavs)
         post_var0 = np.empty(cfg.num_uavs); post_var1 = np.empty(cfg.num_uavs)
         for i in range(cfg.num_uavs):
+            bits_i = int(per_uav_bits[i])
+            if quantizer_bits_per_uav is None:
+                local_edges, local_values = edges, values
+            else:
+                local_edges, local_values = quantizer_from_gaussian_range(
+                    mu0_local[i:i + 1], sigma0_local[i:i + 1, i:i + 1],
+                    mu1_local[i:i + 1], sigma1_local[i:i + 1, i:i + 1],
+                    bits_i,
+                )
             post_mu0[i], post_var0[i] = post_bsc_moments(
-                mu0_local[i], sigma0_local[i, i], edges, values, cfg.quantizer_bits, p_flip[i]
+                mu0_local[i], sigma0_local[i, i], local_edges, local_values,
+                bits_i, p_flip[i],
             )
             post_mu1[i], post_var1[i] = post_bsc_moments(
-                mu1_local[i], sigma1_local[i, i], edges, values, cfg.quantizer_bits, p_flip[i]
+                mu1_local[i], sigma1_local[i, i], local_edges, local_values,
+                bits_i, p_flip[i],
             )
         # Propagate local dependence through moment-matched attenuation factors.
         g0 = np.sqrt(np.maximum(post_var0 - cfg.reporting.calibration_std**2, 1e-12) / np.diag(sigma0_local))
@@ -96,7 +177,7 @@ def build_models(cfg: ExperimentConfig, rng: np.random.Generator) -> list[Target
         post_mu0[owner] = mu0_local[owner]; post_mu1[owner] = mu1_local[owner]
         sigma0 = regularize_covariance(sigma0, cfg.covariance_shrinkage, cfg.covariance_epsilon)
         sigma1 = regularize_covariance(sigma1, cfg.covariance_shrinkage, cfg.covariance_epsilon)
-        bits = np.full(cfg.num_uavs, cfg.quantizer_bits + 2, dtype=int)
+        bits = np.asarray(per_uav_bits + 2, dtype=int)
         bits[owner] = 0
         model = TargetEvidenceModel(
             target_id=q,

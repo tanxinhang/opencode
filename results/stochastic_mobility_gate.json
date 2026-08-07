@@ -1,0 +1,48 @@
+{
+  "gate": "G51-stochastic-mobility",
+  "seeds": 4,
+  "frames": 8,
+  "summary": {
+    "frames": 8,
+    "seeds": 4,
+    "total_budget_bits": 40,
+    "report_budget_bits": 34,
+    "qos_target": 0.85,
+    "trajectory_model": "AR(1) position perturbation + sinusoidal trend + random blockage",
+    "methods": {
+      "no_ris_soft": {
+        "worst_over_time": 0.524162980516238,
+        "mean_over_time": 0.6257920669813939,
+        "qos_over_time": 0.0
+      },
+      "no_ris_mode_ascent": {
+        "worst_over_time": 0.524162980516238,
+        "mean_over_time": 0.6257920669813939,
+        "qos_over_time": 0.0
+      },
+      "ris_static_mode_ascent": {
+        "worst_over_time": 0.7053092310147435,
+        "mean_over_time": 0.8221594169090407,
+        "qos_over_time": 0.40625
+      },
+      "ris_latency_mode_ascent": {
+        "worst_over_time": 0.7217415627355166,
+        "mean_over_time": 0.8296721623620016,
+        "qos_over_time": 0.4375
+      },
+      "ris_ideal_target_wise": {
+        "worst_over_time": 0.8471716928515637,
+        "mean_over_time": 0.8843566412449589,
+        "qos_over_time": 0.8125
+      },
+      "ris_ideal_mode_ascent": {
+        "worst_over_time": 0.8520444052860237,
+        "mean_over_time": 0.8903151846714321,
+        "qos_over_time": 0.90625
+      }
+    },
+    "latency_over_static_worst_gain": 0.016432331720773075,
+    "ideal_ascent_over_target_wise_worst_gain": 0.004872712434459969,
+    "ideal_ascent_qos_gain": 0.09375
+  }
+}

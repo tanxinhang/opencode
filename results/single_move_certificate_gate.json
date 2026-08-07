@@ -1,0 +1,153 @@
+{
+  "gate": "G16-single-move-certificate",
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "report_budget_bits": 4,
+      "g15_allocation": [
+        262,
+        485,
+        277
+      ],
+      "g15_value": 0.9238256728221338,
+      "refined_allocation": [
+        263,
+        486,
+        275
+      ],
+      "refined_value": 0.9241072217668318,
+      "certificate": {
+        "local_optimal": true,
+        "maximum_gradient": -0.00019307066831308894,
+        "best_move": {
+          "source": 2,
+          "target": 1,
+          "value": 0.9239141510985187,
+          "gradient": -0.00019307066831308894
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 704,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "report_budget_bits": 3,
+      "g15_allocation": [
+        187,
+        323,
+        194
+      ],
+      "g15_value": 0.927291009512654,
+      "refined_allocation": [
+        189,
+        323,
+        192
+      ],
+      "refined_value": 0.9273448915608036,
+      "certificate": {
+        "local_optimal": true,
+        "maximum_gradient": 0.0,
+        "best_move": {
+          "source": 0,
+          "target": 1,
+          "value": 0.9273448915608036,
+          "gradient": 0.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "report_budget_bits": 4,
+      "g15_allocation": [
+        648,
+        440,
+        256
+      ],
+      "g15_value": 0.9918724887366632,
+      "refined_allocation": [
+        648,
+        442,
+        254
+      ],
+      "refined_value": 0.9918955714771402,
+      "certificate": {
+        "local_optimal": true,
+        "maximum_gradient": 0.0,
+        "best_move": {
+          "source": 1,
+          "target": 2,
+          "value": 0.9918955714771402,
+          "gradient": 0.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "num_elements": 960,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "report_budget_bits": 5,
+      "g15_allocation": [
+        384,
+        344,
+        232
+      ],
+      "g15_value": 0.985458524715375,
+      "refined_allocation": [
+        387,
+        343,
+        230
+      ],
+      "refined_value": 0.9857380076630472,
+      "certificate": {
+        "local_optimal": true,
+        "maximum_gradient": -5.676851501434932e-06,
+        "best_move": {
+          "source": 1,
+          "target": 0,
+          "value": 0.9857323308115458,
+          "gradient": -5.676851501434932e-06
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "report_budget_bits": 16,
+      "g15_allocation": [
+        907,
+        603,
+        538
+      ],
+      "g15_value": 0.9999781100172704,
+      "refined_allocation": [
+        935,
+        609,
+        504
+      ],
+      "refined_value": 0.9999856700105426,
+      "certificate": {
+        "local_optimal": true,
+        "maximum_gradient": -9.203717787897858e-08,
+        "best_move": {
+          "source": 2,
+          "target": 1,
+          "value": 0.9999855779733647,
+          "gradient": -9.203717787897858e-08
+        }
+      }
+    }
+  ]
+}

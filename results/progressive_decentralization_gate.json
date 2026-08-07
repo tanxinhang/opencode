@@ -1,0 +1,644 @@
+{
+  "gate": "G19-progressive-decentralization",
+  "seeds": 4,
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "allocation": [
+        271,
+        479,
+        274
+      ],
+      "methods": {
+        "centralized_full": {
+          "mean": 0.9588131824479117,
+          "worst": 0.9252235830035591,
+          "used_bits": 4,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "local_schedule_optimal": {
+          "mean": 0.9588131824479117,
+          "worst": 0.9252235830035591,
+          "used_bits": 0,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "local_schedule_deflection": {
+          "mean": 0.9588131824479117,
+          "worst": 0.9252235830035591,
+          "used_bits": 0,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "owner_only": {
+          "mean": 0.9588131824479117,
+          "worst": 0.9252235830035591,
+          "used_bits": 0,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "hard_decision_local": {
+          "mean": 0.7005311553916351,
+          "worst": 0.6233525285022925,
+          "used_bits": 3,
+          "qos_rate": 0.0,
+          "mean_loss_vs_centralized": -0.25828202705627656,
+          "worst_loss_vs_centralized": -0.3018710545012666
+        }
+      }
+    },
+    {
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "allocation": [
+        649,
+        443,
+        252
+      ],
+      "methods": {
+        "centralized_full": {
+          "mean": 0.9968365006648476,
+          "worst": 0.9929074381620121,
+          "used_bits": 4,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "local_schedule_optimal": {
+          "mean": 0.9968365006648476,
+          "worst": 0.9929074381620121,
+          "used_bits": 0,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "local_schedule_deflection": {
+          "mean": 0.9968365006648476,
+          "worst": 0.9929074381620121,
+          "used_bits": 0,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "owner_only": {
+          "mean": 0.9968365006648476,
+          "worst": 0.9929074381620121,
+          "used_bits": 0,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "hard_decision_local": {
+          "mean": 0.749522056018955,
+          "worst": 0.6538280425510361,
+          "used_bits": 3,
+          "qos_rate": 0.0,
+          "mean_loss_vs_centralized": -0.24731444464589258,
+          "worst_loss_vs_centralized": -0.339079395610976
+        }
+      }
+    },
+    {
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 40,
+      "report_budget_bits": 16,
+      "position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "allocation": [
+        956,
+        619,
+        473
+      ],
+      "methods": {
+        "centralized_full": {
+          "mean": 0.9999980892660388,
+          "worst": 0.9999967294569871,
+          "used_bits": 16,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": 0.0,
+          "worst_loss_vs_centralized": 0.0
+        },
+        "local_schedule_optimal": {
+          "mean": 0.9999942209134426,
+          "worst": 0.9999835568895972,
+          "used_bits": 15,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": -3.868352596247959e-06,
+          "worst_loss_vs_centralized": -1.3172567389974077e-05
+        },
+        "local_schedule_deflection": {
+          "mean": 0.9999895603799229,
+          "worst": 0.9999706629853188,
+          "used_bits": 15,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": -8.528886115910517e-06,
+          "worst_loss_vs_centralized": -2.606647166836229e-05
+        },
+        "owner_only": {
+          "mean": 0.9999501938664975,
+          "worst": 0.9998564276861064,
+          "used_bits": 0,
+          "qos_rate": 1.0,
+          "mean_loss_vs_centralized": -4.789539954130895e-05,
+          "worst_loss_vs_centralized": -0.00014030177088075746
+        },
+        "hard_decision_local": {
+          "mean": 0.8522473830260763,
+          "worst": 0.8119727865027296,
+          "used_bits": 15,
+          "qos_rate": 0.5,
+          "mean_loss_vs_centralized": -0.14775070623996256,
+          "worst_loss_vs_centralized": -0.1880239429542575
+        }
+      }
+    }
+  ],
+  "rows": [
+    {
+      "seed_offset": 0,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "allocation": [
+        271,
+        479,
+        274
+      ],
+      "centralized_full_mean": 0.9449971284766928,
+      "centralized_full_worst": 0.8598367471439575,
+      "centralized_full_used_bits": 4,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9449971284766928,
+      "local_schedule_optimal_worst": 0.8598367471439575,
+      "local_schedule_optimal_used_bits": 0,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9449971284766928,
+      "local_schedule_deflection_worst": 0.8598367471439574,
+      "local_schedule_deflection_used_bits": 0,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9449971284766928,
+      "owner_only_worst": 0.8598367471439575,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.7306600786193312,
+      "hard_decision_local_worst": 0.6582846890481584,
+      "hard_decision_local_used_bits": 3,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 1,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "allocation": [
+        271,
+        479,
+        274
+      ],
+      "centralized_full_mean": 0.9560519374026181,
+      "centralized_full_worst": 0.9529231574499559,
+      "centralized_full_used_bits": 4,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9560519374026181,
+      "local_schedule_optimal_worst": 0.9529231574499559,
+      "local_schedule_optimal_used_bits": 0,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9560519374026178,
+      "local_schedule_deflection_worst": 0.9529231574499558,
+      "local_schedule_deflection_used_bits": 0,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9560519374026181,
+      "owner_only_worst": 0.9529231574499559,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.7304183520698344,
+      "hard_decision_local_worst": 0.6561596906188393,
+      "hard_decision_local_used_bits": 3,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 2,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "allocation": [
+        271,
+        479,
+        274
+      ],
+      "centralized_full_mean": 0.9600698882951986,
+      "centralized_full_worst": 0.9473917512910619,
+      "centralized_full_used_bits": 4,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9600698882951986,
+      "local_schedule_optimal_worst": 0.9473917512910619,
+      "local_schedule_optimal_used_bits": 0,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9600698882951986,
+      "local_schedule_deflection_worst": 0.9473917512910618,
+      "local_schedule_deflection_used_bits": 0,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9600698882951986,
+      "owner_only_worst": 0.9473917512910619,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.6481502147428091,
+      "hard_decision_local_worst": 0.5456413442999456,
+      "hard_decision_local_used_bits": 3,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 3,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "allocation": [
+        271,
+        479,
+        274
+      ],
+      "centralized_full_mean": 0.9741337756171374,
+      "centralized_full_worst": 0.9407426761292611,
+      "centralized_full_used_bits": 4,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9741337756171374,
+      "local_schedule_optimal_worst": 0.9407426761292611,
+      "local_schedule_optimal_used_bits": 0,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9741337756171374,
+      "local_schedule_deflection_worst": 0.9407426761292611,
+      "local_schedule_deflection_used_bits": 0,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9741337756171374,
+      "owner_only_worst": 0.9407426761292611,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.6928959761345657,
+      "hard_decision_local_worst": 0.6333243900422265,
+      "hard_decision_local_used_bits": 3,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 0,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "allocation": [
+        649,
+        443,
+        252
+      ],
+      "centralized_full_mean": 0.9939032228886457,
+      "centralized_full_worst": 0.9831703742291722,
+      "centralized_full_used_bits": 4,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9939032228886457,
+      "local_schedule_optimal_worst": 0.9831703742291722,
+      "local_schedule_optimal_used_bits": 0,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9939032228886456,
+      "local_schedule_deflection_worst": 0.9831703742291721,
+      "local_schedule_deflection_used_bits": 0,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9939032228886457,
+      "owner_only_worst": 0.9831703742291722,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.787249755196854,
+      "hard_decision_local_worst": 0.6616553096360855,
+      "hard_decision_local_used_bits": 3,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 1,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "allocation": [
+        649,
+        443,
+        252
+      ],
+      "centralized_full_mean": 0.9969855617610132,
+      "centralized_full_worst": 0.9950006444202473,
+      "centralized_full_used_bits": 4,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9969855617610132,
+      "local_schedule_optimal_worst": 0.9950006444202473,
+      "local_schedule_optimal_used_bits": 0,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9969855617610132,
+      "local_schedule_deflection_worst": 0.9950006444202473,
+      "local_schedule_deflection_used_bits": 0,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9969855617610132,
+      "owner_only_worst": 0.9950006444202473,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.7834945492578734,
+      "hard_decision_local_worst": 0.6740964706141186,
+      "hard_decision_local_used_bits": 3,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 2,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "allocation": [
+        649,
+        443,
+        252
+      ],
+      "centralized_full_mean": 0.9977364409042586,
+      "centralized_full_worst": 0.9967005791560539,
+      "centralized_full_used_bits": 4,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9977364409042586,
+      "local_schedule_optimal_worst": 0.9967005791560539,
+      "local_schedule_optimal_used_bits": 0,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9977364409042586,
+      "local_schedule_deflection_worst": 0.9967005791560539,
+      "local_schedule_deflection_used_bits": 0,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9977364409042586,
+      "owner_only_worst": 0.9967005791560539,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.7287592644172891,
+      "hard_decision_local_worst": 0.6613652427430634,
+      "hard_decision_local_used_bits": 3,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 3,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "allocation": [
+        649,
+        443,
+        252
+      ],
+      "centralized_full_mean": 0.998720777105473,
+      "centralized_full_worst": 0.9967581548425749,
+      "centralized_full_used_bits": 4,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.998720777105473,
+      "local_schedule_optimal_worst": 0.9967581548425749,
+      "local_schedule_optimal_used_bits": 0,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.998720777105473,
+      "local_schedule_deflection_worst": 0.9967581548425749,
+      "local_schedule_deflection_used_bits": 0,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.998720777105473,
+      "owner_only_worst": 0.9967581548425749,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.6985846552038036,
+      "hard_decision_local_worst": 0.6181951472108768,
+      "hard_decision_local_used_bits": 3,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 0,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 40,
+      "report_budget_bits": 16,
+      "position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "allocation": [
+        956,
+        619,
+        473
+      ],
+      "centralized_full_mean": 0.9999951581571,
+      "centralized_full_worst": 0.9999923938839155,
+      "centralized_full_used_bits": 16,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9999836610311723,
+      "local_schedule_optimal_worst": 0.9999517726092594,
+      "local_schedule_optimal_used_bits": 15,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9999720375307309,
+      "local_schedule_deflection_worst": 0.9999177001450624,
+      "local_schedule_deflection_used_bits": 15,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9998408295388952,
+      "owner_only_worst": 0.9995294080293008,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.904126697976603,
+      "hard_decision_local_worst": 0.8940044569265847,
+      "hard_decision_local_used_bits": 15,
+      "hard_decision_local_qos": true
+    },
+    {
+      "seed_offset": 1,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 40,
+      "report_budget_bits": 16,
+      "position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "allocation": [
+        956,
+        619,
+        473
+      ],
+      "centralized_full_mean": 0.9999987967602548,
+      "centralized_full_worst": 0.9999982436965491,
+      "centralized_full_used_bits": 16,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9999972412838609,
+      "local_schedule_optimal_worst": 0.9999937187278707,
+      "local_schedule_optimal_used_bits": 15,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9999941265180228,
+      "local_schedule_deflection_worst": 0.9999870490850378,
+      "local_schedule_deflection_used_bits": 15,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.9999760802439676,
+      "owner_only_worst": 0.9999401207727007,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.9036605432210529,
+      "hard_decision_local_worst": 0.873019406993641,
+      "hard_decision_local_used_bits": 15,
+      "hard_decision_local_qos": true
+    },
+    {
+      "seed_offset": 2,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 40,
+      "report_budget_bits": 16,
+      "position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "allocation": [
+        956,
+        619,
+        473
+      ],
+      "centralized_full_mean": 0.9999991203574456,
+      "centralized_full_worst": 0.9999982655799426,
+      "centralized_full_used_bits": 16,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9999986075357298,
+      "local_schedule_optimal_worst": 0.9999964455754522,
+      "local_schedule_optimal_used_bits": 15,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.999997008455502,
+      "local_schedule_deflection_worst": 0.9999923223732299,
+      "local_schedule_deflection_used_bits": 15,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.999992953297795,
+      "owner_only_worst": 0.9999823340887254,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.8012505486948921,
+      "hard_decision_local_worst": 0.766229827072379,
+      "hard_decision_local_used_bits": 15,
+      "hard_decision_local_qos": false
+    },
+    {
+      "seed_offset": 3,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 40,
+      "report_budget_bits": 16,
+      "position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "allocation": [
+        956,
+        619,
+        473
+      ],
+      "centralized_full_mean": 0.9999992817893547,
+      "centralized_full_worst": 0.9999980146675413,
+      "centralized_full_used_bits": 16,
+      "centralized_full_qos": true,
+      "local_schedule_optimal_mean": 0.9999973738030074,
+      "local_schedule_optimal_worst": 0.9999922906458069,
+      "local_schedule_optimal_used_bits": 15,
+      "local_schedule_optimal_qos": true,
+      "local_schedule_deflection_mean": 0.9999950690154358,
+      "local_schedule_deflection_worst": 0.9999855803379448,
+      "local_schedule_deflection_used_bits": 15,
+      "local_schedule_deflection_qos": true,
+      "owner_only_mean": 0.999990912385332,
+      "owner_only_worst": 0.9999738478536988,
+      "owner_only_used_bits": 0,
+      "owner_only_qos": true,
+      "hard_decision_local_mean": 0.7999517422117571,
+      "hard_decision_local_worst": 0.7146374550183138,
+      "hard_decision_local_used_bits": 15,
+      "hard_decision_local_qos": false
+    }
+  ]
+}

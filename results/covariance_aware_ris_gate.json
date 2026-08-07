@@ -1,0 +1,44 @@
+{
+  "gate": "G54-covariance-aware-ris",
+  "seeds": 4,
+  "frames": 8,
+  "summary": {
+    "frames": 8,
+    "seeds": 4,
+    "horizon": 3,
+    "total_budget_bits": 40,
+    "report_budget_bits": 34,
+    "qos_target": 0.85,
+    "trajectory_model": "AR(1) position perturbation + sinusoidal trend + random blockage",
+    "methods": {
+      "no_ris_soft": {
+        "worst_over_time": 0.524162980516238,
+        "mean_over_time": 0.6257920669813939,
+        "qos_over_time": 0.0
+      },
+      "ris_ideal_mode_ascent": {
+        "worst_over_time": 0.8520444052860237,
+        "mean_over_time": 0.8903151846714321,
+        "qos_over_time": 0.90625
+      },
+      "stale_mode_ascent": {
+        "worst_over_time": 0.6675652345948244,
+        "mean_over_time": 0.811721230482253,
+        "qos_over_time": 0.40625
+      },
+      "mmse_mode_ascent": {
+        "worst_over_time": 0.7199766035067009,
+        "mean_over_time": 0.8261681028967598,
+        "qos_over_time": 0.4375
+      },
+      "covariance_aware_mode_ascent": {
+        "worst_over_time": 0.6557127024659596,
+        "mean_over_time": 0.7950286241933362,
+        "qos_over_time": 0.375
+      }
+    },
+    "robust_over_mmse_worst_gain": -0.06426390104074131,
+    "robust_qos_gain": -0.0625,
+    "verdict": "negative: covariance-aware expected-gain phase is not system-optimal under quantization and exact P_D; MMSE phase is kept"
+  }
+}

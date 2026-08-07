@@ -1,0 +1,57 @@
+{
+  "gate": "G33-spatial-interference-placement",
+  "seeds": 2,
+  "interference_position": [
+    60.0,
+    -20.0,
+    0.0
+  ],
+  "report_budget_bits": 28,
+  "summary": [
+    {
+      "inr_ref": 0.01,
+      "mean_inr": 0.0024440164461522586,
+      "no_ris_worst": 0.8281069550687727,
+      "no_ris_qos": 0.0,
+      "fixed_ris_worst": 0.9881170321924001,
+      "fixed_ris_qos": 1.0,
+      "optimized_position": [
+        -3.5,
+        34.0,
+        6.0
+      ],
+      "optimized_ris_worst": 0.99110333834989,
+      "optimized_ris_qos": 1.0
+    },
+    {
+      "inr_ref": 0.1,
+      "mean_inr": 0.02444016446152259,
+      "no_ris_worst": 0.824333396869339,
+      "no_ris_qos": 0.0,
+      "fixed_ris_worst": 0.9869149263490435,
+      "fixed_ris_qos": 1.0,
+      "optimized_position": [
+        -1.0,
+        34.0,
+        4.0
+      ],
+      "optimized_ris_worst": 0.990306743614216,
+      "optimized_ris_qos": 1.0
+    },
+    {
+      "inr_ref": 1.0,
+      "mean_inr": 0.2444016446152259,
+      "no_ris_worst": 0.7683101413149229,
+      "no_ris_qos": 0.0,
+      "fixed_ris_worst": 0.9691869975960452,
+      "fixed_ris_qos": 1.0,
+      "optimized_position": [
+        1.0,
+        34.0,
+        8.5
+      ],
+      "optimized_ris_worst": 0.9725377766742397,
+      "optimized_ris_qos": 1.0
+    }
+  ]
+}

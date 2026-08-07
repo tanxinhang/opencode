@@ -1,0 +1,227 @@
+{
+  "gate": "G41-consensus-parity-boundary",
+  "seeds": 2,
+  "qos_target": 0.7,
+  "summary": [
+    {
+      "num_uavs": 3,
+      "total_budget_bits": 8,
+      "report_budget_bits": 2,
+      "p0_mean": 0.1623935374769193,
+      "p1_mean": 0.3010120885020031,
+      "theoretical_min_uavs": 51.52663271331835,
+      "centralized_worst": 0.9479623317015272,
+      "peer_worst": 0.9245066121797649,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 3,
+      "total_budget_bits": 12,
+      "report_budget_bits": 6,
+      "p0_mean": 0.1623935374769193,
+      "p1_mean": 0.3010120885020031,
+      "theoretical_min_uavs": 51.52663271331835,
+      "centralized_worst": 0.9481597690904052,
+      "peer_worst": 0.9245066121797649,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 3,
+      "total_budget_bits": 16,
+      "report_budget_bits": 10,
+      "p0_mean": 0.1623935374769193,
+      "p1_mean": 0.3010120885020031,
+      "theoretical_min_uavs": 51.52663271331835,
+      "centralized_worst": 0.9481925682488069,
+      "peer_worst": 0.9245066121797649,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 3,
+      "total_budget_bits": 20,
+      "report_budget_bits": 14,
+      "p0_mean": 0.1623935374769193,
+      "p1_mean": 0.3010120885020031,
+      "theoretical_min_uavs": 51.52663271331835,
+      "centralized_worst": 0.9481925682488069,
+      "peer_worst": 0.9245066121797649,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 6,
+      "total_budget_bits": 8,
+      "report_budget_bits": 2,
+      "p0_mean": 0.14852475456026512,
+      "p1_mean": 0.4290400378337215,
+      "theoretical_min_uavs": 14.649111727732507,
+      "centralized_worst": 0.8871492522912465,
+      "peer_worst": 0.944352547497763,
+      "consensus_wins": true
+    },
+    {
+      "num_uavs": 6,
+      "total_budget_bits": 12,
+      "report_budget_bits": 6,
+      "p0_mean": 0.14852475456026512,
+      "p1_mean": 0.4290400378337215,
+      "theoretical_min_uavs": 14.649111727732507,
+      "centralized_worst": 0.9479623317015272,
+      "peer_worst": 0.944352547497763,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 6,
+      "total_budget_bits": 16,
+      "report_budget_bits": 10,
+      "p0_mean": 0.14852475456026512,
+      "p1_mean": 0.4290400378337215,
+      "theoretical_min_uavs": 14.649111727732507,
+      "centralized_worst": 0.962192367887152,
+      "peer_worst": 0.944352547497763,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 6,
+      "total_budget_bits": 20,
+      "report_budget_bits": 14,
+      "p0_mean": 0.14852475456026512,
+      "p1_mean": 0.4290400378337215,
+      "theoretical_min_uavs": 14.649111727732507,
+      "centralized_worst": 0.962192367887152,
+      "peer_worst": 0.944352547497763,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 8,
+      "total_budget_bits": 8,
+      "report_budget_bits": 2,
+      "p0_mean": 0.14601557615341856,
+      "p1_mean": 0.41456611340167016,
+      "theoretical_min_uavs": 15.835817051638525,
+      "centralized_worst": 0.764068172354162,
+      "peer_worst": 0.8066816619502166,
+      "consensus_wins": true
+    },
+    {
+      "num_uavs": 8,
+      "total_budget_bits": 12,
+      "report_budget_bits": 6,
+      "p0_mean": 0.14601557615341856,
+      "p1_mean": 0.41456611340167016,
+      "theoretical_min_uavs": 15.835817051638525,
+      "centralized_worst": 0.8150853728426151,
+      "peer_worst": 0.8066816619502166,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 8,
+      "total_budget_bits": 16,
+      "report_budget_bits": 10,
+      "p0_mean": 0.14601557615341856,
+      "p1_mean": 0.41456611340167016,
+      "theoretical_min_uavs": 15.835817051638525,
+      "centralized_worst": 0.8624246668590768,
+      "peer_worst": 0.8066816619502166,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 8,
+      "total_budget_bits": 20,
+      "report_budget_bits": 14,
+      "p0_mean": 0.14601557615341856,
+      "p1_mean": 0.41456611340167016,
+      "theoretical_min_uavs": 15.835817051638525,
+      "centralized_worst": 0.8624246668590768,
+      "peer_worst": 0.8066816619502166,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 12,
+      "total_budget_bits": 8,
+      "report_budget_bits": 2,
+      "p0_mean": 0.1424993836750238,
+      "p1_mean": 0.4016693546803567,
+      "theoretical_min_uavs": 16.836873742777613,
+      "centralized_worst": 0.733344002813649,
+      "peer_worst": 0.8405523914998738,
+      "consensus_wins": true
+    },
+    {
+      "num_uavs": 12,
+      "total_budget_bits": 12,
+      "report_budget_bits": 6,
+      "p0_mean": 0.1424993836750238,
+      "p1_mean": 0.4016693546803567,
+      "theoretical_min_uavs": 16.836873742777613,
+      "centralized_worst": 0.8372073344789364,
+      "peer_worst": 0.8405523914998738,
+      "consensus_wins": true
+    },
+    {
+      "num_uavs": 12,
+      "total_budget_bits": 16,
+      "report_budget_bits": 10,
+      "p0_mean": 0.1424993836750238,
+      "p1_mean": 0.4016693546803567,
+      "theoretical_min_uavs": 16.836873742777613,
+      "centralized_worst": 0.9094458456561771,
+      "peer_worst": 0.8405523914998738,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 12,
+      "total_budget_bits": 20,
+      "report_budget_bits": 14,
+      "p0_mean": 0.1424993836750238,
+      "p1_mean": 0.4016693546803567,
+      "theoretical_min_uavs": 16.836873742777613,
+      "centralized_worst": 0.9094458456561771,
+      "peer_worst": 0.8405523914998738,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 16,
+      "total_budget_bits": 8,
+      "report_budget_bits": 2,
+      "p0_mean": 0.1414289482169889,
+      "p1_mean": 0.4317250711004214,
+      "theoretical_min_uavs": 13.699482587730817,
+      "centralized_worst": 0.7342818132511966,
+      "peer_worst": 0.9091298321064225,
+      "consensus_wins": true
+    },
+    {
+      "num_uavs": 16,
+      "total_budget_bits": 12,
+      "report_budget_bits": 6,
+      "p0_mean": 0.1414289482169889,
+      "p1_mean": 0.4317250711004214,
+      "theoretical_min_uavs": 13.699482587730817,
+      "centralized_worst": 0.837094373713819,
+      "peer_worst": 0.9091298321064225,
+      "consensus_wins": true
+    },
+    {
+      "num_uavs": 16,
+      "total_budget_bits": 16,
+      "report_budget_bits": 10,
+      "p0_mean": 0.1414289482169889,
+      "p1_mean": 0.4317250711004214,
+      "theoretical_min_uavs": 13.699482587730817,
+      "centralized_worst": 0.9160088285940393,
+      "peer_worst": 0.9091298321064225,
+      "consensus_wins": false
+    },
+    {
+      "num_uavs": 16,
+      "total_budget_bits": 20,
+      "report_budget_bits": 14,
+      "p0_mean": 0.1414289482169889,
+      "p1_mean": 0.4317250711004214,
+      "theoretical_min_uavs": 13.699482587730817,
+      "centralized_worst": 0.9160088285940393,
+      "peer_worst": 0.9091298321064225,
+      "consensus_wins": false
+    }
+  ]
+}

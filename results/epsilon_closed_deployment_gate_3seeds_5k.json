@@ -1,0 +1,45 @@
+{
+  "gate": "G5-W-epsilon-closed-deployment",
+  "result": {
+    "best_point": [
+      6.875,
+      39.84375,
+      3.5
+    ],
+    "best_value": 0.9867094951997087,
+    "global_upper": 0.9878896533443902,
+    "evaluations": 5001,
+    "certificate_gap": 0.0011801581446814202,
+    "terminated_by_budget": true,
+    "refinement_evaluations": 400,
+    "coarse_position": [
+      0.0,
+      20.0,
+      8.0
+    ],
+    "coarse_value": 0.9583545069082181,
+    "bounds": [
+      [
+        -5.0,
+        15.0
+      ],
+      [
+        30.0,
+        45.0
+      ],
+      [
+        0.0,
+        8.0
+      ]
+    ],
+    "lipschitz_estimate": 0.0037071207701497642,
+    "coordinate_lipschitz_estimate": [
+      0.00202809648528548,
+      0.0025181962033692753,
+      0.0003549003952298124
+    ],
+    "epsilon_closed": false,
+    "seed_count": 3,
+    "report_budget_bits": 28
+  }
+}

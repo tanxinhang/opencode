@@ -1,0 +1,238 @@
+{
+  "gate": "G14-exact-array-factor-allocation",
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "equal_allocation": [
+        342,
+        341,
+        341
+      ],
+      "separable_allocation": [
+        382,
+        388,
+        254
+      ],
+      "exact_allocation": [
+        386,
+        401,
+        237
+      ],
+      "exact_surrogate": {
+        "equal": 23.339673720273915,
+        "separable": 30.031055711401837,
+        "exact": 30.139173785847447
+      },
+      "exact_system": {
+        "equal": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9463869091594832,
+          "worst_expected_pd": 0.8995026627698148,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9442828881547889,
+          "worst_expected_pd": 0.9106670394318612,
+          "qos_feasible_rate": 1.0
+        },
+        "exact": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9379310874620959,
+          "worst_expected_pd": 0.9024663940270792,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 704,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "equal_allocation": [
+        235,
+        235,
+        234
+      ],
+      "separable_allocation": [
+        273,
+        262,
+        169
+      ],
+      "exact_allocation": [
+        279,
+        259,
+        166
+      ],
+      "exact_surrogate": {
+        "equal": 26.20782198415218,
+        "separable": 32.58759194208369,
+        "exact": 32.070313855491335
+      },
+      "exact_system": {
+        "equal": {
+          "report_budget_bits": 3,
+          "mean_expected_pd": 0.9514289255137273,
+          "worst_expected_pd": 0.9095943135239537,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "report_budget_bits": 3,
+          "mean_expected_pd": 0.9440602267522574,
+          "worst_expected_pd": 0.9109630858661483,
+          "qos_feasible_rate": 1.0
+        },
+        "exact": {
+          "report_budget_bits": 3,
+          "mean_expected_pd": 0.9423523107208115,
+          "worst_expected_pd": 0.9090461969379735,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "equal_allocation": [
+        448,
+        448,
+        448
+      ],
+      "separable_allocation": [
+        656,
+        444,
+        244
+      ],
+      "exact_allocation": [
+        658,
+        445,
+        241
+      ],
+      "exact_surrogate": {
+        "equal": 58.76592456244667,
+        "separable": 127.39118426750743,
+        "exact": 128.33365749417578
+      },
+      "exact_system": {
+        "equal": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9905830564494861,
+          "worst_expected_pd": 0.9741099098313808,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9960753459769901,
+          "worst_expected_pd": 0.991584283471092,
+          "qos_feasible_rate": 1.0
+        },
+        "exact": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9960382595895222,
+          "worst_expected_pd": 0.9915418180752222,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "num_elements": 960,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "equal_allocation": [
+        320,
+        320,
+        320
+      ],
+      "separable_allocation": [
+        433,
+        331,
+        196
+      ],
+      "exact_allocation": [
+        439,
+        328,
+        193
+      ],
+      "exact_surrogate": {
+        "equal": 37.74931326913607,
+        "separable": 55.769604555648044,
+        "exact": 56.29723130845123
+      },
+      "exact_system": {
+        "equal": {
+          "report_budget_bits": 5,
+          "mean_expected_pd": 0.9880551214317971,
+          "worst_expected_pd": 0.9794770654485103,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "report_budget_bits": 5,
+          "mean_expected_pd": 0.9869141053239415,
+          "worst_expected_pd": 0.9806946822069971,
+          "qos_feasible_rate": 1.0
+        },
+        "exact": {
+          "report_budget_bits": 5,
+          "mean_expected_pd": 0.986489495889677,
+          "worst_expected_pd": 0.9799179780599673,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "equal_allocation": [
+        683,
+        683,
+        682
+      ],
+      "separable_allocation": [
+        1046,
+        661,
+        341
+      ],
+      "exact_allocation": [
+        1043,
+        661,
+        344
+      ],
+      "exact_surrogate": {
+        "equal": 139.5443665603004,
+        "separable": 451.91297605781,
+        "exact": 477.9328556721927
+      },
+      "exact_system": {
+        "equal": {
+          "report_budget_bits": 16,
+          "mean_expected_pd": 0.9998660363273264,
+          "worst_expected_pd": 0.9995993623048072,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "report_budget_bits": 16,
+          "mean_expected_pd": 0.9999970762410075,
+          "worst_expected_pd": 0.9999950383934478,
+          "qos_feasible_rate": 1.0
+        },
+        "exact": {
+          "report_budget_bits": 16,
+          "mean_expected_pd": 0.9999973477097112,
+          "worst_expected_pd": 0.9999958761703289,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,725 @@
+{
+  "gate": "G5-CI-paired-bootstrap",
+  "sections": {
+    "ris_isac": [
+      {
+        "budget_bits": [
+          20
+        ],
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.12329109303067357,
+        "ci95": [
+          0.11662538561193977,
+          0.13016786457597976
+        ],
+        "win_rate": 1.0,
+        "pairs": 20
+      },
+      {
+        "budget_bits": [
+          20
+        ],
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.17792573170505102,
+        "ci95": [
+          0.1573230314853033,
+          0.20029484359329422
+        ],
+        "win_rate": 1.0,
+        "pairs": 20
+      },
+      {
+        "budget_bits": [
+          30
+        ],
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.10899421494963209,
+        "ci95": [
+          0.10385459898176537,
+          0.11453179686581229
+        ],
+        "win_rate": 1.0,
+        "pairs": 20
+      },
+      {
+        "budget_bits": [
+          30
+        ],
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.15242441422295616,
+        "ci95": [
+          0.1339673720195728,
+          0.17296750091045432
+        ],
+        "win_rate": 1.0,
+        "pairs": 20
+      }
+    ],
+    "ris_physics": [
+      {
+        "budget_bits": 20,
+        "elements": 256,
+        "aperture_scale": 0.001,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.03192409010008676,
+        "ci95": [
+          0.02667737021308663,
+          0.0376346914741666
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 256,
+        "aperture_scale": 0.001,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.03176040773634997,
+        "ci95": [
+          0.026516170677355583,
+          0.0374595782276406
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 256,
+        "aperture_scale": 0.001,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.04644184018268573,
+        "ci95": [
+          0.02881627048769421,
+          0.064437602891805
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 256,
+        "aperture_scale": 0.001,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.04616287109561856,
+        "ci95": [
+          0.028678037150429006,
+          0.06408156445072978
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 256,
+        "aperture_scale": 0.01,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.10825711044787452,
+        "ci95": [
+          0.0956524593364014,
+          0.12152539738895635
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 256,
+        "aperture_scale": 0.01,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.10637097277409058,
+        "ci95": [
+          0.094449763046861,
+          0.11892492140081423
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 256,
+        "aperture_scale": 0.01,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.1334506293201054,
+        "ci95": [
+          0.106087661500708,
+          0.1601028487025548
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 256,
+        "aperture_scale": 0.01,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.13005071877042532,
+        "ci95": [
+          0.10348491216573057,
+          0.15601546051789422
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 1024,
+        "aperture_scale": 0.001,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.12130234773698649,
+        "ci95": [
+          0.10963060371105494,
+          0.13371039159670953
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 1024,
+        "aperture_scale": 0.001,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.12037494364960057,
+        "ci95": [
+          0.10879622838922724,
+          0.13269267046088112
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 1024,
+        "aperture_scale": 0.001,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.1472365501338165,
+        "ci95": [
+          0.12049063580776269,
+          0.17300207120611605
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 1024,
+        "aperture_scale": 0.001,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.14528508855909208,
+        "ci95": [
+          0.119301906087558,
+          0.17005217215684293
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 1024,
+        "aperture_scale": 0.01,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.16263651851248342,
+        "ci95": [
+          0.14822082069049589,
+          0.17770329199975643
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 1024,
+        "aperture_scale": 0.01,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.15671655692729194,
+        "ci95": [
+          0.14278270149899883,
+          0.17142737767523836
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 1024,
+        "aperture_scale": 0.01,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.2477745935749892,
+        "ci95": [
+          0.23237775374847297,
+          0.2641727081961451
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 20,
+        "elements": 1024,
+        "aperture_scale": 0.01,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.2377207139958035,
+        "ci95": [
+          0.22103899173827796,
+          0.25652429502057894
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 256,
+        "aperture_scale": 0.001,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.024682410630294315,
+        "ci95": [
+          0.017614961193908884,
+          0.03065359604324549
+        ],
+        "win_rate": 0.9166666666666666,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 256,
+        "aperture_scale": 0.001,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.024536487188012112,
+        "ci95": [
+          0.01748788607575033,
+          0.030495499115229426
+        ],
+        "win_rate": 0.9166666666666666,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 256,
+        "aperture_scale": 0.001,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.044436526195637586,
+        "ci95": [
+          0.028674420054108193,
+          0.06116827508681355
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 256,
+        "aperture_scale": 0.001,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.04420832344429621,
+        "ci95": [
+          0.028576757063757854,
+          0.060831232425248134
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 256,
+        "aperture_scale": 0.01,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.09012923105091136,
+        "ci95": [
+          0.08247591460803608,
+          0.09771874213260603
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 256,
+        "aperture_scale": 0.01,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.09151539418110251,
+        "ci95": [
+          0.08205082707932344,
+          0.10182286593397297
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 256,
+        "aperture_scale": 0.01,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.11028395476190223,
+        "ci95": [
+          0.08725785932260778,
+          0.13254016498349913
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 256,
+        "aperture_scale": 0.01,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.10652670974954896,
+        "ci95": [
+          0.08467588165227048,
+          0.12752183420331117
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 1024,
+        "aperture_scale": 0.001,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.10068726116630633,
+        "ci95": [
+          0.0936937656997156,
+          0.10695232767793568
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 1024,
+        "aperture_scale": 0.001,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.09981834033142356,
+        "ci95": [
+          0.09303556126904115,
+          0.10567080540228943
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 1024,
+        "aperture_scale": 0.001,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.12514327245606305,
+        "ci95": [
+          0.10419305715068433,
+          0.14535154206632586
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 1024,
+        "aperture_scale": 0.001,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.12318711980062465,
+        "ci95": [
+          0.10298269726020598,
+          0.14242399229376435
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 1024,
+        "aperture_scale": 0.01,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.13869733477989674,
+        "ci95": [
+          0.12785601115039283,
+          0.14916499795787774
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 1024,
+        "aperture_scale": 0.01,
+        "metric": "mean_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.13325485908214454,
+        "ci95": [
+          0.12244769072186902,
+          0.14352873145757802
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 1024,
+        "aperture_scale": 0.01,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_no_ris",
+        "mean": 0.21818036396447607,
+        "ci95": [
+          0.20489108860667093,
+          0.23174302247341463
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "budget_bits": 30,
+        "elements": 1024,
+        "aperture_scale": 0.01,
+        "metric": "worst_expected_pd",
+        "comparison": "aligned_vs_random",
+        "mean": 0.20957144986181167,
+        "ci95": [
+          0.1938843963081122,
+          0.2256906700215186
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      }
+    ],
+    "ris_placement": [
+      {
+        "total_budget_bits": 40,
+        "coherence_frames": 64,
+        "metric": "mean_expected_pd",
+        "comparison": "best_vs_no_ris",
+        "mean": 0.11672979194857984,
+        "ci95": [
+          0.10968326815528438,
+          0.12329575320235978
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 40,
+        "coherence_frames": 64,
+        "metric": "mean_expected_pd",
+        "comparison": "best_vs_fixed",
+        "mean": 0.034082834744974734,
+        "ci95": [
+          0.02326897723484761,
+          0.04551510716740966
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 40,
+        "coherence_frames": 64,
+        "metric": "worst_expected_pd",
+        "comparison": "best_vs_no_ris",
+        "mean": 0.16743864499023622,
+        "ci95": [
+          0.14952228845660387,
+          0.18538840466564402
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 40,
+        "coherence_frames": 64,
+        "metric": "worst_expected_pd",
+        "comparison": "best_vs_fixed",
+        "mean": 0.0706270319380618,
+        "ci95": [
+          0.05755692889085382,
+          0.08327848550437751
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 60,
+        "coherence_frames": 64,
+        "metric": "mean_expected_pd",
+        "comparison": "best_vs_no_ris",
+        "mean": 0.10773994557727506,
+        "ci95": [
+          0.10004280375147703,
+          0.11488651099703415
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 60,
+        "coherence_frames": 64,
+        "metric": "mean_expected_pd",
+        "comparison": "best_vs_fixed",
+        "mean": 0.025252482611553422,
+        "ci95": [
+          0.018354282435016172,
+          0.032321633504670655
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 60,
+        "coherence_frames": 64,
+        "metric": "worst_expected_pd",
+        "comparison": "best_vs_no_ris",
+        "mean": 0.16913224511972244,
+        "ci95": [
+          0.15129981548984647,
+          0.18767926567051624
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 60,
+        "coherence_frames": 64,
+        "metric": "worst_expected_pd",
+        "comparison": "best_vs_fixed",
+        "mean": 0.06579553129500053,
+        "ci95": [
+          0.05251005477990523,
+          0.07933175264179308
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      }
+    ],
+    "ris_joint_budget": [
+      {
+        "total_budget_bits": 40,
+        "coherence_frames": 64,
+        "metric": "mean_expected_pd",
+        "comparison": "bits3_vs_no_ris",
+        "mean": 0.08264695720360511,
+        "ci95": [
+          0.07281412699893401,
+          0.09203645969592497
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 40,
+        "coherence_frames": 64,
+        "metric": "worst_expected_pd",
+        "comparison": "bits3_vs_no_ris",
+        "mean": 0.09681161305217445,
+        "ci95": [
+          0.06993943369225128,
+          0.1224234487609997
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 40,
+        "coherence_frames": 256,
+        "metric": "mean_expected_pd",
+        "comparison": "bits3_vs_no_ris",
+        "mean": 0.08649423599530799,
+        "ci95": [
+          0.07671334273836534,
+          0.09577538227898581
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 40,
+        "coherence_frames": 256,
+        "metric": "worst_expected_pd",
+        "comparison": "bits3_vs_no_ris",
+        "mean": 0.10305614439102007,
+        "ci95": [
+          0.07639578838634428,
+          0.12856426595241038
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 60,
+        "coherence_frames": 64,
+        "metric": "mean_expected_pd",
+        "comparison": "bits3_vs_no_ris",
+        "mean": 0.08248746296572164,
+        "ci95": [
+          0.07809203084355407,
+          0.08698982616186036
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 60,
+        "coherence_frames": 64,
+        "metric": "worst_expected_pd",
+        "comparison": "bits3_vs_no_ris",
+        "mean": 0.10333671382472191,
+        "ci95": [
+          0.07419637965103919,
+          0.1304677497757548
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 60,
+        "coherence_frames": 256,
+        "metric": "mean_expected_pd",
+        "comparison": "bits3_vs_no_ris",
+        "mean": 0.08517987810373595,
+        "ci95": [
+          0.08054620913276028,
+          0.08963066944164058
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      },
+      {
+        "total_budget_bits": 60,
+        "coherence_frames": 256,
+        "metric": "worst_expected_pd",
+        "comparison": "bits3_vs_no_ris",
+        "mean": 0.10482024306039257,
+        "ci95": [
+          0.07524932766295504,
+          0.13222056769811355
+        ],
+        "win_rate": 1.0,
+        "pairs": 12
+      }
+    ]
+  }
+}

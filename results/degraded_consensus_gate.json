@@ -1,0 +1,156 @@
+{
+  "gate": "G22-degraded-consensus",
+  "seeds": 4,
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "allocation": [
+        271,
+        479,
+        274
+      ],
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9252235830035591,
+          "qos_rate": 1.0,
+          "mean_participation": null
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9546350377557089,
+          "qos_rate": 1.0,
+          "mean_participation": 1.0
+        },
+        "obs_075": {
+          "worst_expected_pd": 0.8494499300916182,
+          "qos_rate": 0.0,
+          "mean_participation": 0.75
+        },
+        "link_08": {
+          "worst_expected_pd": 0.8643789042388341,
+          "qos_rate": 1.0,
+          "mean_participation": 0.8000000000000002
+        },
+        "multihop_3x08": {
+          "worst_expected_pd": 0.9517546092408636,
+          "qos_rate": 1.0,
+          "mean_participation": 0.9920000000000003
+        },
+        "severe": {
+          "worst_expected_pd": 0.721703423159126,
+          "qos_rate": 0.0,
+          "mean_participation": 0.546
+        }
+      }
+    },
+    {
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "allocation": [
+        649,
+        443,
+        252
+      ],
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9929074381620121,
+          "qos_rate": 1.0,
+          "mean_participation": null
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9982289650476229,
+          "qos_rate": 1.0,
+          "mean_participation": 1.0
+        },
+        "obs_075": {
+          "worst_expected_pd": 0.931857257220701,
+          "qos_rate": 1.0,
+          "mean_participation": 0.75
+        },
+        "link_08": {
+          "worst_expected_pd": 0.9457755900118868,
+          "qos_rate": 1.0,
+          "mean_participation": 0.8000000000000002
+        },
+        "multihop_3x08": {
+          "worst_expected_pd": 0.9969640222250322,
+          "qos_rate": 1.0,
+          "mean_participation": 0.9920000000000003
+        },
+        "severe": {
+          "worst_expected_pd": 0.823404533085163,
+          "qos_rate": 0.0,
+          "mean_participation": 0.546
+        }
+      }
+    },
+    {
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 40,
+      "report_budget_bits": 16,
+      "position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "allocation": [
+        956,
+        619,
+        473
+      ],
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9999967294569871,
+          "qos_rate": 1.0,
+          "mean_participation": null
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9999977465482408,
+          "qos_rate": 1.0,
+          "mean_participation": 1.0
+        },
+        "obs_075": {
+          "worst_expected_pd": 0.9659407655901768,
+          "qos_rate": 1.0,
+          "mean_participation": 0.75
+        },
+        "link_08": {
+          "worst_expected_pd": 0.9766684465818638,
+          "qos_rate": 1.0,
+          "mean_participation": 0.8000000000000002
+        },
+        "multihop_3x08": {
+          "worst_expected_pd": 0.9997990803866799,
+          "qos_rate": 1.0,
+          "mean_participation": 0.9920000000000003
+        },
+        "severe": {
+          "worst_expected_pd": 0.8770602615698555,
+          "qos_rate": 1.0,
+          "mean_participation": 0.546
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "gate": "G5-U-deployment-theory",
+  "seeds": 6,
+  "lipschitz_estimate": 0.0029699525675560812,
+  "fine_spacing": 10.0,
+  "second_spacing": 5.0,
+  "fine_suboptimality_bound": 0.025720543715383855,
+  "second_suboptimality_bound": 0.012860271857691927,
+  "coarse_position": [
+    0.0,
+    20.0,
+    8.0
+  ],
+  "coarse_value": 0.9571758336974517,
+  "fine_position": [
+    0.0,
+    30.0,
+    6.0
+  ],
+  "fine_value": 0.9831939659083012,
+  "second_position": [
+    0.0,
+    35.0,
+    5.0
+  ],
+  "second_value": 0.9878355401627149,
+  "coarse_to_fine_improvement": 0.026018132210849476,
+  "fine_to_second_improvement": 0.004641574254413694,
+  "fine_bound_holds": true,
+  "second_bound_holds": true
+}

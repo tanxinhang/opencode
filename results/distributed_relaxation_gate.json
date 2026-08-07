@@ -1,0 +1,213 @@
+{
+  "gate": "G39-distributed-relaxation",
+  "seeds": 2,
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "report_budget_bits": 8,
+      "qos_target": 0.7,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9525602258434871,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8641719465311879,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "report_budget_bits": 8,
+      "qos_target": 0.75,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9525602258434871,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8641719465311879,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "report_budget_bits": 8,
+      "qos_target": 0.8,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9525602258434871,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8641719465311879,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 24,
+      "report_budget_bits": 12,
+      "qos_target": 0.7,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9682541485320548,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8624009972730057,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 24,
+      "report_budget_bits": 12,
+      "qos_target": 0.75,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9682541485320548,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8624009972730057,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 24,
+      "report_budget_bits": 12,
+      "qos_target": 0.8,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9682541485320548,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8624009972730057,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "qos_target": 0.7,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.97731646498321,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8428848210762456,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "qos_target": 0.75,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.97731646498321,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8428848210762456,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "qos_target": 0.8,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.97731646498321,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.9552823320189865,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.9530093558095547,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.8428848210762456,
+          "qos_feasible": true
+        }
+      }
+    }
+  ]
+}

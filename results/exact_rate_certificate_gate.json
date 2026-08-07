@@ -1,0 +1,161 @@
+{
+  "gate": "G30-E-exact-rate-certificate",
+  "seeds": 2,
+  "grid": 256,
+  "qos_target": 0.85,
+  "g30_result": "results\\global_rate_optimization_gate.json",
+  "summary": [
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "g30_bits": [
+        3,
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        2
+      ],
+      "g30_greedy_value": 0.9879467480379376,
+      "g30_exact_value": 0.9879467480379376,
+      "exact_optimized_bits": [
+        3,
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        2
+      ],
+      "exact_optimized_value": 0.9879467480379376,
+      "exact_optimized_greedy_value": 0.9879467480379376,
+      "exact_gain_over_g30": 0.0,
+      "greedy_certificate_false_under_exact": false,
+      "initial_exact_improvements": [],
+      "exact_single_change_local_optimal": true,
+      "fixed3_exact_value": 0.9740389884714946,
+      "fixed5_exact_value": 0.981353133298833,
+      "adaptive_exact_value": 0.9747089167501471,
+      "history": [
+        {
+          "bits": [
+            3,
+            1,
+            2,
+            3,
+            3,
+            3,
+            3,
+            2
+          ],
+          "exact_value": 0.9879467480379376
+        }
+      ]
+    },
+    {
+      "total_budget_bits": 40,
+      "report_budget_bits": 28,
+      "g30_bits": [
+        3,
+        3,
+        2,
+        3,
+        3,
+        1,
+        3,
+        2
+      ],
+      "g30_greedy_value": 0.9907946234885221,
+      "g30_exact_value": 0.9911445288735049,
+      "exact_optimized_bits": [
+        1,
+        3,
+        2,
+        3,
+        3,
+        1,
+        1,
+        2
+      ],
+      "exact_optimized_value": 0.9915571240660606,
+      "exact_optimized_greedy_value": 0.9907946234885221,
+      "exact_gain_over_g30": 0.0004125951925556537,
+      "greedy_certificate_false_under_exact": true,
+      "initial_exact_improvements": [
+        {
+          "uav": 0,
+          "new_bits": 1,
+          "exact_value": 0.991495716200369
+        },
+        {
+          "uav": 1,
+          "new_bits": 1,
+          "exact_value": 0.9912342563023306
+        },
+        {
+          "uav": 3,
+          "new_bits": 1,
+          "exact_value": 0.991172422194198
+        },
+        {
+          "uav": 6,
+          "new_bits": 1,
+          "exact_value": 0.9912059367391963
+        },
+        {
+          "uav": 6,
+          "new_bits": 2,
+          "exact_value": 0.9911454340898622
+        }
+      ],
+      "exact_single_change_local_optimal": true,
+      "fixed3_exact_value": 0.9791353311101236,
+      "fixed5_exact_value": 0.9873653633455163,
+      "adaptive_exact_value": 0.9873653633455163,
+      "history": [
+        {
+          "bits": [
+            3,
+            3,
+            2,
+            3,
+            3,
+            1,
+            3,
+            2
+          ],
+          "exact_value": 0.9911445288735049
+        },
+        {
+          "bits": [
+            1,
+            3,
+            2,
+            3,
+            3,
+            1,
+            3,
+            2
+          ],
+          "exact_value": 0.991495716200369
+        },
+        {
+          "bits": [
+            1,
+            3,
+            2,
+            3,
+            3,
+            1,
+            1,
+            2
+          ],
+          "exact_value": 0.9915571240660606
+        }
+      ]
+    }
+  ]
+}

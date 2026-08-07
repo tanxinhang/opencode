@@ -1,0 +1,965 @@
+# Exact Budgeted Soft-Information Fusion for UAV-ISAC under Correlated Reporting Losses
+
+*Submission draft. All reported numbers are traced to the audited result
+files in `../results/`; the full gate-by-gate audit is in
+`../PAPER_DRAFT.md` and `../AUDIT.md`.*
+
+## Abstract
+
+Multistatic UAV-ISAC sensing produces correlated soft evidence that must be
+quantized, transmitted over error-prone reporting links, and selectively
+fused under a finite bit budget.  We formulate this post-communication chain
+as a moment-matched Gaussian detection problem whose H0/H1 statistics
+include quantization, binary-symmetric-channel (BSC) errors, and correlated
+erasures, and we derive a one-parameter linear fusion family whose
+KKT-optimal member is the $P_D$-optimal linear score whenever the operating
+point has $P_D>0.5$.  Set monotonicity is obtained independently as
+feasible-region nesting, and a bounded-regime submodularity guarantee is
+stated with explicit conditions.  When variable-rate reporting makes report
+costs heterogeneous, we replace the equal-cost certificate by an exact
+multiple-choice knapsack budget selector and an exact worst-target max-min
+selector, together with a branch-and-bound threshold certificate whose
+pruning bound is stated and verified.  The framework is instantiated for a
+UAV-ISAC scenario with a geometry-aware normalized RIS power-gain model, and
+the numerical audit separately reports combinatorial exactness, value-oracle
+discretization, and statistical evidence.
+
+**Keywords:** UAV-ISAC, distributed detection, selective fusion, quantized
+soft information, exact optimization, correlated reporting losses.
+
+## 1. Introduction
+
+Integrated sensing and communication (ISAC) on UAV platforms must reconcile
+three tensions: sensing creates correlated per-UAV evidence, reporting links
+are finite-rate and error-prone, and the sensing and control planes compete
+for the same resource budget.  Prior UAV-ISAC work emphasizes trajectory,
+beamforming, and resource allocation [9], [10], [16]; RIS-assisted ISAC
+optimizes phase profiles or placement [3], [4], [17]; distributed detection
+with quantized soft decisions, sparse sensor selection, and knapsack-style
+radar sensor selection is well developed [5]--[8], [18]--[22], but typically
+under independent observations or a fixed report channel.  The gap addressed
+here is the selective fusion of post-communication correlated soft evidence
+under heterogeneous report costs and correlated reporting losses, with
+exactness certificates for the combinatorial selection layer.
+
+This paper makes three contributions.
+
+1. A communication-in-the-loop system model in which quantization, BSC
+   errors, detectable erasures, and the random received report set are
+   propagated into H0/H1 evidence moments before fusion, with a concrete
+   correlated-erasure model.
+2. A KKT-derived $P_D$-optimal linear fusion family with an independent
+   zero-extension monotonicity argument, an expected-$P_D$ selection
+   objective over the exact reception law, and exact heterogeneous-cost
+   budget/max-min selection certificates with a stated branch-and-bound
+   pruning bound.
+3. An audited, reproducible UAV-ISAC application study in which a
+   geometry-aware RIS power-gain model changes the local evidence quality
+   under one normalized report/control budget; multi-seed paired
+   comparisons, two-sided statistics with multiplicity correction, and
+   explicit recording of where guarantees do not apply are included.
+
+The remainder of the paper is organized as follows.  Section 2 reviews the
+related work.  Section 3 states the system model.  Section 4 derives the
+method.  Section 5 describes the simulation setup.  Section 6 reports the
+results.  Section 7 discusses limitations, and Section 8 concludes.
+
+## 2. Related Work
+
+### 2.1 UAV-ISAC and DD-domain sensing context
+
+UAV-ISAC is an active application scenario for correlated multistatic
+evidence [1], [2], [9], [10].  OTFS concentrates doubly selective channels
+in the delay-Doppler (DD) domain [1], [2], [14]; any such front end that
+produces moment-matched Gaussian local evidence can feed the framework
+proposed here.  We do not claim a new waveform or receiver design, and the
+selection/fusion theory does not depend on a specific DD-domain model.
+
+### 2.2 RIS-assisted ISAC
+
+RIS creates controllable propagation paths and is a 6G enabler for ISAC
+[3], [4], [17].  Prior work treats RIS phase as a beamforming variable for
+waveform or link quality, or jointly allocates radio resources and phase
+shifts [17].  In this paper RIS is an application instance: it changes the
+per-target evidence moments, and its control overhead competes with report
+bits under one normalized budget proxy.  It is not a claim about a new RIS
+beamforming design.
+
+### 2.3 UAV-ISAC
+
+UAVs add mobility and deployment flexibility to ISAC [10].  Existing
+surveys emphasize trajectory, beamforming, and bandwidth, but do not model
+the selective soft-information reporting chain after quantization, BSC, and
+correlated erasures.
+
+### 2.4 Distributed detection and soft-information fusion
+
+Distributed detection with quantized soft decisions is a classical problem
+[5]--[8].  The likelihood-ratio fusion rule of Chair and Varshney [6]
+and the person-by-person-optimal local rules of Tenney and Sandell [5]
+assume independent observations.  Sparse sensor selection has been studied
+for distributed detection [18], estimation under correlated measurement
+noise [19], nonparametric decentralized detection with quantizer design
+[20], robust submodular observation selection [21], and radar sensor
+selection as a knapsack problem [22].  Exact Poisson-binomial counting [11]
+and consensus algorithms [13] certify distributed majority but do not model
+correlated common-state erasures or set-dependent fusion ranking.  Relative
+to this literature, our contribution is the combination of a
+post-communication correlated value model, heterogeneous report costs, and
+an exact max-min selection certificate, with the conditions for the
+submodular shortcut stated explicitly.
+
+### 2.5 Communication-constrained ISAC resource allocation
+
+ISAC resource allocation has moved toward joint beamforming/bandwidth/power
+under sensing constraints [4], [12], [15], [16], [17].  These schemes split
+time/frequency/power between radar and communication but do not allocate
+per-report quantization bits and report/control overhead under an
+expected-$P_D$ objective with an exact combinatorial certificate.
+
+### 2.6 Positioning
+
+We are not aware of prior work that couples the correlated
+post-communication evidence chain with exact heterogeneous-cost max-min
+selection certificates under an explicit value oracle and a stated pruning
+bound.  Distributed majority counting and RIS resource allocation are
+treated here as secondary application audits, not as claims about a new
+physical-layer system.
+
+## 3. System Model
+
+**Figure 1.**  Scenario evolution: UAV-ISAC sensing as a source of correlated soft evidence, quantization/BSC/correlated erasures, selective fusion under a finite report-bit budget, and an optional RIS-assisted geometry-aware power-gain instance.**
+
+![Scenario evolution](paper_figures/scenario_evolution.png)
+
+### 3.1 Evidence and communication chain
+
+Let $M$ transmitting UAVs serve $Q$ target hypotheses with one receive
+array.  Per-UAV evidence under H0/H1 is moment-matched Gaussian
+$(\mu_0,\mu_1,\Sigma_0,\Sigma_1)$ with $\Sigma_0,\Sigma_1\succ 0$.  A
+report $i$ costs $b_i$ bits and passes through the following chain:
+
+$$
+X_i \xrightarrow{Q_{b_i}}
+\mathbf{c}_i(X_i) \xrightarrow{\text{BSC}}
+\tilde{\mathbf{c}}_i \xrightarrow{\text{dequant}}
+\hat{X}_i \xrightarrow{\text{erasure mask}}
+\gamma_i \hat{X}_i,
+$$
+
+where $Q_{b_i}$ is a $b_i$-bit scalar quantizer with thresholds
+$\tau_{i,1}<\cdots<\tau_{i,2^{b_i}-1}$, reconstruction values
+$r_i(c)$, and bit labels $c_i(x)\in\{0,1\}^{b_i}$.  The BSC flips each bit
+independently with probability $\epsilon_i$; dequantization maps the
+received bit word to $r_i(\tilde{\mathbf{c}}_i)$.  Erasure is modeled by
+$\gamma_i\in\{0,1\}$; erased reports are omitted from fusion.
+
+The erasure mask is correlated across UAVs through a common block state
+$Z\in\{0,1\}$ and independent per-link success events
+$V_i\sim\mathrm{Bernoulli}(s_i)$:
+
+$$
+\gamma_i = Z V_i,
+\qquad
+\Pr(\gamma)=\begin{cases}
+1-p_z, & \gamma=\mathbf{0},\\
+p_z \prod_i s_i^{\gamma_i}(1-s_i)^{1-\gamma_i}, & \gamma\neq\mathbf{0}.
+\end{cases}
+$$
+
+This is the concrete correlated-communication-loss model referenced by the
+title.  Conditional on the reception pattern $\gamma$, the fused
+observation is the subvector of reconstructed reports with $\gamma_i=1$.
+Its conditional moments are
+
+$$
+\mu_h^{(\gamma)} =
+\mathbb{E}[\hat{\mathbf{X}}_\gamma \mid H_h,\gamma],
+\qquad
+\Sigma_h^{(\gamma)} =
+\operatorname{Cov}[\hat{\mathbf{X}}_\gamma \mid H_h,\gamma],
+$$
+
+which are obtained by propagating the quantizer cells, the BSC transition
+probabilities, and the dequantization map through the moment-matched
+Gaussian distribution.  For example, the conditional mean of a received
+report is
+
+$$
+\mathbb{E}[\hat{X}_i\mid H_h,\gamma_i=1]
+= \sum_{c\in\{0,1\}^{b_i}} r_i(c)\,
+  \Pr(\tilde{\mathbf{c}}_i=c\mid H_h),
+$$
+
+with the BSC transition matrix
+$\Pr(\tilde{\mathbf{c}}=c'\mid \mathbf{c}=c)=
+\epsilon_i^{d_H(c,c')}(1-\epsilon_i)^{b_i-d_H(c,c')}$.
+The fusion threshold is recomputed from the received-set moments, so
+$P_{FA}$ is calibrated per reception pattern rather than for the nominal
+all-received set.  The primary metrics are mean and worst-target expected
+$P_D$ over the erasure law $\Pr(\gamma)$.
+
+### 3.2 Fusion and resource identity
+
+The linear fusion score is $s = w^\top x$ with threshold
+$\tau = w^\top \mu_0 + z\sqrt{w^\top\Sigma_0 w}$, where
+$z = \Phi^{-1}(1-P_{FA})$.  The detection probability is
+
+$$
+P_D(w) = \Phi\!\left(
+  \frac{w^\top\delta - z\sqrt{w^\top\Sigma_0 w}}
+       {\sqrt{w^\top\Sigma_1 w}}
+\right),
+$$
+
+with $\delta = \mu_1-\mu_0$.  The RIS application model changes the effective
+evidence gain $g_{iq}$ of report $i$ for target $q$.  The controlled model is
+$g_{iq} = 1 + (\mathrm{strength}_q\, \mathrm{array\_gain}_{iq})^2$; the
+geometry-aware normalized power-gain model uses
+
+$$
+P_{\mathrm{dir}} = \frac{1}{R_{tx}^2 R_{rx}^2},
+\qquad
+P_{\mathrm{ris}} =
+  \frac{N_{\mathrm{ris}}^2\,\mathrm{array\_gain}_{iq}^2\,
+       a_{\mathrm{ap}}}
+       {R_1^2 R_2^2 R_3^2},
+$$
+
+and $g_{iq} = 1 + P_{\mathrm{ris}}/P_{\mathrm{dir}}$, with an optional
+direct-path blockage factor for the weak target.  This is a normalized
+power-gain proxy: in general the direct and RIS paths should be added as
+complex amplitudes,
+
+$$
+P_{\mathrm{tot}} = \left|
+  \sqrt{P_{\mathrm{dir}}}\,e^{j\phi_d} +
+  \sqrt{P_{\mathrm{ris}}}\,e^{j\phi_r}
+\right|^2,
+$$
+
+so the coherent cross term $2\sqrt{P_{\mathrm{dir}}P_{\mathrm{ris}}}
+\cos(\phi_r-\phi_d)$ can be negative.  The power-additive form is therefore
+an approximation valid when the two paths are separable in the DD domain, or
+when $\phi_r$ is aligned to $\phi_d$; we do not claim that an uncontrolled
+RIS phase never reduces a link's evidence SNR.
+
+The control/report resource identity is
+
+$$
+B_{\mathrm{total}} =
+  B_{\mathrm{report}} +
+  N_{\mathrm{ris}}\cdot\frac{b_{\mathrm{phase}}}{C},
+$$
+
+where $C$ is the coherence-frame count.  This is a normalized budget proxy,
+not a true time-bandwidth identity: channel coding, headers, control-plane
+signaling, RIS estimation, and retransmission overhead are not modeled.
+Under the conservative one-symbol-per-bit convention, report and control
+bits map to time-bandwidth symbols.
+
+**Table 6.  Notation.**
+
+| Symbol | Meaning |
+|:-------|:--------|
+| $M$, $Q$ | UAV count, target count |
+| $\mu_0,\mu_1,\Sigma_0,\Sigma_1$ | H0/H1 evidence moments |
+| $b_i$ | bit cost of report $i$ |
+| $\epsilon_i$ | BSC bit-flip probability of report $i$ |
+| $P_{FA}$, $P_D$ | false-alarm and detection probabilities |
+| $B_{\mathrm{total}}$, $B_{\mathrm{report}}$ | total and report budgets |
+| $N_{\mathrm{ris}}$, $b_{\mathrm{phase}}$, $C$ | RIS elements, phase bits, coherence frames |
+| $S_q$ | report schedule of target $q$ |
+| $m_q(t)$ | minimum bit cost for target $q$ to reach threshold $t$ |
+| $L_{\min}$ | exact first-feasible majority prefix length |
+
+Abbreviations: ISAC (integrated sensing and communication), UAV (unmanned
+aerial vehicle), RIS (reconfigurable intelligent surface), BSC (binary
+symmetric channel), DD (delay-Doppler), QoS (quality of service), KKT
+(Karush-Kuhn-Tucker), DP (dynamic programming).
+
+## 4. Method
+
+Figure 2 shows how the proposed chain evolves from classical distributed
+detection to exact selective fusion.  Each stage keeps the prior element as
+a baseline or a degenerate case, so the experimental gates audit the
+transition between adjacent stages.
+
+**Figure 2.**  Algorithm evolution: person-by-person optimal local rules and likelihood-ratio fusion, exact Poisson-binomial counting and consensus, KKT $P_D$-optimal fusion, expected-$P_D$ greedy selection, exact heterogeneous-cost budget/max-min selection, scaled threshold certificate, and the RIS/control-budget and distributed architecture layers.**
+
+![Algorithm evolution](paper_figures/algorithm_evolution.png)
+
+### 4.1 $P_D$-optimal linear fusion
+
+Let $\Sigma_0=LL^\top$ with $L$ invertible, and use the whitened coordinates
+$y=L^\top w$, $a=L^{-1}\delta$, $Q=L^{-1}\Sigma_1 L^{-\top}$.  The
+detection probability is
+
+$$
+P_D = \Phi\!\left(
+  \frac{a^\top y - z\|y\|}{\sqrt{y^\top Q y}}
+\right).
+$$
+
+Maximizing $P_D$ is equivalent to maximizing
+$F(y)=a^\top y-z\|y\|$ over the compact ellipsoid $y^\top Q y=1$.  The
+objective is scale-invariant in $y$, so the ellipsoid normalization fixes
+the scale without loss of generality.  At a stationary point,
+
+$$
+a - z\frac{y}{\|y\|} - 2\lambda Q y = 0.
+$$
+
+Left-multiplying by $y^\top$ and using $y^\top Q y=1$ gives
+
+$$
+2\lambda = a^\top y - z\|y\| = F(y).
+$$
+
+If $P_D>0.5$, then $F(y)>0$ and hence $\lambda>0$.  The stationarity
+condition therefore yields
+
+$$
+y \propto (Q+\mu I)^{-1} a,
+\qquad
+\mu = \frac{z}{2\lambda\|y\|}\ge 0,
+$$
+
+so any global optimum direction lies in the one-parameter family
+$w(\mu)=L^{-\top}(Q+\mu I)^{-1}L^{-1}\delta$.  The endpoints $\mu=0$ and
+$\mu\to\infty$ are included in the search (the latter as the deflection
+limit), and the one-dimensional search is performed over a dense grid with
+a controlled tolerance.  Consequently, when every candidate subset has an
+optimal operating point with $P_D>0.5$, optimizing the one-parameter family
+attains the global linear optimum.
+
+**Lemma 1 (zero-extension monotonicity).**  Let $S\subseteq T$ and let the
+moments on $S$ be the consistent principal submatrix of the moments on $T$.
+Taking the optimal weights of $S$ and zero-extending them to $T$ preserves
+the score and hence preserves $P_D$, so
+$P_D^\star(T)\ge P_D^\star(S)$.  This is feasible-region nesting, independent
+of the KKT parametrization.
+
+In the proportional regime $\Sigma_1=c\Sigma_0$, the family degenerates to
+
+$$
+P_D = \Phi\!\left(
+  \frac{\sqrt{D(S)}-z}{\sqrt{c}}
+\right),
+\qquad
+D(S) = \delta_S^\top \Sigma_{0,SS}^{-1}\delta_S.
+$$
+
+This closed form is used in Section 4.2 to state the submodularity boundary.
+
+### 4.2 Expected-$P_D$ selection
+
+For target $q$ and schedule $S_q$, the objective is
+
+$$
+\mathbb{E}_{P_D}(q,S_q) =
+  \mathbb{E}_{\gamma}\big[
+    P_D\big(\mathrm{owner}\cup \mathrm{received}(S_q,\gamma)\big)
+  \big].
+$$
+
+The two-stage greedy first minimizes the normalized miss-deficit and then
+maximizes expected-$P_D$ gain per report bit.  Every fixed-pattern $P_D$ is
+set-monotone at the audited operating points, so the expectation is
+monotone.
+
+In the proportional regime, set $x=\sqrt{D}$.  The map
+$P_D(D)=\Phi((x-z)/\sqrt{c})$ is concave in $D$ if and only if
+
+$$
+x^2 - z x + c \ge 0.
+$$
+
+Consequently:
+
+- If $c\ge z^2/4$, concavity holds for every $D>0$.
+- Otherwise, concavity holds in the strong-evidence region
+  $x\ge (z+\sqrt{z^2-4c})/2$, i.e.
+  $\sqrt{D}\ge (z+\sqrt{z^2-4c})/2$, and also in a low-evidence interval;
+  the strong-evidence threshold is the one used by the audit.
+
+The modularity of the deflection $D(S)$ requires a diagonal
+$\Sigma_0$: then $D(S)=\sum_{i\in S}\delta_i^2/\sigma_{0,i}^2$ is additive.
+For general correlated $\Sigma_0$,
+$D(S)=\delta_S^\top\Sigma_{0,SS}^{-1}\delta_S$ is not modular and need not
+be submodular.  In addition, the erasure law $\Pr(\gamma)$ must not be
+coupled to the chosen schedule; if scheduling changes the erasure
+distribution, the expectation of a set-submodular function is not
+necessarily submodular.  Under proportional covariance, diagonal
+$\Sigma_0$, the strong-evidence condition above, and schedule-independent
+erasures, the expected objective is monotone submodular and equal-cost
+cardinality greedy inherits the classical $1-1/e$ bound.  The implemented
+bit-budgeted greedy does not inherit that ratio and is not claimed to.
+
+### 4.3 Exact selection under heterogeneous report costs
+
+Variable-rate reporting makes per-report costs heterogeneous, so the
+equal-cost quota certificate no longer covers the feasible set.  Let
+$\mathcal{O}_q$ be the set of all $(\mathrm{cost}(S),P_D(S))$ pairs obtained
+by enumerating every subset of non-owner reports for target $q$.  A global
+schedule chooses one option per target with total cost at most $B$.  This is
+a multiple-choice knapsack, solved by a dynamic program over targets and
+accumulated bits in which states are pruned only by componentwise Pareto
+dominance.
+
+**Theorem 1 (exactness of the budget DP).**  Under additive report costs and
+target-separable report option sets with no cross-target coupling, for every
+target enumerate all report subsets and their exact bit costs.  For any two
+partial schedules with the same accumulated cost, if one has $P_D$ no
+smaller in every processed target, then every monotone completion of the
+dominated schedule is no better than the corresponding completion of the
+dominating one.  Keeping only componentwise-Pareto value vectors preserves
+at least one optimal path, so the DP terminates with the exact lexicographic
+optimum $(QoS\ gap,\ weighted\ mean,\ worst\ target)$.
+
+The system-level objective is worst-target expected $P_D$.  For a threshold
+$t$, feasibility asks whether each target can choose a subset with value at
+least $t$ under the total budget; this is again a multiple-choice knapsack
+feasibility problem.  Because feasibility is monotone in $t$, the exact
+max-min value is found by binary search over the finite set of per-target
+subset values, and the returned schedule is feasible at the optimal
+threshold.
+
+**Theorem 2 (exact max-min selection).**  Under the same target-separable,
+additive-cost assumptions, let
+$\mathcal{T}=\{t_1<\cdots<t_K\}$ be the finite set of enumerated per-target
+subset values.  The threshold-feasibility DP returns a feasible schedule
+with $\min_q P_D(q,S_q)=\max_{t\in\mathcal{T}}\{t : \text{feasible}(t)\}$,
+and among schedules attaining that threshold it returns the lexicographically
+best secondary score.
+
+### 4.4 Scaled exact-threshold certificate
+
+For larger report sets, define $m_q(t)$ as the minimum bit cost for target
+$q$ to reach $t$.  A global schedule with all values at least $t$ exists if
+and only if $\sum_q m_q(t)\le B$, because the per-target minima are jointly
+attainable and every feasible subset costs at least its minimum.
+
+**Theorem 3 (exact minimum-cost certificate).**  Let $m_q(t)$ be computed by
+branch-and-bound with the closed-form Cauchy upper bound.  In whitened
+coordinates for a candidate set $S$, every linear score satisfies
+
+$$
+s(y) \le \sqrt{a_S^\top Q_S^{-1} a_S} -
+  \frac{z}{\sqrt{\lambda_{\max}(Q_S)}},
+\qquad z\ge 0,
+$$
+
+with $\lambda_{\min}(Q_S)$ replacing $\lambda_{\max}(Q_S)$ when $z<0$.
+This bound follows from $a^\top y\le\sqrt{a^\top Q^{-1}a}\sqrt{y^\top Q y}$
+and $\|y\|/\sqrt{y^\top Q y}\ge 1/\sqrt{\lambda_{\max}(Q)}$.  When remaining
+reports are added, the enlarged covariance is a principal extension and the
+bound is recomputed on the union set, so no Schur-complement error is
+introduced.  A node is pruned only when that bound is below $t$, when its
+cost already reaches the best known cost, or when the cheapest remaining
+reports cannot beat the best known cost.  The returned cost is therefore the
+exact minimum, and pruning never changes the result.  The implementation
+uses a value cache and an explicit tolerance of $10^{-12}$ on the threshold
+comparison, so the claim is exact with respect to the tolerance-controlled
+value oracle.
+
+Small low-$P_D$ models use exact subset enumeration instead; when every
+model is within `max_exhaustive_reports`, the scaled selector delegates
+directly to the exact selector rather than running an epsilon binary search.
+The worst case remains exponential, and the bound is reported as a pruning
+certificate, not a polynomial-time guarantee.
+
+### 4.5 Complexity
+
+The exact budget DP processes $Q$ targets, $B$ cost states, and a per-target
+cost-value Pareto option set whose size is at most the number of distinct
+subset costs.  Its complexity is
+$O(Q \cdot B \cdot |\mathcal{F}| \cdot S)$ with state-pruning factor $S$;
+componentwise dominance removes options that are no cheaper and no better,
+so in the audited models the option set is the cost-value frontier rather
+than the full exponential subset list.  The max-min selector adds a binary
+search over the finite candidate threshold set, multiplying the DP by
+$O(\log K)$ feasibility checks.  G8-S keeps the same threshold search but
+replaces per-target subset enumeration by branch-and-bound; its worst case
+is exponential, while the greedy warm start and cost-bounded minimality
+proof make the audited 24-report instance finish in 35 ms.  The exact
+majority certificate evaluates Poisson-binomial tails by a
+$O(N^2)$-state DP over the voter prefix when decisions are independent
+conditional on the hypothesis; when independence holds only after
+conditioning on a common state, the mixture form is used instead.  It does
+not rely on the Gaussian approximation or on monotonicity of feasibility in
+the prefix length.
+
+### 4.6 Application instance: geometry-aware RIS power gain
+
+The RIS application model uses a target-aligned beam codebook with $b$-bit
+uniform phase quantization.  The mean array-gain loss is
+$\mathrm{sinc}^2(1/2^b)$ in the large-$N$ limit, with the finite-$N$
+correction $1/N+(1-1/N)\mathrm{sinc}^2(1/2^b)$.  Placement and phase-bits
+are searched over a finite candidate set in the application audit only.
+These searches use coarse-to-fine refinement with an $L$-Lipschitz grid
+loss bound $Lh\sqrt{d}/2$; they are not part of the core selection/fusion
+theory and do not claim physical-layer optimality.
+
+### 4.7 Exact first-feasible majority prefix
+
+For the distributed branch, local 1-bit decisions with probabilities
+$p_{0,i},p_{1,i}$ are fused by a counting rule.  The exact type-I/II
+probabilities are Poisson-binomial tails only when the decisions are
+independent conditional on the hypothesis.  If only conditional independence
+given a common state $Z$ holds, the exact tail is
+$\mathbb{E}_Z[P_{\mathrm{PB}}(k;p_{h,i}(Z))]$ rather than a single
+Poisson-binomial tail.  The certificate below returns the first feasible
+prefix of a fixed voter sequence; it is not a global minimum over arbitrary
+voter subsets.
+
+**Theorem 4 (exact first-feasible prefix).**  For a fixed voter sequence,
+`exact_min_majority_uavs` evaluates the exact tail on every prefix and
+returns the first feasible prefix.  Feasibility is not monotone in the
+prefix length in general; the audit exhibits sequences with trace
+$[F,F,T,F,T]$.  Consequently binary search over the prefix length is valid
+only when the per-sequence monotonicity certificate is available.
+
+## 5. Simulation Setup
+
+The audited demo configuration uses $M=8$ UAVs and $Q=3$ targets with the
+same false-alarm rate and QoS weighting as the repository's `demo.yaml`.
+Report budgets are swept over $\{3,5,7,9,11\}$ bits for the exact selection
+audits and over total budgets $\{20,28,40\}$ for the RIS/architecture
+audits.  The exact selection experiments use 20 seeds and a 64-point
+expectation grid; the RIS/architecture experiments use 4-12 seeds and
+512-point grids as documented in the audit.  A separate target-count
+scalability audit uses 3 seeds and a 32-point grid at $Q=3/4/5$.  Every
+number reported below is mean over seeds unless stated otherwise.  The full
+result table is
+`../results/paper_results_table.md`.
+
+The term "exact" in this paper has three levels.  The combinatorial DP and
+branch-and-bound results are exact with respect to a given per-subset value
+oracle; the oracle itself uses a finite expectation grid (64 or 512 points)
+and a one-dimensional $\mu$ search with a controlled tolerance.  We
+therefore claim combinatorial exactness given the discretized /
+tolerance-controlled value oracle, not end-to-end exactness of the
+continuous expectation.
+
+**Table 1.  Simulation parameters.**
+
+| Parameter | Value |
+|:----------|:------|
+| UAVs $M$ | 8 |
+| Targets $Q$ | 3 |
+| False-alarm rate $P_{FA}$ | 0.05 |
+| Nominal quantizer bits per report | 3 |
+| Default report budget $B_{\mathrm{report}}$ | 42 bits |
+| DD-domain Doppler bins / delay bins / accumulation | 16 / 32 / 8 |
+| UAV SNR range | -7 to 5 dB |
+| Fractional Doppler range | $[-0.48,0.48]$ |
+| Residual DD-domain interference | 0.12 |
+| Common correlation factor | 0.30 |
+| Report success probability range | $[0.72,0.98]$ |
+| BSC bit-flip range | $[0.005,0.08]$ |
+| Exact-selection audit | 20 seeds, grid 64, $B\in\{3,5,7,9,11\}$ |
+| RIS/architecture audit | 4-12 seeds, grid 512, $B\in\{20,28,40\}$ |
+
+### 5.1 Reproducibility
+
+All reported numbers are generated by the repository scripts and stored in
+`../results/`.  The exact-selection tables are reproduced by
+
+```
+python scripts/run_exact_budget_gate.py --seeds 20 --budgets 3 5 7 9 11 --grid 64
+python scripts/run_exact_maxmin_gate.py --seeds 20 --budgets 3 5 7 9 11 --grid 64
+python scripts/run_scaled_maxmin_gate.py --seeds 20 --budgets 5 9 --grid 64
+python scripts/run_exact_selection_target_scalability.py `
+  --seeds 3 --budgets 8 12 16 --grid 32
+python scripts/run_scaled_difficulty_gate.py --grid 96
+python scripts/audit_exact_selection_stats.py
+```
+
+The unified result table and all paper figures are rebuilt by
+
+```
+python scripts/build_paper_tables.py
+python scripts/draw_algorithm_evolution.py
+python scripts/draw_scenario_evolution.py
+python scripts/verify_paper_numbers.py
+```
+
+## 6. Results
+
+### 6.1 Fusion and selection
+
+On 1318 operating-point addition edges, the $P_D$-optimal family has zero
+decreasing edges, while the deflection-optimal score decreases on 258 edges
+(19.6%) with a maximum 16.1 pp drop.  The mean gain over the deflection
+score is +0.63 pp and the maximum per-edge gain is +21.2 pp.
+
+At $B=20$ under correlated erasures, the expected-$P_D$ greedy improves mean
+expected $P_D$ by +1.14 pp (bootstrap CI $[0.47,1.74]$, 85% win) and
+worst-target $P_D$ by +7.56 pp; a two-candidate hybrid gives +1.44 pp mean
+and +6.50 pp worst-target.  At $B=40$ the greedy alone is -0.91 pp in mean,
+so the audited claim uses the hybrid and does not claim universal dominance.
+
+The exact-selection audit below uses 20 paired seeds.  The exact budget
+selector (G8-K) matches the exhaustive global oracle in 100% of controlled
+cells and never loses to greedy on the lexicographic score.  The exact
+max-min selector (G8-M) is never worse than greedy in any audited cell; this
+is a correctness property of the optimizer, not a statistical discovery.
+At the system level with variable-rate reporting, the worst-target gains are
+small (up to +2.57 pp at $B=7$) and do not survive a two-sided paired t-test
+with Holm correction over the five budgets (Holm p=0.094 at $B=7$, p=0.112
+at $B=5$ and $B=11$).  In the constrained oracle scenario, where every
+target has the same report pool and cost structure, the gains are larger
+(+5.37/+8.24/+3.33 pp at $B=5/7/11$) and remain significant after Holm
+correction (Holm p=5.8e-6/1.1e-6/2.3e-3).  We therefore report the
+constrained scenario as the statistical evidence for the max-min layer and
+the system-level audit as the exactness/correctness check.
+
+**Table 2.  Exact selection versus forward greedy (20 seeds, grid 64, system-level variable-rate audit).**
+
+| Budget | G8-K gain (pp) | G8-M gain (pp) | G8-M two-sided t p | G8-M Holm p | G8-M Wilcoxon p |
+|:------:|:--------------:|:--------------:|:------------------:|:-----------:|:---------------:|
+| 3      | 0.00           | +0.16          | 0.330              | 0.330        | 0.317            |
+| 5      | 0.00           | +1.27          | 0.031              | 0.112        | 0.028            |
+| 7      | +2.57          | +2.57          | 0.019              | 0.094        | 0.012            |
+| 9      | -1.00          | +0.28          | 0.092              | 0.185        | 0.109            |
+| 11     | +0.48          | +1.09          | 0.028              | 0.112        | 0.012            |
+
+The scaled certificate (G8-S) matches exact selection to zero absolute error
+on the 20-seed set.  A report-count benchmark covers
+$R=8/12/16/20/24/28/32/40$
+non-owner reports: exhaustive subset counts grow to $2^{24}=16{,}777{,}216$,
+$2^{32}\approx 4.3\times 10^9$, and
+$2^{40}\approx 1.1\times 10^{12}$, while the branch-and-bound certificate
+finishes in 24-60 ms and returns the exact minimum cost (1-2 bits) at every
+scale.  A difficulty sweep on 10-report models adds critical-threshold,
+similar-weak, and K-report layers: thresholds $0.75$-$0.90$ require $4$-$9$
+reports, the branch-and-bound visits 484-8185 nodes with a recursion depth
+of 10 and a 50% prune rate, and every returned minimum matches exhaustive
+enumeration on all nine audited cells.
+
+The target-count audit re-verifies the exhaustive-oracle match when the
+number of targets grows.  At $Q=3/4/5$ and $B=8/12/16$ (3 seeds each), the
+budget and max-min selectors match their exhaustive oracles in 100% of all
+27 cells and are never worse than forward greedy.  Mean wall time grows from
+about 180 ms at $Q=3$ to about 300-360 ms at $Q=5$ (grid 32), so the
+exactness certificate remains practical at larger target counts.
+
+**Table 5.  Target-count scalability (3 seeds, grid 32).**
+
+| Targets $Q$ | Budget $B$ | Budget wall (ms) | Max-min wall (ms) | Oracle match | Never worse |
+|:-----------:|:----------:|:----------------:|:-----------------:|:------------:|:-----------:|
+| 3           | 8          | 182              | 176               | 100%         | 100%        |
+| 3           | 12         | 180              | 184               | 100%         | 100%        |
+| 3           | 16         | 183              | 175               | 100%         | 100%        |
+| 4           | 8          | 228              | 234               | 100%         | 100%        |
+| 4           | 12         | 243              | 237               | 100%         | 100%        |
+| 4           | 16         | 245              | 241               | 100%         | 100%        |
+| 5           | 8          | 300              | 302               | 100%         | 100%        |
+| 5           | 12         | 322              | 312               | 100%         | 100%        |
+| 5           | 16         | 363              | 351               | 100%         | 100%        |
+
+Figure 3 shows the max-min wall time as a function of $Q$ for each budget.
+
+**Figure 3.**  Exact max-min wall time versus target count at report budgets $B=8/12/16$; all cells match the exhaustive oracle and never lose to greedy.**
+
+![Target-count scalability](paper_figures/g8_target_scalability.png)
+
+### 6.2 Application audit: RIS-assisted evidence quality
+
+At $B=20$, aligned RIS plus expected-$P_D$ greedy gives +12.3 pp mean and
++17.8 pp worst-target expected $P_D$ over no RIS, with QoS feasibility
+rising from 0% to 95%.  With the physics-based channel, 1024 elements and
+aperture scale $10^{-2}$ raise mean and worst-target expected $P_D$ by
++16.3 pp and +24.8 pp at $B=20$.  At total budget 40, a jointly optimized
+3-bit RIS with 256 elements raises worst-target expected $P_D$ by up to
++9.85 pp over a fixed RIS deployment and +19.5 pp over no RIS while using
+slightly less time-bandwidth.
+
+These numbers illustrate how the fusion/selection layer consumes improved
+local evidence under the geometry-aware power-gain model.  Subarray
+multi-beam partitioning, aperture scaling, and array-factor allocation are
+heuristic extensions outside the exactness theorems; we do not interpret
+them as physical-layer optimality statements.
+
+### 6.3 Extension audit: distributed branch and exact majority
+
+The distributed-branch and rate-profile consistency audits are collected in
+Appendix B.  They are extension checks outside the core fusion/selection
+theory: they verify the exact first-feasible prefix certificate, the
+correlated-mixture semantics, and the difference between greedy and exact
+rate-profile optimality, and are not used as standalone contributions.
+
+### 6.4 Re-implemented literature-style baselines
+
+At total budget 40 with a 3-bit, 256-element RIS and 28 report bits, the
+proposed chain is compared with re-implemented baselines under identical
+channel and budget assumptions (12 seeds).
+
+**Table 3.  Literature-style baselines versus proposed chain (12 seeds).**
+
+| Baseline | Mean gain (pp) | Worst-target gain (pp) |
+|:---------|:--------------:|:----------------------:|
+| RIS + deflection Top-K | +0.68 | +1.63 |
+| No-RIS deflection Top-K | +15.17 | +27.48 |
+| Random-RIS deflection Top-K | +14.38 | +25.41 |
+| Uniform soft, no RIS | +21.85 | +46.14 |
+| Hard decision, no RIS | +75.67 | +79.93 |
+| Hard decision, RIS | +52.11 | +64.48 |
+| Same schedule, deflection fusion | +0.25 | +0.45 |
+
+The gains over deflection-fusion baselines are small but consistently
+positive, confirming that the $P_D$-optimal fusion family and the exact
+selection layer contribute beyond re-ranked soft evidence.  Because these
+are re-implemented literature-style components rather than externally
+reproduced results, the comparison is an internal baseline audit.
+
+## 7. Discussion and Limitations
+
+- The moment-matched Gaussian score is a tractable detection model, not an
+  exact discrete likelihood-ratio detector.
+- The KKT guarantee holds at $P_D>0.5$; below that point the implementation
+  does not claim global optimality.
+- The RIS application model is a geometry-aware normalized power-gain proxy;
+  per-element mutual coupling, polarization, waveform-level RIS responses,
+  and coherent cancellation between direct and RIS paths are not modeled.
+- The normalized report/control ledger is conservative but not
+  waveform-derived; coding, headers, control signaling, and estimation
+  overhead remain unmodeled.
+- The core exactness claims are combinatorial, given a discretized /
+  tolerance-controlled value oracle; they are not end-to-end exactness of
+  the continuous expectation or of the one-dimensional $\mu$ search.
+- The per-target subset enumeration remains exponential; G8-S is an exact
+  pruning certificate, not a polynomial-time guarantee.
+- The system-level G8-M gains are small at 20 seeds and are not significant
+  after Holm correction; the constrained oracle scenario is significant
+  after correction, but larger seed sets (50-100 paired scenarios) and
+  independent hardware baselines remain future work.
+- The distributed-branch, architecture-switch, and rate-profile audits are
+  extensions; their communication overhead and seed counts are documented
+  separately and are not part of the core fusion/selection claims.
+- The G30-E exact certificate is stated for B=28/40 and single-rate changes
+  only.
+- The exact first-feasible prefix length is reported for the audited voter
+  sequence and is not monotone in $M$ in general.
+- The SOTA comparison is a 12-seed draft with re-implemented baseline
+  components under identical channel and budget assumptions; external
+  numerical results from other systems remain to be matched.
+
+## 8. Conclusion
+
+We presented exact budgeted soft-information fusion for UAV-ISAC under
+correlated reporting losses.  Communication loss enters the evidence
+moments through a concrete quantization/BSC/correlated-erasure chain;
+$P_D$-optimal linear fusion is derived from a KKT family with an independent
+zero-extension monotonicity argument; heterogeneous-cost budget/max-min
+selection is solved exactly with a stated branch-and-bound pruning bound;
+and the claims are separated into combinatorial exactness, value-oracle
+discretization, and statistical evidence.  The RIS-assisted scenario is an
+application instance with a geometry-aware normalized power-gain model.
+The numerical audit includes multi-seed paired comparisons with two-sided
+statistics and Holm correction, oracle-match checks, and explicit recording
+of where guarantees do not apply.
+
+## Appendix A. Proof Sketches
+
+**Theorem 1 (exactness of the budget DP).**  Prove by induction on the
+number of processed targets.  The base case is the empty schedule.  At each
+target the DP extends every kept partial schedule with one enumerated
+subset and retains, per accumulated cost, only componentwise-Pareto value
+vectors.  If vector $v$ dominates $u$ for the same cost, then any completion
+of $u$ has, coordinatewise, no larger $P_D$; therefore its QoS gap is no
+smaller, its weighted mean is no larger, and its minimum is no larger.  A
+monotone completion of $v$ is never worse, so at least one optimal path
+survives the pruning.  The terminal state with the best lexicographic score
+is therefore globally optimal.
+
+**Theorem 2 (exact max-min selection).**  For threshold $t$, the
+threshold-feasibility DP is the budget DP restricted to options with value
+at least $t$, so its exactness follows from Theorem 1.  The feasible set is
+decreasing in $t$; binary search over the finite sorted candidate set
+therefore returns the largest feasible threshold.  The terminal tie-break
+uses the lexicographic score among schedules attaining that threshold, and
+the same DP-exactness argument shows the returned schedule is feasible and
+optimal.
+
+**Theorem 3 (exact minimum-cost certificate).**  For each target, $m_q(t)$
+is the minimum cost over all subsets with value at least $t$.  Any global
+schedule with value at least $t$ and cost at most $B$ has per-target costs at
+least $m_q(t)$, so $\sum_q m_q(t)\le B$ is necessary; choosing the per-target
+minimal subsets attains the bound, so it is sufficient.  The branch-and-bound
+computes $m_q(t)$ exactly: for $z\ge 0$,
+$s(y)\le \sqrt{a_S^\top Q_S^{-1} a_S} - z/\sqrt{\lambda_{\max}(Q_S)}$
+(with $\lambda_{\min}$ for $z<0$) follows from Cauchy-Schwarz and the
+Rayleigh quotient, so a node whose bound is below $t$ cannot contain a
+feasible subset; the cost-based prunes discard only nodes that cannot
+improve the current best.  The remaining DFS is exhaustive, so the returned
+cost is exact.  The full statement is Lemma 4.7G in `FORMAL_PROOFS.md`, now
+also stated in Section 4.4.
+
+**Theorem 4 (exact first-feasible prefix).**  The Poisson-binomial tails
+are exact only when the voter decisions are independent conditional on the
+hypothesis.  If independence holds only after conditioning on a common
+state $Z$, the exact probability is the mixture
+$\mathbb{E}_Z[P_{\mathrm{PB}}(k;p_{h,i}(Z))]$, and the implementation
+reports which form is used.  The prefix DP evaluates each candidate prefix
+exactly; by construction the returned value is the first-feasible prefix
+length, not a minimum over arbitrary voter subsets.  The counterexample
+with trace $[F,F,T,F,T]$ shows that feasibility is not monotone in the
+prefix length in general, so the prefix search is required unless a
+per-sequence monotonicity certificate is available.
+
+## Appendix B. Extension Audits
+
+### Distributed branch and exact majority
+
+At low report budgets, peer majority uses zero report-budget bits and can
+exceed centralized soft fusion: at $B=8/12$ the exact architecture switch
+selects peer and raises worst $P_D$ from 0.774/0.824 to 0.881
+(+10.68/+5.68 pp), making the 0.85 QoS target feasible.  Target-wise
+switching adds up to +1.55 pp, and soft-report reallocation adds another
++0.75 pp at $B=16/20$.
+
+**Table 4.  Architecture comparison (worst-target $P_D$).**
+
+| Total budget | Centralized soft | Peer majority | Exact/target-wise switch | Reallocation |
+|:------------:|:----------------:|:-------------:|:------------------------:|:------------:|
+| 8            | 0.774            | 0.881          | 0.881                    | 0.881         |
+| 12           | 0.824            | 0.881          | 0.886                    | 0.886         |
+| 16           | 0.902            | 0.881          | 0.917                    | 0.925         |
+| 20           | 0.902            | 0.881          | 0.917                    | 0.925         |
+| 28           | 0.923            | 0.881          | 0.923                    | 0.938         |
+| 40           | 0.933            | 0.881          | 0.933                    | 0.941         |
+
+The peer branch is never selected when centralized soft already satisfies
+the QoS target, so the switch and reallocation are monotone improvements
+over the centralized baseline at $B\ge 16$.
+
+The exact Poisson-binomial boundary starts at $M=6$, matching empirical
+wins, while the Gaussian approximation predicted $M_{\min}=13.36$.  The
+exact prefix audit reports first-feasible prefix lengths of 14/17/16/19 over
+the pooled per-target non-owner voter sequence at $M=6/8/12/16$.  Here $M$
+is the UAV count, while voters are pooled across targets; with $Q=3$ targets
+and $M=6$ UAVs the maximum voter count is $Q(M-1)=15$, so a first-feasible
+prefix of 14 is consistent.  Feasibility is non-monotone in the prefix
+length at $M=8/12/16$, so binary-search shortcuts are rejected without a
+per-sequence monotonicity certificate.
+
+Peer majority is reported with zero *report-budget* bits under the explicit
+assumption that the 1-bit local decisions are combined by over-the-air
+counting or over a reserved control channel.  Physically, combining $M$
+decisions still requires that mechanism; the architecture tables count only
+the soft-report budget and treat the distributed-combining cost separately.
+
+### Rate-profile consistency
+
+This auxiliary audit is a consistency check, not a performance claim: it
+uses only two seeds and is too small for statistical conclusions.  Its
+purpose is to document that switching from the greedy certificate to the
+exact max-min objective changes the reported rate-profile optimality.
+
+The global rate-profile optimizer (G30) certifies single-rate-change local
+optimality under the greedy objective.  Because the greedy schedule is not
+exact under heterogeneous report costs, we re-run the certificate with the
+exact max-min selector on the same 2-seed/grid-256 audit.  At $B=28$, the
+G30 profile remains a single-rate exact local optimum at worst $P_D$ 0.9879
+with zero gain.  At $B=40$, the greedy certificate is false under the exact
+objective: the G30 profile reaches 0.9911 with the exact selector and has
+improving single-rate changes, and exact coordinate ascent finds a profile
+with worst $P_D$ 0.9916 (+0.04 pp) that is a single-rate exact local
+optimum.  These numbers are included only to show implementation
+consistency and are not used as a headline result.
+
+## References
+
+[1] R. Hadani, S. Rakib, M. Tsatsanis, A. Monk, A. J. Goldsmith, A. F.
+Molisch, and R. Calderbank, "Orthogonal time frequency space modulation,"
+in Proc. IEEE Wireless Communications and Networking Conference (WCNC),
+2017.
+
+[2] W. Yuan, L. Zhou, S. K. Dehkordi, et al., "From OTFS to DD-ISAC:
+Integrating sensing and communications in the delay Doppler domain," arXiv
+preprint arXiv:2311.15215, 2023.
+
+[3] Q. Wu and R. Zhang, "Intelligent reflecting surface enhanced wireless
+network via joint active and passive beamforming," IEEE Transactions on
+Wireless Communications, vol. 18, no. 11, pp. 5394-5409, 2019.
+
+[4] Y. Xu et al., "Joint beamforming for RIS-assisted integrated sensing and
+communication systems," IEEE Transactions on Communications, vol. 72, no. 4,
+2024.
+
+[5] R. R. Tenney and N. R. Sandell, "Detection with distributed sensors,"
+IEEE Transactions on Aerospace and Electronic Systems, vol. AES-17, no. 4,
+pp. 501-510, 1981.
+
+[6] Z. Chair and P. K. Varshney, "Optimal data fusion in multiple sensor
+detection systems," IEEE Transactions on Aerospace and Electronic Systems,
+vol. AES-22, no. 1, pp. 98-101, 1986.
+
+[7] P. K. Varshney, Distributed Detection and Data Fusion. New York, NY,
+USA: Springer, 1997.
+
+[8] E. Nurellari, S. A. Aldalahmeh, M. Ghogho, and D. C. McLernon,
+"Quantized fusion rules for energy-based distributed detection in wireless
+sensor networks," arXiv preprint arXiv:1506.01210, 2015.
+
+[9] A. Liu, Z. Huang, M. Li, et al., "A survey on fundamental limits of
+integrated sensing and communication," IEEE Communications Surveys &
+Tutorials, vol. 24, no. 2, pp. 994-1034, 2022.
+
+[10] K. Meng et al., "UAV-enabled integrated sensing and communication:
+Opportunities and challenges," IEEE Wireless Communications, vol. 31, no. 2,
+pp. 97-104, 2024.
+
+[11] Y. H. Wang, "On the number of successes in independent trials,"
+Statistica Sinica, vol. 3, no. 2, pp. 295-312, 1993.
+
+[12] S. Zargari, D. L. Galappaththige, C. Tellambura, and H. V. Poor, "A
+Riemannian manifold approach to constrained resource allocation in ISAC,"
+IEEE Transactions on Communications, 2024, DOI:
+10.1109/TCOMM.2024.3487801.
+
+[13] R. Olfati-Saber and R. M. Murray, "Consensus problems in networks of
+agents with switching topology and time-delays," IEEE Transactions on
+Automatic Control, vol. 49, no. 9, pp. 1520-1533, 2004.
+
+[14] P. Raviteja, K. T. Phan, Y. Hong, and E. Viterbo, "Interference
+cancellation and iterative detection for orthogonal time frequency space
+modulation," IEEE Transactions on Wireless Communications, vol. 17, no. 10,
+pp. 6501-6515, 2018.
+
+[15] F. Liu, C. Masouros, A. P. Petropulu, H. Griffiths, and L. Hanzo,
+"Joint radar and communication design: Applications, state-of-the-art, and
+the road ahead," IEEE Transactions on Communications, vol. 68, no. 6,
+pp. 3834-3862, 2020.
+
+[16] P. Kumari, J. Choi, N. Gonzalez-Prelcic, and R. W. Heath, "IEEE
+802.11ad-based radar: An approach to joint vehicular communication-radar
+system," IEEE Transactions on Vehicular Technology, vol. 67, no. 4,
+pp. 3012-3027, 2018.
+
+[17] Y. K. Tun and G. Dán, "RIS-assisted UAV-enabled JSAC system: Joint
+radio resource and phase shift optimization framework," in Proc. IEEE Global
+Communications Conference Workshops (GLOBECOM Workshops), 2023, pp. 763-768.
+
+[18] S. P. Chepuri and G. Leus, "Sparse sensing for distributed detection,"
+IEEE Transactions on Signal Processing, vol. 64, no. 6, pp. 1446-1460, 2016.
+
+[19] S. Liu, S. P. Chepuri, M. Fardad, E. Maşazade, G. Leus, and P. K.
+Varshney, "Sensor selection for estimation with correlated measurement
+noise," IEEE Transactions on Signal Processing, vol. 64, no. 13,
+pp. 3509-3522, 2016.
+
+[20] J. Guo et al., "Nonparametric decentralized detection and sparse sensor
+selection via multi-sensor online kernel scalar quantization," IEEE
+Transactions on Signal Processing, 2022, DOI: 10.1109/TSP.2022.3176109.
+
+[21] A. Krause, H. B. McMahan, C. Guestrin, and A. Gupta, "Robust submodular
+observation selection," Journal of Machine Learning Research, vol. 9,
+pp. 2761-2801, 2008.
+
+[22] H. Godrich, A. P. Petropulu, and H. V. Poor, "Sensor selection in
+distributed multiple-radar architectures for localization: A knapsack
+problem formulation," IEEE Transactions on Signal Processing, vol. 60, no. 1,
+pp. 247-260, 2012.

@@ -1,0 +1,61 @@
+{
+  "gate": "G44-fundamental-information-budget",
+  "seeds": 4,
+  "summary": [
+    {
+      "total_budget_bits": 8,
+      "report_budget_bits": 2,
+      "soft_pd": 0.774207019802749,
+      "soft_info_norm": 0.5069167710467409,
+      "hard_pd": 0.7644163012259496,
+      "hard_info_norm": 0.0,
+      "peer_pd": 0.8809649203678571,
+      "peer_info_norm": 0.08822213897950976,
+      "full_info": 28.092602414548328
+    },
+    {
+      "total_budget_bits": 12,
+      "report_budget_bits": 6,
+      "soft_pd": 0.8231812761841794,
+      "soft_info_norm": 0.6558842464307609,
+      "hard_pd": 0.7547489286884584,
+      "hard_info_norm": 0.06829260989286276,
+      "peer_pd": 0.8809649203678571,
+      "peer_info_norm": 0.08822213897950976,
+      "full_info": 28.092602414548328
+    },
+    {
+      "total_budget_bits": 16,
+      "report_budget_bits": 10,
+      "soft_pd": 0.9019386105804511,
+      "soft_info_norm": 0.7309297334554171,
+      "hard_pd": 0.748328854888971,
+      "hard_info_norm": 0.08066631908073926,
+      "peer_pd": 0.8809649203678571,
+      "peer_info_norm": 0.08822213897950976,
+      "full_info": 28.092602414548328
+    },
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 22,
+      "soft_pd": 0.9228579837410391,
+      "soft_info_norm": 0.8953716945968594,
+      "hard_pd": 0.6025545868559595,
+      "hard_info_norm": 0.08822213897950976,
+      "peer_pd": 0.8809649203678571,
+      "peer_info_norm": 0.08822213897950976,
+      "full_info": 28.092602414548328
+    },
+    {
+      "total_budget_bits": 40,
+      "report_budget_bits": 34,
+      "soft_pd": 0.9327639400160778,
+      "soft_info_norm": 0.9463807403569581,
+      "hard_pd": 0.6025545868559595,
+      "hard_info_norm": 0.08822213897950976,
+      "peer_pd": 0.8809649203678571,
+      "peer_info_norm": 0.08822213897950976,
+      "full_info": 28.092602414548328
+    }
+  ]
+}

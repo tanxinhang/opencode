@@ -94,6 +94,16 @@ class SelectionResult:
 
 
 @dataclass(frozen=True)
+class ExpectedPdSelectionResult:
+    scheduled: tuple[frozenset[int], ...]
+    expected_pd: NDArray[np.float64]
+    used_bits: int
+    normalized_qos_gap: float
+    trace: tuple[dict[str, float | int | str], ...]
+    certificate_upper_bound: float | None = None
+
+
+@dataclass(frozen=True)
 class DetectionMetrics:
     pd_per_target: NDArray[np.float64]
     pfa_per_target: NDArray[np.float64]

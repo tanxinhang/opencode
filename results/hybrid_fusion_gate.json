@@ -1,0 +1,43 @@
+{
+  "gate": "G31-hybrid-soft-hard-fusion",
+  "seeds": 2,
+  "qos_target": 0.85,
+  "summary": [
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "methods": {
+        "soft5": {
+          "worst_expected_pd": 0.97731646498321,
+          "qos_rate": 1.0
+        },
+        "hard1": {
+          "worst_expected_pd": 0.8428848210762456,
+          "qos_rate": 0.0
+        },
+        "hybrid": {
+          "worst_expected_pd": 0.9769324742811633,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "report_budget_bits": 28,
+      "methods": {
+        "soft5": {
+          "worst_expected_pd": 0.9810085159885928,
+          "qos_rate": 1.0
+        },
+        "hard1": {
+          "worst_expected_pd": 0.7358698835867745,
+          "qos_rate": 0.0
+        },
+        "hybrid": {
+          "worst_expected_pd": 0.9691180893850834,
+          "qos_rate": 1.0
+        }
+      }
+    }
+  ]
+}

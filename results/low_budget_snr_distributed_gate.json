@@ -1,0 +1,81 @@
+{
+  "gate": "G40-low-budget-snr-distributed",
+  "seeds": 2,
+  "summary": [
+    {
+      "total_budget_bits": 12,
+      "report_budget_bits": 6,
+      "ris_elements": 128,
+      "mean_inr": 0.12220082230761295,
+      "qos_target": 0.7,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.7857790278163563,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.8582451881788563,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.8549371885811643,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.7647833575624021,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 16,
+      "report_budget_bits": 10,
+      "ris_elements": 128,
+      "mean_inr": 0.12220082230761295,
+      "qos_target": 0.7,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.8909663663115703,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.8582451881788563,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.8549371885811643,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.7579334222155745,
+          "qos_feasible": true
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "report_budget_bits": 14,
+      "ris_elements": 128,
+      "mean_inr": 0.12220082230761295,
+      "qos_target": 0.7,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.8909663663115703,
+          "qos_feasible": true
+        },
+        "peer_clean": {
+          "worst_expected_pd": 0.8582451881788563,
+          "qos_feasible": true
+        },
+        "peer_multihop": {
+          "worst_expected_pd": 0.8549371885811643,
+          "qos_feasible": true
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.7385759411532337,
+          "qos_feasible": true
+        }
+      }
+    }
+  ]
+}

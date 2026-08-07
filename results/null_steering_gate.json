@@ -1,0 +1,48 @@
+{
+  "gate": "G36-null-steering",
+  "seeds": 2,
+  "interference_suppression": {
+    "mean_reflected_inr_aligned": 0.026695185929801156,
+    "mean_reflected_inr_null": 0.010558691762117526,
+    "mean_array_gain_aligned": 1.0,
+    "mean_array_gain_null": 0.9843962353684232
+  },
+  "summary": [
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.7153756713951064,
+          "qos_rate": 0.0
+        },
+        "aligned": {
+          "worst_expected_pd": 0.9771494724274867,
+          "qos_rate": 1.0
+        },
+        "null_steered": {
+          "worst_expected_pd": 0.9784236932484566,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "report_budget_bits": 28,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.8097900821653411,
+          "qos_rate": 0.0
+        },
+        "aligned": {
+          "worst_expected_pd": 0.9811190770012128,
+          "qos_rate": 1.0
+        },
+        "null_steered": {
+          "worst_expected_pd": 0.9821646428384123,
+          "qos_rate": 1.0
+        }
+      }
+    }
+  ]
+}

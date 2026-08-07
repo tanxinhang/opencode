@@ -1,0 +1,25 @@
+{
+  "gate": "G38-joint-null-placement",
+  "seeds": 2,
+  "report_budget_bits": 28,
+  "summary": {
+    "no_ris_worst": 0.8097900821653411,
+    "no_ris_qos": 0.0,
+    "fixed_position": [
+      0.0,
+      30.0,
+      6.0
+    ],
+    "fixed_value": 0.9821661475672139,
+    "fixed_reflected_inr": 0.010520512708665997,
+    "fixed_qos": 1.0,
+    "optimized_position": [
+      -2.5,
+      32.5,
+      1.0
+    ],
+    "optimized_value": 0.9848135220051248,
+    "optimized_reflected_inr": 0.029561197688302312,
+    "optimized_qos": 1.0
+  }
+}

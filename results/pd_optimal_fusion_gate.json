@@ -1,0 +1,33 @@
+{
+  "gate": "G3-pd-optimal-fusion",
+  "operating_pd": 0.5,
+  "seed": 20260805,
+  "grid": 2048,
+  "monotonicity": {
+    "operating_edges": 1318,
+    "optimal_decreasing_edges": 0,
+    "deflection_decreasing_edges": 258,
+    "deflection_decreasing_edge_rate": 0.19575113808801214,
+    "maximum_deflection_pd_drop": 0.16058817966925565
+  },
+  "gains": {
+    "mean_pd_gain_over_deflection": 0.0063397352758338445,
+    "maximum_pd_gain_over_deflection": 0.21162815993104545
+  },
+  "proportional_regime": {
+    "checks": 960,
+    "maximum_absolute_error_vs_closed_form": 1.3322676295501878e-15
+  },
+  "greedy": {
+    "mean_fusion_gain_on_deflection_schedule": 0.008308527542804565,
+    "mean_scheduling_gain_under_optimal_rule": 0.0016157417186987303,
+    "mean_total_gain": 0.009924269261503296,
+    "mean_optimal_rule_pd": 0.5641287257081036,
+    "mean_all_scheduled_pd": 0.6029020321352297,
+    "scheduling_gain_positive_rate": 0.23333333333333334
+  },
+  "rows": {
+    "monotonicity_instances": 80,
+    "greedy_instances": 30
+  }
+}

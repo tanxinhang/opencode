@@ -1,0 +1,133 @@
+{
+  "gate": "G17-bounded-multi-block-certificate",
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "report_budget_bits": 4,
+      "g16_allocation": [
+        263,
+        486,
+        275
+      ],
+      "g16_value": 0.9241072217668318,
+      "multi_block_allocation": [
+        263,
+        486,
+        275
+      ],
+      "multi_block_value": 0.9241072217668318,
+      "rounds": 0,
+      "certificate": {
+        "local_optimal": true,
+        "evaluated": 36,
+        "max_transfer": 3
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 704,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "report_budget_bits": 3,
+      "g16_allocation": [
+        189,
+        323,
+        192
+      ],
+      "g16_value": 0.9273448915608036,
+      "multi_block_allocation": [
+        189,
+        323,
+        192
+      ],
+      "multi_block_value": 0.9273448915608036,
+      "rounds": 0,
+      "certificate": {
+        "local_optimal": true,
+        "evaluated": 36,
+        "max_transfer": 3
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "report_budget_bits": 4,
+      "g16_allocation": [
+        648,
+        442,
+        254
+      ],
+      "g16_value": 0.9918955714771402,
+      "multi_block_allocation": [
+        648,
+        442,
+        254
+      ],
+      "multi_block_value": 0.9918955714771402,
+      "rounds": 0,
+      "certificate": {
+        "local_optimal": true,
+        "evaluated": 36,
+        "max_transfer": 3
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "num_elements": 960,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "report_budget_bits": 5,
+      "g16_allocation": [
+        387,
+        343,
+        230
+      ],
+      "g16_value": 0.9857380076630472,
+      "multi_block_allocation": [
+        387,
+        343,
+        230
+      ],
+      "multi_block_value": 0.9857380076630472,
+      "rounds": 0,
+      "certificate": {
+        "local_optimal": true,
+        "evaluated": 36,
+        "max_transfer": 3
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "report_budget_bits": 16,
+      "g16_allocation": [
+        935,
+        609,
+        504
+      ],
+      "g16_value": 0.9999856700105426,
+      "multi_block_allocation": [
+        945,
+        616,
+        487
+      ],
+      "multi_block_value": 0.9999884082901385,
+      "rounds": 7,
+      "certificate": {
+        "local_optimal": true,
+        "evaluated": 36,
+        "max_transfer": 3
+      }
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "gate": "G53-multi-step-prediction",
+  "seeds": 4,
+  "frames": 8,
+  "summary": {
+    "frames": 8,
+    "seeds": 4,
+    "total_budget_bits": 40,
+    "report_budget_bits": 34,
+    "qos_target": 0.85,
+    "trajectory_model": "AR(1) position perturbation + sinusoidal trend + random blockage",
+    "predictor": "h-step conditional-mean AR(1), rho=0.8",
+    "methods": {
+      "no_ris_soft": {
+        "worst_over_time": 0.524162980516238,
+        "mean_over_time": 0.6257920669813939,
+        "qos_over_time": 0.0
+      },
+      "ris_ideal_mode_ascent": {
+        "worst_over_time": 0.8520444052860237,
+        "mean_over_time": 0.8903151846714321,
+        "qos_over_time": 0.90625
+      },
+      "oracle_horizon_mode_ascent": {
+        "worst_over_time": 0.7368796060860398,
+        "mean_over_time": 0.8460158931541754,
+        "qos_over_time": 0.53125
+      },
+      "stale_h1_mode_ascent": {
+        "worst_over_time": 0.7217415627355166,
+        "mean_over_time": 0.8296721623620016,
+        "qos_over_time": 0.4375
+      },
+      "mmse_h1_mode_ascent": {
+        "worst_over_time": 0.7282524681594389,
+        "mean_over_time": 0.8330808383475738,
+        "qos_over_time": 0.46875
+      },
+      "stale_h2_mode_ascent": {
+        "worst_over_time": 0.6726365631735043,
+        "mean_over_time": 0.8198314224832977,
+        "qos_over_time": 0.4375
+      },
+      "mmse_h2_mode_ascent": {
+        "worst_over_time": 0.7050677173849795,
+        "mean_over_time": 0.8315334542598387,
+        "qos_over_time": 0.40625
+      },
+      "stale_h3_mode_ascent": {
+        "worst_over_time": 0.6675652345948244,
+        "mean_over_time": 0.811721230482253,
+        "qos_over_time": 0.40625
+      },
+      "mmse_h3_mode_ascent": {
+        "worst_over_time": 0.7199766035067009,
+        "mean_over_time": 0.8261681028967598,
+        "qos_over_time": 0.4375
+      }
+    },
+    "horizons": [
+      {
+        "horizon": 1,
+        "prediction_coefficient": 0.8,
+        "error_covariance_scale": 0.3599999999999999,
+        "stale_worst_over_time": 0.7217415627355166,
+        "mmse_worst_over_time": 0.7282524681594389,
+        "mmse_over_stale_worst_gain": 0.006510905423922297,
+        "mmse_qos_over_time": 0.46875,
+        "stale_qos_over_time": 0.4375
+      },
+      {
+        "horizon": 2,
+        "prediction_coefficient": 0.6400000000000001,
+        "error_covariance_scale": 0.5903999999999999,
+        "stale_worst_over_time": 0.6726365631735043,
+        "mmse_worst_over_time": 0.7050677173849795,
+        "mmse_over_stale_worst_gain": 0.032431154211475244,
+        "mmse_qos_over_time": 0.40625,
+        "stale_qos_over_time": 0.4375
+      },
+      {
+        "horizon": 3,
+        "prediction_coefficient": 0.5120000000000001,
+        "error_covariance_scale": 0.7378559999999998,
+        "stale_worst_over_time": 0.6675652345948244,
+        "mmse_worst_over_time": 0.7199766035067009,
+        "mmse_over_stale_worst_gain": 0.05241136891187648,
+        "mmse_qos_over_time": 0.4375,
+        "stale_qos_over_time": 0.40625
+      }
+    ],
+    "oracle_horizon_worst_over_time": 0.7368796060860398,
+    "oracle_over_best_fixed_mmse_worst_gain": 0.008627137926600859,
+    "architecture_reconfiguration": [
+      {
+        "delta": 0.0,
+        "worst_over_time": 0.7368796060860398,
+        "mean_switches_per_seed": 4.5,
+        "qos_over_time": 0.53125
+      },
+      {
+        "delta": 0.005,
+        "worst_over_time": 0.7358379827074838,
+        "mean_switches_per_seed": 2.75,
+        "qos_over_time": 0.53125
+      },
+      {
+        "delta": 0.01,
+        "worst_over_time": 0.7358379827074838,
+        "mean_switches_per_seed": 2.5,
+        "qos_over_time": 0.53125
+      },
+      {
+        "delta": 0.02,
+        "worst_over_time": 0.7358379827074838,
+        "mean_switches_per_seed": 2.25,
+        "qos_over_time": 0.53125
+      },
+      {
+        "delta": 0.03,
+        "worst_over_time": 0.7250451405046677,
+        "mean_switches_per_seed": 1.5,
+        "qos_over_time": 0.5
+      },
+      {
+        "delta": 0.05,
+        "worst_over_time": 0.7217387190881306,
+        "mean_switches_per_seed": 0.75,
+        "qos_over_time": 0.46875
+      }
+    ],
+    "switch_cost_analysis": [
+      {
+        "switch_cost_bits": 0,
+        "control_budget_bits": 6,
+        "best_delta": 0.0,
+        "best_worst_over_time": 0.7368796060860398,
+        "best_switches": 4.5
+      },
+      {
+        "switch_cost_bits": 1,
+        "control_budget_bits": 6,
+        "best_delta": 0.0,
+        "best_worst_over_time": 0.7368796060860398,
+        "best_switches": 4.5
+      },
+      {
+        "switch_cost_bits": 3,
+        "control_budget_bits": 6,
+        "best_delta": 0.03,
+        "best_worst_over_time": 0.7250451405046677,
+        "best_switches": 1.5
+      },
+      {
+        "switch_cost_bits": 6,
+        "control_budget_bits": 6,
+        "best_delta": 0.05,
+        "best_worst_over_time": 0.7217387190881306,
+        "best_switches": 0.75
+      }
+    ],
+    "oracle_horizon_qos_over_time": 0.53125
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "gate": "G35-ula-vs-upa",
+  "seeds": 2,
+  "qos_target": 0.85,
+  "ris_elements": 256,
+  "summary": [
+    {
+      "scenario": "clean",
+      "total_budget_bits": 20,
+      "report_budget_bits": 8,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.5401107560089943,
+          "qos_rate": 0.0
+        },
+        "ula": {
+          "worst_expected_pd": 0.9525602258434871,
+          "qos_rate": 1.0
+        },
+        "upa": {
+          "worst_expected_pd": 0.9525455855958407,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "scenario": "clean",
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.7039102351317528,
+          "qos_rate": 0.0
+        },
+        "ula": {
+          "worst_expected_pd": 0.97731646498321,
+          "qos_rate": 1.0
+        },
+        "upa": {
+          "worst_expected_pd": 0.9773101136265683,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "scenario": "clean",
+      "total_budget_bits": 40,
+      "report_budget_bits": 28,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.7966541610478751,
+          "qos_rate": 0.0
+        },
+        "ula": {
+          "worst_expected_pd": 0.9810085159885928,
+          "qos_rate": 1.0
+        },
+        "upa": {
+          "worst_expected_pd": 0.9810033936967741,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "scenario": "interference",
+      "total_budget_bits": 20,
+      "report_budget_bits": 8,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.5705392216915653,
+          "qos_rate": 0.0
+        },
+        "ula": {
+          "worst_expected_pd": 0.9665846041875231,
+          "qos_rate": 1.0
+        },
+        "upa": {
+          "worst_expected_pd": 0.9665733013709157,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "scenario": "interference",
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.7593915863341192,
+          "qos_rate": 0.0
+        },
+        "ula": {
+          "worst_expected_pd": 0.9841974684245349,
+          "qos_rate": 1.0
+        },
+        "upa": {
+          "worst_expected_pd": 0.9841932496884827,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "scenario": "interference",
+      "total_budget_bits": 40,
+      "report_budget_bits": 28,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.824333396869339,
+          "qos_rate": 0.0
+        },
+        "ula": {
+          "worst_expected_pd": 0.9869149263490435,
+          "qos_rate": 1.0
+        },
+        "upa": {
+          "worst_expected_pd": 0.9869116488157437,
+          "qos_rate": 1.0
+        }
+      }
+    }
+  ]
+}

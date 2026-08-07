@@ -1,0 +1,141 @@
+{
+  "gate": "G21-network-decentralization",
+  "seeds": 4,
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "allocation": [
+        271,
+        479,
+        274
+      ],
+      "hard_used_bits": 3,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9252235830035591,
+          "qos_rate": 1.0
+        },
+        "hard_full_links": {
+          "worst_expected_pd": 0.6539065104220183,
+          "qos_rate": 0.0
+        },
+        "hard_top5": {
+          "worst_expected_pd": 0.6539065104220183,
+          "qos_rate": 0.0
+        },
+        "hard_top3": {
+          "worst_expected_pd": 0.6539065104220183,
+          "qos_rate": 0.0
+        },
+        "hard_top1": {
+          "worst_expected_pd": 0.6539065104220183,
+          "qos_rate": 0.0
+        },
+        "peer_majority": {
+          "worst_expected_pd": 0.9546350377557089,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "allocation": [
+        649,
+        443,
+        252
+      ],
+      "hard_used_bits": 3,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9929074381620121,
+          "qos_rate": 1.0
+        },
+        "hard_full_links": {
+          "worst_expected_pd": 0.6662005667438256,
+          "qos_rate": 0.0
+        },
+        "hard_top5": {
+          "worst_expected_pd": 0.6662005667438256,
+          "qos_rate": 0.0
+        },
+        "hard_top3": {
+          "worst_expected_pd": 0.6662005667438256,
+          "qos_rate": 0.0
+        },
+        "hard_top1": {
+          "worst_expected_pd": 0.6662005667438256,
+          "qos_rate": 0.0
+        },
+        "peer_majority": {
+          "worst_expected_pd": 0.9982289650476229,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 40,
+      "report_budget_bits": 16,
+      "position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "allocation": [
+        956,
+        619,
+        473
+      ],
+      "hard_used_bits": 15,
+      "methods": {
+        "centralized_soft": {
+          "worst_expected_pd": 0.9999967294569871,
+          "qos_rate": 1.0
+        },
+        "hard_full_links": {
+          "worst_expected_pd": 0.9444642038866373,
+          "qos_rate": 1.0
+        },
+        "hard_top5": {
+          "worst_expected_pd": 0.9444642038866373,
+          "qos_rate": 1.0
+        },
+        "hard_top3": {
+          "worst_expected_pd": 0.944359166071018,
+          "qos_rate": 1.0
+        },
+        "hard_top1": {
+          "worst_expected_pd": 0.6666427502959404,
+          "qos_rate": 0.0
+        },
+        "peer_majority": {
+          "worst_expected_pd": 0.9999977465482408,
+          "qos_rate": 1.0
+        }
+      }
+    }
+  ]
+}

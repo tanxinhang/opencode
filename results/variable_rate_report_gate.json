@@ -1,0 +1,73 @@
+{
+  "gate": "G29-variable-rate-reporting",
+  "seeds": 2,
+  "qos_target": 0.85,
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "report_budget_bits": 8,
+      "methods": {
+        "soft5": {
+          "worst_expected_pd": 0.9525602258434871,
+          "qos_rate": 1.0
+        },
+        "soft3": {
+          "worst_expected_pd": 0.9506668913646732,
+          "qos_rate": 1.0
+        },
+        "adaptive_soft": {
+          "worst_expected_pd": 0.9506668913646732,
+          "qos_rate": 1.0
+        },
+        "hard1": {
+          "worst_expected_pd": 0.8447628282542463,
+          "qos_rate": 0.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "methods": {
+        "soft5": {
+          "worst_expected_pd": 0.97731646498321,
+          "qos_rate": 1.0
+        },
+        "soft3": {
+          "worst_expected_pd": 0.9686812589358403,
+          "qos_rate": 1.0
+        },
+        "adaptive_soft": {
+          "worst_expected_pd": 0.9742168396427942,
+          "qos_rate": 1.0
+        },
+        "hard1": {
+          "worst_expected_pd": 0.9357455165485665,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "report_budget_bits": 28,
+      "methods": {
+        "soft5": {
+          "worst_expected_pd": 0.9810085159885928,
+          "qos_rate": 1.0
+        },
+        "soft3": {
+          "worst_expected_pd": 0.9781177550340128,
+          "qos_rate": 1.0
+        },
+        "adaptive_soft": {
+          "worst_expected_pd": 0.988202832374941,
+          "qos_rate": 1.0
+        },
+        "hard1": {
+          "worst_expected_pd": 0.8578317604682926,
+          "qos_rate": 1.0
+        }
+      }
+    }
+  ]
+}

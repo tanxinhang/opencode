@@ -211,6 +211,18 @@ def _received_patterns(model: TargetEvidenceModel, scheduled: Iterable[int]):
         yield received, probability
 
 
+def received_pattern_distribution(
+    model: TargetEvidenceModel, scheduled: Iterable[int]
+) -> list[tuple[frozenset[int], float]]:
+    """Materialize the reception law of a scheduled report set.
+
+    Returns ``(received_set, probability)`` pairs under the model's exact
+    independent, common-state, or grouped reception law.  The owner is always
+    included in every received set.
+    """
+    return list(_received_patterns(model, scheduled))
+
+
 def _received_quality(
     model: TargetEvidenceModel,
     received: Iterable[int],

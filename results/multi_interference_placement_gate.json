@@ -1,0 +1,42 @@
+{
+  "gate": "G34-multi-interference-placement",
+  "seeds": 2,
+  "sources": [
+    [
+      60.0,
+      -20.0,
+      0.0
+    ],
+    [
+      -30.0,
+      40.0,
+      0.0
+    ],
+    [
+      80.0,
+      20.0,
+      0.0
+    ]
+  ],
+  "source_refs": [
+    0.1,
+    0.2,
+    0.05
+  ],
+  "report_budget_bits": 28,
+  "summary": {
+    "mean_inr": 0.08740436639756428,
+    "max_inr": 0.13132766576919283,
+    "no_ris_worst": 0.8097900821653411,
+    "no_ris_qos": 0.0,
+    "fixed_ris_worst": 0.9829695978939279,
+    "fixed_ris_qos": 1.0,
+    "optimized_position": [
+      -4.0,
+      34.0,
+      4.0
+    ],
+    "optimized_ris_worst": 0.9868714469947626,
+    "optimized_ris_qos": 1.0
+  }
+}

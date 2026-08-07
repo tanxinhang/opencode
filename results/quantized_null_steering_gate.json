@@ -1,0 +1,64 @@
+{
+  "gate": "G37-quantized-null-steering",
+  "seeds": 2,
+  "interference_info": {
+    "aligned_quantized": {
+      "mean_reflected_inr": 0.026695185929801156,
+      "mean_target_gain": 0.9503640012195825
+    },
+    "continuous_quantized": {
+      "mean_reflected_inr": 0.010558691762117526,
+      "mean_target_gain": 0.9323657813905584
+    },
+    "quantized_optimized": {
+      "mean_reflected_inr": 0.010520512708665997,
+      "mean_target_gain": 0.9330374877808282
+    }
+  },
+  "summary": [
+    {
+      "total_budget_bits": 28,
+      "report_budget_bits": 16,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.7153756713951064,
+          "qos_rate": 0.0
+        },
+        "aligned_quantized": {
+          "worst_expected_pd": 0.9771494724274867,
+          "qos_rate": 1.0
+        },
+        "continuous_quantized": {
+          "worst_expected_pd": 0.9784236932484566,
+          "qos_rate": 1.0
+        },
+        "quantized_optimized": {
+          "worst_expected_pd": 0.9784254951924658,
+          "qos_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "report_budget_bits": 28,
+      "methods": {
+        "no_ris": {
+          "worst_expected_pd": 0.8097900821653411,
+          "qos_rate": 0.0
+        },
+        "aligned_quantized": {
+          "worst_expected_pd": 0.9811190770012128,
+          "qos_rate": 1.0
+        },
+        "continuous_quantized": {
+          "worst_expected_pd": 0.9821646428384123,
+          "qos_rate": 1.0
+        },
+        "quantized_optimized": {
+          "worst_expected_pd": 0.9821661475672139,
+          "qos_rate": 1.0
+        }
+      }
+    }
+  ]
+}

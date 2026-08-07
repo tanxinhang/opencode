@@ -1,0 +1,120 @@
+{
+  "gate": "G20-amplified-distributed-detection",
+  "seeds": 4,
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "allocation": [
+        271,
+        479,
+        274
+      ],
+      "hard_used_bits": 3,
+      "mean_optimized_local_pfa": 0.04733051828497975,
+      "methods": {
+        "centralized_full": {
+          "worst_expected_pd": 0.9252235830035591,
+          "qos_rate": 1.0
+        },
+        "owner_only": {
+          "worst_expected_pd": 0.9252235830035591,
+          "qos_rate": 1.0
+        },
+        "hard_default": {
+          "worst_expected_pd": 0.9853038417707817,
+          "qos_rate": 1.0
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.0,
+          "qos_rate": 0.0
+        }
+      }
+    },
+    {
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 20,
+      "report_budget_bits": 4,
+      "position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "allocation": [
+        649,
+        443,
+        252
+      ],
+      "hard_used_bits": 3,
+      "mean_optimized_local_pfa": 0.05480171075118192,
+      "methods": {
+        "centralized_full": {
+          "worst_expected_pd": 0.9929074381620121,
+          "qos_rate": 1.0
+        },
+        "owner_only": {
+          "worst_expected_pd": 0.9929074381620121,
+          "qos_rate": 1.0
+        },
+        "hard_default": {
+          "worst_expected_pd": 0.9990820903429525,
+          "qos_rate": 1.0
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.0,
+          "qos_rate": 0.0
+        }
+      }
+    },
+    {
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "total_budget_bits": 40,
+      "report_budget_bits": 16,
+      "position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "allocation": [
+        956,
+        619,
+        473
+      ],
+      "hard_used_bits": 15,
+      "mean_optimized_local_pfa": 0.032265751174532876,
+      "methods": {
+        "centralized_full": {
+          "worst_expected_pd": 0.9999967294569871,
+          "qos_rate": 1.0
+        },
+        "owner_only": {
+          "worst_expected_pd": 0.9998564276861064,
+          "qos_rate": 1.0
+        },
+        "hard_default": {
+          "worst_expected_pd": 0.8119727865027296,
+          "qos_rate": 0.0
+        },
+        "hard_optimized": {
+          "worst_expected_pd": 0.9444642038866373,
+          "qos_rate": 1.0
+        }
+      }
+    }
+  ]
+}

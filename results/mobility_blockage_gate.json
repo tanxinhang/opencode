@@ -1,0 +1,39 @@
+{
+  "gate": "G26-mobility-blockage",
+  "seeds": 2,
+  "frames": 8,
+  "summary": {
+    "frames": 8,
+    "seeds": 2,
+    "total_budget_bits": 40,
+    "report_budget_bits": 28,
+    "qos_target": 0.85,
+    "static_allocation": [
+      0,
+      115,
+      141
+    ],
+    "methods": {
+      "no_ris": {
+        "worst_over_time": 0.4886277960399499,
+        "mean_over_time": 0.6191178698230778,
+        "qos_over_time": 0.0
+      },
+      "ris_ideal": {
+        "worst_over_time": 0.9350620150130953,
+        "mean_over_time": 0.9561482689776665,
+        "qos_over_time": 1.0
+      },
+      "ris_static_subarray": {
+        "worst_over_time": 0.8405722938677492,
+        "mean_over_time": 0.8686005473104407,
+        "qos_over_time": 0.6875
+      },
+      "ris_adaptive_subarray": {
+        "worst_over_time": 0.8469858472690228,
+        "mean_over_time": 0.8741199391925933,
+        "qos_over_time": 0.8125
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "gate": "G5-T-ris-multigrid",
+  "ris_elements": 256,
+  "aperture_scale": 0.01,
+  "phase_bits": 3,
+  "total_budget_bits": 40,
+  "coherence_frames": 64,
+  "report_budget_bits": 28,
+  "evaluations": 34,
+  "no_ris_mean": 0.8630594404819621,
+  "no_ris_worst": 0.7849218933023755,
+  "fixed_position": [
+    55.0,
+    15.0,
+    12.0
+  ],
+  "fixed_mean": 0.9457063976855671,
+  "fixed_worst": 0.8817335063545503,
+  "coarse_position": [
+    0.0,
+    20.0,
+    8.0
+  ],
+  "coarse_mean": 0.9797892324305417,
+  "coarse_worst": 0.952360538292612,
+  "best_position": [
+    0.0,
+    30.0,
+    6.0
+  ],
+  "best_mean": 0.9898885769019228,
+  "best_worst": 0.9802047449955746,
+  "mean_gain_best_vs_no_ris": 0.12682913641996063,
+  "worst_gain_best_vs_no_ris": 0.19528285169319914,
+  "worst_gain_best_vs_fixed": 0.09847123864102436,
+  "worst_gain_fine_vs_coarse": 0.027844206702962615
+}

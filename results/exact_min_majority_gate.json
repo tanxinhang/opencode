@@ -1,0 +1,123 @@
+{
+  "gate": "G43-B-exact-min-majority",
+  "qos_target": 0.7,
+  "summary": [
+    {
+      "num_uavs": 3,
+      "max_voters": 6,
+      "pooled_voter_groups": 3,
+      "exact_min_uavs": null,
+      "exact_min_voters": null,
+      "best_local_alpha": null,
+      "feasibility_monotone": true,
+      "trace_prefix": null
+    },
+    {
+      "num_uavs": 6,
+      "max_voters": 15,
+      "pooled_voter_groups": 3,
+      "exact_min_uavs": 14,
+      "exact_min_voters": 14,
+      "best_local_alpha": 0.03475963980887802,
+      "feasibility_monotone": true,
+      "trace_prefix": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "num_uavs": 8,
+      "max_voters": 21,
+      "pooled_voter_groups": 3,
+      "exact_min_uavs": 17,
+      "exact_min_voters": 17,
+      "best_local_alpha": 0.027277973905842596,
+      "feasibility_monotone": false,
+      "trace_prefix": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "num_uavs": 12,
+      "max_voters": 33,
+      "pooled_voter_groups": 3,
+      "exact_min_uavs": 16,
+      "exact_min_voters": 16,
+      "best_local_alpha": 0.07192249441438314,
+      "feasibility_monotone": false,
+      "trace_prefix": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "num_uavs": 16,
+      "max_voters": 45,
+      "pooled_voter_groups": 3,
+      "exact_min_uavs": 19,
+      "exact_min_voters": 19,
+      "best_local_alpha": 0.1,
+      "feasibility_monotone": false,
+      "trace_prefix": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  ]
+}

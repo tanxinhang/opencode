@@ -1,0 +1,140 @@
+{
+  "gate": "G18-joint-placement-allocation",
+  "seeds": 4,
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "bounds": [
+    [
+      -20.0,
+      20.0
+    ],
+    [
+      15.0,
+      45.0
+    ],
+    [
+      0.0,
+      12.0
+    ]
+  ],
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "report_budget_bits": 4,
+      "g17_value": 0.9241072217668318,
+      "g17_allocation": [
+        263,
+        486,
+        275
+      ],
+      "initial_position": [
+        0.0,
+        30.0,
+        6.0
+      ],
+      "final_position": [
+        -2.0,
+        30.0,
+        6.0
+      ],
+      "final_allocation": [
+        271,
+        479,
+        274
+      ],
+      "final_value": 0.9252235830035591,
+      "rounds": 3,
+      "allocation_certificate": {
+        "local_optimal": true,
+        "max_transfer": 3
+      },
+      "position_certificate": {
+        "local_optimal": true,
+        "maximum_gradient": -0.003472790517788482,
+        "step_meters": 0.5
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "report_budget_bits": 4,
+      "g17_value": 0.9918955714771402,
+      "g17_allocation": [
+        648,
+        442,
+        254
+      ],
+      "initial_position": [
+        0.0,
+        30.0,
+        6.0
+      ],
+      "final_position": [
+        0.5,
+        31.0,
+        6.0
+      ],
+      "final_allocation": [
+        649,
+        443,
+        252
+      ],
+      "final_value": 0.9929074381620121,
+      "rounds": 3,
+      "allocation_certificate": {
+        "local_optimal": true,
+        "max_transfer": 3
+      },
+      "position_certificate": {
+        "local_optimal": true,
+        "maximum_gradient": -0.000742044692123689,
+        "step_meters": 0.5
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "report_budget_bits": 16,
+      "g17_value": 0.9999884082901385,
+      "g17_allocation": [
+        945,
+        616,
+        487
+      ],
+      "initial_position": [
+        0.0,
+        30.0,
+        6.0
+      ],
+      "final_position": [
+        6.5,
+        34.0,
+        5.0
+      ],
+      "final_allocation": [
+        956,
+        619,
+        473
+      ],
+      "final_value": 0.9999967294569871,
+      "rounds": 3,
+      "allocation_certificate": {
+        "local_optimal": true,
+        "max_transfer": 3
+      },
+      "position_certificate": {
+        "local_optimal": true,
+        "maximum_gradient": -2.6215375470428626e-07,
+        "step_meters": 0.5
+      }
+    }
+  ]
+}

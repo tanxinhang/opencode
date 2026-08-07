@@ -1,0 +1,218 @@
+{
+  "gate": "G13-waterfilling-architecture",
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "base_deflections": [
+        20.16435539380909,
+        7.017467367626918,
+        0.1264888752548502
+      ],
+      "effective_constants": [
+        1.5146357562164779e-06,
+        7.109628606175501e-06,
+        0.0002233776052188146
+      ],
+      "waterfilling_allocation": [
+        382,
+        388,
+        254
+      ],
+      "equal_allocation": [
+        342,
+        341,
+        341
+      ],
+      "surrogate_water_min": 30.042646186053027,
+      "surrogate_equal_min": 23.416493405406417,
+      "exact": {
+        "equal": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9463869091594832,
+          "worst_expected_pd": 0.8995026627698148,
+          "qos_feasible_rate": 1.0
+        },
+        "waterfilling": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9442828881547889,
+          "worst_expected_pd": 0.9106670394318612,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 704,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "base_deflections": [
+        20.16435539380909,
+        7.017467367626918,
+        0.1264888752548502
+      ],
+      "effective_constants": [
+        3.549012335745535e-06,
+        1.6658896056247538e-05,
+        0.0005234062864270341
+      ],
+      "waterfilling_allocation": [
+        273,
+        262,
+        169
+      ],
+      "equal_allocation": [
+        235,
+        235,
+        234
+      ],
+      "surrogate_water_min": 32.17507924630771,
+      "surrogate_equal_min": 25.86885580190908,
+      "exact": {
+        "equal": {
+          "report_budget_bits": 3,
+          "mean_expected_pd": 0.9514289255137273,
+          "worst_expected_pd": 0.9095943135239537,
+          "qos_feasible_rate": 1.0
+        },
+        "waterfilling": {
+          "report_budget_bits": 3,
+          "mean_expected_pd": 0.9440602267522574,
+          "worst_expected_pd": 0.9109630858661483,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "base_deflections": [
+        20.16435539380909,
+        7.017467367626918,
+        0.1264888752548502
+      ],
+      "effective_constants": [
+        3.549012335745535e-06,
+        1.6658896056247538e-05,
+        0.0005234062864270341
+      ],
+      "waterfilling_allocation": [
+        656,
+        444,
+        244
+      ],
+      "equal_allocation": [
+        448,
+        448,
+        448
+      ],
+      "surrogate_water_min": 128.79139932205422,
+      "surrogate_equal_min": 59.12137820584,
+      "exact": {
+        "equal": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9905830564494861,
+          "worst_expected_pd": 0.9741099098313808,
+          "qos_feasible_rate": 1.0
+        },
+        "waterfilling": {
+          "report_budget_bits": 4,
+          "mean_expected_pd": 0.9960753459769901,
+          "worst_expected_pd": 0.991584283471092,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "num_elements": 960,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "base_deflections": [
+        20.16435539380909,
+        7.017467367626918,
+        0.1264888752548502
+      ],
+      "effective_constants": [
+        3.549012335745535e-06,
+        1.6658896056247538e-05,
+        0.0005234062864270341
+      ],
+      "waterfilling_allocation": [
+        433,
+        331,
+        196
+      ],
+      "equal_allocation": [
+        320,
+        320,
+        320
+      ],
+      "surrogate_water_min": 55.92704425147642,
+      "surrogate_equal_min": 37.48374197840142,
+      "exact": {
+        "equal": {
+          "report_budget_bits": 5,
+          "mean_expected_pd": 0.9880551214317971,
+          "worst_expected_pd": 0.9794770654485103,
+          "qos_feasible_rate": 1.0
+        },
+        "waterfilling": {
+          "report_budget_bits": 5,
+          "mean_expected_pd": 0.9869141053239415,
+          "worst_expected_pd": 0.9806946822069971,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "base_deflections": [
+        20.16435539380909,
+        7.017467367626918,
+        0.1264888752548502
+      ],
+      "effective_constants": [
+        3.549012335745535e-06,
+        1.6658896056247538e-05,
+        0.0005234062864270341
+      ],
+      "waterfilling_allocation": [
+        1046,
+        661,
+        341
+      ],
+      "equal_allocation": [
+        683,
+        683,
+        682
+      ],
+      "surrogate_water_min": 480.7987591845636,
+      "surrogate_equal_min": 142.2006418428482,
+      "exact": {
+        "equal": {
+          "report_budget_bits": 16,
+          "mean_expected_pd": 0.9998660363273264,
+          "worst_expected_pd": 0.9995993623048072,
+          "qos_feasible_rate": 1.0
+        },
+        "waterfilling": {
+          "report_budget_bits": 16,
+          "mean_expected_pd": 0.9999970762410075,
+          "worst_expected_pd": 0.9999950383934478,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    }
+  ]
+}

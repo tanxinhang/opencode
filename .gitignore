@@ -1,9 +1,11 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.pytest_tmp*/
 .docx_temp/
 rendered_system_model/
 third_party/
+.tools/
 *.docx
 *.pdf
 .venv/
@@ -13,3 +15,7 @@ venv/
 
 # Keep compact JSON experiment summaries, but ignore transient logs.
 *.log
+*.blg
+*.aux
+*.xdv
+*.out

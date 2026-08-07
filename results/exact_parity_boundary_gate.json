@@ -1,0 +1,47 @@
+{
+  "gate": "G43-exact-parity-boundary",
+  "seeds": 2,
+  "qos_target": 0.7,
+  "summary": [
+    {
+      "num_uavs": 3,
+      "exact_min_feasible": Infinity,
+      "gaussian_min": 47.79169467418343,
+      "centralized_worst_low_budget": 0.9479623317015272,
+      "peer_worst_low_budget": 0.9245066121797649,
+      "consensus_wins_low_budget": false
+    },
+    {
+      "num_uavs": 6,
+      "exact_min_feasible": 6.0,
+      "gaussian_min": 13.36244985586639,
+      "centralized_worst_low_budget": 0.8871492522912465,
+      "peer_worst_low_budget": 0.944352547497763,
+      "consensus_wins_low_budget": true
+    },
+    {
+      "num_uavs": 8,
+      "exact_min_feasible": 8.0,
+      "gaussian_min": 14.313571055562946,
+      "centralized_worst_low_budget": 0.764068172354162,
+      "peer_worst_low_budget": 0.8066816619502166,
+      "consensus_wins_low_budget": true
+    },
+    {
+      "num_uavs": 12,
+      "exact_min_feasible": 12.0,
+      "gaussian_min": 15.273876889943637,
+      "centralized_worst_low_budget": 0.733344002813649,
+      "peer_worst_low_budget": 0.8405523914998738,
+      "consensus_wins_low_budget": true
+    },
+    {
+      "num_uavs": 16,
+      "exact_min_feasible": 16.0,
+      "gaussian_min": 12.138336782107908,
+      "centralized_worst_low_budget": 0.7342818132511966,
+      "peer_worst_low_budget": 0.9091298321064225,
+      "consensus_wins_low_budget": true
+    }
+  ]
+}

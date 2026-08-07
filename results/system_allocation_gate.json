@@ -1,0 +1,521 @@
+{
+  "gate": "G15-greedy-aware-system-allocation",
+  "qos_target": 0.85,
+  "aperture_scale": 0.01,
+  "direct_blockage": 0.01,
+  "summary": [
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1024,
+      "phase_bits": 1,
+      "coherence_frames": 64,
+      "report_budget_bits": 4,
+      "system_ascent_allocation": [
+        262,
+        485,
+        277
+      ],
+      "system_ascent_value": 0.9238256728221338,
+      "system_ascent_history": [
+        {
+          "allocation": [
+            342,
+            341,
+            341
+          ],
+          "value": 0.8995026627698148
+        },
+        {
+          "allocation": [
+            342,
+            373,
+            309
+          ],
+          "value": 0.9109942461610431
+        },
+        {
+          "allocation": [
+            342,
+            405,
+            277
+          ],
+          "value": 0.9173804733884461
+        },
+        {
+          "allocation": [
+            310,
+            437,
+            277
+          ],
+          "value": 0.9220044554011818
+        },
+        {
+          "allocation": [
+            278,
+            469,
+            277
+          ],
+          "value": 0.9227043715099347
+        },
+        {
+          "allocation": [
+            262,
+            485,
+            277
+          ],
+          "value": 0.9238256728221338
+        }
+      ],
+      "exact_system": {
+        "equal": {
+          "mean_expected_pd": 0.9463869091594832,
+          "worst_expected_pd": 0.8995026627698148,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "mean_expected_pd": 0.9442828881547889,
+          "worst_expected_pd": 0.9106670394318612,
+          "qos_feasible_rate": 1.0
+        },
+        "exact_surrogate": {
+          "mean_expected_pd": 0.9379310874620959,
+          "worst_expected_pd": 0.9024663940270792,
+          "qos_feasible_rate": 1.0
+        },
+        "system_ascent": {
+          "mean_expected_pd": 0.9574648856790325,
+          "worst_expected_pd": 0.9238256728221338,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 704,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "report_budget_bits": 3,
+      "system_ascent_allocation": [
+        187,
+        323,
+        194
+      ],
+      "system_ascent_value": 0.927291009512654,
+      "system_ascent_history": [
+        {
+          "allocation": [
+            235,
+            235,
+            234
+          ],
+          "value": 0.9095943135239537
+        },
+        {
+          "allocation": [
+            235,
+            267,
+            202
+          ],
+          "value": 0.9229717358041394
+        },
+        {
+          "allocation": [
+            203,
+            299,
+            202
+          ],
+          "value": 0.9252228916189222
+        },
+        {
+          "allocation": [
+            187,
+            315,
+            202
+          ],
+          "value": 0.9259285548614213
+        },
+        {
+          "allocation": [
+            187,
+            323,
+            194
+          ],
+          "value": 0.927291009512654
+        }
+      ],
+      "exact_system": {
+        "equal": {
+          "mean_expected_pd": 0.9514289255137273,
+          "worst_expected_pd": 0.9095943135239537,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "mean_expected_pd": 0.9440602267522574,
+          "worst_expected_pd": 0.9109630858661483,
+          "qos_feasible_rate": 1.0
+        },
+        "exact_surrogate": {
+          "mean_expected_pd": 0.9423523107208115,
+          "worst_expected_pd": 0.9090461969379735,
+          "qos_feasible_rate": 1.0
+        },
+        "system_ascent": {
+          "mean_expected_pd": 0.9605401995488192,
+          "worst_expected_pd": 0.927291009512654,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 20,
+      "num_elements": 1344,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "report_budget_bits": 4,
+      "system_ascent_allocation": [
+        648,
+        440,
+        256
+      ],
+      "system_ascent_value": 0.9918724887366632,
+      "system_ascent_history": [
+        {
+          "allocation": [
+            448,
+            448,
+            448
+          ],
+          "value": 0.9741099098313808
+        },
+        {
+          "allocation": [
+            480,
+            448,
+            416
+          ],
+          "value": 0.9787118396381993
+        },
+        {
+          "allocation": [
+            512,
+            448,
+            384
+          ],
+          "value": 0.9824243313858545
+        },
+        {
+          "allocation": [
+            544,
+            448,
+            352
+          ],
+          "value": 0.9857265878679594
+        },
+        {
+          "allocation": [
+            576,
+            448,
+            320
+          ],
+          "value": 0.9882034633964772
+        },
+        {
+          "allocation": [
+            592,
+            448,
+            304
+          ],
+          "value": 0.9890669458053095
+        },
+        {
+          "allocation": [
+            608,
+            448,
+            288
+          ],
+          "value": 0.9901574206377376
+        },
+        {
+          "allocation": [
+            624,
+            448,
+            272
+          ],
+          "value": 0.9909341259813502
+        },
+        {
+          "allocation": [
+            640,
+            448,
+            256
+          ],
+          "value": 0.9917215337908877
+        },
+        {
+          "allocation": [
+            648,
+            440,
+            256
+          ],
+          "value": 0.9918724887366632
+        }
+      ],
+      "exact_system": {
+        "equal": {
+          "mean_expected_pd": 0.9905830564494861,
+          "worst_expected_pd": 0.9741099098313808,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "mean_expected_pd": 0.9960753459769901,
+          "worst_expected_pd": 0.991584283471092,
+          "qos_feasible_rate": 1.0
+        },
+        "exact_surrogate": {
+          "mean_expected_pd": 0.9960382595895222,
+          "worst_expected_pd": 0.9915418180752222,
+          "qos_feasible_rate": 1.0
+        },
+        "system_ascent": {
+          "mean_expected_pd": 0.9962909444081813,
+          "worst_expected_pd": 0.9918724887366632,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 28,
+      "num_elements": 960,
+      "phase_bits": 3,
+      "coherence_frames": 128,
+      "report_budget_bits": 5,
+      "system_ascent_allocation": [
+        384,
+        344,
+        232
+      ],
+      "system_ascent_value": 0.985458524715375,
+      "system_ascent_history": [
+        {
+          "allocation": [
+            320,
+            320,
+            320
+          ],
+          "value": 0.9794770654485103
+        },
+        {
+          "allocation": [
+            352,
+            320,
+            288
+          ],
+          "value": 0.9809847151604272
+        },
+        {
+          "allocation": [
+            352,
+            352,
+            256
+          ],
+          "value": 0.9825568397247839
+        },
+        {
+          "allocation": [
+            384,
+            352,
+            224
+          ],
+          "value": 0.9846616643537646
+        },
+        {
+          "allocation": [
+            400,
+            336,
+            224
+          ],
+          "value": 0.9850812626140816
+        },
+        {
+          "allocation": [
+            392,
+            336,
+            232
+          ],
+          "value": 0.985353387522347
+        },
+        {
+          "allocation": [
+            384,
+            344,
+            232
+          ],
+          "value": 0.985458524715375
+        }
+      ],
+      "exact_system": {
+        "equal": {
+          "mean_expected_pd": 0.9880551214317971,
+          "worst_expected_pd": 0.9794770654485103,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "mean_expected_pd": 0.9869141053239415,
+          "worst_expected_pd": 0.9806946822069971,
+          "qos_feasible_rate": 1.0
+        },
+        "exact_surrogate": {
+          "mean_expected_pd": 0.986489495889677,
+          "worst_expected_pd": 0.9799179780599673,
+          "qos_feasible_rate": 1.0
+        },
+        "system_ascent": {
+          "mean_expected_pd": 0.9903045799823214,
+          "worst_expected_pd": 0.985458524715375,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    },
+    {
+      "total_budget_bits": 40,
+      "num_elements": 2048,
+      "phase_bits": 3,
+      "coherence_frames": 256,
+      "report_budget_bits": 16,
+      "system_ascent_allocation": [
+        907,
+        603,
+        538
+      ],
+      "system_ascent_value": 0.9999781100172704,
+      "system_ascent_history": [
+        {
+          "allocation": [
+            683,
+            683,
+            682
+          ],
+          "value": 0.9995993623048072
+        },
+        {
+          "allocation": [
+            715,
+            683,
+            650
+          ],
+          "value": 0.9997391249116289
+        },
+        {
+          "allocation": [
+            747,
+            651,
+            650
+          ],
+          "value": 0.9998289252429927
+        },
+        {
+          "allocation": [
+            779,
+            619,
+            650
+          ],
+          "value": 0.9998894445043253
+        },
+        {
+          "allocation": [
+            811,
+            619,
+            618
+          ],
+          "value": 0.9999253983645773
+        },
+        {
+          "allocation": [
+            827,
+            603,
+            618
+          ],
+          "value": 0.9999389384142439
+        },
+        {
+          "allocation": [
+            843,
+            603,
+            602
+          ],
+          "value": 0.9999485063048419
+        },
+        {
+          "allocation": [
+            859,
+            603,
+            586
+          ],
+          "value": 0.9999607770879388
+        },
+        {
+          "allocation": [
+            875,
+            603,
+            570
+          ],
+          "value": 0.9999661356313039
+        },
+        {
+          "allocation": [
+            883,
+            603,
+            562
+          ],
+          "value": 0.9999700974666045
+        },
+        {
+          "allocation": [
+            891,
+            603,
+            554
+          ],
+          "value": 0.9999745744059866
+        },
+        {
+          "allocation": [
+            899,
+            603,
+            546
+          ],
+          "value": 0.9999761243317952
+        },
+        {
+          "allocation": [
+            907,
+            603,
+            538
+          ],
+          "value": 0.9999781100172704
+        }
+      ],
+      "exact_system": {
+        "equal": {
+          "mean_expected_pd": 0.9998660363273264,
+          "worst_expected_pd": 0.9995993623048072,
+          "qos_feasible_rate": 1.0
+        },
+        "separable": {
+          "mean_expected_pd": 0.9999970762410075,
+          "worst_expected_pd": 0.9999950383934478,
+          "qos_feasible_rate": 1.0
+        },
+        "exact_surrogate": {
+          "mean_expected_pd": 0.9999973477097112,
+          "worst_expected_pd": 0.9999958761703289,
+          "qos_feasible_rate": 1.0
+        },
+        "system_ascent": {
+          "mean_expected_pd": 0.9999893951827131,
+          "worst_expected_pd": 0.9999781100172704,
+          "qos_feasible_rate": 1.0
+        }
+      }
+    }
+  ]
+}
