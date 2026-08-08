@@ -844,10 +844,15 @@ threshold-feasibility formulation, which is the one stated in Theorem 2.
 With five reports per target, the same sweep gives frontier size at most
 $1+5\cdot 4=21$ and keeps exact-joint gains of 1.5-2.7 pp over greedy at
 $Q=2/3/5/8/12/20$ (5 seeds), with threshold DP still below 0.2 ms.  The
-option generation remains enumeration-based and is therefore limited to
-$R=5$ in this paper ($5^5=3125$ options per target); generating the frontier
-by branch-and-bound for $R\ge 8$ is a natural extension, and Proposition 1
-bounds the frontier independently of $R$.
+option generation is vectorized: the $5^R$ report/bit combinations are
+evaluated in batches with a shared $\mu$ grid, so $R=8$ (390625 combinations
+per target, about 5.7 s/target) is solved exactly.  The measured frontier is
+27-32 with maximum 33, matching the Proposition 1 bound
+$1+8\cdot 4=33$.  At $R=8$ and a budget of $11Q$ bits the greedy allocation
+is already close to saturation, so exact-joint gains shrink to 0.2-0.65 pp
+over $Q=2/3/5/8/12/20$ (2 seeds); the scalable threshold DP remains below
+0.4 ms.  Branch-and-bound frontier generation would be needed for
+$R\ge 12$, where $5^{12}$ combinations are no longer enumerable.
 
 As a learning-based baseline, we train a parameter-sharing MAPPO with a
 centralized critic on the same two-target environment (3000 episodes per

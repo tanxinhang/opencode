@@ -6,6 +6,7 @@ from uav_otfs_isac.joint_allocation import (
     exact_joint_maxmin,
     subset_options,
     target_options,
+    vectorized_target_options,
 )
 
 
@@ -34,3 +35,12 @@ def test_exact_joint_maxmin_matches_bruteforce() -> None:
             if cost_a + cost_b <= budget:
                 best = max(best, min(value_a, value_b))
     assert abs(exact - best) < 1e-9
+
+
+def test_vectorized_target_options_matches_enumeration() -> None:
+    deltas = np.array([1.0, 1.2, 1.4, 1.6])
+    enumerated = dict(target_options(0.4, deltas, grid=64))
+    vectorized = dict(vectorized_target_options(0.4, deltas, grid=64))
+    assert set(enumerated) == set(vectorized)
+    for cost in enumerated:
+        assert abs(enumerated[cost] - vectorized[cost]) < 1e-9

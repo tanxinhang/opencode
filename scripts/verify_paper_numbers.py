@@ -308,6 +308,17 @@ def main() -> None:
     check("R5 frontier bound 21",
           r5q20["max_frontier_size"] == 21)
 
+    r8 = load("joint_scale_r8_gate.json")
+    check("R8 gate two seeds", r8["seeds"] == 2)
+    check("R8 gate reports eight", r8["reports_per_target"] == 8)
+    r8q20 = next(r for r in r8["summary"] if r["target_count"] == 20)
+    check("R8 Q20 gain",
+          close(r8q20["joint_over_greedy_mean_pp"], 0.498, 1e-3))
+    check("R8 frontier bound 33",
+          r8q20["max_frontier_size"] == 33)
+    check("R8 Q20 DP fast",
+          r8q20["dp_wall_seconds_mean"] < 0.01)
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",

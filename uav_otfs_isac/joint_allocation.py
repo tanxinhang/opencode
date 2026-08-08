@@ -13,6 +13,7 @@ from __future__ import annotations
 import itertools
 
 import numpy as np
+from scipy.stats import norm
 
 from .expected_pd import expected_gaussian_detection_probability
 from .fusion import optimal_gaussian_detection_probability
@@ -159,6 +160,109 @@ def target_options(
         if pd > best_value + 1e-12:
             pareto.append((cost, pd))
             best_value = pd
+    return pareto
+
+
+def vectorized_target_options(
+    owner_delta: float,
+    deltas: np.ndarray,
+    grid: int = 32,
+    max_bits: int = 4,
+    batch_size: int = 50_000,
+) -> list[tuple[int, float]]:
+    """Vectorized exact Pareto frontier for up to R=8 reports.
+
+    Enumerates all 5^R report/bit choices but evaluates the P_D-optimal shift
+    for a batch of choices at once, so the option generation is practical for
+    R=8 (390625 choices).  The frontier keeps one point per distinct cost.
+    """
+    reports = list(range(len(deltas)))
+    choices = list(range(max_bits + 1))
+    count = (max_bits + 1) ** len(reports)
+
+    pre_m0 = np.zeros((len(reports), max_bits + 1))
+    pre_m1 = np.zeros((len(reports), max_bits + 1))
+    pre_v0 = np.ones((len(reports), max_bits + 1))
+    pre_v1 = np.ones((len(reports), max_bits + 1))
+    for i, delta in enumerate(deltas):
+        for b in choices:
+            m0, m1, v0, v1 = moments(float(delta), b)
+            pre_m0[i, b] = m0
+            pre_m1[i, b] = m1
+            pre_v0[i, b] = v0
+            pre_v1[i, b] = v1
+
+    z = float(norm.ppf(0.95))
+    owner_a2 = float(owner_delta ** 2)
+    owner_q = 1.0
+    mu_grid = np.concatenate((
+        np.linspace(0.0, 3.0, grid // 2),
+        np.geomspace(3.0 + 1e-3, 1e6, grid // 2),
+    ))
+    frontier: dict[int, float] = {}
+
+    def evaluate_batch(batch_choices: np.ndarray):
+        costs = batch_choices.sum(axis=1).astype(int)
+        selected = batch_choices > 0
+        b = batch_choices
+        delta_mu = pre_m1 - pre_m0
+        a = np.where(selected, delta_mu[np.arange(len(deltas)), b] / np.sqrt(pre_v0[np.arange(len(deltas)), b]), 0.0)
+        q = np.where(
+            selected,
+            pre_v1[np.arange(len(deltas)), b] / pre_v0[np.arange(len(deltas)), b],
+            1.0,
+        )
+        a2 = a * a
+        # (G, B, R)
+        denom = q[None, :, :] + mu_grid[:, None, None]
+        a2_den = a2[None, :, :] / denom
+        a2_den2 = a2[None, :, :] / (denom * denom)
+        q_a2_den2 = q[None, :, :] * a2[None, :, :] / (denom * denom)
+        A2 = a2_den.sum(axis=2)
+        N2 = a2_den2.sum(axis=2)
+        H2 = q_a2_den2.sum(axis=2)
+        A2 = A2 + owner_a2 / (owner_q + mu_grid[:, None])
+        N2 = N2 + owner_a2 / ((owner_q + mu_grid[:, None]) ** 2)
+        H2 = H2 + owner_q * owner_a2 / ((owner_q + mu_grid[:, None]) ** 2)
+        shifts = (
+            A2
+            - z * np.sqrt(np.maximum(N2, 0.0))
+        ) / np.sqrt(np.maximum(H2, 1e-30))
+        num_a = a2.sum(axis=1)
+        h_a = (q * a2).sum(axis=1)
+        num_a = num_a + owner_a2
+        h_a = h_a + owner_q * owner_a2
+        deflection_limit = (
+            num_a - z * np.sqrt(np.maximum(num_a, 0.0))
+        ) / np.sqrt(np.maximum(h_a, 1e-30))
+        best_shift = np.maximum(
+            shifts.max(axis=0),
+            deflection_limit,
+        )
+        pd_values = norm.cdf(best_shift)
+        return costs, pd_values
+
+    all_combos = np.asarray(
+        list(itertools.product(choices, repeat=len(reports))),
+        dtype=np.int64,
+    )
+    for start in range(0, count, batch_size):
+        batch = all_combos[start:start + batch_size]
+        costs, values = evaluate_batch(batch)
+        for cost, value in zip(costs, values):
+            key = int(cost)
+            if key not in frontier or float(value) > frontier[key]:
+                frontier[key] = float(value)
+
+    result = sorted(
+        (cost, value) for cost, value in frontier.items()
+    )
+    pareto: list[tuple[int, float]] = []
+    best_value = -1.0
+    for cost, value in result:
+        if value > best_value + 1e-12:
+            pareto.append((cost, value))
+            best_value = value
     return pareto
 
 

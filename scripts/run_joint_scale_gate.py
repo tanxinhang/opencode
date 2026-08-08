@@ -29,6 +29,7 @@ from uav_otfs_isac.joint_allocation import (
     model_from_bits,
     subset_options,
     target_options,
+    vectorized_target_options,
 )
 
 
@@ -91,10 +92,18 @@ def run_gate(
                 )
             greedy = exact_joint_maxmin(greedy_option_sets, budget)
 
-            option_sets = [
-                target_options(float(deltas[0]), deltas[1:], grid)
-                for deltas in deltas_list
-            ]
+            if reports_per_target >= 6:
+                option_sets = [
+                    vectorized_target_options(
+                        float(deltas[0]), deltas[1:], grid=grid,
+                    )
+                    for deltas in deltas_list
+                ]
+            else:
+                option_sets = [
+                    target_options(float(deltas[0]), deltas[1:], grid)
+                    for deltas in deltas_list
+                ]
             started = time.perf_counter()
             joint = exact_joint_maxmin(option_sets, budget)
             dp_wall = time.perf_counter() - started
