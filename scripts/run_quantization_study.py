@@ -4,12 +4,12 @@ For a fixed total budget, the receiver can spend bits on fewer, finely
 quantized reports or on more, coarsely quantized reports.  Under a scalar
 quantizer whose distortion decreases with bit count, the better choice
 depends on the marginal evidence of each report and on how tight the budget
-is.  Under high-resolution scalar quantization, the distortion of a b-bit
-quantizer is proportional to ``2^{-2b}``, so the marginal evidence gain of
-the next bit is decreasing; the greedy arm repeatedly gives the next bit to
-the report with the largest marginal per-report P_D gain, which is the
-discrete water-filling rule for a separable, diminishing-returns resource
-allocation.
+is.  The greedy arm is inspired by discrete water-filling: it repeatedly
+gives the next bit to the report with the largest marginal per-report P_D
+gain.  It is a heuristic rather than a proven optimum, because under the
+finite-resolution uniform quantizer used here the marginal gains are not
+strictly diminishing; the gate reports its empirical gains over a fixed
+1-4 bit pattern.
 
 The budgets are set from the all-report costs: variable 1-4 bit reporting
 needs 20 bits for all eight reports, while fixed 3-bit reporting needs 24
