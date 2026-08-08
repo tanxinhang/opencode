@@ -433,6 +433,15 @@ with $\min_q P_D(q,S_q)=\max_{t\in\mathcal{T}}\{t : \text{feasible}(t)\}$,
 and among schedules attaining that threshold it returns the lexicographically
 best secondary score.
 
+**Corollary 1 (joint bit allocation and selection).**  Under the same
+target-separable, additive-cost assumptions, replace each report option by
+the mutually exclusive options $\{$not selected, 1-4 bit quantized$\}$ with
+their post-communication moments and bit costs.  The option set remains
+finite and target-separable, so Theorem 1 and Theorem 2 hold unchanged: the
+exact DP returns the global joint optimum over report selection and
+per-report quantization bits, with no concavity or diminishing-returns
+assumption.
+
 ### 4.4 Scaled exact-threshold certificate
 
 For larger report sets, define $m_q(t)$ as the minimum bit cost for target
@@ -790,9 +799,9 @@ per-report allocation spends too many bits on the strong target and starves
 the weak one.  Enumerating, per target, every report-selection / bit-allocation
 combination and solving the resulting target-separable multiple-choice
 knapsack exactly (the joint extension of Theorem 1/2) raises worst-target
-$P_D$ by 5.32/4.15/3.40 pp at $B=14/16/18$ over 10 seeds, reaching
-0.849/0.862/0.872 versus 0.796/0.820/0.838 for greedy (minimum gain 0.0-1.9
-pp, maximum 6.4-9.0 pp).  No diminishing-returns assumption is needed: the
+$P_D$ by 4.95/3.61/3.72 pp at $B=14/16/18$ over 20 seeds, reaching
+0.849/0.861/0.871 versus 0.799/0.825/0.834 for greedy (minimum gain 0.0-1.6
+pp, maximum 6.9-9.1 pp).  No diminishing-returns assumption is needed: the
 per-target option set is finite and target-separable, so the exact DP applies
 directly.
 

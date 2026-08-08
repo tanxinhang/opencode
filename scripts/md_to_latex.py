@@ -153,6 +153,7 @@ def main() -> None:
     tex.append(r"\usepackage{booktabs}")
     tex.append(r"\newtheorem{theorem}{Theorem}")
     tex.append(r"\newtheorem{lemma}{Lemma}")
+    tex.append(r"\newtheorem{corollary}{Corollary}")
     tex.append(r"\newtheorem*{theoremstar}{Theorem}")
     tex.append(r"\newtheorem*{lemmastar}{Lemma}")
     tex.append(r"\begin{document}")
@@ -355,17 +356,31 @@ def main() -> None:
         elif in_references and re.match(r"^\[\d+\]\s", stripped):
             index += 1
             continue
-        elif stripped.startswith("**Theorem ") or stripped.startswith("**Lemma "):
+        elif (
+            stripped.startswith("**Theorem ")
+            or stripped.startswith("**Lemma ")
+            or stripped.startswith("**Corollary ")
+        ):
             if in_appendix:
-                kind = "theoremstar" if stripped.startswith("**Theorem") else "lemmastar"
+                if stripped.startswith("**Theorem"):
+                    kind = "theoremstar"
+                elif stripped.startswith("**Lemma"):
+                    kind = "lemmastar"
+                else:
+                    kind = "corollary"
             else:
-                kind = "theorem" if stripped.startswith("**Theorem") else "lemma"
+                if stripped.startswith("**Theorem"):
+                    kind = "theorem"
+                elif stripped.startswith("**Lemma"):
+                    kind = "lemma"
+                else:
+                    kind = "corollary"
             header, _, body = stripped.partition(".**")
             header = header[2:].strip()
             if _:
                 header = header + "."
             match = re.match(
-                r"^(Theorem|Lemma)\s+([^ (]+)(?:\s+\(([^)]+)\))?\.$",
+                r"^(Theorem|Lemma|Corollary)\s+([^ (]+)(?:\s+\(([^)]+)\))?\.$",
                 header,
             )
             if match and match.group(3):
