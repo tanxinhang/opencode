@@ -34,6 +34,7 @@ python scripts/run_quantization_study.py --seeds 10 --budgets 18 20 24 --grid 64
 python scripts/run_quantization_joint_gate.py --seeds 10 --budgets 18 20 24 --grid 64
 python scripts/run_joint_multi_gate.py --seeds 20 --budgets 14 16 18 --grid 64
 python scripts/run_joint_scale_gate.py --seeds 10 --grid 32
+python scripts/run_mappo_baseline.py --train-seeds 40 --test-seeds 20 --episodes 3000
 python scripts/audit_submission_completeness.py
 python scripts/audit_submission_docx.py
 python scripts/audit_submission_latex.py

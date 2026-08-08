@@ -290,6 +290,15 @@ def main() -> None:
     check("joint scale Q20 DP fast",
           scale20["dp_wall_seconds_mean"] < 0.01)
 
+    mappo = load("mappo_baseline.json")
+    check("MAPPO 3000 episodes", mappo["episodes"] == 3000)
+    check("MAPPO 20 test seeds", mappo["test_seeds"] == 20)
+    mappo14 = next(r for r in mappo["summary"] if r["budget_bits"] == 14)
+    check("MAPPO B14 below exact",
+          close(mappo14["mappo_gap_to_exact_pp"], 6.355, 1e-3))
+    check("MAPPO B14 below greedy",
+          mappo14["mappo_worst_mean"] < mappo14["greedy_worst_mean"])
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",
