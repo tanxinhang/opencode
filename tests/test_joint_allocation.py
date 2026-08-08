@@ -4,6 +4,7 @@ import numpy as np
 
 from uav_otfs_isac.joint_allocation import (
     exact_joint_maxmin,
+    minimum_cost_joint_threshold,
     subset_options,
     target_options,
     vectorized_target_options,
@@ -44,3 +45,17 @@ def test_vectorized_target_options_matches_enumeration() -> None:
     assert set(enumerated) == set(vectorized)
     for cost in enumerated:
         assert abs(enumerated[cost] - vectorized[cost]) < 1e-9
+
+
+def test_minimum_cost_joint_threshold_matches_enumeration() -> None:
+    deltas = np.array([1.0, 1.2, 1.4, 1.6])
+    options = target_options(0.4, deltas, grid=32)
+    for threshold in (0.4, 0.6, 0.75, 0.85):
+        brute = min(
+            (cost for cost, value in options if value >= threshold - 1e-12),
+            default=None,
+        )
+        branch = minimum_cost_joint_threshold(
+            0.4, deltas, threshold, grid=32,
+        )
+        assert branch == brute

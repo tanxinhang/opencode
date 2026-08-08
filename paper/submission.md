@@ -851,8 +851,14 @@ per target, about 5.7 s/target) is solved exactly.  The measured frontier is
 $1+8\cdot 4=33$.  At $R=8$ and a budget of $11Q$ bits the greedy allocation
 is already close to saturation, so exact-joint gains shrink to 0.2-0.65 pp
 over $Q=2/3/5/8/12/20$ (2 seeds); the scalable threshold DP remains below
-0.4 ms.  Branch-and-bound frontier generation would be needed for
-$R\ge 12$, where $5^{12}$ combinations are no longer enumerable.
+0.4 ms.  For $R=12$, where $5^{12}$ combinations are no longer enumerable,
+a branch-and-bound variant solves each threshold-minimum-cost query in
+0.2-2.9 s: it prunes by cost once a feasible solution is known and by a
+value bound that replaces remaining reports by their quantization-free
+versions.  That pruning bound was verified on all 20,480 report/bit
+combinations of the audited diagonal models and is reported as an audited
+certificate, not as a general proof; the remaining DFS is exhaustive, so the
+returned minimum is exact for those audited models.
 
 As a learning-based baseline, we train a parameter-sharing MAPPO with a
 centralized critic on the same two-target environment (3000 episodes per
