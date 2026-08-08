@@ -251,6 +251,18 @@ def main() -> None:
     check("quantization greedy absolute P_D",
           quant18["greedy_worst_mean"] >= 0.90)
 
+    joint = load("quantization_joint_gate.json")
+    check("joint gate 10 seeds", joint["seeds"] == 10)
+    joint18 = next(r for r in joint["summary"] if r["budget_bits"] == 18)
+    joint20 = next(r for r in joint["summary"] if r["budget_bits"] == 20)
+    joint24 = next(r for r in joint["summary"] if r["budget_bits"] == 24)
+    check("joint B18 over greedy",
+          close(joint18["exact_over_greedy_mean_pp"], 0.894, 1e-3))
+    check("joint B20 over greedy",
+          close(joint20["exact_over_greedy_mean_pp"], 0.633, 1e-3))
+    check("joint B24 matches greedy",
+          close(joint24["exact_over_greedy_mean_pp"], 0.0, 1e-3))
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",
