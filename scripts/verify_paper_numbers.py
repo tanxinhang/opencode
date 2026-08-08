@@ -277,6 +277,17 @@ def main() -> None:
     check("multi-target absolute P_D",
           multi14["exact_joint_pd_mean"] >= 0.80)
 
+    scale = load("joint_scale_gate.json")
+    check("joint scale 10 seeds", scale["seeds"] == 10)
+    check("joint scale six Q", len(scale["target_counts"]) == 6)
+    scale20 = next(r for r in scale["summary"] if r["target_count"] == 20)
+    check("joint scale Q20 gain",
+          close(scale20["joint_over_greedy_mean_pp"], 2.618, 1e-3))
+    check("joint scale Q20 frontier",
+          scale20["max_frontier_size"] == 173)
+    check("joint scale Q20 DP fast",
+          scale20["dp_wall_seconds_mean"] < 0.01)
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",

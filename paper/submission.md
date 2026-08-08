@@ -805,6 +805,17 @@ pp, maximum 6.9-9.1 pp).  No diminishing-returns assumption is needed: the
 per-target option set is finite and target-separable, so the exact DP applies
 directly.
 
+The two-target result is not a scalability anecdote.  We sweep
+$Q=2/3/5/8/12/20$ targets with four reports per target and a budget that
+grows as $7Q$ bits (10 seeds).  The exact joint max-min beats the greedy
+per-report allocation by 1.98-2.65 pp at every target count, with worst
+target $P_D$ of 0.847-0.932 versus 0.821-0.905 for greedy.  The per-target
+Pareto frontier size is 65-94 on the median (maximum 173, far below the
+$5^4=625$ raw option count), and the threshold-feasibility DP of Theorem 2
+takes less than 1 ms per instance even at $Q=20$.  The existing lexicographic
+DP state explosion observed at $Q=8$ is therefore avoided by the
+threshold-feasibility formulation, which is the one stated in Theorem 2.
+
 **Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, grid 64; variable all-report cost 20 bits, fixed 24 bits).**
 
 | Budget | Variable worst $P_D$ | Fixed worst $P_D$ | Greedy worst $P_D$ | Variable gain (pp) | Greedy vs pattern (pp) | Variable used | Fixed used |
