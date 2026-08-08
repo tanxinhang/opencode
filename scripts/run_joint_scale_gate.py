@@ -61,9 +61,13 @@ def run_gate(
     seeds: int,
     grid: int,
     reports_per_target: int,
+    budget_multiplier: int | None = None,
+    target_counts: tuple[int, ...] | None = None,
 ) -> None:
-    target_counts = (2, 3, 5, 8, 12, 20)
-    budget_multiplier = 3 + reports_per_target
+    if target_counts is None:
+        target_counts = (2, 3, 5, 8, 12, 20)
+    if budget_multiplier is None:
+        budget_multiplier = 3 + reports_per_target
     rows = []
     for target_count in target_counts:
         budget = budget_multiplier * target_count
@@ -167,12 +171,19 @@ def main() -> None:
     parser.add_argument("--seeds", type=int, default=5)
     parser.add_argument("--grid", type=int, default=64)
     parser.add_argument("--reports", type=int, default=4)
+    parser.add_argument("--budget-multiplier", type=int, default=None)
+    parser.add_argument("--target-counts", type=int, nargs="+", default=None)
     args = parser.parse_args()
     run_gate(
         output=Path(args.output),
         seeds=args.seeds,
         grid=args.grid,
         reports_per_target=args.reports,
+        budget_multiplier=args.budget_multiplier,
+        target_counts=(
+            None if args.target_counts is None
+            else tuple(args.target_counts)
+        ),
     )
 
 

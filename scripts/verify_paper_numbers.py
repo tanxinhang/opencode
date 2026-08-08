@@ -313,7 +313,9 @@ def main() -> None:
     check("R8 gate reports eight", r8["reports_per_target"] == 8)
     r8q20 = next(r for r in r8["summary"] if r["target_count"] == 20)
     check("R8 Q20 gain",
-          close(r8q20["joint_over_greedy_mean_pp"], 0.498, 1e-3))
+          close(r8q20["joint_over_greedy_mean_pp"], 3.480, 1e-3))
+    check("R8 Q20 budget 7Q",
+          r8q20["budget_bits"] == 140)
     check("R8 frontier bound 33",
           r8q20["max_frontier_size"] == 33)
     check("R8 Q20 DP fast",

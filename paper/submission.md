@@ -848,10 +848,11 @@ option generation is vectorized: the $5^R$ report/bit combinations are
 evaluated in batches with a shared $\mu$ grid, so $R=8$ (390625 combinations
 per target, about 5.7 s/target) is solved exactly.  The measured frontier is
 27-32 with maximum 33, matching the Proposition 1 bound
-$1+8\cdot 4=33$.  At $R=8$ and a budget of $11Q$ bits the greedy allocation
-is already close to saturation, so exact-joint gains shrink to 0.2-0.65 pp
-over $Q=2/3/5/8/12/20$ (2 seeds); the scalable threshold DP remains below
-0.4 ms.  For $R=12$, where $5^{12}$ combinations are no longer enumerable,
+$1+8\cdot 4=33$.  With the same per-target budget scale $7Q$ used for
+$R=4/5$, exact-joint gains are 1.60-3.84 pp over
+$Q=3/5/8/12/20$ (2 seeds; $Q=2$ is already greedy-optimal at P_D 0.994), and
+the scalable threshold DP remains below 0.4 ms.  For $R=12$, where
+$5^{12}$ combinations are no longer enumerable,
 a branch-and-bound variant solves each threshold-minimum-cost query in
 0.2-2.9 s: it prunes by cost once a feasible solution is known and by a
 value bound that replaces remaining reports by their quantization-free
