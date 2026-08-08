@@ -23,7 +23,7 @@ and the committed fix.
 | 1 | RIS model too strong | DONE: wording is now geometry-aware normalized power-gain model with coherent cross-term caveat; RIS demoted to an application instance. |
 | 2 | OTFS is a label | DONE: title/abstract rewritten without OTFS; DD-domain sensing is background and explicitly not required by the theory. |
 | 3 | Statistical evidence weak | DONE: 500-seed two-sided paired t, Wilcoxon, and Holm correction are all significant at every system-level budget; absolute P_D and effect sizes are reported. |
-| 4 | Ablations mixed | DONE: 500-seed factorial ablation in `results/factorial_ablation.json` toggles fusion, selection, RIS, quantization, communication, and max-min one factor at a time. |
+| 4 | Ablations mixed | DONE: 500-seed factorial ablation toggles each factor one at a time; a hard weak-target scenario further shows max-min gains of 2.45-3.45 pp over greedy/lexicographic baselines at B=8/10. |
 | 5 | Hard B&B instances missing | DONE: `scripts/run_scaled_difficulty_gate.py` adds critical-threshold, similar-weak, and K-report layers with node counts, recursion depth, prune rate, and exhaustive match checks. |
 
 ## P2 (submission engineering)

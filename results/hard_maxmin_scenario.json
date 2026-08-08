@@ -1,0 +1,429 @@
+{
+  "gate": "hard-maxmin-vs-greedy-vs-lex",
+  "seeds": 20,
+  "grid": 64,
+  "rows": [
+    {
+      "budget_bits": 8,
+      "seed": 0,
+      "maxmin_worst": 0.276635746909113,
+      "greedy_worst": 0.2732410656188885,
+      "lex_worst": 0.2301078710321789,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 1,
+      "maxmin_worst": 0.3159465666380241,
+      "greedy_worst": 0.27430220932654303,
+      "lex_worst": 0.27430220932654303,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 2,
+      "maxmin_worst": 0.34073614549719367,
+      "greedy_worst": 0.3088747515741936,
+      "lex_worst": 0.3088747515741936,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 3,
+      "maxmin_worst": 0.33247781799382725,
+      "greedy_worst": 0.33247781799382725,
+      "lex_worst": 0.33247781799382725,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 4,
+      "maxmin_worst": 0.31225840935966553,
+      "greedy_worst": 0.31225840935966553,
+      "lex_worst": 0.31225840935966553,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 5,
+      "maxmin_worst": 0.31030870389558196,
+      "greedy_worst": 0.2744861607002224,
+      "lex_worst": 0.2744861607002224,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 6,
+      "maxmin_worst": 0.3115914060226661,
+      "greedy_worst": 0.2718634541071874,
+      "lex_worst": 0.2718634541071874,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 7,
+      "maxmin_worst": 0.3208755825932036,
+      "greedy_worst": 0.3124836524984592,
+      "lex_worst": 0.2667907637201722,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 8,
+      "maxmin_worst": 0.35398288634072683,
+      "greedy_worst": 0.35398288634072683,
+      "lex_worst": 0.31934322630776857,
+      "maxmin_used_bits": 7,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 9,
+      "maxmin_worst": 0.3271097317738656,
+      "greedy_worst": 0.3271097317738656,
+      "lex_worst": 0.2825975802118843,
+      "maxmin_used_bits": 7,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 10,
+      "maxmin_worst": 0.2746976619749143,
+      "greedy_worst": 0.23262211810777023,
+      "lex_worst": 0.23262211810777023,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 11,
+      "maxmin_worst": 0.30304995980346405,
+      "greedy_worst": 0.2619141492368896,
+      "lex_worst": 0.2619141492368896,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 12,
+      "maxmin_worst": 0.2978021333193712,
+      "greedy_worst": 0.2629667948345802,
+      "lex_worst": 0.2629667948345802,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 13,
+      "maxmin_worst": 0.2788710564917254,
+      "greedy_worst": 0.2788710564917254,
+      "lex_worst": 0.2450143746416062,
+      "maxmin_used_bits": 7,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 14,
+      "maxmin_worst": 0.3223794978409116,
+      "greedy_worst": 0.2814533584425073,
+      "lex_worst": 0.2814533584425073,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 15,
+      "maxmin_worst": 0.273040371397322,
+      "greedy_worst": 0.23101479217550103,
+      "lex_worst": 0.23101479217550103,
+      "maxmin_used_bits": 7,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 16,
+      "maxmin_worst": 0.26551799117327946,
+      "greedy_worst": 0.22144985453830507,
+      "lex_worst": 0.22144985453830507,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 17,
+      "maxmin_worst": 0.3037307341637309,
+      "greedy_worst": 0.266097084806141,
+      "lex_worst": 0.266097084806141,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 18,
+      "maxmin_worst": 0.3124865015151697,
+      "greedy_worst": 0.2675726140124015,
+      "lex_worst": 0.2675726140124015,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 7,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 8,
+      "seed": 19,
+      "maxmin_worst": 0.2724160231270314,
+      "greedy_worst": 0.2718542564212879,
+      "lex_worst": 0.2718542564212879,
+      "maxmin_used_bits": 8,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 8
+    },
+    {
+      "budget_bits": 10,
+      "seed": 0,
+      "maxmin_worst": 0.30887492317207466,
+      "greedy_worst": 0.2732410656188885,
+      "lex_worst": 0.2732410656188885,
+      "maxmin_used_bits": 9,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 1,
+      "maxmin_worst": 0.34828155056602306,
+      "greedy_worst": 0.31352469663523086,
+      "lex_worst": 0.31352469663523086,
+      "maxmin_used_bits": 9,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 2,
+      "maxmin_worst": 0.34073614549719367,
+      "greedy_worst": 0.34073614549719367,
+      "lex_worst": 0.34073614549719367,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 3,
+      "maxmin_worst": 0.33247781799382725,
+      "greedy_worst": 0.33247781799382725,
+      "lex_worst": 0.33247781799382725,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 4,
+      "maxmin_worst": 0.32003852750393064,
+      "greedy_worst": 0.31225840935966553,
+      "lex_worst": 0.31225840935966553,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 5,
+      "maxmin_worst": 0.34160651097700195,
+      "greedy_worst": 0.2744861607002224,
+      "lex_worst": 0.2744861607002224,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 6,
+      "maxmin_worst": 0.34723702144329743,
+      "greedy_worst": 0.3115914060226661,
+      "lex_worst": 0.3115914060226661,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 7,
+      "maxmin_worst": 0.35415348125998397,
+      "greedy_worst": 0.3124836524984592,
+      "lex_worst": 0.3124836524984592,
+      "maxmin_used_bits": 9,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 8,
+      "maxmin_worst": 0.35398288634072683,
+      "greedy_worst": 0.35398288634072683,
+      "lex_worst": 0.35398288634072683,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 9,
+      "maxmin_worst": 0.3610177370190658,
+      "greedy_worst": 0.3271097317738656,
+      "lex_worst": 0.3271097317738656,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 10,
+      "maxmin_worst": 0.30834305159809017,
+      "greedy_worst": 0.2736283519670034,
+      "lex_worst": 0.2736283519670034,
+      "maxmin_used_bits": 9,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 11,
+      "maxmin_worst": 0.33424503620656876,
+      "greedy_worst": 0.2619141492368896,
+      "lex_worst": 0.2619141492368896,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 12,
+      "maxmin_worst": 0.3312528202040753,
+      "greedy_worst": 0.2978021333193712,
+      "lex_worst": 0.2978021333193712,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 13,
+      "maxmin_worst": 0.3225978940935189,
+      "greedy_worst": 0.2788710564917254,
+      "lex_worst": 0.2788710564917254,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 14,
+      "maxmin_worst": 0.3575034155440244,
+      "greedy_worst": 0.3223794978409116,
+      "lex_worst": 0.3223794978409116,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 15,
+      "maxmin_worst": 0.30689161646640084,
+      "greedy_worst": 0.273040371397322,
+      "lex_worst": 0.273040371397322,
+      "maxmin_used_bits": 9,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 16,
+      "maxmin_worst": 0.2988878158956081,
+      "greedy_worst": 0.2616492812217452,
+      "lex_worst": 0.2616492812217452,
+      "maxmin_used_bits": 9,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 17,
+      "maxmin_worst": 0.3367189082982819,
+      "greedy_worst": 0.3037307341637309,
+      "lex_worst": 0.3037307341637309,
+      "maxmin_used_bits": 10,
+      "greedy_used_bits": 10,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 18,
+      "maxmin_worst": 0.344101766439335,
+      "greedy_worst": 0.30787894690643136,
+      "lex_worst": 0.30787894690643136,
+      "maxmin_used_bits": 9,
+      "greedy_used_bits": 9,
+      "lex_used_bits": 10
+    },
+    {
+      "budget_bits": 10,
+      "seed": 19,
+      "maxmin_worst": 0.30814048275347905,
+      "greedy_worst": 0.2718542564212879,
+      "lex_worst": 0.2718542564212879,
+      "maxmin_used_bits": 9,
+      "greedy_used_bits": 8,
+      "lex_used_bits": 10
+    }
+  ],
+  "summary": [
+    {
+      "budget_bits": 8,
+      "n_seeds": 20,
+      "maxmin_worst_mean": 0.3052957463915394,
+      "greedy_worst_mean": 0.28084481091803437,
+      "lex_worst_mean": 0.2707530820775316,
+      "maxmin_gain_over_greedy_pp": 2.4450935473505018,
+      "maxmin_gain_over_lex_pp": 3.4542664314007765,
+      "qos_feasible_rate": 0.0
+    },
+    {
+      "budget_bits": 10,
+      "n_seeds": 20,
+      "maxmin_worst_mean": 0.3328544704636254,
+      "greedy_worst_mean": 0.3002320375703582,
+      "lex_worst_mean": 0.3002320375703582,
+      "maxmin_gain_over_greedy_pp": 3.262243289326716,
+      "maxmin_gain_over_lex_pp": 3.262243289326716,
+      "qos_feasible_rate": 0.0
+    }
+  ]
+}

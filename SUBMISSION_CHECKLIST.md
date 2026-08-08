@@ -28,7 +28,8 @@ python -m pytest -q
 python scripts/verify_paper_numbers.py
 python scripts/audit_exact_selection_stats.py
 python scripts/run_scaled_difficulty_gate.py --grid 96
-python scripts/run_factorial_ablation.py --seeds 50 --budget 20 --grid 64
+python scripts/run_factorial_ablation.py --seeds 500 --budget 20 --grid 64
+python scripts/run_hard_maxmin_scenario.py --seeds 20 --budgets 8 10 --grid 64
 python scripts/audit_submission_completeness.py
 python scripts/audit_submission_docx.py
 python scripts/audit_submission_latex.py

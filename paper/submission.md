@@ -716,6 +716,13 @@ at this budget; that comparison is not strictly budget-equivalent.
 | Clean channel | 0.986 | 0.992 | -0.84 | 100% |
 | Lexicographic budget | 0.977 | 0.989 | +0.13 | 100% |
 
+The small demo-level max-min gain is a scenario property, not an algorithmic
+ceiling.  In a hard two-target scenario with one strong target and one weak
+target whose reports are similar and heterogeneously priced, exact max-min
+exceeds forward greedy by 2.45-3.26 pp and the lexicographic budget selector
+by 3.26-3.45 pp at $B=8/10$ over 20 seeds, while both baselines sometimes
+spend the whole budget on the strong target.
+
 ### 6.5 Re-implemented literature-style baselines
 
 At total budget 40 with a 3-bit, 256-element RIS and 28 report bits, the

@@ -212,6 +212,17 @@ def main() -> None:
     check("factorial full QoS",
           fab["summary"]["full"]["qos_rate"] == 1.0)
 
+    hard = load("hard_maxmin_scenario.json")
+    check("hard scenario 20 seeds", hard["seeds"] == 20)
+    hard8 = next(r for r in hard["summary"] if r["budget_bits"] == 8)
+    hard10 = next(r for r in hard["summary"] if r["budget_bits"] == 10)
+    check("hard B8 gain over greedy",
+          close(hard8["maxmin_gain_over_greedy_pp"], 2.445, 1e-3))
+    check("hard B8 gain over lex",
+          close(hard8["maxmin_gain_over_lex_pp"], 3.454, 1e-3))
+    check("hard B10 gain over greedy",
+          close(hard10["maxmin_gain_over_greedy_pp"], 3.262, 1e-3))
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",
