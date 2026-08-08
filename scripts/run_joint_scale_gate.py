@@ -39,24 +39,39 @@ PROFILES = (
 )
 
 
-def _profiles(target_count: int, rng: np.random.Generator):
+def _profiles(
+    target_count: int,
+    reports_per_target: int,
+    rng: np.random.Generator,
+):
     result = []
     for q in range(target_count):
         owner, lo, hi = PROFILES[q % len(PROFILES)]
-        deltas = np.concatenate(([owner], rng.uniform(lo, hi, 4)))
+        deltas = np.concatenate((
+            [owner], rng.uniform(lo, hi, reports_per_target),
+        ))
         result.append(deltas)
     return result
 
 
-def run_gate(*, output: Path, seeds: int, grid: int) -> None:
+def run_gate(
+    *,
+    output: Path,
+    seeds: int,
+    grid: int,
+    reports_per_target: int,
+) -> None:
     target_counts = (2, 3, 5, 8, 12, 20)
+    budget_multiplier = 3 + reports_per_target
     rows = []
     for target_count in target_counts:
-        budget = 7 * target_count
+        budget = budget_multiplier * target_count
         for seed in range(seeds):
             rng = np.random.default_rng(seed)
-            deltas_list = _profiles(target_count, rng)
-            pattern = np.array([0, 1, 2, 3, 4])
+            deltas_list = _profiles(target_count, reports_per_target, rng)
+            pattern = np.array(
+                [0] + list(range(1, reports_per_target + 1)),
+            )
 
             fixed = exact_joint_maxmin(
                 [
@@ -104,7 +119,7 @@ def run_gate(*, output: Path, seeds: int, grid: int) -> None:
         gain = [r["joint_over_greedy_pp"] for r in cell]
         summary.append({
             "target_count": target_count,
-            "budget_bits": 7 * target_count,
+            "budget_bits": budget_multiplier * target_count,
             "n_seeds": len(cell),
             "fixed_pd_mean": float(np.mean([r["fixed_pd"] for r in cell])),
             "greedy_pd_mean": float(np.mean([r["greedy_pd"] for r in cell])),
@@ -127,6 +142,7 @@ def run_gate(*, output: Path, seeds: int, grid: int) -> None:
         "gate": "joint-bit-allocation-target-count-scalability",
         "seeds": seeds,
         "grid": grid,
+        "reports_per_target": reports_per_target,
         "target_counts": list(target_counts),
         "rows": rows,
         "summary": summary,
@@ -141,8 +157,14 @@ def main() -> None:
     parser.add_argument("--output", default="results/joint_scale_gate.json")
     parser.add_argument("--seeds", type=int, default=5)
     parser.add_argument("--grid", type=int, default=64)
+    parser.add_argument("--reports", type=int, default=4)
     args = parser.parse_args()
-    run_gate(output=Path(args.output), seeds=args.seeds, grid=args.grid)
+    run_gate(
+        output=Path(args.output),
+        seeds=args.seeds,
+        grid=args.grid,
+        reports_per_target=args.reports,
+    )
 
 
 if __name__ == "__main__":

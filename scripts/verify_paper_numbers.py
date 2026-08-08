@@ -299,6 +299,15 @@ def main() -> None:
     check("MAPPO B14 below greedy",
           mappo14["mappo_worst_mean"] < mappo14["greedy_worst_mean"])
 
+    r5 = load("joint_scale_r5_gate.json")
+    check("R5 gate five seeds", r5["seeds"] == 5)
+    check("R5 gate reports five", r5["reports_per_target"] == 5)
+    r5q20 = next(r for r in r5["summary"] if r["target_count"] == 20)
+    check("R5 Q20 gain",
+          close(r5q20["joint_over_greedy_mean_pp"], 2.223, 1e-3))
+    check("R5 frontier bound 21",
+          r5q20["max_frontier_size"] == 21)
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",
