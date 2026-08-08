@@ -17,7 +17,7 @@
       "prune_leaf": 244,
       "prune_rate": 0.5041322314049587,
       "max_depth": 10,
-      "wall_seconds": 0.8495188998058438
+      "wall_seconds": 0.9323962000198662
     },
     {
       "label": "critical-0.80",
@@ -33,7 +33,7 @@
       "prune_leaf": 630,
       "prune_rate": 0.50199203187251,
       "max_depth": 10,
-      "wall_seconds": 3.05735469982028
+      "wall_seconds": 3.409341000020504
     },
     {
       "label": "critical-0.85",
@@ -49,7 +49,7 @@
       "prune_leaf": 2116,
       "prune_rate": 0.5008284023668639,
       "max_depth": 10,
-      "wall_seconds": 17.14295159978792
+      "wall_seconds": 18.957476899959147
     },
     {
       "label": "critical-0.90",
@@ -65,7 +65,7 @@
       "prune_leaf": 4097,
       "prune_rate": 0.5005497861942578,
       "max_depth": 10,
-      "wall_seconds": 35.146186999976635
+      "wall_seconds": 40.465493000112474
     },
     {
       "label": "similar-weak",
@@ -81,7 +81,7 @@
       "prune_leaf": 1268,
       "prune_rate": 0.5011857707509881,
       "max_depth": 10,
-      "wall_seconds": 8.09300780016929
+      "wall_seconds": 9.23420390021056
     },
     {
       "label": "k-layer-0.75",
@@ -97,7 +97,7 @@
       "prune_leaf": 630,
       "prune_rate": 0.50199203187251,
       "max_depth": 10,
-      "wall_seconds": 3.126027299556881
+      "wall_seconds": 3.199073299765587
     },
     {
       "label": "k-layer-0.80",
@@ -113,7 +113,7 @@
       "prune_leaf": 1268,
       "prune_rate": 0.5011857707509881,
       "max_depth": 10,
-      "wall_seconds": 8.298143700230867
+      "wall_seconds": 9.49731219979003
     },
     {
       "label": "k-layer-0.85",
@@ -129,7 +129,7 @@
       "prune_leaf": 2116,
       "prune_rate": 0.5008284023668639,
       "max_depth": 10,
-      "wall_seconds": 16.973245000001043
+      "wall_seconds": 18.37356049986556
     },
     {
       "label": "k-layer-0.90",
@@ -145,7 +145,23 @@
       "prune_leaf": 3084,
       "prune_rate": 0.5006493506493507,
       "max_depth": 10,
-      "wall_seconds": 26.755015700124204
+      "wall_seconds": 28.956024299841374
+    },
+    {
+      "label": "correlated-redundant",
+      "threshold": 0.74,
+      "num_reports": 10,
+      "min_cost": null,
+      "num_selected": null,
+      "brute_min_cost": null,
+      "matches_exhaustive": true,
+      "nodes": 1791,
+      "prune_upper": 12,
+      "prune_cost": 0,
+      "prune_leaf": 884,
+      "prune_rate": 0.5002791736460078,
+      "max_depth": 10,
+      "wall_seconds": 27.899475099984556
     }
   ]
 }

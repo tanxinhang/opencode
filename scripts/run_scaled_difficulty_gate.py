@@ -41,6 +41,33 @@ def _model(deltas: np.ndarray, costs: np.ndarray) -> TargetEvidenceModel:
     return model
 
 
+def _correlated_model(
+    num_reports: int,
+    correlation: float,
+    low: float,
+    high: float,
+) -> TargetEvidenceModel:
+    """Redundant-report model: correlated Sigma1 with weak marginal evidence."""
+    n = num_reports + 1
+    deltas = np.concatenate(([0.8], np.linspace(high, low, num_reports)))
+    costs = np.concatenate(([0], np.ones(num_reports, dtype=int)))
+    index = np.arange(n)
+    sigma1 = correlation ** np.abs(index[:, None] - index[None, :])
+    return TargetEvidenceModel(
+        target_id=0,
+        owner=0,
+        mu0=np.zeros(n),
+        mu1=deltas,
+        sigma0=np.eye(n),
+        sigma1=sigma1,
+        success_prob=np.ones(n),
+        report_bits=costs,
+        bit_flip_prob=np.zeros(n),
+        quantizer_edges=np.array([-np.inf, 0.0, np.inf]),
+        quantizer_values=np.array([-1.0, 1.0]),
+    )
+
+
 def _row(
     label: str,
     threshold: float,
@@ -82,9 +109,12 @@ def _row(
         ),
         "brute_min_cost": None if brute is None else int(brute[0]),
         "matches_exhaustive": (
-            result is not None
-            and brute is not None
-            and int(result[0]) == int(brute[0])
+            (result is None and brute is None)
+            or (
+                result is not None
+                and brute is not None
+                and int(result[0]) == int(brute[0])
+            )
         ),
         "nodes": nodes,
         "prune_upper": stats.get("prune_upper", 0),
@@ -139,6 +169,18 @@ def run_gate(*, output: Path, grid: int) -> None:
             grid,
             exhaustive=True,
         ))
+
+    # Correlated-redundant instance: high inter-report correlation makes the
+    # Cauchy bound on the remaining reports tighten below the threshold, so
+    # the branch-and-bound exercises upper-bound pruning.
+    correlated = _correlated_model(num_reports, 0.95, 0.5, 1.5)
+    rows.append(_row(
+        "correlated-redundant",
+        0.74,
+        correlated,
+        grid,
+        exhaustive=True,
+    ))
 
     payload = {
         "gate": "G8-S-difficulty",

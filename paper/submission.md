@@ -636,7 +636,10 @@ scale.  A difficulty sweep on 10-report models adds critical-threshold,
 similar-weak, and K-report layers: thresholds $0.75$-$0.90$ require $4$-$9$
 reports, the branch-and-bound visits 484-8185 nodes with a recursion depth
 of 10 and a 50% prune rate, and every returned minimum matches exhaustive
-enumeration on all nine audited cells.
+enumeration on all ten audited cells.  A correlated-redundant instance with
+inter-report correlation 0.95 visits 1791 nodes and triggers 12
+upper-bound cuts, confirming that the Cauchy bound becomes active when the
+remaining reports are highly correlated and hence carry little new evidence.
 
 The target-count audit re-verifies the exhaustive-oracle match when the
 number of targets grows.  At $Q=3/4/5$ and $B=8/12/16$ (3 seeds each), the

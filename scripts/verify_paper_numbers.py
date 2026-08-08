@@ -185,7 +185,7 @@ def main() -> None:
           r40["min_cost"] == 1 and r40["exhaustive_subsets"] == 1099511627776)
 
     g8d = load("scaled_difficulty_gate.json")
-    check("G8-D nine difficulty cells", len(g8d["rows"]) == 9)
+    check("G8-D ten difficulty cells", len(g8d["rows"]) == 10)
     check("G8-D exhaustive match",
           g8d["all_match_exhaustive"] is True)
     critical85 = next(r for r in g8d["rows"] if r["label"] == "critical-0.85")
@@ -193,6 +193,13 @@ def main() -> None:
           critical85["min_cost"] == 7 and critical85["num_selected"] == 7)
     check("G8-D critical 0.85 nodes",
           critical85["nodes"] == 4225 and critical85["max_depth"] == 10)
+    correlated = next(
+        r for r in g8d["rows"] if r["label"] == "correlated-redundant"
+    )
+    check("G8-D correlated upper cuts",
+          correlated["prune_upper"] == 12 and correlated["nodes"] == 1791)
+    check("G8-D correlated exhaustive match",
+          correlated["matches_exhaustive"] is True)
 
     g8stats = load("exact_selection_stats.json")
     check("G8-stats 500 seeds", g8stats["seeds"] == 500)
