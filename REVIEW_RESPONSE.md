@@ -23,7 +23,7 @@ and the committed fix.
 | 1 | RIS model too strong | DONE: wording is now geometry-aware normalized power-gain model with coherent cross-term caveat; RIS demoted to an application instance. |
 | 2 | OTFS is a label | DONE: title/abstract rewritten without OTFS; DD-domain sensing is background and explicitly not required by the theory. |
 | 3 | Statistical evidence weak | DONE: 500-seed two-sided paired t, Wilcoxon, and Holm correction are all significant at every system-level budget; absolute P_D and effect sizes are reported. |
-| 4 | Ablations mixed | DONE: 500-seed factorial ablation toggles each factor one at a time; a hard weak-target scenario shows max-min gains of 2.45-3.45 pp; a quantization study adds a water-filling-inspired greedy (not claimed optimal) and an exact joint oracle used only to certify that the greedy gap is at most 0.89 pp (not a performance claim). |
+| 4 | Ablations mixed | DONE: 500-seed factorial ablation toggles each factor one at a time; a hard weak-target scenario shows max-min gains of 2.45-3.45 pp; a quantization study adds a water-filling-inspired greedy plus an exact joint oracle; in a strong-vs-weak multi-target budget competition the exact joint allocation beats greedy by 3.40-5.32 pp at B=18/16/14. |
 | 5 | Hard B&B instances missing | DONE: `scripts/run_scaled_difficulty_gate.py` adds critical-threshold, similar-weak, K-report, and correlated-redundant layers with node counts, recursion depth, prune rate, and exhaustive match checks. A dual Cauchy bound (min over `mu>=0`) tightens the old `mu=0` bound and cuts the correlated-redundant tree from 1791 to 113 nodes. |
 
 ## P2 (submission engineering)

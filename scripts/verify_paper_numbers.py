@@ -263,6 +263,20 @@ def main() -> None:
     check("joint B24 matches greedy",
           close(joint24["exact_over_greedy_mean_pp"], 0.0, 1e-3))
 
+    multi = load("joint_multi_gate.json")
+    check("multi-target joint gate 10 seeds", multi["seeds"] == 10)
+    multi14 = next(r for r in multi["summary"] if r["budget_bits"] == 14)
+    multi16 = next(r for r in multi["summary"] if r["budget_bits"] == 16)
+    multi18 = next(r for r in multi["summary"] if r["budget_bits"] == 18)
+    check("multi-target B14 gain",
+          close(multi14["joint_over_greedy_mean_pp"], 5.317, 1e-3))
+    check("multi-target B16 gain",
+          close(multi16["joint_over_greedy_mean_pp"], 4.148, 1e-3))
+    check("multi-target B18 gain",
+          close(multi18["joint_over_greedy_mean_pp"], 3.400, 1e-3))
+    check("multi-target absolute P_D",
+          multi14["exact_joint_pd_mean"] >= 0.80)
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",

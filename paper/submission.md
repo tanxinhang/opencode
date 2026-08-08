@@ -783,6 +783,19 @@ formulation provides a certificate, while the practically meaningful gains
 in this section remain the variable-rate-vs-fixed comparison (3.05 pp at
 $B=20$) and the max-min selection gains in the hard scenario (2.45-3.45 pp).
 
+The exact joint formulation does become a performance contribution when the
+bit allocation must be shared across competing targets.  With one strong and
+one weak target, four reports per target, and one common budget, the greedy
+per-report allocation spends too many bits on the strong target and starves
+the weak one.  Enumerating, per target, every report-selection / bit-allocation
+combination and solving the resulting target-separable multiple-choice
+knapsack exactly (the joint extension of Theorem 1/2) raises worst-target
+$P_D$ by 5.32/4.15/3.40 pp at $B=14/16/18$ over 10 seeds, reaching
+0.849/0.862/0.872 versus 0.796/0.820/0.838 for greedy (minimum gain 0.0-1.9
+pp, maximum 6.4-9.0 pp).  No diminishing-returns assumption is needed: the
+per-target option set is finite and target-separable, so the exact DP applies
+directly.
+
 **Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, grid 64; variable all-report cost 20 bits, fixed 24 bits).**
 
 | Budget | Variable worst $P_D$ | Fixed worst $P_D$ | Greedy worst $P_D$ | Variable gain (pp) | Greedy vs pattern (pp) | Variable used | Fixed used |
