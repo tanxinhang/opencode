@@ -844,13 +844,13 @@ threshold-feasibility formulation, which is the one stated in Theorem 2.
 As a learning-based baseline, we train a parameter-sharing MAPPO with a
 centralized critic on the same two-target environment (3000 episodes per
 budget, 40 training scenarios, 20 held-out test scenarios).  Its
-deterministic worst-target $P_D$ is 0.782/0.799/0.814 at $B=14/16/18$,
+deterministic worst-target $P_D$ is 0.782/0.786/0.800 at $B=14/16/18$,
 versus 0.845/0.857/0.867 for the exact joint optimum and
-0.791/0.828/0.841 for greedy; it uses only 8.0/12.0/12.7 bits on average and
+0.791/0.828/0.841 for greedy; it uses only 10.0/10.2/14.0 bits on average and
 never exceeds the budget.  MAPPO therefore underperforms both structured
 baselines on this discrete budget-allocation problem, in part because the
 terminal reward does not force full budget utilization; we report it as a
-learning baseline, not as a tuned competitor.
+learning baseline from a single training run, not as a tuned competitor.
 
 **Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, grid 64; variable all-report cost 20 bits, fixed 24 bits).**
 

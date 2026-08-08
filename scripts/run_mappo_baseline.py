@@ -148,7 +148,11 @@ def _rollout(
             _target_pd(float(weak[0]), weak[1:], bits[1]),
         ]
         worst = float(min(pds))
-        reward = worst - 0.1 * max(0, used - budget)
+        reward = (
+            worst
+            - 0.1 * max(0, used - budget)
+            - 0.05 * max(0, budget - used) / max(budget, 1)
+        )
         lp = 0.0
         for r in range(N_REPORTS):
             lp += float(distributions[r].log_prob(chosen_tensor[:, r]).sum())
