@@ -769,18 +769,19 @@ optimal.  Empirically it still improves over the fixed 1-4 pattern by
 0.932), while fixed 3-bit reporting remains the best arm once its full
 24-bit budget is available.
 
-The optimality gap of the heuristic can be made explicit without any
+The optimality gap of the heuristic can be audited without any
 diminishing-returns assumption.  For a six-report target, enumerate for each
 report the options $\{$not selected, 1-4 bits$\}$ and take the combination
 with total cost at most $B$ that maximizes worst-target $P_D$.  Under the
 target-separable, additive-cost assumptions of Theorem 1 this option space
-embeds into the exact max-min DP, so the result is the global joint optimum
-of bit allocation and report selection.  Over 10 seeds, this exact joint
-optimum exceeds the greedy heuristic by 0.89 pp at $B=18$ and by 0.63 pp at
-$B=20$, and matches it at $B=24$; it exceeds the fixed 1-4 pattern by
-3.80-5.75 pp.  The greedy rule is therefore near-optimal in these regimes,
-and when its gap matters the exact joint formulation provides a certified
-global optimum.
+embeds into the exact max-min DP, so the result is a certified global joint
+optimum of bit allocation and report selection.  Over 10 seeds, the greedy
+heuristic loses at most 0.89 pp to this exact joint optimum at $B=18$, 0.63
+pp at $B=20$, and matches it at $B=24$.  We report this as an audit of
+heuristic quality, not as a performance contribution: the exact joint
+formulation provides a certificate, while the practically meaningful gains
+in this section remain the variable-rate-vs-fixed comparison (3.05 pp at
+$B=20$) and the max-min selection gains in the hard scenario (2.45-3.45 pp).
 
 **Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, grid 64; variable all-report cost 20 bits, fixed 24 bits).**
 
