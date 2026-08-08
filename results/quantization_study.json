@@ -1,0 +1,309 @@
+{
+  "gate": "quantization-variable-vs-fixed",
+  "seeds": 10,
+  "grid": 64,
+  "rows": [
+    {
+      "budget_bits": 9,
+      "seed": 0,
+      "variable_worst": 0.2388486383851175,
+      "fixed_worst": 0.2174492315234267,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 2.139940686169078
+    },
+    {
+      "budget_bits": 9,
+      "seed": 1,
+      "variable_worst": 0.23689146344551404,
+      "fixed_worst": 0.22613402672219496,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 1.075743672331908
+    },
+    {
+      "budget_bits": 9,
+      "seed": 2,
+      "variable_worst": 0.2291518978337913,
+      "fixed_worst": 0.20768517579069257,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 2.146672204309874
+    },
+    {
+      "budget_bits": 9,
+      "seed": 3,
+      "variable_worst": 0.2081936768170795,
+      "fixed_worst": 0.19932056750370897,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 0.8873109313370542
+    },
+    {
+      "budget_bits": 9,
+      "seed": 4,
+      "variable_worst": 0.2450858277323213,
+      "fixed_worst": 0.2259949667940741,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 1.909086093824719
+    },
+    {
+      "budget_bits": 9,
+      "seed": 5,
+      "variable_worst": 0.22503818779153528,
+      "fixed_worst": 0.20743943304412915,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 1.7598754747406131
+    },
+    {
+      "budget_bits": 9,
+      "seed": 6,
+      "variable_worst": 0.23745463602627098,
+      "fixed_worst": 0.21272441311120738,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 2.4730222915063607
+    },
+    {
+      "budget_bits": 9,
+      "seed": 7,
+      "variable_worst": 0.2464701933475978,
+      "fixed_worst": 0.22173023273003017,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 2.473996061756761
+    },
+    {
+      "budget_bits": 9,
+      "seed": 8,
+      "variable_worst": 0.23388595219726216,
+      "fixed_worst": 0.2235650314315124,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 1.0320920765749753
+    },
+    {
+      "budget_bits": 9,
+      "seed": 9,
+      "variable_worst": 0.24976894421394813,
+      "fixed_worst": 0.22533708124028184,
+      "variable_used_bits": 9,
+      "fixed_used_bits": 9,
+      "variable_gain_pp": 2.4431862973666285
+    },
+    {
+      "budget_bits": 12,
+      "seed": 0,
+      "variable_worst": 0.2584460375796634,
+      "fixed_worst": 0.2521796022676561,
+      "variable_used_bits": 11,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 0.6266435312007268
+    },
+    {
+      "budget_bits": 12,
+      "seed": 1,
+      "variable_worst": 0.2654934336236835,
+      "fixed_worst": 0.25708625887083847,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 0.8407174752845026
+    },
+    {
+      "budget_bits": 12,
+      "seed": 2,
+      "variable_worst": 0.25192972515324996,
+      "fixed_worst": 0.23374102232571758,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 1.8188702827532377
+    },
+    {
+      "budget_bits": 12,
+      "seed": 3,
+      "variable_worst": 0.23891523100139866,
+      "fixed_worst": 0.2291471315236296,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 0.9768099477769077
+    },
+    {
+      "budget_bits": 12,
+      "seed": 4,
+      "variable_worst": 0.28345744115465965,
+      "fixed_worst": 0.25955977677495434,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 2.389766437970531
+    },
+    {
+      "budget_bits": 12,
+      "seed": 5,
+      "variable_worst": 0.2533170838061414,
+      "fixed_worst": 0.23631423894039294,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 1.7002844865748434
+    },
+    {
+      "budget_bits": 12,
+      "seed": 6,
+      "variable_worst": 0.26435248537139266,
+      "fixed_worst": 0.24488183328111318,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 1.9470652090279483
+    },
+    {
+      "budget_bits": 12,
+      "seed": 7,
+      "variable_worst": 0.27079027844689874,
+      "fixed_worst": 0.26031326482970607,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 1.0477013617192665
+    },
+    {
+      "budget_bits": 12,
+      "seed": 8,
+      "variable_worst": 0.25964543092307973,
+      "fixed_worst": 0.2526527102256166,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 0.6992720697463151
+    },
+    {
+      "budget_bits": 12,
+      "seed": 9,
+      "variable_worst": 0.2823582097864078,
+      "fixed_worst": 0.2663116437050447,
+      "variable_used_bits": 12,
+      "fixed_used_bits": 12,
+      "variable_gain_pp": 1.6046566081363123
+    },
+    {
+      "budget_bits": 15,
+      "seed": 0,
+      "variable_worst": 0.27803516837865916,
+      "fixed_worst": 0.28477958527961533,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": -0.6744416900956174
+    },
+    {
+      "budget_bits": 15,
+      "seed": 1,
+      "variable_worst": 0.28968134276456103,
+      "fixed_worst": 0.2847589925189472,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": 0.4922350245613827
+    },
+    {
+      "budget_bits": 15,
+      "seed": 2,
+      "variable_worst": 0.25655211786503906,
+      "fixed_worst": 0.258126517750866,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": -0.1574399885826916
+    },
+    {
+      "budget_bits": 15,
+      "seed": 3,
+      "variable_worst": 0.2595511282935764,
+      "fixed_worst": 0.2530690510682145,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": 0.6482077225361926
+    },
+    {
+      "budget_bits": 15,
+      "seed": 4,
+      "variable_worst": 0.2852013307121545,
+      "fixed_worst": 0.28939415898882404,
+      "variable_used_bits": 14,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": -0.4192828276669558
+    },
+    {
+      "budget_bits": 15,
+      "seed": 5,
+      "variable_worst": 0.26601207246387115,
+      "fixed_worst": 0.2636037756981374,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": 0.24082967657337306
+    },
+    {
+      "budget_bits": 15,
+      "seed": 6,
+      "variable_worst": 0.27261987239275853,
+      "fixed_worst": 0.27169632914644337,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": 0.09235432463151616
+    },
+    {
+      "budget_bits": 15,
+      "seed": 7,
+      "variable_worst": 0.2887004528058362,
+      "fixed_worst": 0.29313106171707587,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": -0.4430608911239642
+    },
+    {
+      "budget_bits": 15,
+      "seed": 8,
+      "variable_worst": 0.28213771631032697,
+      "fixed_worst": 0.2796528013960697,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": 0.24849149142572857
+    },
+    {
+      "budget_bits": 15,
+      "seed": 9,
+      "variable_worst": 0.3138359885044211,
+      "fixed_worst": 0.303138371315584,
+      "variable_used_bits": 15,
+      "fixed_used_bits": 15,
+      "variable_gain_pp": 1.0697617188837105
+    }
+  ],
+  "summary": [
+    {
+      "budget_bits": 9,
+      "n_seeds": 10,
+      "variable_worst_mean": 0.23507894177904376,
+      "fixed_worst_mean": 0.21673801598912582,
+      "variable_gain_mean_pp": 1.8340925789917975,
+      "variable_gain_std_pp": 0.6241240487146417,
+      "variable_used_mean": 9.0,
+      "fixed_used_mean": 9.0
+    },
+    {
+      "budget_bits": 12,
+      "n_seeds": 10,
+      "variable_worst_mean": 0.26287053568465757,
+      "fixed_worst_mean": 0.24921874827446694,
+      "variable_gain_mean_pp": 1.3651787410190592,
+      "variable_gain_std_pp": 0.6036372265189232,
+      "variable_used_mean": 11.9,
+      "fixed_used_mean": 12.0
+    },
+    {
+      "budget_bits": 15,
+      "n_seeds": 10,
+      "variable_worst_mean": 0.2792327190491204,
+      "fixed_worst_mean": 0.27813506448797776,
+      "variable_gain_mean_pp": 0.10976545611426747,
+      "variable_gain_std_pp": 0.5443048996922868,
+      "variable_used_mean": 14.9,
+      "fixed_used_mean": 15.0
+    }
+  ]
+}

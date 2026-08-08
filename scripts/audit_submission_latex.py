@@ -31,7 +31,7 @@ def main() -> None:
          r"\bibliographystyle{IEEEtran}" in text
          and r"\bibliography{references}" in text
          and text.count(r"\bibitem") == 0),
-        ("seven tables", text.count(r"\begin{table}") == 7),
+        ("eight tables", text.count(r"\begin{table}") == 8),
         ("three figures", text.count(r"\begin{figure}") == 3),
         ("seventeen equations", text.count(r"\begin{equation}") == 17),
         ("theorems present",

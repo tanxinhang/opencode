@@ -9,8 +9,8 @@ Each factor fixes the other five components and toggles one of:
 - communication: noisy/correlated channel vs clean channel
 - max-min: worst-target max-min objective vs lexicographic mean objective
 
-Run with ``--seeds 50`` or ``--seeds 100`` for the full statistical audit.
-The default is a two-seed smoke test.
+Run with ``--seeds 500`` for the full statistical audit.  The default is a
+two-seed smoke test.
 """
 
 from __future__ import annotations
@@ -54,20 +54,18 @@ FACTORS = (
 )
 
 
-def _fixed_rate_models(
-    models: list[TargetEvidenceModel],
-    bits: int = 3,
-) -> list[TargetEvidenceModel]:
-    return [
-        replace(
-            model,
-            report_bits=np.array(
-                [0 if i == model.owner else bits for i in range(model.num_uavs)],
-                dtype=int,
-            ),
-        )
-        for model in models
-    ]
+def _variable_rate_bits(cfg) -> np.ndarray:
+    """Per-UAV quantizer bits for the variable-rate arm.
+
+    The owner entry is ignored by ``build_models`` for report cost but still
+    selects the owner quantizer; any positive value is fine.
+    """
+    pattern = np.array([1, 2, 3, 4, 5], dtype=int)
+    return np.resize(pattern, cfg.num_uavs)
+
+
+def _fixed_rate_bits(cfg) -> np.ndarray:
+    return np.full(cfg.num_uavs, 3, dtype=int)
 
 
 def _clean_channel_models(
@@ -199,13 +197,23 @@ def run_ablation(*, output: Path, seeds: int, budget: int, grid: int) -> None:
     for seed_offset in range(seeds):
         seed = cfg.seed + seed_offset
         rng = np.random.default_rng(seed)
-        noisy_ris = build_models(cfg, rng, snr_gain=gain)
-        noisy_no_ris = build_models(cfg, np.random.default_rng(seed + 1000))
-        clean_ris = _clean_channel_models(
-            build_models(cfg, np.random.default_rng(seed + 2000), snr_gain=gain)
+        noisy_ris = build_models(
+            cfg, rng, snr_gain=gain,
+            quantizer_bits_per_uav=_variable_rate_bits(cfg),
         )
-        fixed_ris = _fixed_rate_models(
-            build_models(cfg, np.random.default_rng(seed + 3000), snr_gain=gain)
+        noisy_no_ris = build_models(
+            cfg, np.random.default_rng(seed + 1000),
+            quantizer_bits_per_uav=_variable_rate_bits(cfg),
+        )
+        clean_ris = _clean_channel_models(
+            build_models(
+                cfg, np.random.default_rng(seed + 2000), snr_gain=gain,
+                quantizer_bits_per_uav=_variable_rate_bits(cfg),
+            )
+        )
+        fixed_ris = build_models(
+            cfg, np.random.default_rng(seed + 3000), snr_gain=gain,
+            quantizer_bits_per_uav=_fixed_rate_bits(cfg),
         )
 
         full = _select(noisy_ris, budget, false_alarm_rate, grid, "exact_maxmin")

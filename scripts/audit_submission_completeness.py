@@ -43,7 +43,7 @@ def main() -> None:
     ]
     for number in range(1, 23):
         checks.append((f"reference [{number}]", f"\n[{number}] " in text))
-    for number in range(1, 8):
+    for number in range(1, 9):
         checks.append((f"Table {number}", f"**Table {number}." in text))
     for name in ("algorithm_evolution", "g8_target_scalability", "scenario_evolution"):
         checks.append((f"Figure {name}", (FIGURES / f"{name}.png").exists()))

@@ -721,10 +721,9 @@ and QoS feasibility falls from 100% to 0.4%.  The clean-channel upper bound
 is next (+0.84 pp), followed by $P_D$-optimal fusion (+0.42 pp) and exact
 max-min selection (+0.13 pp).  Greedy and lexicographic budget schedules
 coincide on this geometry, so the max-min gain is the worst-target-aware
-tie-break rather than a different schedule family.  Fixed 3-bit
-quantization used only 18 of 20 bits and was 0.17 pp better than
-variable-rate reporting, so the variable-rate advantage is not established
-at this budget; that comparison is not strictly budget-equivalent.
+tie-break rather than a different schedule family.  Quantization is assessed
+separately in Section 6.5 because the strong-evidence demo geometry is not
+the regime where variable-rate reporting helps.
 
 **Table 5.  Factorial ablation (500 seeds, grid 64, $B=20$).**
 
@@ -734,7 +733,6 @@ at this budget; that comparison is not strictly budget-equivalent.
 | Deflection fusion | 0.974 | 0.985 | +0.42 | 100% |
 | Forward greedy | 0.977 | 0.989 | +0.13 | 100% |
 | No RIS | 0.755 | 0.832 | +22.32 | 0.4% |
-| Fixed 3-bit quantization | 0.980 | 0.988 | -0.17 | 100% |
 | Clean channel | 0.986 | 0.992 | -0.84 | 100% |
 | Lexicographic budget | 0.977 | 0.989 | +0.13 | 100% |
 
@@ -745,13 +743,36 @@ exceeds forward greedy by 2.45-3.26 pp and the lexicographic budget selector
 by 3.26-3.45 pp at $B=8/10$ over 20 seeds, while both baselines sometimes
 spend the whole budget on the strong target.
 
-### 6.5 Re-implemented literature-style baselines
+### 6.5 Quantization study: variable-rate under a tight budget
+
+In the strong-evidence demo geometry, all reports have enough marginal
+information that spending the budget on 3-bit quantization is at least as
+good as variable-rate reporting.  The value of variable-rate appears when
+the budget is tight and the reports are weak.  In a weak-target model with
+similar reports, exact max-min selection with 1-4 bit variable-rate
+reporting exceeds fixed 3-bit reporting by 1.83 pp at $B=9$ and by 1.37 pp
+at $B=12$ over 10 seeds, while the two schemes are statistically
+indistinguishable at $B=15$ (Table 6).  Both arms spend the same budget at
+$B=9$; at $B=12/15$ the variable-rate arm leaves at most one bit unused.
+This is the expected trade-off: with a fixed total budget, spending bits on
+more coarsely quantized weak reports dominates spending the same bits on
+fewer reports only when the per-report marginal evidence is small.
+
+**Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, weak-report model, grid 64).**
+
+| Budget | Variable worst $P_D$ | Fixed worst $P_D$ | Variable gain (pp) | Variable used | Fixed used |
+|:------:|:--------------------:|:-----------------:|:------------------:|:-------------:|:----------:|
+| 9      | 0.235                | 0.217             | +1.83              | 9.0           | 9.0        |
+| 12     | 0.263                | 0.249             | +1.37              | 11.9          | 12.0       |
+| 15     | 0.279                | 0.278             | +0.11              | 14.9          | 15.0       |
+
+### 6.6 Re-implemented literature-style baselines
 
 At total budget 40 with a 3-bit, 256-element RIS and 28 report bits, the
 proposed chain is compared with re-implemented baselines under identical
 channel and budget assumptions (12 seeds).
 
-**Table 6.  Literature-style baselines versus proposed chain (12 seeds).**
+**Table 7.  Literature-style baselines versus proposed chain (12 seeds).**
 
 | Baseline | Mean gain (pp) | Worst-target gain (pp) |
 |:---------|:--------------:|:----------------------:|
@@ -875,7 +896,7 @@ selects peer and raises worst $P_D$ from 0.774/0.824 to 0.881
 switching adds up to +1.55 pp, and soft-report reallocation adds another
 +0.75 pp at $B=16/20$.
 
-**Table 7.  Architecture comparison (worst-target $P_D$).**
+**Table 8.  Architecture comparison (worst-target $P_D$).**
 
 | Total budget | Centralized soft | Peer majority | Exact/target-wise switch | Reallocation |
 |:------------:|:----------------:|:-------------:|:------------------------:|:------------:|

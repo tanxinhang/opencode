@@ -51,6 +51,7 @@ python scripts/run_exact_maxmin_gate.py --seeds 500 --budgets 3 5 7 9 11 --grid 
 python scripts/run_scaled_difficulty_gate.py --grid 96
 python scripts/run_factorial_ablation.py --seeds 500 --budget 20 --grid 64
 python scripts/run_hard_maxmin_scenario.py --seeds 20 --budgets 8 10 --grid 64
+python scripts/run_quantization_study.py --seeds 10 --budgets 9 12 15 --grid 64
 python scripts/audit_exact_selection_stats.py
 python scripts/run_sensitivity_study.py --config config/demo.yaml
 python scripts/run_risk_portfolio_study.py --config config/demo.yaml

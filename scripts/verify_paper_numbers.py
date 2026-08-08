@@ -230,6 +230,15 @@ def main() -> None:
     check("hard B10 gain over greedy",
           close(hard10["maxmin_gain_over_greedy_pp"], 3.262, 1e-3))
 
+    quant = load("quantization_study.json")
+    check("quantization study 10 seeds", quant["seeds"] == 10)
+    quant9 = next(r for r in quant["summary"] if r["budget_bits"] == 9)
+    quant12 = next(r for r in quant["summary"] if r["budget_bits"] == 12)
+    check("quantization B9 gain",
+          close(quant9["variable_gain_mean_pp"], 1.834, 1e-3))
+    check("quantization B12 gain",
+          close(quant12["variable_gain_mean_pp"], 1.365, 1e-3))
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",
