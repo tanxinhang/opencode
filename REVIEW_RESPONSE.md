@@ -24,7 +24,7 @@ and the committed fix.
 | 2 | OTFS is a label | DONE: title/abstract rewritten without OTFS; DD-domain sensing is background and explicitly not required by the theory. |
 | 3 | Statistical evidence weak | DONE: 500-seed two-sided paired t, Wilcoxon, and Holm correction are all significant at every system-level budget; absolute P_D and effect sizes are reported. |
 | 4 | Ablations mixed | DONE: 500-seed factorial ablation toggles each factor one at a time; a hard weak-target scenario shows max-min gains of 2.45-3.45 pp; a quantization study adds a water-filling-inspired greedy plus an exact joint oracle; a strong-vs-weak multi-target gate shows 3.61-4.95 pp gains, and a Q=2..20 target-count sweep (10 seeds) keeps exact-joint gains at 1.98-2.65 pp with <0.2 ms threshold DP and frontier size bounded by 17. |
-| 5 | Hard B&B instances missing | DONE: `scripts/run_scaled_difficulty_gate.py` adds critical-threshold, similar-weak, K-report, and correlated-redundant layers with node counts, recursion depth, prune rate, and exhaustive match checks. A dual Cauchy bound (min over `mu>=0`) tightens the old `mu=0` bound and cuts the correlated-redundant tree from 1791 to 113 nodes. |
+| 5 | Hard B&B instances missing | DONE: `scripts/run_scaled_difficulty_gate.py` adds critical-threshold, similar-weak, K-report, and correlated-redundant layers with node counts, recursion depth, prune rate, and exhaustive match checks. A dual Cauchy bound (min over `mu>=0`) tightens the old `mu=0` bound and cuts the correlated-redundant tree from 1791 to 113 nodes. Proposition 1 adds a Pareto-frontier bound and the joint MCKP complexity `O(Q |F| log K)`. |
 
 ## P2 (submission engineering)
 

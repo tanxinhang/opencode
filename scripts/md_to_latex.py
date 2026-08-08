@@ -154,6 +154,7 @@ def main() -> None:
     tex.append(r"\newtheorem{theorem}{Theorem}")
     tex.append(r"\newtheorem{lemma}{Lemma}")
     tex.append(r"\newtheorem{corollary}{Corollary}")
+    tex.append(r"\newtheorem{proposition}{Proposition}")
     tex.append(r"\newtheorem*{theoremstar}{Theorem}")
     tex.append(r"\newtheorem*{lemmastar}{Lemma}")
     tex.append(r"\begin{document}")
@@ -360,12 +361,15 @@ def main() -> None:
             stripped.startswith("**Theorem ")
             or stripped.startswith("**Lemma ")
             or stripped.startswith("**Corollary ")
+            or stripped.startswith("**Proposition ")
         ):
             if in_appendix:
                 if stripped.startswith("**Theorem"):
                     kind = "theoremstar"
                 elif stripped.startswith("**Lemma"):
                     kind = "lemmastar"
+                elif stripped.startswith("**Proposition"):
+                    kind = "proposition"
                 else:
                     kind = "corollary"
             else:
@@ -373,6 +377,8 @@ def main() -> None:
                     kind = "theorem"
                 elif stripped.startswith("**Lemma"):
                     kind = "lemma"
+                elif stripped.startswith("**Proposition"):
+                    kind = "proposition"
                 else:
                     kind = "corollary"
             header, _, body = stripped.partition(".**")
@@ -380,7 +386,7 @@ def main() -> None:
             if _:
                 header = header + "."
             match = re.match(
-                r"^(Theorem|Lemma|Corollary)\s+([^ (]+)(?:\s+\(([^)]+)\))?\.$",
+                r"^(Theorem|Lemma|Corollary|Proposition)\s+([^ (]+)(?:\s+\(([^)]+)\))?\.$",
                 header,
             )
             if match and match.group(3):

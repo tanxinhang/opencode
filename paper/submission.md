@@ -442,6 +442,21 @@ exact DP returns the global joint optimum over report selection and
 per-report quantization bits, with no concavity or diminishing-returns
 assumption.
 
+**Proposition 1 (joint Pareto frontier bound).**  For a target with reports
+$1,\ldots,R$, let $b_{\max,i}$ be the maximum bit cost of report $i$.  The
+Pareto frontier keeps one point per distinct total cost, so its size
+satisfies
+
+$$
+|\mathcal{F}| \le 1+\sum_{i=1}^{R} b_{\max,i}.
+$$
+
+In particular, four reports of at most four bits satisfy
+$|\mathcal{F}|\le 17$.  Among options with equal total cost, the one with
+the strictly largest value dominates all others; replacing a dominated
+option preserves every threshold-feasibility test of Theorem 2, so one
+point per cost is sufficient and the bound is tight in the worst case.
+
 ### 4.4 Scaled exact-threshold certificate
 
 For larger report sets, define $m_q(t)$ as the minimum bit cost for target
@@ -516,6 +531,14 @@ conditional on the hypothesis; when independence holds only after
 conditioning on a common state, the mixture form is used instead.  It does
 not rely on the Gaussian approximation or on monotonicity of feasibility in
 the prefix length.
+
+For the joint bit-allocation extension of Corollary 1, each target keeps a
+Pareto frontier of size at most $|\mathcal{F}|\le 1+\sum_i b_{\max,i}$
+(Proposition 1).  The threshold-feasibility DP of Theorem 2 runs
+$O(\log K)$ feasibility checks, each $O(Q\cdot|\mathcal{F}|)$ after sorting
+options by cost, so the joint max-min selector has complexity
+$O(Q\cdot|\mathcal{F}|\cdot\log K)$ with $|\mathcal{F}|$ independent of
+$Q$ and bounded by the per-target bit-cost sum.
 
 ### 4.6 Application instance: geometry-aware RIS power gain
 

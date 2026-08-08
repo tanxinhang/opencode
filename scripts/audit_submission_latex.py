@@ -33,7 +33,7 @@ def main() -> None:
          and text.count(r"\bibitem") == 0),
         ("eight tables", text.count(r"\begin{table}") == 8),
         ("three figures", text.count(r"\begin{figure}") == 3),
-        ("seventeen equations", text.count(r"\begin{equation}") == 17),
+        ("eighteen equations", text.count(r"\begin{equation}") == 18),
         ("theorems present",
          text.count(r"\begin{theorem}") >= 4),
     ]

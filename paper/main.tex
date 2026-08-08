@@ -7,6 +7,7 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
 \newtheorem*{theoremstar}{Theorem}
 \newtheorem*{lemmastar}{Lemma}
 \begin{document}
@@ -265,6 +266,18 @@ exact DP returns the global joint optimum over report selection and
 per-report quantization bits, with no concavity or diminishing-returns
 assumption.
 \end{corollary}
+\begin{proposition}[joint Pareto frontier bound]
+For a target with reports
+$1,\ldots,R$, let $b_{\max,i}$ be the maximum bit cost of report $i$.  The
+Pareto frontier keeps one point per distinct total cost, so its size
+satisfies
+\end{proposition}
+\begin{equation}
+\begin{gathered}
+|\mathcal{F}| \le 1+\sum_{i=1}^{R} b_{\max,i}.
+\end{gathered}
+\end{equation}
+In particular, four reports of at most four bits satisfy $|\mathcal{F}|\le 17$.  Among options with equal total cost, the one with the strictly largest value dominates all others; replacing a dominated option preserves every threshold-feasibility test of Theorem 2, so one point per cost is sufficient and the bound is tight in the worst case.
 \subsection{Scaled exact-threshold certificate}
 For larger report sets, define $m_q(t)$ as the minimum bit cost for target $q$ to reach $t$.  A global schedule with all values at least $t$ exists if and only if $\sum_q m_q(t)\le B$, because the per-target minima are jointly attainable and every feasible subset costs at least its minimum.
 \begin{theorem}[exact minimum-cost certificate]
@@ -294,6 +307,7 @@ For any $\mu\ge 0$, Cauchy-Schwarz with the factor $(Q_S+\mu I)^{1/2}$ gives $a_
 Small low-$P_D$ models use exact subset enumeration instead; when every model is within \texttt{max\_exhaustive\_reports}, the scaled selector delegates directly to the exact selector rather than running an epsilon binary search. The worst case remains exponential, and the bound is reported as a pruning certificate, not a polynomial-time guarantee.
 \subsection{Complexity}
 The exact budget DP processes $Q$ targets, $B$ cost states, and a per-target cost-value Pareto option set whose size is at most the number of distinct subset costs.  Its complexity is $O(Q \cdot B \cdot |\mathcal{F}| \cdot S)$ with state-pruning factor $S$; componentwise dominance removes options that are no cheaper and no better, so in the audited models the option set is the cost-value frontier rather than the full exponential subset list.  The max-min selector adds a binary search over the finite candidate threshold set, multiplying the DP by $O(\log K)$ feasibility checks.  G8-S keeps the same threshold search but replaces per-target subset enumeration by branch-and-bound; its worst case is exponential, while the greedy warm start and cost-bounded minimality proof make the audited 24-report instance finish in 35 ms.  The exact majority certificate evaluates Poisson-binomial tails by a $O(N^2)$-state DP over the voter prefix when decisions are independent conditional on the hypothesis; when independence holds only after conditioning on a common state, the mixture form is used instead.  It does not rely on the Gaussian approximation or on monotonicity of feasibility in the prefix length.
+For the joint bit-allocation extension of Corollary 1, each target keeps a Pareto frontier of size at most $|\mathcal{F}|\le 1+\sum_i b_{\max,i}$ (Proposition 1).  The threshold-feasibility DP of Theorem 2 runs $O(\log K)$ feasibility checks, each $O(Q\cdot|\mathcal{F}|)$ after sorting options by cost, so the joint max-min selector has complexity $O(Q\cdot|\mathcal{F}|\cdot\log K)$ with $|\mathcal{F}|$ independent of $Q$ and bounded by the per-target bit-cost sum.
 \subsection{Application instance: geometry-aware RIS power gain}
 The RIS application model uses a target-aligned beam codebook with $b$-bit uniform phase quantization.  The mean array-gain loss is $\mathrm{sinc}^2(1/2^b)$ in the large-$N$ limit, with the finite-$N$ correction $1/N+(1-1/N)\mathrm{sinc}^2(1/2^b)$.  Placement and phase-bits are searched over a finite candidate set in the application audit only. These searches use coarse-to-fine refinement with an $L$-Lipschitz grid loss bound $Lh\sqrt{d}/2$; they are not part of the core selection/fusion theory and do not claim physical-layer optimality.
 \subsection{Exact first-feasible majority prefix}
