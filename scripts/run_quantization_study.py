@@ -1,14 +1,21 @@
-"""Quantization study: variable-rate vs fixed-rate under a tight bit budget.
+"""Quantization study: fixed, fixed-pattern variable, and greedy bit loading.
 
 For a fixed total budget, the receiver can spend bits on fewer, finely
 quantized reports or on more, coarsely quantized reports.  Under a scalar
 quantizer whose distortion decreases with bit count, the better choice
 depends on the marginal evidence of each report and on how tight the budget
-is.  The budgets are set from the all-report costs: variable 1-4 bit
-reporting needs 20 bits for all eight reports, while fixed 3-bit reporting
-needs 24 bits.  Budgets 18/20/24 therefore cover the regimes where the
-fixed-rate arm is short of bits, just short of its all-report cost, and has
-its full budget.
+is.  Under high-resolution scalar quantization, the distortion of a b-bit
+quantizer is proportional to ``2^{-2b}``, so the marginal evidence gain of
+the next bit is decreasing; the greedy arm repeatedly gives the next bit to
+the report with the largest marginal per-report P_D gain, which is the
+discrete water-filling rule for a separable, diminishing-returns resource
+allocation.
+
+The budgets are set from the all-report costs: variable 1-4 bit reporting
+needs 20 bits for all eight reports, while fixed 3-bit reporting needs 24
+bits.  Budgets 18/20/24 therefore cover the regimes where the fixed-rate arm
+is short of bits, just short of its all-report cost, and has its full
+budget.
 """
 
 from __future__ import annotations
@@ -25,6 +32,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from uav_otfs_isac.exact_quota_selection import exact_maxmin_select
+from uav_otfs_isac.expected_pd import expected_gaussian_detection_probability
 from uav_otfs_isac.models import TargetEvidenceModel
 from uav_otfs_isac.reporting import post_bsc_moments, quantizer_from_gaussian_range
 
@@ -68,6 +76,66 @@ def _quantized_model(
     )
 
 
+def _one_report_model(delta: float, bits: int) -> TargetEvidenceModel:
+    edges, values = quantizer_from_gaussian_range(
+        [0.0], [1.0], [delta], [1.0], bits,
+    )
+    mu0, var0 = post_bsc_moments(0.0, 1.0, edges, values, bits, 0.0)
+    mu1, var1 = post_bsc_moments(float(delta), 1.0, edges, values, bits, 0.0)
+    return TargetEvidenceModel(
+        target_id=0,
+        owner=0,
+        mu0=np.array([0.0, mu0]),
+        mu1=np.array([delta, mu1]),
+        sigma0=np.diag([1.0, var0]),
+        sigma1=np.diag([1.0, var1]),
+        success_prob=np.ones(2),
+        report_bits=np.array([0, bits]),
+        bit_flip_prob=np.zeros(2),
+        quantizer_edges=np.array([-np.inf, 0.0, np.inf]),
+        quantizer_values=np.array([-1.0, 1.0]),
+    )
+
+
+def _greedy_bits(
+    deltas: np.ndarray,
+    budget_bits: int,
+    grid: int,
+    max_bits: int = 4,
+) -> np.ndarray:
+    """Discrete water-filling: give each next bit to the largest marginal gain."""
+    bits = np.ones(len(deltas), dtype=int)
+    gains: dict[int, list[float]] = {}
+    for index, delta in enumerate(deltas):
+        previous = float(expected_gaussian_detection_probability(
+            _one_report_model(float(delta), 1), {0, 1}, 0.05,
+            pd_mode="optimal", grid=grid,
+        ))
+        row = []
+        for candidate in range(2, max_bits + 1):
+            current = float(expected_gaussian_detection_probability(
+                _one_report_model(float(delta), candidate), {0, 1}, 0.05,
+                pd_mode="optimal", grid=grid,
+            ))
+            row.append(current - previous)
+            previous = current
+        gains[index] = row
+    while bits.sum() < budget_bits:
+        best_index = None
+        best_gain = 0.0
+        for index, row in gains.items():
+            if bits[index] >= max_bits:
+                continue
+            gain = row[bits[index] - 1]
+            if gain > best_gain + 1e-12:
+                best_gain = gain
+                best_index = index
+        if best_index is None:
+            break
+        bits[best_index] += 1
+    return bits
+
+
 def run_gate(*, output: Path, seeds: int, budgets, grid: int) -> None:
     rows = []
     for budget in budgets:
@@ -84,6 +152,14 @@ def run_gate(*, output: Path, seeds: int, budgets, grid: int) -> None:
                 [_quantized_model(deltas, fixed_bits)],
                 budget, 0.05, grid=grid, max_exhaustive_reports=10,
             )
+            greedy_allocation = _greedy_bits(
+                deltas[1:], budget, grid, max_bits=4,
+            )
+            greedy_bits = np.concatenate(([0], greedy_allocation))
+            greedy = exact_maxmin_select(
+                [_quantized_model(deltas, greedy_bits)],
+                budget, 0.05, grid=grid, max_exhaustive_reports=10,
+            )
             rows.append({
                 "budget_bits": budget,
                 "seed": seed,
@@ -93,6 +169,14 @@ def run_gate(*, output: Path, seeds: int, budgets, grid: int) -> None:
                 "fixed_used_bits": int(fixed.used_bits),
                 "variable_gain_pp": float(
                     (np.min(variable.expected_pd) - np.min(fixed.expected_pd)) * 100.0
+                ),
+                "greedy_worst": float(np.min(greedy.expected_pd)),
+                "greedy_used_bits": int(greedy.used_bits),
+                "greedy_gain_over_pattern_pp": float(
+                    (np.min(greedy.expected_pd) - np.min(variable.expected_pd)) * 100.0
+                ),
+                "greedy_gain_over_fixed_pp": float(
+                    (np.min(greedy.expected_pd) - np.min(fixed.expected_pd)) * 100.0
                 ),
             })
 
@@ -109,6 +193,14 @@ def run_gate(*, output: Path, seeds: int, budgets, grid: int) -> None:
             "variable_gain_std_pp": float(np.std(gains, ddof=1)) if len(gains) > 1 else 0.0,
             "variable_used_mean": float(np.mean([r["variable_used_bits"] for r in cell])),
             "fixed_used_mean": float(np.mean([r["fixed_used_bits"] for r in cell])),
+            "greedy_worst_mean": float(np.mean([r["greedy_worst"] for r in cell])),
+            "greedy_gain_over_pattern_mean_pp": float(
+                np.mean([r["greedy_gain_over_pattern_pp"] for r in cell])
+            ),
+            "greedy_gain_over_fixed_mean_pp": float(
+                np.mean([r["greedy_gain_over_fixed_pp"] for r in cell])
+            ),
+            "greedy_used_mean": float(np.mean([r["greedy_used_bits"] for r in cell])),
         })
 
     payload = {

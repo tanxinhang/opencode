@@ -10,7 +10,11 @@
       "fixed_worst": 0.907571353697238,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 0.18299698430738198
+      "variable_gain_pp": 0.18299698430738198,
+      "greedy_worst": 0.9242886931094731,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 1.4887369569161368,
+      "greedy_gain_over_fixed_pp": 1.6717339412235188
     },
     {
       "budget_bits": 18,
@@ -19,7 +23,11 @@
       "fixed_worst": 0.9104217059759294,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 0.874706738268427
+      "variable_gain_pp": 0.874706738268427,
+      "greedy_worst": 0.9343048926134749,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 1.5136119254861247,
+      "greedy_gain_over_fixed_pp": 2.3883186637545517
     },
     {
       "budget_bits": 18,
@@ -28,7 +36,11 @@
       "fixed_worst": 0.8781210608341528,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 0.4960482726960147
+      "variable_gain_pp": 0.4960482726960147,
+      "greedy_worst": 0.9045767863605221,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 2.1495242799409175,
+      "greedy_gain_over_fixed_pp": 2.6455725526369323
     },
     {
       "budget_bits": 18,
@@ -37,7 +49,11 @@
       "fixed_worst": 0.8715242411952051,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 1.323445589005301
+      "variable_gain_pp": 1.323445589005301,
+      "greedy_worst": 0.9004057483694837,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 1.564705128422561,
+      "greedy_gain_over_fixed_pp": 2.888150717427862
     },
     {
       "budget_bits": 18,
@@ -46,7 +62,11 @@
       "fixed_worst": 0.9137748408672146,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 0.3541922297751299
+      "variable_gain_pp": 0.3541922297751299,
+      "greedy_worst": 0.9329943601393018,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 1.5677596974335906,
+      "greedy_gain_over_fixed_pp": 1.9219519272087204
     },
     {
       "budget_bits": 18,
@@ -55,7 +75,11 @@
       "fixed_worst": 0.8869926330620254,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 0.15941461215558395
+      "variable_gain_pp": 0.15941461215558395,
+      "greedy_worst": 0.910140082074914,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 2.1553302891332837,
+      "greedy_gain_over_fixed_pp": 2.3147449012888677
     },
     {
       "budget_bits": 18,
@@ -64,7 +88,11 @@
       "fixed_worst": 0.8974231723529291,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 1.4593038472866526
+      "variable_gain_pp": 1.4593038472866526,
+      "greedy_worst": 0.9293658099781322,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 1.7349599152336581,
+      "greedy_gain_over_fixed_pp": 3.1942637625203107
     },
     {
       "budget_bits": 18,
@@ -73,7 +101,11 @@
       "fixed_worst": 0.9154377838846608,
       "variable_used_bits": 17,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 0.45834057435325537
+      "variable_gain_pp": 0.45834057435325537,
+      "greedy_worst": 0.933389246543046,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 1.3368056914852655,
+      "greedy_gain_over_fixed_pp": 1.7951462658385209
     },
     {
       "budget_bits": 18,
@@ -82,7 +114,11 @@
       "fixed_worst": 0.9049683088492959,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 1.2436068958985524
+      "variable_gain_pp": 1.2436068958985524,
+      "greedy_worst": 0.9338718218901859,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 1.646744408190448,
+      "greedy_gain_over_fixed_pp": 2.8903513040890005
     },
     {
       "budget_bits": 18,
@@ -91,7 +127,11 @@
       "fixed_worst": 0.9313266574496807,
       "variable_used_bits": 18,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 1.4643042343997048
+      "variable_gain_pp": 1.4643042343997048,
+      "greedy_worst": 0.9549750698723154,
+      "greedy_used_bits": 18,
+      "greedy_gain_over_pattern_pp": 0.9005370078637664,
+      "greedy_gain_over_fixed_pp": 2.3648412422634713
     },
     {
       "budget_bits": 20,
@@ -100,7 +140,11 @@
       "fixed_worst": 0.907571353697238,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 2.3681840339765836
+      "variable_gain_pp": 2.3681840339765836,
+      "greedy_worst": 0.932199612746848,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": 0.09464187098442434,
+      "greedy_gain_over_fixed_pp": 2.462825904961008
     },
     {
       "budget_bits": 20,
@@ -109,7 +153,11 @@
       "fixed_worst": 0.9104217059759294,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 3.0325697086201253
+      "variable_gain_pp": 3.0325697086201253,
+      "greedy_worst": 0.940520002166577,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": -0.022740089555361997,
+      "greedy_gain_over_fixed_pp": 3.0098296190647633
     },
     {
       "budget_bits": 20,
@@ -118,7 +166,11 @@
       "fixed_worst": 0.8781210608341528,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 3.3226937726084094
+      "variable_gain_pp": 3.3226937726084094,
+      "greedy_worst": 0.9125328585642215,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": 0.11848600039846557,
+      "greedy_gain_over_fixed_pp": 3.441179773006875
     },
     {
       "budget_bits": 20,
@@ -127,7 +179,11 @@
       "fixed_worst": 0.8715242411952051,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 4.003728623583114
+      "variable_gain_pp": 4.003728623583114,
+      "greedy_worst": 0.9085496288959304,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": -0.30118985351058614,
+      "greedy_gain_over_fixed_pp": 3.7025387700725276
     },
     {
       "budget_bits": 20,
@@ -136,7 +192,11 @@
       "fixed_worst": 0.9137748408672146,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 2.4972266065179993
+      "variable_gain_pp": 2.4972266065179993,
+      "greedy_worst": 0.9396696460266679,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": 0.09225390942733114,
+      "greedy_gain_over_fixed_pp": 2.5894805159453305
     },
     {
       "budget_bits": 20,
@@ -145,7 +205,11 @@
       "fixed_worst": 0.8869926330620254,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 3.008174310223577
+      "variable_gain_pp": 3.008174310223577,
+      "greedy_worst": 0.9182744059629065,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": 0.12000297986454189,
+      "greedy_gain_over_fixed_pp": 3.128177290088119
     },
     {
       "budget_bits": 20,
@@ -154,7 +218,11 @@
       "fixed_worst": 0.8974231723529291,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 3.685776215965242
+      "variable_gain_pp": 3.685776215965242,
+      "greedy_worst": 0.9358216882256127,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": 0.15407537130311955,
+      "greedy_gain_over_fixed_pp": 3.8398515872683614
     },
     {
       "budget_bits": 20,
@@ -163,7 +231,11 @@
       "fixed_worst": 0.9154377838846608,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 2.407219130300342
+      "variable_gain_pp": 2.407219130300342,
+      "greedy_worst": 0.9404754153634333,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": 0.096544017576905,
+      "greedy_gain_over_fixed_pp": 2.503763147877247
     },
     {
       "budget_bits": 20,
@@ -172,7 +244,11 @@
       "fixed_worst": 0.9049683088492959,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 3.4036003101277523
+      "variable_gain_pp": 3.4036003101277523,
+      "greedy_worst": 0.9400024274548796,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": 0.0998115504306174,
+      "greedy_gain_over_fixed_pp": 3.5034118605583697
     },
     {
       "budget_bits": 20,
@@ -181,7 +257,11 @@
       "fixed_worst": 0.9313266574496807,
       "variable_used_bits": 20,
       "fixed_used_bits": 18,
-      "variable_gain_pp": 2.8178631615873306
+      "variable_gain_pp": 2.8178631615873306,
+      "greedy_worst": 0.9602858327011474,
+      "greedy_used_bits": 20,
+      "greedy_gain_over_pattern_pp": 0.07805436355934336,
+      "greedy_gain_over_fixed_pp": 2.895917525146674
     },
     {
       "budget_bits": 24,
@@ -190,7 +270,11 @@
       "fixed_worst": 0.9476667512611464,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -1.6413557224142616
+      "variable_gain_pp": -1.6413557224142616,
+      "greedy_worst": 0.9406233715906005,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 0.9370177553596704,
+      "greedy_gain_over_fixed_pp": -0.7043379670545913
     },
     {
       "budget_bits": 24,
@@ -199,7 +283,11 @@
       "fixed_worst": 0.9539149408966519,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -1.3167537834521181
+      "variable_gain_pp": -1.3167537834521181,
+      "greedy_worst": 0.9475105375405063,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 0.6763134478375621,
+      "greedy_gain_over_fixed_pp": -0.640440335614556
     },
     {
       "budget_bits": 24,
@@ -208,7 +296,11 @@
       "fixed_worst": 0.9316339466313059,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -2.0285948071069093
+      "variable_gain_pp": -2.0285948071069093,
+      "greedy_worst": 0.9220231065385022,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 1.067510797826532,
+      "greedy_gain_over_fixed_pp": -0.9610840092803774
     },
     {
       "budget_bits": 24,
@@ -217,7 +309,11 @@
       "fixed_worst": 0.9283012559494878,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -1.6739728518451513
+      "variable_gain_pp": -1.6739728518451513,
+      "greedy_worst": 0.9191603695089741,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 0.7598842077937817,
+      "greedy_gain_over_fixed_pp": -0.9140886440513696
     },
     {
       "budget_bits": 24,
@@ -226,7 +322,11 @@
       "fixed_worst": 0.9534948616794338,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -1.4747754747039155
+      "variable_gain_pp": -1.4747754747039155,
+      "greedy_worst": 0.9470527456767844,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 0.8305638744389832,
+      "greedy_gain_over_fixed_pp": -0.6442116002649323
     },
     {
       "budget_bits": 24,
@@ -235,7 +335,11 @@
       "fixed_worst": 0.9361199257837681,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -1.9045549619506996
+      "variable_gain_pp": -1.9045549619506996,
+      "greedy_worst": 0.9276992822730411,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 1.0624906108779975,
+      "greedy_gain_over_fixed_pp": -0.8420643510727022
     },
     {
       "budget_bits": 24,
@@ -244,7 +348,11 @@
       "fixed_worst": 0.9496790361717619,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -1.5398101659180319
+      "variable_gain_pp": -1.5398101659180319,
+      "greedy_worst": 0.9436302192407483,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 0.9349284728166762,
+      "greedy_gain_over_fixed_pp": -0.6048816931013556
     },
     {
       "budget_bits": 24,
@@ -253,7 +361,11 @@
       "fixed_worst": 0.9541965279191961,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -1.4686552731531854
+      "variable_gain_pp": -1.4686552731531854,
+      "greedy_worst": 0.9481756933901748,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 0.8665718202510608,
+      "greedy_gain_over_fixed_pp": -0.6020834529021246
     },
     {
       "budget_bits": 24,
@@ -262,7 +374,11 @@
       "fixed_worst": 0.9532193669989416,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -1.4215055048368175
+      "variable_gain_pp": -1.4215055048368175,
+      "greedy_worst": 0.9468863427917966,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 0.7882030841223187,
+      "greedy_gain_over_fixed_pp": -0.6333024207144988
     },
     {
       "budget_bits": 24,
@@ -271,7 +387,11 @@
       "fixed_worst": 0.9688072109734442,
       "variable_used_bits": 20,
       "fixed_used_bits": 24,
-      "variable_gain_pp": -0.9301921907890254
+      "variable_gain_pp": -0.9301921907890254,
+      "greedy_worst": 0.9656224634859283,
+      "greedy_used_bits": 24,
+      "greedy_gain_over_pattern_pp": 0.6117174420374294,
+      "greedy_gain_over_fixed_pp": -0.318474748751596
     }
   ],
   "summary": [
@@ -283,7 +403,11 @@
       "variable_gain_mean_pp": 0.8016359978146003,
       "variable_gain_std_pp": 0.5324182897800903,
       "variable_used_mean": 17.9,
-      "fixed_used_mean": 18.0
+      "fixed_used_mean": 18.0,
+      "greedy_worst_mean": 0.925831251095085,
+      "greedy_gain_over_pattern_mean_pp": 1.6058715300105753,
+      "greedy_gain_over_fixed_mean_pp": 2.4075075278251754,
+      "greedy_used_mean": 18.0
     },
     {
       "budget_bits": 20,
@@ -293,7 +417,11 @@
       "variable_gain_mean_pp": 3.0547035873510473,
       "variable_gain_std_pp": 0.553024303010272,
       "variable_used_mean": 20.0,
-      "fixed_used_mean": 18.0
+      "fixed_used_mean": 18.0,
+      "greedy_worst_mean": 0.9328331518108225,
+      "greedy_gain_over_pattern_mean_pp": 0.05299401204788001,
+      "greedy_gain_over_fixed_mean_pp": 3.1076975993989278,
+      "greedy_used_mean": 20.0
     },
     {
       "budget_bits": 24,
@@ -303,7 +431,11 @@
       "variable_gain_mean_pp": -1.5400170736170116,
       "variable_gain_std_pp": 0.3064014501606247,
       "variable_used_mean": 20.0,
-      "fixed_used_mean": 24.0
+      "fixed_used_mean": 24.0,
+      "greedy_worst_mean": 0.9408384132037056,
+      "greedy_gain_over_pattern_mean_pp": 0.8535201513362012,
+      "greedy_gain_over_fixed_mean_pp": -0.6864969222808103,
+      "greedy_used_mean": 24.0
     }
   ]
 }

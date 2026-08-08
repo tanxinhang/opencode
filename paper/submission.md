@@ -759,13 +759,24 @@ converts the leftover fractional report budget into coverage at low
 precision; when the budget is sufficient for uniformly high precision,
 fixed 3-bit reporting dominates.
 
+A third arm applies discrete water-filling to the bit allocation: under
+high-resolution scalar quantization the distortion of a $b$-bit quantizer
+scales as $2^{-2b}$, so the marginal evidence gain of each additional bit is
+decreasing.  Starting from one bit per report, the greedy rule gives the
+next bit to the report with the largest marginal per-report $P_D$ gain; for
+a separable, diminishing-returns allocation this is the discrete KKT /
+water-filling solution.  At $B=18$ it exceeds the fixed 1-4 pattern by
+1.61 pp (0.926 vs 0.910) and at $B=24$ it remains better than the pattern by
+0.85 pp (0.941 vs 0.932), while fixed 3-bit reporting is still the best arm
+once its full 24-bit budget is available.
+
 **Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, grid 64; variable all-report cost 20 bits, fixed 24 bits).**
 
-| Budget | Variable worst $P_D$ | Fixed worst $P_D$ | Variable gain (pp) | Variable used | Fixed used |
-|:------:|:--------------------:|:-----------------:|:------------------:|:-------------:|:----------:|
-| 18     | 0.910                | 0.902             | +0.80              | 17.9          | 18.0       |
-| 20     | 0.932                | 0.902             | +3.05              | 20.0          | 18.0       |
-| 24     | 0.932                | 0.948             | -1.54              | 20.0          | 24.0       |
+| Budget | Variable worst $P_D$ | Fixed worst $P_D$ | Greedy worst $P_D$ | Variable gain (pp) | Greedy vs pattern (pp) | Variable used | Fixed used |
+|:------:|:--------------------:|:-----------------:|:------------------:|:------------------:|:----------------------:|:-------------:|:----------:|
+| 18     | 0.910                | 0.902             | 0.926              | +0.80              | +1.61                 | 17.9          | 18.0       |
+| 20     | 0.932                | 0.902             | 0.933              | +3.05              | +0.05                 | 20.0          | 18.0       |
+| 24     | 0.932                | 0.948             | 0.941              | -1.54              | +0.85                 | 20.0          | 24.0       |
 
 ### 6.6 Re-implemented literature-style baselines
 

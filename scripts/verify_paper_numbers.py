@@ -244,6 +244,12 @@ def main() -> None:
     check("quantization absolute P_D reasonable",
           quant20["variable_worst_mean"] >= 0.90
           and quant24["fixed_worst_mean"] >= 0.90)
+    check("quantization greedy B18 over pattern",
+          close(quant18["greedy_gain_over_pattern_mean_pp"], 1.606, 1e-3))
+    check("quantization greedy B24 over pattern",
+          close(quant24["greedy_gain_over_pattern_mean_pp"], 0.854, 1e-3))
+    check("quantization greedy absolute P_D",
+          quant18["greedy_worst_mean"] >= 0.90)
 
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
