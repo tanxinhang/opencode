@@ -148,10 +148,14 @@ def target_options(
             set(range(len(mu0))), 0.05, grid=grid,
         ))
         out.append((cost, pd))
-    out.sort()
+    out.sort(key=lambda item: (item[0], -item[1]))
     pareto: list[tuple[int, float]] = []
     best_value = -1.0
+    last_cost = None
     for cost, pd in out:
+        if cost == last_cost:
+            continue
+        last_cost = cost
         if pd > best_value + 1e-12:
             pareto.append((cost, pd))
             best_value = pd
@@ -186,10 +190,14 @@ def subset_options(
             set(range(len(mu0))), 0.05, grid=grid,
         ))
         out.append((cost, pd))
-    out.sort()
+    out.sort(key=lambda item: (item[0], -item[1]))
     pareto: list[tuple[int, float]] = []
     best_value = -1.0
+    last_cost = None
     for cost, pd in out:
+        if cost == last_cost:
+            continue
+        last_cost = cost
         if pd > best_value + 1e-12:
             pareto.append((cost, pd))
             best_value = pd

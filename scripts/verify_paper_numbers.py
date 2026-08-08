@@ -284,7 +284,9 @@ def main() -> None:
     check("joint scale Q20 gain",
           close(scale20["joint_over_greedy_mean_pp"], 2.618, 1e-3))
     check("joint scale Q20 frontier",
-          scale20["max_frontier_size"] == 173)
+          scale20["max_frontier_size"] == 17)
+    check("joint scale frontier bounded",
+          all(r["max_frontier_size"] <= 17 for r in scale["summary"]))
     check("joint scale Q20 DP fast",
           scale20["dp_wall_seconds_mean"] < 0.01)
 
