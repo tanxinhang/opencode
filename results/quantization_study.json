@@ -4,306 +4,306 @@
   "grid": 64,
   "rows": [
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 0,
-      "variable_worst": 0.2388486383851175,
-      "fixed_worst": 0.2174492315234267,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 2.139940686169078
+      "variable_worst": 0.9094013235403118,
+      "fixed_worst": 0.907571353697238,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 0.18299698430738198
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 1,
-      "variable_worst": 0.23689146344551404,
-      "fixed_worst": 0.22613402672219496,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 1.075743672331908
+      "variable_worst": 0.9191687733586137,
+      "fixed_worst": 0.9104217059759294,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 0.874706738268427
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 2,
-      "variable_worst": 0.2291518978337913,
-      "fixed_worst": 0.20768517579069257,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 2.146672204309874
+      "variable_worst": 0.8830815435611129,
+      "fixed_worst": 0.8781210608341528,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 0.4960482726960147
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 3,
-      "variable_worst": 0.2081936768170795,
-      "fixed_worst": 0.19932056750370897,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 0.8873109313370542
+      "variable_worst": 0.8847586970852581,
+      "fixed_worst": 0.8715242411952051,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 1.323445589005301
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 4,
-      "variable_worst": 0.2450858277323213,
-      "fixed_worst": 0.2259949667940741,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 1.909086093824719
+      "variable_worst": 0.9173167631649659,
+      "fixed_worst": 0.9137748408672146,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 0.3541922297751299
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 5,
-      "variable_worst": 0.22503818779153528,
-      "fixed_worst": 0.20743943304412915,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 1.7598754747406131
+      "variable_worst": 0.8885867791835812,
+      "fixed_worst": 0.8869926330620254,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 0.15941461215558395
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 6,
-      "variable_worst": 0.23745463602627098,
-      "fixed_worst": 0.21272441311120738,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 2.4730222915063607
+      "variable_worst": 0.9120162108257956,
+      "fixed_worst": 0.8974231723529291,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 1.4593038472866526
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 7,
-      "variable_worst": 0.2464701933475978,
-      "fixed_worst": 0.22173023273003017,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 2.473996061756761
+      "variable_worst": 0.9200211896281933,
+      "fixed_worst": 0.9154377838846608,
+      "variable_used_bits": 17,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 0.45834057435325537
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 8,
-      "variable_worst": 0.23388595219726216,
-      "fixed_worst": 0.2235650314315124,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 1.0320920765749753
+      "variable_worst": 0.9174043778082814,
+      "fixed_worst": 0.9049683088492959,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 1.2436068958985524
     },
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "seed": 9,
-      "variable_worst": 0.24976894421394813,
-      "fixed_worst": 0.22533708124028184,
-      "variable_used_bits": 9,
-      "fixed_used_bits": 9,
-      "variable_gain_pp": 2.4431862973666285
+      "variable_worst": 0.9459696997936777,
+      "fixed_worst": 0.9313266574496807,
+      "variable_used_bits": 18,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 1.4643042343997048
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 0,
-      "variable_worst": 0.2584460375796634,
-      "fixed_worst": 0.2521796022676561,
-      "variable_used_bits": 11,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 0.6266435312007268
+      "variable_worst": 0.9312531940370038,
+      "fixed_worst": 0.907571353697238,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 2.3681840339765836
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 1,
-      "variable_worst": 0.2654934336236835,
-      "fixed_worst": 0.25708625887083847,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 0.8407174752845026
+      "variable_worst": 0.9407474030621307,
+      "fixed_worst": 0.9104217059759294,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 3.0325697086201253
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 2,
-      "variable_worst": 0.25192972515324996,
-      "fixed_worst": 0.23374102232571758,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 1.8188702827532377
+      "variable_worst": 0.9113479985602368,
+      "fixed_worst": 0.8781210608341528,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 3.3226937726084094
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 3,
-      "variable_worst": 0.23891523100139866,
-      "fixed_worst": 0.2291471315236296,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 0.9768099477769077
+      "variable_worst": 0.9115615274310362,
+      "fixed_worst": 0.8715242411952051,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 4.003728623583114
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 4,
-      "variable_worst": 0.28345744115465965,
-      "fixed_worst": 0.25955977677495434,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 2.389766437970531
+      "variable_worst": 0.9387471069323946,
+      "fixed_worst": 0.9137748408672146,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 2.4972266065179993
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 5,
-      "variable_worst": 0.2533170838061414,
-      "fixed_worst": 0.23631423894039294,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 1.7002844865748434
+      "variable_worst": 0.9170743761642611,
+      "fixed_worst": 0.8869926330620254,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 3.008174310223577
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 6,
-      "variable_worst": 0.26435248537139266,
-      "fixed_worst": 0.24488183328111318,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 1.9470652090279483
+      "variable_worst": 0.9342809345125815,
+      "fixed_worst": 0.8974231723529291,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 3.685776215965242
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 7,
-      "variable_worst": 0.27079027844689874,
-      "fixed_worst": 0.26031326482970607,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 1.0477013617192665
+      "variable_worst": 0.9395099751876642,
+      "fixed_worst": 0.9154377838846608,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 2.407219130300342
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 8,
-      "variable_worst": 0.25964543092307973,
-      "fixed_worst": 0.2526527102256166,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 0.6992720697463151
+      "variable_worst": 0.9390043119505734,
+      "fixed_worst": 0.9049683088492959,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 3.4036003101277523
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "seed": 9,
-      "variable_worst": 0.2823582097864078,
-      "fixed_worst": 0.2663116437050447,
-      "variable_used_bits": 12,
-      "fixed_used_bits": 12,
-      "variable_gain_pp": 1.6046566081363123
+      "variable_worst": 0.959505289065554,
+      "fixed_worst": 0.9313266574496807,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 18,
+      "variable_gain_pp": 2.8178631615873306
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 0,
-      "variable_worst": 0.27803516837865916,
-      "fixed_worst": 0.28477958527961533,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": -0.6744416900956174
+      "variable_worst": 0.9312531940370038,
+      "fixed_worst": 0.9476667512611464,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -1.6413557224142616
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 1,
-      "variable_worst": 0.28968134276456103,
-      "fixed_worst": 0.2847589925189472,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": 0.4922350245613827
+      "variable_worst": 0.9407474030621307,
+      "fixed_worst": 0.9539149408966519,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -1.3167537834521181
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 2,
-      "variable_worst": 0.25655211786503906,
-      "fixed_worst": 0.258126517750866,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": -0.1574399885826916
+      "variable_worst": 0.9113479985602368,
+      "fixed_worst": 0.9316339466313059,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -2.0285948071069093
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 3,
-      "variable_worst": 0.2595511282935764,
-      "fixed_worst": 0.2530690510682145,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": 0.6482077225361926
+      "variable_worst": 0.9115615274310362,
+      "fixed_worst": 0.9283012559494878,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -1.6739728518451513
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 4,
-      "variable_worst": 0.2852013307121545,
-      "fixed_worst": 0.28939415898882404,
-      "variable_used_bits": 14,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": -0.4192828276669558
+      "variable_worst": 0.9387471069323946,
+      "fixed_worst": 0.9534948616794338,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -1.4747754747039155
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 5,
-      "variable_worst": 0.26601207246387115,
-      "fixed_worst": 0.2636037756981374,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": 0.24082967657337306
+      "variable_worst": 0.9170743761642611,
+      "fixed_worst": 0.9361199257837681,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -1.9045549619506996
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 6,
-      "variable_worst": 0.27261987239275853,
-      "fixed_worst": 0.27169632914644337,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": 0.09235432463151616
+      "variable_worst": 0.9342809345125815,
+      "fixed_worst": 0.9496790361717619,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -1.5398101659180319
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 7,
-      "variable_worst": 0.2887004528058362,
-      "fixed_worst": 0.29313106171707587,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": -0.4430608911239642
+      "variable_worst": 0.9395099751876642,
+      "fixed_worst": 0.9541965279191961,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -1.4686552731531854
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 8,
-      "variable_worst": 0.28213771631032697,
-      "fixed_worst": 0.2796528013960697,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": 0.24849149142572857
+      "variable_worst": 0.9390043119505734,
+      "fixed_worst": 0.9532193669989416,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -1.4215055048368175
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "seed": 9,
-      "variable_worst": 0.3138359885044211,
-      "fixed_worst": 0.303138371315584,
-      "variable_used_bits": 15,
-      "fixed_used_bits": 15,
-      "variable_gain_pp": 1.0697617188837105
+      "variable_worst": 0.959505289065554,
+      "fixed_worst": 0.9688072109734442,
+      "variable_used_bits": 20,
+      "fixed_used_bits": 24,
+      "variable_gain_pp": -0.9301921907890254
     }
   ],
   "summary": [
     {
-      "budget_bits": 9,
+      "budget_bits": 18,
       "n_seeds": 10,
-      "variable_worst_mean": 0.23507894177904376,
-      "fixed_worst_mean": 0.21673801598912582,
-      "variable_gain_mean_pp": 1.8340925789917975,
-      "variable_gain_std_pp": 0.6241240487146417,
-      "variable_used_mean": 9.0,
-      "fixed_used_mean": 9.0
+      "variable_worst_mean": 0.9097725357949791,
+      "fixed_worst_mean": 0.9017561758168332,
+      "variable_gain_mean_pp": 0.8016359978146003,
+      "variable_gain_std_pp": 0.5324182897800903,
+      "variable_used_mean": 17.9,
+      "fixed_used_mean": 18.0
     },
     {
-      "budget_bits": 12,
+      "budget_bits": 20,
       "n_seeds": 10,
-      "variable_worst_mean": 0.26287053568465757,
-      "fixed_worst_mean": 0.24921874827446694,
-      "variable_gain_mean_pp": 1.3651787410190592,
-      "variable_gain_std_pp": 0.6036372265189232,
-      "variable_used_mean": 11.9,
-      "fixed_used_mean": 12.0
+      "variable_worst_mean": 0.9323032116903436,
+      "fixed_worst_mean": 0.9017561758168332,
+      "variable_gain_mean_pp": 3.0547035873510473,
+      "variable_gain_std_pp": 0.553024303010272,
+      "variable_used_mean": 20.0,
+      "fixed_used_mean": 18.0
     },
     {
-      "budget_bits": 15,
+      "budget_bits": 24,
       "n_seeds": 10,
-      "variable_worst_mean": 0.2792327190491204,
-      "fixed_worst_mean": 0.27813506448797776,
-      "variable_gain_mean_pp": 0.10976545611426747,
-      "variable_gain_std_pp": 0.5443048996922868,
-      "variable_used_mean": 14.9,
-      "fixed_used_mean": 15.0
+      "variable_worst_mean": 0.9323032116903436,
+      "fixed_worst_mean": 0.9477033824265139,
+      "variable_gain_mean_pp": -1.5400170736170116,
+      "variable_gain_std_pp": 0.3064014501606247,
+      "variable_used_mean": 20.0,
+      "fixed_used_mean": 24.0
     }
   ]
 }

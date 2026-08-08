@@ -23,7 +23,7 @@ and the committed fix.
 | 1 | RIS model too strong | DONE: wording is now geometry-aware normalized power-gain model with coherent cross-term caveat; RIS demoted to an application instance. |
 | 2 | OTFS is a label | DONE: title/abstract rewritten without OTFS; DD-domain sensing is background and explicitly not required by the theory. |
 | 3 | Statistical evidence weak | DONE: 500-seed two-sided paired t, Wilcoxon, and Holm correction are all significant at every system-level budget; absolute P_D and effect sizes are reported. |
-| 4 | Ablations mixed | DONE: 500-seed factorial ablation toggles each factor one at a time; a hard weak-target scenario shows max-min gains of 2.45-3.45 pp; a separate quantization study (10 seeds) shows variable-rate gains of 1.37-1.83 pp over fixed 3-bit reporting at tight budgets. |
+| 4 | Ablations mixed | DONE: 500-seed factorial ablation toggles each factor one at a time; a hard weak-target scenario shows max-min gains of 2.45-3.45 pp; a quantization study with budgets set by all-report costs (10 seeds) shows variable-rate gains of 0.80/3.05 pp at B=18/20 and fixed 3-bit winning by 1.54 pp at B=24. |
 | 5 | Hard B&B instances missing | DONE: `scripts/run_scaled_difficulty_gate.py` adds critical-threshold, similar-weak, K-report, and correlated-redundant layers with node counts, recursion depth, prune rate, and exhaustive match checks. A dual Cauchy bound (min over `mu>=0`) tightens the old `mu=0` bound and cuts the correlated-redundant tree from 1791 to 113 nodes. |
 
 ## P2 (submission engineering)

@@ -232,12 +232,18 @@ def main() -> None:
 
     quant = load("quantization_study.json")
     check("quantization study 10 seeds", quant["seeds"] == 10)
-    quant9 = next(r for r in quant["summary"] if r["budget_bits"] == 9)
-    quant12 = next(r for r in quant["summary"] if r["budget_bits"] == 12)
-    check("quantization B9 gain",
-          close(quant9["variable_gain_mean_pp"], 1.834, 1e-3))
-    check("quantization B12 gain",
-          close(quant12["variable_gain_mean_pp"], 1.365, 1e-3))
+    quant18 = next(r for r in quant["summary"] if r["budget_bits"] == 18)
+    quant20 = next(r for r in quant["summary"] if r["budget_bits"] == 20)
+    quant24 = next(r for r in quant["summary"] if r["budget_bits"] == 24)
+    check("quantization B18 gain",
+          close(quant18["variable_gain_mean_pp"], 0.802, 1e-3))
+    check("quantization B20 gain",
+          close(quant20["variable_gain_mean_pp"], 3.055, 1e-3))
+    check("quantization B24 gain",
+          close(quant24["variable_gain_mean_pp"], -1.540, 1e-3))
+    check("quantization absolute P_D reasonable",
+          quant20["variable_worst_mean"] >= 0.90
+          and quant24["fixed_worst_mean"] >= 0.90)
 
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)

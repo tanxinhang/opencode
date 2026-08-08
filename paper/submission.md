@@ -745,26 +745,27 @@ spend the whole budget on the strong target.
 
 ### 6.5 Quantization study: variable-rate under a tight budget
 
-In the strong-evidence demo geometry, all reports have enough marginal
-information that spending the budget on 3-bit quantization is at least as
-good as variable-rate reporting.  The value of variable-rate appears when
-the budget is tight and the reports are weak.  In a weak-target model with
-similar reports, exact max-min selection with 1-4 bit variable-rate
-reporting exceeds fixed 3-bit reporting by 1.83 pp at $B=9$ and by 1.37 pp
-at $B=12$ over 10 seeds, while the two schemes are statistically
-indistinguishable at $B=15$ (Table 6).  Both arms spend the same budget at
-$B=9$; at $B=12/15$ the variable-rate arm leaves at most one bit unused.
-This is the expected trade-off: with a fixed total budget, spending bits on
-more coarsely quantized weak reports dominates spending the same bits on
-fewer reports only when the per-report marginal evidence is small.
+The quantization comparison uses budgets set by the all-report costs: the
+1-4 bit variable-rate arm needs 20 bits to schedule all eight reports, while
+the fixed 3-bit arm needs 24 bits.  Over 10 seeds, variable-rate reporting
+exceeds fixed 3-bit reporting by 0.80 pp at $B=18$ and by 3.05 pp at $B=20$,
+with worst-target $P_D$ of 0.910 and 0.932 respectively (Table 6).  At
+$B=20$ the fixed-rate arm can schedule only six of eight reports (18 bits),
+so it leaves two bits unused.  When the budget reaches 24 bits and fixed
+3-bit reporting can schedule every report, it is the better arm (0.948 vs
+0.932, +1.54 pp).  This is the expected quantization trade-off: when the
+fixed-rate arm is short of its all-report budget, variable-rate reporting
+converts the leftover fractional report budget into coverage at low
+precision; when the budget is sufficient for uniformly high precision,
+fixed 3-bit reporting dominates.
 
-**Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, weak-report model, grid 64).**
+**Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, grid 64; variable all-report cost 20 bits, fixed 24 bits).**
 
 | Budget | Variable worst $P_D$ | Fixed worst $P_D$ | Variable gain (pp) | Variable used | Fixed used |
 |:------:|:--------------------:|:-----------------:|:------------------:|:-------------:|:----------:|
-| 9      | 0.235                | 0.217             | +1.83              | 9.0           | 9.0        |
-| 12     | 0.263                | 0.249             | +1.37              | 11.9          | 12.0       |
-| 15     | 0.279                | 0.278             | +0.11              | 14.9          | 15.0       |
+| 18     | 0.910                | 0.902             | +0.80              | 17.9          | 18.0       |
+| 20     | 0.932                | 0.902             | +3.05              | 20.0          | 18.0       |
+| 24     | 0.932                | 0.948             | -1.54              | 20.0          | 24.0       |
 
 ### 6.6 Re-implemented literature-style baselines
 

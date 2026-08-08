@@ -4,9 +4,11 @@ For a fixed total budget, the receiver can spend bits on fewer, finely
 quantized reports or on more, coarsely quantized reports.  Under a scalar
 quantizer whose distortion decreases with bit count, the better choice
 depends on the marginal evidence of each report and on how tight the budget
-is.  This gate uses a weak-target model with similar reports and compares
-the exact max-min worst-target P_D of variable-rate (1-4 bits) and fixed
-3-bit reporting across several budgets.
+is.  The budgets are set from the all-report costs: variable 1-4 bit
+reporting needs 20 bits for all eight reports, while fixed 3-bit reporting
+needs 24 bits.  Budgets 18/20/24 therefore cover the regimes where the
+fixed-rate arm is short of bits, just short of its all-report cost, and has
+its full budget.
 """
 
 from __future__ import annotations
@@ -71,7 +73,7 @@ def run_gate(*, output: Path, seeds: int, budgets, grid: int) -> None:
     for budget in budgets:
         for seed in range(seeds):
             rng = np.random.default_rng(seed)
-            deltas = np.concatenate(([0.15], rng.uniform(0.35, 0.55, 8)))
+            deltas = np.concatenate(([0.4], rng.uniform(1.0, 1.4, 8)))
             variable_bits = np.array([0, 1, 2, 3, 4, 1, 2, 3, 4])
             fixed_bits = np.array([0, 3, 3, 3, 3, 3, 3, 3, 3])
             variable = exact_maxmin_select(
@@ -125,7 +127,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="results/quantization_study.json")
     parser.add_argument("--seeds", type=int, default=20)
-    parser.add_argument("--budgets", type=int, nargs="+", default=[9, 12, 15, 18])
+    parser.add_argument("--budgets", type=int, nargs="+", default=[18, 20, 24])
     parser.add_argument("--grid", type=int, default=64)
     args = parser.parse_args()
     run_gate(
