@@ -872,6 +872,16 @@ baselines on this discrete budget-allocation problem, in part because the
 terminal reward does not force full budget utilization; we report it as a
 learning baseline from a single training run, not as a tuned competitor.
 
+**Channel-difficulty audit.**  Sweeping the BSC flip probability from 0 to
+0.15 in the same two-target model shows that exact-joint gains vanish once
+$\epsilon\ge 0.05$ (gain 0.00 pp) while worst-target $P_D$ drops to
+0.48-0.69.  Under a strong BSC the effective evidence of every report is
+compressed toward the same low level, so report/bit selection loses its
+leverage, and the operating point leaves the usable detection region.
+We therefore keep the reporting channel at the audited mild BSC settings and
+treat channel hardness as a scenario constraint rather than an optimization
+lever.
+
 **Table 6.  Variable-rate versus fixed 3-bit reporting (10 seeds, grid 64; variable all-report cost 20 bits, fixed 24 bits).**
 
 | Budget | Variable worst $P_D$ | Fixed worst $P_D$ | Greedy worst $P_D$ | Variable gain (pp) | Greedy vs pattern (pp) | Variable used | Fixed used |

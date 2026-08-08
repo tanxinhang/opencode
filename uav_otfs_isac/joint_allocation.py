@@ -21,17 +21,29 @@ from .models import TargetEvidenceModel
 from .reporting import post_bsc_moments, quantizer_from_gaussian_range
 
 
-def moments(delta: float, bits: int):
+def moments(
+    delta: float,
+    bits: int,
+    bit_flip_probability: float = 0.0,
+):
     """Post-BSC H0/H1 moments of a b-bit quantized Gaussian report."""
     edges, values = quantizer_from_gaussian_range(
         [0.0], [1.0], [delta], [1.0], bits,
     )
-    m0, v0 = post_bsc_moments(0.0, 1.0, edges, values, bits, 0.0)
-    m1, v1 = post_bsc_moments(float(delta), 1.0, edges, values, bits, 0.0)
+    m0, v0 = post_bsc_moments(
+        0.0, 1.0, edges, values, bits, bit_flip_probability,
+    )
+    m1, v1 = post_bsc_moments(
+        float(delta), 1.0, edges, values, bits, bit_flip_probability,
+    )
     return m0, m1, v0, v1
 
 
-def model_from_bits(deltas: np.ndarray, bits: np.ndarray) -> TargetEvidenceModel:
+def model_from_bits(
+    deltas: np.ndarray,
+    bits: np.ndarray,
+    bit_flip_probability: float = 0.0,
+) -> TargetEvidenceModel:
     """Build a model with fixed per-report bit counts (owner excluded)."""
     n = len(deltas)
     post_mu0 = np.zeros(n)
@@ -43,7 +55,9 @@ def model_from_bits(deltas: np.ndarray, bits: np.ndarray) -> TargetEvidenceModel
         if i == 0:
             post_mu1[i] = float(deltas[i])
             continue
-        m0, m1, v0, v1 = moments(float(deltas[i]), int(bits[i]))
+        m0, m1, v0, v1 = moments(
+            float(deltas[i]), int(bits[i]), bit_flip_probability,
+        )
         post_mu0[i], post_mu1[i] = m0, m1
         var0[i], var1[i] = v0, v1
         costs[i] = int(bits[i])
@@ -62,9 +76,13 @@ def model_from_bits(deltas: np.ndarray, bits: np.ndarray) -> TargetEvidenceModel
     )
 
 
-def one_report_model(delta: float, bits: int) -> TargetEvidenceModel:
+def one_report_model(
+    delta: float,
+    bits: int,
+    bit_flip_probability: float = 0.0,
+) -> TargetEvidenceModel:
     """Single-report model used for marginal-gain bit loading."""
-    m0, m1, v0, v1 = moments(delta, bits)
+    m0, m1, v0, v1 = moments(delta, bits, bit_flip_probability)
     return TargetEvidenceModel(
         target_id=0,
         owner=0,
@@ -85,19 +103,21 @@ def greedy_bits(
     budget_bits: int,
     grid: int,
     max_bits: int = 4,
+    bit_flip_probability: float = 0.0,
 ) -> np.ndarray:
     """Water-filling-inspired heuristic: give the next bit to the largest gain."""
     bits = np.ones(len(deltas), dtype=int)
     gains: dict[int, list[float]] = {}
     for index, delta in enumerate(deltas):
         previous = float(expected_gaussian_detection_probability(
-            one_report_model(float(delta), 1), {0, 1}, 0.05,
+            one_report_model(float(delta), 1, bit_flip_probability), {0, 1}, 0.05,
             pd_mode="optimal", grid=grid,
         ))
         row = []
         for candidate in range(2, max_bits + 1):
             current = float(expected_gaussian_detection_probability(
-                one_report_model(float(delta), candidate), {0, 1}, 0.05,
+                one_report_model(float(delta), candidate, bit_flip_probability),
+                {0, 1}, 0.05,
                 pd_mode="optimal", grid=grid,
             ))
             row.append(current - previous)
@@ -124,12 +144,15 @@ def target_options(
     deltas: np.ndarray,
     grid: int,
     max_bits: int = 4,
+    bit_flip_probability: float = 0.0,
 ) -> list[tuple[int, float]]:
     """Pareto frontier of (cost, P_D) over selection and 1-4 bit choices."""
     options = [[(0, 0.0, 0.0, 1.0, 1.0)] for _ in deltas]
     for index, delta in enumerate(deltas):
         for bits in range(1, max_bits + 1):
-            options[index].append((bits, *moments(float(delta), bits)))
+            options[index].append((
+                bits, *moments(float(delta), bits, bit_flip_probability),
+            ))
     out: list[tuple[int, float]] = []
     for combo in itertools.product(*options):
         cost = sum(item[0] for item in combo)
@@ -169,6 +192,7 @@ def vectorized_target_options(
     grid: int = 32,
     max_bits: int = 4,
     batch_size: int = 50_000,
+    bit_flip_probability: float = 0.0,
 ) -> list[tuple[int, float]]:
     """Vectorized exact Pareto frontier for up to R=8 reports.
 
@@ -186,7 +210,7 @@ def vectorized_target_options(
     pre_v1 = np.ones((len(reports), max_bits + 1))
     for i, delta in enumerate(deltas):
         for b in choices:
-            m0, m1, v0, v1 = moments(float(delta), b)
+            m0, m1, v0, v1 = moments(float(delta), b, bit_flip_probability)
             pre_m0[i, b] = m0
             pre_m1[i, b] = m1
             pre_v0[i, b] = v0
@@ -271,6 +295,7 @@ def subset_options(
     deltas: np.ndarray,
     bits: np.ndarray,
     grid: int,
+    bit_flip_probability: float = 0.0,
 ) -> list[tuple[int, float]]:
     """Pareto frontier of (cost, P_D) for a fixed per-report bit assignment."""
     reports = list(range(len(deltas)))
@@ -283,7 +308,9 @@ def subset_options(
         var0 = [1.0]
         var1 = [1.0]
         for i in selected:
-            m0, m1, v0, v1 = moments(float(deltas[i]), int(bits[i]))
+            m0, m1, v0, v1 = moments(
+                float(deltas[i]), int(bits[i]), bit_flip_probability,
+            )
             mu0.append(m0)
             mu1.append(m1)
             var0.append(v0)

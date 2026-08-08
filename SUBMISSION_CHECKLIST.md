@@ -37,6 +37,7 @@ python scripts/run_joint_scale_gate.py --seeds 10 --grid 32
 python scripts/run_joint_scale_gate.py --seeds 5 --grid 32 --reports 5 --output results/joint_scale_r5_gate.json
 python scripts/run_joint_scale_gate.py --seeds 2 --grid 32 --reports 8 --budget-multiplier 7 --output results/joint_scale_r8_gate.json
 python scripts/run_mappo_baseline.py --train-seeds 40 --test-seeds 20 --episodes 3000
+python scripts/run_channel_difficulty_gate.py --seeds 10 --grid 32
 python scripts/audit_submission_completeness.py
 python scripts/audit_submission_docx.py
 python scripts/audit_submission_latex.py

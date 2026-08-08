@@ -321,6 +321,18 @@ def main() -> None:
     check("R8 Q20 DP fast",
           r8q20["dp_wall_seconds_mean"] < 0.01)
 
+    channel = load("channel_difficulty_gate.json")
+    check("channel difficulty 10 seeds", channel["seeds"] == 10)
+    check("channel difficulty four flips", len(channel["flips"]) == 4)
+    flip05 = next(
+        r for r in channel["summary"]
+        if r["bit_flip"] == 0.05 and r["budget_bits"] == 14
+    )
+    check("channel flip 0.05 exact equals greedy",
+          close(flip05["gain_over_greedy_mean_pp"], 0.0, 1e-3))
+    check("channel flip 0.05 P_D low",
+          flip05["exact_joint_pd_mean"] < 0.75)
+
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)
     check("G8-target all oracle match",
