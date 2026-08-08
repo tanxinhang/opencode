@@ -22,8 +22,8 @@ and the committed fix.
 |---|--------------|------|
 | 1 | RIS model too strong | DONE: wording is now geometry-aware normalized power-gain model with coherent cross-term caveat; RIS demoted to an application instance. |
 | 2 | OTFS is a label | DONE: title/abstract rewritten without OTFS; DD-domain sensing is background and explicitly not required by the theory. |
-| 3 | Statistical evidence weak | PARTIAL: added two-sided paired t, Wilcoxon, and Holm correction via `scripts/audit_exact_selection_stats.py`; absolute P_D and honest non-significance at system level are reported. 50-100 seeds still future work. |
-| 4 | Ablations mixed | DONE (runner ready): `scripts/run_factorial_ablation.py` toggles fusion, selection, RIS, quantization, communication, and max-min one factor at a time; the 50-100 seed run is queued on the user side. |
+| 3 | Statistical evidence weak | DONE: 500-seed two-sided paired t, Wilcoxon, and Holm correction are all significant at every system-level budget; absolute P_D and effect sizes are reported. |
+| 4 | Ablations mixed | DONE: 500-seed factorial ablation in `results/factorial_ablation.json` toggles fusion, selection, RIS, quantization, communication, and max-min one factor at a time. |
 | 5 | Hard B&B instances missing | DONE: `scripts/run_scaled_difficulty_gate.py` adds critical-threshold, similar-weak, and K-report layers with node counts, recursion depth, prune rate, and exhaustive match checks. |
 
 ## P2 (submission engineering)

@@ -47,9 +47,9 @@ python scripts/run_demo.py --config config/demo.yaml
 python scripts/run_benchmarks.py --config config/demo.yaml
 python scripts/run_oracle_study.py --config config/oracle_small.yaml
 python scripts/run_ablation_study.py --config config/demo.yaml
-python scripts/run_exact_maxmin_gate.py --seeds 50 --budgets 3 5 7 9 11 --grid 64
+python scripts/run_exact_maxmin_gate.py --seeds 500 --budgets 3 5 7 9 11 --grid 64
 python scripts/run_scaled_difficulty_gate.py --grid 96
-python scripts/run_factorial_ablation.py --seeds 50 --budget 20 --grid 64
+python scripts/run_factorial_ablation.py --seeds 500 --budget 20 --grid 64
 python scripts/audit_exact_selection_stats.py
 python scripts/run_sensitivity_study.py --config config/demo.yaml
 python scripts/run_risk_portfolio_study.py --config config/demo.yaml

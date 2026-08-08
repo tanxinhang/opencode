@@ -23,7 +23,7 @@ def main() -> None:
         ("at least 20 headings",
          sum(1 for p in doc.paragraphs
              if p.style.name.startswith("Heading")) >= 20),
-        ("six tables", len(doc.tables) == 6),
+        ("seven tables", len(doc.tables) == 7),
         ("three inline images", len(doc.inline_shapes) == 3),
         ("22 references",
          any(p.text.strip().startswith("[22]") for p in doc.paragraphs)),

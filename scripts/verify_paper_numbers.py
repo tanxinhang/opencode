@@ -163,7 +163,7 @@ def main() -> None:
     g8m = load("exact_maxmin_gate.json")
     g8s = load("scaled_maxmin_gate.json")
     check("G8-K seeds 20", g8k["seeds"] == 20)
-    check("G8-M seeds 20", g8m["seeds"] == 20)
+    check("G8-M seeds 500", g8m["seeds"] == 500)
     check("G8-S seeds 20", g8s["seeds"] == 20)
     check("G8-K oracle match 100%",
           g8k["controlled"]["summary"]["oracle_match_rate"] == 1.0)
@@ -174,7 +174,7 @@ def main() -> None:
     g8m7 = next(r for r in g8m["variable_rate_system"]["by_budget"]
                 if r["budget_bits"] == 7)
     check("G8-K B7 gain", close(g8k7["gain_worst_mean"], 0.0257, 1e-3))
-    check("G8-M B7 gain", close(g8m7["gain_worst_mean"], 0.0257, 1e-3))
+    check("G8-M B7 gain", close(g8m7["gain_worst_mean"], 0.0240, 1e-3))
     check("G8-M B7 significant",
           g8m7["gain_worst_paired_t"]["p_one_sided"] < 0.05)
     check("G8-S zero max abs error", g8s["controlled_summary"]["max_abs_error"] == 0.0)
@@ -193,6 +193,24 @@ def main() -> None:
           critical85["min_cost"] == 7 and critical85["num_selected"] == 7)
     check("G8-D critical 0.85 nodes",
           critical85["nodes"] == 4225 and critical85["max_depth"] == 10)
+
+    g8stats = load("exact_selection_stats.json")
+    check("G8-stats 500 seeds", g8stats["seeds"] == 500)
+    check("G8-stats all Holm significant",
+          all(cell["holm_p_two_sided_t"] < 0.05
+              for cell in g8stats["sections"]["variable_rate_system"]))
+
+    fab = load("factorial_ablation.json")
+    check("factorial 500 seeds", fab["seeds"] == 500)
+    check("factorial seven factors",
+          set(fab["summary"]) == {
+              "full", "fusion_off", "selection_off", "ris_off",
+              "quantization_off", "communication_off", "maxmin_off",
+          })
+    check("factorial RIS dominant",
+          close(fab["summary"]["ris_off"]["worst_pd_gain_vs_full"], 0.2232, 1e-3))
+    check("factorial full QoS",
+          fab["summary"]["full"]["qos_rate"] == 1.0)
 
     g8t = load("exact_selection_target_scalability.json")
     check("G8-target 9 summary cells", len(g8t["summary"]) == 9)

@@ -65,10 +65,6 @@ Expected: all green.
 
 ## Optional technical follow-ups
 
-- Increase the 20-seed exact-selection audit to 50-100 paired scenarios so
-  the system-level max-min gains can be reassessed with more power.
-- Build a factorial ablation table separating fusion, selection, RIS,
-  quantization, communication robustness, and max-min contributions.
 - Increase G30-E from 2 seeds to 5-10 seeds (requires re-running G30 with
   the same seed set) to strengthen the exact rate-profile certificate.
 - Replace the empirical Lipschitz constant in G5-W with an analytically
