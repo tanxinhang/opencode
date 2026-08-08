@@ -441,27 +441,45 @@ and only if $\sum_q m_q(t)\le B$, because the per-target minima are jointly
 attainable and every feasible subset costs at least its minimum.
 
 **Theorem 3 (exact minimum-cost certificate).**  Let $m_q(t)$ be computed by
-branch-and-bound with the closed-form Cauchy upper bound.  In whitened
-coordinates for a candidate set $S$, every linear score satisfies
+branch-and-bound with the dual Cauchy upper bound.  In whitened coordinates
+for a candidate set $S$, let $\lambda_{\min},\lambda_{\max}$ be the extreme
+eigenvalues of $Q_S$ and define
 
 $$
-s(y) \le \sqrt{a_S^\top Q_S^{-1} a_S} -
-  \frac{z}{\sqrt{\lambda_{\max}(Q_S)}},
-\qquad z\ge 0,
+A_S(\mu)=\sqrt{a_S^\top(Q_S+\mu I)^{-1}a_S},
+\qquad
+\mu\ge 0.
 $$
 
-with $\lambda_{\min}(Q_S)$ replacing $\lambda_{\max}(Q_S)$ when $z<0$.
-This bound follows from $a^\top y\le\sqrt{a^\top Q^{-1}a}\sqrt{y^\top Q y}$
-and $\|y\|/\sqrt{y^\top Q y}\ge 1/\sqrt{\lambda_{\max}(Q)}$.  When remaining
-reports are added, the enlarged covariance is a principal extension and the
-bound is recomputed on the union set, so no Schur-complement error is
-introduced.  A node is pruned only when that bound is below $t$, when its
-cost already reaches the best known cost, or when the cheapest remaining
-reports cannot beat the best known cost.  The returned cost is therefore the
-exact minimum, and pruning never changes the result.  The implementation
-uses a value cache and an explicit tolerance of $10^{-12}$ on the threshold
-comparison, so the claim is exact with respect to the tolerance-controlled
-value oracle.
+Then every linear score satisfies
+
+$$
+s(y) \le \min_{\mu\ge 0}\ \max\Bigl\{
+\\
+  A_S(\mu)\sqrt{1+\mu/\lambda_{\max}} - z/\sqrt{\lambda_{\max}},\\
+  A_S(\mu)\sqrt{1+\mu/\lambda_{\min}} - z/\sqrt{\lambda_{\min}}
+\Bigr\}.
+$$
+
+For any $\mu\ge 0$, Cauchy-Schwarz with the factor
+$(Q_S+\mu I)^{1/2}$ gives
+$a_S^\top y\le A_S(\mu)\sqrt{y^\top(Q_S+\mu I)y}=
+A_S(\mu)\sqrt{1+\mu\|y\|^2}$, and Rayleigh's quotient gives
+$\|y\|\in[1/\sqrt{\lambda_{\max}},1/\sqrt{\lambda_{\min}}]$.  The majorant
+$g(t)=A_S(\mu)\sqrt{1+\mu t^2}-zt$ is convex in $t$, so its maximum on the
+interval is attained at an endpoint; minimizing over $\mu$ keeps the bound
+valid and no tighter than the $\mu=0$ Cauchy bound
+$\sqrt{a_S^\top Q_S^{-1}a_S}-z/\sqrt{\lambda_{\max}}$ (with
+$\lambda_{\min}$ when $z<0$).  When remaining reports are added, the
+enlarged covariance is a principal extension and the bound is recomputed on
+the union set, so no Schur-complement error is introduced.  A node is pruned
+only when that bound is below $t$, when its cost already reaches the best
+known cost, or when the cheapest remaining reports cannot beat the best
+known cost.  The returned cost is therefore the exact minimum, and pruning
+never changes the result.  The implementation uses a value cache, a 33-point
+$\mu$ grid with local refinement, and an explicit tolerance of $10^{-12}$ on
+the threshold comparison, so the claim is exact with respect to the
+tolerance-controlled value oracle.
 
 Small low-$P_D$ models use exact subset enumeration instead; when every
 model is within `max_exhaustive_reports`, the scaled selector delegates
@@ -637,8 +655,9 @@ similar-weak, and K-report layers: thresholds $0.75$-$0.90$ require $4$-$9$
 reports, the branch-and-bound visits 484-8185 nodes with a recursion depth
 of 10 and a 50% prune rate, and every returned minimum matches exhaustive
 enumeration on all ten audited cells.  A correlated-redundant instance with
-inter-report correlation 0.95 visits 1791 nodes and triggers 12
-upper-bound cuts, confirming that the Cauchy bound becomes active when the
+inter-report correlation 0.95 visits 113 nodes and triggers 15 upper-bound
+cuts with the dual bound, versus 1791 nodes with the $\mu=0$ Cauchy member,
+confirming that the parameterized bound becomes active and tight when the
 remaining reports are highly correlated and hence carry little new evidence.
 
 The target-count audit re-verifies the exhaustive-oracle match when the
@@ -823,14 +842,15 @@ is the minimum cost over all subsets with value at least $t$.  Any global
 schedule with value at least $t$ and cost at most $B$ has per-target costs at
 least $m_q(t)$, so $\sum_q m_q(t)\le B$ is necessary; choosing the per-target
 minimal subsets attains the bound, so it is sufficient.  The branch-and-bound
-computes $m_q(t)$ exactly: for $z\ge 0$,
-$s(y)\le \sqrt{a_S^\top Q_S^{-1} a_S} - z/\sqrt{\lambda_{\max}(Q_S)}$
-(with $\lambda_{\min}$ for $z<0$) follows from Cauchy-Schwarz and the
-Rayleigh quotient, so a node whose bound is below $t$ cannot contain a
-feasible subset; the cost-based prunes discard only nodes that cannot
-improve the current best.  The remaining DFS is exhaustive, so the returned
-cost is exact.  The full statement is Lemma 4.7G in `FORMAL_PROOFS.md`, now
-also stated in Section 4.4.
+computes $m_q(t)$ exactly: for every $\mu\ge 0$, Cauchy-Schwarz with
+$(Q_S+\mu I)^{1/2}$ and the Rayleigh interval
+$\|y\|\in[1/\sqrt{\lambda_{\max}},1/\sqrt{\lambda_{\min}}]$ imply the
+endpoint bound stated in Section 4.4, and minimizing that bound over $\mu$
+keeps it valid.  A node whose bound is below $t$ cannot contain a feasible
+subset; the cost-based prunes discard only nodes that cannot improve the
+current best.  The remaining DFS is exhaustive, so the returned cost is
+exact.  The full statement is Lemma 4.7G in `FORMAL_PROOFS.md`, now also
+stated in Section 4.4.
 
 **Theorem 4 (exact first-feasible prefix).**  The Poisson-binomial tails
 are exact only when the voter decisions are independent conditional on the

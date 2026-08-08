@@ -235,24 +235,32 @@ def pd_shift_upper_bound(
     indices: Iterable[int],
     false_alarm_rate: float,
 ) -> float:
-    """Closed-form upper bound on the P_D-optimal linear-score shift.
+    """Tight dual upper bound on the P_D-optimal linear-score shift.
 
     In whitened coordinates ``y = L^T w``, ``a = L^-1 delta`` and
     ``Q = L^-1 Sigma1 L^-T``, every linear score has shift
 
     ``s(y) = (a^T y - z ||y||) / sqrt(y^T Q y)``
 
-    with ``z = Phi^-1(1 - P_FA)``.  Cauchy-Schwarz gives
-    ``a^T y <= sqrt(a^T Q^-1 a) sqrt(y^T Q y)``.  For ``z >= 0``, the
-    ratio bound ``||y|| / sqrt(y^T Q y) >= 1 / sqrt(lambda_max(Q))`` gives
+    with ``z = Phi^-1(1 - P_FA)``.  For any ``mu >= 0``,
+
+    ``y^T(Q + mu I)y = 1 + mu ||y||^2``
+
+    and Cauchy-Schwarz gives
+
+    ``a^T y <= sqrt(a^T(Q+mu I)^-1 a) sqrt(1 + mu ||y||^2)``.
+
+    Since ``y^T Q y = 1``, Rayleigh's quotient gives
+    ``||y|| in [1/sqrt(lambda_max(Q)), 1/sqrt(lambda_min(Q))]``, and the
+    one-dimensional majorant ``g(t)`` is convex, so its maximum over the
+    interval is attained at one of the two endpoints.  Minimizing the
+    resulting bound over ``mu >= 0`` yields the upper bound used here.  The
+    earlier Cauchy bound is the ``mu = 0`` member of this family:
 
     ``s(y) <= sqrt(a^T Q^-1 a) - z / sqrt(lambda_max(Q))``.
 
-    For ``z < 0`` the sign flips and the tight denominator is
-    ``lambda_min(Q)`` instead.  The bound is valid for every linear score and
-    therefore also for the P_D-optimal one.  It is used as a pruning bound
-    that does not require the numerical monotonicity condition
-    ``P_D >= 0.5``.
+    The bound is valid for every linear score, including ``z < 0``, and is
+    used as a pruning bound that does not require ``P_D >= 0.5``.
     """
     if not 0.0 < false_alarm_rate < 1.0:
         raise ValueError("false_alarm_rate must lie in (0, 1)")
@@ -270,12 +278,32 @@ def pd_shift_upper_bound(
     inverse0 = stable_solve(cholesky0, np.eye(cov0.shape[0]))
     a = inverse0 @ delta
     q = inverse0 @ cov1 @ inverse0.T
-    cauchy = float(np.sqrt(max(a @ stable_solve(q, a), 0.0)))
-    eigenvalues = np.linalg.eigvalsh(q)
+    eigenvalues, eigenvectors = np.linalg.eigh(q)
     z = norm.ppf(1.0 - false_alarm_rate)
-    if z >= 0.0:
-        return cauchy - z / float(np.sqrt(max(eigenvalues.max(), 1e-30)))
-    return cauchy - z / float(np.sqrt(max(eigenvalues.min(), 1e-30)))
+    projected = eigenvectors.T @ a
+    t_lo = 1.0 / float(np.sqrt(max(eigenvalues.max(), 1e-30)))
+    t_hi = 1.0 / float(np.sqrt(max(eigenvalues.min(), 1e-30)))
+
+    def endpoint(mu: float) -> float:
+        energy = float(np.sum(projected**2 / (eigenvalues + mu)))
+        amplitude = float(np.sqrt(max(energy, 0.0)))
+        return max(
+            amplitude * np.sqrt(1.0 + mu * t_lo**2) - z * t_lo,
+            amplitude * np.sqrt(1.0 + mu * t_hi**2) - z * t_hi,
+        )
+
+    mu_grid = np.concatenate(([0.0], np.geomspace(1e-8, 1e8, 32)))
+    values = np.asarray([endpoint(mu) for mu in mu_grid])
+    best_index = int(np.argmin(values))
+    lo = 0.0 if best_index == 0 else mu_grid[best_index - 1]
+    hi = 1e9 if best_index == mu_grid.size - 1 else mu_grid[best_index + 1]
+    refined = minimize_scalar(
+        endpoint,
+        bounds=(lo, hi),
+        method="bounded",
+        options={"xatol": 1e-10, "maxiter": 100},
+    )
+    return float(min(refined.fun, values.min()))
 
 
 def optimal_gaussian_weights(

@@ -193,3 +193,33 @@ def test_pd_shift_upper_bound_covers_high_false_alarm_rate():
             mu0, mu1, sigma0, sigma1, indices, false_alarm_rate
         )
         assert shift <= bound + 1e-8
+
+
+def test_dual_upper_bound_tightens_cauchy_on_correlated_evidence():
+    """The mu-parameterized bound must beat the mu=0 Cauchy member."""
+    rng = np.random.default_rng(20260818)
+    for correlation in (0.8, 0.9, 0.95):
+        n = 11
+        index = np.arange(n)
+        sigma1 = correlation ** np.abs(index[:, None] - index[None, :])
+        mu0 = np.zeros(n)
+        mu1 = np.concatenate(([0.8], np.linspace(1.5, 0.5, n - 1)))
+        sigma0 = np.eye(n)
+        indices = set(range(n))
+        cholesky0 = np.linalg.cholesky(sigma0)
+        inverse0 = np.linalg.inv(cholesky0)
+        a = inverse0 @ (mu1 - mu0)
+        q = inverse0 @ sigma1 @ inverse0.T
+        z = norm.ppf(0.95)
+        eigenvalues = np.linalg.eigvalsh(q)
+        cauchy = float(np.sqrt(max(a @ np.linalg.solve(q, a), 0.0)))
+        cauchy -= z / float(np.sqrt(eigenvalues.max()))
+        dual = pd_shift_upper_bound(
+            mu0, mu1, sigma0, sigma1, indices, 0.05
+        )
+        pd = optimal_gaussian_detection_probability(
+            mu0, mu1, sigma0, sigma1, indices, 0.05, grid=128
+        )
+        actual = norm.ppf(np.clip(pd, 1e-12, 1.0 - 1e-12))
+        assert dual <= cauchy - 0.1
+        assert actual <= dual + 1e-6

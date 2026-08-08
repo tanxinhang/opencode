@@ -197,7 +197,7 @@ def main() -> None:
         r for r in g8d["rows"] if r["label"] == "correlated-redundant"
     )
     check("G8-D correlated upper cuts",
-          correlated["prune_upper"] == 12 and correlated["nodes"] == 1791)
+          correlated["prune_upper"] == 15 and correlated["nodes"] == 113)
     check("G8-D correlated exhaustive match",
           correlated["matches_exhaustive"] is True)
 
