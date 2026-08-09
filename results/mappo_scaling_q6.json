@@ -1,0 +1,25 @@
+{
+  "gate": "mappo-baseline-multi-target",
+  "train_seeds": 50,
+  "test_seeds": 30,
+  "episodes": 5000,
+  "grid": 32,
+  "exact_max_reports": null,
+  "exact_max_bits": 4,
+  "summary": [
+    {
+      "budget_bits": 48,
+      "exact_max_reports": null,
+      "exact_max_bits": 4,
+      "train_episodes": 5000,
+      "train_seconds": 113.25905560003594,
+      "mappo_worst_mean": 0.7741146815275457,
+      "mappo_used_bits_mean": 12.0,
+      "mappo_over_budget_rate": 0.0,
+      "greedy_worst_mean": 0.8250158845972544,
+      "exact_joint_worst_mean": 0.8479830254856554,
+      "mappo_gap_to_exact_pp": 7.38683439581097,
+      "greedy_gap_to_exact_pp": 2.2967140888401016
+    }
+  ]
+}

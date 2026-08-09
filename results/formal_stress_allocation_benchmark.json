@@ -1,6 +1,6 @@
 {
   "gate": "robust-stress-allocation",
-  "config": "config\\demo.yaml",
+  "config": "config/demo.yaml",
   "profiles": [
     "clean",
     "combined"

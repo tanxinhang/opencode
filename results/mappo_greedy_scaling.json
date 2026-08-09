@@ -1,46 +1,46 @@
 {
   "gate": "mappo-greedy-exact-scaling",
-  "train_seeds": 20,
-  "test_seeds": 20,
-  "episodes": 800,
+  "train_seeds": 50,
+  "test_seeds": 30,
+  "episodes": 5000,
   "budget_multiplier": 8,
   "reports_per_target": 4,
   "rows": [
     {
       "targets": 2,
       "budget_bits": 16,
-      "mappo_worst_mean": 0.7820116129860402,
-      "greedy_worst_mean": 0.8280318497998957,
-      "exact_joint_worst_mean": 0.8570850540956508,
+      "mappo_worst_mean": 0.7857163717451109,
+      "greedy_worst_mean": 0.8320395459819706,
+      "exact_joint_worst_mean": 0.8603465966496204,
       "mappo_used_bits_mean": 10.0,
-      "train_seconds": 13.46718699997291
+      "train_seconds": 75.0901968999533
     },
     {
       "targets": 4,
       "budget_bits": 32,
-      "mappo_worst_mean": 0.7590584974183139,
-      "greedy_worst_mean": 0.8246903431046941,
-      "exact_joint_worst_mean": 0.8486179277715481,
-      "mappo_used_bits_mean": 10.0,
-      "train_seconds": 15.847544600255787
+      "mappo_worst_mean": 0.765574142075433,
+      "greedy_worst_mean": 0.8268178720621701,
+      "exact_joint_worst_mean": 0.8520487784410811,
+      "mappo_used_bits_mean": 10.133333333333333,
+      "train_seconds": 94.31533040001523
     },
     {
       "targets": 6,
       "budget_bits": 48,
-      "mappo_worst_mean": 0.7730484705601643,
-      "greedy_worst_mean": 0.8245133277565669,
-      "exact_joint_worst_mean": 0.8471450805947207,
-      "mappo_used_bits_mean": 13.0,
-      "train_seconds": 18.054302799981087
+      "mappo_worst_mean": 0.7741146815275457,
+      "greedy_worst_mean": 0.8250158845972544,
+      "exact_joint_worst_mean": 0.8479830254856554,
+      "mappo_used_bits_mean": 12.0,
+      "train_seconds": 113.25905560003594
     },
     {
       "targets": 8,
       "budget_bits": 64,
-      "mappo_worst_mean": 0.7742659766642472,
-      "greedy_worst_mean": 0.8217201861858516,
-      "exact_joint_worst_mean": 0.8421669679439316,
+      "mappo_worst_mean": 0.7494104341146646,
+      "greedy_worst_mean": 0.8226045404916781,
+      "exact_joint_worst_mean": 0.8439025647046371,
       "mappo_used_bits_mean": 11.0,
-      "train_seconds": 20.451470999978483
+      "train_seconds": 132.3633690000279
     }
   ]
 }

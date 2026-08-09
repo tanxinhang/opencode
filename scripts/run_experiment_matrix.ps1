@@ -19,9 +19,9 @@ $cells = @(
         Name = "mappo-q2"
         Args = @(
             "scripts\run_mappo_baseline.py",
-            "--train-seeds", "40",
-            "--test-seeds", "20",
-            "--episodes", "3000",
+            "--train-seeds", "50",
+            "--test-seeds", "30",
+            "--episodes", "5000",
             "--budgets", "14", "16", "18",
             "--output", "results\mappo_baseline.json"
         )
@@ -32,9 +32,9 @@ $cells = @(
             "scripts\run_mappo_baseline.py",
             "--targets", "4",
             "--reports", "4",
-            "--train-seeds", "40",
-            "--test-seeds", "20",
-            "--episodes", "3000",
+            "--train-seeds", "50",
+            "--test-seeds", "30",
+            "--episodes", "5000",
             "--budgets", "28", "32", "36",
             "--output", "results\mappo_q4_baseline.json"
         )
@@ -45,9 +45,9 @@ $cells = @(
             "scripts\run_mappo_baseline.py",
             "--targets", "4",
             "--reports", "4",
-            "--train-seeds", "40",
-            "--test-seeds", "20",
-            "--episodes", "3000",
+            "--train-seeds", "50",
+            "--test-seeds", "30",
+            "--episodes", "5000",
             "--budgets", "28", "32", "36",
             "--exact-max-bits", "3",
             "--output", "results\mappo_q4_limited_bits_baseline.json"
@@ -58,9 +58,9 @@ $cells = @(
         Args = @(
             "scripts\run_mappo_greedy_scaling.py",
             "--targets", "2", "4", "6", "8",
-            "--train-seeds", "20",
-            "--test-seeds", "20",
-            "--episodes", "800",
+            "--train-seeds", "50",
+            "--test-seeds", "30",
+            "--episodes", "5000",
             "--budget-multiplier", "8",
             "--output", "results\mappo_greedy_scaling.json",
             "--figure", "paper_figures\mappo_greedy_scaling.png"

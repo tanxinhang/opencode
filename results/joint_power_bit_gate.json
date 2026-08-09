@@ -7,25 +7,25 @@
       "budget": 8,
       "joint_worst_pd": 0.6842640201988307,
       "sensing_only_worst_pd": 0.6048991575254604,
-      "communication_only_worst_pd": 0.4878798937624104,
+      "communication_only_worst_pd": 0.48787989376241053,
       "joint_vs_sensing_pp": 7.936486267337028,
-      "joint_vs_communication_pp": 19.638412643642027
+      "joint_vs_communication_pp": 19.638412643642017
     },
     {
       "budget": 12,
       "joint_worst_pd": 0.7764800630353774,
       "sensing_only_worst_pd": 0.7764800630353774,
-      "communication_only_worst_pd": 0.48870307123863904,
+      "communication_only_worst_pd": 0.4887030712386391,
       "joint_vs_sensing_pp": 0.0,
-      "joint_vs_communication_pp": 28.77769917967384
+      "joint_vs_communication_pp": 28.77769917967383
     },
     {
       "budget": 16,
       "joint_worst_pd": 0.7764800630353774,
       "sensing_only_worst_pd": 0.7764800630353774,
-      "communication_only_worst_pd": 0.48870307123863904,
+      "communication_only_worst_pd": 0.4887030712386391,
       "joint_vs_sensing_pp": 0.0,
-      "joint_vs_communication_pp": 28.77769917967384
+      "joint_vs_communication_pp": 28.77769917967383
     }
   ]
 }
