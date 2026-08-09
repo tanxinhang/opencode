@@ -187,6 +187,19 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "joint-power-comparison"
+        Args = @(
+            "scripts\run_joint_power_comparison.py",
+            "--reports", "2",
+            "--targets", "2",
+            "--budgets", "8", "10", "12",
+            "--episodes", "300",
+            "--train-seeds", "30",
+            "--test-seeds", "20",
+            "--output", "results\joint_power_comparison.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",
