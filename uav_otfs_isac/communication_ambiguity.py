@@ -93,3 +93,24 @@ def verify_endpoint_dominance(
         "grid_worst_at": worst_at,
         "passed": worst <= endpoint_violation + 1e-12,
     }
+
+
+def build_endpoint_scenario_groups(
+    targets,
+    flip_interval: tuple[float, float],
+    success_interval: tuple[float, float],
+) -> tuple[list[list[TargetEvidenceModel]], list[list[TargetEvidenceModel]]]:
+    """Return (four-corner groups, endpoint-reduced groups) per target.
+
+    The endpoint-reduced group contains only the ``(flip_hi, success_lo)``
+    model, which is the worst corner under the monotonicity closure.
+    """
+    full_groups = []
+    reduced_groups = []
+    for owner_delta, deltas, bits in targets:
+        models = build_endpoint_models(
+            owner_delta, deltas, bits, flip_interval, success_interval
+        )
+        full_groups.append(models)
+        reduced_groups.append([models[-1]])
+    return full_groups, reduced_groups

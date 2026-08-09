@@ -2,7 +2,11 @@ import numpy as np
 
 from uav_otfs_isac.communication_ambiguity import (
     build_endpoint_models,
+    build_endpoint_scenario_groups,
     verify_endpoint_dominance,
+)
+from uav_otfs_isac.robust_portfolio import (
+    optimize_robust_chance_constrained_portfolio,
 )
 
 
@@ -37,3 +41,32 @@ def test_endpoint_dominance_holds_on_grid():
     )
     assert result["passed"]
     assert result["grid_worst_at"] is None
+
+
+def test_endpoint_reduced_robust_dp_matches_four_corner_dp():
+    targets = [
+        (0.4, np.array([1.2, 1.5, 1.8, 2.0]), np.array([2, 3, 2, 3])),
+        (0.3, np.array([0.9, 1.1, 1.3, 1.5]), np.array([2, 2, 3, 3])),
+    ]
+    full, reduced = build_endpoint_scenario_groups(
+        targets, (0.0, 0.2), (0.5, 1.0)
+    )
+    common = dict(
+        budget_bits=8,
+        minimum_quality=[0.2, 0.2],
+        target_weights=[1.0, 1.3],
+        violation_limits=[0.1, 0.1],
+        quality_mode="gaussian_pd",
+        false_alarm_rate=0.05,
+    )
+    full_result = optimize_robust_chance_constrained_portfolio(
+        full, **common
+    )
+    reduced_result = optimize_robust_chance_constrained_portfolio(
+        reduced, **common
+    )
+    assert np.isclose(
+        reduced_result.worst_weighted_violation_excess,
+        full_result.worst_weighted_violation_excess,
+    )
+    assert reduced_result.scenario_count == 1

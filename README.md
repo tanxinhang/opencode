@@ -228,7 +228,9 @@ optimality with heterogeneous erasure still uses the exact DP.
 ambiguity: when violation probability is monotone in flip and success
 (Theorems 4.59/4.60), the worst case over a rectangular channel ambiguity
 set is at `(flip_hi, success_lo)`, so robust DP can use the single endpoint
-scenario (Lemma 4.70).
+scenario (Lemma 4.70).  Corollary 4.70A shows this endpoint-reduced DP has
+the same worst excess as the four-corner DP with scenario count reduced from
+four to one.
 
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case

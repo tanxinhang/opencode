@@ -37,5 +37,47 @@
       "grid_worst_at": null,
       "passed": true
     }
+  ],
+  "dp_rows": [
+    {
+      "seed": 0,
+      "full_scenarios": 4,
+      "reduced_scenarios": 1,
+      "full_worst_excess": 2.0700000000000003,
+      "reduced_worst_excess": 2.0700000000000003,
+      "equal": true
+    },
+    {
+      "seed": 1,
+      "full_scenarios": 4,
+      "reduced_scenarios": 1,
+      "full_worst_excess": 1.8200000000000003,
+      "reduced_worst_excess": 1.8200000000000003,
+      "equal": true
+    },
+    {
+      "seed": 2,
+      "full_scenarios": 4,
+      "reduced_scenarios": 1,
+      "full_worst_excess": 2.0700000000000003,
+      "reduced_worst_excess": 2.0700000000000003,
+      "equal": true
+    },
+    {
+      "seed": 3,
+      "full_scenarios": 4,
+      "reduced_scenarios": 1,
+      "full_worst_excess": 1.9450000000000003,
+      "reduced_worst_excess": 1.9450000000000003,
+      "equal": true
+    },
+    {
+      "seed": 4,
+      "full_scenarios": 4,
+      "reduced_scenarios": 1,
+      "full_worst_excess": 1.8200000000000003,
+      "reduced_worst_excess": 1.8200000000000003,
+      "equal": true
+    }
   ]
 }

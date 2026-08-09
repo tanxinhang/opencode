@@ -1682,6 +1682,20 @@ verifies the same inequality on a grid.  Consequently, for common
 communication ambiguity, the robust DP over the single endpoint scenario is
 exact whenever the monotonicity closure passes.
 
+### Corollary 4.70A (endpoint-reduced robust DP)
+
+Under the assumptions of Lemma 4.70, the exact worst-case robust DP over the
+four-corner ambiguity set has the same worst weighted violation excess as the
+DP over the single `(flip_hi, success_lo)` scenario, with scenario count
+reduced from four to one.
+
+Proof: Lemma 4.70 shows the endpoint dominates every rectangle point for
+every fixed schedule, so the maximum over the four corners is attained at
+the endpoint for each schedule.  Since the robust DP minimizes the maximum
+over scenario vectors, replacing the four scenario vectors by the endpoint
+vector preserves both the objective and the optimum.  The gate compares the
+two DPs on controlled models.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1775,6 +1789,7 @@ the audit.
 | Lemma 4.68 | `physical_link_model.build_physical_link_models` | `tests/test_physical_link_model.py` |
 | Lemma 4.69 | `communication_aware.communication_aware_sensing_score`, `communication_aware_top_k` | `tests/test_communication_aware.py` |
 | Lemma 4.70 | `communication_ambiguity.verify_endpoint_dominance` | `tests/test_communication_ambiguity.py`, Gate CA-E JSON |
+| Corollary 4.70A | `communication_ambiguity.build_endpoint_scenario_groups` | `tests/test_communication_ambiguity.py` |
 
 ## 6. Explicit non-claims
 
