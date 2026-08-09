@@ -303,6 +303,49 @@ def greedy_joint_multi(scenario, budget):
         else:
             bits[q][r] += 1
         used += 1
+    # Reallocation phase: move one unit from a surplus report to a bottleneck
+    # target/report when it improves the global worst target.
+    while True:
+        current = worst()
+        best_move = None
+        for qa in range(len(scenario)):
+            for ra in range(reports):
+                for qb in range(len(scenario)):
+                    for rb in range(reports):
+                        if qa == qb and ra == rb:
+                            continue
+                        for kind in ("bit", "power"):
+                            if kind == "bit":
+                                if bits[qa][ra] <= 1 or bits[qb][rb] >= MAX_BITS:
+                                    continue
+                                old_a, old_b = bits[qa].copy(), bits[qb].copy()
+                                bits[qa][ra] -= 1
+                                bits[qb][rb] += 1
+                            else:
+                                if powers[qa][ra] <= 1 or powers[qb][rb] >= MAX_POWER:
+                                    continue
+                                old_a, old_b = powers[qa].copy(), powers[qb].copy()
+                                powers[qa][ra] -= 1
+                                powers[qb][rb] += 1
+                            new_worst = worst()
+                            gain = current - new_worst
+                            if kind == "bit":
+                                bits[qa], bits[qb] = old_a, old_b
+                            else:
+                                powers[qa], powers[qb] = old_a, old_b
+                            if gain > 0:
+                                key = (gain, qa, ra, qb, rb, kind)
+                                if best_move is None or key > best_move[0]:
+                                    best_move = (key, qa, ra, qb, rb, kind)
+        if best_move is None:
+            break
+        _, qa, ra, qb, rb, kind = best_move
+        if kind == "bit":
+            bits[qa][ra] -= 1
+            bits[qb][rb] += 1
+        else:
+            powers[qa][ra] -= 1
+            powers[qb][rb] += 1
     return worst()
 
 
