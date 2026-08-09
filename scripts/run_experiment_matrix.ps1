@@ -4,7 +4,10 @@ param(
     [switch]$DryRun
 )
 
-$ErrorActionPreference = "Stop"
+# Anaconda on Windows often loads libiomp5md.dll from both NumPy and PyTorch;
+# this silences the duplicate-OpenMP-runtime error before launching Python.
+$env:KMP_DUPLICATE_LIB_OK = "TRUE"
+$ErrorActionPreference = "Continue"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
@@ -129,8 +132,9 @@ foreach ($cell in $cells) {
     }
     $logFile = Join-Path $logDir "$($cell.Name).log"
     & $Python @($cell.Args) 2>&1 | Tee-Object -FilePath $logFile
-    if ($LASTEXITCODE -ne 0) {
-        throw "Cell '$($cell.Name)' failed with exit code $LASTEXITCODE"
+    $exit = $LASTEXITCODE
+    if ($exit -ne 0) {
+        throw "Cell '$($cell.Name)' failed with exit code $exit"
     }
 }
 

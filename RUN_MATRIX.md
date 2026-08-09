@@ -10,6 +10,10 @@ All commands below use that interpreter.  The PowerShell batch runner is
 `scripts/run_experiment_matrix.ps1`; it runs every cell sequentially and
 writes logs to `results/run_matrix_logs/`.
 
+On Windows with Anaconda, the runner sets `KMP_DUPLICATE_LIB_OK=TRUE` before
+launching Python to avoid the duplicate `libiomp5md.dll` OpenMP runtime
+error.
+
 ## Matrix
 
 | ID | Experiment | Command | Output |
