@@ -42,10 +42,17 @@ POWER_OPTIONS = (0, 1, 2)
 BIT_OPTIONS = (0, 1, 2)
 
 
-def make_scenario(seed: int, reports: int, targets: int):
+def make_scenario(seed: int, reports: int, targets: int, heterogeneous=False):
     rng = np.random.default_rng(seed)
     out = []
     for q in range(targets):
+        if heterogeneous:
+            owner = rng.uniform(0.2, 0.5)
+            out.append(np.concatenate((
+                [owner],
+                rng.uniform(0.5, 2.5, reports),
+            )))
+            continue
         strong = q % 2 == 0
         owner = 0.4 if strong else 0.3
         lo, hi = (1.8, 2.2) if strong else (1.2, 1.6)
@@ -752,14 +759,21 @@ def main() -> None:
     parser.add_argument("--episodes", type=int, default=300)
     parser.add_argument("--train-seeds", type=int, default=30)
     parser.add_argument("--test-seeds", type=int, default=20)
+    parser.add_argument("--mode", choices=["homogeneous", "heterogeneous"], default="homogeneous")
     args = parser.parse_args()
 
     train_scenarios = [
-        make_scenario(seed, args.reports, args.targets)
+        make_scenario(
+            seed, args.reports, args.targets,
+            heterogeneous=args.mode == "heterogeneous",
+        )
         for seed in range(args.train_seeds)
     ]
     test_scenarios = [
-        make_scenario(10000 + seed, args.reports, args.targets)
+        make_scenario(
+            10000 + seed, args.reports, args.targets,
+            heterogeneous=args.mode == "heterogeneous",
+        )
         for seed in range(args.test_seeds)
     ]
     summary = []
@@ -848,6 +862,7 @@ def main() -> None:
         })
     payload = {
         "gate": "joint-power-comparison",
+        "mode": args.mode,
         "summary": summary,
     }
     output = Path(args.output)
