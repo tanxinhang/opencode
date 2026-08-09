@@ -123,6 +123,7 @@ python scripts/run_error_feedback_gate.py --seeds 20 --rounds 1 3 10 30 --noise 
 python scripts/run_ucb_error_feedback_gate.py --seeds 20 --max-rounds 50 --noise 0.2
 python -m pytest -q tests/test_nomp_refinement.py
 python scripts/run_joint_power_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 200 --output results/joint_power_scaling.json --figure paper_figures/joint_power_scaling.png
+python scripts/run_joint_power_comm_mismatch_gate.py --seeds 20 --budgets 8 10 12 --output results/joint_power_comm_mismatch_gate.json
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/build_paper_tables.py
 ```

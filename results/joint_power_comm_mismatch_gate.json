@@ -1,0 +1,38 @@
+{
+  "gate": "joint-power-comm-mismatch",
+  "flip_hi": 0.2,
+  "success_lo": 0.7,
+  "seeds": 20,
+  "targets": 2,
+  "reports": 2,
+  "grid": 16,
+  "summary": [
+    {
+      "budget": 8,
+      "wta_greedy_worst_mean": 0.30335053411629,
+      "nomp_greedy_worst_mean": 0.33417050382509633,
+      "robust_exact_worst_mean": 0.33417050382509633,
+      "wta_gap_to_exact": 0.03081996970880635,
+      "nomp_gap_to_exact": 0.0,
+      "nomp_mean_refine_rounds": 0.75
+    },
+    {
+      "budget": 10,
+      "wta_greedy_worst_mean": 0.3507742532273781,
+      "nomp_greedy_worst_mean": 0.37330202050759587,
+      "robust_exact_worst_mean": 0.3737165376761479,
+      "wta_gap_to_exact": 0.02294228444876978,
+      "nomp_gap_to_exact": 0.0004145171685520088,
+      "nomp_mean_refine_rounds": 0.7
+    },
+    {
+      "budget": 12,
+      "wta_greedy_worst_mean": 0.38626581386934855,
+      "nomp_greedy_worst_mean": 0.3997005390706262,
+      "robust_exact_worst_mean": 0.4029108647829701,
+      "wta_gap_to_exact": 0.016645050913621562,
+      "nomp_gap_to_exact": 0.00321032571234392,
+      "nomp_mean_refine_rounds": 0.65
+    }
+  ]
+}

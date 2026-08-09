@@ -226,6 +226,15 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "joint-power-comm-mismatch"
+        Args = @(
+            "scripts\run_joint_power_comm_mismatch_gate.py",
+            "--seeds", "20",
+            "--budgets", "8", "10", "12",
+            "--output", "results\joint_power_comm_mismatch_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

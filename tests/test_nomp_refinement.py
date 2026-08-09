@@ -10,6 +10,10 @@ from uav_otfs_isac.nomp_refinement import (
 from uav_otfs_isac.power_split_theory import (
     winner_take_all_proportional_options,
 )
+from uav_otfs_isac.robust_joint_power_bit import (
+    enumerate_robust_power_bit_options,
+    pareto_options,
+)
 from scripts.run_joint_power_comparison import (
     make_scenario,
     ucb_wta_greedy_joint_multi,
@@ -120,3 +124,46 @@ def test_ucb_nomp_feedback_is_finite_and_keeps_worst_value():
     assert noisy["feedback_rounds"] <= 10
     assert abs(noisy["worst_pd"] - exact_value) < 1e-9
     assert isinstance(noisy["stopped_by_certificate"], bool)
+
+
+def test_nomp_refinement_improves_wta_under_comm_errors():
+    scenario = make_scenario(10001, 2, 2, heterogeneous=True)
+    wta = wta_greedy_joint_multi(
+        scenario,
+        8,
+        min_cover=False,
+        flip_probability=0.2,
+        success_probability=0.7,
+    )["worst_pd"]
+    nomp = nomp_wta_greedy_joint_multi(
+        scenario,
+        8,
+        flip_probability=0.2,
+        success_probability=0.7,
+    )["worst_pd"]
+    assert nomp > wta + 1e-6
+
+
+def test_nomp_refinement_matches_robust_exact_under_comm_errors():
+    scenario = make_scenario(10001, 2, 2, heterogeneous=True)
+    result = nomp_wta_greedy_joint_multi(
+        scenario,
+        8,
+        flip_probability=0.2,
+        success_probability=0.7,
+    )
+    groups = []
+    for target in scenario:
+        options = enumerate_robust_power_bit_options(
+            float(target[0]),
+            target[1:],
+            power_levels=np.arange(9, dtype=float),
+            bit_options=np.arange(3, dtype=int),
+            budget=8,
+            flip_interval=(0.0, 0.2),
+            success_interval=(0.7, 1.0),
+            grid=16,
+        )
+        groups.append(pareto_options(options, "robust_pd"))
+    exact = exact_joint_power_bit_maxmin(groups, 8)
+    assert abs(result["worst_pd"] - exact) < 1e-6

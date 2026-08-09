@@ -56,6 +56,27 @@ def _target_pd(
     ))
 
 
+def communication_target_pd(
+    owner_delta: float,
+    report_deltas: np.ndarray,
+    powers: np.ndarray,
+    bits: np.ndarray,
+    flip_probability: float,
+    success_probability: float,
+    grid: int = 32,
+) -> float:
+    """P_D of one target with a shared communication channel state."""
+    return _target_pd(
+        owner_delta,
+        report_deltas,
+        powers,
+        bits,
+        flip_probability,
+        success_probability,
+        grid,
+    )
+
+
 def dataclasses_replace_success(model, report_count: int, success: float):
     from dataclasses import replace
     return replace(

@@ -17,6 +17,7 @@ from .power_split_theory import (
     power_gain_coefficient,
     proportional_target_pd,
 )
+from .robust_joint_power_bit import communication_target_pd
 
 
 def leximin_improves(old_values, new_values) -> bool:
@@ -29,7 +30,14 @@ def leximin_improves(old_values, new_values) -> bool:
     return False
 
 
-def initial_min_cover(scenario, budget, *, max_bits: int = 2):
+def initial_min_cover(
+    scenario,
+    budget,
+    *,
+    max_bits: int = 2,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
+):
     """Activate one best report per target when the budget allows it."""
     reports = len(scenario[0]) - 1
     powers = [np.zeros(reports, dtype=int) for _ in scenario]
@@ -40,7 +48,12 @@ def initial_min_cover(scenario, budget, *, max_bits: int = 2):
     for q, target in enumerate(scenario):
         deltas = np.asarray(target[1:], dtype=float)
         coefficients = np.asarray([
-            power_gain_coefficient(float(delta), 1, 0.0, 1.0)
+            power_gain_coefficient(
+                float(delta),
+                1,
+                flip_probability,
+                success_probability,
+            )
             for delta in deltas
         ])
         winner = int(np.argmax(coefficients))
@@ -50,32 +63,73 @@ def initial_min_cover(scenario, budget, *, max_bits: int = 2):
     return powers, bits, used
 
 
-def target_scores(scenario, powers, bits, grid: int = 16):
+def target_scores(
+    scenario,
+    powers,
+    bits,
+    grid: int = 16,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
+):
     """Per-target P_D under the current allocation."""
     return [
-        float(proportional_target_pd(
+        float(_target_pd(
             float(target[0]),
             target[1:],
             powers[q],
             bits[q],
             grid,
+            flip_probability,
+            success_probability,
         ))
         for q, target in enumerate(scenario)
     ]
+
+
+def _target_pd(
+    owner_delta,
+    deltas,
+    powers,
+    bits,
+    grid,
+    flip_probability,
+    success_probability,
+):
+    if flip_probability == 0.0 and success_probability == 1.0:
+        return proportional_target_pd(
+            owner_delta, deltas, powers, bits, grid
+        )
+    return communication_target_pd(
+        owner_delta,
+        deltas,
+        powers,
+        bits,
+        flip_probability,
+        success_probability,
+        grid,
+    )
 
 
 def _active_reports(bits):
     return [r for r in range(len(bits)) if bits[r] > 0]
 
 
-def _winner_index(target, bits):
+def _winner_index(
+    target,
+    bits,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
+):
     active = _active_reports(bits)
     if not active:
         return None
     return max(
         active,
         key=lambda r: power_gain_coefficient(
-            float(target[r + 1]), int(bits[r]), 0.0, 1.0
+            float(target[r + 1]),
+            int(bits[r]),
+            flip_probability,
+            success_probability,
         ),
     )
 
@@ -106,6 +160,8 @@ def _iter_candidates(
     *,
     max_power,
     max_bits,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
 ):
     """Yield feasible single-exchange power/bit/atom moves."""
     q_count = len(scenario)
@@ -113,7 +169,12 @@ def _iter_candidates(
     for q in range(q_count):
         target_q = scenario[q]
         active_q = _active_reports(bits[q])
-        winner_q = _winner_index(target_q, bits[q])
+        winner_q = _winner_index(
+            target_q,
+            bits[q],
+            flip_probability,
+            success_probability,
+        )
         for s in range(reports):
             if winner_q is not None and s != winner_q:
                 if powers[q][s] > 0 and powers[q][winner_q] < max_power:
@@ -153,7 +214,12 @@ def _iter_candidates(
                     continue
                 target_d = scenario[d]
                 active_d = _active_reports(bits[d])
-                winner_d = _winner_index(target_d, bits[d])
+                winner_d = _winner_index(
+                    target_d,
+                    bits[d],
+                    flip_probability,
+                    success_probability,
+                )
                 if winner_d is None:
                     continue
                 if powers[q][s] > 0 and powers[d][winner_d] < max_power:
@@ -199,11 +265,20 @@ def maxmin_refine(
     max_bits: int = 2,
     max_rounds: int = 100,
     grid: int = 16,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
 ):
     """NOMP-style discrete refinement with a hard iteration cap."""
     rounds_used = 0
     for _ in range(max_rounds):
-        old_values = np.sort(target_scores(scenario, powers, bits, grid))
+        old_values = np.sort(target_scores(
+            scenario,
+            powers,
+            bits,
+            grid,
+            flip_probability,
+            success_probability,
+        ))
         best = None
         for candidate in _iter_candidates(
             scenario,
@@ -211,9 +286,16 @@ def maxmin_refine(
             bits,
             max_power=max_power,
             max_bits=max_bits,
+            flip_probability=flip_probability,
+            success_probability=success_probability,
         ):
             new_values = np.sort(target_scores(
-                scenario, candidate[0], candidate[1], grid
+                scenario,
+                candidate[0],
+                candidate[1],
+                grid,
+                flip_probability,
+                success_probability,
             ))
             if leximin_improves(old_values, new_values):
                 if best is None or new_values.tolist() > best[0]:
@@ -233,6 +315,8 @@ def wta_greedy_joint_multi(
     max_bits: int = 2,
     max_power=None,
     grid: int = 16,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
 ):
     """Online WTA greedy allocation with optional per-target minimum cover."""
     if max_power is None:
@@ -240,7 +324,11 @@ def wta_greedy_joint_multi(
     reports = len(scenario[0]) - 1
     if min_cover:
         powers, bits, used = initial_min_cover(
-            scenario, budget, max_bits=max_bits
+            scenario,
+            budget,
+            max_bits=max_bits,
+            flip_probability=flip_probability,
+            success_probability=success_probability,
         )
     else:
         powers = [np.zeros(reports, dtype=int) for _ in scenario]
@@ -249,7 +337,14 @@ def wta_greedy_joint_multi(
     steps = 0
 
     def current_mean():
-        return float(np.mean(target_scores(scenario, powers, bits, grid)))
+        return float(np.mean(target_scores(
+            scenario,
+            powers,
+            bits,
+            grid,
+            flip_probability,
+            success_probability,
+        )))
 
     while True:
         mean_before = current_mean()
@@ -282,7 +377,10 @@ def wta_greedy_joint_multi(
             if active:
                 coefficients = np.asarray([
                     power_gain_coefficient(
-                        float(target[r + 1]), int(bits[q][r]), 0.0, 1.0
+                        float(target[r + 1]),
+                        int(bits[q][r]),
+                        flip_probability,
+                        success_probability,
                     )
                     for r in active
                 ])
@@ -314,7 +412,14 @@ def wta_greedy_joint_multi(
     return {
         "powers": powers,
         "bits": bits,
-        "worst_pd": float(min(target_scores(scenario, powers, bits, grid))),
+        "worst_pd": float(min(target_scores(
+            scenario,
+            powers,
+            bits,
+            grid,
+            flip_probability,
+            success_probability,
+        ))),
         "used": int(sum(
             int(powers[q].sum()) + int(bits[q].sum())
             for q in range(len(scenario))
@@ -331,6 +436,8 @@ def nomp_wta_greedy_joint_multi(
     max_power=None,
     max_rounds: int = 100,
     grid: int = 16,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
 ):
     """WTA greedy with minimum cover, followed by NOMP-style refinement."""
     if max_power is None:
@@ -342,6 +449,8 @@ def nomp_wta_greedy_joint_multi(
         max_bits=max_bits,
         max_power=max_power,
         grid=grid,
+        flip_probability=flip_probability,
+        success_probability=success_probability,
     )
     powers, bits, refine_rounds = maxmin_refine(
         scenario,
@@ -351,11 +460,20 @@ def nomp_wta_greedy_joint_multi(
         max_bits=max_bits,
         max_rounds=max_rounds,
         grid=grid,
+        flip_probability=flip_probability,
+        success_probability=success_probability,
     )
     return {
         "powers": powers,
         "bits": bits,
-        "worst_pd": float(min(target_scores(scenario, powers, bits, grid))),
+        "worst_pd": float(min(target_scores(
+            scenario,
+            powers,
+            bits,
+            grid,
+            flip_probability,
+            success_probability,
+        ))),
         "used": int(sum(
             int(powers[q].sum()) + int(bits[q].sum())
             for q in range(len(scenario))

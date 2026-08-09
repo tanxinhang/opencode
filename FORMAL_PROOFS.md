@@ -1882,6 +1882,23 @@ above the smaller one at every step, so leximin accepts each move.  The gate
 does not claim exactness for arbitrary report counts; it reports the measured
 equality on the tested frontier.
 
+### Lemma 4.81 (communication-aware NOMP refinement under channel mismatch)
+
+Let the sensing channel set the report deflection while the communication
+channel adds BSC bit flips and link erasures.  When both are present, the
+per-target covariance is no longer proportional, so winner-take-all power is
+a heuristic rather than exact.  The online refinement evaluates every
+candidate at the worst communication endpoint `(flip_hi, success_lo)` and
+accepts only leximin-improving single power/bit/atom exchanges.
+
+Proof: by Lemma 4.70 the worst endpoint dominates the ambiguity rectangle, so
+the endpoint P_D is a valid robust per-target score.  Applying the same
+leximin acceptance argument as Lemma 4.80 keeps the robust worst target
+nondecreasing and guarantees termination at a local optimum or at
+`max_rounds`.  The gate reports the measured NOMP-to-robust-exact gaps; in
+the Q=2/R=2 gate they are 0.000/0.0004/0.0032 at budgets 8/10/12, versus
+0.031/0.023/0.017 for WTA-Greedy.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1987,6 +2004,7 @@ the audit.
 | Lemma 4.79 | `nomp_refinement.initial_min_cover` | `tests/test_nomp_refinement.py` |
 | Lemma 4.80 | `nomp_refinement.maxmin_refine` | `tests/test_nomp_refinement.py` |
 | Corollary 4.80A | `nomp_refinement.nomp_wta_greedy_joint_multi` | `tests/test_nomp_refinement.py`, Gate JC JSON |
+| Lemma 4.81 | `nomp_refinement` channel parameters + `scripts/run_joint_power_comm_mismatch_gate.py` | `tests/test_nomp_refinement.py`, Gate CMM JSON |
 
 ## 6. Explicit non-claims
 

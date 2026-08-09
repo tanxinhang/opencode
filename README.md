@@ -317,6 +317,15 @@ average-score greedy path starve the weak targets.
 
 ![Joint power-bit scaling](paper_figures/joint_power_scaling.png)
 
+`scripts/run_joint_power_comm_mismatch_gate.py` decouples the sensing channel
+from the communication channel: reports now carry BSC bit flips up to 0.2 and
+link erasures down to 0.7, and the exact oracle evaluates every option at the
+worst endpoint `(flip_hi, success_lo)`.  Winner-take-all is only a heuristic
+under this mismatch, so NOMP refinement has real room: at budgets 8/10/12 the
+NOMP worst P_D is 0.334/0.373/0.400 versus robust exact 0.334/0.374/0.403,
+while WTA-Greedy is 0.303/0.351/0.386.  The NOMP gaps to robust exact are
+0.000/0.0004/0.0032 against WTA gaps of 0.031/0.023/0.017.
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
 union-bound UCB widths.  The winner certificate compares the active winner's
