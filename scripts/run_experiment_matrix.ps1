@@ -235,6 +235,12 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "joint-power-summary"
+        Args = @(
+            "scripts\summarize_joint_power_results.py"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",
