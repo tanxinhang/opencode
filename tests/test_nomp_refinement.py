@@ -11,8 +11,12 @@ from uav_otfs_isac.power_split_theory import (
     winner_take_all_proportional_options,
 )
 from uav_otfs_isac.robust_joint_power_bit import (
+    enumerate_heterogeneous_robust_power_bit_options,
     enumerate_robust_power_bit_options,
     pareto_options,
+)
+from scripts.run_joint_power_comm_mismatch_gate import (
+    make_comm_mismatch_scenario,
 )
 from scripts.run_joint_power_comparison import (
     make_scenario,
@@ -162,6 +166,62 @@ def test_nomp_refinement_matches_robust_exact_under_comm_errors():
             budget=8,
             flip_interval=(0.0, 0.2),
             success_interval=(0.7, 1.0),
+            grid=16,
+        )
+        groups.append(pareto_options(options, "robust_pd"))
+    exact = exact_joint_power_bit_maxmin(groups, 8)
+    assert abs(result["worst_pd"] - exact) < 1e-6
+
+
+def test_success_probability_changes_robust_frontier():
+    options_weak = enumerate_robust_power_bit_options(
+        0.4,
+        np.array([1.8, 2.0]),
+        power_levels=np.array([0.0, 1.0, 2.0]),
+        bit_options=np.array([0, 1, 2]),
+        budget=4,
+        flip_interval=(0.0, 0.2),
+        success_interval=(0.5, 1.0),
+        grid=16,
+    )
+    options_strong = enumerate_robust_power_bit_options(
+        0.4,
+        np.array([1.8, 2.0]),
+        power_levels=np.array([0.0, 1.0, 2.0]),
+        bit_options=np.array([0, 1, 2]),
+        budget=4,
+        flip_interval=(0.0, 0.2),
+        success_interval=(0.99, 1.0),
+        grid=16,
+    )
+    weak = pareto_options(options_weak, "robust_pd")
+    strong = pareto_options(options_strong, "robust_pd")
+    assert any(
+        weak_value < strong_value
+        for (_, weak_value), (_, strong_value) in zip(weak, strong)
+    )
+
+
+def test_nomp_refinement_improves_wta_under_per_link_channels():
+    scenario = make_comm_mismatch_scenario(10001, 2, 2)
+    wta = wta_greedy_joint_multi(scenario, 8, min_cover=False)["worst_pd"]
+    nomp = nomp_wta_greedy_joint_multi(scenario, 8)["worst_pd"]
+    assert nomp >= wta - 1e-12
+
+
+def test_per_link_nomp_matches_robust_exact_at_low_budget():
+    scenario = make_comm_mismatch_scenario(10001, 2, 2)
+    result = nomp_wta_greedy_joint_multi(scenario, 8)
+    groups = []
+    for owner, deltas, flips, successes in scenario:
+        options = enumerate_heterogeneous_robust_power_bit_options(
+            owner,
+            deltas,
+            [(0.0, float(value)) for value in flips],
+            [(float(value), 1.0) for value in successes],
+            power_levels=np.arange(9, dtype=float),
+            bit_options=np.arange(3, dtype=int),
+            budget=8,
             grid=16,
         )
         groups.append(pareto_options(options, "robust_pd"))

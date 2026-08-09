@@ -17,7 +17,7 @@ from .power_split_theory import (
     power_gain_coefficient,
     proportional_target_pd,
 )
-from .robust_joint_power_bit import communication_target_pd
+from .robust_joint_power_bit import per_report_communication_target_pd
 
 
 def leximin_improves(old_values, new_values) -> bool:
@@ -30,6 +30,31 @@ def leximin_improves(old_values, new_values) -> bool:
     return False
 
 
+def _parse_target(target, flip_probability=0.0, success_probability=1.0):
+    """Return (owner, deltas, flips, successes) for either scenario format."""
+    if (
+        isinstance(target, tuple)
+        and len(target) == 4
+        and isinstance(target[1], np.ndarray)
+    ):
+        return (
+            float(target[0]),
+            np.asarray(target[1], dtype=float),
+            np.asarray(target[2], dtype=float),
+            np.asarray(target[3], dtype=float),
+        )
+    row = np.asarray(target, dtype=float)
+    owner = float(row[0])
+    deltas = row[1:]
+    flips = np.full(deltas.size, float(flip_probability))
+    successes = np.full(deltas.size, float(success_probability))
+    return owner, deltas, flips, successes
+
+
+def _report_count(target):
+    return int(_parse_target(target)[1].size)
+
+
 def initial_min_cover(
     scenario,
     budget,
@@ -37,29 +62,49 @@ def initial_min_cover(
     max_bits: int = 2,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
+    grid: int = 16,
 ):
     """Activate one best report per target when the budget allows it."""
-    reports = len(scenario[0]) - 1
+    reports = _report_count(scenario[0])
     powers = [np.zeros(reports, dtype=int) for _ in scenario]
     bits = [np.zeros(reports, dtype=int) for _ in scenario]
     used = 0
     if 2 * len(scenario) > budget:
         return powers, bits, used
     for q, target in enumerate(scenario):
-        deltas = np.asarray(target[1:], dtype=float)
-        coefficients = np.asarray([
-            power_gain_coefficient(
-                float(delta),
-                1,
+        zero_powers = np.zeros(reports, dtype=float)
+        zero_bits = np.zeros(reports, dtype=int)
+        baseline = _target_pd(
+            target,
+            zero_powers,
+            zero_bits,
+            grid,
+            flip_probability,
+            success_probability,
+        )
+        best_value = baseline
+        best_winner = None
+        for r in range(reports):
+            candidate_powers = zero_powers.copy()
+            candidate_bits = zero_bits.copy()
+            candidate_powers[r] = 1
+            candidate_bits[r] = 1
+            candidate = _target_pd(
+                target,
+                candidate_powers,
+                candidate_bits,
+                grid,
                 flip_probability,
                 success_probability,
             )
-            for delta in deltas
-        ])
-        winner = int(np.argmax(coefficients))
-        powers[q][winner] = 1
-        bits[q][winner] = 1
-        used += 2
+            if candidate > best_value:
+                best_value = candidate
+                best_winner = r
+        if best_winner is not None and best_value > baseline + 1e-12:
+            winner = best_winner
+            powers[q][winner] = 1
+            bits[q][winner] = 1
+            used += 2
     return powers, bits, used
 
 
@@ -74,8 +119,7 @@ def target_scores(
     """Per-target P_D under the current allocation."""
     return [
         float(_target_pd(
-            float(target[0]),
-            target[1:],
+            target,
             powers[q],
             bits[q],
             grid,
@@ -87,25 +131,25 @@ def target_scores(
 
 
 def _target_pd(
-    owner_delta,
-    deltas,
+    target,
     powers,
     bits,
     grid,
     flip_probability,
     success_probability,
 ):
-    if flip_probability == 0.0 and success_probability == 1.0:
-        return proportional_target_pd(
-            owner_delta, deltas, powers, bits, grid
-        )
-    return communication_target_pd(
+    owner_delta, deltas, flips, successes = _parse_target(
+        target, flip_probability, success_probability
+    )
+    if np.all(flips == 0.0) and np.all(successes == 1.0):
+        return proportional_target_pd(owner_delta, deltas, powers, bits, grid)
+    return per_report_communication_target_pd(
         owner_delta,
         deltas,
         powers,
         bits,
-        flip_probability,
-        success_probability,
+        flips,
+        successes,
         grid,
     )
 
@@ -119,17 +163,39 @@ def _winner_index(
     bits,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
+    grid: int = 16,
 ):
     active = _active_reports(bits)
     if not active:
         return None
+    owner, deltas, flips, successes = _parse_target(
+        target, flip_probability, success_probability
+    )
+    if not (np.all(flips == 0.0) and np.all(successes == 1.0)):
+        best = None
+        for r in active:
+            candidate_p = np.zeros(deltas.size)
+            candidate_b = np.zeros(deltas.size, dtype=int)
+            candidate_p[r] = 1
+            candidate_b[r] = int(bits[r])
+            value = _target_pd(
+                (owner, deltas, flips, successes),
+                candidate_p,
+                candidate_b,
+                grid,
+                flip_probability,
+                success_probability,
+            )
+            if best is None or value > best[0]:
+                best = (float(value), r)
+        return int(best[1])
     return max(
         active,
         key=lambda r: power_gain_coefficient(
-            float(target[r + 1]),
+            float(deltas[r]),
             int(bits[r]),
-            flip_probability,
-            success_probability,
+            float(flips[r]),
+            float(successes[r]),
         ),
     )
 
@@ -162,10 +228,11 @@ def _iter_candidates(
     max_bits,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
+    grid: int = 16,
 ):
     """Yield feasible single-exchange power/bit/atom moves."""
     q_count = len(scenario)
-    reports = len(scenario[0]) - 1
+    reports = _report_count(scenario[0])
     for q in range(q_count):
         target_q = scenario[q]
         active_q = _active_reports(bits[q])
@@ -174,6 +241,7 @@ def _iter_candidates(
             bits[q],
             flip_probability,
             success_probability,
+            grid,
         )
         for s in range(reports):
             if winner_q is not None and s != winner_q:
@@ -219,6 +287,7 @@ def _iter_candidates(
                     bits[d],
                     flip_probability,
                     success_probability,
+                    grid,
                 )
                 if winner_d is None:
                     continue
@@ -288,6 +357,7 @@ def maxmin_refine(
             max_bits=max_bits,
             flip_probability=flip_probability,
             success_probability=success_probability,
+            grid=grid,
         ):
             new_values = np.sort(target_scores(
                 scenario,
@@ -321,7 +391,7 @@ def wta_greedy_joint_multi(
     """Online WTA greedy allocation with optional per-target minimum cover."""
     if max_power is None:
         max_power = int(budget)
-    reports = len(scenario[0]) - 1
+    reports = _report_count(scenario[0])
     if min_cover:
         powers, bits, used = initial_min_cover(
             scenario,
@@ -329,6 +399,7 @@ def wta_greedy_joint_multi(
             max_bits=max_bits,
             flip_probability=flip_probability,
             success_probability=success_probability,
+            grid=grid,
         )
     else:
         powers = [np.zeros(reports, dtype=int) for _ in scenario]
@@ -375,16 +446,13 @@ def wta_greedy_joint_multi(
                     if best is None or key > best[0]:
                         best = (key, q, "bit", r)
             if active:
-                coefficients = np.asarray([
-                    power_gain_coefficient(
-                        float(target[r + 1]),
-                        int(bits[q][r]),
-                        flip_probability,
-                        success_probability,
-                    )
-                    for r in active
-                ])
-                winner = active[int(np.argmax(coefficients))]
+                winner = _winner_index(
+                    target,
+                    bits[q],
+                    flip_probability,
+                    success_probability,
+                    grid,
+                )
                 if powers[q][winner] < max_power and used + 1 <= budget:
                     old_p = powers[q].copy()
                     powers[q][winner] += 1

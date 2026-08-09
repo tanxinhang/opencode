@@ -1885,19 +1885,25 @@ equality on the tested frontier.
 ### Lemma 4.81 (communication-aware NOMP refinement under channel mismatch)
 
 Let the sensing channel set the report deflection while the communication
-channel adds BSC bit flips and link erasures.  When both are present, the
-per-target covariance is no longer proportional, so winner-take-all power is
-a heuristic rather than exact.  The online refinement evaluates every
-candidate at the worst communication endpoint `(flip_hi, success_lo)` and
-accepts only leximin-improving single power/bit/atom exchanges.
+channel adds per-link BSC bit flips and link erasures.  The expected P_D
+marginalizes over independent erasure patterns, so the per-report worst
+endpoint `(flip_i, success_i)` is evaluated for every candidate.  When both
+channels are present, the per-target covariance is no longer proportional, so
+winner-take-all power is a heuristic rather than exact.  The online
+refinement accepts only leximin-improving single power/bit/atom exchanges
+under the same expected-P_D score.
 
-Proof: by Lemma 4.70 the worst endpoint dominates the ambiguity rectangle, so
-the endpoint P_D is a valid robust per-target score.  Applying the same
-leximin acceptance argument as Lemma 4.80 keeps the robust worst target
-nondecreasing and guarantees termination at a local optimum or at
-`max_rounds`.  The gate reports the measured NOMP-to-robust-exact gaps; in
-the Q=2/R=2 gate they are 0.000/0.0004/0.0032 at budgets 8/10/12, versus
-0.031/0.023/0.017 for WTA-Greedy.
+Proof: erasure marginalization is a convex combination of fixed-received-set
+P_D values, and each fixed-set value is monotone in flip degradation at the
+operating points used by the gate, so the per-report worst endpoint is a
+valid robust score.  Applying the same leximin acceptance argument as Lemma
+4.80 keeps the robust worst target nondecreasing and guarantees termination
+at a local optimum or at `max_rounds`.  The minimum-cover stage is adaptive:
+a report is activated only when it improves the target's expected P_D, which
+prevents forcing a low-reliability link into the fusion set.  The gate
+reports measured NOMP-to-robust-exact gaps; in the Q=2/R=2 per-link gate they
+are 0.009/0.015/0.022 at budgets 8/10/12, versus 0.082/0.061/0.053 for
+WTA-Greedy.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is

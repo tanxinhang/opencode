@@ -26,10 +26,31 @@ from uav_otfs_isac.nomp_refinement import (
     wta_greedy_joint_multi,
 )
 from uav_otfs_isac.robust_joint_power_bit import (
-    enumerate_robust_power_bit_options,
+    enumerate_heterogeneous_robust_power_bit_options,
     pareto_options,
 )
-from scripts.run_joint_power_comparison import make_scenario
+
+
+def make_comm_mismatch_scenario(
+    seed: int,
+    reports: int,
+    targets: int,
+    *,
+    flip_lo: float = 0.0,
+    flip_hi: float = 0.2,
+    success_lo: float = 0.6,
+    success_hi: float = 1.0,
+):
+    """Heterogeneous targets with per-report BSC flip and erasure."""
+    rng = np.random.default_rng(seed)
+    out = []
+    for _ in range(targets):
+        owner = rng.uniform(0.2, 0.5)
+        deltas = rng.uniform(0.5, 2.5, reports)
+        flips = rng.uniform(flip_lo, flip_hi, reports)
+        successes = rng.uniform(success_lo, success_hi, reports)
+        out.append((float(owner), deltas, flips, successes))
+    return out
 
 
 def main() -> None:
@@ -51,37 +72,32 @@ def main() -> None:
         exact_worsts = []
         nomp_rounds = []
         for seed in range(args.seeds):
-            scenario = make_scenario(
+            scenario = make_comm_mismatch_scenario(
                 10000 + seed,
                 args.reports,
                 args.targets,
-                heterogeneous=True,
             )
             wta_worsts.append(float(wta_greedy_joint_multi(
                 scenario,
                 budget,
                 min_cover=False,
-                flip_probability=args.flip_hi,
-                success_probability=args.success_lo,
             )["worst_pd"]))
             result = nomp_wta_greedy_joint_multi(
                 scenario,
                 budget,
-                flip_probability=args.flip_hi,
-                success_probability=args.success_lo,
             )
             nomp_worsts.append(float(result["worst_pd"]))
             nomp_rounds.append(int(result["refine_rounds"]))
             groups = []
-            for target in scenario:
-                options = enumerate_robust_power_bit_options(
-                    float(target[0]),
-                    target[1:],
+            for owner, deltas, flips, successes in scenario:
+                options = enumerate_heterogeneous_robust_power_bit_options(
+                    owner,
+                    deltas,
+                    [(0.0, float(value)) for value in flips],
+                    [(float(value), 1.0) for value in successes],
                     power_levels=np.arange(budget + 1, dtype=float),
                     bit_options=np.arange(3, dtype=int),
                     budget=budget,
-                    flip_interval=(0.0, args.flip_hi),
-                    success_interval=(args.success_lo, 1.0),
                     grid=args.grid,
                 )
                 groups.append(pareto_options(options, "robust_pd"))
@@ -109,6 +125,7 @@ def main() -> None:
         "targets": args.targets,
         "reports": args.reports,
         "grid": args.grid,
+        "per_link_channels": True,
         "summary": summary,
     }
     output = Path(args.output)

@@ -318,13 +318,16 @@ average-score greedy path starve the weak targets.
 ![Joint power-bit scaling](paper_figures/joint_power_scaling.png)
 
 `scripts/run_joint_power_comm_mismatch_gate.py` decouples the sensing channel
-from the communication channel: reports now carry BSC bit flips up to 0.2 and
-link erasures down to 0.7, and the exact oracle evaluates every option at the
-worst endpoint `(flip_hi, success_lo)`.  Winner-take-all is only a heuristic
-under this mismatch, so NOMP refinement has real room: at budgets 8/10/12 the
-NOMP worst P_D is 0.334/0.373/0.400 versus robust exact 0.334/0.374/0.403,
-while WTA-Greedy is 0.303/0.351/0.386.  The NOMP gaps to robust exact are
-0.000/0.0004/0.0032 against WTA gaps of 0.031/0.023/0.017.
+from the communication channel at the per-link level: every report has its
+own BSC flip probability and link success probability, and the expected P_D
+marginalizes over independent report erasures.  The robust exact oracle
+evaluates every option at each report's worst endpoint.  Winner-take-all is
+only a heuristic under this mismatch, so NOMP refinement has real room: at
+budgets 8/10/12 the NOMP worst P_D is 0.482/0.550/0.593 versus robust exact
+0.491/0.564/0.615, while WTA-Greedy is 0.409/0.503/0.562.  The NOMP gaps to
+robust exact are 0.009/0.015/0.022 against WTA gaps of 0.082/0.061/0.053.
+Minimum cover is adaptive: a report is activated only when it improves the
+target's expected P_D, so harmful low-reliability links are not forced in.
 
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
