@@ -113,6 +113,7 @@ python scripts/run_robust_cas_divergence_gate.py --seeds 10 --budget 6
 python scripts/run_joint_power_bit_split_gate.py --budgets 8 12 16 --grid 32
 python scripts/run_exact_vs_greedy_config_gate.py --seeds 20 --targets 2 4 --budget-multiplier 8
 python scripts/run_winner_take_all_power_gate.py --seeds 10
+python scripts/run_winner_take_all_joint_proportional_gate.py --seeds 10 --budget 4
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/build_paper_tables.py
 ```

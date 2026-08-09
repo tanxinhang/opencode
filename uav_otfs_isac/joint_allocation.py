@@ -378,6 +378,10 @@ def exact_joint_maxmin(
                 return False
         return True
 
+    if not feasible(values[0]):
+        raise RuntimeError(
+            "max-min is infeasible even at the lowest candidate threshold"
+        )
     lo, hi = 0, len(values) - 1
     while lo < hi:
         mid = (lo + hi + 1) // 2

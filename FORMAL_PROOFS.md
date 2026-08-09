@@ -1780,6 +1780,20 @@ equivalent to maximizing a linear function, whose optimum is attained at an
 extreme point.  The gate compares the closed-form allocation with exhaustive
 power splits on random diagonal models.
 
+### Lemma 4.76 (winner-take-all reduces joint power-bit enumeration)
+
+Under the diagonal proportional-covariance model with deterministic
+reception, fix a bit profile and a power budget.  By Lemma 4.75 the optimal
+power allocation is winner-take-all, so the joint power-bit frontier can be
+enumerated over bit profiles and scalar power budgets instead of full power
+vectors.  The power dimension drops from `P^R` to `P`.
+
+Proof: for every bit profile and every scalar power budget, Lemma 4.75 gives
+the exact power allocation in closed form.  Evaluating those options with
+the same `Sigma1 = Sigma0` model produces the same P_D values as the full
+power-vector enumeration, so the resulting max-min DP is exact.  The gate
+compares both frontiers on random proportional models and reports equality.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1879,6 +1893,7 @@ the audit.
 | Lemma 4.73 | `robust_cas_divergence` gate | Gate RCD JSON |
 | Lemma 4.74 | `joint_allocation.exact_joint_maxmin_selection` | `tests/test_joint_allocation.py`, Gate PBS JSON |
 | Lemma 4.75 | `power_split_theory.winner_take_all_allocation` | `tests/test_power_split_theory.py`, Gate WTA JSON |
+| Lemma 4.76 | `power_split_theory.winner_take_all_proportional_options` | `tests/test_winner_take_all_joint_proportional.py`, Gate WTAP JSON |
 
 ## 6. Explicit non-claims
 

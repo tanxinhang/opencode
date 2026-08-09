@@ -1,0 +1,66 @@
+{
+  "gate": "winner-take-all-joint-proportional",
+  "passed": true,
+  "rows": [
+    {
+      "seed": 0,
+      "full_worst_pd": 0.41486584869931986,
+      "winner_worst_pd": 0.41486584869931986,
+      "equal": true
+    },
+    {
+      "seed": 1,
+      "full_worst_pd": 0.568750486069691,
+      "winner_worst_pd": 0.568750486069691,
+      "equal": true
+    },
+    {
+      "seed": 2,
+      "full_worst_pd": 0.45036084756907635,
+      "winner_worst_pd": 0.45036084756907635,
+      "equal": true
+    },
+    {
+      "seed": 3,
+      "full_worst_pd": 0.37969923155472984,
+      "winner_worst_pd": 0.37969923155472984,
+      "equal": true
+    },
+    {
+      "seed": 4,
+      "full_worst_pd": 0.3913181207728742,
+      "winner_worst_pd": 0.3913181207728742,
+      "equal": true
+    },
+    {
+      "seed": 5,
+      "full_worst_pd": 0.2964108019376412,
+      "winner_worst_pd": 0.2964108019376412,
+      "equal": true
+    },
+    {
+      "seed": 6,
+      "full_worst_pd": 0.3700940697287377,
+      "winner_worst_pd": 0.3700940697287377,
+      "equal": true
+    },
+    {
+      "seed": 7,
+      "full_worst_pd": 0.5270410235650362,
+      "winner_worst_pd": 0.5270410235650362,
+      "equal": true
+    },
+    {
+      "seed": 8,
+      "full_worst_pd": 0.5250392519399407,
+      "winner_worst_pd": 0.5250392519399407,
+      "equal": true
+    },
+    {
+      "seed": 9,
+      "full_worst_pd": 0.5333360479081808,
+      "winner_worst_pd": 0.5333360479081808,
+      "equal": true
+    }
+  ]
+}

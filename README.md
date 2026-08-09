@@ -265,6 +265,10 @@ allocation rule: under diagonal proportional covariance, all power goes to
 the report with the largest per-unit-power gain (Lemma 4.75).  This is a
 closed-form algorithm rather than another analysis gate.
 
+Lemma 4.76 extends it to the joint allocation: with the same proportional
+model, winner-take-all reduces the power dimension from `P^R` to `P`, and the
+reduced frontier matches the full power-bit frontier exactly.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic
