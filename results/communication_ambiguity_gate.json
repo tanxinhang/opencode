@@ -1,0 +1,41 @@
+{
+  "gate": "communication-ambiguity-endpoint",
+  "passed": true,
+  "rows": [
+    {
+      "seed": 0,
+      "endpoint_violation": 1.0,
+      "grid_worst_violation": 1.0,
+      "grid_worst_at": null,
+      "passed": true
+    },
+    {
+      "seed": 1,
+      "endpoint_violation": 0.625,
+      "grid_worst_violation": 0.625,
+      "grid_worst_at": null,
+      "passed": true
+    },
+    {
+      "seed": 2,
+      "endpoint_violation": 0.9375,
+      "grid_worst_violation": 0.9375,
+      "grid_worst_at": null,
+      "passed": true
+    },
+    {
+      "seed": 3,
+      "endpoint_violation": 0.8125,
+      "grid_worst_violation": 0.8125,
+      "grid_worst_at": null,
+      "passed": true
+    },
+    {
+      "seed": 4,
+      "endpoint_violation": 0.625,
+      "grid_worst_violation": 0.625,
+      "grid_worst_at": null,
+      "passed": true
+    }
+  ]
+}

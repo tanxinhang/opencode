@@ -106,6 +106,14 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "communication-ambiguity"
+        Args = @(
+            "scripts\run_communication_ambiguity_gate.py",
+            "--seeds", "5",
+            "--output", "results\communication_ambiguity_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",

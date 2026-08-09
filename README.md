@@ -224,6 +224,12 @@ largest `J_i` maximizes the expected received deflection and, in the concave
 P_D region, the upper-bound surrogate `P_D(E[D_R])` (Lemma 4.69).  Exact P_D
 optimality with heterogeneous erasure still uses the exact DP.
 
+`uav_otfs_isac/communication_ambiguity.py` closes communication-parameter
+ambiguity: when violation probability is monotone in flip and success
+(Theorems 4.59/4.60), the worst case over a rectangular channel ambiguity
+set is at `(flip_hi, success_lo)`, so robust DP can use the single endpoint
+scenario (Lemma 4.70).
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic

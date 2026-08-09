@@ -1666,6 +1666,22 @@ so the largest-J subset also maximizes the upper-bound surrogate
 still require DP; the gate reports both the exact expected-deflection match
 and the resulting P_D gap.
 
+### Lemma 4.70 (communication ambiguity endpoint reduction)
+
+Let a fixed schedule have violation probability `v(p, s)` that is
+nondecreasing in the BSC flip probability `p` and nonincreasing in the link
+success probability `s`.  Over the rectangle
+`[p_lo, p_hi] x [s_lo, s_hi]`, the worst-case violation is attained at
+`(p_hi, s_lo)`.
+
+Proof: for every `(p, s)` in the rectangle, monotonicity gives
+`v(p, s) <= v(p_hi, s) <= v(p_hi, s_lo)`.  The exact-LRT basis is provided by
+the BSC cascade ordering (Theorem 4.59) and erasure stochastic dominance
+(Theorem 4.60); the moment-model gate in `communication_ambiguity.py`
+verifies the same inequality on a grid.  Consequently, for common
+communication ambiguity, the robust DP over the single endpoint scenario is
+exact whenever the monotonicity closure passes.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1758,6 +1774,7 @@ the audit.
 | Lemma 4.67 | `joint_power_bit.vectorized_power_bit_target_options` | `tests/test_joint_power_bit.py`, `results/joint_power_bit_scaling_benchmark.json` |
 | Lemma 4.68 | `physical_link_model.build_physical_link_models` | `tests/test_physical_link_model.py` |
 | Lemma 4.69 | `communication_aware.communication_aware_sensing_score`, `communication_aware_top_k` | `tests/test_communication_aware.py` |
+| Lemma 4.70 | `communication_ambiguity.verify_endpoint_dominance` | `tests/test_communication_ambiguity.py`, Gate CA-E JSON |
 
 ## 6. Explicit non-claims
 
