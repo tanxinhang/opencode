@@ -219,6 +219,7 @@ def _reference(
 ):
     greedy_worst = []
     exact_worst = []
+    greedy_schedules = []
     exact_schedules = []
     pattern = np.array([0, 1, 2, 3, 4])
     for scenario in scenarios:
@@ -252,6 +253,9 @@ def _reference(
         )
         greedy_worst.append(greedy)
         exact_worst.append(exact)
+        greedy_schedules.append([
+            vector.tolist() for vector in greedy_vectors
+        ])
         exact_schedules.append([
             {"cost": cost, "value": value}
             for cost, value in exact_chosen
@@ -259,6 +263,7 @@ def _reference(
     return (
         float(np.mean(greedy_worst)),
         float(np.mean(exact_worst)),
+        greedy_schedules,
         exact_schedules,
     )
 
@@ -324,7 +329,12 @@ def run_baseline(
         mappo_worst, used_mean, over_rate = _evaluate(
             actor, budget, test_scenarios,
         )
-        greedy_worst, exact_worst, exact_schedules = _reference(
+        (
+            greedy_worst,
+            exact_worst,
+            greedy_schedules,
+            exact_schedules,
+        ) = _reference(
             budget,
             test_scenarios,
             exact_max_reports=exact_max_reports,
@@ -341,6 +351,7 @@ def run_baseline(
             "mappo_over_budget_rate": over_rate,
             "greedy_worst_mean": greedy_worst,
             "exact_joint_worst_mean": exact_worst,
+            "greedy_schedules": greedy_schedules,
             "exact_schedules": exact_schedules,
             "mappo_gap_to_exact_pp": float((exact_worst - mappo_worst) * 100.0),
             "greedy_gap_to_exact_pp": float((exact_worst - greedy_worst) * 100.0),

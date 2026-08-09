@@ -150,6 +150,16 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "exact-vs-greedy-config"
+        Args = @(
+            "scripts\run_exact_vs_greedy_config_gate.py",
+            "--seeds", "20",
+            "--targets", "2", "4",
+            "--budget-multiplier", "8",
+            "--output", "results\exact_vs_greedy_config_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",

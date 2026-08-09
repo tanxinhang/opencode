@@ -256,6 +256,10 @@ The same reconstruction is now part of the MAPPO/Greedy/Exact comparison:
 only a scalar worst-P_D oracle but also returns the concrete per-target
 bit/report configuration.
 
+`scripts/run_exact_vs_greedy_config_gate.py` uses the concrete schedules to
+analyze where Exact wins: it reports P_D gap, budget usage, and the
+correlation between the gap and Exact's extra budget use.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic
