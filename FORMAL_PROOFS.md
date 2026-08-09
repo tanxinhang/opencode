@@ -1810,6 +1810,24 @@ is eventually explored and strictly dominates all others; thereafter it
 remains the best estimate.  The gate measures the one-shot versus feedback
 deflection improvement over random noise draws.
 
+### Lemma 4.78 (UCB certificate stopping)
+
+Let observations be sub-Gaussian with noise scale `sigma`, and let each
+report keep a prior-regularized mean and uncertainty width
+`beta * sigma_prior / sqrt(n)`.  The loop stops when the best report's lower
+confidence bound exceeds every other report's upper confidence bound.
+Under the standard sub-Gaussian concentration inequality, the true best
+report is then selected with probability at least `1 - confidence`, and the
+loop terminates after at most `max_rounds` iterations.
+
+Proof: each UCB/LCB width is chosen from the Gaussian quantile with a union
+bound over reports, so the true gain lies inside the interval with the
+claimed confidence.  The stopping condition certifies that the best report's
+lower bound dominates all other upper bounds, hence the true best is the
+certified winner.  The loop always terminates at `max_rounds` even if the
+certificate is not reached.  The gate reports the mean/max rounds used and
+the certificate stop rate.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1911,6 +1929,7 @@ the audit.
 | Lemma 4.75 | `power_split_theory.winner_take_all_allocation` | `tests/test_power_split_theory.py`, Gate WTA JSON |
 | Lemma 4.76 | `power_split_theory.winner_take_all_proportional_options` | `tests/test_winner_take_all_joint_proportional.py`, Gate WTAP JSON |
 | Lemma 4.77 | `error_feedback.wta_feedback_allocator` | `tests/test_error_feedback.py`, Gate EFB JSON |
+| Lemma 4.78 | `error_feedback.ucb_wta_feedback_allocator` | `tests/test_error_feedback.py`, Gate UCB JSON |
 
 ## 6. Explicit non-claims
 

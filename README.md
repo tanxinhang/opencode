@@ -288,6 +288,10 @@ feedback: each round explores the top estimates plus one random candidate,
 corrects the observed gains, and reallocates power by winner-take-all.
 Lemma 4.77 shows the true winner is eventually explored and selected.
 
+`scripts/run_ucb_error_feedback_gate.py` adds a finite stopping certificate:
+the loop stops when the best report's lower confidence bound exceeds all
+other upper bounds, and always terminates at `max_rounds` (Lemma 4.78).
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic

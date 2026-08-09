@@ -210,6 +210,16 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "ucb-error-feedback"
+        Args = @(
+            "scripts\run_ucb_error_feedback_gate.py",
+            "--seeds", "20",
+            "--max-rounds", "50",
+            "--noise", "0.2",
+            "--output", "results\ucb_error_feedback_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",

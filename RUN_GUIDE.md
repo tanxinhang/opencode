@@ -117,6 +117,7 @@ python scripts/run_winner_take_all_joint_proportional_gate.py --seeds 10 --budge
 python scripts/benchmark_winner_take_all_scaling.py --reports 2 3 4 --budget 4 --grid 16
 python scripts/run_joint_power_comparison.py --reports 2 --targets 2 --budgets 8 10 12 --episodes 300 --train-seeds 30 --test-seeds 20
 python scripts/run_error_feedback_gate.py --seeds 20 --rounds 1 3 10 30 --noise 0.8
+python scripts/run_ucb_error_feedback_gate.py --seeds 20 --max-rounds 50 --noise 0.2
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/build_paper_tables.py
 ```

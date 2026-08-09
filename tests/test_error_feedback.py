@@ -3,6 +3,7 @@ import numpy as np
 from uav_otfs_isac.error_feedback import (
     evaluate_feedback_gain,
     one_shot_wta,
+    ucb_wta_feedback_allocator,
     wta_feedback_allocator,
 )
 
@@ -39,3 +40,21 @@ def test_feedback_gain_positive_on_noisy_scenarios():
         for seed in range(5)
     ]
     assert np.mean(gains) >= 0.0
+
+
+def test_ucb_feedback_stops_in_finite_rounds_and_uses_error():
+    true = np.array([1.0, 2.0, 0.5])
+    noisy = np.array([2.0, 0.5, 1.0])
+    result = ucb_wta_feedback_allocator(
+        true,
+        noisy,
+        budget=5.0,
+        observation_noise_scale=0.01,
+        max_rounds=100,
+        confidence=0.05,
+        explore=2,
+        seed=0,
+    )
+    assert result["rounds_used"] <= 100
+    assert result["stopped_by_certificate"]
+    assert result["best_report"] == 1

@@ -1,0 +1,171 @@
+{
+  "gate": "ucb-error-feedback",
+  "summary": {
+    "mean_rounds_used": 35.6,
+    "max_rounds_used": 50,
+    "certificate_stop_rate": 0.95,
+    "mean_improvement": 0.2
+  },
+  "rows": [
+    {
+      "seed": 0,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 30,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 1,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 31,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 2,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 31,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 3,
+      "one_shot_deflection": 6.0,
+      "feedback_deflection": 8.0,
+      "improvement": 2.0,
+      "rounds_used": 42,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 4,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 35,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 5,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 29,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 6,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 35,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 7,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 35,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 8,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 50,
+      "stopped_by_certificate": false
+    },
+    {
+      "seed": 9,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 38,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 10,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 33,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 11,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 39,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 12,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 33,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 13,
+      "one_shot_deflection": 6.0,
+      "feedback_deflection": 8.0,
+      "improvement": 2.0,
+      "rounds_used": 34,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 14,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 36,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 15,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 31,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 16,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 46,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 17,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 34,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 18,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 48,
+      "stopped_by_certificate": true
+    },
+    {
+      "seed": 19,
+      "one_shot_deflection": 8.0,
+      "feedback_deflection": 8.0,
+      "improvement": 0.0,
+      "rounds_used": 22,
+      "stopped_by_certificate": true
+    }
+  ]
+}
