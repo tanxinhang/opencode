@@ -1,0 +1,68 @@
+{
+  "gate": "joint-power-scaling",
+  "mode": "heterogeneous",
+  "exact_mode": "wta",
+  "train_seeds": 20,
+  "test_seeds": 20,
+  "episodes": 200,
+  "budget_multiplier": 4,
+  "reports_per_target": 2,
+  "rows": [
+    {
+      "targets": 2,
+      "budget": 8,
+      "mappo_worst_mean": 0.4797891644957737,
+      "greedy_worst_mean": 0.5160826354728898,
+      "wta_greedy_worst_mean": 0.8462242460358483,
+      "ucb_wta_greedy_worst_mean": 0.8462242460358483,
+      "ucb_wta_certificate_stop_rate": 0.85,
+      "nomp_greedy_worst_mean": 0.8918160488723709,
+      "ucb_nomp_greedy_worst_mean": 0.8918160488723709,
+      "ucb_nomp_certificate_stop_rate": 0.9,
+      "exact_worst_mean": 0.8918160488723709,
+      "train_seconds": 2.327818499878049
+    },
+    {
+      "targets": 4,
+      "budget": 16,
+      "mappo_worst_mean": 0.5535954892847486,
+      "greedy_worst_mean": 0.39374801230749984,
+      "wta_greedy_worst_mean": 0.735629532204006,
+      "ucb_wta_greedy_worst_mean": 0.735629532204006,
+      "ucb_wta_certificate_stop_rate": 0.8,
+      "nomp_greedy_worst_mean": 0.8358715213357384,
+      "ucb_nomp_greedy_worst_mean": 0.8358715213357384,
+      "ucb_nomp_certificate_stop_rate": 0.75,
+      "exact_worst_mean": 0.8358715213357384,
+      "train_seconds": 1.7578564998693764
+    },
+    {
+      "targets": 6,
+      "budget": 24,
+      "mappo_worst_mean": 0.7027720788515562,
+      "greedy_worst_mean": 0.3520912199631239,
+      "wta_greedy_worst_mean": 0.660205966182526,
+      "ucb_wta_greedy_worst_mean": 0.660205966182526,
+      "ucb_wta_certificate_stop_rate": 0.6,
+      "nomp_greedy_worst_mean": 0.8270486012069638,
+      "ucb_nomp_greedy_worst_mean": 0.8270486012069638,
+      "ucb_nomp_certificate_stop_rate": 0.6,
+      "exact_worst_mean": 0.8270486012069638,
+      "train_seconds": 2.3201387003064156
+    },
+    {
+      "targets": 8,
+      "budget": 32,
+      "mappo_worst_mean": 0.28730441959784087,
+      "greedy_worst_mean": 0.3320316952973624,
+      "wta_greedy_worst_mean": 0.536961346596547,
+      "ucb_wta_greedy_worst_mean": 0.536961346596547,
+      "ucb_wta_certificate_stop_rate": 0.4,
+      "nomp_greedy_worst_mean": 0.817602110957137,
+      "ucb_nomp_greedy_worst_mean": 0.817602110957137,
+      "ucb_nomp_certificate_stop_rate": 0.45,
+      "exact_worst_mean": 0.817602110957137,
+      "train_seconds": 3.0077217002399266
+    }
+  ]
+}

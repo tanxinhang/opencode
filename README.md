@@ -308,6 +308,15 @@ NOMP-Greedy matches the exact winner-take-all frontier at the tested budgets,
 while WTA-Greedy alone lags by about 0.08-0.10 at the lower budget.  The
 online refinement remains finite and does not enumerate report combinations.
 
+`scripts/run_joint_power_scaling.py` keeps the per-target budget at `4Q` and
+sweeps Q=2/4/6/8.  NOMP-Greedy matches the WTA-Exact oracle at every Q
+(0.892/0.836/0.827/0.818) while WTA-Greedy drops from 0.846 to 0.537, so the
+NOMP advantage grows with target count because the leximin refinement
+rebalances power/bit resources across targets instead of letting one
+average-score greedy path starve the weak targets.
+
+![Joint power-bit scaling](paper_figures/joint_power_scaling.png)
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
 union-bound UCB widths.  The winner certificate compares the active winner's

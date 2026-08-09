@@ -534,23 +534,7 @@ def nomp_greedy_joint_multi(
     )["worst_pd"])
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--output", default="results/joint_power_comparison.json")
-    parser.add_argument("--reports", type=int, default=2)
-    parser.add_argument("--targets", type=int, default=2)
-    parser.add_argument("--budgets", type=int, nargs="+", default=[8, 10, 12])
-    parser.add_argument("--episodes", type=int, default=300)
-    parser.add_argument("--train-seeds", type=int, default=30)
-    parser.add_argument("--test-seeds", type=int, default=20)
-    parser.add_argument("--mode", choices=["homogeneous", "heterogeneous"], default="homogeneous")
-    parser.add_argument(
-        "--exact-mode",
-        choices=["full", "wta", "auto"],
-        default="auto",
-        help="full enumerates power vectors; wta uses the closed-form frontier; auto switches at reports>2",
-    )
-    args = parser.parse_args()
+def run_comparison(args) -> dict:
     exact_mode = args.exact_mode
     if exact_mode == "auto":
         exact_mode = "full" if args.reports <= 2 else "wta"
@@ -711,10 +695,31 @@ def main() -> None:
         "test_seeds": args.test_seeds,
         "summary": summary,
     }
+    return payload
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", default="results/joint_power_comparison.json")
+    parser.add_argument("--reports", type=int, default=2)
+    parser.add_argument("--targets", type=int, default=2)
+    parser.add_argument("--budgets", type=int, nargs="+", default=[8, 10, 12])
+    parser.add_argument("--episodes", type=int, default=300)
+    parser.add_argument("--train-seeds", type=int, default=30)
+    parser.add_argument("--test-seeds", type=int, default=20)
+    parser.add_argument("--mode", choices=["homogeneous", "heterogeneous"], default="homogeneous")
+    parser.add_argument(
+        "--exact-mode",
+        choices=["full", "wta", "auto"],
+        default="auto",
+        help="full enumerates power vectors; wta uses the closed-form frontier; auto switches at reports>2",
+    )
+    args = parser.parse_args()
+    payload = run_comparison(args)
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    print(json.dumps(summary, indent=2))
+    print(json.dumps(payload["summary"], indent=2))
 
 
 if __name__ == "__main__":

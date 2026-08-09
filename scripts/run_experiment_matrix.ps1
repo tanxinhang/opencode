@@ -214,6 +214,18 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "joint-power-scaling"
+        Args = @(
+            "scripts\run_joint_power_scaling.py",
+            "--targets", "2", "4", "6", "8",
+            "--train-seeds", "20",
+            "--test-seeds", "20",
+            "--episodes", "200",
+            "--output", "results\joint_power_scaling.json",
+            "--figure", "paper_figures\joint_power_scaling.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",
