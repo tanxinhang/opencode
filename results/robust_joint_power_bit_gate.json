@@ -1,0 +1,26 @@
+{
+  "gate": "robust-joint-power-bit",
+  "summary": [
+    {
+      "budget": 8,
+      "robust_worst_pd": 0.29127480131061345,
+      "clean_optimal_clean_worst_pd": 0.6842640201988307,
+      "clean_schedule_robust_worst_pd": 0.29127480131061345,
+      "robust_improvement_pp": 0.0
+    },
+    {
+      "budget": 12,
+      "robust_worst_pd": 0.33527475845103094,
+      "clean_optimal_clean_worst_pd": 0.7764800630353774,
+      "clean_schedule_robust_worst_pd": 0.33527475845103094,
+      "robust_improvement_pp": 0.0
+    },
+    {
+      "budget": 16,
+      "robust_worst_pd": 0.33527475845103094,
+      "clean_optimal_clean_worst_pd": 0.7764800630353774,
+      "clean_schedule_robust_worst_pd": 0.33527475845103094,
+      "robust_improvement_pp": 0.0
+    }
+  ]
+}

@@ -1696,6 +1696,20 @@ over scenario vectors, replacing the four scenario vectors by the endpoint
 vector preserves both the objective and the optimum.  The gate compares the
 two DPs on controlled models.
 
+### Lemma 4.71 (robust joint power-bit allocation is exact)
+
+Let every `(power, bit)` option be evaluated at the worst communication
+endpoint `(flip_hi, success_lo)`.  Then the exact DP over the resulting
+robust option frontiers is the exact worst-case allocation over the
+communication ambiguity rectangle, and it is never worse under the endpoint
+than any clean-optimal schedule.
+
+Proof: by Lemma 4.70, the endpoint dominates every rectangle point for every
+fixed option.  Evaluating each option at the endpoint gives its exact
+worst-case P_D, so the target-separable max-min DP is exact over the robust
+option set.  The clean-optimal schedule is one feasible candidate in the
+robust DP, so the robust optimum is no worse under the endpoint.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1790,6 +1804,7 @@ the audit.
 | Lemma 4.69 | `communication_aware.communication_aware_sensing_score`, `communication_aware_top_k` | `tests/test_communication_aware.py` |
 | Lemma 4.70 | `communication_ambiguity.verify_endpoint_dominance` | `tests/test_communication_ambiguity.py`, Gate CA-E JSON |
 | Corollary 4.70A | `communication_ambiguity.build_endpoint_scenario_groups` | `tests/test_communication_ambiguity.py` |
+| Lemma 4.71 | `robust_joint_power_bit.enumerate_robust_power_bit_options` | `tests/test_robust_joint_power_bit.py`, Gate RJB JSON |
 
 ## 6. Explicit non-claims
 

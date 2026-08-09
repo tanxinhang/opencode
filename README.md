@@ -232,6 +232,12 @@ scenario (Lemma 4.70).  Corollary 4.70A shows this endpoint-reduced DP has
 the same worst excess as the four-corner DP with scenario count reduced from
 four to one.
 
+`uav_otfs_isac/robust_joint_power_bit.py` merges the two lines: every joint
+power-bit option is evaluated at the worst communication endpoint, and the
+exact max-min DP over robust options gives the worst-case resource
+allocation (Lemma 4.71).  `scripts/run_robust_joint_power_bit_gate.py` is
+the reproducible gate.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic
