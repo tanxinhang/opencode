@@ -285,6 +285,9 @@ and MAPPO at low/medium budgets while remaining fully online.
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates and UCB-driven winner selection,
 with a hard `max_steps` cutoff and per-target LCB/UCB certificate stopping.
+It also reports `NOMP-Greedy`, a NOMP-inspired online variant that refines
+power and bit allocation after each greedy step; in the current homogeneous
+scenario it matches WTA-Greedy.
 
 `uav_otfs_isac/error_feedback.py` adds coefficient error and multi-round
 feedback: each round explores the top estimates plus one random candidate,
