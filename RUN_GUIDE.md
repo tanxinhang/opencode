@@ -108,6 +108,12 @@ python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --
 python scripts/build_paper_tables.py
 ```
 
+If the runtime is `E:\anaconda\conda\python.exe`, use
+`scripts/run_experiment_matrix.ps1` or the commands in `RUN_MATRIX.md`; the
+matrix covers MAPPO/Greedy/Exact comparisons, weakened Exact Joint, robust
+allocation baselines, joint power-bit allocation, and performance
+benchmarks.
+
 The robustness stress suite is the incremental entry point for the
 progressive resistance gates: stage 1 covers spatial INR via free-space path
 loss, BSC flip probability, link success scaling, and bounded target

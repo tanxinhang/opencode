@@ -161,6 +161,11 @@ python scripts/verify_paper_numbers.py
 
 The demo writes `results/demo_summary.json`.
 
+For the remote runtime `E:\anaconda\conda\python.exe`, all comparison
+experiments are listed with that interpreter in `RUN_MATRIX.md`.  The batch
+runner is `scripts/run_experiment_matrix.ps1`; use `-DryRun` to print the
+matrix, `-Only <id>` to run one cell, or no filter to run everything.
+
 ## Progressive robustness stress suite (stage 1)
 
 `uav_otfs_isac/robustness_stress.py` defines `StressProfile` and
