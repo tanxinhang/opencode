@@ -54,3 +54,41 @@ def test_robust_maxmin_is_exact_over_robust_frontier():
     ]
     value = exact_joint_power_bit_maxmin(groups, 6)
     assert 0.0 <= value <= 1.0
+
+
+def test_robust_gate_scenario_shows_positive_improvement():
+    targets = [
+        (0.4795536269792586, np.array([1.14145509, 1.00589003])),
+        (0.3, np.array([2.0, 1.2])),
+    ]
+    for budget in (8, 12):
+        options = [
+            enumerate_robust_power_bit_options(
+                owner,
+                deltas,
+                power_levels=np.array([0.0, 1.0, 2.0]),
+                bit_options=np.array([0, 1, 2]),
+                budget=budget,
+                flip_interval=(0.0, 0.2),
+                success_interval=(0.5, 1.0),
+                grid=16,
+            )
+            for owner, deltas in targets
+        ]
+        robust = exact_joint_power_bit_maxmin(
+            [pareto_options(item, "robust_pd") for item in options],
+            budget,
+        )
+        clean = exact_joint_power_bit_maxmin(
+            [pareto_options(item, "clean_pd") for item in options],
+            budget,
+        )
+        clean_schedule_robust = []
+        for item in options:
+            candidates = [
+                option for option in item
+                if option.clean_pd >= clean - 1e-9
+            ]
+            chosen = min(candidates, key=lambda option: option.cost_bits)
+            clean_schedule_robust.append(chosen.robust_pd)
+        assert robust > min(clean_schedule_robust) + 1e-6

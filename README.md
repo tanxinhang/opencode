@@ -233,10 +233,12 @@ the same worst excess as the four-corner DP with scenario count reduced from
 four to one.
 
 `uav_otfs_isac/robust_joint_power_bit.py` merges the two lines: every joint
-power-bit option is evaluated at the worst communication endpoint, and the
-exact max-min DP over robust options gives the worst-case resource
-allocation (Lemma 4.71).  `scripts/run_robust_joint_power_bit_gate.py` is
-the reproducible gate.
+power-bit option is evaluated at the worst communication endpoint with the
+expected P_D marginalizing over independent link erasures, and the exact
+max-min DP over robust options gives the worst-case resource allocation
+(Lemma 4.71).  `scripts/run_robust_joint_power_bit_gate.py` is the
+reproducible gate; on its current scenario robust allocation beats the clean
+schedule's robust worst by 2.4-2.7 percentage points.
 
 `scripts/run_robust_communication_aware_gate.py` extends the CAS score to
 the worst endpoint: the robust top-K schedule never reduces expected
@@ -326,6 +328,9 @@ only a heuristic under this mismatch, so NOMP refinement has real room: at
 budgets 8/10/12 the NOMP worst P_D is 0.482/0.555/0.609 versus robust exact
 0.491/0.564/0.615, while WTA-Greedy is 0.403/0.499/0.566.  The NOMP gaps to
 robust exact are 0.009/0.010/0.006 against WTA gaps of 0.088/0.066/0.049.
+Because the per-link gate treats the realized channel as the worst endpoint,
+its exact oracle is a channel-aware upper bound; the clean-vs-robust
+scheduling tension is measured separately by `run_robust_joint_power_bit_gate`.
 Winner selection under channel mismatch uses the marginal expected-P_D gain
 at the current allocation, and the refinement explores every active
 destination report plus new-report activation, so it can jump the local

@@ -32,11 +32,7 @@ def leximin_improves(old_values, new_values) -> bool:
 
 def _parse_target(target, flip_probability=0.0, success_probability=1.0):
     """Return (owner, deltas, flips, successes) for either scenario format."""
-    if (
-        isinstance(target, tuple)
-        and len(target) == 4
-        and isinstance(target[1], np.ndarray)
-    ):
+    if isinstance(target, tuple) and len(target) == 4:
         return (
             float(target[0]),
             np.asarray(target[1], dtype=float),

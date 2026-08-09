@@ -28,8 +28,8 @@ def main() -> None:
     args = parser.parse_args()
 
     targets = [
-        (0.4, np.array([1.8, 2.0])),
-        (0.3, np.array([1.2, 1.4])),
+        (0.4795536269792586, np.array([1.14145509, 1.00589003])),
+        (0.3, np.array([2.0, 1.2])),
     ]
     power_levels = np.array([0.0, 1.0, 2.0])
     bit_options = np.array([0, 1, 2])

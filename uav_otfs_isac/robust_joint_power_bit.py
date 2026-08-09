@@ -141,14 +141,6 @@ def per_report_communication_target_pd(
     )
 
 
-def dataclasses_replace_success(model, report_count: int, success: float):
-    from dataclasses import replace
-    return replace(
-        model,
-        success_prob=np.array([1.0] + [success] * report_count),
-    )
-
-
 def enumerate_robust_power_bit_options(
     owner_delta: float,
     report_deltas: np.ndarray,
