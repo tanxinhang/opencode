@@ -9,38 +9,38 @@
     {
       "targets": 2,
       "budget_bits": 16,
-      "mappo_worst_mean": 0.7818234983741276,
+      "mappo_worst_mean": 0.7820116129860402,
       "greedy_worst_mean": 0.8280318497998957,
       "exact_joint_worst_mean": 0.8570850540956508,
-      "mappo_used_bits_mean": 8.0,
-      "train_seconds": 13.366167299915105
+      "mappo_used_bits_mean": 10.0,
+      "train_seconds": 13.46718699997291
     },
     {
       "targets": 4,
       "budget_bits": 32,
-      "mappo_worst_mean": 0.759869174134939,
+      "mappo_worst_mean": 0.7590584974183139,
       "greedy_worst_mean": 0.8246903431046941,
       "exact_joint_worst_mean": 0.8486179277715481,
-      "mappo_used_bits_mean": 12.0,
-      "train_seconds": 15.689954599831253
+      "mappo_used_bits_mean": 10.0,
+      "train_seconds": 15.847544600255787
     },
     {
       "targets": 6,
       "budget_bits": 48,
-      "mappo_worst_mean": 0.7746370837587083,
+      "mappo_worst_mean": 0.7730484705601643,
       "greedy_worst_mean": 0.8245133277565669,
       "exact_joint_worst_mean": 0.8471450805947207,
-      "mappo_used_bits_mean": 14.0,
-      "train_seconds": 18.09770209994167
+      "mappo_used_bits_mean": 13.0,
+      "train_seconds": 18.054302799981087
     },
     {
       "targets": 8,
       "budget_bits": 64,
-      "mappo_worst_mean": 0.7665588404355372,
+      "mappo_worst_mean": 0.7742659766642472,
       "greedy_worst_mean": 0.8217201861858516,
       "exact_joint_worst_mean": 0.8421669679439316,
-      "mappo_used_bits_mean": 14.0,
-      "train_seconds": 20.63608539989218
+      "mappo_used_bits_mean": 11.0,
+      "train_seconds": 20.451470999978483
     }
   ]
 }
