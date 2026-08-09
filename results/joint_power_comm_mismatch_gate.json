@@ -10,30 +10,30 @@
   "summary": [
     {
       "budget": 8,
-      "wta_greedy_worst_mean": 0.40904315278750936,
+      "wta_greedy_worst_mean": 0.40293343683509886,
       "nomp_greedy_worst_mean": 0.4824109384307474,
       "robust_exact_worst_mean": 0.4909793923155231,
-      "wta_gap_to_exact": 0.08193623952801377,
+      "wta_gap_to_exact": 0.08804595548042427,
       "nomp_gap_to_exact": 0.008568453884775729,
       "nomp_mean_refine_rounds": 1.2
     },
     {
       "budget": 10,
-      "wta_greedy_worst_mean": 0.5031374848521086,
-      "nomp_greedy_worst_mean": 0.5498379533105544,
+      "wta_greedy_worst_mean": 0.49855437329007585,
+      "nomp_greedy_worst_mean": 0.5549167312416466,
       "robust_exact_worst_mean": 0.5644368716637522,
-      "wta_gap_to_exact": 0.0612993868116436,
-      "nomp_gap_to_exact": 0.01459891835319782,
+      "wta_gap_to_exact": 0.06588249837367638,
+      "nomp_gap_to_exact": 0.009520140422105583,
       "nomp_mean_refine_rounds": 1.35
     },
     {
       "budget": 12,
-      "wta_greedy_worst_mean": 0.561569896513013,
-      "nomp_greedy_worst_mean": 0.5925560685062804,
+      "wta_greedy_worst_mean": 0.5664959460561632,
+      "nomp_greedy_worst_mean": 0.6094239550180183,
       "robust_exact_worst_mean": 0.6149960760668739,
-      "wta_gap_to_exact": 0.053426179553860864,
-      "nomp_gap_to_exact": 0.0224400075605935,
-      "nomp_mean_refine_rounds": 1.25
+      "wta_gap_to_exact": 0.04850013001071074,
+      "nomp_gap_to_exact": 0.005572121048855627,
+      "nomp_mean_refine_rounds": 1.55
     }
   ]
 }

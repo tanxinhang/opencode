@@ -161,6 +161,7 @@ def _active_reports(bits):
 def _winner_index(
     target,
     bits,
+    powers,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
     grid: int = 16,
@@ -172,12 +173,19 @@ def _winner_index(
         target, flip_probability, success_probability
     )
     if not (np.all(flips == 0.0) and np.all(successes == 1.0)):
+        base = _target_pd(
+            (owner, deltas, flips, successes),
+            powers,
+            bits,
+            grid,
+            flip_probability,
+            success_probability,
+        )
         best = None
         for r in active:
-            candidate_p = np.zeros(deltas.size)
-            candidate_b = np.zeros(deltas.size, dtype=int)
-            candidate_p[r] = 1
-            candidate_b[r] = int(bits[r])
+            candidate_p = np.asarray(powers, dtype=float).copy()
+            candidate_b = np.asarray(bits, dtype=int).copy()
+            candidate_p[r] += 1
             value = _target_pd(
                 (owner, deltas, flips, successes),
                 candidate_p,
@@ -185,7 +193,7 @@ def _winner_index(
                 grid,
                 flip_probability,
                 success_probability,
-            )
+            ) - base
             if best is None or value > best[0]:
                 best = (float(value), r)
         return int(best[1])
@@ -239,6 +247,7 @@ def _iter_candidates(
         winner_q = _winner_index(
             target_q,
             bits[q],
+            powers[q],
             flip_probability,
             success_probability,
             grid,
@@ -280,49 +289,62 @@ def _iter_candidates(
             for d in range(q_count):
                 if d == q:
                     continue
-                target_d = scenario[d]
                 active_d = _active_reports(bits[d])
-                winner_d = _winner_index(
-                    target_d,
-                    bits[d],
-                    flip_probability,
-                    success_probability,
-                    grid,
-                )
-                if winner_d is None:
-                    continue
-                if powers[q][s] > 0 and powers[d][winner_d] < max_power:
-                    new_p = [row.copy() for row in powers]
-                    new_b = [row.copy() for row in bits]
-                    new_p[q][s] -= 1
-                    new_p[d][winner_d] += 1
-                    yield new_p, new_b
-                if (
-                    bits[q][s] > 0
-                    and bits[d][winner_d] < max_bits
-                    and (len(active_q) > 1 or bits[q][s] > 1)
-                ):
-                    new_p = [row.copy() for row in powers]
-                    new_b = [row.copy() for row in bits]
-                    new_b[q][s] -= 1
-                    new_b[d][winner_d] += 1
-                    yield new_p, new_b
+                for dd in active_d:
+                    if powers[q][s] > 0 and powers[d][dd] < max_power:
+                        new_p = [row.copy() for row in powers]
+                        new_b = [row.copy() for row in bits]
+                        new_p[q][s] -= 1
+                        new_p[d][dd] += 1
+                        yield new_p, new_b
+                    if (
+                        bits[q][s] > 0
+                        and bits[d][dd] < max_bits
+                        and (len(active_q) > 1 or bits[q][s] > 1)
+                    ):
+                        new_p = [row.copy() for row in powers]
+                        new_b = [row.copy() for row in bits]
+                        new_b[q][s] -= 1
+                        new_b[d][dd] += 1
+                        yield new_p, new_b
                 if len(active_q) >= 2:
                     freed = int(powers[q][s] + bits[q][s])
-                    new_p = [row.copy() for row in powers]
-                    new_b = [row.copy() for row in bits]
-                    new_p[q][s] = 0
-                    new_b[q][s] = 0
-                    remaining = _add_freed_units(
-                        new_p[d],
-                        new_b[d],
-                        winner_d,
-                        freed,
-                        max_power=max_power,
-                        max_bits=max_bits,
-                    )
-                    if remaining == 0:
-                        yield new_p, new_b
+                    for dd in active_d:
+                        new_p = [row.copy() for row in powers]
+                        new_b = [row.copy() for row in bits]
+                        new_p[q][s] = 0
+                        new_b[q][s] = 0
+                        remaining = _add_freed_units(
+                            new_p[d],
+                            new_b[d],
+                            dd,
+                            freed,
+                            max_power=max_power,
+                            max_bits=max_bits,
+                        )
+                        if remaining == 0:
+                            yield new_p, new_b
+                    for dd in range(reports):
+                        if bits[d][dd] > 0:
+                            continue
+                        new_p = [row.copy() for row in powers]
+                        new_b = [row.copy() for row in bits]
+                        new_p[q][s] = 0
+                        new_b[q][s] = 0
+                        if freed >= 2:
+                            new_p[d][dd] = 1
+                            new_b[d][dd] = 1
+                            remaining = freed - 2
+                            remaining = _add_freed_units(
+                                new_p[d],
+                                new_b[d],
+                                dd,
+                                remaining,
+                                max_power=max_power,
+                                max_bits=max_bits,
+                            )
+                            if remaining == 0:
+                                yield new_p, new_b
 
 
 def maxmin_refine(
@@ -449,6 +471,7 @@ def wta_greedy_joint_multi(
                 winner = _winner_index(
                     target,
                     bits[q],
+                    powers[q],
                     flip_probability,
                     success_probability,
                     grid,

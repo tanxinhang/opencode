@@ -1902,8 +1902,12 @@ at a local optimum or at `max_rounds`.  The minimum-cover stage is adaptive:
 a report is activated only when it improves the target's expected P_D, which
 prevents forcing a low-reliability link into the fusion set.  The gate
 reports measured NOMP-to-robust-exact gaps; in the Q=2/R=2 per-link gate they
-are 0.009/0.015/0.022 at budgets 8/10/12, versus 0.082/0.061/0.053 for
-WTA-Greedy.
+are 0.009/0.010/0.006 at budgets 8/10/12, versus 0.088/0.066/0.049 for
+WTA-Greedy.  Under channel mismatch the winner report is selected by the
+marginal expected-P_D gain at the current allocation, and the candidate set
+includes every active destination report plus activation of a new report, so
+the discrete refinement can escape the local optima caused by a proxy-ranked
+single winner.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is

@@ -323,11 +323,15 @@ own BSC flip probability and link success probability, and the expected P_D
 marginalizes over independent report erasures.  The robust exact oracle
 evaluates every option at each report's worst endpoint.  Winner-take-all is
 only a heuristic under this mismatch, so NOMP refinement has real room: at
-budgets 8/10/12 the NOMP worst P_D is 0.482/0.550/0.593 versus robust exact
-0.491/0.564/0.615, while WTA-Greedy is 0.409/0.503/0.562.  The NOMP gaps to
-robust exact are 0.009/0.015/0.022 against WTA gaps of 0.082/0.061/0.053.
-Minimum cover is adaptive: a report is activated only when it improves the
-target's expected P_D, so harmful low-reliability links are not forced in.
+budgets 8/10/12 the NOMP worst P_D is 0.482/0.555/0.609 versus robust exact
+0.491/0.564/0.615, while WTA-Greedy is 0.403/0.499/0.566.  The NOMP gaps to
+robust exact are 0.009/0.010/0.006 against WTA gaps of 0.088/0.066/0.049.
+Winner selection under channel mismatch uses the marginal expected-P_D gain
+at the current allocation, and the refinement explores every active
+destination report plus new-report activation, so it can jump the local
+optima that a single proxy-ranked exchange would miss.  Minimum cover is
+adaptive: a report is activated only when it improves the target's expected
+P_D, so harmful low-reliability links are not forced in.
 
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
