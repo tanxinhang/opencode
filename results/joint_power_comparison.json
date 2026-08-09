@@ -3,30 +3,33 @@
   "summary": [
     {
       "budget": 8,
-      "mappo_worst_mean": 0.5959210075172322,
+      "mappo_worst_mean": 0.5348727154607726,
       "greedy_worst_mean": 0.5348727154607726,
       "wta_greedy_worst_mean": 0.7350509632671736,
+      "ucb_wta_greedy_worst_mean": 0.7350509632671736,
       "exact_worst_mean": 0.924507088184435,
       "winner_worst_mean": 0.924507088184435,
-      "train_seconds": 3.025292200036347
+      "train_seconds": 2.9712077998556197
     },
     {
       "budget": 10,
-      "mappo_worst_mean": 0.7214273492708898,
+      "mappo_worst_mean": 0.7135831495746257,
       "greedy_worst_mean": 0.5323849643283289,
       "wta_greedy_worst_mean": 0.7350509632671736,
+      "ucb_wta_greedy_worst_mean": 0.7463835603777865,
       "exact_worst_mean": 0.9856628188651367,
       "winner_worst_mean": 0.9856628188651367,
-      "train_seconds": 1.7952689002268016
+      "train_seconds": 1.8310263003222644
     },
     {
       "budget": 12,
       "mappo_worst_mean": 0.8344057400210563,
       "greedy_worst_mean": 0.5323849643283289,
       "wta_greedy_worst_mean": 0.7366077769492148,
+      "ucb_wta_greedy_worst_mean": 0.7478052630083423,
       "exact_worst_mean": 0.9993277094776527,
       "winner_worst_mean": 0.9993277094776527,
-      "train_seconds": 1.8142464002594352
+      "train_seconds": 1.822273500263691
     }
   ]
 }

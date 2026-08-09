@@ -19,6 +19,7 @@ import time
 import numpy as np
 import torch
 import torch.nn as nn
+from scipy.stats import norm
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -396,6 +397,111 @@ def wta_greedy_joint_multi(scenario, budget):
     return worst()
 
 
+def ucb_wta_greedy_joint_multi(
+    scenario, budget, *, noise_scale, seed
+):
+    """Online WTA-Greedy whose winner/activation use UCB error estimates."""
+    reports = len(scenario[0]) - 1
+    rng = np.random.default_rng(seed)
+    powers = [np.zeros(reports, dtype=int) for _ in scenario]
+    bits = [np.zeros(reports, dtype=int) for _ in scenario]
+    means = []
+    counts = []
+    for q, target in enumerate(scenario):
+        true = np.asarray([
+            power_gain_coefficient(
+                float(target[r + 1]), 1, 0.0, 1.0
+            )
+            for r in range(reports)
+        ])
+        means.append(
+            true + noise_scale * rng.standard_normal(reports)
+        )
+        counts.append(np.ones(reports, dtype=float))
+    used = 0
+    beta = float(norm.ppf(0.975))
+
+    def scores():
+        return np.asarray([
+            pd_value(float(t[0]), t[1:], powers[q], bits[q])
+            for q, t in enumerate(scenario)
+        ])
+
+    def ucb(q):
+        return means[q] + beta * noise_scale / np.sqrt(counts[q])
+
+    def observe(q, r, delta, bit_count):
+        observed = power_gain_coefficient(
+            float(delta), int(bit_count), 0.0, 1.0
+        )
+        means[q][r] = (
+            means[q][r] * counts[q][r] + observed
+        ) / (counts[q][r] + 1.0)
+        counts[q][r] += 1.0
+
+    while True:
+        current = float(np.mean(scores()))
+        best = None
+        for q, target in enumerate(scenario):
+            active = [r for r in range(reports) if bits[q][r] > 0]
+            for r in range(reports):
+                if bits[q][r] > 0 or used + 2 > budget:
+                    continue
+                old_b, old_p = bits[q].copy(), powers[q].copy()
+                bits[q][r] = 1
+                powers[q][r] = 1
+                new_score = float(np.mean(scores()))
+                gain = new_score - current
+                bits[q], powers[q] = old_b, old_p
+                if gain > 0:
+                    key = (gain / 2.0, gain, ucb(q)[r], q, "activate", r)
+                    if best is None or key > best[0]:
+                        best = (key, q, "activate", r)
+            for r in active:
+                if bits[q][r] >= MAX_BITS or used + 1 > budget:
+                    continue
+                old_b = bits[q].copy()
+                bits[q][r] += 1
+                new_score = float(np.mean(scores()))
+                gain = new_score - current
+                bits[q] = old_b
+                if gain > 0:
+                    key = (gain, gain, ucb(q)[r], q, "bit", r)
+                    if best is None or key > best[0]:
+                        best = (key, q, "bit", r)
+            if active:
+                winner = active[int(np.argmax(ucb(q)[active]))]
+                if powers[q][winner] < MAX_POWER and used + 1 <= budget:
+                    old_p = powers[q].copy()
+                    powers[q][winner] += 1
+                    new_score = float(np.mean(scores()))
+                    gain = new_score - current
+                    powers[q] = old_p
+                    if gain > 0:
+                        key = (gain, gain, ucb(q)[winner], q, "power", winner)
+                        if best is None or key > best[0]:
+                            best = (key, q, "power", winner)
+        if best is None:
+            break
+        _, q, action, index = best
+        if action == "activate":
+            bits[q][index] = 1
+            powers[q][index] = 1
+            used += 2
+            observe(q, index, scenario[q][index + 1], 1)
+        elif action == "bit":
+            bits[q][index] += 1
+            used += 1
+            observe(q, index, scenario[q][index + 1], bits[q][index])
+        else:
+            powers[q][index] += 1
+            used += 1
+    return min(
+        pd_value(float(t[0]), t[1:], powers[q], bits[q])
+        for q, t in enumerate(scenario)
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="results/joint_power_comparison.json")
@@ -427,11 +533,18 @@ def main() -> None:
         train_seconds = time.perf_counter() - start
         greedy_worsts = []
         wta_greedy_worsts = []
+        ucb_wta_greedy_worsts = []
         exact_worsts = []
         winner_worsts = []
-        for scenario in test_scenarios:
+        for scenario_index, scenario in enumerate(test_scenarios):
             greedy_worsts.append(greedy_joint_multi(scenario, budget))
             wta_greedy_worsts.append(wta_greedy_joint_multi(scenario, budget))
+            ucb_wta_greedy_worsts.append(ucb_wta_greedy_joint_multi(
+                scenario,
+                budget,
+                noise_scale=0.2,
+                seed=scenario_index,
+            ))
             full_groups = [
                 proportional_power_bit_options(
                     float(t[0]), t[1:],
@@ -460,6 +573,9 @@ def main() -> None:
             "mappo_worst_mean": mappo_worst,
             "greedy_worst_mean": float(np.mean(greedy_worsts)),
             "wta_greedy_worst_mean": float(np.mean(wta_greedy_worsts)),
+            "ucb_wta_greedy_worst_mean": float(np.mean(
+                ucb_wta_greedy_worsts
+            )),
             "exact_worst_mean": float(np.mean(exact_worsts)),
             "winner_worst_mean": float(np.mean(winner_worsts)),
             "train_seconds": train_seconds,

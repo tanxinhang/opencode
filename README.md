@@ -282,6 +282,8 @@ bits are increased by marginal gain per resource unit, every power increment
 is given to the current winner report, and no report/bit/power combination
 is enumerated.  In the joint power-bit comparison it outperforms both Greedy
 and MAPPO at low/medium budgets while remaining fully online.
+The same comparison also reports `UCB-WTA-Greedy`, which runs the online
+greedy with noisy coefficient estimates and UCB-driven winner selection.
 
 `uav_otfs_isac/error_feedback.py` adds coefficient error and multi-round
 feedback: each round explores the top estimates plus one random candidate,
