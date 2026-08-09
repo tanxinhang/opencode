@@ -1,10 +1,9 @@
-"""Physical report-link model with BPSK and log-normal outage.
+"""Physical sensing and communication channels with explicit decoupling.
 
-The reporting channel is derived from geometry instead of drawn from a
-configuration interval.  Each report link follows a free-space path-loss
-law, the bit-flip probability is the uncoded BPSK error probability, and the
-erasure/success probability is the log-normal outage survival above a
-required link SNR.
+The sensing channel is UAV-to-target and determines the H0/H1 evidence
+moments.  The communication channel is UAV-to-owner and determines report
+bit-flip and erasure statistics.  The two channels are not assumed to share
+path-loss exponents, reference SNRs, shadowing, or outage thresholds.
 """
 
 from __future__ import annotations

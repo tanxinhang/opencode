@@ -1,6 +1,7 @@
 import numpy as np
 
 from uav_otfs_isac.config import load_config
+from uav_otfs_isac.fusion import optimal_deflection
 from uav_otfs_isac.physical_link_model import (
     bpsk_bit_flip_probability,
     build_physical_link_models,
@@ -63,3 +64,33 @@ def test_physical_link_models_are_valid_and_use_derived_links():
     assert len(models) == cfg.num_targets
     assert np.isclose(models[0].bit_flip_prob[models[0].owner], 0.0)
     assert np.isclose(models[0].success_prob[models[0].owner], 1.0)
+
+
+def test_sensing_and_communication_channels_are_decoupled():
+    cfg = load_config("config/demo.yaml")
+    high_comm = build_physical_link_models(
+        cfg,
+        cfg.seed,
+        reference_snr_db=30.0,
+        threshold_db=5.0,
+        shadowing_db=3.0,
+    )
+    low_comm = build_physical_link_models(
+        cfg,
+        cfg.seed,
+        reference_snr_db=5.0,
+        threshold_db=5.0,
+        shadowing_db=3.0,
+    )
+    for high, low in zip(high_comm, low_comm):
+        # Owner-only evidence uses the sensing channel only, so it must be
+        # invariant to the communication-channel reference SNR.
+        high_owner_pd = optimal_deflection(
+            high.delta, high.sigma0, {high.owner}
+        )
+        low_owner_pd = optimal_deflection(
+            low.delta, low.sigma0, {low.owner}
+        )
+        assert np.isclose(high_owner_pd, low_owner_pd)
+        # Report links must differ because the communication channel differs.
+        assert np.any(high.bit_flip_prob != low.bit_flip_prob)

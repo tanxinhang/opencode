@@ -69,6 +69,14 @@ and never reduce a link's evidence SNR.
 - Detectable erasure modeled by the reception law `gamma` over the scheduled
   report set, which may be independent, common-state, or grouped.
 
+The sensing channel (UAV-to-target) and the communication channel
+(UAV-to-owner) are separate channels.  They are not assumed to share
+path-loss exponents, reference SNRs, shadowing, or outage thresholds.  The
+sensing channel determines the pre-report H0/H1 moments; the communication
+channel determines BSC flip probability and link success probability after
+quantization.  Consequently owner-only evidence is invariant to
+communication-channel parameters.
+
 ### 5.1 Physical report-link parameterization
 
 `uav_otfs_isac/physical_link_model.py` optionally replaces the configuration

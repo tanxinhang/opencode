@@ -1625,6 +1625,21 @@ cost/value Pareto pruning is applied afterward.  The gate compares both
 paths on small instances and reports equal frontiers up to floating-point
 tolerance.
 
+### Lemma 4.68 (sensing and communication channels are decoupled)
+
+Let the sensing channel map target geometry and power to the pre-report H0/H1
+moments, and let the communication channel map the UAV-to-owner link to the
+BSC flip probability and erasure survival.  If the communication-channel
+parameters change while the sensing channel stays fixed, the owner-only
+evidence is unchanged.
+
+Proof: the owner does not send a report, so its BSC flip and erasure are
+reset to zero and one, respectively.  Its moments are therefore produced
+entirely by the sensing channel.  The gate in `physical_link_model.py`
+builds two models with different communication reference SNRs and verifies
+that the owner-only deflection is identical while the report flip
+probabilities differ.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1715,6 +1730,7 @@ the audit.
 | Lemma 4.65 | `joint_allocation.minimum_cost_for_threshold`, `exact_joint_maxmin` | `tests/test_joint_allocation.py`, `results/exact_joint_scaling_benchmark.json` |
 | Lemma 4.66 | `joint_power_bit.power_bit_target_options`, `exact_joint_power_bit_maxmin` | `tests/test_joint_power_bit.py`, Gate JPB JSON |
 | Lemma 4.67 | `joint_power_bit.vectorized_power_bit_target_options` | `tests/test_joint_power_bit.py`, `results/joint_power_bit_scaling_benchmark.json` |
+| Lemma 4.68 | `physical_link_model.build_physical_link_models` | `tests/test_physical_link_model.py` |
 
 ## 6. Explicit non-claims
 

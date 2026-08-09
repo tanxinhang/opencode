@@ -246,7 +246,9 @@ per-UAV range gives a free-space link SNR, the BSC flip is the uncoded BPSK
 error probability, and the erasure survival is the log-normal outage
 probability.  `build_physical_link_models` feeds these values into the exact
 post-communication moments; the formulas and monotonicity are Lemma 4.64 in
-`FORMAL_PROOFS.md`.
+`FORMAL_PROOFS.md`.  The sensing channel and the communication channel are
+explicitly decoupled: Lemma 4.68 shows owner-only evidence is invariant to
+communication-channel parameters.
 
 `uav_otfs_isac/mobility_envelope.py` closes the sensing side of the stress
 model: a maximum speed and frame duration define a bounded displacement
