@@ -269,6 +269,9 @@ Lemma 4.76 extends it to the joint allocation: with the same proportional
 model, winner-take-all reduces the power dimension from `P^R` to `P`, and the
 reduced frontier matches the full power-bit frontier exactly.
 
+`scripts/benchmark_winner_take_all_scaling.py` measures the resulting
+speedup while verifying that the reduced and full frontiers are identical.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic

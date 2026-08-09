@@ -1,0 +1,30 @@
+{
+  "gate": "winner-take-all-scaling",
+  "passed": true,
+  "rows": [
+    {
+      "reports": 2,
+      "full_seconds": 0.06820439966395497,
+      "winner_seconds": 0.03665679972618818,
+      "speedup": 1.860620680839978,
+      "equal_frontier": true,
+      "frontier_options": 4
+    },
+    {
+      "reports": 3,
+      "full_seconds": 0.26412490010261536,
+      "winner_seconds": 0.0832801996730268,
+      "speedup": 3.171520975449359,
+      "equal_frontier": true,
+      "frontier_options": 4
+    },
+    {
+      "reports": 4,
+      "full_seconds": 0.7591802002862096,
+      "winner_seconds": 0.17261220002546906,
+      "speedup": 4.398183906897612,
+      "equal_frontier": true,
+      "frontier_options": 4
+    }
+  ]
+}

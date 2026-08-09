@@ -177,6 +177,16 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "winner-take-all-scaling"
+        Args = @(
+            "scripts\benchmark_winner_take_all_scaling.py",
+            "--reports", "2", "3", "4",
+            "--budget", "4",
+            "--grid", "16",
+            "--output", "results\winner_take_all_scaling_benchmark.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",
