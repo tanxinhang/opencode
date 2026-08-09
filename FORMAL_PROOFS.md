@@ -1609,6 +1609,22 @@ supplied option set, the joint optimum is never below either baseline at the
 same budget.  The gate in `joint_power_bit.py` verifies this and reports the
 joint gain at low/medium budgets.
 
+### Lemma 4.67 (vectorized power-bit option enumeration)
+
+Let `R` be the number of reports and `C = |P| * |B|` the number of
+`(power, bit)` choices per report.  The joint power-bit frontier enumerates
+`C^R` combinations.  The vectorized implementation precomputes the
+whitened per-report gain and variance-ratio tables once and evaluates
+`P_D`-optimal shifts in batches, so the per-target cost is
+`O(C^R grid / batch_size)` with an exactness-equivalent result to the
+per-combination evaluator.
+
+Proof: the precomputed tables and the batched shift formula are algebraically
+the same operations as the per-combination evaluator, and the same
+cost/value Pareto pruning is applied afterward.  The gate compares both
+paths on small instances and reports equal frontiers up to floating-point
+tolerance.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1698,6 +1714,7 @@ the audit.
 | Lemma 4.64 | `physical_link_model.physical_report_link_parameters`, `build_physical_link_models` | `tests/test_physical_link_model.py` |
 | Lemma 4.65 | `joint_allocation.minimum_cost_for_threshold`, `exact_joint_maxmin` | `tests/test_joint_allocation.py`, `results/exact_joint_scaling_benchmark.json` |
 | Lemma 4.66 | `joint_power_bit.power_bit_target_options`, `exact_joint_power_bit_maxmin` | `tests/test_joint_power_bit.py`, Gate JPB JSON |
+| Lemma 4.67 | `joint_power_bit.vectorized_power_bit_target_options` | `tests/test_joint_power_bit.py`, `results/joint_power_bit_scaling_benchmark.json` |
 
 ## 6. Explicit non-claims
 

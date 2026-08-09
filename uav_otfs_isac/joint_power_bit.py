@@ -12,6 +12,7 @@ from __future__ import annotations
 import itertools
 
 import numpy as np
+from scipy.stats import norm
 
 from .fusion import optimal_gaussian_detection_probability
 from .joint_allocation import exact_joint_maxmin, moments
@@ -54,43 +55,129 @@ def power_bit_target_options(
     power_cost: float = 1.0,
     bit_cost: float = 1.0,
     grid: int = 32,
+    batch_size: int = 50_000,
 ) -> list[tuple[int, float]]:
     """Pareto frontier of (cost, P_D) over power and bit choices."""
-    reports = list(range(len(report_deltas)))
-    per_report_choices = list(itertools.product(power_levels, bit_options))
-    out = []
-    for combo in itertools.product(
-        per_report_choices, repeat=len(reports)
-    ):
-        powers = np.asarray([item[0] for item in combo], dtype=float)
-        bits = np.asarray([item[1] for item in combo], dtype=int)
-        cost = int(round(
-            power_cost * float(powers.sum()) + bit_cost * float(bits.sum())
-        ))
-        if cost > budget:
-            continue
-        pd = _target_pd(
-            owner_delta, np.asarray(report_deltas, dtype=float),
-            powers, bits, grid,
+    return vectorized_power_bit_target_options(
+        owner_delta,
+        report_deltas,
+        power_levels=power_levels,
+        bit_options=bit_options,
+        budget=budget,
+        power_cost=power_cost,
+        bit_cost=bit_cost,
+        grid=grid,
+        batch_size=batch_size,
+    )
+
+
+def vectorized_power_bit_target_options(
+    owner_delta: float,
+    report_deltas: np.ndarray,
+    *,
+    power_levels: np.ndarray,
+    bit_options: np.ndarray,
+    budget: int,
+    power_cost: float = 1.0,
+    bit_cost: float = 1.0,
+    grid: int = 32,
+    batch_size: int = 50_000,
+) -> list[tuple[int, float]]:
+    """Batched exact Pareto frontier over power and bit choices."""
+    deltas = np.asarray(report_deltas, dtype=float)
+    reports = list(range(deltas.size))
+    choices = list(itertools.product(power_levels, bit_options))
+    pre_a = np.zeros((deltas.size, len(choices)), dtype=float)
+    pre_q = np.ones((deltas.size, len(choices)), dtype=float)
+    pre_cost = np.zeros((deltas.size, len(choices)), dtype=float)
+    for i, delta in enumerate(deltas):
+        for j, (power, bits) in enumerate(choices):
+            if int(bits) <= 0:
+                continue
+            scaled_delta = float(delta) * np.sqrt(max(float(power), 0.0))
+            m0, m1, v0, v1 = moments(scaled_delta, int(bits))
+            pre_a[i, j] = (m1 - m0) / np.sqrt(max(v0, 1e-12))
+            pre_q[i, j] = max(v1 / max(v0, 1e-12), 1e-12)
+            pre_cost[i, j] = (
+                float(power_cost) * float(power)
+                + float(bit_cost) * int(bits)
+            )
+
+    all_combos = np.asarray(
+        list(itertools.product(range(len(choices)), repeat=deltas.size)),
+        dtype=np.int64,
+    )
+    costs = np.zeros(all_combos.shape[0], dtype=float)
+    for i in reports:
+        costs += pre_cost[i, all_combos[:, i]]
+    mask = costs <= float(budget)
+    all_combos = all_combos[mask]
+    costs = np.round(costs[mask]).astype(int)
+    if all_combos.shape[0] == 0:
+        return [(0, _target_pd(
+            owner_delta, deltas,
+            np.zeros(deltas.size), np.zeros(deltas.size, dtype=int), grid,
+        ))]
+
+    z = float(norm.ppf(0.95))
+    owner_a2 = float(owner_delta ** 2)
+    mu_grid = np.concatenate((
+        np.linspace(0.0, 3.0, grid // 2),
+        np.geomspace(3.0 + 1e-3, 1e6, grid // 2),
+    ))
+    frontier: dict[int, float] = {}
+    report_index = np.arange(deltas.size)[None, :]
+
+    def evaluate_batch(batch: np.ndarray):
+        selected = pre_a[report_index, batch] != 0.0
+        a = np.where(
+            selected,
+            pre_a[report_index, batch],
+            0.0,
         )
-        out.append((cost, pd))
-    out.sort(key=lambda item: (item[0], -item[1]))
+        q = np.where(
+            selected,
+            pre_q[report_index, batch],
+            1.0,
+        )
+        a2 = a * a
+        denom = q[None, :, :] + mu_grid[:, None, None]
+        a2_den = a2[None, :, :] / denom
+        a2_den2 = a2[None, :, :] / (denom * denom)
+        q_a2_den2 = q[None, :, :] * a2[None, :, :] / (denom * denom)
+        A2 = a2_den.sum(axis=2) + owner_a2 / (1.0 + mu_grid[:, None])
+        N2 = a2_den2.sum(axis=2) + owner_a2 / ((1.0 + mu_grid[:, None]) ** 2)
+        H2 = q_a2_den2.sum(axis=2) + owner_a2 / ((1.0 + mu_grid[:, None]) ** 2)
+        shifts = (
+            A2 - z * np.sqrt(np.maximum(N2, 0.0))
+        ) / np.sqrt(np.maximum(H2, 1e-30))
+        num_a = a2.sum(axis=1) + owner_a2
+        h_a = (q * a2).sum(axis=1) + owner_a2
+        deflection_limit = (
+            num_a - z * np.sqrt(np.maximum(num_a, 0.0))
+        ) / np.sqrt(np.maximum(h_a, 1e-30))
+        return np.maximum(shifts.max(axis=0), deflection_limit)
+
+    for start in range(0, all_combos.shape[0], batch_size):
+        batch = all_combos[start:start + batch_size]
+        batch_costs = costs[start:start + batch_size]
+        pd_values = norm.cdf(evaluate_batch(batch))
+        for cost, pd in zip(batch_costs, pd_values):
+            key = int(cost)
+            if key not in frontier or float(pd) > frontier[key]:
+                frontier[key] = float(pd)
+
+    result = sorted(frontier.items())
     pareto = []
     best_value = -1.0
     last_cost = None
-    for cost, pd in out:
+    for cost, pd in result:
         if cost == last_cost:
             continue
         last_cost = cost
         if pd > best_value + 1e-12:
             pareto.append((cost, pd))
             best_value = pd
-    if not pareto:
-        pareto.append((0, _target_pd(
-            owner_delta, np.asarray(report_deltas, dtype=float),
-            np.zeros(len(report_deltas)), np.zeros(len(report_deltas), dtype=int),
-            grid,
-        )))
     return pareto
 
 

@@ -88,6 +88,15 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "joint-power-bit-scaling"
+        Args = @(
+            "scripts\benchmark_joint_power_bit_scaling.py",
+            "--reports", "2", "4", "6",
+            "--grid", "32",
+            "--output", "results\joint_power_bit_scaling_benchmark.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",

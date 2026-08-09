@@ -213,7 +213,9 @@ optimization layer: a shared budget can be spent on sensing power (which
 scales evidence separation) or quantizer bits (which improve report
 fidelity).  `scripts/run_joint_power_bit_gate.py` compares the exact joint
 allocation with sensing-only and communication-only baselines; Lemma 4.66
-shows the joint feasible set contains both baselines.
+shows the joint feasible set contains both baselines, and Lemma 4.67 records
+the vectorized option-enumeration complexity.  Scaling is checked by
+`scripts/benchmark_joint_power_bit_scaling.py`.
 
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case

@@ -104,6 +104,7 @@ python scripts/benchmark_robustness_performance.py
 python scripts/benchmark_robustness_performance.py --formal
 python scripts/benchmark_exact_joint_scaling.py --targets 2 4 8 16
 python scripts/run_joint_power_bit_gate.py --budgets 8 12 16 --grid 32
+python scripts/benchmark_joint_power_bit_scaling.py --reports 2 4 6 --grid 32
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/build_paper_tables.py
 ```

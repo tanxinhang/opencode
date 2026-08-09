@@ -41,7 +41,11 @@ def test_power_bit_options_match_bruteforce():
         if pd > best + 1e-12:
             expected.append((cost, pd))
             best = pd
-    assert dict(options) == dict(expected)
+    actual = dict(options)
+    reference = dict(expected)
+    assert set(actual) == set(reference)
+    for cost in actual:
+        assert abs(actual[cost] - reference[cost]) < 1e-9
 
 
 def test_joint_power_bit_maxmin_matches_bruteforce():
