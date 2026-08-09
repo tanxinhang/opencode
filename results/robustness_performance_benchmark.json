@@ -1,0 +1,36 @@
+{
+  "gate": "robustness-performance-benchmark",
+  "config": "config/demo.yaml",
+  "smoke": [
+    {
+      "label": "enumerate_robust_options_S2_R7",
+      "seconds": 0.06388630019500852
+    },
+    {
+      "label": "common_dp_S2_B20",
+      "seconds": 0.1833276003599167
+    },
+    {
+      "label": "independent_dp_S2_B20",
+      "seconds": 0.17267490038648248
+    },
+    {
+      "label": "survival_envelope_4x2x1_g64",
+      "seconds": 0.5854699998162687
+    },
+    {
+      "label": "bsc_roc_gate_default",
+      "seconds": 0.12648800015449524
+    },
+    {
+      "label": "build_physical_link_models",
+      "seconds": 0.005976600106805563
+    }
+  ],
+  "smoke_max_seconds": 0.5854699998162687,
+  "formal": {
+    "stress_suite": 16.21874070027843,
+    "stress_allocation": 10.71510750008747
+  },
+  "formal_max_seconds": 16.21874070027843
+}

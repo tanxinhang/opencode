@@ -63,8 +63,9 @@ Expected: all green.
    generated without a rendering environment, so this visual check is
    mandatory before submission.
 
-3. Replace the placeholder author/affiliation block in `paper/main.tex`
-   (and add any acknowledgments/funding) with the real author list.
+3. The author name is filled as Xu Ya; replace the remaining affiliation
+   placeholder in `paper/main.tex` (and add any acknowledgments/funding)
+   before submission.
 
 4. Choose the target venue and adjust the template if it is not IEEEtran
    conference style; keep the manuscript content unchanged.

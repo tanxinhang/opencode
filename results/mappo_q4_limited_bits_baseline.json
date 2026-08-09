@@ -1,0 +1,53 @@
+{
+  "gate": "mappo-baseline-multi-target",
+  "train_seeds": 40,
+  "test_seeds": 20,
+  "episodes": 3000,
+  "grid": 32,
+  "exact_max_reports": 4,
+  "exact_max_bits": 3,
+  "summary": [
+    {
+      "budget_bits": 28,
+      "exact_max_reports": 4,
+      "exact_max_bits": 3,
+      "train_episodes": 3000,
+      "train_seconds": 58.4500035000965,
+      "mappo_worst_mean": 0.7780706431773645,
+      "mappo_used_bits_mean": 12.0,
+      "mappo_over_budget_rate": 0.0,
+      "greedy_worst_mean": 0.8041332311781954,
+      "exact_joint_worst_mean": 0.82635326755584,
+      "mappo_gap_to_exact_pp": 4.8282624378475525,
+      "greedy_gap_to_exact_pp": 2.222003637764469
+    },
+    {
+      "budget_bits": 32,
+      "exact_max_reports": 4,
+      "exact_max_bits": 3,
+      "train_episodes": 3000,
+      "train_seconds": 59.35120059968904,
+      "mappo_worst_mean": 0.7590584974183139,
+      "mappo_used_bits_mean": 9.0,
+      "mappo_over_budget_rate": 0.0,
+      "greedy_worst_mean": 0.8246903431046941,
+      "exact_joint_worst_mean": 0.8265521434301857,
+      "mappo_gap_to_exact_pp": 6.74936460118718,
+      "greedy_gap_to_exact_pp": 0.18618003254915472
+    },
+    {
+      "budget_bits": 36,
+      "exact_max_reports": 4,
+      "exact_max_bits": 3,
+      "train_episodes": 3000,
+      "train_seconds": 61.44155590003356,
+      "mappo_worst_mean": 0.824929184449679,
+      "mappo_used_bits_mean": 16.7,
+      "mappo_over_budget_rate": 0.0,
+      "greedy_worst_mean": 0.8279916059699076,
+      "exact_joint_worst_mean": 0.8265521434301857,
+      "mappo_gap_to_exact_pp": 0.16229589805066835,
+      "greedy_gap_to_exact_pp": -0.14394625397219363
+    }
+  ]
+}

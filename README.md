@@ -58,7 +58,15 @@ python scripts/run_joint_scale_gate.py --seeds 10 --grid 32
 python scripts/run_joint_scale_gate.py --seeds 5 --grid 32 --reports 5 --output results/joint_scale_r5_gate.json
 python scripts/run_joint_scale_gate.py --seeds 2 --grid 32 --reports 8 --budget-multiplier 7 --output results/joint_scale_r8_gate.json
 python scripts/run_mappo_baseline.py --train-seeds 40 --test-seeds 20 --episodes 3000
+python scripts/run_mappo_baseline.py --targets 4 --train-seeds 40 --test-seeds 20 --episodes 3000 --budgets 28 32 36
+python scripts/run_mappo_baseline.py --targets 4 --train-seeds 40 --test-seeds 20 --episodes 3000 --budgets 28 32 36 --exact-max-bits 3
+python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/run_channel_difficulty_gate.py --seeds 10 --grid 32
+python scripts/run_robustness_stress_suite.py --seeds 2 --grid 64 --budgets 20 30 40
+python scripts/run_robust_stress_allocation.py --seeds 2 --budgets 16 20 24
+python scripts/run_bsc_degradation_roc_gate.py --bits 1 2 3 --deltas 1.0 1.5 2.0 --lo 0.0 0.1 0.2 --hi 0.3 0.4 0.45 --pfa-grid 0.01 0.05 0.1 0.2
+python scripts/run_erasure_dominance_gate.py --samples 50000 --grid 128
+python scripts/run_sensing_mobility_envelope_gate.py --samples 5000 --max-displacement 8.0
 python scripts/audit_exact_selection_stats.py
 python scripts/run_sensitivity_study.py --config config/demo.yaml
 python scripts/run_risk_portfolio_study.py --config config/demo.yaml
@@ -152,6 +160,97 @@ python scripts/verify_paper_numbers.py
 ```
 
 The demo writes `results/demo_summary.json`.
+
+## Progressive robustness stress suite (stage 1)
+
+`uav_otfs_isac/robustness_stress.py` defines `StressProfile` and
+`survival_envelope` as the shared skeleton for progressively adding
+robustness axes.  Stage 1 sweeps free-space-path-loss spatial interference,
+BSC flip probability, report-link success scaling, and bounded target
+mobility on the same seed-resolved scenario, and reports mean/min
+worst-target expected `P_D` plus QoS rate per budget.
+`scripts/run_robustness_stress_suite.py` writes
+`results/robustness_stress_suite.json`.
+
+Every new axis should be added incrementally: add a focused test first,
+then enable the axis in the envelope.  Later stages target correlated
+failure groups, RIS null-steering, and model-parameter uncertainty.
+
+`uav_otfs_isac/robust_portfolio.py` adds the exact worst-scenario chance
+constraint layer: for a finite physical scenario set (clean plus degraded
+INR/BSC/erasure/mobility), the DP keeps componentwise nondominated scenario
+excess/risk labels and minimizes the maximum weighted violation excess.
+The correctness proof is Theorem 4.58 in `FORMAL_PROOFS.md`;
+`scripts/run_robust_stress_allocation.py` compares the nominal schedule and
+the robust schedule on the same worst-case scale.
+
+Theorem 4.62 adds the independent-ambiguity counterpart: when degradation
+states are independent across targets, the worst-case total separates as the
+sum of per-target worst cases, so the exact problem reduces to a scalar DP
+and different targets may have different scenario counts.
+
+Performance is checked by `scripts/benchmark_robustness_performance.py`;
+Theorem 4.63 in `FORMAL_PROOFS.md` records the exact-DP complexity.  On the
+current 8-UAV/3-target machine, smoke operations finish in about 0.6 s, and
+the formal stress sweep finishes in about 16 s while the robust-allocation
+sweep finishes in about 11 s.
+
+Exact Joint scaling is checked by
+`scripts/benchmark_exact_joint_scaling.py`.  Lemma 4.65 records the
+optimized threshold complexity `O(Q log O log V)`: each target pre-builds a
+cost-value Pareto frontier and threshold feasibility uses binary search
+instead of scanning every option.  On the current machine the Q=16,
+R=4, grid=16 enumeration+solve drops from about 8.7 s to about 0.07 s after
+`target_options` delegates to the vectorized frontier.
+
+`uav_otfs_isac/joint_power_bit.py` adds the joint sensing-communication
+optimization layer: a shared budget can be spent on sensing power (which
+scales evidence separation) or quantizer bits (which improve report
+fidelity).  `scripts/run_joint_power_bit_gate.py` compares the exact joint
+allocation with sensing-only and communication-only baselines; Lemma 4.66
+shows the joint feasible set contains both baselines.
+
+`uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
+comparison: no cooperation, worst-case sensing Top-K, worst-case
+communication Top-K, worst-case independent post-report Top-K, deterministic
+random Top-K, and a worst-case marginal greedy are all evaluated on the same
+maximum scenario excess scale as the exact robust DP in
+`scripts/run_robust_stress_allocation.py`.  Every row also reports per-target
+worst violation probabilities and their mean, which stay in `[0,1]`, so the
+weighted excess can be read as an auxiliary index instead of a probability.
+
+`uav_otfs_isac/channel_degradation.py` formalizes BSC degradation ordering:
+for `0 <= p1 <= p2 <= 0.5`, `BSC(p2)` is `BSC(p1)` followed by another BSC,
+so the exact likelihood-ratio ROC under the cleaner channel dominates the
+degraded channel.  `scripts/run_bsc_degradation_roc_gate.py` verifies this
+on the exact quantized-Gaussian LRT grid; the proof is Theorem 4.59 in
+`FORMAL_PROOFS.md`.
+
+`uav_otfs_isac/erasure_dominance.py` closes the erasure side of the same
+ordering: with success probabilities `p_b <= p_a`, the degraded received set
+is always a subset of the clean set in a shared-uniform coupling, so the
+exact LRT ROC and, at set-monotone operating points, the expected P_D are
+nonincreasing as erasure grows.  The proof is Theorem 4.60 in
+`FORMAL_PROOFS.md`; `scripts/run_erasure_dominance_gate.py` is the
+reproducible gate.
+
+`uav_otfs_isac/physical_link_model.py` makes the reporting channel concrete:
+per-UAV range gives a free-space link SNR, the BSC flip is the uncoded BPSK
+error probability, and the erasure survival is the log-normal outage
+probability.  `build_physical_link_models` feeds these values into the exact
+post-communication moments; the formulas and monotonicity are Lemma 4.64 in
+`FORMAL_PROOFS.md`.
+
+`uav_otfs_isac/mobility_envelope.py` closes the sensing side of the stress
+model: a maximum speed and frame duration define a bounded displacement
+`R = v_max T_frame`, the reverse triangle inequality bounds every UAV-target
+range change by `R`, and the free-space path-loss bound
+`(d_min/(d_min-R))^2` certifies the power envelope.  The proof is Theorem
+4.61 in `FORMAL_PROOFS.md`; `scripts/run_sensing_mobility_envelope_gate.py`
+verifies the envelope on independent samples.  Corollary 4.61A additionally
+covers the range-derived dB-SNR law actually used by `build_models`: with
+`p = ptp(d)` and `p > 2R`, the normalized range term changes by at most
+`4R/(p-2R)`, which yields a finite linear-SNR bound.
 
 ## OTFS physical-layer direction (Gate 0)
 

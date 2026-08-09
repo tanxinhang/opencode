@@ -145,45 +145,22 @@ def target_options(
     grid: int,
     max_bits: int = 4,
     bit_flip_probability: float = 0.0,
+    max_reports: int | None = None,
 ) -> list[tuple[int, float]]:
-    """Pareto frontier of (cost, P_D) over selection and 1-4 bit choices."""
-    options = [[(0, 0.0, 0.0, 1.0, 1.0)] for _ in deltas]
-    for index, delta in enumerate(deltas):
-        for bits in range(1, max_bits + 1):
-            options[index].append((
-                bits, *moments(float(delta), bits, bit_flip_probability),
-            ))
-    out: list[tuple[int, float]] = []
-    for combo in itertools.product(*options):
-        cost = sum(item[0] for item in combo)
-        mu0 = [0.0]
-        mu1 = [owner_delta]
-        var0 = [1.0]
-        var1 = [1.0]
-        for (bits, m0, m1, v0, v1) in combo:
-            if bits > 0:
-                mu0.append(m0)
-                mu1.append(m1)
-                var0.append(v0)
-                var1.append(v1)
-        pd = float(optimal_gaussian_detection_probability(
-            np.asarray(mu0), np.asarray(mu1),
-            np.diag(var0), np.diag(var1),
-            set(range(len(mu0))), 0.05, grid=grid,
-        ))
-        out.append((cost, pd))
-    out.sort(key=lambda item: (item[0], -item[1]))
-    pareto: list[tuple[int, float]] = []
-    best_value = -1.0
-    last_cost = None
-    for cost, pd in out:
-        if cost == last_cost:
-            continue
-        last_cost = cost
-        if pd > best_value + 1e-12:
-            pareto.append((cost, pd))
-            best_value = pd
-    return pareto
+    """Pareto frontier over selection and bit choices, optionally limited.
+
+    ``max_reports`` caps the number of selected reports per target, and
+    ``max_bits`` caps the bit count per report.  The returned frontier is
+    exact over the restricted feasible set.
+    """
+    return vectorized_target_options(
+        owner_delta,
+        deltas,
+        grid,
+        max_bits=max_bits,
+        bit_flip_probability=bit_flip_probability,
+        max_reports=max_reports,
+    )
 
 
 def vectorized_target_options(
@@ -193,6 +170,7 @@ def vectorized_target_options(
     max_bits: int = 4,
     batch_size: int = 50_000,
     bit_flip_probability: float = 0.0,
+    max_reports: int | None = None,
 ) -> list[tuple[int, float]]:
     """Vectorized exact Pareto frontier for up to R=8 reports.
 
@@ -202,7 +180,8 @@ def vectorized_target_options(
     """
     reports = list(range(len(deltas)))
     choices = list(range(max_bits + 1))
-    count = (max_bits + 1) ** len(reports)
+    if max_reports is not None and max_reports < 0:
+        raise ValueError("max_reports must be nonnegative")
 
     pre_m0 = np.zeros((len(reports), max_bits + 1))
     pre_m1 = np.zeros((len(reports), max_bits + 1))
@@ -270,6 +249,12 @@ def vectorized_target_options(
         list(itertools.product(choices, repeat=len(reports))),
         dtype=np.int64,
     )
+    if max_reports is not None:
+        selected_counts = (all_combos > 0).sum(axis=1)
+        all_combos = all_combos[selected_counts <= max_reports]
+    if all_combos.shape[0] == 0:
+        raise ValueError("no report/bit combinations satisfy max_reports")
+    count = all_combos.shape[0]
     for start in range(0, count, batch_size):
         batch = all_combos[start:start + batch_size]
         costs, values = evaluate_batch(batch)
@@ -335,23 +320,60 @@ def subset_options(
     return pareto
 
 
+def minimum_cost_for_threshold(
+    options: list[tuple[int, float]],
+    threshold: float,
+) -> int | None:
+    """Minimum cost among options whose value reaches the threshold.
+
+    ``options`` must be the Pareto frontier returned by ``target_options``:
+    sorted by nondecreasing cost with strictly nondecreasing value.  A binary
+    search is exact because the feasible cost set is an upper interval of the
+    sorted frontier.
+    """
+    if not options:
+        return None
+    costs = np.asarray([cost for cost, _ in options])
+    values = np.asarray([value for _, value in options])
+    index = int(np.searchsorted(
+        values, threshold - 1e-12, side="left"
+    ))
+    if index >= costs.size:
+        return None
+    return int(costs[index])
+
+
 def exact_joint_maxmin(
     target_options_list: list[list[tuple[int, float]]],
     budget_bits: int,
 ) -> float:
     """Exact max-min over target-separable bit/report option sets."""
-    values = sorted({value for options in target_options_list for _, value in options})
+    if not target_options_list:
+        raise ValueError("target_options_list must be nonempty")
+    frontiers = [
+        (
+            np.asarray([cost for cost, _ in options], dtype=int),
+            np.asarray([value for _, value in options], dtype=float),
+        )
+        for options in target_options_list
+    ]
+    if any(costs.size == 0 for costs, _ in frontiers):
+        raise ValueError("every target option set must be nonempty")
+    values = sorted({
+        float(value)
+        for _, values in frontiers
+        for value in values
+    })
 
     def feasible(threshold: float) -> bool:
         total = 0
-        for options in target_options_list:
-            best = None
-            for cost, value in options:
-                if value >= threshold - 1e-12 and (best is None or cost < best):
-                    best = cost
-            if best is None:
+        for costs, values in frontiers:
+            index = int(np.searchsorted(
+                values, threshold - 1e-12, side="left"
+            ))
+            if index >= costs.size:
                 return False
-            total += best
+            total += int(costs[index])
             if total > budget_bits:
                 return False
         return True

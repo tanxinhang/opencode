@@ -29,6 +29,8 @@ def build_models(
     target_positions: Sequence | None = None,
     quantizer_bits_per_uav: Sequence[int] | None = None,
     interference_to_noise: np.ndarray | None = None,
+    report_bit_flip_probabilities: np.ndarray | None = None,
+    report_success_probabilities: np.ndarray | None = None,
 ) -> list[TargetEvidenceModel]:
     """Build the moment-matched system models.
 
@@ -45,6 +47,11 @@ def build_models(
 
     ``interference_to_noise`` applies an interference-to-noise ratio per UAV,
     reducing the effective SINR as ``SNR / (1 + INR)``.
+
+    ``report_bit_flip_probabilities`` and ``report_success_probabilities``
+    optionally replace the distance-derived reporting channel with
+    externally computed physical values of shape ``(num_targets, num_uavs)``.
+    The owner entries are always reset to no-flip and no-erasure.
     """
     positions = (
         uav_geometry(cfg.num_uavs)
@@ -77,6 +84,38 @@ def build_models(
             raise ValueError("interference_to_noise must have one entry per UAV")
         if np.any(interference_to_noise < 0.0):
             raise ValueError("interference_to_noise entries must be nonnegative")
+    if report_bit_flip_probabilities is not None:
+        report_bit_flip_probabilities = np.asarray(
+            report_bit_flip_probabilities, dtype=float
+        )
+        if report_bit_flip_probabilities.shape != (
+            cfg.num_targets, cfg.num_uavs
+        ):
+            raise ValueError(
+                "report_bit_flip_probabilities must have shape "
+                "(num_targets, num_uavs)"
+            )
+        if np.any(
+            (report_bit_flip_probabilities < 0.0)
+            | (report_bit_flip_probabilities > 1.0)
+        ):
+            raise ValueError("report bit flip probabilities must lie in [0, 1]")
+    if report_success_probabilities is not None:
+        report_success_probabilities = np.asarray(
+            report_success_probabilities, dtype=float
+        )
+        if report_success_probabilities.shape != (
+            cfg.num_targets, cfg.num_uavs
+        ):
+            raise ValueError(
+                "report_success_probabilities must have shape "
+                "(num_targets, num_uavs)"
+            )
+        if np.any(
+            (report_success_probabilities < 0.0)
+            | (report_success_probabilities > 1.0)
+        ):
+            raise ValueError("report success probabilities must lie in [0, 1]")
     if snr_gain is not None:
         gain = np.asarray(snr_gain, dtype=float)
         if gain.shape != (cfg.num_targets, cfg.num_uavs):
@@ -133,16 +172,30 @@ def build_models(
         success_lo, success_hi = cfg.reporting.success_probability_range
         flip_lo, flip_hi = cfg.reporting.bit_flip_probability_range
         link_jitter = rng.normal(0.0, 0.025, cfg.num_uavs)
-        success = np.clip(
-            success_hi - (success_hi - success_lo) * normalized_report_distance + link_jitter,
-            success_lo,
-            success_hi,
-        )
-        p_flip = np.clip(
-            flip_lo + (flip_hi - flip_lo) * normalized_report_distance - 0.15 * link_jitter,
-            flip_lo,
-            flip_hi,
-        )
+        if report_success_probabilities is None:
+            success = np.clip(
+                success_hi
+                - (success_hi - success_lo) * normalized_report_distance
+                + link_jitter,
+                success_lo,
+                success_hi,
+            )
+        else:
+            success = np.asarray(
+                report_success_probabilities[q], dtype=float
+            ).copy()
+        if report_bit_flip_probabilities is None:
+            p_flip = np.clip(
+                flip_lo
+                + (flip_hi - flip_lo) * normalized_report_distance
+                - 0.15 * link_jitter,
+                flip_lo,
+                flip_hi,
+            )
+        else:
+            p_flip = np.asarray(
+                report_bit_flip_probabilities[q], dtype=float
+            ).copy()
         success[owner] = 1.0; p_flip[owner] = 0.0
 
         post_mu0 = np.empty(cfg.num_uavs); post_mu1 = np.empty(cfg.num_uavs)

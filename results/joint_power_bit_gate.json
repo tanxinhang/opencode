@@ -1,0 +1,31 @@
+{
+  "gate": "joint-power-bit-allocation",
+  "max_power": 2.0,
+  "max_bits": 2,
+  "summary": [
+    {
+      "budget": 8,
+      "joint_worst_pd": 0.6842640201988307,
+      "sensing_only_worst_pd": 0.6048991575254604,
+      "communication_only_worst_pd": 0.4878798937624104,
+      "joint_vs_sensing_pp": 7.936486267337028,
+      "joint_vs_communication_pp": 19.638412643642027
+    },
+    {
+      "budget": 12,
+      "joint_worst_pd": 0.7764800630353774,
+      "sensing_only_worst_pd": 0.7764800630353774,
+      "communication_only_worst_pd": 0.48870307123863904,
+      "joint_vs_sensing_pp": 0.0,
+      "joint_vs_communication_pp": 28.77769917967384
+    },
+    {
+      "budget": 16,
+      "joint_worst_pd": 0.7764800630353774,
+      "sensing_only_worst_pd": 0.7764800630353774,
+      "communication_only_worst_pd": 0.48870307123863904,
+      "joint_vs_sensing_pp": 0.0,
+      "joint_vs_communication_pp": 28.77769917967384
+    }
+  ]
+}

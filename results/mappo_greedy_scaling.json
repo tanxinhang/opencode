@@ -1,0 +1,46 @@
+{
+  "gate": "mappo-greedy-exact-scaling",
+  "train_seeds": 20,
+  "test_seeds": 20,
+  "episodes": 800,
+  "budget_multiplier": 8,
+  "reports_per_target": 4,
+  "rows": [
+    {
+      "targets": 2,
+      "budget_bits": 16,
+      "mappo_worst_mean": 0.7818234983741276,
+      "greedy_worst_mean": 0.8280318497998957,
+      "exact_joint_worst_mean": 0.8570850540956508,
+      "mappo_used_bits_mean": 8.0,
+      "train_seconds": 13.366167299915105
+    },
+    {
+      "targets": 4,
+      "budget_bits": 32,
+      "mappo_worst_mean": 0.759869174134939,
+      "greedy_worst_mean": 0.8246903431046941,
+      "exact_joint_worst_mean": 0.8486179277715481,
+      "mappo_used_bits_mean": 12.0,
+      "train_seconds": 15.689954599831253
+    },
+    {
+      "targets": 6,
+      "budget_bits": 48,
+      "mappo_worst_mean": 0.7746370837587083,
+      "greedy_worst_mean": 0.8245133277565669,
+      "exact_joint_worst_mean": 0.8471450805947207,
+      "mappo_used_bits_mean": 14.0,
+      "train_seconds": 18.09770209994167
+    },
+    {
+      "targets": 8,
+      "budget_bits": 64,
+      "mappo_worst_mean": 0.7665588404355372,
+      "greedy_worst_mean": 0.8217201861858516,
+      "exact_joint_worst_mean": 0.8421669679439316,
+      "mappo_used_bits_mean": 14.0,
+      "train_seconds": 20.63608539989218
+    }
+  ]
+}

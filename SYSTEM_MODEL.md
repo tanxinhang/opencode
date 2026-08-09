@@ -69,6 +69,25 @@ and never reduce a link's evidence SNR.
 - Detectable erasure modeled by the reception law `gamma` over the scheduled
   report set, which may be independent, common-state, or grouped.
 
+### 5.1 Physical report-link parameterization
+
+`uav_otfs_isac/physical_link_model.py` optionally replaces the configuration
+interval with a geometry-derived reporting channel.  For report link `i`
+with range `d_i` from UAV `i` to its owner, the link SNR is
+
+`SNR_db_i = SNR_ref - 10 alpha log10(d_i / d_ref)`,
+
+the uncoded BPSK bit-flip probability is
+
+`epsilon_i = Q(sqrt(2 * 10^(SNR_db_i / 10)))`,
+
+and the log-normal outage survival above threshold `gamma_th` is
+
+`s_i = Phi((SNR_db_i - gamma_th) / sigma_shadow)`.
+
+This keeps the reporting model tied to geometry, distance, path-loss
+exponent, link SNR, and shadowing instead of an uninterpreted range.
+
 ## 6. Fusion
 
 For a received set `R`, the deflection-optimal linear score has weight

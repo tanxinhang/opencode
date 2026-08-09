@@ -64,9 +64,16 @@ def _target_pd(owner_delta: float, report_deltas: np.ndarray, bits: np.ndarray) 
 
 def _scenario(seed: int):
     rng = np.random.default_rng(seed)
-    strong = np.concatenate(([0.4], rng.uniform(1.8, 2.2, N_REPORTS)))
-    weak = np.concatenate(([0.3], rng.uniform(1.2, 1.6, N_REPORTS)))
-    return [strong, weak]
+    scenario = []
+    for q in range(N_TARGETS):
+        strong = q % 2 == 0
+        owner_delta = 0.4 if strong else 0.3
+        lo, hi = (1.8, 2.2) if strong else (1.2, 1.6)
+        scenario.append(np.concatenate((
+            [owner_delta],
+            rng.uniform(lo, hi, N_REPORTS),
+        )))
+    return scenario
 
 
 def _state(owner_delta: float, report_deltas: np.ndarray, budget: int) -> np.ndarray:
@@ -122,10 +129,10 @@ def _rollout(
     rewards = []
     values = []
     dones = []
-    for strong, weak in scenarios:
+    for scenario in scenarios:
         state_list = [
-            _state(float(strong[0]), strong[1:], budget),
-            _state(float(weak[0]), weak[1:], budget),
+            _state(float(target[0]), target[1:], budget)
+            for target in scenario
         ]
         global_state = np.concatenate(state_list)
         with torch.no_grad():
@@ -140,12 +147,12 @@ def _rollout(
             ], dim=1).numpy()
             chosen_tensor = torch.as_tensor(chosen, dtype=torch.int64)
             value = critic_value(critic, global_state)
-        bits = [chosen[0], chosen[1]]
+        bits = [chosen[q] for q in range(N_TARGETS)]
         costs = [int(bits[q].sum()) for q in range(N_TARGETS)]
         used = sum(costs)
         pds = [
-            _target_pd(float(strong[0]), strong[1:], bits[0]),
-            _target_pd(float(weak[0]), weak[1:], bits[1]),
+            _target_pd(float(target[0]), target[1:], bits[q])
+            for q, target in enumerate(scenario)
         ]
         worst = float(min(pds))
         reward = (
@@ -177,10 +184,10 @@ def _evaluate(
 ) -> tuple[float, float, float]:
     worsts = []
     used = []
-    for strong, weak in scenarios:
+    for scenario in scenarios:
         state_list = [
-            _state(float(strong[0]), strong[1:], budget),
-            _state(float(weak[0]), weak[1:], budget),
+            _state(float(target[0]), target[1:], budget)
+            for target in scenario
         ]
         with torch.no_grad():
             logits = actor(torch.as_tensor(
@@ -190,10 +197,10 @@ def _evaluate(
                 torch.argmax(logits[:, r, :], dim=1)
                 for r in range(N_REPORTS)
             ], dim=1).numpy()
-        bits = [chosen[0], chosen[1]]
+        bits = [chosen[q] for q in range(N_TARGETS)]
         pds = [
-            _target_pd(float(strong[0]), strong[1:], bits[0]),
-            _target_pd(float(weak[0]), weak[1:], bits[1]),
+            _target_pd(float(target[0]), target[1:], bits[q])
+            for q, target in enumerate(scenario)
         ]
         worsts.append(float(min(pds)))
         used.append(int(bits[0].sum() + bits[1].sum()))
@@ -202,24 +209,40 @@ def _evaluate(
     )
 
 
-def _reference(budget: int, scenarios):
+def _reference(
+    budget: int,
+    scenarios,
+    *,
+    exact_max_reports: int | None = None,
+    exact_max_bits: int = 4,
+):
     greedy_worst = []
     exact_worst = []
     pattern = np.array([0, 1, 2, 3, 4])
-    for strong, weak in scenarios:
-        gs = np.concatenate(([0], greedy_bits(strong[1:], budget, GRID)))
-        gw = np.concatenate(([0], greedy_bits(weak[1:], budget, GRID)))
+    for scenario in scenarios:
+        greedy_vectors = [
+            np.concatenate((
+                [0], greedy_bits(target[1:], budget, GRID),
+            ))
+            for target in scenario
+        ]
         greedy = exact_joint_maxmin(
             [
-                subset_options(float(strong[0]), strong[1:], gs[1:], GRID),
-                subset_options(float(weak[0]), weak[1:], gw[1:], GRID),
+                subset_options(
+                    float(target[0]), target[1:], vector[1:], GRID,
+                )
+                for target, vector in zip(scenario, greedy_vectors)
             ],
             budget,
         )
         exact = exact_joint_maxmin(
             [
-                target_options(float(strong[0]), strong[1:], GRID),
-                target_options(float(weak[0]), weak[1:], GRID),
+                target_options(
+                    float(target[0]), target[1:], GRID,
+                    max_bits=exact_max_bits,
+                    max_reports=exact_max_reports,
+                )
+                for target in scenario
             ],
             budget,
         )
@@ -228,16 +251,25 @@ def _reference(budget: int, scenarios):
     return float(np.mean(greedy_worst)), float(np.mean(exact_worst))
 
 
-def run_baseline(*, output: Path, train_seeds: int, test_seeds: int, episodes: int) -> None:
-    budgets = (14, 16, 18)
+def run_baseline(
+    *,
+    output: Path,
+    train_seeds: int,
+    test_seeds: int,
+    episodes: int,
+    budgets,
+    exact_max_reports: int | None,
+    exact_max_bits: int,
+) -> None:
     summary = []
     for budget in budgets:
         train_scenarios = [_scenario(seed) for seed in range(train_seeds)]
         test_scenarios = [
             _scenario(10000 + seed) for seed in range(test_seeds)
         ]
-        actor = Actor(6)
-        critic = Critic(12)
+        state_dim = N_REPORTS + 2
+        actor = Actor(state_dim)
+        critic = Critic(state_dim * N_TARGETS)
         actor_opt = torch.optim.Adam(actor.parameters(), lr=3e-4)
         critic_opt = torch.optim.Adam(critic.parameters(), lr=3e-4)
         started = time.perf_counter()
@@ -280,9 +312,16 @@ def run_baseline(*, output: Path, train_seeds: int, test_seeds: int, episodes: i
         mappo_worst, used_mean, over_rate = _evaluate(
             actor, budget, test_scenarios,
         )
-        greedy_worst, exact_worst = _reference(budget, test_scenarios)
+        greedy_worst, exact_worst = _reference(
+            budget,
+            test_scenarios,
+            exact_max_reports=exact_max_reports,
+            exact_max_bits=exact_max_bits,
+        )
         summary.append({
             "budget_bits": budget,
+            "exact_max_reports": exact_max_reports,
+            "exact_max_bits": exact_max_bits,
             "train_episodes": episodes,
             "train_seconds": train_seconds,
             "mappo_worst_mean": mappo_worst,
@@ -301,6 +340,8 @@ def run_baseline(*, output: Path, train_seeds: int, test_seeds: int, episodes: i
         "test_seeds": test_seeds,
         "episodes": episodes,
         "grid": GRID,
+        "exact_max_reports": exact_max_reports,
+        "exact_max_bits": exact_max_bits,
         "summary": summary,
     }
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -313,12 +354,23 @@ def main() -> None:
     parser.add_argument("--train-seeds", type=int, default=40)
     parser.add_argument("--test-seeds", type=int, default=20)
     parser.add_argument("--episodes", type=int, default=400)
+    parser.add_argument("--targets", type=int, default=2)
+    parser.add_argument("--reports", type=int, default=4)
+    parser.add_argument("--budgets", type=int, nargs="+", default=[14, 16, 18])
+    parser.add_argument("--exact-max-reports", type=int, default=None)
+    parser.add_argument("--exact-max-bits", type=int, default=4)
     args = parser.parse_args()
+    global N_TARGETS, N_REPORTS
+    N_TARGETS = args.targets
+    N_REPORTS = args.reports
     run_baseline(
         output=Path(args.output),
         train_seeds=args.train_seeds,
         test_seeds=args.test_seeds,
         episodes=args.episodes,
+        budgets=tuple(args.budgets),
+        exact_max_reports=args.exact_max_reports,
+        exact_max_bits=args.exact_max_bits,
     )
 
 

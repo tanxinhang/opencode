@@ -214,7 +214,7 @@ def main() -> None:
 
         if stripped.startswith("# ") and not stripped.startswith("## "):
             tex.append(r"\title{" + escape_inline(stripped[2:]) + "}")
-            tex.append(r"\author{\IEEEauthorblockN{Author Placeholder}"
+            tex.append(r"\author{\IEEEauthorblockN{Xu Ya}"
                        r"\IEEEauthorblockA{Department, University, City, Country}}")
             tex.append(r"\maketitle")
         elif stripped.startswith("## ") and not stripped.startswith("### "):

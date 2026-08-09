@@ -1391,6 +1391,224 @@ that occurs at a larger threshold can be absent at a smaller threshold;
 hence `N(delta)` is monotone.  The finite grid search therefore evaluates
 the exact objective over the feasible upper interval.
 
+### Theorem 4.58 (exact worst-scenario chance-constrained allocation)
+
+Let target `q` have a finite scenario set `S_q`, and let each schedule
+`A_q` be scored under every scenario `s` by violation probability
+`v_qs(A_q)` and risk `r_qs(A_q)`.  For global weights `w_q` and violation
+limits `l_q`, define the scenario excess
+
+`E_s(A) = sum_q w_q max(v_qs(A_q) - l_q, 0)`
+
+and the scenario risk `R_s(A) = sum_q r_qs(A_q)`.  The robust DP in
+`robust_portfolio.py` keeps, for every exact cost, the componentwise
+nondominated labels `(E_1, ..., E_S, R_1, ..., R_S)` and returns the
+schedule minimizing `(max_s E_s, max_s R_s, used_bits)`.
+
+Proof: every global schedule is a path through one option per target, and
+each `E_s`, `R_s` is a sum of nonnegative target-level contributions.  If
+label A dominates label B componentwise in both vectors, then for every
+future option group the final max under A is no larger than under B, so
+pruning B cannot remove an optimal completion.  The final comparison over
+the remaining labels therefore solves the max-of-sums knapsack exactly.
+When the scenario set contains all physically relevant degradation states,
+the returned schedule is exact worst-case optimal over that finite set.
+
+### Theorem 4.59 (BSC degradation ordering and exact-LRT ROC dominance)
+
+For `0 <= p1 <= p2 <= 0.5`, let
+
+`q = (p2 - p1) / (1 - 2 p1)`.
+
+Then `BSC(p2)` is the cascade of `BSC(p1)` followed by `BSC(q)`, and every
+decision rule applied to the `p2` output is a randomized decision rule
+applied to the `p1` output.  Consequently the exact likelihood-ratio ROC
+under `p1` dominates the ROC under `p2`: at every fixed `P_FA`, the exact
+LRT `P_D` under the cleaner channel is no smaller.
+
+Proof: for a sent bit `b` and received bit `r`, the cascade
+`BSC(p1)` then `BSC(q)` flips `b` twice with probabilities `p1` and `q`, so
+the net flip probability is `p1 (1-q) + (1-p1) q`, which equals `p2` by the
+definition of `q`.  For an arbitrary decision rule `delta` on the `p2`
+output, define `delta'(y1) = E_q[ delta(y2) | y1 ]` on the `p1` output; this
+randomized rule has the same H0/H1 probabilities as `delta` on the `p2`
+output.  The exact LRT is optimal at each fixed `P_FA`, so its ROC cannot be
+worse than the `p1` ROC, and the dominance inequality follows.  The gate in
+`channel_degradation.py` verifies the same ordering on the exact quantized
+Gaussian likelihood-ratio grid.
+
+### Theorem 4.60 (erasure stochastic dominance and expected-P_D monotonicity)
+
+Let independent reporting links have success probabilities `p_a` and `p_b`
+with `p_b <= p_a` componentwise.  Set `r_i = p_b_i / p_a_i` for `p_a_i > 0`
+and `r_i = 0` otherwise.  The `p_b` reception process is exactly the process
+that first receives with `p_a` and then drops every received report
+independently with probability `1 - r_i`.
+
+Proof: by independence, the survival probability of link `i` under the
+cascade is `p_a_i r_i = p_b_i`, and in the shared-uniform coupling
+`U_i < p_b_i` implies `U_i < p_a_i`, so the degraded received set is always a
+subset of the clean received set.  Any decision rule on the degraded output
+is therefore a randomized decision rule on the clean output, and the exact
+LRT ROC under `p_a` dominates the ROC under `p_b`.  Moreover, when the
+P_D-optimal linear family is at operating points with `P_D >= 0.5`, Theorem
+2.4 makes fixed-set P_D set-monotone; averaging over the coupled reception
+law gives a nonincreasing expected P_D as success probabilities fall.  The
+gate in `erasure_dominance.py` verifies both the coupling and the exact
+expected-P_D ordering.
+
+### Theorem 4.61 (velocity-bounded sensing mobility envelope)
+
+Let a target move by displacement `delta` with `||delta|| <= R`, where
+`R = v_max T_frame` is the product of a maximum target speed and the frame
+duration.  For every UAV position `p_i`, the reverse triangle inequality
+gives
+
+`| ||p_i - (t + delta)|| - ||p_i - t|| | <= R`.
+
+Under the free-space power law `P(d) = P_ref / d^2`, the largest possible
+relative power increase is attained at the shortest post-move range, so for
+`R < min_i ||p_i - t||`:
+
+`max_delta P(d + delta) / P(d) <= (d_min / (d_min - R))^2`.
+
+Proof: the first inequality is the reverse triangle inequality.  For the
+second, `P` is decreasing in `d`, so the power maximum occurs at distance
+`d_min - R`; substituting into `P(d) = P_ref / d^2` gives the bound.  The
+stress suite therefore samples mobility inside a compact, physically
+bounded sensing envelope, and `mobility_envelope.py` verifies both the range
+and power inequalities on independent samples.
+
+### Corollary 4.61A (range-derived dB-SNR envelope in `build_models`)
+
+Let `d` be the UAV-target distance vector before a displacement bounded by
+`R`, let `p = ptp(d)`, and suppose `p > 2R`.  In `build_models`, the
+per-UAV range SNR is
+
+`snr_db_i = snr_hi - span (d_i - min(d)) / ptp(d)`.
+
+Then every normalized range term changes by at most `4R / (p - 2R)`, so the
+linear SNR relative change is bounded by
+
+`10^( span * 4R / (10 (p - 2R)) ) - 1`.
+
+Proof: each distance changes by at most `R`, the minimum changes by at most
+`R`, and the range width changes by at most `2R`.  Applying the triangle
+inequality to the normalized term
+`x_i = (d_i - min(d)) / ptp(d)` gives
+`|x'_i - x_i| <= (R + R + p * 2R/(p p')) / p' <= 4R/(p - 2R)`.
+Converting the dB bound to a linear-SNR relative increase gives the
+corollary.  The mobility gate therefore verifies the envelope against the
+same range-derived SNR law used by the stress suite, not only the standalone
+free-space model.
+
+### Theorem 4.62 (independent per-target ambiguity reduces to scalar DP)
+
+Let target `q` have an independent ambiguity set `S_q`, and let
+`E_q(A_q)` and `R_q(A_q)` be its worst-case excess and risk over `S_q`.
+For independent choices across targets,
+
+`max_{A in product S_q} sum_q E_q(A_q) = sum_q E_q(A_q*)`,
+
+where `A_q*` is the option minimizing the target-level worst-case
+lexicographic objective, and the analogous identity holds for the sum of
+worst-case risks.
+
+Proof: the product set makes every target choice independent, and the
+objective is a sum of nonnegative target-level terms, so the maximum
+separates as the sum of per-target maxima.  The scalar DP over per-target
+worst-case option metrics is therefore exact; it also permits different
+numbers of scenarios per target.  Theorem 4.58 remains the appropriate
+formulation when one common degradation state affects all targets
+simultaneously.
+
+### Theorem 4.63 (exact robust-DP complexity)
+
+Let `Q` be the target count, `B` the bit budget, `S` the scenario count,
+`O <= 2^R` the per-target schedule/bit options in one scenario, and `E` the
+cost of one exact reception-pattern quality evaluation.  Enumerating the
+robust target options costs
+
+`O( Q S O E )`.
+
+For the common-scenario vector DP, let `L` be the maximum number of
+componentwise nondominated labels kept at one exact cost.  The DP costs
+
+`O( Q B L O S )`
+
+in time, with `L` bounded in practice by Pareto pruning.  For the
+independent per-target ambiguity DP, each cost keeps one scalar label, so
+the DP costs
+
+`O( Q B O )`.
+
+Proof: every scenario enumerates the same target option set; each common-DP
+transition updates `S` scenario totals and compares against `L` existing
+labels, giving `O(B L O S)` per target.  The independent DP replaces the
+scenario vectors by scalar worst cases, so the usual multiple-choice knapsack
+transition gives `O(B O)` per target.  `benchmark_robustness_performance.py`
+measures these operations on the target machine; on the audited 8-UAV/3-target
+configuration the formal stress sweep completes in about 16 seconds and the
+robust-allocation sweep in about 11 seconds.
+
+### Lemma 4.64 (physical report-link model)
+
+Let report link `i` have range `d_i` and path-loss exponent `alpha`, with
+reference SNR `SNR_ref` at `d_ref`.  Define
+
+`SNR_db_i = SNR_ref - 10 alpha log10(d_i / d_ref)`,
+
+`epsilon_i = Q(sqrt(2 * 10^(SNR_db_i / 10)))`,
+
+and, for a log-normal link with shadowing `sigma_shadow` and outage threshold
+`gamma_th`,
+
+`s_i = Phi((SNR_db_i - gamma_th) / sigma_shadow)`.
+
+Then `epsilon_i` is nondecreasing in `d_i` and `s_i` is nonincreasing in
+`d_i`, with the owner link reset to `epsilon = 0`, `s = 1`.
+
+Proof: the path-loss formula is decreasing in `d_i`; `Q(x)` is decreasing in
+`x`, so `epsilon_i` increases as `d_i` grows.  The normal CDF is increasing,
+so `s_i` decreases as `SNR_db_i` falls.  `build_models` uses these values as
+the post-communication moments and reception probabilities, so the physical
+link layer preserves the model structure.
+
+### Lemma 4.65 (threshold-feasibility complexity with Pareto frontiers)
+
+Let every target have a Pareto frontier of `O` cost-value options, sorted by
+nondecreasing cost with strictly nondecreasing value.  For a threshold `t`,
+the minimum cost to reach `t` is found by binary search in `O(log O)`.
+Therefore one feasibility check in `exact_joint_maxmin` costs `O(Q log O)`,
+and the full threshold binary search costs `O(Q log O log V)`, where `V` is
+the number of distinct frontier values.
+
+Proof: feasibility of a threshold is the sum over targets of each target's
+minimum cost to reach the threshold, because targets are separable and the
+objective is max-min.  The first option whose value is at least `t` in a
+sorted frontier gives that minimum cost, and `np.searchsorted` finds it in
+logarithmic time.  This replaces the previous `O(Q O log V)` scan without
+changing the exact result.  In addition, `target_options` now delegates to
+`vectorized_target_options`, so the per-target enumeration is evaluated in
+batches instead of one Python call per combination.
+
+### Lemma 4.66 (joint power-bit allocation contains single-dimension baselines)
+
+For a fixed target, let sensing power `p_i` scale the evidence separation by
+`sqrt(p_i)` and let bit count `b_i` determine the report cost and
+quantization fidelity.  The per-target joint option set enumerates all
+affordable `(p_i, b_i)` combinations.  A sensing-only baseline is the subset
+with `b_i = 1` for every selected report, and a communication-only baseline
+is the subset with `p_i = 1` for every report, so both feasible sets are
+subsets of the joint option set.
+
+Proof: fixing either resource dimension restricts the same Cartesian
+product, so every single-dimension feasible allocation appears unchanged in
+the joint enumeration.  Since `exact_joint_maxmin` is exact over the
+supplied option set, the joint optimum is never below either baseline at the
+same budget.  The gate in `joint_power_bit.py` verifies this and reports the
+joint gain at low/medium budgets.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1471,6 +1689,15 @@ the audit.
 | Lemma 4.54 / Corollary 4.55 | `covariance_aware_ris.py`, `run_covariance_aware_ris_gate.py` | `test_covariance_aware_phase_improves_expected_gain`, Gate G54 JSON |
 | Lemma 4.56 | `run_multi_step_prediction_gate.py` architecture_reconfiguration | Gate G53 JSON |
 | Corollary 4.57 | `run_multi_step_prediction_gate.py` switch_cost_analysis | Gate G53 JSON |
+| Theorem 4.58 | `robust_portfolio.optimize_robust_chance_constrained_portfolio` | `tests/test_robust_portfolio.py` |
+| Theorem 4.59 | `channel_degradation.verify_bsc_roc_dominance` | `tests/test_channel_degradation.py`, Gate BSC-D JSON |
+| Theorem 4.60 | `erasure_dominance.verify_monotone_coupling`, `verify_expected_pd_monotonicity` | `tests/test_erasure_dominance.py`, Gate ER-D JSON |
+| Theorem 4.61 / Corollary 4.61A | `mobility_envelope.verify_displacement_envelope`, `verify_range_snr_envelope` | `tests/test_mobility_envelope.py`, Gate MOB-E JSON |
+| Theorem 4.62 | `robust_portfolio.optimize_independent_robust_chance_constrained_portfolio` | `tests/test_robust_portfolio.py` |
+| Theorem 4.63 | `scripts/benchmark_robustness_performance.py` | `results/robustness_performance_benchmark.json` |
+| Lemma 4.64 | `physical_link_model.physical_report_link_parameters`, `build_physical_link_models` | `tests/test_physical_link_model.py` |
+| Lemma 4.65 | `joint_allocation.minimum_cost_for_threshold`, `exact_joint_maxmin` | `tests/test_joint_allocation.py`, `results/exact_joint_scaling_benchmark.json` |
+| Lemma 4.66 | `joint_power_bit.power_bit_target_options`, `exact_joint_power_bit_maxmin` | `tests/test_joint_power_bit.py`, Gate JPB JSON |
 
 ## 6. Explicit non-claims
 
@@ -1485,3 +1712,7 @@ the audit.
   greedy-approximated deployment objective.
 - The finite-N quantization formula should be used for small RIS arrays; the
   Gate G5-Q audit reports the asymptotic `sinc^2` factor.
+- The erasure expected-P_D monotonicity gate is asserted only at operating
+  points with `P_D >= 0.5`, where Theorem 2.4 guarantees set monotonicity;
+  outside that region the empirical ordering is reported but not claimed as
+  a theorem consequence.

@@ -1,0 +1,43 @@
+{
+  "gate": "exact-joint-scaling",
+  "reports_per_target": 4,
+  "grid": 16,
+  "rows": [
+    {
+      "targets": 2,
+      "reports_per_target": 4,
+      "grid": 16,
+      "option_enumeration_seconds": 0.015007799956947565,
+      "maxmin_solve_seconds": 9.740004315972328e-05,
+      "total_seconds": 0.015105200000107288,
+      "worst_pd": 0.815853833878945
+    },
+    {
+      "targets": 4,
+      "reports_per_target": 4,
+      "grid": 16,
+      "option_enumeration_seconds": 0.018603899981826544,
+      "maxmin_solve_seconds": 8.030002936720848e-05,
+      "total_seconds": 0.018684200011193752,
+      "worst_pd": 0.8278105615084899
+    },
+    {
+      "targets": 8,
+      "reports_per_target": 4,
+      "grid": 16,
+      "option_enumeration_seconds": 0.03930239984765649,
+      "maxmin_solve_seconds": 0.0001329001970589161,
+      "total_seconds": 0.039435300044715405,
+      "worst_pd": 0.8523279557109924
+    },
+    {
+      "targets": 16,
+      "reports_per_target": 4,
+      "grid": 16,
+      "option_enumeration_seconds": 0.07187539990991354,
+      "maxmin_solve_seconds": 0.00022529996931552887,
+      "total_seconds": 0.07210069987922907,
+      "worst_pd": 0.8710698306349993
+    }
+  ]
+}

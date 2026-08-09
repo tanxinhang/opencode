@@ -1,0 +1,1153 @@
+{
+  "gate": "robust-stress-allocation",
+  "config": "config/demo.yaml",
+  "profiles": [
+    "clean",
+    "combined"
+  ],
+  "qos_target": 0.7,
+  "violation_limit": 0.2,
+  "scenario_count": 2,
+  "summary": [
+    {
+      "budget_bits": 16,
+      "seed": 20260802,
+      "nominal_worst_excess": 0.24589092507909166,
+      "robust_worst_excess": 0.23357758256986655,
+      "nominal_mean_worst_violation_probability": 0.1297156218151517,
+      "robust_mean_worst_violation_probability": 0.12655835450509398,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.3891468654454551
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.37967506351528196
+      ],
+      "excess_reduction": 0.012313342509225111,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.23357758256986655,
+          "mean_worst_violation_probability": 0.12655835450509398,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.37967506351528196
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 20,
+      "seed": 20260802,
+      "nominal_worst_excess": 0.044774534553256085,
+      "robust_worst_excess": 0.0001642557741547368,
+      "nominal_mean_worst_violation_probability": 0.07814731655211694,
+      "robust_mean_worst_violation_probability": 0.06670878353183456,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.23444194965635085
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.20012635059550365
+      ],
+      "excess_reduction": 0.04461027877910135,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.3703490425875391,
+          "mean_worst_violation_probability": 0.16162795963783053,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.4848838789134916
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.3703490425875391,
+          "mean_worst_violation_probability": 0.16162795963783053,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.4848838789134916
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.0001642557741547368,
+          "mean_worst_violation_probability": 0.06670878353183456,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.20012635059550365
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 24,
+      "seed": 20260802,
+      "nominal_worst_excess": 0.044774534553256085,
+      "robust_worst_excess": 0.0001642557741547368,
+      "nominal_mean_worst_violation_probability": 0.07814731655211694,
+      "robust_mean_worst_violation_probability": 0.06670878353183456,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.23444194965635085
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.20012635059550365
+      ],
+      "excess_reduction": 0.04461027877910135,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.3703490425875391,
+          "mean_worst_violation_probability": 0.16162795963783053,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.4848838789134916
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.3703490425875391,
+          "mean_worst_violation_probability": 0.16162795963783053,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.4848838789134916
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.0001642557741547368,
+          "mean_worst_violation_probability": 0.06670878353183456,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.20012635059550365
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 16,
+      "seed": 20260803,
+      "nominal_worst_excess": 0.088382449584465,
+      "robust_worst_excess": 0.088382449584465,
+      "nominal_mean_worst_violation_probability": 0.15223900728135134,
+      "robust_mean_worst_violation_probability": 0.15223900728135134,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.18873052216369635,
+        0.2679864996803577
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.18873052216369635,
+        0.2679864996803577
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 1.054146276763063,
+          "mean_worst_violation_probability": 0.465165711990529,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            0.39549713597158687
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.345679052992927,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.037037158978781126,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 1.054146276763063,
+          "mean_worst_violation_probability": 0.465165711990529,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            0.39549713597158687
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.088382449584465,
+          "mean_worst_violation_probability": 0.15223900728135134,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.18873052216369635,
+            0.2679864996803577
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 20,
+      "seed": 20260803,
+      "nominal_worst_excess": 0.0,
+      "robust_worst_excess": 0.0,
+      "nominal_mean_worst_violation_probability": 0.09208852503696181,
+      "robust_mean_worst_violation_probability": 0.09208852503696181,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.18873052216369635,
+        0.08753505294718912
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.18873052216369635,
+        0.08753505294718912
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": true,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.2541462767630629,
+          "mean_worst_violation_probability": 0.19474255271176108,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.18873052216369635,
+            0.39549713597158687
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.345679052992927,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.037037158978781126,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.2541462767630629,
+          "mean_worst_violation_probability": 0.19474255271176108,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.18873052216369635,
+            0.39549713597158687
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.0,
+          "mean_worst_violation_probability": 0.09208852503696181,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.18873052216369635,
+            0.08753505294718912
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 24,
+      "seed": 20260803,
+      "nominal_worst_excess": 0.0,
+      "robust_worst_excess": 0.0,
+      "nominal_mean_worst_violation_probability": 0.09208852503696181,
+      "robust_mean_worst_violation_probability": 0.09208852503696181,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.18873052216369635,
+        0.08753505294718912
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.18873052216369635,
+        0.08753505294718912
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": true,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.2541462767630629,
+          "mean_worst_violation_probability": 0.19474255271176108,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.18873052216369635,
+            0.39549713597158687
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.345679052992927,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.037037158978781126,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.2541462767630629,
+          "mean_worst_violation_probability": 0.19474255271176108,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.18873052216369635,
+            0.39549713597158687
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.0,
+          "mean_worst_violation_probability": 0.09208852503696181,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.18873052216369635,
+            0.08753505294718912
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 16,
+      "seed": 20260804,
+      "nominal_worst_excess": 0.13823280692126827,
+      "robust_worst_excess": 0.13823280692126827,
+      "nominal_mean_worst_violation_probability": 0.10211097613365853,
+      "robust_mean_worst_violation_probability": 0.10211097613365853,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.3063329284009756
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.3063329284009756
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.13823280692126827,
+          "mean_worst_violation_probability": 0.10211097613365853,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.3063329284009756
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 20,
+      "seed": 20260804,
+      "nominal_worst_excess": 0.0,
+      "robust_worst_excess": 0.0,
+      "nominal_mean_worst_violation_probability": 0.05874476727682119,
+      "robust_mean_worst_violation_probability": 0.05874476727682119,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.17623430183046357
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.17623430183046357
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": true,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.0,
+          "mean_worst_violation_probability": 0.05874476727682119,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.17623430183046357
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 24,
+      "seed": 20260804,
+      "nominal_worst_excess": 0.0,
+      "robust_worst_excess": 0.0,
+      "nominal_mean_worst_violation_probability": 0.05874476727682119,
+      "robust_mean_worst_violation_probability": 0.05874476727682119,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.17623430183046357
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.17623430183046357
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": true,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.0,
+          "mean_worst_violation_probability": 0.05874476727682119,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.17623430183046357
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 16,
+      "seed": 20260805,
+      "nominal_worst_excess": 0.19759999999999997,
+      "robust_worst_excess": 0.19759999999999997,
+      "nominal_mean_worst_violation_probability": 0.11733333333333333,
+      "robust_mean_worst_violation_probability": 0.11733333333333333,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.352
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.352
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.19759999999999997,
+          "mean_worst_violation_probability": 0.11733333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.352
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 20,
+      "seed": 20260805,
+      "nominal_worst_excess": 0.19759999999999997,
+      "robust_worst_excess": 0.19759999999999997,
+      "nominal_mean_worst_violation_probability": 0.11733333333333333,
+      "robust_mean_worst_violation_probability": 0.11733333333333333,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.352
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.352
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.26890641182869646,
+          "mean_worst_violation_probability": 0.13561702867402473,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.4068510860220742
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.23070439196263842,
+          "mean_worst_violation_probability": 0.12582163896477908,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.37746491689433725
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.19759999999999997,
+          "mean_worst_violation_probability": 0.11733333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.352
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 24,
+      "seed": 20260805,
+      "nominal_worst_excess": 0.19759999999999997,
+      "robust_worst_excess": 0.19759999999999997,
+      "nominal_mean_worst_violation_probability": 0.11733333333333333,
+      "robust_mean_worst_violation_probability": 0.11733333333333333,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.352
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.0,
+        0.352
+      ],
+      "excess_reduction": 0.0,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.26890641182869646,
+          "mean_worst_violation_probability": 0.13561702867402473,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.4068510860220742
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.23070439196263842,
+          "mean_worst_violation_probability": 0.12582163896477908,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.37746491689433725
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.04,
+          "mean_worst_violation_probability": 0.3333333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.19759999999999997,
+          "mean_worst_violation_probability": 0.11733333333333333,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.0,
+            0.352
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 16,
+      "seed": 20260806,
+      "nominal_worst_excess": 0.9051731633281113,
+      "robust_worst_excess": 0.13633023735033023,
+      "nominal_mean_worst_violation_probability": 0.4343114845572744,
+      "robust_mean_worst_violation_probability": 0.17803050923134744,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        1.0,
+        0.30293445367182326
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.23115707402221908,
+        0.30293445367182326
+      ],
+      "excess_reduction": 0.768842925977781,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.2609257241108565,
+          "mean_worst_violation_probability": 0.21062305649736957,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.4007120954698896
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.2609257241108565,
+          "mean_worst_violation_probability": 0.21062305649736957,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.4007120954698896
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.13633023735033023,
+          "mean_worst_violation_probability": 0.17803050923134744,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.30293445367182326
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 20,
+      "seed": 20260806,
+      "nominal_worst_excess": 0.8,
+      "robust_worst_excess": 0.031157074022219067,
+      "nominal_mean_worst_violation_probability": 0.3649839608640139,
+      "robust_mean_worst_violation_probability": 0.12650990483433375,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        1.0,
+        0.09495188259204165
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.23115707402221908,
+        0.14837264048078216
+      ],
+      "excess_reduction": 0.7688429259777809,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.2609257241108565,
+          "mean_worst_violation_probability": 0.21062305649736957,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.4007120954698896
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.2609257241108565,
+          "mean_worst_violation_probability": 0.21062305649736957,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.4007120954698896
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.031157074022219067,
+          "mean_worst_violation_probability": 0.10870298553808692,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.09495188259204165
+          ]
+        }
+      }
+    },
+    {
+      "budget_bits": 24,
+      "seed": 20260806,
+      "nominal_worst_excess": 0.8,
+      "robust_worst_excess": 0.031157074022219067,
+      "nominal_mean_worst_violation_probability": 0.3649839608640139,
+      "robust_mean_worst_violation_probability": 0.12650990483433375,
+      "nominal_worst_violation_probability_per_target": [
+        0.0,
+        1.0,
+        0.09495188259204165
+      ],
+      "robust_worst_violation_probability_per_target": [
+        0.0,
+        0.23115707402221908,
+        0.14837264048078216
+      ],
+      "excess_reduction": 0.7688429259777809,
+      "robust_feasible": false,
+      "baselines": {
+        "worst_case_sensing_top_k": {
+          "worst_excess": 0.2609257241108565,
+          "mean_worst_violation_probability": 0.21062305649736957,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.4007120954698896
+          ]
+        },
+        "worst_case_communication_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_independent_post_top_k": {
+          "worst_excess": 0.2609257241108565,
+          "mean_worst_violation_probability": 0.21062305649736957,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.4007120954698896
+          ]
+        },
+        "worst_case_random_top_k": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "worst_case_no_cooperation": {
+          "worst_excess": 1.84,
+          "mean_worst_violation_probability": 0.6666666666666666,
+          "worst_violation_probability_per_target": [
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        "robust_greedy_worst_case": {
+          "worst_excess": 0.031157074022219067,
+          "mean_worst_violation_probability": 0.10870298553808692,
+          "worst_violation_probability_per_target": [
+            0.0,
+            0.23115707402221908,
+            0.09495188259204165
+          ]
+        }
+      }
+    }
+  ]
+}

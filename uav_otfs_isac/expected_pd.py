@@ -16,6 +16,7 @@ submodular and cardinality-greedy retains the classical ``1 - 1/e`` property.
 
 from __future__ import annotations
 
+import math
 from collections.abc import Iterable, Sequence
 
 import numpy as np
@@ -140,6 +141,41 @@ def pd_inflection_condition(
     )
 
 
+def reliability_weighted_report_cost(
+    model: TargetEvidenceModel,
+    uav: int,
+) -> float:
+    """Effective report cost after erasure and BSC information loss.
+
+    For a symmetric/affine quantizer the post-BSC mean separation scales by
+    ``(1 - 2 epsilon)``, so the squared separation scales by
+    ``(1 - 2 epsilon)^2``; erasure further scales the expected received
+    contribution by ``success_prob``.  The effective cost is the transmitted
+    bit count divided by this communication fidelity.
+    """
+    success = float(model.success_prob[uav])
+    flip = float(model.bit_flip_prob[uav])
+    fidelity = success * max(1.0 - 2.0 * flip, 0.0) ** 2
+    return float(model.report_bits[uav]) / max(fidelity, 1e-12)
+
+
+def capacity_weighted_report_cost(
+    model: TargetEvidenceModel,
+    uav: int,
+) -> float:
+    """Effective cost weighted by the BSC capacity ``1 - H(epsilon)``."""
+    flip = float(np.clip(model.bit_flip_prob[uav], 0.0, 0.5))
+    if flip <= 0.0 or flip >= 1.0:
+        capacity = 1.0
+    else:
+        entropy = (
+            -flip * math.log2(flip)
+            - (1.0 - flip) * math.log2(1.0 - flip)
+        )
+        capacity = max(1.0 - entropy, 1e-12)
+    return float(model.report_bits[uav]) / capacity
+
+
 def expected_pd_greedy_select(
     models: Sequence[TargetEvidenceModel],
     budget_bits: int,
@@ -153,6 +189,7 @@ def expected_pd_greedy_select(
     rng: np.random.Generator | None = None,
     samples: int = 2048,
     grid: int = 4096,
+    cost_mode: str = "bits",
 ) -> ExpectedPdSelectionResult:
     """Budgeted greedy on expected P_D gain per report bit.
 
@@ -165,6 +202,13 @@ def expected_pd_greedy_select(
         raise ValueError("budget_bits must be nonnegative")
     if pd_mode not in {"optimal", "deflection"}:
         raise ValueError("pd_mode must be 'optimal' or 'deflection'")
+    if cost_mode not in {
+        "bits", "reliability_weighted", "capacity_weighted",
+    }:
+        raise ValueError(
+            "cost_mode must be 'bits', 'reliability_weighted', or "
+            "'capacity_weighted'"
+        )
     count = len(models)
     qos = np.zeros(count, dtype=float) if qos_pd is None else np.asarray(
         qos_pd, dtype=float
@@ -211,6 +255,15 @@ def expected_pd_greedy_select(
                 cost = int(model.report_bits[i])
                 if used + cost > budget_bits:
                     continue
+                score_cost = (
+                    reliability_weighted_report_cost(model, i)
+                    if cost_mode == "reliability_weighted"
+                    else (
+                        capacity_weighted_report_cost(model, i)
+                        if cost_mode == "capacity_weighted"
+                        else cost
+                    )
+                )
                 trial = scheduled[q] | {i}
                 trial_quality = expected(q, trial)
                 true_gain = max(trial_quality - current, 0.0)
@@ -223,9 +276,9 @@ def expected_pd_greedy_select(
                     trial_values = list(quality)
                     trial_values[q] = current + true_gain
                     gap_reduction = current_gap - normalized_gap(trial_values)
-                    score = gap_reduction / max(cost, 1)
+                    score = gap_reduction / max(score_cost, 1e-12)
                 else:
-                    score = perf_w[q] * true_gain / max(cost, 1)
+                    score = perf_w[q] * true_gain / max(score_cost, 1e-12)
                 yield score, true_gain, relative_gain, q, i, cost, trial_quality
 
     for stage in ("qos", "performance"):
