@@ -251,6 +251,11 @@ degradation reverses the clean score order (Lemma 4.73).
 schedule and reports the optimal sensing-power versus communication-bit
 resource split (Lemma 4.74).
 
+The same reconstruction is now part of the MAPPO/Greedy/Exact comparison:
+`run_mappo_baseline.py` emits `exact_schedules`, so Exact Joint is no longer
+only a scalar worst-P_D oracle but also returns the concrete per-target
+bit/report configuration.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic

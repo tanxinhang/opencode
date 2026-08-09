@@ -15,7 +15,11 @@ import numpy as np
 from scipy.stats import norm
 
 from .fusion import optimal_gaussian_detection_probability
-from .joint_allocation import exact_joint_maxmin, moments
+from .joint_allocation import (
+    exact_joint_maxmin,
+    exact_joint_maxmin_selection,
+    moments,
+)
 
 
 def _target_pd(
@@ -187,3 +191,11 @@ def exact_joint_power_bit_maxmin(
 ) -> float:
     """Exact max-min over joint power-bit target frontiers."""
     return exact_joint_maxmin(target_groups, budget)
+
+
+def exact_joint_power_bit_maxmin_selection(
+    target_groups: list[list[tuple[int, float]]],
+    budget: int,
+) -> tuple[float, list[tuple[int, float]]]:
+    """Exact max-min value and the cost-minimal schedule attaining it."""
+    return exact_joint_maxmin_selection(target_groups, budget)

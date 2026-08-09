@@ -4,6 +4,7 @@ import numpy as np
 
 from uav_otfs_isac.joint_power_bit import (
     exact_joint_power_bit_maxmin,
+    exact_joint_power_bit_maxmin_selection,
     power_bit_target_options,
 )
 
@@ -119,3 +120,27 @@ def test_joint_dominates_sensing_only_and_communication_only():
     comm = exact_joint_power_bit_maxmin(comm_groups, 6)
     assert joint + 1e-9 >= sensing
     assert joint + 1e-9 >= comm
+
+
+def test_joint_power_bit_maxmin_selection_is_feasible():
+    groups = [
+        power_bit_target_options(
+            0.4,
+            np.array([1.0, 1.2]),
+            power_levels=np.array([0.0, 1.0, 2.0]),
+            bit_options=np.array([0, 1, 2]),
+            budget=6,
+            grid=16,
+        ),
+        power_bit_target_options(
+            0.3,
+            np.array([0.8, 1.0]),
+            power_levels=np.array([0.0, 1.0, 2.0]),
+            bit_options=np.array([0, 1, 2]),
+            budget=6,
+            grid=16,
+        ),
+    ]
+    value, chosen = exact_joint_power_bit_maxmin_selection(groups, 6)
+    assert np.isclose(value, exact_joint_power_bit_maxmin(groups, 6))
+    assert sum(cost for cost, _ in chosen) <= 6

@@ -27,6 +27,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from uav_otfs_isac.joint_allocation import (
     exact_joint_maxmin,
+    exact_joint_maxmin_selection,
     greedy_bits,
     moments,
     subset_options,
@@ -218,6 +219,7 @@ def _reference(
 ):
     greedy_worst = []
     exact_worst = []
+    exact_schedules = []
     pattern = np.array([0, 1, 2, 3, 4])
     for scenario in scenarios:
         greedy_vectors = [
@@ -235,20 +237,30 @@ def _reference(
             ],
             budget,
         )
-        exact = exact_joint_maxmin(
-            [
+        exact_options = [
                 target_options(
                     float(target[0]), target[1:], GRID,
                     max_bits=exact_max_bits,
                     max_reports=exact_max_reports,
                 )
                 for target in scenario
-            ],
+        ]
+        exact = exact_joint_maxmin(exact_options, budget)
+        _, exact_chosen = exact_joint_maxmin_selection(
+            exact_options,
             budget,
         )
         greedy_worst.append(greedy)
         exact_worst.append(exact)
-    return float(np.mean(greedy_worst)), float(np.mean(exact_worst))
+        exact_schedules.append([
+            {"cost": cost, "value": value}
+            for cost, value in exact_chosen
+        ])
+    return (
+        float(np.mean(greedy_worst)),
+        float(np.mean(exact_worst)),
+        exact_schedules,
+    )
 
 
 def run_baseline(
@@ -312,7 +324,7 @@ def run_baseline(
         mappo_worst, used_mean, over_rate = _evaluate(
             actor, budget, test_scenarios,
         )
-        greedy_worst, exact_worst = _reference(
+        greedy_worst, exact_worst, exact_schedules = _reference(
             budget,
             test_scenarios,
             exact_max_reports=exact_max_reports,
@@ -329,6 +341,7 @@ def run_baseline(
             "mappo_over_budget_rate": over_rate,
             "greedy_worst_mean": greedy_worst,
             "exact_joint_worst_mean": exact_worst,
+            "exact_schedules": exact_schedules,
             "mappo_gap_to_exact_pp": float((exact_worst - mappo_worst) * 100.0),
             "greedy_gap_to_exact_pp": float((exact_worst - greedy_worst) * 100.0),
         })
