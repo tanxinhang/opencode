@@ -217,6 +217,13 @@ shows the joint feasible set contains both baselines, and Lemma 4.67 records
 the vectorized option-enumeration complexity.  Scaling is checked by
 `scripts/benchmark_joint_power_bit_scaling.py`.
 
+`uav_otfs_isac/communication_aware.py` proves the communication-aware
+sensing score `J_i = s_i * delta_i^2 / sigma0_ii`: under diagonal
+proportional covariance, independent erasure, and equal costs, selecting the
+largest `J_i` maximizes the expected received deflection and, in the concave
+P_D region, the upper-bound surrogate `P_D(E[D_R])` (Lemma 4.69).  Exact P_D
+optimality with heterogeneous erasure still uses the exact DP.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic

@@ -1640,6 +1640,32 @@ builds two models with different communication reference SNRs and verifies
 that the owner-only deflection is identical while the report flip
 probabilities differ.
 
+### Lemma 4.69 (communication-aware sensing score is a certificate-optimal surrogate)
+
+Consider one target with diagonal, proportional-covariance evidence
+`Sigma0_ii = Sigma1_ii = v_i`, independent erasures with survival `s_i`, and
+equal report costs.  Define
+
+`J_i = s_i * delta_i^2 / v_i`.
+
+Then, for every budget, the subset with the largest `J_i` maximizes the
+expected received deflection
+
+`E[ D_R ] = sum_{i in S} J_i`.
+
+Proof: with diagonal covariance, the deflection of a received set is the sum
+of per-report contributions `delta_i^2 / v_i`, and erasure keeps report `i`
+with probability `s_i` independently, so the expectation is exactly the sum
+of `J_i`.  When the P_D-deflection map is concave on the operating region,
+Jensen's inequality gives
+
+`E[ P_D(D_R) ] <= P_D(E[ D_R ])`,
+
+so the largest-J subset also maximizes the upper-bound surrogate
+`P_D(E[D_R])`.  Exact P_D optimality with heterogeneous erasure survival can
+still require DP; the gate reports both the exact expected-deflection match
+and the resulting P_D gap.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1731,6 +1757,7 @@ the audit.
 | Lemma 4.66 | `joint_power_bit.power_bit_target_options`, `exact_joint_power_bit_maxmin` | `tests/test_joint_power_bit.py`, Gate JPB JSON |
 | Lemma 4.67 | `joint_power_bit.vectorized_power_bit_target_options` | `tests/test_joint_power_bit.py`, `results/joint_power_bit_scaling_benchmark.json` |
 | Lemma 4.68 | `physical_link_model.build_physical_link_models` | `tests/test_physical_link_model.py` |
+| Lemma 4.69 | `communication_aware.communication_aware_sensing_score`, `communication_aware_top_k` | `tests/test_communication_aware.py` |
 
 ## 6. Explicit non-claims
 
