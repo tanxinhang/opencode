@@ -10,8 +10,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
-from dataclasses import replace
 from pathlib import Path
 import sys
 import time
@@ -25,13 +23,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from uav_otfs_isac.fusion import optimal_gaussian_detection_probability
-from uav_otfs_isac.joint_allocation import model_from_bits
 from uav_otfs_isac.joint_power_bit import exact_joint_power_bit_maxmin
 from uav_otfs_isac import nomp_refinement as nomp
 from uav_otfs_isac.power_split_theory import (
     power_gain_coefficient,
     proportional_power_bit_options,
+    proportional_target_pd,
     winner_take_all_proportional_options,
 )
 
@@ -71,23 +68,12 @@ def state(owner, deltas, budget):
 
 
 def pd_value(owner, deltas, powers, bits, grid=GRID):
-    full_deltas = np.concatenate((
-        [owner],
-        np.asarray(deltas, dtype=float)
-        * np.sqrt(np.maximum(np.asarray(powers, dtype=float), 0.0)),
-    ))
-    full_bits = np.concatenate(([0], np.asarray(bits, dtype=int)))
-    model = model_from_bits(
-        full_deltas, full_bits, bit_flip_probability=0.0
-    )
-    model = replace(
-        model,
-        success_prob=np.ones(model.num_uavs),
-        sigma1=model.sigma0,
-    )
-    return float(optimal_gaussian_detection_probability(
-        model.mu0, model.mu1, model.sigma0, model.sigma1,
-        set(range(model.num_uavs)), 0.05, grid=grid,
+    return float(proportional_target_pd(
+        float(owner),
+        np.asarray(deltas, dtype=float),
+        np.asarray(powers, dtype=float),
+        np.asarray(bits, dtype=int),
+        grid,
     ))
 
 
@@ -211,45 +197,6 @@ def evaluate_mappo(actor, scenarios, budget, reports):
         ]
         worsts.append(float(np.min(pds)))
     return float(np.mean(worsts))
-
-
-def greedy_joint(owner, deltas, budget, max_power=None):
-    if max_power is None:
-        max_power = budget
-    reports = len(deltas)
-    powers = np.zeros(reports, dtype=int)
-    bits = np.ones(reports, dtype=int)
-    used = reports
-    if used > budget:
-        bits = np.zeros(reports, dtype=int)
-        used = 0
-    while True:
-        best = None
-        for r in range(reports):
-            for action in ("power", "bit"):
-                trial_p = powers.copy(); trial_b = bits.copy()
-                if action == "power":
-                    if trial_p[r] >= max_power:
-                        continue
-                    trial_p[r] += 1
-                else:
-                    if trial_b[r] >= MAX_BITS:
-                        continue
-                    trial_b[r] += 1
-                cost = used + 1
-                if cost > budget:
-                    continue
-                gain = pd_value(
-                    owner, deltas, trial_p, trial_b
-                ) - pd_value(owner, deltas, powers, bits)
-                key = (gain, r, action)
-                if best is None or key > best[0]:
-                    best = (key, trial_p, trial_b)
-        if best is None or best[0][0] <= 0:
-            break
-        _, powers, bits = best
-        used += 1
-    return pd_value(owner, deltas, powers, bits)
 
 
 def greedy_joint_multi(scenario, budget, initialization="equal", max_power=None):
@@ -400,6 +347,8 @@ def ucb_wta_greedy_joint_multi(
     refine: bool = False,
     max_refine_rounds: int = 100,
     max_power=None,
+    confidence: float = 0.05,
+    max_feedback_rounds: int = 20,
 ):
     """Online WTA-Greedy whose winner/activation use UCB error estimates."""
     reports = len(scenario[0]) - 1
@@ -424,7 +373,8 @@ def ucb_wta_greedy_joint_multi(
             true + noise_scale * rng.standard_normal(reports)
         )
         counts.append(np.ones(reports, dtype=float))
-    beta = float(norm.ppf(0.975))
+    beta = float(norm.ppf(1.0 - confidence / (2.0 * reports)))
+    prior_noise_scale = max(noise_scale, 0.1)
 
     def scores():
         return np.asarray([
@@ -432,52 +382,44 @@ def ucb_wta_greedy_joint_multi(
             for q, t in enumerate(scenario)
         ])
 
+    def width(q):
+        return beta * prior_noise_scale / np.sqrt(counts[q])
+
     def ucb(q):
-        return means[q] + beta * noise_scale / np.sqrt(counts[q])
+        return means[q] + width(q)
 
     def observe(q, r, delta, bit_count):
-        observed = power_gain_coefficient(
-            float(delta), int(bit_count), 0.0, 1.0
+        observed = (
+            power_gain_coefficient(
+                float(delta), int(bit_count), 0.0, 1.0
+            )
+            + noise_scale * rng.standard_normal()
         )
         means[q][r] = (
             means[q][r] * counts[q][r] + observed
         ) / (counts[q][r] + 1.0)
         counts[q][r] += 1.0
 
-    steps_used = 0
-    stopped_by_certificate = False
-    while True:
-        certificate_ok = True
-        active_targets = 0
+    def certificate_status():
         for q in range(len(scenario)):
             active = [r for r in range(reports) if bits[q][r] > 0]
             if not active:
-                continue
-            if len(active) < 2:
-                certificate_ok = False
-                break
-            active_targets += 1
+                return False
             values = ucb(q)[active]
-            order = np.argsort(-values, kind="stable")
-            best = active[order[0]]
-            second = active[order[1]] if len(active) > 1 else None
-            lcb_best = (
-                means[q][best]
-                - beta * noise_scale / np.sqrt(counts[q][best])
-            )
-            if second is None:
-                ucb_second = -np.inf
-            else:
-                ucb_second = (
-                    means[q][second]
-                    + beta * noise_scale / np.sqrt(counts[q][second])
-                )
+            winner = active[int(np.argmax(values))]
+            if powers[q][winner] <= 0:
+                return False
+            lcb_best = means[q][winner] - width(q)[winner]
+            all_ucb = ucb(q).copy()
+            all_ucb[winner] = -np.inf
+            second = int(np.argmax(all_ucb))
+            ucb_second = all_ucb[second]
             if lcb_best <= ucb_second:
-                certificate_ok = False
-                break
-        if certificate_ok and active_targets == len(scenario):
-            stopped_by_certificate = True
-            break
+                return False
+        return True
+
+    steps_used = 0
+    while True:
         current = float(np.mean(scores()))
         best = None
         for q, target in enumerate(scenario):
@@ -548,6 +490,28 @@ def ucb_wta_greedy_joint_multi(
             max_rounds=max_refine_rounds,
             grid=GRID,
         )
+        for q, target in enumerate(scenario):
+            for r in range(reports):
+                if bits[q][r] > 0:
+                    observe(q, r, target[r + 1], bits[q][r])
+    stopped_by_certificate = False
+    feedback_rounds = 0
+    while feedback_rounds < max_feedback_rounds:
+        if certificate_status():
+            stopped_by_certificate = True
+            break
+        for q, target in enumerate(scenario):
+            active = [r for r in range(reports) if bits[q][r] > 0]
+            if active:
+                winner = active[int(np.argmax(ucb(q)[active]))]
+                observe(q, winner, target[winner + 1], bits[q][winner])
+            all_ucb = ucb(q).copy()
+            for r in active:
+                all_ucb[r] = -np.inf
+            if np.isfinite(all_ucb).any():
+                probe = int(np.argmax(all_ucb))
+                observe(q, probe, target[probe + 1], 1)
+        feedback_rounds += 1
     worst_pd = min(
         pd_value(float(t[0]), t[1:], powers[q], bits[q])
         for q, t in enumerate(scenario)
@@ -557,6 +521,7 @@ def ucb_wta_greedy_joint_multi(
         "steps_used": steps_used,
         "stopped_by_certificate": stopped_by_certificate,
         "refine_rounds": refine_rounds,
+        "feedback_rounds": feedback_rounds,
     }
 
 
@@ -579,7 +544,16 @@ def main() -> None:
     parser.add_argument("--train-seeds", type=int, default=30)
     parser.add_argument("--test-seeds", type=int, default=20)
     parser.add_argument("--mode", choices=["homogeneous", "heterogeneous"], default="homogeneous")
+    parser.add_argument(
+        "--exact-mode",
+        choices=["full", "wta", "auto"],
+        default="auto",
+        help="full enumerates power vectors; wta uses the closed-form frontier; auto switches at reports>2",
+    )
     args = parser.parse_args()
+    exact_mode = args.exact_mode
+    if exact_mode == "auto":
+        exact_mode = "full" if args.reports <= 2 else "wta"
 
     train_scenarios = [
         make_scenario(
@@ -611,10 +585,12 @@ def main() -> None:
         ucb_wta_greedy_worsts = []
         ucb_steps = []
         ucb_certificates = []
+        ucb_feedback_rounds = []
         ucb_nomp_worsts = []
         ucb_nomp_steps = []
         ucb_nomp_certificates = []
         ucb_nomp_refine_rounds = []
+        ucb_nomp_feedback_rounds = []
         nomp_greedy_worsts = []
         exact_worsts = []
         winner_worsts = []
@@ -635,6 +611,7 @@ def main() -> None:
             ucb_certificates.append(
                 ucb_result["stopped_by_certificate"]
             )
+            ucb_feedback_rounds.append(ucb_result["feedback_rounds"])
             ucb_nomp_result = ucb_wta_greedy_joint_multi(
                 scenario,
                 budget,
@@ -652,18 +629,12 @@ def main() -> None:
             ucb_nomp_refine_rounds.append(
                 ucb_nomp_result["refine_rounds"]
             )
+            ucb_nomp_feedback_rounds.append(
+                ucb_nomp_result["feedback_rounds"]
+            )
             nomp_greedy_worsts.append(nomp_greedy_joint_multi(
                 scenario, budget
             ))
-            full_groups = [
-                proportional_power_bit_options(
-                    float(t[0]), t[1:],
-                    power_levels=np.arange(budget + 1, dtype=float),
-                    bit_options=np.arange(MAX_BITS + 1, dtype=int),
-                    budget=budget, grid=GRID,
-                )
-                for t in scenario
-            ]
             winner_groups = [
                 winner_take_all_proportional_options(
                     float(t[0]), t[1:],
@@ -672,12 +643,25 @@ def main() -> None:
                 )
                 for t in scenario
             ]
-            exact_worsts.append(exact_joint_power_bit_maxmin(
-                full_groups, budget
-            ))
-            winner_worsts.append(exact_joint_power_bit_maxmin(
+            winner_value = exact_joint_power_bit_maxmin(
                 winner_groups, budget
-            ))
+            )
+            if exact_mode == "full":
+                full_groups = [
+                    proportional_power_bit_options(
+                        float(t[0]), t[1:],
+                        power_levels=np.arange(budget + 1, dtype=float),
+                        bit_options=np.arange(MAX_BITS + 1, dtype=int),
+                        budget=budget, grid=GRID,
+                    )
+                    for t in scenario
+                ]
+                exact_worsts.append(exact_joint_power_bit_maxmin(
+                    full_groups, budget
+                ))
+            else:
+                exact_worsts.append(winner_value)
+            winner_worsts.append(winner_value)
         summary.append({
             "budget": budget,
             "mappo_worst_mean": mappo_worst,
@@ -693,6 +677,9 @@ def main() -> None:
             "ucb_wta_certificate_stop_rate": float(np.mean(
                 ucb_certificates
             )),
+            "ucb_wta_mean_feedback_rounds": float(np.mean(
+                ucb_feedback_rounds
+            )),
             "ucb_nomp_greedy_worst_mean": float(np.mean(
                 ucb_nomp_worsts
             )),
@@ -702,6 +689,9 @@ def main() -> None:
             )),
             "ucb_nomp_mean_refine_rounds": float(np.mean(
                 ucb_nomp_refine_rounds
+            )),
+            "ucb_nomp_mean_feedback_rounds": float(np.mean(
+                ucb_nomp_feedback_rounds
             )),
             "nomp_greedy_worst_mean": float(np.mean(
                 nomp_greedy_worsts
@@ -713,6 +703,12 @@ def main() -> None:
     payload = {
         "gate": "joint-power-comparison",
         "mode": args.mode,
+        "exact_mode": exact_mode,
+        "targets": args.targets,
+        "reports": args.reports,
+        "episodes": args.episodes,
+        "train_seeds": args.train_seeds,
+        "test_seeds": args.test_seeds,
         "summary": summary,
     }
     output = Path(args.output)

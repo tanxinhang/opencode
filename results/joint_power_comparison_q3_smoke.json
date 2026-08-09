@@ -1,42 +1,52 @@
 {
   "gate": "joint-power-comparison",
   "mode": "heterogeneous",
+  "exact_mode": "full",
+  "targets": 3,
+  "reports": 2,
+  "episodes": 20,
+  "train_seeds": 5,
+  "test_seeds": 5,
   "summary": [
     {
       "budget": 12,
-      "mappo_worst_mean": 0.22529341272623485,
+      "mappo_worst_mean": 0.5218220993333671,
       "greedy_worst_mean": 0.44810424765556406,
       "greedy_winner_init_worst_mean": 0.3345023517354967,
       "wta_greedy_worst_mean": 0.7864273269721779,
       "ucb_wta_greedy_worst_mean": 0.7864273269721779,
       "ucb_wta_mean_steps": 9.0,
-      "ucb_wta_certificate_stop_rate": 0.0,
+      "ucb_wta_certificate_stop_rate": 1.0,
+      "ucb_wta_mean_feedback_rounds": 3.6,
       "ucb_nomp_greedy_worst_mean": 0.8686018687986723,
       "ucb_nomp_mean_steps": 6.0,
-      "ucb_nomp_certificate_stop_rate": 0.0,
+      "ucb_nomp_certificate_stop_rate": 1.0,
       "ucb_nomp_mean_refine_rounds": 0.6,
+      "ucb_nomp_mean_feedback_rounds": 3.4,
       "nomp_greedy_worst_mean": 0.8686018687986723,
       "exact_worst_mean": 0.8686018687986723,
       "winner_worst_mean": 0.8686018687986723,
-      "train_seconds": 1.3927691001445055
+      "train_seconds": 1.3953899997286499
     },
     {
       "budget": 15,
-      "mappo_worst_mean": 0.9231144934675817,
+      "mappo_worst_mean": 0.08195990834134131,
       "greedy_worst_mean": 0.4445806344918804,
       "greedy_winner_init_worst_mean": 0.3345023517354967,
       "wta_greedy_worst_mean": 0.9522589342548352,
       "ucb_wta_greedy_worst_mean": 0.9522589342548352,
       "ucb_wta_mean_steps": 12.0,
-      "ucb_wta_certificate_stop_rate": 0.0,
+      "ucb_wta_certificate_stop_rate": 1.0,
+      "ucb_wta_mean_feedback_rounds": 3.6,
       "ucb_nomp_greedy_worst_mean": 0.9522589342548352,
       "ucb_nomp_mean_steps": 9.0,
-      "ucb_nomp_certificate_stop_rate": 0.0,
+      "ucb_nomp_certificate_stop_rate": 1.0,
       "ucb_nomp_mean_refine_rounds": 0.0,
+      "ucb_nomp_mean_feedback_rounds": 3.4,
       "nomp_greedy_worst_mean": 0.9522589342548352,
       "exact_worst_mean": 0.9522589342548352,
       "winner_worst_mean": 0.9522589342548352,
-      "train_seconds": 0.16070959996432066
+      "train_seconds": 0.19298719987273216
     }
   ]
 }

@@ -1814,19 +1814,23 @@ deflection improvement over random noise draws.
 
 Let observations be sub-Gaussian with noise scale `sigma`, and let each
 report keep a prior-regularized mean and uncertainty width
-`beta * sigma_prior / sqrt(n)`.  The loop stops when the best report's lower
-confidence bound exceeds every other report's upper confidence bound.
+`beta * sigma_prior / sqrt(n)` with `beta` from the Gaussian quantile and a
+union bound over reports.  The feedback loop stops when the current active
+winner's lower confidence bound exceeds the upper confidence bound of every
+other report, active or inactive.
 Under the standard sub-Gaussian concentration inequality, the true best
-report is then selected with probability at least `1 - confidence`, and the
-loop terminates after at most `max_rounds` iterations.
+report is then certified with probability at least `1 - confidence`, and the
+loop terminates after at most `max_feedback_rounds` iterations.
 
 Proof: each UCB/LCB width is chosen from the Gaussian quantile with a union
 bound over reports, so the true gain lies inside the interval with the
-claimed confidence.  The stopping condition certifies that the best report's
+claimed confidence.  The stopping condition certifies that the active winner's
 lower bound dominates all other upper bounds, hence the true best is the
-certified winner.  The loop always terminates at `max_rounds` even if the
-certificate is not reached.  The gate reports the mean/max rounds used and
-the certificate stop rate.
+certified winner.  The loop always terminates at `max_feedback_rounds` even if
+the certificate is not reached.  In the joint comparison the certificate only
+stops the estimation feedback loop after the allocation loop has finished, so
+certifying a winner cannot starve later power/bit additions.  The gate reports
+the certificate stop rate and mean feedback rounds.
 
 ### Lemma 4.79 (per-target minimum cover)
 

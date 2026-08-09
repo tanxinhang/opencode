@@ -10,6 +10,10 @@ from uav_otfs_isac.nomp_refinement import (
 from uav_otfs_isac.power_split_theory import (
     winner_take_all_proportional_options,
 )
+from scripts.run_joint_power_comparison import (
+    make_scenario,
+    ucb_wta_greedy_joint_multi,
+)
 
 
 def test_leximin_improves_never_lowers_worst():
@@ -75,3 +79,44 @@ def test_wta_greedy_uses_oracle_power_range_and_improves_with_budget():
     ]
     assert values[0] <= values[1] <= values[2]
     assert values[0] > 0.9
+
+
+def test_nomp_refinement_matches_exact_on_random_scenarios():
+    for seed in range(5):
+        scenario = make_scenario(3000 + seed, 2, 2, heterogeneous=True)
+        result = nomp_wta_greedy_joint_multi(
+            scenario, 8, max_rounds=100
+        )
+        groups = [
+            winner_take_all_proportional_options(
+                float(t[0]),
+                t[1:],
+                bit_options=np.arange(3, dtype=int),
+                budget=8,
+                grid=16,
+            )
+            for t in scenario
+        ]
+        exact = exact_joint_power_bit_maxmin(groups, 8)
+        assert abs(result["worst_pd"] - exact) < 1e-6
+
+
+def test_ucb_nomp_feedback_is_finite_and_keeps_worst_value():
+    scenario = make_scenario(10000, 2, 2, heterogeneous=True)
+    noisy = ucb_wta_greedy_joint_multi(
+        scenario,
+        8,
+        noise_scale=0.2,
+        seed=0,
+        min_cover=True,
+        refine=True,
+        max_steps=100,
+        max_feedback_rounds=10,
+    )
+    exact_value = nomp_wta_greedy_joint_multi(
+        scenario, 8, max_rounds=100
+    )["worst_pd"]
+    assert noisy["steps_used"] <= 100
+    assert noisy["feedback_rounds"] <= 10
+    assert abs(noisy["worst_pd"] - exact_value) < 1e-9
+    assert isinstance(noisy["stopped_by_certificate"], bool)

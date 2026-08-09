@@ -309,12 +309,16 @@ while WTA-Greedy alone lags by about 0.08-0.10 at the lower budget.  The
 online refinement remains finite and does not enumerate report combinations.
 
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
-greedy with noisy coefficient estimates and UCB-driven winner selection,
-with a hard `max_steps` cutoff and per-target LCB/UCB certificate stopping.
-`UCB-NOMP` combines the same UCB feedback with minimum cover and the
-refinement stage; in the heterogeneous gate it reaches the same worst-target
-values as the deterministic NOMP-Greedy while keeping the feedback loop
-finite.
+greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
+union-bound UCB widths.  The winner certificate compares the active winner's
+lower bound with the upper bound of every other report, active or inactive,
+and stops only the estimation feedback loop after allocation finishes, so it
+cannot starve power/bit additions.  `UCB-NOMP` combines the same feedback with
+minimum cover and the refinement stage.  In the heterogeneous gate UCB-WTA
+keeps the WTA-Greedy worst-target values and UCB-NOMP keeps the NOMP-Greedy
+values, with certificate stop rates of 0.85-0.90; the homogeneous gate gives
+the same worst-target values with a 0.30 certificate stop rate, and the Q=3/Q=4
+smokes certify on all tested scenarios.
 
 `uav_otfs_isac/error_feedback.py` adds coefficient error and multi-round
 feedback: each round explores the top estimates plus one random candidate,
