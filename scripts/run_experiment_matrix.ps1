@@ -200,6 +200,16 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "error-feedback"
+        Args = @(
+            "scripts\run_error_feedback_gate.py",
+            "--seeds", "20",
+            "--rounds", "1", "3", "10", "30",
+            "--noise", "0.8",
+            "--output", "results\error_feedback_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",

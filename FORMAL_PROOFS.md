@@ -1794,6 +1794,22 @@ the same `Sigma1 = Sigma0` model produces the same P_D values as the full
 power-vector enumeration, so the resulting max-min DP is exact.  The gate
 compares both frontiers on random proportional models and reports equality.
 
+### Lemma 4.77 (error feedback corrects WTA winner selection)
+
+Let true per-report gains `J_i` be distinct and let the algorithm hold noisy
+estimates.  Each feedback round explores the top-`K` estimated reports,
+updates their estimates toward the observed true gains, and allocates all
+power to the current best estimate.  With enough rounds, the true winner is
+explored and becomes the best estimate, so the allocation converges to
+winner-take-all.
+
+Proof: exploring report `i` applies a convex combination
+`J_i <- (1-lr) J_i + lr J_i*`, so the estimate converges to the true gain for
+every explored report.  Since the true gains are distinct, the true maximum
+is eventually explored and strictly dominates all others; thereafter it
+remains the best estimate.  The gate measures the one-shot versus feedback
+deflection improvement over random noise draws.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1894,6 +1910,7 @@ the audit.
 | Lemma 4.74 | `joint_allocation.exact_joint_maxmin_selection` | `tests/test_joint_allocation.py`, Gate PBS JSON |
 | Lemma 4.75 | `power_split_theory.winner_take_all_allocation` | `tests/test_power_split_theory.py`, Gate WTA JSON |
 | Lemma 4.76 | `power_split_theory.winner_take_all_proportional_options` | `tests/test_winner_take_all_joint_proportional.py`, Gate WTAP JSON |
+| Lemma 4.77 | `error_feedback.wta_feedback_allocator` | `tests/test_error_feedback.py`, Gate EFB JSON |
 
 ## 6. Explicit non-claims
 

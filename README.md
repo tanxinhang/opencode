@@ -283,6 +283,11 @@ is given to the current winner report, and no report/bit/power combination
 is enumerated.  In the joint power-bit comparison it outperforms both Greedy
 and MAPPO at low/medium budgets while remaining fully online.
 
+`uav_otfs_isac/error_feedback.py` adds coefficient error and multi-round
+feedback: each round explores the top estimates plus one random candidate,
+corrects the observed gains, and reallocates power by winner-take-all.
+Lemma 4.77 shows the true winner is eventually explored and selected.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic
