@@ -230,23 +230,24 @@ def test_per_link_nomp_matches_robust_exact_at_low_budget():
 
 
 def test_per_link_refinement_reaches_robust_exact_on_hard_scenario():
-    scenario = make_comm_mismatch_scenario(10006, 2, 2)
-    result = nomp_wta_greedy_joint_multi(scenario, 12)
-    groups = []
-    for owner, deltas, flips, successes in scenario:
-        options = enumerate_heterogeneous_robust_power_bit_options(
-            owner,
-            deltas,
-            [(0.0, float(value)) for value in flips],
-            [(float(value), 1.0) for value in successes],
-            power_levels=np.arange(13, dtype=float),
-            bit_options=np.arange(3, dtype=int),
-            budget=12,
-            grid=16,
-        )
-        groups.append(pareto_options(options, "robust_pd"))
-    exact = exact_joint_power_bit_maxmin(groups, 12)
-    assert abs(result["worst_pd"] - exact) < 1e-6
+    for seed in (10002, 10006, 10009):
+        scenario = make_comm_mismatch_scenario(seed, 2, 2)
+        result = nomp_wta_greedy_joint_multi(scenario, 12)
+        groups = []
+        for owner, deltas, flips, successes in scenario:
+            options = enumerate_heterogeneous_robust_power_bit_options(
+                owner,
+                deltas,
+                [(0.0, float(value)) for value in flips],
+                [(float(value), 1.0) for value in successes],
+                power_levels=np.arange(13, dtype=float),
+                bit_options=np.arange(3, dtype=int),
+                budget=12,
+                grid=16,
+            )
+            groups.append(pareto_options(options, "robust_pd"))
+        exact = exact_joint_power_bit_maxmin(groups, 12)
+        assert abs(result["worst_pd"] - exact) < 1e-6
 
 
 def test_ucb_nomp_per_link_is_finite_and_close_to_deterministic():

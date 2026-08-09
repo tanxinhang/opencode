@@ -325,22 +325,23 @@ own BSC flip probability and link success probability, and the expected P_D
 marginalizes over independent report erasures.  The robust exact oracle
 evaluates every option at each report's worst endpoint.  Winner-take-all is
 only a heuristic under this mismatch, so NOMP refinement has real room: at
-budgets 8/10/12 the NOMP worst P_D is 0.482/0.555/0.609 versus robust exact
-0.491/0.564/0.615, while WTA-Greedy is 0.403/0.499/0.566.  The NOMP gaps to
-robust exact are 0.009/0.010/0.006 against WTA gaps of 0.088/0.066/0.049.
+budgets 8/10/12 the NOMP worst P_D is 0.491/0.564/0.615, equal to robust
+exact, while WTA-Greedy is 0.403/0.499/0.566.  The NOMP gaps to robust exact
+are 0.000 against WTA gaps of 0.088/0.066/0.049.
 Because the per-link gate treats the realized channel as the worst endpoint,
 its exact oracle is a channel-aware upper bound; the clean-vs-robust
 scheduling tension is measured separately by `run_robust_joint_power_bit_gate`.
 The per-link `UCB-NOMP` variant uses noisy per-link coefficient observations
 and the all-report winner certificate; it keeps the deterministic NOMP
-worst values (0.482/0.555/0.608) with a 0.55 certificate stop rate and about
-11.6 mean feedback rounds.
+worst values (0.491/0.564/0.615) with certificate stop rates of
+0.60/0.55/0.55 and about 10-11.5 mean feedback rounds.
 Winner selection under channel mismatch uses the marginal expected-P_D gain
 at the current allocation, and the refinement explores every active
-destination report plus new-report activation, so it can jump the local
-optima that a single proxy-ranked exchange would miss.  Minimum cover is
-adaptive: a report is activated only when it improves the target's expected
-P_D, so harmful low-reliability links are not forced in.
+destination report plus new-report activation, whole-atom switches, and
+within-target activation transfers, so it can jump the local optima that a
+proxy-ranked single exchange would miss.  Minimum cover is adaptive: a report
+is activated only when it improves the target's expected P_D, so harmful
+low-reliability links are not forced in.
 
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and

@@ -12,41 +12,41 @@
     {
       "budget": 8,
       "wta_greedy_worst_mean": 0.40293343683509886,
-      "nomp_greedy_worst_mean": 0.4824109384307474,
-      "ucb_nomp_greedy_worst_mean": 0.4824109384307474,
-      "ucb_nomp_certificate_stop_rate": 0.55,
-      "ucb_nomp_mean_feedback_rounds": 11.65,
-      "ucb_nomp_mean_refine_rounds": 1.2,
+      "nomp_greedy_worst_mean": 0.4909793923155231,
+      "ucb_nomp_greedy_worst_mean": 0.4909793923155231,
+      "ucb_nomp_certificate_stop_rate": 0.6,
+      "ucb_nomp_mean_feedback_rounds": 10.25,
+      "ucb_nomp_mean_refine_rounds": 1.6,
       "robust_exact_worst_mean": 0.4909793923155231,
       "wta_gap_to_exact": 0.08804595548042427,
-      "nomp_gap_to_exact": 0.008568453884775729,
-      "nomp_mean_refine_rounds": 1.2
+      "nomp_gap_to_exact": 0.0,
+      "nomp_mean_refine_rounds": 1.6
     },
     {
       "budget": 10,
       "wta_greedy_worst_mean": 0.49855437329007585,
-      "nomp_greedy_worst_mean": 0.5549167312416466,
-      "ucb_nomp_greedy_worst_mean": 0.5549167312416466,
+      "nomp_greedy_worst_mean": 0.5644368716637522,
+      "ucb_nomp_greedy_worst_mean": 0.5644368716637522,
       "ucb_nomp_certificate_stop_rate": 0.55,
-      "ucb_nomp_mean_feedback_rounds": 11.65,
-      "ucb_nomp_mean_refine_rounds": 1.35,
+      "ucb_nomp_mean_feedback_rounds": 11.2,
+      "ucb_nomp_mean_refine_rounds": 1.75,
       "robust_exact_worst_mean": 0.5644368716637522,
       "wta_gap_to_exact": 0.06588249837367638,
-      "nomp_gap_to_exact": 0.009520140422105583,
-      "nomp_mean_refine_rounds": 1.35
+      "nomp_gap_to_exact": 0.0,
+      "nomp_mean_refine_rounds": 1.75
     },
     {
       "budget": 12,
       "wta_greedy_worst_mean": 0.5664959460561632,
-      "nomp_greedy_worst_mean": 0.6094239550180183,
-      "ucb_nomp_greedy_worst_mean": 0.6083661178136393,
+      "nomp_greedy_worst_mean": 0.6149960760668739,
+      "ucb_nomp_greedy_worst_mean": 0.6149960760668739,
       "ucb_nomp_certificate_stop_rate": 0.55,
-      "ucb_nomp_mean_feedback_rounds": 11.55,
-      "ucb_nomp_mean_refine_rounds": 1.6,
+      "ucb_nomp_mean_feedback_rounds": 11.5,
+      "ucb_nomp_mean_refine_rounds": 1.85,
       "robust_exact_worst_mean": 0.6149960760668739,
       "wta_gap_to_exact": 0.04850013001071074,
-      "nomp_gap_to_exact": 0.005572121048855627,
-      "nomp_mean_refine_rounds": 1.55
+      "nomp_gap_to_exact": 0.0,
+      "nomp_mean_refine_rounds": 1.7
     }
   ]
 }

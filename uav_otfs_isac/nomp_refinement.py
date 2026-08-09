@@ -256,6 +256,73 @@ def _iter_candidates(
             grid,
         )
         for s in range(reports):
+            for d in range(reports):
+                if (
+                    bits[q][d] > 0
+                    or bits[q][s] <= 0
+                    or powers[q][s] + bits[q][s] < 2
+                ):
+                    continue
+                if powers[q][s] >= 2:
+                    new_p = [row.copy() for row in powers]
+                    new_b = [row.copy() for row in bits]
+                    new_p[q][s] -= 2
+                    new_p[q][d] = 1
+                    new_b[q][d] = 1
+                    yield new_p, new_b
+                elif bits[q][s] >= 2 and powers[q][s] >= 1:
+                    new_p = [row.copy() for row in powers]
+                    new_b = [row.copy() for row in bits]
+                    new_p[q][s] -= 1
+                    new_b[q][s] -= 1
+                    new_p[q][d] = 1
+                    new_b[q][d] = 1
+                    yield new_p, new_b
+            if powers[q][s] > 0 and bits[q][s] > 0:
+                freed = int(powers[q][s] + bits[q][s])
+                for d in range(reports):
+                    if d == s:
+                        continue
+                    new_p = [row.copy() for row in powers]
+                    new_b = [row.copy() for row in bits]
+                    new_p[q][s] = 0
+                    new_b[q][s] = 0
+                    if new_b[q][d] > 0:
+                        remaining = _add_freed_units(
+                            new_p[q],
+                            new_b[q],
+                            d,
+                            freed,
+                            max_power=max_power,
+                            max_bits=max_bits,
+                        )
+                    elif freed >= 2:
+                        new_p[q][d] = 1
+                        new_b[q][d] = 1
+                        remaining = _add_freed_units(
+                            new_p[q],
+                            new_b[q],
+                            d,
+                            freed - 2,
+                            max_power=max_power,
+                            max_bits=max_bits,
+                        )
+                    else:
+                        continue
+                    if remaining == 0:
+                        yield new_p, new_b
+            if powers[q][s] > 0:
+                for d in active_q:
+                    if (
+                        d == s
+                        or powers[q][d] + powers[q][s] > max_power
+                    ):
+                        continue
+                    new_p = [row.copy() for row in powers]
+                    new_b = [row.copy() for row in bits]
+                    new_p[q][d] += new_p[q][s]
+                    new_p[q][s] = 0
+                    yield new_p, new_b
             if winner_q is not None and s != winner_q:
                 if powers[q][s] > 0 and powers[q][winner_q] < max_power:
                     new_p = [row.copy() for row in powers]
