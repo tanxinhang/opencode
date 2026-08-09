@@ -244,18 +244,38 @@ def greedy_joint(owner, deltas, budget):
     return pd_value(owner, deltas, powers, bits)
 
 
-def greedy_joint_multi(scenario, budget):
+def greedy_joint_multi(scenario, budget, initialization="equal"):
     reports = len(scenario[0]) - 1
-    powers = [np.zeros(reports, dtype=int) for _ in scenario]
-    bits = [np.ones(reports, dtype=int) for _ in scenario]
-    used = 2 * reports * len(scenario)
-    if used > budget:
+    if initialization == "equal":
+        powers = [np.zeros(reports, dtype=int) for _ in scenario]
+        bits = [np.ones(reports, dtype=int) for _ in scenario]
+        used = 2 * reports * len(scenario)
+        if used > budget:
+            powers = [np.zeros(reports, dtype=int) for _ in scenario]
+            bits = [np.zeros(reports, dtype=int) for _ in scenario]
+            used = 0
+        else:
+            powers = [np.ones(reports, dtype=int) for _ in scenario]
+            bits = [np.ones(reports, dtype=int) for _ in scenario]
+    else:
         powers = [np.zeros(reports, dtype=int) for _ in scenario]
         bits = [np.zeros(reports, dtype=int) for _ in scenario]
         used = 0
-    else:
-        powers = [np.ones(reports, dtype=int) for _ in scenario]
-        bits = [np.ones(reports, dtype=int) for _ in scenario]
+        for q, target in enumerate(scenario):
+            coefficients = np.asarray([
+                power_gain_coefficient(
+                    float(target[r + 1]), 1, 0.0, 1.0
+                )
+                for r in range(reports)
+            ])
+            winner = int(np.argmax(coefficients))
+            bits[q][winner] = 1
+            powers[q][winner] = 1
+            used += 2
+        if used > budget:
+            powers = [np.zeros(reports, dtype=int) for _ in scenario]
+            bits = [np.zeros(reports, dtype=int) for _ in scenario]
+            used = 0
 
     def scores():
         return np.asarray([
@@ -616,6 +636,7 @@ def main() -> None:
         )
         train_seconds = time.perf_counter() - start
         greedy_worsts = []
+        greedy_winner_init_worsts = []
         wta_greedy_worsts = []
         ucb_wta_greedy_worsts = []
         ucb_steps = []
@@ -624,6 +645,9 @@ def main() -> None:
         winner_worsts = []
         for scenario_index, scenario in enumerate(test_scenarios):
             greedy_worsts.append(greedy_joint_multi(scenario, budget))
+            greedy_winner_init_worsts.append(greedy_joint_multi(
+                scenario, budget, initialization="winner"
+            ))
             wta_greedy_worsts.append(wta_greedy_joint_multi(scenario, budget))
             ucb_result = ucb_wta_greedy_joint_multi(
                 scenario,
@@ -663,6 +687,9 @@ def main() -> None:
             "budget": budget,
             "mappo_worst_mean": mappo_worst,
             "greedy_worst_mean": float(np.mean(greedy_worsts)),
+            "greedy_winner_init_worst_mean": float(np.mean(
+                greedy_winner_init_worsts
+            )),
             "wta_greedy_worst_mean": float(np.mean(wta_greedy_worsts)),
             "ucb_wta_greedy_worst_mean": float(np.mean(
                 ucb_wta_greedy_worsts
