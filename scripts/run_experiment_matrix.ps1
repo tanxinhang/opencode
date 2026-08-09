@@ -200,6 +200,20 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "joint-power-comparison-hetero"
+        Args = @(
+            "scripts\run_joint_power_comparison.py",
+            "--mode", "heterogeneous",
+            "--reports", "2",
+            "--targets", "2",
+            "--budgets", "8", "10", "12",
+            "--episodes", "300",
+            "--train-seeds", "30",
+            "--test-seeds", "20",
+            "--output", "results\joint_power_comparison_heterogeneous.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

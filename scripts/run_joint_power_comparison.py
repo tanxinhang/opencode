@@ -28,6 +28,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from uav_otfs_isac.fusion import optimal_gaussian_detection_probability
 from uav_otfs_isac.joint_allocation import model_from_bits
 from uav_otfs_isac.joint_power_bit import exact_joint_power_bit_maxmin
+from uav_otfs_isac import nomp_refinement as nomp
 from uav_otfs_isac.power_split_theory import (
     power_gain_coefficient,
     proportional_power_bit_options,
@@ -36,9 +37,7 @@ from uav_otfs_isac.power_split_theory import (
 
 
 GRID = 16
-MAX_POWER = 2
 MAX_BITS = 2
-POWER_OPTIONS = (0, 1, 2)
 BIT_OPTIONS = (0, 1, 2)
 
 
@@ -93,7 +92,7 @@ def pd_value(owner, deltas, powers, bits, grid=GRID):
 
 
 class Actor(nn.Module):
-    def __init__(self, state_dim, reports):
+    def __init__(self, state_dim, reports, power_options=3):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(state_dim, 64), nn.Tanh(),
@@ -103,7 +102,7 @@ class Actor(nn.Module):
             nn.Linear(64, len(BIT_OPTIONS)) for _ in range(reports)
         ])
         self.power_heads = nn.ModuleList([
-            nn.Linear(64, len(POWER_OPTIONS)) for _ in range(reports)
+            nn.Linear(64, power_options) for _ in range(reports)
         ])
 
     def forward(self, x):
@@ -155,7 +154,7 @@ def rollout(actor, critic, scenario, budget):
 
 def train_mappo(scenarios, budget, episodes, reports):
     state_dim = reports + 2
-    actor = Actor(state_dim, reports)
+    actor = Actor(state_dim, reports, power_options=budget + 1)
     critic = Critic(state_dim * len(scenarios[0]))
     actor_opt = torch.optim.Adam(actor.parameters(), lr=3e-3)
     critic_opt = torch.optim.Adam(critic.parameters(), lr=3e-3)
@@ -214,7 +213,9 @@ def evaluate_mappo(actor, scenarios, budget, reports):
     return float(np.mean(worsts))
 
 
-def greedy_joint(owner, deltas, budget):
+def greedy_joint(owner, deltas, budget, max_power=None):
+    if max_power is None:
+        max_power = budget
     reports = len(deltas)
     powers = np.zeros(reports, dtype=int)
     bits = np.ones(reports, dtype=int)
@@ -228,7 +229,7 @@ def greedy_joint(owner, deltas, budget):
             for action in ("power", "bit"):
                 trial_p = powers.copy(); trial_b = bits.copy()
                 if action == "power":
-                    if trial_p[r] >= MAX_POWER:
+                    if trial_p[r] >= max_power:
                         continue
                     trial_p[r] += 1
                 else:
@@ -251,7 +252,9 @@ def greedy_joint(owner, deltas, budget):
     return pd_value(owner, deltas, powers, bits)
 
 
-def greedy_joint_multi(scenario, budget, initialization="equal"):
+def greedy_joint_multi(scenario, budget, initialization="equal", max_power=None):
+    if max_power is None:
+        max_power = budget
     reports = len(scenario[0]) - 1
     if initialization == "equal":
         powers = [np.zeros(reports, dtype=int) for _ in scenario]
@@ -305,7 +308,7 @@ def greedy_joint_multi(scenario, budget, initialization="equal"):
                     trial_p = powers[q].copy()
                     trial_b = bits[q].copy()
                     if action == "power":
-                        if trial_p[r] >= MAX_POWER:
+                        if trial_p[r] >= max_power:
                             continue
                         trial_p[r] += 1
                     else:
@@ -349,7 +352,10 @@ def greedy_joint_multi(scenario, budget, initialization="equal"):
                                 bits[qa][ra] -= 1
                                 bits[qb][rb] += 1
                             else:
-                                if powers[qa][ra] <= 1 or powers[qb][rb] >= MAX_POWER:
+                                if (
+                                    powers[qa][ra] <= 1
+                                    or powers[qb][rb] >= max_power
+                                ):
                                     continue
                                 old_a, old_b = powers[qa].copy(), powers[qb].copy()
                                 powers[qa][ra] -= 1
@@ -377,104 +383,34 @@ def greedy_joint_multi(scenario, budget, initialization="equal"):
 
 
 def wta_greedy_joint_multi(scenario, budget):
-    """Online winner-take-all greedy.
-
-    Bits are added by marginal gain per resource unit.  Every power increment
-    is given to the current best report of that target, so the power rule is
-    winner-take-all at every step and no power-vector enumeration is used.
-    """
-    reports = len(scenario[0]) - 1
-    powers = [np.zeros(reports, dtype=int) for _ in scenario]
-    bits = [np.zeros(reports, dtype=int) for _ in scenario]
-    used = 0
-
-    def worst():
-        return min(
-            pd_value(float(t[0]), t[1:], powers[q], bits[q])
-            for q, t in enumerate(scenario)
-        )
-
-    def scores():
-        return np.asarray([
-            pd_value(float(t[0]), t[1:], powers[q], bits[q])
-            for q, t in enumerate(scenario)
-        ])
-
-    while True:
-        current = float(np.mean(scores()))
-        best = None
-        for q, target in enumerate(scenario):
-            active = [r for r in range(reports) if bits[q][r] > 0]
-            # Activate a new report with 1 bit + 1 power.
-            for r in range(reports):
-                if bits[q][r] > 0 or used + 2 > budget:
-                    continue
-                old_b, old_p = bits[q].copy(), powers[q].copy()
-                bits[q][r] = 1
-                powers[q][r] = 1
-                new_score = float(np.mean(scores()))
-                gain = new_score - current
-                bits[q], powers[q] = old_b, old_p
-                if gain > 0:
-                    key = (gain / 2.0, gain, q, "activate", r)
-                    if best is None or key > best[0]:
-                        best = (key, q, "activate", r)
-            # Add one bit to an active report.
-            for r in active:
-                if bits[q][r] >= MAX_BITS or used + 1 > budget:
-                    continue
-                old_b = bits[q].copy()
-                bits[q][r] += 1
-                new_score = float(np.mean(scores()))
-                gain = new_score - current
-                bits[q] = old_b
-                if gain > 0:
-                    key = (gain, gain, q, "bit", r)
-                    if best is None or key > best[0]:
-                        best = (key, q, "bit", r)
-            # Add one power to the current winner.
-            if active:
-                coefficients = np.asarray([
-                    power_gain_coefficient(
-                        float(target[r + 1]), int(bits[q][r]), 0.0, 1.0
-                    )
-                    for r in active
-                ])
-                winner = active[int(np.argmax(coefficients))]
-                if powers[q][winner] < MAX_POWER and used + 1 <= budget:
-                    old_p = powers[q].copy()
-                    powers[q][winner] += 1
-                    new_score = float(np.mean(scores()))
-                    gain = new_score - current
-                    powers[q] = old_p
-                    if gain > 0:
-                        key = (gain, gain, q, "power", winner)
-                        if best is None or key > best[0]:
-                            best = (key, q, "power", winner)
-        if best is None:
-            break
-        _, q, action, index = best
-        if action == "activate":
-            bits[q][index] = 1
-            powers[q][index] = 1
-            used += 2
-        elif action == "bit":
-            bits[q][index] += 1
-            used += 1
-        else:
-            powers[q][index] += 1
-            used += 1
-    return worst()
+    """Online WTA greedy wrapper (power action space matches the oracle)."""
+    return float(nomp.wta_greedy_joint_multi(
+        scenario, budget, min_cover=False
+    )["worst_pd"])
 
 
 def ucb_wta_greedy_joint_multi(
-    scenario, budget, *, noise_scale, seed, max_steps: int = 100
+    scenario,
+    budget,
+    *,
+    noise_scale,
+    seed,
+    max_steps: int = 100,
+    min_cover: bool = False,
+    refine: bool = False,
+    max_refine_rounds: int = 100,
+    max_power=None,
 ):
     """Online WTA-Greedy whose winner/activation use UCB error estimates."""
     reports = len(scenario[0]) - 1
     rng = np.random.default_rng(seed)
-    powers = [np.zeros(reports, dtype=int) for _ in scenario]
-    bits = [np.zeros(reports, dtype=int) for _ in scenario]
+    power_cap = budget if max_power is None else int(max_power)
+    if min_cover:
+        powers, bits, used = nomp.initial_min_cover(scenario, budget)
+    else:
+        powers = [np.zeros(reports, dtype=int) for _ in scenario]
+        bits = [np.zeros(reports, dtype=int) for _ in scenario]
+        used = 0
     means = []
     counts = []
     for q, target in enumerate(scenario):
@@ -488,7 +424,6 @@ def ucb_wta_greedy_joint_multi(
             true + noise_scale * rng.standard_normal(reports)
         )
         counts.append(np.ones(reports, dtype=float))
-    used = 0
     beta = float(norm.ppf(0.975))
 
     def scores():
@@ -574,7 +509,7 @@ def ucb_wta_greedy_joint_multi(
                         best = (key, q, "bit", r)
             if active:
                 winner = active[int(np.argmax(ucb(q)[active]))]
-                if powers[q][winner] < MAX_POWER and used + 1 <= budget:
+                if powers[q][winner] < power_cap and used + 1 <= budget:
                     old_p = powers[q].copy()
                     powers[q][winner] += 1
                     new_score = float(np.mean(scores()))
@@ -602,6 +537,17 @@ def ucb_wta_greedy_joint_multi(
         steps_used += 1
         if steps_used >= max_steps:
             break
+    refine_rounds = 0
+    if refine:
+        powers, bits, refine_rounds = nomp.maxmin_refine(
+            scenario,
+            powers,
+            bits,
+            max_power=power_cap,
+            max_bits=MAX_BITS,
+            max_rounds=max_refine_rounds,
+            grid=GRID,
+        )
     worst_pd = min(
         pd_value(float(t[0]), t[1:], powers[q], bits[q])
         for q, t in enumerate(scenario)
@@ -610,144 +556,17 @@ def ucb_wta_greedy_joint_multi(
         "worst_pd": worst_pd,
         "steps_used": steps_used,
         "stopped_by_certificate": stopped_by_certificate,
+        "refine_rounds": refine_rounds,
     }
 
 
 def nomp_greedy_joint_multi(
-    scenario, budget, *, max_steps: int = 100
+    scenario, budget, *, max_rounds: int = 100
 ):
-    """NOMP-inspired online greedy with power refinement.
-
-    Greedy selects bit/activation actions; after every action a refinement
-    loop moves power from low-gain reports to the current winner when it
-    improves the average P_D.  The residual is recomputed each round.
-    """
-    reports = len(scenario[0]) - 1
-    powers = [np.zeros(reports, dtype=int) for _ in scenario]
-    bits = [np.zeros(reports, dtype=int) for _ in scenario]
-    used = 0
-
-    def scores():
-        return np.asarray([
-            pd_value(float(t[0]), t[1:], powers[q], bits[q])
-            for q, t in enumerate(scenario)
-        ])
-
-    def refine():
-        improved = True
-        while improved:
-            improved = False
-            for q, target in enumerate(scenario):
-                active = [r for r in range(reports) if bits[q][r] > 0]
-                if len(active) < 2:
-                    continue
-                coefficients = np.asarray([
-                    power_gain_coefficient(
-                        float(target[r + 1]), int(bits[q][r]), 0.0, 1.0
-                    )
-                    for r in active
-                ])
-                winner = active[int(np.argmax(coefficients))]
-                before = float(np.mean(scores()))
-                for source in active:
-                    if source == winner or powers[q][source] <= 1:
-                        continue
-                    old_p = powers[q].copy()
-                    powers[q][source] -= 1
-                    powers[q][winner] += 1
-                    after = float(np.mean(scores()))
-                    if after > before + 1e-12:
-                        improved = True
-                        break
-                    powers[q] = old_p
-                if improved:
-                    continue
-                # Bit refinement: move one bit to the winner if it improves
-                # the average P_D.
-                for source in active:
-                    if source == winner or bits[q][source] <= 1:
-                        continue
-                    if bits[q][winner] >= MAX_BITS:
-                        continue
-                    old_b = bits[q].copy()
-                    bits[q][source] -= 1
-                    bits[q][winner] += 1
-                    after = float(np.mean(scores()))
-                    if after > before + 1e-12:
-                        improved = True
-                        break
-                    bits[q] = old_b
-
-    steps_used = 0
-    while True:
-        current = float(np.mean(scores()))
-        best = None
-        for q, target in enumerate(scenario):
-            active = [r for r in range(reports) if bits[q][r] > 0]
-            for r in range(reports):
-                if bits[q][r] > 0 or used + 2 > budget:
-                    continue
-                old_b, old_p = bits[q].copy(), powers[q].copy()
-                bits[q][r] = 1
-                powers[q][r] = 1
-                new_score = float(np.mean(scores()))
-                gain = new_score - current
-                bits[q], powers[q] = old_b, old_p
-                if gain > 0:
-                    key = (gain / 2.0, gain, q, "activate", r)
-                    if best is None or key > best[0]:
-                        best = (key, q, "activate", r)
-            for r in active:
-                if bits[q][r] >= MAX_BITS or used + 1 > budget:
-                    continue
-                old_b = bits[q].copy()
-                bits[q][r] += 1
-                new_score = float(np.mean(scores()))
-                gain = new_score - current
-                bits[q] = old_b
-                if gain > 0:
-                    key = (gain, gain, q, "bit", r)
-                    if best is None or key > best[0]:
-                        best = (key, q, "bit", r)
-            if active:
-                coefficients = np.asarray([
-                    power_gain_coefficient(
-                        float(target[r + 1]), int(bits[q][r]), 0.0, 1.0
-                    )
-                    for r in active
-                ])
-                winner = active[int(np.argmax(coefficients))]
-                if powers[q][winner] < MAX_POWER and used + 1 <= budget:
-                    old_p = powers[q].copy()
-                    powers[q][winner] += 1
-                    new_score = float(np.mean(scores()))
-                    gain = new_score - current
-                    powers[q] = old_p
-                    if gain > 0:
-                        key = (gain, gain, q, "power", winner)
-                        if best is None or key > best[0]:
-                            best = (key, q, "power", winner)
-        if best is None:
-            break
-        _, q, action, index = best
-        if action == "activate":
-            bits[q][index] = 1
-            powers[q][index] = 1
-            used += 2
-        elif action == "bit":
-            bits[q][index] += 1
-            used += 1
-        else:
-            powers[q][index] += 1
-            used += 1
-        refine()
-        steps_used += 1
-        if steps_used >= max_steps:
-            break
-    return min(
-        pd_value(float(t[0]), t[1:], powers[q], bits[q])
-        for q, t in enumerate(scenario)
-    )
+    """NOMP-inspired online greedy: min cover, WTA addition, leximin refine."""
+    return float(nomp.nomp_wta_greedy_joint_multi(
+        scenario, budget, max_rounds=max_rounds
+    )["worst_pd"])
 
 
 def main() -> None:
@@ -792,6 +611,10 @@ def main() -> None:
         ucb_wta_greedy_worsts = []
         ucb_steps = []
         ucb_certificates = []
+        ucb_nomp_worsts = []
+        ucb_nomp_steps = []
+        ucb_nomp_certificates = []
+        ucb_nomp_refine_rounds = []
         nomp_greedy_worsts = []
         exact_worsts = []
         winner_worsts = []
@@ -811,6 +634,23 @@ def main() -> None:
             ucb_steps.append(ucb_result["steps_used"])
             ucb_certificates.append(
                 ucb_result["stopped_by_certificate"]
+            )
+            ucb_nomp_result = ucb_wta_greedy_joint_multi(
+                scenario,
+                budget,
+                noise_scale=0.2,
+                seed=scenario_index,
+                min_cover=True,
+                refine=True,
+                max_refine_rounds=100,
+            )
+            ucb_nomp_worsts.append(ucb_nomp_result["worst_pd"])
+            ucb_nomp_steps.append(ucb_nomp_result["steps_used"])
+            ucb_nomp_certificates.append(
+                ucb_nomp_result["stopped_by_certificate"]
+            )
+            ucb_nomp_refine_rounds.append(
+                ucb_nomp_result["refine_rounds"]
             )
             nomp_greedy_worsts.append(nomp_greedy_joint_multi(
                 scenario, budget
@@ -852,6 +692,16 @@ def main() -> None:
             "ucb_wta_mean_steps": float(np.mean(ucb_steps)),
             "ucb_wta_certificate_stop_rate": float(np.mean(
                 ucb_certificates
+            )),
+            "ucb_nomp_greedy_worst_mean": float(np.mean(
+                ucb_nomp_worsts
+            )),
+            "ucb_nomp_mean_steps": float(np.mean(ucb_nomp_steps)),
+            "ucb_nomp_certificate_stop_rate": float(np.mean(
+                ucb_nomp_certificates
+            )),
+            "ucb_nomp_mean_refine_rounds": float(np.mean(
+                ucb_nomp_refine_rounds
             )),
             "nomp_greedy_worst_mean": float(np.mean(
                 nomp_greedy_worsts

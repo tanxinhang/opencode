@@ -280,14 +280,41 @@ and the winner-take-all exact method reports the exact max-min P_D.
 The same script also runs `WTA-Greedy`, an online non-oracle algorithm:
 bits are increased by marginal gain per resource unit, every power increment
 is given to the current winner report, and no report/bit/power combination
-is enumerated.  In the joint power-bit comparison it outperforms both Greedy
-and MAPPO at low/medium budgets while remaining fully online.
+is enumerated.  Every online method now uses the same power action space as
+the exact oracle (`0..B` per report), so the comparison is no longer biased by
+an artificial 2-unit power cap.  In the joint power-bit comparison this
+already lifts WTA-Greedy from about 0.73 to 0.85/0.94/0.97 at budgets
+8/10/12 in the heterogeneous scenario.
+
+The proposed online method is `NOMP-Greedy`: it first enforces a per-target
+minimum cover (one active sensing/communication report per target, Lemma
+4.79), then runs winner-take-all greedy, and finally performs a NOMP-style
+discrete refinement.  The refinement searches single power/bit exchanges,
+within-target atom merges, and redundant-atom transfers, accepting a move
+only when it improves the lexicographic max-min vector (Lemma 4.80).  This
+keeps the worst target nondecreasing, terminates at a finite local optimum or
+a hard round cap, and on the Q=2/R=2 proportional test set reaches the exact
+winner-take-all frontier: 0.8918/0.9562/0.9808 at budgets 8/10/12 versus
+0.8918/0.9562/0.9808 for the oracle.
+
+The homogeneous scenario gives the same qualitative result: WTA-Greedy reaches
+0.9245/0.9854/0.9993 and NOMP-Greedy matches the oracle at all three budgets.
+The classic Greedy baseline stays near 0.53 because its equal-activation init
+and single-unit reallocation cannot reclaim whole `(power, bit)` report atoms,
+which is exactly the structural gap the atom-merge/transfer refinement fixes.
+
+The Q=3 and Q=4 heterogeneous smokes (5 test seeds) show the same pattern:
+NOMP-Greedy matches the exact winner-take-all frontier at the tested budgets,
+while WTA-Greedy alone lags by about 0.08-0.10 at the lower budget.  The
+online refinement remains finite and does not enumerate report combinations.
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates and UCB-driven winner selection,
 with a hard `max_steps` cutoff and per-target LCB/UCB certificate stopping.
-It also reports `NOMP-Greedy`, a NOMP-inspired online variant that refines
-power and bit allocation after each greedy step; in the current homogeneous
-scenario it matches WTA-Greedy.
+`UCB-NOMP` combines the same UCB feedback with minimum cover and the
+refinement stage; in the heterogeneous gate it reaches the same worst-target
+values as the deterministic NOMP-Greedy while keeping the feedback loop
+finite.
 
 `uav_otfs_isac/error_feedback.py` adds coefficient error and multi-round
 feedback: each round explores the top estimates plus one random candidate,

@@ -1,0 +1,60 @@
+{
+  "gate": "joint-power-comparison",
+  "mode": "heterogeneous",
+  "summary": [
+    {
+      "budget": 8,
+      "mappo_worst_mean": 0.6544123526408421,
+      "greedy_worst_mean": 0.5160826354728898,
+      "greedy_winner_init_worst_mean": 0.39420256836395423,
+      "wta_greedy_worst_mean": 0.8462242460358483,
+      "ucb_wta_greedy_worst_mean": 0.8462242460358483,
+      "ucb_wta_mean_steps": 6.05,
+      "ucb_wta_certificate_stop_rate": 0.0,
+      "ucb_nomp_greedy_worst_mean": 0.8918160488723709,
+      "ucb_nomp_mean_steps": 4.0,
+      "ucb_nomp_certificate_stop_rate": 0.0,
+      "ucb_nomp_mean_refine_rounds": 0.15,
+      "nomp_greedy_worst_mean": 0.8918160488723709,
+      "exact_worst_mean": 0.8918160488723709,
+      "winner_worst_mean": 0.8918160488723709,
+      "train_seconds": 3.187935800291598
+    },
+    {
+      "budget": 10,
+      "mappo_worst_mean": 0.7870421912493472,
+      "greedy_worst_mean": 0.5047233309635313,
+      "greedy_winner_init_worst_mean": 0.39420256836395423,
+      "wta_greedy_worst_mean": 0.9359098612042006,
+      "ucb_wta_greedy_worst_mean": 0.9359098612042006,
+      "ucb_wta_mean_steps": 8.0,
+      "ucb_wta_certificate_stop_rate": 0.0,
+      "ucb_nomp_greedy_worst_mean": 0.9562384410904323,
+      "ucb_nomp_mean_steps": 6.0,
+      "ucb_nomp_certificate_stop_rate": 0.0,
+      "ucb_nomp_mean_refine_rounds": 0.15,
+      "nomp_greedy_worst_mean": 0.9562384410904323,
+      "exact_worst_mean": 0.956238441090464,
+      "winner_worst_mean": 0.956238441090464,
+      "train_seconds": 1.8518542000092566
+    },
+    {
+      "budget": 12,
+      "mappo_worst_mean": 0.6821736357556522,
+      "greedy_worst_mean": 0.5047233309635313,
+      "greedy_winner_init_worst_mean": 0.39420256836395423,
+      "wta_greedy_worst_mean": 0.9749410457442467,
+      "ucb_wta_greedy_worst_mean": 0.9749410457442467,
+      "ucb_wta_mean_steps": 9.95,
+      "ucb_wta_certificate_stop_rate": 0.0,
+      "ucb_nomp_greedy_worst_mean": 0.9807706602549221,
+      "ucb_nomp_mean_steps": 7.95,
+      "ucb_nomp_certificate_stop_rate": 0.0,
+      "ucb_nomp_mean_refine_rounds": 0.0,
+      "nomp_greedy_worst_mean": 0.9807706602549221,
+      "exact_worst_mean": 0.980770660254969,
+      "winner_worst_mean": 0.980770660254969,
+      "train_seconds": 1.8086022003553808
+    }
+  ]
+}

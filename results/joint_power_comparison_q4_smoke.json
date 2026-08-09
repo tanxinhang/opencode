@@ -1,0 +1,42 @@
+{
+  "gate": "joint-power-comparison",
+  "mode": "heterogeneous",
+  "summary": [
+    {
+      "budget": 16,
+      "mappo_worst_mean": 0.9999786975890942,
+      "greedy_worst_mean": 0.43769270550618256,
+      "greedy_winner_init_worst_mean": 0.3263388633698935,
+      "wta_greedy_worst_mean": 0.7681748559001983,
+      "ucb_wta_greedy_worst_mean": 0.7681748559001983,
+      "ucb_wta_mean_steps": 12.0,
+      "ucb_wta_certificate_stop_rate": 0.0,
+      "ucb_nomp_greedy_worst_mean": 0.8633886982724309,
+      "ucb_nomp_mean_steps": 8.0,
+      "ucb_nomp_certificate_stop_rate": 0.0,
+      "ucb_nomp_mean_refine_rounds": 0.6,
+      "nomp_greedy_worst_mean": 0.8633886982724309,
+      "exact_worst_mean": 0.8633886982724309,
+      "winner_worst_mean": 0.8633886982724309,
+      "train_seconds": 1.3944839001633227
+    },
+    {
+      "budget": 20,
+      "mappo_worst_mean": 0.08183635672031453,
+      "greedy_worst_mean": 0.4341690923424989,
+      "greedy_winner_init_worst_mean": 0.3263388633698935,
+      "wta_greedy_worst_mean": 0.9628191146928955,
+      "ucb_wta_greedy_worst_mean": 0.9628191146928955,
+      "ucb_wta_mean_steps": 16.0,
+      "ucb_wta_certificate_stop_rate": 0.0,
+      "ucb_nomp_greedy_worst_mean": 0.9628191146928955,
+      "ucb_nomp_mean_steps": 12.0,
+      "ucb_nomp_certificate_stop_rate": 0.0,
+      "ucb_nomp_mean_refine_rounds": 0.0,
+      "nomp_greedy_worst_mean": 0.9628191146928955,
+      "exact_worst_mean": 0.9628191146928955,
+      "winner_worst_mean": 0.9628191146928955,
+      "train_seconds": 0.20311699993908405
+    }
+  ]
+}

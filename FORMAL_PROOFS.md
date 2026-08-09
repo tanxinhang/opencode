@@ -1828,6 +1828,56 @@ certified winner.  The loop always terminates at `max_rounds` even if the
 certificate is not reached.  The gate reports the mean/max rounds used and
 the certificate stop rate.
 
+### Lemma 4.79 (per-target minimum cover)
+
+When the budget satisfies `B >= 2Q`, the online allocator first activates one
+report per target with 1 sensing power and 1 communication bit, using the
+report with the largest per-unit-power gain.  The activation costs exactly
+`2Q`, so the remaining allocation is feasible, and every target keeps at least
+one active sensing/communication link.
+
+Proof: each activation is a single `(power=1, bit=1)` report whose total cost
+is 2.  Selecting the maximum `J_i` report for every target is a per-target
+choice, and `2Q <= B` guarantees feasibility.  After this phase no target can
+be left unobserved, which also prevents the average-score greedy from
+spending the whole budget on one target while another remains unsensed.
+
+### Lemma 4.80 (leximin refinement monotonicity and termination)
+
+Let `v(p,b) = (v_1,...,v_Q)` be the target P_D vector and let the refinement
+accept only moves that strictly improve the lexicographically sorted vector.
+Then the worst target value never decreases, the sorted vector cannot cycle,
+and the loop stops at a finite local optimum or at the hard `max_rounds` cap.
+
+Proof: `leximin_improves` compares sorted vectors from the smallest entry; a
+strict improvement means the first differing entry is larger, so `min_q v_q`
+is nondecreasing and increases whenever a move is accepted at the minimum
+position.  All powers and bits are integer-valued in `[0, B]`, so the number
+of feasible allocations is finite.  A strictly monotone sequence over a
+finite set cannot revisit an allocation, hence termination is guaranteed even
+before the cap.  The implemented `maxmin_refine` also reports `rounds_used`
+for audit.
+
+### Corollary 4.80A (single-exchange water-filling reachability)
+
+For two targets with one active winner report each, repeatedly moving one
+power unit from the richer target to the poorer target visits every
+budget-feasible power split.  The leximin acceptance rule keeps the worst
+value nondecreasing, so the water-filling max-min split is reachable by the
+single-exchange moves implemented in `maxmin_refine`.  The joint power-bit
+gate compares the refined online allocation with the exact winner-take-all
+frontier and reports equality on the tested Q=2, R=2 proportional scenarios.
+
+Proof: with one active report per target, moving one unit from target `a` to
+target `b` preserves the total budget and changes only `(p_a, p_b)`.
+Repeating this generates all integer splits of the remaining power budget.
+Among those splits, the max-min value is maximized by the split that
+equalizes the two P_D values as closely as possible, which is exactly the
+water-filling rule; the move sequence that reaches it keeps the larger value
+above the smaller one at every step, so leximin accepts each move.  The gate
+does not claim exactness for arbitrary report counts; it reports the measured
+equality on the tested frontier.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1930,6 +1980,9 @@ the audit.
 | Lemma 4.76 | `power_split_theory.winner_take_all_proportional_options` | `tests/test_winner_take_all_joint_proportional.py`, Gate WTAP JSON |
 | Lemma 4.77 | `error_feedback.wta_feedback_allocator` | `tests/test_error_feedback.py`, Gate EFB JSON |
 | Lemma 4.78 | `error_feedback.ucb_wta_feedback_allocator` | `tests/test_error_feedback.py`, Gate UCB JSON |
+| Lemma 4.79 | `nomp_refinement.initial_min_cover` | `tests/test_nomp_refinement.py` |
+| Lemma 4.80 | `nomp_refinement.maxmin_refine` | `tests/test_nomp_refinement.py` |
+| Corollary 4.80A | `nomp_refinement.nomp_wta_greedy_joint_multi` | `tests/test_nomp_refinement.py`, Gate JC JSON |
 
 ## 6. Explicit non-claims
 

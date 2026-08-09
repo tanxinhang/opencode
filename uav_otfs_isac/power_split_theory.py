@@ -114,6 +114,17 @@ def _proportional_pd(
     ))
 
 
+def proportional_target_pd(
+    owner_delta: float,
+    deltas: np.ndarray,
+    powers: np.ndarray,
+    bits: np.ndarray,
+    grid: int = 32,
+) -> float:
+    """P_D of one target under the proportional-covariance model."""
+    return _proportional_pd(owner_delta, deltas, powers, bits, grid)
+
+
 def proportional_power_bit_options(
     owner_delta: float,
     deltas: np.ndarray,
