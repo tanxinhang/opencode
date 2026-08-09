@@ -1,0 +1,1091 @@
+{
+  "gate": "robust-cas-divergence",
+  "summary": {
+    "total_cells": 120,
+    "divergence_rate": 0.375,
+    "mean_improvement_when_divergent": 0.0074461420462996935,
+    "max_improvement_when_divergent": 0.03348617869204484
+  },
+  "rows": [
+    {
+      "seed": 0,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.1820133420518727,
+      "robust_endpoint_deflection": 0.1820133420518727,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.30335557008645453,
+      "robust_endpoint_deflection": 0.30335557008645453,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.42469779812103625,
+      "robust_endpoint_deflection": 0.42469779812103625,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.06941194793574369,
+      "robust_endpoint_deflection": 0.06941194793574369,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.11568657989290615,
+      "robust_endpoint_deflection": 0.11568657989290615,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.16196121185006862,
+      "robust_endpoint_deflection": 0.16196121185006862,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.025082991751355803,
+      "robust_endpoint_deflection": 0.025082991751355803,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.041804986252259674,
+      "robust_endpoint_deflection": 0.041804986252259674,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.05852698075316354,
+      "robust_endpoint_deflection": 0.05852698075316354,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.005638452175144453,
+      "robust_endpoint_deflection": 0.005638452175144453,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.009397420291907418,
+      "robust_endpoint_deflection": 0.009397420291907418,
+      "improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.013156388408670387,
+      "robust_endpoint_deflection": 0.013156388408670387,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.25795880307507135,
+      "robust_endpoint_deflection": 0.25795880307507135,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.4299313384584522,
+      "robust_endpoint_deflection": 0.4299313384584522,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.6019038738418331,
+      "robust_endpoint_deflection": 0.6019038738418331,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.09442675751978957,
+      "robust_endpoint_deflection": 0.09442675751978957,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.15737792919964927,
+      "robust_endpoint_deflection": 0.15737792919964927,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.22032910087950902,
+      "robust_endpoint_deflection": 0.22032910087950902,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.033588584006323995,
+      "robust_endpoint_deflection": 0.033588584006323995,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.05598097334387332,
+      "robust_endpoint_deflection": 0.05598097334387332,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.07837336268142264,
+      "robust_endpoint_deflection": 0.07837336268142264,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.007498851807984838,
+      "robust_endpoint_deflection": 0.007498851807984838,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.012498086346641398,
+      "robust_endpoint_deflection": 0.012498086346641398,
+      "improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.017497320885297957,
+      "robust_endpoint_deflection": 0.017497320885297957,
+      "improvement": 0.0
+    },
+    {
+      "seed": 2,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.1988860316513131,
+      "robust_endpoint_deflection": 0.21206047105153325,
+      "improvement": 0.013174439400220145
+    },
+    {
+      "seed": 2,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.3314767194188552,
+      "robust_endpoint_deflection": 0.3534341184192221,
+      "improvement": 0.021957399000366917
+    },
+    {
+      "seed": 2,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.4640674071863973,
+      "robust_endpoint_deflection": 0.4948077657869109,
+      "improvement": 0.030740358600513606
+    },
+    {
+      "seed": 2,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.07533996159282194,
+      "robust_endpoint_deflection": 0.08156920499210875,
+      "improvement": 0.006229243399286807
+    },
+    {
+      "seed": 2,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.12556660265470326,
+      "robust_endpoint_deflection": 0.13594867498684793,
+      "improvement": 0.010382072332144665
+    },
+    {
+      "seed": 2,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.17579324371658456,
+      "robust_endpoint_deflection": 0.19032814498158707,
+      "improvement": 0.014534901265002509
+    },
+    {
+      "seed": 2,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.027152470272784463,
+      "robust_endpoint_deflection": 0.029576975597160802,
+      "improvement": 0.0024245053243763387
+    },
+    {
+      "seed": 2,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.04525411712130744,
+      "robust_endpoint_deflection": 0.04929495932860134,
+      "improvement": 0.0040408422072939
+    },
+    {
+      "seed": 2,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.0633557639698304,
+      "robust_endpoint_deflection": 0.06901294306004187,
+      "improvement": 0.005657179090211462
+    },
+    {
+      "seed": 2,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.006096462243827975,
+      "robust_endpoint_deflection": 0.006658663712251557,
+      "improvement": 0.0005622014684235821
+    },
+    {
+      "seed": 2,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.010160770406379959,
+      "robust_endpoint_deflection": 0.011097772853752595,
+      "improvement": 0.0009370024473726365
+    },
+    {
+      "seed": 2,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.014225078568931938,
+      "robust_endpoint_deflection": 0.015536881995253632,
+      "improvement": 0.0013118034263216935
+    },
+    {
+      "seed": 3,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.21674946565450673,
+      "robust_endpoint_deflection": 0.21674946565450673,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.36124910942417787,
+      "robust_endpoint_deflection": 0.36124910942417787,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.505748753193849,
+      "robust_endpoint_deflection": 0.505748753193849,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.08177244680555176,
+      "robust_endpoint_deflection": 0.08177244680555176,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.1362874113425863,
+      "robust_endpoint_deflection": 0.1362874113425863,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.1908023758796208,
+      "robust_endpoint_deflection": 0.1908023758796208,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.029425907606380045,
+      "robust_endpoint_deflection": 0.029425907606380045,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.049043179343966736,
+      "robust_endpoint_deflection": 0.049043179343966736,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.06866045108155343,
+      "robust_endpoint_deflection": 0.06866045108155343,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.006602595572890074,
+      "robust_endpoint_deflection": 0.006602595572890074,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.01100432595481679,
+      "robust_endpoint_deflection": 0.01100432595481679,
+      "improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.015406056336743504,
+      "robust_endpoint_deflection": 0.015406056336743504,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.35367708172860246,
+      "robust_endpoint_deflection": 0.35367708172860246,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.589461802881004,
+      "robust_endpoint_deflection": 0.589461802881004,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.8252465240334057,
+      "robust_endpoint_deflection": 0.8252465240334057,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.1337545183898261,
+      "robust_endpoint_deflection": 0.1337545183898261,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.2229241973163768,
+      "robust_endpoint_deflection": 0.2229241973163768,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.3120938762429275,
+      "robust_endpoint_deflection": 0.3120938762429275,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.048171703406878194,
+      "robust_endpoint_deflection": 0.048171703406878194,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.08028617234479699,
+      "robust_endpoint_deflection": 0.08028617234479699,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.11240064128271576,
+      "robust_endpoint_deflection": 0.11240064128271576,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.010812493433811054,
+      "robust_endpoint_deflection": 0.010812493433811054,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.01802082238968509,
+      "robust_endpoint_deflection": 0.01802082238968509,
+      "improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.025229151345559128,
+      "robust_endpoint_deflection": 0.025229151345559128,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.2773505766736689,
+      "robust_endpoint_deflection": 0.2773505766736689,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.46225096112278147,
+      "robust_endpoint_deflection": 0.46225096112278147,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.647151345571894,
+      "robust_endpoint_deflection": 0.647151345571894,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.10409636507907467,
+      "robust_endpoint_deflection": 0.10409636507907467,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.17349394179845778,
+      "robust_endpoint_deflection": 0.17349394179845778,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.24289151851784088,
+      "robust_endpoint_deflection": 0.24289151851784088,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.03738687422065883,
+      "robust_endpoint_deflection": 0.03738687422065883,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.06231145703443139,
+      "robust_endpoint_deflection": 0.06231145703443139,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.08723603984820394,
+      "robust_endpoint_deflection": 0.08723603984820394,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.008381914629406195,
+      "robust_endpoint_deflection": 0.008381914629406195,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.013969857715676992,
+      "robust_endpoint_deflection": 0.013969857715676992,
+      "improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.019557800801947786,
+      "robust_endpoint_deflection": 0.019557800801947786,
+      "improvement": 0.0
+    },
+    {
+      "seed": 6,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.173126335711772,
+      "robust_endpoint_deflection": 0.18747755515121978,
+      "improvement": 0.014351219439447782
+    },
+    {
+      "seed": 6,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.28854389285295334,
+      "robust_endpoint_deflection": 0.31246259191869963,
+      "improvement": 0.023918699065746285
+    },
+    {
+      "seed": 6,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.40396144999413464,
+      "robust_endpoint_deflection": 0.4374476286861795,
+      "improvement": 0.03348617869204484
+    },
+    {
+      "seed": 6,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.06607593315887976,
+      "robust_endpoint_deflection": 0.07273262285964328,
+      "improvement": 0.006656689700763524
+    },
+    {
+      "seed": 6,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.1101265552647996,
+      "robust_endpoint_deflection": 0.12122103809940549,
+      "improvement": 0.011094482834605887
+    },
+    {
+      "seed": 6,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.15417717737071943,
+      "robust_endpoint_deflection": 0.16970945333916765,
+      "improvement": 0.015532275968448223
+    },
+    {
+      "seed": 6,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.02388675174819383,
+      "robust_endpoint_deflection": 0.02646097304643995,
+      "improvement": 0.0025742212982461203
+    },
+    {
+      "seed": 6,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.03981125291365638,
+      "robust_endpoint_deflection": 0.04410162174406659,
+      "improvement": 0.004290368830410209
+    },
+    {
+      "seed": 6,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.05573575407911893,
+      "robust_endpoint_deflection": 0.06174227044169322,
+      "improvement": 0.0060065163625742865
+    },
+    {
+      "seed": 6,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.005370530227156131,
+      "robust_endpoint_deflection": 0.005965847512210386,
+      "improvement": 0.0005953172850542551
+    },
+    {
+      "seed": 6,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.008950883711926884,
+      "robust_endpoint_deflection": 0.00994307918701731,
+      "improvement": 0.0009921954750904266
+    },
+    {
+      "seed": 6,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.012531237196697636,
+      "robust_endpoint_deflection": 0.013920310861824232,
+      "improvement": 0.0013890736651265955
+    },
+    {
+      "seed": 7,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.26745029355965,
+      "robust_endpoint_deflection": 0.26745029355965,
+      "improvement": 0.0
+    },
+    {
+      "seed": 7,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.4457504892660833,
+      "robust_endpoint_deflection": 0.4457504892660833,
+      "improvement": 0.0
+    },
+    {
+      "seed": 7,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.6240506849725165,
+      "robust_endpoint_deflection": 0.6240506849725165,
+      "improvement": 0.0
+    },
+    {
+      "seed": 7,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.10011166597639007,
+      "robust_endpoint_deflection": 0.10058352414382228,
+      "improvement": 0.00047185816743221254
+    },
+    {
+      "seed": 7,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.16685277662731676,
+      "robust_endpoint_deflection": 0.16763920690637046,
+      "improvement": 0.0007864302790537014
+    },
+    {
+      "seed": 7,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.23359388727824343,
+      "robust_endpoint_deflection": 0.23469488966891866,
+      "improvement": 0.001101002390675232
+    },
+    {
+      "seed": 7,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.0359203093334662,
+      "robust_endpoint_deflection": 0.03641582478213645,
+      "improvement": 0.0004955154486702557
+    },
+    {
+      "seed": 7,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.059867182222443666,
+      "robust_endpoint_deflection": 0.060693041303560756,
+      "improvement": 0.0008258590811170904
+    },
+    {
+      "seed": 7,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.08381405511142112,
+      "robust_endpoint_deflection": 0.08497025782498505,
+      "improvement": 0.0011562027135639252
+    },
+    {
+      "seed": 7,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.00804973315367918,
+      "robust_endpoint_deflection": 0.008192634783400144,
+      "improvement": 0.0001429016297209637
+    },
+    {
+      "seed": 7,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.013416221922798637,
+      "robust_endpoint_deflection": 0.013654391305666907,
+      "improvement": 0.00023816938286826995
+    },
+    {
+      "seed": 7,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.018782710691918086,
+      "robust_endpoint_deflection": 0.019116147827933666,
+      "improvement": 0.00033343713601557967
+    },
+    {
+      "seed": 8,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.24403703221280065,
+      "robust_endpoint_deflection": 0.24403703221280065,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.4067283870213344,
+      "robust_endpoint_deflection": 0.4067283870213344,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.5694197418298681,
+      "robust_endpoint_deflection": 0.5694197418298681,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.08943990529030907,
+      "robust_endpoint_deflection": 0.08943990529030907,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.14906650881718175,
+      "robust_endpoint_deflection": 0.14906650881718175,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.20869311234405447,
+      "robust_endpoint_deflection": 0.20869311234405447,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.03182930896454577,
+      "robust_endpoint_deflection": 0.03182930896454577,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.05304884827424294,
+      "robust_endpoint_deflection": 0.05304884827424294,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.07426838758394011,
+      "robust_endpoint_deflection": 0.07426838758394011,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.007107486281472843,
+      "robust_endpoint_deflection": 0.007107486281472843,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.011845810469121405,
+      "robust_endpoint_deflection": 0.011845810469121405,
+      "improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": false,
+      "nominal_endpoint_deflection": 0.016584134656769965,
+      "robust_endpoint_deflection": 0.016584134656769965,
+      "improvement": 0.0
+    },
+    {
+      "seed": 9,
+      "flip": 0.1,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.2688961009943349,
+      "robust_endpoint_deflection": 0.2795244449023403,
+      "improvement": 0.010628343908005378
+    },
+    {
+      "seed": 9,
+      "flip": 0.1,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.4481601683238915,
+      "robust_endpoint_deflection": 0.4658740748372338,
+      "improvement": 0.017713906513342315
+    },
+    {
+      "seed": 9,
+      "flip": 0.1,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.6274242356534481,
+      "robust_endpoint_deflection": 0.6522237047721272,
+      "improvement": 0.02479946911867914
+    },
+    {
+      "seed": 9,
+      "flip": 0.2,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.10096552187382694,
+      "robust_endpoint_deflection": 0.10678061451045462,
+      "improvement": 0.005815092636627675
+    },
+    {
+      "seed": 9,
+      "flip": 0.2,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.16827586978971157,
+      "robust_endpoint_deflection": 0.1779676908507577,
+      "improvement": 0.00969182106104613
+    },
+    {
+      "seed": 9,
+      "flip": 0.2,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.2355862177055962,
+      "robust_endpoint_deflection": 0.24915476719106078,
+      "improvement": 0.01356854948546457
+    },
+    {
+      "seed": 9,
+      "flip": 0.3,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.03626660369706412,
+      "robust_endpoint_deflection": 0.03861001714706522,
+      "improvement": 0.0023434134500010945
+    },
+    {
+      "seed": 9,
+      "flip": 0.3,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.06044433949510687,
+      "robust_endpoint_deflection": 0.06435002857844202,
+      "improvement": 0.003905689083335148
+    },
+    {
+      "seed": 9,
+      "flip": 0.3,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.0846220752931496,
+      "robust_endpoint_deflection": 0.09009004000981882,
+      "improvement": 0.005467964716669216
+    },
+    {
+      "seed": 9,
+      "flip": 0.4,
+      "success_scale": 0.3,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.008131100317898203,
+      "robust_endpoint_deflection": 0.008681416178319312,
+      "improvement": 0.0005503158604211085
+    },
+    {
+      "seed": 9,
+      "flip": 0.4,
+      "success_scale": 0.5,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.013551833863163672,
+      "robust_endpoint_deflection": 0.014469026963865518,
+      "improvement": 0.0009171931007018463
+    },
+    {
+      "seed": 9,
+      "flip": 0.4,
+      "success_scale": 0.7,
+      "divergent": true,
+      "nominal_endpoint_deflection": 0.01897256740842914,
+      "robust_endpoint_deflection": 0.02025663774941172,
+      "improvement": 0.0012840703409825807
+    }
+  ]
+}

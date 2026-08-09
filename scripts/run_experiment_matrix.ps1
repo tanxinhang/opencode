@@ -132,6 +132,15 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "robust-cas-divergence"
+        Args = @(
+            "scripts\run_robust_cas_divergence_gate.py",
+            "--seeds", "10",
+            "--budget", "6",
+            "--output", "results\robust_cas_divergence_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",

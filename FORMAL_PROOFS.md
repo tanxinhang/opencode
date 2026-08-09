@@ -1729,6 +1729,26 @@ same top-J rule certifies the rectangle's worst-case surrogate.  The gate
 compares nominal and robust top-K schedules under the endpoint and verifies
 the robust schedule is never worse in expected deflection.
 
+### Lemma 4.73 (robust CAS divergence condition)
+
+Let `J_i^clean` and `J_i^rob` be the clean and endpoint scores of report `i`.
+The nominal and robust top-K schedules differ if and only if there exist
+reports `i, j` with
+
+`J_i^clean > J_j^clean` and `J_i^rob < J_j^rob`.
+
+Whenever this reversal occurs under strict score separation, the robust
+top-K schedule has strictly larger expected received deflection at the
+endpoint than the nominal top-K schedule.
+
+Proof: top-K order is determined solely by the score sequence.  If no
+reversal exists, the order is preserved and both schedules select the same
+set.  If a reversal exists, the nominal schedule keeps a lower-endpoint-score
+report over a higher one, so replacing it with the robust top-K cannot
+decrease the endpoint expected deflection; with strict separation it strictly
+increases.  The gate sweeps flip/success severities and reports the
+divergence rate and the improvement.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1825,6 +1845,7 @@ the audit.
 | Corollary 4.70A | `communication_ambiguity.build_endpoint_scenario_groups` | `tests/test_communication_ambiguity.py` |
 | Lemma 4.71 | `robust_joint_power_bit.enumerate_robust_power_bit_options` | `tests/test_robust_joint_power_bit.py`, Gate RJB JSON |
 | Lemma 4.72 | `robust_communication_aware` gate | `tests/test_robust_communication_aware.py`, Gate RCA JSON |
+| Lemma 4.73 | `robust_cas_divergence` gate | Gate RCD JSON |
 
 ## 6. Explicit non-claims
 
