@@ -1,0 +1,186 @@
+{
+  "gate": "winner-take-all-power",
+  "passed": true,
+  "rows": [
+    {
+      "seed": 0,
+      "winner_allocation": [
+        4.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "best_allocation": [
+        4.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "winner_deflection": 1.5222214101555018,
+      "best_deflection": 1.5222214101555018,
+      "passed": true
+    },
+    {
+      "seed": 1,
+      "winner_allocation": [
+        0.0,
+        4.0,
+        0.0,
+        0.0
+      ],
+      "best_allocation": [
+        0.0,
+        4.0,
+        0.0,
+        0.0
+      ],
+      "winner_deflection": 2.118425418027822,
+      "best_deflection": 2.118425418027822,
+      "passed": true
+    },
+    {
+      "seed": 2,
+      "winner_allocation": [
+        0.0,
+        0.0,
+        4.0,
+        0.0
+      ],
+      "best_allocation": [
+        0.0,
+        0.0,
+        4.0,
+        0.0
+      ],
+      "winner_deflection": 1.8975552330323444,
+      "best_deflection": 1.8975552330323444,
+      "passed": true
+    },
+    {
+      "seed": 3,
+      "winner_allocation": [
+        0.0,
+        0.0,
+        4.0,
+        0.0
+      ],
+      "best_allocation": [
+        0.0,
+        0.0,
+        4.0,
+        0.0
+      ],
+      "winner_deflection": 1.8693444755450033,
+      "best_deflection": 1.8693444755450033,
+      "passed": true
+    },
+    {
+      "seed": 4,
+      "winner_allocation": [
+        0.0,
+        0.0,
+        4.0,
+        0.0
+      ],
+      "best_allocation": [
+        0.0,
+        0.0,
+        4.0,
+        0.0
+      ],
+      "winner_deflection": 2.25895125550767,
+      "best_deflection": 2.25895125550767,
+      "passed": true
+    },
+    {
+      "seed": 5,
+      "winner_allocation": [
+        4.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "best_allocation": [
+        4.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "winner_deflection": 1.8774543536285508,
+      "best_deflection": 1.8774543536285508,
+      "passed": true
+    },
+    {
+      "seed": 6,
+      "winner_allocation": [
+        4.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "best_allocation": [
+        4.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "winner_deflection": 1.3245967545612423,
+      "best_deflection": 1.3245967545612423,
+      "passed": true
+    },
+    {
+      "seed": 7,
+      "winner_allocation": [
+        0.0,
+        4.0,
+        0.0,
+        0.0
+      ],
+      "best_allocation": [
+        0.0,
+        4.0,
+        0.0,
+        0.0
+      ],
+      "winner_deflection": 2.0023550270416925,
+      "best_deflection": 2.0023550270416925,
+      "passed": true
+    },
+    {
+      "seed": 8,
+      "winner_allocation": [
+        0.0,
+        4.0,
+        0.0,
+        0.0
+      ],
+      "best_allocation": [
+        0.0,
+        4.0,
+        0.0,
+        0.0
+      ],
+      "winner_deflection": 2.199824393063848,
+      "best_deflection": 2.199824393063848,
+      "passed": true
+    },
+    {
+      "seed": 9,
+      "winner_allocation": [
+        4.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "best_allocation": [
+        4.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "winner_deflection": 2.02082987812969,
+      "best_deflection": 2.02082987812969,
+      "passed": true
+    }
+  ]
+}

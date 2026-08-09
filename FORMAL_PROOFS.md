@@ -1763,6 +1763,23 @@ value.  `exact_joint_maxmin_selection` reconstructs this schedule and the
 joint power-bit split gate reports the resulting sensing-power and
 communication-bit shares.
 
+### Lemma 4.75 (winner-take-all sensing power allocation)
+
+In a diagonal proportional-covariance target model with deterministic
+reception, the deflection of a power allocation is
+
+`D(p) = sum_i p_i * J_i`,
+
+where `J_i` is the per-unit-power communication-aware sensing gain.  For a
+fixed bit profile and power budget, the deflection-maximizing allocation
+puts all power on the report with the largest `J_i`.
+
+Proof: `D` is linear in `p`, and `P_D` is monotone in deflection in the
+proportional-covariance regime, so maximizing `D` over the power simplex is
+equivalent to maximizing a linear function, whose optimum is attained at an
+extreme point.  The gate compares the closed-form allocation with exhaustive
+power splits on random diagonal models.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1861,6 +1878,7 @@ the audit.
 | Lemma 4.72 | `robust_communication_aware` gate | `tests/test_robust_communication_aware.py`, Gate RCA JSON |
 | Lemma 4.73 | `robust_cas_divergence` gate | Gate RCD JSON |
 | Lemma 4.74 | `joint_allocation.exact_joint_maxmin_selection` | `tests/test_joint_allocation.py`, Gate PBS JSON |
+| Lemma 4.75 | `power_split_theory.winner_take_all_allocation` | `tests/test_power_split_theory.py`, Gate WTA JSON |
 
 ## 6. Explicit non-claims
 

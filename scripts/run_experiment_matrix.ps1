@@ -160,6 +160,14 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "winner-take-all-power"
+        Args = @(
+            "scripts\run_winner_take_all_power_gate.py",
+            "--seeds", "10",
+            "--output", "results\winner_take_all_power_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",

@@ -260,6 +260,11 @@ bit/report configuration.
 analyze where Exact wins: it reports P_D gap, budget usage, and the
 correlation between the gap and Exact's extra budget use.
 
+`uav_otfs_isac/power_split_theory.py` provides a scalable sensing-power
+allocation rule: under diagonal proportional covariance, all power goes to
+the report with the largest per-unit-power gain (Lemma 4.75).  This is a
+closed-form algorithm rather than another analysis gate.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic
