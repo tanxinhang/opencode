@@ -141,6 +141,15 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "power-bit-split"
+        Args = @(
+            "scripts\run_joint_power_bit_split_gate.py",
+            "--budgets", "8", "12", "16",
+            "--grid", "32",
+            "--output", "results\joint_power_bit_split_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",

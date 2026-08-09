@@ -7,6 +7,7 @@ import numpy as np
 from uav_otfs_isac.fusion import optimal_gaussian_detection_probability
 from uav_otfs_isac.joint_allocation import (
     exact_joint_maxmin,
+    exact_joint_maxmin_selection,
     minimum_cost_joint_threshold,
     minimum_cost_for_threshold,
     moments,
@@ -41,6 +42,17 @@ def test_exact_joint_maxmin_matches_bruteforce() -> None:
             if cost_a + cost_b <= budget:
                 best = max(best, min(value_a, value_b))
     assert abs(exact - best) < 1e-9
+
+
+def test_exact_joint_maxmin_selection_is_feasible_and_at_threshold() -> None:
+    groups = [
+        target_options(0.4, np.array([1.0, 1.2, 1.4]), grid=16),
+        target_options(0.3, np.array([0.8, 1.0, 1.2]), grid=16),
+    ]
+    value, chosen = exact_joint_maxmin_selection(groups, 6)
+    assert np.isclose(value, exact_joint_maxmin(groups, 6))
+    assert sum(cost for cost, _ in chosen) <= 6
+    assert all(option_value >= value - 1e-9 for _, option_value in chosen)
 
 
 def test_vectorized_target_options_matches_enumeration() -> None:

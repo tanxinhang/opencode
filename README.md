@@ -247,6 +247,10 @@ surrogate (Lemma 4.72).
 actually matters: nominal and robust top-K differ exactly when the endpoint
 degradation reverses the clean score order (Lemma 4.73).
 
+`scripts/run_joint_power_bit_split_gate.py` reconstructs the exact max-min
+schedule and reports the optimal sensing-power versus communication-bit
+resource split (Lemma 4.74).
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic

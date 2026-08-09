@@ -1,0 +1,113 @@
+{
+  "gate": "joint-power-bit-split",
+  "summary": [
+    {
+      "budget": 8,
+      "power_share": 0.625,
+      "bit_share": 0.375,
+      "power_cost": 5,
+      "bit_cost": 3,
+      "total_used": 8,
+      "selected": [
+        {
+          "target": 0,
+          "powers": [
+            0.0,
+            2.0
+          ],
+          "bits": [
+            0,
+            1
+          ],
+          "cost_bits": 3,
+          "clean_pd": 0.9346173496703817
+        },
+        {
+          "target": 1,
+          "powers": [
+            1.0,
+            2.0
+          ],
+          "bits": [
+            1,
+            1
+          ],
+          "cost_bits": 5,
+          "clean_pd": 0.6842640201988307
+        }
+      ]
+    },
+    {
+      "budget": 12,
+      "power_share": 0.6666666666666666,
+      "bit_share": 0.3333333333333333,
+      "power_cost": 6,
+      "bit_cost": 3,
+      "total_used": 9,
+      "selected": [
+        {
+          "target": 0,
+          "powers": [
+            0.0,
+            2.0
+          ],
+          "bits": [
+            0,
+            1
+          ],
+          "cost_bits": 3,
+          "clean_pd": 0.9346173496703817
+        },
+        {
+          "target": 1,
+          "powers": [
+            2.0,
+            2.0
+          ],
+          "bits": [
+            1,
+            1
+          ],
+          "cost_bits": 6,
+          "clean_pd": 0.7764800630353774
+        }
+      ]
+    },
+    {
+      "budget": 16,
+      "power_share": 0.6666666666666666,
+      "bit_share": 0.3333333333333333,
+      "power_cost": 6,
+      "bit_cost": 3,
+      "total_used": 9,
+      "selected": [
+        {
+          "target": 0,
+          "powers": [
+            0.0,
+            2.0
+          ],
+          "bits": [
+            0,
+            1
+          ],
+          "cost_bits": 3,
+          "clean_pd": 0.9346173496703817
+        },
+        {
+          "target": 1,
+          "powers": [
+            2.0,
+            2.0
+          ],
+          "bits": [
+            1,
+            1
+          ],
+          "cost_bits": 6,
+          "clean_pd": 0.7764800630353774
+        }
+      ]
+    }
+  ]
+}

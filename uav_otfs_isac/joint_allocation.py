@@ -388,6 +388,22 @@ def exact_joint_maxmin(
     return float(values[lo])
 
 
+def exact_joint_maxmin_selection(
+    target_options_list: list[list[tuple[int, float]]],
+    budget_bits: int,
+) -> tuple[float, list[tuple[int, float]]]:
+    """Exact max-min value and one cost-minimal schedule attaining it."""
+    value = exact_joint_maxmin(target_options_list, budget_bits)
+    chosen = []
+    for options in target_options_list:
+        candidates = [
+            option for option in options
+            if option[1] >= value - 1e-12
+        ]
+        chosen.append(min(candidates, key=lambda option: option[0]))
+    return value, chosen
+
+
 def minimum_cost_joint_threshold(
     owner_delta: float,
     deltas: np.ndarray,

@@ -1749,6 +1749,20 @@ decrease the endpoint expected deflection; with strict separation it strictly
 increases.  The gate sweeps flip/success severities and reports the
 divergence rate and the improvement.
 
+### Lemma 4.74 (exact max-min schedule reconstruction)
+
+Let `t*` be the exact max-min value returned by `exact_joint_maxmin`.  For
+every target, selecting any enumerated option with value at least `t*` and
+minimum cost gives a feasible schedule attaining `t*`.
+
+Proof: feasibility of `t*` means each target has at least one option with
+value at least `t*`, and the sum of their minimum costs is at most the
+budget.  Taking the per-target minimum-cost option preserves feasibility and
+keeps every target value at least `t*`, so the schedule attains the max-min
+value.  `exact_joint_maxmin_selection` reconstructs this schedule and the
+joint power-bit split gate reports the resulting sensing-power and
+communication-bit shares.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1846,6 +1860,7 @@ the audit.
 | Lemma 4.71 | `robust_joint_power_bit.enumerate_robust_power_bit_options` | `tests/test_robust_joint_power_bit.py`, Gate RJB JSON |
 | Lemma 4.72 | `robust_communication_aware` gate | `tests/test_robust_communication_aware.py`, Gate RCA JSON |
 | Lemma 4.73 | `robust_cas_divergence` gate | Gate RCD JSON |
+| Lemma 4.74 | `joint_allocation.exact_joint_maxmin_selection` | `tests/test_joint_allocation.py`, Gate PBS JSON |
 
 ## 6. Explicit non-claims
 
