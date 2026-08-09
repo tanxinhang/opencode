@@ -398,7 +398,7 @@ def wta_greedy_joint_multi(scenario, budget):
 
 
 def ucb_wta_greedy_joint_multi(
-    scenario, budget, *, noise_scale, seed
+    scenario, budget, *, noise_scale, seed, max_steps: int = 100
 ):
     """Online WTA-Greedy whose winner/activation use UCB error estimates."""
     reports = len(scenario[0]) - 1
@@ -439,7 +439,40 @@ def ucb_wta_greedy_joint_multi(
         ) / (counts[q][r] + 1.0)
         counts[q][r] += 1.0
 
+    steps_used = 0
+    stopped_by_certificate = False
     while True:
+        certificate_ok = True
+        active_targets = 0
+        for q in range(len(scenario)):
+            active = [r for r in range(reports) if bits[q][r] > 0]
+            if not active:
+                continue
+            if len(active) < 2:
+                certificate_ok = False
+                break
+            active_targets += 1
+            values = ucb(q)[active]
+            order = np.argsort(-values, kind="stable")
+            best = active[order[0]]
+            second = active[order[1]] if len(active) > 1 else None
+            lcb_best = (
+                means[q][best]
+                - beta * noise_scale / np.sqrt(counts[q][best])
+            )
+            if second is None:
+                ucb_second = -np.inf
+            else:
+                ucb_second = (
+                    means[q][second]
+                    + beta * noise_scale / np.sqrt(counts[q][second])
+                )
+            if lcb_best <= ucb_second:
+                certificate_ok = False
+                break
+        if certificate_ok and active_targets == len(scenario):
+            stopped_by_certificate = True
+            break
         current = float(np.mean(scores()))
         best = None
         for q, target in enumerate(scenario):
@@ -496,10 +529,18 @@ def ucb_wta_greedy_joint_multi(
         else:
             powers[q][index] += 1
             used += 1
-    return min(
+        steps_used += 1
+        if steps_used >= max_steps:
+            break
+    worst_pd = min(
         pd_value(float(t[0]), t[1:], powers[q], bits[q])
         for q, t in enumerate(scenario)
     )
+    return {
+        "worst_pd": worst_pd,
+        "steps_used": steps_used,
+        "stopped_by_certificate": stopped_by_certificate,
+    }
 
 
 def main() -> None:
@@ -534,17 +575,24 @@ def main() -> None:
         greedy_worsts = []
         wta_greedy_worsts = []
         ucb_wta_greedy_worsts = []
+        ucb_steps = []
+        ucb_certificates = []
         exact_worsts = []
         winner_worsts = []
         for scenario_index, scenario in enumerate(test_scenarios):
             greedy_worsts.append(greedy_joint_multi(scenario, budget))
             wta_greedy_worsts.append(wta_greedy_joint_multi(scenario, budget))
-            ucb_wta_greedy_worsts.append(ucb_wta_greedy_joint_multi(
+            ucb_result = ucb_wta_greedy_joint_multi(
                 scenario,
                 budget,
                 noise_scale=0.2,
                 seed=scenario_index,
-            ))
+            )
+            ucb_wta_greedy_worsts.append(ucb_result["worst_pd"])
+            ucb_steps.append(ucb_result["steps_used"])
+            ucb_certificates.append(
+                ucb_result["stopped_by_certificate"]
+            )
             full_groups = [
                 proportional_power_bit_options(
                     float(t[0]), t[1:],
@@ -575,6 +623,10 @@ def main() -> None:
             "wta_greedy_worst_mean": float(np.mean(wta_greedy_worsts)),
             "ucb_wta_greedy_worst_mean": float(np.mean(
                 ucb_wta_greedy_worsts
+            )),
+            "ucb_wta_mean_steps": float(np.mean(ucb_steps)),
+            "ucb_wta_certificate_stop_rate": float(np.mean(
+                ucb_certificates
             )),
             "exact_worst_mean": float(np.mean(exact_worsts)),
             "winner_worst_mean": float(np.mean(winner_worsts)),
