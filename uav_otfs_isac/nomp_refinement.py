@@ -47,6 +47,13 @@ def _parse_target(target, flip_probability=0.0, success_probability=1.0):
     return owner, deltas, flips, successes
 
 
+def parse_target(target, flip_probability=0.0, success_probability=1.0):
+    """Public accessor for (owner, deltas, flips, successes)."""
+    return _parse_target(
+        target, flip_probability, success_probability
+    )
+
+
 def _report_count(target):
     return int(_parse_target(target)[1].size)
 

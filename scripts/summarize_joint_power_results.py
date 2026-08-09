@@ -89,10 +89,11 @@ def main() -> None:
 
     print_table(
         "Per-link communication mismatch",
-        ["Budget", "WTA", "NOMP", "Robust Exact", "WTA gap", "NOMP gap"],
+        ["Budget", "WTA", "UCB-NOMP", "NOMP", "Robust Exact", "WTA gap", "NOMP gap"],
         [[
             row["budget"],
             round(row["wta_greedy_worst_mean"], 4),
+            round(row["ucb_nomp_greedy_worst_mean"], 4),
             round(row["nomp_greedy_worst_mean"], 4),
             round(row["robust_exact_worst_mean"], 4),
             round(row["wta_gap_to_exact"], 4),
@@ -137,6 +138,8 @@ def main() -> None:
     budgets = [row["budget"] for row in comm_mismatch["summary"]]
     ax.plot(budgets, [row["wta_greedy_worst_mean"] for row in comm_mismatch["summary"]],
             "v-", color="#3182bd", label="WTA-Greedy")
+    ax.plot(budgets, [row["ucb_nomp_greedy_worst_mean"] for row in comm_mismatch["summary"]],
+            "d--", color="#a1d99b", label="UCB-NOMP")
     ax.plot(budgets, [row["nomp_greedy_worst_mean"] for row in comm_mismatch["summary"]],
             "D-", color="#31a354", label="NOMP-Greedy")
     ax.plot(budgets, [row["robust_exact_worst_mean"] for row in comm_mismatch["summary"]],

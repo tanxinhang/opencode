@@ -29,6 +29,7 @@ from uav_otfs_isac.robust_joint_power_bit import (
     enumerate_heterogeneous_robust_power_bit_options,
     pareto_options,
 )
+from scripts.run_joint_power_comparison import ucb_wta_greedy_joint_multi
 
 
 def make_comm_mismatch_scenario(
@@ -69,6 +70,10 @@ def main() -> None:
     for budget in args.budgets:
         wta_worsts = []
         nomp_worsts = []
+        ucb_nomp_worsts = []
+        ucb_nomp_certificates = []
+        ucb_nomp_feedback_rounds = []
+        ucb_nomp_refine_rounds = []
         exact_worsts = []
         nomp_rounds = []
         for seed in range(args.seeds):
@@ -88,6 +93,25 @@ def main() -> None:
             )
             nomp_worsts.append(float(result["worst_pd"]))
             nomp_rounds.append(int(result["refine_rounds"]))
+            ucb_result = ucb_wta_greedy_joint_multi(
+                scenario,
+                budget,
+                noise_scale=0.2,
+                seed=seed,
+                min_cover=True,
+                refine=True,
+                max_feedback_rounds=20,
+            )
+            ucb_nomp_worsts.append(float(ucb_result["worst_pd"]))
+            ucb_nomp_certificates.append(
+                bool(ucb_result["stopped_by_certificate"])
+            )
+            ucb_nomp_feedback_rounds.append(
+                int(ucb_result["feedback_rounds"])
+            )
+            ucb_nomp_refine_rounds.append(
+                int(ucb_result["refine_rounds"])
+            )
             groups = []
             for owner, deltas, flips, successes in scenario:
                 options = enumerate_heterogeneous_robust_power_bit_options(
@@ -111,6 +135,16 @@ def main() -> None:
             "budget": budget,
             "wta_greedy_worst_mean": wta_mean,
             "nomp_greedy_worst_mean": nomp_mean,
+            "ucb_nomp_greedy_worst_mean": float(np.mean(ucb_nomp_worsts)),
+            "ucb_nomp_certificate_stop_rate": float(np.mean(
+                ucb_nomp_certificates
+            )),
+            "ucb_nomp_mean_feedback_rounds": float(np.mean(
+                ucb_nomp_feedback_rounds
+            )),
+            "ucb_nomp_mean_refine_rounds": float(np.mean(
+                ucb_nomp_refine_rounds
+            )),
             "robust_exact_worst_mean": exact_mean,
             "wta_gap_to_exact": float(exact_mean - wta_mean),
             "nomp_gap_to_exact": float(exact_mean - nomp_mean),
@@ -126,6 +160,7 @@ def main() -> None:
         "reports": args.reports,
         "grid": args.grid,
         "per_link_channels": True,
+        "ucb_noise_scale": 0.2,
         "summary": summary,
     }
     output = Path(args.output)

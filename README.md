@@ -331,6 +331,10 @@ robust exact are 0.009/0.010/0.006 against WTA gaps of 0.088/0.066/0.049.
 Because the per-link gate treats the realized channel as the worst endpoint,
 its exact oracle is a channel-aware upper bound; the clean-vs-robust
 scheduling tension is measured separately by `run_robust_joint_power_bit_gate`.
+The per-link `UCB-NOMP` variant uses noisy per-link coefficient observations
+and the all-report winner certificate; it keeps the deterministic NOMP
+worst values (0.482/0.555/0.608) with a 0.55 certificate stop rate and about
+11.6 mean feedback rounds.
 Winner selection under channel mismatch uses the marginal expected-P_D gain
 at the current allocation, and the refinement explores every active
 destination report plus new-report activation, so it can jump the local

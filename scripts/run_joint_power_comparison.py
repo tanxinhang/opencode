@@ -349,13 +349,21 @@ def ucb_wta_greedy_joint_multi(
     max_power=None,
     confidence: float = 0.05,
     max_feedback_rounds: int = 20,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
 ):
     """Online WTA-Greedy whose winner/activation use UCB error estimates."""
-    reports = len(scenario[0]) - 1
+    reports = nomp._report_count(scenario[0])
     rng = np.random.default_rng(seed)
     power_cap = budget if max_power is None else int(max_power)
     if min_cover:
-        powers, bits, used = nomp.initial_min_cover(scenario, budget)
+        powers, bits, used = nomp.initial_min_cover(
+            scenario,
+            budget,
+            flip_probability=flip_probability,
+            success_probability=success_probability,
+            grid=GRID,
+        )
     else:
         powers = [np.zeros(reports, dtype=int) for _ in scenario]
         bits = [np.zeros(reports, dtype=int) for _ in scenario]
@@ -363,9 +371,15 @@ def ucb_wta_greedy_joint_multi(
     means = []
     counts = []
     for q, target in enumerate(scenario):
+        _, deltas, flips, successes = nomp.parse_target(
+            target, flip_probability, success_probability
+        )
         true = np.asarray([
             power_gain_coefficient(
-                float(target[r + 1]), 1, 0.0, 1.0
+                float(deltas[r]),
+                1,
+                float(flips[r]),
+                float(successes[r]),
             )
             for r in range(reports)
         ])
@@ -377,10 +391,14 @@ def ucb_wta_greedy_joint_multi(
     prior_noise_scale = max(noise_scale, 0.1)
 
     def scores():
-        return np.asarray([
-            pd_value(float(t[0]), t[1:], powers[q], bits[q])
-            for q, t in enumerate(scenario)
-        ])
+        return np.asarray(nomp.target_scores(
+            scenario,
+            powers,
+            bits,
+            GRID,
+            flip_probability,
+            success_probability,
+        ))
 
     def width(q):
         return beta * prior_noise_scale / np.sqrt(counts[q])
@@ -388,10 +406,16 @@ def ucb_wta_greedy_joint_multi(
     def ucb(q):
         return means[q] + width(q)
 
-    def observe(q, r, delta, bit_count):
+    def observe(q, r, bit_count):
+        _, deltas, flips, successes = nomp.parse_target(
+            scenario[q], flip_probability, success_probability
+        )
         observed = (
             power_gain_coefficient(
-                float(delta), int(bit_count), 0.0, 1.0
+                float(deltas[r]),
+                int(bit_count),
+                float(flips[r]),
+                float(successes[r]),
             )
             + noise_scale * rng.standard_normal()
         )
@@ -468,11 +492,11 @@ def ucb_wta_greedy_joint_multi(
             bits[q][index] = 1
             powers[q][index] = 1
             used += 2
-            observe(q, index, scenario[q][index + 1], 1)
+            observe(q, index, 1)
         elif action == "bit":
             bits[q][index] += 1
             used += 1
-            observe(q, index, scenario[q][index + 1], bits[q][index])
+            observe(q, index, bits[q][index])
         else:
             powers[q][index] += 1
             used += 1
@@ -489,11 +513,13 @@ def ucb_wta_greedy_joint_multi(
             max_bits=MAX_BITS,
             max_rounds=max_refine_rounds,
             grid=GRID,
+            flip_probability=flip_probability,
+            success_probability=success_probability,
         )
         for q, target in enumerate(scenario):
             for r in range(reports):
                 if bits[q][r] > 0:
-                    observe(q, r, target[r + 1], bits[q][r])
+                    observe(q, r, bits[q][r])
     stopped_by_certificate = False
     feedback_rounds = 0
     while feedback_rounds < max_feedback_rounds:
@@ -504,17 +530,23 @@ def ucb_wta_greedy_joint_multi(
             active = [r for r in range(reports) if bits[q][r] > 0]
             if active:
                 winner = active[int(np.argmax(ucb(q)[active]))]
-                observe(q, winner, target[winner + 1], bits[q][winner])
+                observe(q, winner, bits[q][winner])
             all_ucb = ucb(q).copy()
             for r in active:
                 all_ucb[r] = -np.inf
             if np.isfinite(all_ucb).any():
                 probe = int(np.argmax(all_ucb))
-                observe(q, probe, target[probe + 1], 1)
+                observe(q, probe, 1)
         feedback_rounds += 1
     worst_pd = min(
-        pd_value(float(t[0]), t[1:], powers[q], bits[q])
-        for q, t in enumerate(scenario)
+        nomp.target_scores(
+            scenario,
+            powers,
+            bits,
+            GRID,
+            flip_probability,
+            success_probability,
+        )
     )
     return {
         "worst_pd": worst_pd,

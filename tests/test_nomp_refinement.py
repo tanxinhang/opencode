@@ -247,3 +247,20 @@ def test_per_link_refinement_reaches_robust_exact_on_hard_scenario():
         groups.append(pareto_options(options, "robust_pd"))
     exact = exact_joint_power_bit_maxmin(groups, 12)
     assert abs(result["worst_pd"] - exact) < 1e-6
+
+
+def test_ucb_nomp_per_link_is_finite_and_close_to_deterministic():
+    scenario = make_comm_mismatch_scenario(10001, 2, 2)
+    noisy = ucb_wta_greedy_joint_multi(
+        scenario,
+        8,
+        noise_scale=0.2,
+        seed=0,
+        min_cover=True,
+        refine=True,
+        max_feedback_rounds=10,
+    )
+    deterministic = nomp_wta_greedy_joint_multi(scenario, 8)
+    assert noisy["steps_used"] <= 100
+    assert noisy["feedback_rounds"] <= 10
+    assert abs(noisy["worst_pd"] - deterministic["worst_pd"]) < 1e-3
