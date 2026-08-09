@@ -28,6 +28,7 @@ from uav_otfs_isac.fusion import optimal_gaussian_detection_probability
 from uav_otfs_isac.joint_allocation import model_from_bits
 from uav_otfs_isac.joint_power_bit import exact_joint_power_bit_maxmin
 from uav_otfs_isac.power_split_theory import (
+    power_gain_coefficient,
     proportional_power_bit_options,
     winner_take_all_proportional_options,
 )
@@ -298,6 +299,78 @@ def greedy_joint_multi(scenario, budget):
     return worst()
 
 
+def wta_greedy_joint_multi(scenario, budget):
+    """Online winner-take-all greedy.
+
+    Bits are added by marginal gain per resource unit.  Every power increment
+    is given to the current best report of that target, so the power rule is
+    winner-take-all at every step and no power-vector enumeration is used.
+    """
+    reports = len(scenario[0]) - 1
+    powers = [np.zeros(reports, dtype=int) for _ in scenario]
+    bits = [np.ones(reports, dtype=int) for _ in scenario]
+    used = 2 * reports * len(scenario)
+    if used > budget:
+        powers = [np.zeros(reports, dtype=int) for _ in scenario]
+        bits = [np.zeros(reports, dtype=int) for _ in scenario]
+        used = 0
+    else:
+        powers = [np.ones(reports, dtype=int) for _ in scenario]
+        bits = [np.ones(reports, dtype=int) for _ in scenario]
+
+    def worst():
+        return min(
+            pd_value(float(t[0]), t[1:], powers[q], bits[q])
+            for q, t in enumerate(scenario)
+        )
+
+    while True:
+        current = worst()
+        best = None
+        for q, target in enumerate(scenario):
+            for r in range(reports):
+                if bits[q][r] >= MAX_BITS:
+                    continue
+                old_bits = bits[q].copy()
+                bits[q][r] += 1
+                new_worst = worst()
+                gain = current - new_worst
+                bits[q] = old_bits
+                if used + 1 <= budget:
+                    key = (gain, q, "bit", r)
+                    if best is None or key > best[0]:
+                        best = (key, q, "bit", r)
+            if powers[q].sum() >= MAX_POWER * reports:
+                continue
+            coefficients = [
+                power_gain_coefficient(
+                    float(target[r + 1]), int(bits[q][r]), 0.0, 1.0
+                )
+                for r in range(reports)
+            ]
+            winner = int(np.argmax(coefficients))
+            if powers[q][winner] >= MAX_POWER:
+                continue
+            old_power = powers[q].copy()
+            powers[q][winner] += 1
+            new_worst = worst()
+            gain = current - new_worst
+            powers[q] = old_power
+            if used + 1 <= budget:
+                key = (gain, q, "power", winner)
+                if best is None or key > best[0]:
+                    best = (key, q, "power", winner)
+        if best is None or best[0][0] <= 0:
+            break
+        _, q, action, index = best
+        if action == "bit":
+            bits[q][index] += 1
+        else:
+            powers[q][index] += 1
+        used += 1
+    return worst()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="results/joint_power_comparison.json")
@@ -328,10 +401,12 @@ def main() -> None:
         )
         train_seconds = time.perf_counter() - start
         greedy_worsts = []
+        wta_greedy_worsts = []
         exact_worsts = []
         winner_worsts = []
         for scenario in test_scenarios:
             greedy_worsts.append(greedy_joint_multi(scenario, budget))
+            wta_greedy_worsts.append(wta_greedy_joint_multi(scenario, budget))
             full_groups = [
                 proportional_power_bit_options(
                     float(t[0]), t[1:],
@@ -359,6 +434,7 @@ def main() -> None:
             "budget": budget,
             "mappo_worst_mean": mappo_worst,
             "greedy_worst_mean": float(np.mean(greedy_worsts)),
+            "wta_greedy_worst_mean": float(np.mean(wta_greedy_worsts)),
             "exact_worst_mean": float(np.mean(exact_worsts)),
             "winner_worst_mean": float(np.mean(winner_worsts)),
             "train_seconds": train_seconds,

@@ -277,6 +277,11 @@ method into the MAPPO/Greedy comparison in the joint power-bit setting:
 MAPPO selects bits and power, Greedy uses shared-budget marginal allocation,
 and the winner-take-all exact method reports the exact max-min P_D.
 
+The same script also runs `WTA-Greedy`, an online non-oracle algorithm:
+bits are increased by marginal gain per resource unit, every power increment
+is given to the current winner report, and no report/bit/power combination
+is enumerated.
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic
