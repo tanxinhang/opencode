@@ -1,0 +1,233 @@
+{
+  "gate": "robust-communication-aware",
+  "passed": true,
+  "summary": [
+    {
+      "budget_bits": 4,
+      "mean_robust_improvement": 0.0,
+      "robust_never_worse_rate": 1.0
+    },
+    {
+      "budget_bits": 6,
+      "mean_robust_improvement": 0.0,
+      "robust_never_worse_rate": 1.0
+    },
+    {
+      "budget_bits": 8,
+      "mean_robust_improvement": 0.0,
+      "robust_never_worse_rate": 1.0
+    }
+  ],
+  "rows": [
+    {
+      "seed": 0,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.14291072105633632,
+      "robust_endpoint_deflection": 0.14291072105633632,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.1738156086187176,
+      "robust_endpoint_deflection": 0.1738156086187176,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 0,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.20277718567331995,
+      "robust_endpoint_deflection": 0.20277718567331995,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.25994225571729235,
+      "robust_endpoint_deflection": 0.25994225571729235,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.3369737735871825,
+      "robust_endpoint_deflection": 0.3369737735871825,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 1,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.37663445734198264,
+      "robust_endpoint_deflection": 0.37663445734198264,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 2,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.16725471363671926,
+      "robust_endpoint_deflection": 0.16725471363671926,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 2,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.21788923037134983,
+      "robust_endpoint_deflection": 0.21788923037134983,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 2,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.25300758391539885,
+      "robust_endpoint_deflection": 0.25300758391539885,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.19643253517546244,
+      "robust_endpoint_deflection": 0.19643253517546244,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.24466620457651228,
+      "robust_endpoint_deflection": 0.24466620457651228,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 3,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.279254532844953,
+      "robust_endpoint_deflection": 0.279254532844953,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.2625119955872328,
+      "robust_endpoint_deflection": 0.2625119955872328,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.33948792641602826,
+      "robust_endpoint_deflection": 0.33948792641602826,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 4,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.37367137455111094,
+      "robust_endpoint_deflection": 0.37367137455111094,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.22402240430256154,
+      "robust_endpoint_deflection": 0.22402240430256154,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.30144849007363633,
+      "robust_endpoint_deflection": 0.30144849007363633,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 5,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.3544655195344571,
+      "robust_endpoint_deflection": 0.3544655195344571,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 6,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.14209377792215977,
+      "robust_endpoint_deflection": 0.14209377792215977,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 6,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.20360591317732882,
+      "robust_endpoint_deflection": 0.20360591317732882,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 6,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.2624390791461693,
+      "robust_endpoint_deflection": 0.2624390791461693,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 7,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.2315622179559419,
+      "robust_endpoint_deflection": 0.2315622179559419,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 7,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.3216388927230367,
+      "robust_endpoint_deflection": 0.3216388927230367,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 7,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.3687642625685359,
+      "robust_endpoint_deflection": 0.3687642625685359,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.24456934723234602,
+      "robust_endpoint_deflection": 0.24456934723234602,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.3017313364697737,
+      "robust_endpoint_deflection": 0.3017313364697737,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 8,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.3580527126342421,
+      "robust_endpoint_deflection": 0.3580527126342421,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 9,
+      "budget_bits": 4,
+      "nominal_endpoint_deflection": 0.22839997536601703,
+      "robust_endpoint_deflection": 0.22839997536601703,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 9,
+      "budget_bits": 6,
+      "nominal_endpoint_deflection": 0.3159046587961036,
+      "robust_endpoint_deflection": 0.3159046587961036,
+      "robust_improvement": 0.0
+    },
+    {
+      "seed": 9,
+      "budget_bits": 8,
+      "nominal_endpoint_deflection": 0.36902261018203936,
+      "robust_endpoint_deflection": 0.36902261018203936,
+      "robust_improvement": 0.0
+    }
+  ]
+}

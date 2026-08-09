@@ -1710,6 +1710,25 @@ worst-case P_D, so the target-separable max-min DP is exact over the robust
 option set.  The clean-optimal schedule is one feasible candidate in the
 robust DP, so the robust optimum is no worse under the endpoint.
 
+### Lemma 4.72 (robust communication-aware sensing score)
+
+In the diagonal/proportional regime, let the robust model be evaluated at
+the worst communication endpoint `(flip_hi, success_lo)`.  The robust
+communication-aware score
+
+`J_i^rob = success_lo * delta_i(flip_hi)^2 / sigma0_ii`
+
+maximizes the expected received deflection at the endpoint, and therefore
+certifies the worst-case surrogate `P_D(E[D_R])` over the communication
+ambiguity rectangle.
+
+Proof: the endpoint model has the same diagonal/proportional structure as
+Lemma 4.69, so the top-J rule maximizes `E[D_R]` at the endpoint.  Lemma
+4.70 shows the endpoint dominates the rectangle for every schedule, so the
+same top-J rule certifies the rectangle's worst-case surrogate.  The gate
+compares nominal and robust top-K schedules under the endpoint and verifies
+the robust schedule is never worse in expected deflection.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -1805,6 +1824,7 @@ the audit.
 | Lemma 4.70 | `communication_ambiguity.verify_endpoint_dominance` | `tests/test_communication_ambiguity.py`, Gate CA-E JSON |
 | Corollary 4.70A | `communication_ambiguity.build_endpoint_scenario_groups` | `tests/test_communication_ambiguity.py` |
 | Lemma 4.71 | `robust_joint_power_bit.enumerate_robust_power_bit_options` | `tests/test_robust_joint_power_bit.py`, Gate RJB JSON |
+| Lemma 4.72 | `robust_communication_aware` gate | `tests/test_robust_communication_aware.py`, Gate RCA JSON |
 
 ## 6. Explicit non-claims
 

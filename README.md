@@ -238,6 +238,11 @@ exact max-min DP over robust options gives the worst-case resource
 allocation (Lemma 4.71).  `scripts/run_robust_joint_power_bit_gate.py` is
 the reproducible gate.
 
+`scripts/run_robust_communication_aware_gate.py` extends the CAS score to
+the worst endpoint: the robust top-K schedule never reduces expected
+deflection at the endpoint and certifies the rectangle's worst-case
+surrogate (Lemma 4.72).
+
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case
 communication Top-K, worst-case independent post-report Top-K, deterministic

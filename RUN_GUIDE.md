@@ -108,6 +108,7 @@ python scripts/benchmark_joint_power_bit_scaling.py --reports 2 4 6 --grid 32
 python scripts/run_communication_aware_gate.py --seeds 10 --budgets 2 4 6 8
 python scripts/run_communication_ambiguity_gate.py --seeds 5
 python scripts/run_robust_joint_power_bit_gate.py --budgets 8 12 16 --grid 32
+python scripts/run_robust_communication_aware_gate.py --seeds 10 --budgets 4 6 8
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/build_paper_tables.py
 ```

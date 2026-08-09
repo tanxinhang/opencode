@@ -123,6 +123,15 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "robust-communication-aware"
+        Args = @(
+            "scripts\run_robust_communication_aware_gate.py",
+            "--seeds", "10",
+            "--budgets", "4", "6", "8",
+            "--output", "results\robust_communication_aware_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "exact-joint-scaling"
         Args = @(
             "scripts\benchmark_exact_joint_scaling.py",
