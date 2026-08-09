@@ -280,7 +280,8 @@ and the winner-take-all exact method reports the exact max-min P_D.
 The same script also runs `WTA-Greedy`, an online non-oracle algorithm:
 bits are increased by marginal gain per resource unit, every power increment
 is given to the current winner report, and no report/bit/power combination
-is enumerated.
+is enumerated.  In the joint power-bit comparison it outperforms both Greedy
+and MAPPO at low/medium budgets while remaining fully online.
 
 `uav_otfs_isac/robust_baselines.py` strengthens the robust-allocation
 comparison: no cooperation, worst-case sensing Top-K, worst-case

@@ -256,6 +256,12 @@ def greedy_joint_multi(scenario, budget):
         powers = [np.ones(reports, dtype=int) for _ in scenario]
         bits = [np.ones(reports, dtype=int) for _ in scenario]
 
+    def scores():
+        return np.asarray([
+            pd_value(float(t[0]), t[1:], powers[q], bits[q])
+            for q, t in enumerate(scenario)
+        ])
+
     def worst():
         return min(
             pd_value(float(t[0]), t[1:], powers[q], bits[q])
@@ -308,15 +314,8 @@ def wta_greedy_joint_multi(scenario, budget):
     """
     reports = len(scenario[0]) - 1
     powers = [np.zeros(reports, dtype=int) for _ in scenario]
-    bits = [np.ones(reports, dtype=int) for _ in scenario]
-    used = 2 * reports * len(scenario)
-    if used > budget:
-        powers = [np.zeros(reports, dtype=int) for _ in scenario]
-        bits = [np.zeros(reports, dtype=int) for _ in scenario]
-        used = 0
-    else:
-        powers = [np.ones(reports, dtype=int) for _ in scenario]
-        bits = [np.ones(reports, dtype=int) for _ in scenario]
+    bits = [np.zeros(reports, dtype=int) for _ in scenario]
+    used = 0
 
     def worst():
         return min(
@@ -324,50 +323,76 @@ def wta_greedy_joint_multi(scenario, budget):
             for q, t in enumerate(scenario)
         )
 
+    def scores():
+        return np.asarray([
+            pd_value(float(t[0]), t[1:], powers[q], bits[q])
+            for q, t in enumerate(scenario)
+        ])
+
     while True:
-        current = worst()
+        current = float(np.mean(scores()))
         best = None
         for q, target in enumerate(scenario):
+            active = [r for r in range(reports) if bits[q][r] > 0]
+            # Activate a new report with 1 bit + 1 power.
             for r in range(reports):
-                if bits[q][r] >= MAX_BITS:
+                if bits[q][r] > 0 or used + 2 > budget:
                     continue
-                old_bits = bits[q].copy()
+                old_b, old_p = bits[q].copy(), powers[q].copy()
+                bits[q][r] = 1
+                powers[q][r] = 1
+                new_score = float(np.mean(scores()))
+                gain = new_score - current
+                bits[q], powers[q] = old_b, old_p
+                if gain > 0:
+                    key = (gain / 2.0, gain, q, "activate", r)
+                    if best is None or key > best[0]:
+                        best = (key, q, "activate", r)
+            # Add one bit to an active report.
+            for r in active:
+                if bits[q][r] >= MAX_BITS or used + 1 > budget:
+                    continue
+                old_b = bits[q].copy()
                 bits[q][r] += 1
-                new_worst = worst()
-                gain = current - new_worst
-                bits[q] = old_bits
-                if used + 1 <= budget:
-                    key = (gain, q, "bit", r)
+                new_score = float(np.mean(scores()))
+                gain = new_score - current
+                bits[q] = old_b
+                if gain > 0:
+                    key = (gain, gain, q, "bit", r)
                     if best is None or key > best[0]:
                         best = (key, q, "bit", r)
-            if powers[q].sum() >= MAX_POWER * reports:
-                continue
-            coefficients = [
-                power_gain_coefficient(
-                    float(target[r + 1]), int(bits[q][r]), 0.0, 1.0
-                )
-                for r in range(reports)
-            ]
-            winner = int(np.argmax(coefficients))
-            if powers[q][winner] >= MAX_POWER:
-                continue
-            old_power = powers[q].copy()
-            powers[q][winner] += 1
-            new_worst = worst()
-            gain = current - new_worst
-            powers[q] = old_power
-            if used + 1 <= budget:
-                key = (gain, q, "power", winner)
-                if best is None or key > best[0]:
-                    best = (key, q, "power", winner)
-        if best is None or best[0][0] <= 0:
+            # Add one power to the current winner.
+            if active:
+                coefficients = np.asarray([
+                    power_gain_coefficient(
+                        float(target[r + 1]), int(bits[q][r]), 0.0, 1.0
+                    )
+                    for r in active
+                ])
+                winner = active[int(np.argmax(coefficients))]
+                if powers[q][winner] < MAX_POWER and used + 1 <= budget:
+                    old_p = powers[q].copy()
+                    powers[q][winner] += 1
+                    new_score = float(np.mean(scores()))
+                    gain = new_score - current
+                    powers[q] = old_p
+                    if gain > 0:
+                        key = (gain, gain, q, "power", winner)
+                        if best is None or key > best[0]:
+                            best = (key, q, "power", winner)
+        if best is None:
             break
         _, q, action, index = best
-        if action == "bit":
+        if action == "activate":
+            bits[q][index] = 1
+            powers[q][index] = 1
+            used += 2
+        elif action == "bit":
             bits[q][index] += 1
+            used += 1
         else:
             powers[q][index] += 1
-        used += 1
+            used += 1
     return worst()
 
 
