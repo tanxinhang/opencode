@@ -38,6 +38,7 @@ def main() -> None:
     header = [
         "Budget",
         "MAPPO",
+        "MAPPO-NOMP",
         "Greedy",
         "WTA",
         "UCB-WTA",
@@ -51,6 +52,7 @@ def main() -> None:
         [[
             row["budget"],
             round(row["mappo_worst_mean"], 4),
+            round(row["mappo_nomp_worst_mean"], 4),
             round(row["greedy_worst_mean"], 4),
             round(row["wta_greedy_worst_mean"], 4),
             round(row["ucb_wta_greedy_worst_mean"], 4),
@@ -65,6 +67,7 @@ def main() -> None:
         [[
             row["budget"],
             round(row["mappo_worst_mean"], 4),
+            round(row["mappo_nomp_worst_mean"], 4),
             round(row["greedy_worst_mean"], 4),
             round(row["wta_greedy_worst_mean"], 4),
             round(row["ucb_wta_greedy_worst_mean"], 4),

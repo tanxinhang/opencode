@@ -1935,6 +1935,23 @@ UCB-NOMP variant with the same floors and weights keeps the QoS worst values
 under noisy observations and stops its feedback loop by the all-report
 certificate.
 
+### Lemma 4.83 (two-stage MAPPO-NOMP decomposition)
+
+Let the MAPPO policy propose a report activation and bit profile, and let the
+NOMP power stage allocate the sensing power under that fixed profile using
+winner-take-all greedy followed by power-only leximin refinement.  The hybrid
+is never below the MAPPO proposal because the power stage only accepts
+moves that improve the max-min vector, and it is bounded above by the full
+NOMP schedule that may also change the bit profile.
+
+Proof: the power-only refinement uses the same leximin acceptance as Lemma
+4.80, so it preserves or improves the proposed schedule.  Full NOMP searches
+a superset of moves (bit/atom changes included), hence its optimum is no
+worse.  In the clean homogeneous gate the hybrid reaches the exact max-min;
+in clean heterogeneous it matches exact at B=8/10 and stays 0.040 below the
+full NOMP schedule at B=12 because the fixed MAPPO bit profile is the only
+remaining restriction.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -2042,6 +2059,7 @@ the audit.
 | Corollary 4.80A | `nomp_refinement.nomp_wta_greedy_joint_multi` | `tests/test_nomp_refinement.py`, Gate JC JSON |
 | Lemma 4.81 | `nomp_refinement` channel parameters + `scripts/run_joint_power_comm_mismatch_gate.py` | `tests/test_nomp_refinement.py`, Gate CMM JSON |
 | Lemma 4.82 | `nomp_refinement.qos_scores` + `scripts/run_qos_weighted_maxmin_gate.py` | `tests/test_nomp_refinement.py`, Gate QOS JSON |
+| Lemma 4.83 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp` | Gate JC JSON |
 
 ## 6. Explicit non-claims
 

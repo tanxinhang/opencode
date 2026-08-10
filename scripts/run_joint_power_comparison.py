@@ -199,6 +199,77 @@ def evaluate_mappo(actor, scenarios, budget, reports):
     return float(np.mean(worsts))
 
 
+def _feasible_from_mappo(scenario, powers, bits, budget):
+    """Drop power units until the MAPPO proposal is budget feasible."""
+    q_count = len(scenario)
+    reports = len(powers[0])
+    powers = [np.asarray(row, dtype=int).copy() for row in powers]
+    bits = [np.asarray(row, dtype=int).copy() for row in bits]
+    used = int(sum(powers[q].sum() + bits[q].sum() for q in range(q_count)))
+
+    def score(row_p, row_b):
+        return float(np.min(nomp.target_scores(
+            scenario,
+            row_p,
+            row_b,
+            GRID,
+        )))
+
+    while used > budget:
+        best = None
+        for q in range(q_count):
+            for r in range(reports):
+                if powers[q][r] <= 0:
+                    continue
+                trial_p = [row.copy() for row in powers]
+                trial_p[q][r] -= 1
+                loss = score(powers, bits) - score(trial_p, bits)
+                key = (loss, q, r)
+                if best is None or key < best[0]:
+                    best = (key, q, r)
+        if best is None:
+            break
+        _, q, r = best
+        powers[q][r] -= 1
+        used -= 1
+    return powers, bits
+
+
+def evaluate_mappo_nomp(actor, scenarios, budget, reports):
+    """MAPPO proposes report activation/bits, NOMP refines sensing power."""
+    worsts = []
+    for scenario in scenarios:
+        states = [state(float(t[0]), t[1:], budget) for t in scenario]
+        with torch.no_grad():
+            logits_b, logits_p = actor(torch.as_tensor(
+                np.stack(states), dtype=torch.float32
+            ))
+            bits = torch.stack([
+                torch.argmax(logits_b[:, r, :], dim=1)
+                for r in range(reports)
+            ], dim=1).numpy()
+            powers = torch.stack([
+                torch.argmax(logits_p[:, r, :], dim=1)
+                for r in range(reports)
+            ], dim=1).numpy()
+        powers, bits = _feasible_from_mappo(
+            scenario, powers, bits, budget
+        )
+        powers, bits, _ = nomp.maxmin_refine(
+            scenario,
+            powers,
+            bits,
+            max_power=budget,
+            max_bits=MAX_BITS,
+            max_rounds=100,
+            grid=GRID,
+        )
+        worsts.append(float(min(nomp.target_scores(
+            scenario, powers, bits, GRID
+        ))))
+    return float(np.mean(worsts))
+
+
 def greedy_joint_multi(scenario, budget, initialization="equal", max_power=None):
     if max_power is None:
         max_power = budget
@@ -616,6 +687,9 @@ def run_comparison(args) -> dict:
         mappo_worst = evaluate_mappo(
             actor, test_scenarios, budget, args.reports
         )
+        mappo_nomp_worst = evaluate_mappo_nomp(
+            actor, test_scenarios, budget, args.reports
+        )
         train_seconds = time.perf_counter() - start
         greedy_worsts = []
         greedy_winner_init_worsts = []
@@ -703,6 +777,7 @@ def run_comparison(args) -> dict:
         summary.append({
             "budget": budget,
             "mappo_worst_mean": mappo_worst,
+            "mappo_nomp_worst_mean": mappo_nomp_worst,
             "greedy_worst_mean": float(np.mean(greedy_worsts)),
             "greedy_winner_init_worst_mean": float(np.mean(
                 greedy_winner_init_worsts

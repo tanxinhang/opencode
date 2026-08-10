@@ -20,6 +20,7 @@ from scripts.run_joint_power_comm_mismatch_gate import (
 )
 from scripts.run_qos_weighted_maxmin_gate import exact_qos_worst
 from scripts.run_joint_power_comparison import (
+    _feasible_from_mappo,
     make_scenario,
     ucb_wta_greedy_joint_multi,
 )
@@ -299,3 +300,12 @@ def test_ucb_nomp_qos_matches_deterministic():
     )
     assert noisy["feedback_rounds"] <= 10
     assert abs(noisy["qos_worst"] - deterministic["qos_worst"]) < 1e-6
+
+
+def test_mappo_nomp_feasibility_helper_respects_budget():
+    scenario = make_scenario(0, 2, 2, heterogeneous=True)
+    powers = [np.array([5, 5]), np.array([5, 5])]
+    bits = [np.ones(2, dtype=int), np.ones(2, dtype=int)]
+    powers, bits = _feasible_from_mappo(scenario, powers, bits, 8)
+    used = int(sum(powers[q].sum() + bits[q].sum() for q in range(2)))
+    assert used <= 8

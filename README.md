@@ -370,6 +370,14 @@ Q=6/R=2 WTA-Greedy falls to 0.144 while NOMP stays at 0.449.
 
 ![Q-R scenario comparison](paper_figures/qr_scenario_comparison.png)
 
+`MAPPO-NOMP` is a two-stage hybrid: MAPPO proposes the report activation and
+communication-bit profile (探测选择), then NOMP allocates sensing power and
+refines the schedule (功率分配).  In clean homogeneous it matches Exact; in
+clean heterogeneous it matches Exact at B=8/10 and reaches 0.940 at B=12
+where MAPPO alone is 0.588, while full NOMP reaches 0.981.  The remaining gap
+at B=12 comes from the MAPPO bit proposal, which the power-only refinement is
+not allowed to change.
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
 union-bound UCB widths.  The winner certificate compares the active winner's
