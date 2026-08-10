@@ -24,6 +24,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from scripts.run_joint_power_comparison import (
     evaluate_mappo_bandit_adapter_nomp,
     evaluate_mappo_nomp,
+    evaluate_mappo_nomp_multi,
     make_scenario,
     train_mappo_ppo,
 )
@@ -89,11 +90,14 @@ def main() -> None:
             ppo = evaluate_mappo_true(
                 actor, mappo_scenarios, scenarios, budget, reports
             )
-            ppo_nomp = evaluate_mappo_nomp(
+            ppo_nomp = evaluate_mappo_nomp_multi(
                 actor,
                 scenarios,
                 budget,
                 reports,
+                samples=4,
+                max_rounds=50,
+                candidate_budget=8,
                 state_scenarios=mappo_scenarios,
             )
             ppo_bandit = evaluate_mappo_bandit_adapter_nomp(

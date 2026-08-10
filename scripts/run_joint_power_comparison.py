@@ -671,6 +671,71 @@ def evaluate_mappo_nomp(
     return float(np.mean(worsts))
 
 
+def evaluate_mappo_nomp_multi(
+    actor,
+    scenarios,
+    budget,
+    reports,
+    *,
+    samples: int = 6,
+    state_scenarios=None,
+    max_rounds: int = 100,
+    candidate_budget: int = 32,
+):
+    """PPO+NOMP with multiple sampled proposals, keeping the best refined one.
+
+    This is the Bandit-style mechanism without an explicit mode registry:
+    NOMP refines several PPO proposals and the best max-min schedule is kept,
+    so a single bad argmax proposal cannot drag the hybrid down.
+    """
+    worsts = []
+    for index, scenario in enumerate(scenarios):
+        state_scenario = (
+            state_scenarios[index] if state_scenarios is not None
+            else scenario
+        )
+        states = [state(float(t[0]), t[1:], budget) for t in state_scenario]
+        with torch.no_grad():
+            logits_b, logits_p = actor(torch.as_tensor(
+                np.stack(states), dtype=torch.float32
+            ))
+            dist_b = [
+                torch.distributions.Categorical(logits=logits_b[:, r, :])
+                for r in range(reports)
+            ]
+            dist_p = [
+                torch.distributions.Categorical(logits=logits_p[:, r, :])
+                for r in range(reports)
+            ]
+            best_score = -1.0
+            for _ in range(samples):
+                bits = torch.stack([
+                    dist_b[r].sample() for r in range(reports)
+                ], dim=1).numpy()
+                powers = torch.stack([
+                    dist_p[r].sample() for r in range(reports)
+                ], dim=1).numpy()
+                powers, bits = _feasible_from_mappo(
+                    scenario, powers, bits, budget
+                )
+                powers, bits, _ = nomp.maxmin_refine(
+                    scenario,
+                    powers,
+                    bits,
+                    max_power=budget,
+                    max_bits=MAX_BITS,
+                    max_rounds=max_rounds,
+                    grid=GRID,
+                    candidate_budget=candidate_budget,
+                )
+                score = float(min(nomp.target_scores(
+                    scenario, powers, bits, GRID
+                )))
+                best_score = max(best_score, score)
+        worsts.append(best_score)
+    return float(np.mean(worsts))
+
+
 def evaluate_mappo_probe_nomp(actor, scenarios, budget, reports):
     """MAPPO chooses which reports to probe, NOMP allocates bits/power."""
     worsts = []
