@@ -137,6 +137,23 @@ def build_state(owner, deltas, budget):
     ))
 
 
+def build_state_channel_aware(target, budget):
+    """Channel-aware state including per-report flip and success."""
+    owner, deltas, flips, successes = nomp.parse_target(target)
+    return np.concatenate((
+        [float(owner) / 2.0],
+        np.asarray(deltas, dtype=float) / 2.0,
+        [float(budget) / 20.0],
+        np.asarray(flips, dtype=float) / 0.5,
+        np.asarray(successes, dtype=float),
+    ))
+
+
+def _default_state_builder(target, budget):
+    owner, deltas, _, _ = nomp.parse_target(target)
+    return build_state(owner, deltas, budget)
+
+
 def _feasible(scenario, powers, bits, budget, grid):
     """Drop power units until the proposal is budget feasible."""
     q_count = len(scenario)
@@ -175,8 +192,11 @@ def _feasible(scenario, powers, bits, budget, grid):
 class MappoNompAdapter:
     """Translate MAPPO rollouts into NOMP inputs and keep the best schedule."""
 
-    def __init__(self, actor):
+    def __init__(self, actor, state_builder=None):
         self.actor = actor
+        self.state_builder = (
+            state_builder or _default_state_builder
+        )
 
     def propose_and_allocate(
         self,
@@ -200,7 +220,7 @@ class MappoNompAdapter:
         trace = []
         for _ in range(iters):
             states = np.stack([
-                build_state(float(t[0]), t[1:], requirement.budget)
+                self.state_builder(t, requirement.budget)
                 for t in state_scenario
             ])
             with torch.no_grad():
@@ -257,9 +277,12 @@ class MappoNompAdapter:
 class ModeBanditAdapter:
     """UCB over MAPPO information modes, with NOMP max-min as reward."""
 
-    def __init__(self, actor, beta: float = 1.0):
+    def __init__(self, actor, beta: float = 1.0, state_builder=None):
         self.actor = actor
         self.beta = beta
+        self.state_builder = (
+            state_builder or _default_state_builder
+        )
 
     def propose_and_allocate(
         self,
@@ -296,7 +319,7 @@ class ModeBanditAdapter:
                 }
                 chosen = max(scores, key=lambda mode: scores[mode])
             states = np.stack([
-                build_state(float(t[0]), t[1:], requirement.budget)
+                self.state_builder(t, requirement.budget)
                 for t in state_scenario
             ])
             with torch.no_grad():

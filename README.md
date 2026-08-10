@@ -380,6 +380,18 @@ different distribution.
 
 ![Unknown environment performance](paper_figures/unknown_environment.png)
 
+`scripts/run_robust_curriculum_gate.py` additionally trains a channel-aware
+MAPPO on a curriculum of heterogeneous, weak, strong, and harsh-channel
+scenarios.  The curriculum alone is not enough for the raw REINFORCE policy
+(Robust MAPPO still drops to 0.16-0.32 on weak/poor-channel tests), but
+`Robust Bandit` (MAPPO proposal + NOMP allocation) reaches near-exact values,
+e.g. weak B=10 0.501 versus exact 0.505 and channel B=10 0.331 versus exact
+0.331.  This confirms the intended division of labor: NOMP guarantees
+robustness, MAPPO contributes probing/proposal information through the
+adapter.
+
+![Robust curriculum performance](paper_figures/robust_curriculum.png)
+
 `MAPPO-NOMP` is a two-stage hybrid: MAPPO proposes the report activation and
 communication-bit profile (probe selection), then NOMP allocates sensing
 power and refines the schedule (power allocation).  In clean homogeneous it

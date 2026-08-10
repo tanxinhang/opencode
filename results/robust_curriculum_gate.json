@@ -1,0 +1,80 @@
+{
+  "gate": "robust-curriculum",
+  "episodes": 300,
+  "train_seeds": 20,
+  "test_seeds": 10,
+  "rows": [
+    {
+      "environment": "weak",
+      "budget": 8,
+      "robust_mappo_worst_mean": 0.24278631221818917,
+      "robust_bandit_worst_mean": 0.0823524592892186,
+      "nomp_worst_mean": 0.3864144900256675,
+      "exact_worst_mean": 0.3864144900256675
+    },
+    {
+      "environment": "weak",
+      "budget": 10,
+      "robust_mappo_worst_mean": 0.1618115938856689,
+      "robust_bandit_worst_mean": 0.5011619066582934,
+      "nomp_worst_mean": 0.5050467272230896,
+      "exact_worst_mean": 0.5050467272230896
+    },
+    {
+      "environment": "weak",
+      "budget": 12,
+      "robust_mappo_worst_mean": 0.3158598151313312,
+      "robust_bandit_worst_mean": 0.6046215173197523,
+      "nomp_worst_mean": 0.6070410937439562,
+      "exact_worst_mean": 0.6070410937439562
+    },
+    {
+      "environment": "channel_shift",
+      "budget": 8,
+      "robust_mappo_worst_mean": 0.19936517164104592,
+      "robust_bandit_worst_mean": 0.27395195869673333,
+      "nomp_worst_mean": 0.2922418672086732,
+      "exact_worst_mean": 0.2922418672086732
+    },
+    {
+      "environment": "channel_shift",
+      "budget": 10,
+      "robust_mappo_worst_mean": 0.16019525937470241,
+      "robust_bandit_worst_mean": 0.33060557513567385,
+      "nomp_worst_mean": 0.33060557513567385,
+      "exact_worst_mean": 0.33060557513567385
+    },
+    {
+      "environment": "channel_shift",
+      "budget": 12,
+      "robust_mappo_worst_mean": 0.23081863840284803,
+      "robust_bandit_worst_mean": 0.353608680481409,
+      "nomp_worst_mean": 0.353608680481409,
+      "exact_worst_mean": 0.353608680481409
+    },
+    {
+      "environment": "in_distribution",
+      "budget": 8,
+      "robust_mappo_worst_mean": 0.5058651938692804,
+      "robust_bandit_worst_mean": 0.8936653247694796,
+      "nomp_worst_mean": 0.8936653247694796,
+      "exact_worst_mean": 0.8936653247694796
+    },
+    {
+      "environment": "in_distribution",
+      "budget": 10,
+      "robust_mappo_worst_mean": 0.5538808379277832,
+      "robust_bandit_worst_mean": 0.9560360217435202,
+      "nomp_worst_mean": 0.9560360217435202,
+      "exact_worst_mean": 0.9560360217435202
+    },
+    {
+      "environment": "in_distribution",
+      "budget": 12,
+      "robust_mappo_worst_mean": 0.6701693004102369,
+      "robust_bandit_worst_mean": 0.9850397551805017,
+      "nomp_worst_mean": 0.9850397551805017,
+      "exact_worst_mean": 0.9850397551805017
+    }
+  ]
+}

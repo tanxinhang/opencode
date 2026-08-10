@@ -36,6 +36,7 @@ def main() -> None:
     comm_mismatch = load("joint_power_comm_mismatch_gate.json")
     qos = load("qos_weighted_maxmin_gate.json")
     unknown = load("unknown_environment_gate.json")
+    robust = load("robust_curriculum_gate.json")
 
     header = [
         "Budget",
@@ -160,6 +161,30 @@ def main() -> None:
                 if row["environment"] == env
             ]), 4),
         ] for env in ["in_distribution", "channel_shift", "weak", "strong"]],
+    )
+
+    print_table(
+        "Robust curriculum (average over budgets)",
+        ["Environment", "Robust MAPPO", "Robust Bandit", "NOMP", "Exact"],
+        [[
+            env,
+            round(np.mean([
+                row["robust_mappo_worst_mean"] for row in robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["robust_bandit_worst_mean"] for row in robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["nomp_worst_mean"] for row in robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["exact_worst_mean"] for row in robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+        ] for env in ["in_distribution", "weak", "channel_shift"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))

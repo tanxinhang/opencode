@@ -286,6 +286,18 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "robust-curriculum"
+        Args = @(
+            "scripts\run_robust_curriculum_gate.py",
+            "--budgets", "8", "10", "12",
+            "--episodes", "300",
+            "--train-seeds", "20",
+            "--test-seeds", "10",
+            "--output", "results\robust_curriculum_gate.json",
+            "--figure", "paper_figures\robust_curriculum.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

@@ -72,6 +72,18 @@ def state(owner, deltas, budget):
     ))
 
 
+def robust_state(target, budget):
+    """Channel-aware MAPPO state including per-report flip/success."""
+    owner, deltas, flips, successes = nomp.parse_target(target)
+    return np.concatenate((
+        [float(owner) / 2.0],
+        np.asarray(deltas, dtype=float) / 2.0,
+        [float(budget) / 20.0],
+        np.asarray(flips, dtype=float) / 0.5,
+        np.asarray(successes, dtype=float),
+    ))
+
+
 def pd_value(owner, deltas, powers, bits, grid=GRID):
     return float(proportional_target_pd(
         float(owner),
@@ -182,6 +194,102 @@ def train_mappo(scenarios, budget, episodes, reports):
         actor_opt.zero_grad(); critic_opt.zero_grad()
         loss.backward(); actor_opt.step(); critic_opt.step()
     return actor
+
+
+def robust_rollout(actor, critic, scenario, budget):
+    states = [robust_state(t, budget) for t in scenario]
+    global_state = np.concatenate(states)
+    reports = nomp._report_count(scenario[0])
+    with torch.no_grad():
+        logits_b, logits_p = actor(torch.as_tensor(
+            np.stack(states), dtype=torch.float32
+        ))
+        bits = torch.stack([
+            torch.distributions.Categorical(
+                logits=logits_b[:, r, :]
+            ).sample()
+            for r in range(reports)
+        ], dim=1).numpy()
+        powers = torch.stack([
+            torch.distributions.Categorical(
+                logits=logits_p[:, r, :]
+            ).sample()
+            for r in range(reports)
+        ], dim=1).numpy()
+        value = float(critic(torch.as_tensor(
+            global_state, dtype=torch.float32
+        )))
+    pds = nomp.target_scores(scenario, powers, bits, GRID)
+    used = int(powers.sum() + bits.sum())
+    worst = float(np.min(pds))
+    reward = worst - 0.1 * max(0, used - budget)
+    return reward, value, bits, powers
+
+
+def train_robust_mappo(scenarios, budget, episodes, reports):
+    """Curriculum-trained MAPPO with channel-aware state."""
+    state_dim = 2 + 3 * reports
+    actor = Actor(state_dim, reports, power_options=budget + 1)
+    critic = Critic(state_dim * len(scenarios[0]))
+    actor_opt = torch.optim.Adam(actor.parameters(), lr=3e-3)
+    critic_opt = torch.optim.Adam(critic.parameters(), lr=3e-3)
+    for episode in range(episodes):
+        scenario = scenarios[episode % len(scenarios)]
+        reward, value, bits, powers = robust_rollout(
+            actor, critic, scenario, budget
+        )
+        states = [robust_state(t, budget) for t in scenario]
+        agent_states = torch.as_tensor(np.stack(states), dtype=torch.float32)
+        global_state = torch.as_tensor(
+            np.concatenate(states), dtype=torch.float32
+        )
+        returns = torch.as_tensor([reward], dtype=torch.float32)
+        advantage = returns - torch.as_tensor([value], dtype=torch.float32)
+        bit_target = torch.as_tensor(bits, dtype=torch.int64)
+        power_target = torch.as_tensor(powers, dtype=torch.int64)
+        logits_b, logits_p = actor(agent_states)
+        lp = 0.0
+        entropy = 0.0
+        for r in range(reports):
+            dist_b = torch.distributions.Categorical(
+                logits=logits_b[:, r, :]
+            )
+            dist_p = torch.distributions.Categorical(
+                logits=logits_p[:, r, :]
+            )
+            lp += dist_b.log_prob(bit_target[:, r]).sum()
+            lp += dist_p.log_prob(power_target[:, r]).sum()
+            entropy += dist_b.entropy().sum() + dist_p.entropy().sum()
+        loss = -advantage * lp - 0.01 * entropy
+        vp = critic(global_state.unsqueeze(0))
+        loss = loss + nn.functional.mse_loss(vp, returns)
+        actor_opt.zero_grad(); critic_opt.zero_grad()
+        loss.backward(); actor_opt.step(); critic_opt.step()
+    return actor
+
+
+def evaluate_robust_mappo(actor, scenarios, budget, reports):
+    worsts = []
+    for scenario in scenarios:
+        states = [robust_state(t, budget) for t in scenario]
+        with torch.no_grad():
+            logits_b, logits_p = actor(torch.as_tensor(
+                np.stack(states), dtype=torch.float32
+            ))
+            bits = torch.stack([
+                torch.argmax(logits_b[:, r, :], dim=1)
+                for r in range(reports)
+            ], dim=1).numpy()
+            powers = torch.stack([
+                torch.argmax(logits_p[:, r, :], dim=1)
+                for r in range(reports)
+            ], dim=1).numpy()
+        powers, bits = _feasible_from_mappo(
+            scenario, powers, bits, budget
+        )
+        pds = nomp.target_scores(scenario, powers, bits, GRID)
+        worsts.append(float(np.min(pds)))
+    return float(np.mean(worsts))
 
 
 def evaluate_mappo(actor, scenarios, budget, reports):
@@ -304,11 +412,17 @@ def evaluate_mappo_probe_nomp(actor, scenarios, budget, reports):
 
 
 def evaluate_mappo_adapter_nomp(
-    actor, scenarios, budget, reports, iters=3, state_scenarios=None
+    actor,
+    scenarios,
+    budget,
+    reports,
+    iters=3,
+    state_scenarios=None,
+    state_builder=None,
 ):
     """Adapter repeatedly translates MAPPO rollouts into NOMP inputs."""
     worsts = []
-    adapter = MappoNompAdapter(actor)
+    adapter = MappoNompAdapter(actor, state_builder=state_builder)
     for scenario_index, scenario in enumerate(scenarios):
         state_scenario = (
             state_scenarios[scenario_index]
@@ -332,11 +446,17 @@ def evaluate_mappo_adapter_nomp(
 
 
 def evaluate_mappo_bandit_adapter_nomp(
-    actor, scenarios, budget, reports, iters=5, state_scenarios=None
+    actor,
+    scenarios,
+    budget,
+    reports,
+    iters=5,
+    state_scenarios=None,
+    state_builder=None,
 ):
     """UCB adapter learns which MAPPO information NOMP should request."""
     worsts = []
-    adapter = ModeBanditAdapter(actor)
+    adapter = ModeBanditAdapter(actor, state_builder=state_builder)
     for scenario_index, scenario in enumerate(scenarios):
         state_scenario = (
             state_scenarios[scenario_index]

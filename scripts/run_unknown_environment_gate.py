@@ -66,8 +66,8 @@ def make_shifted_clean(seed, reports, targets, kind):
 def exact_clean(scenario, budget, grid):
     groups = [
         winner_take_all_proportional_options(
-            float(target[0]),
-            target[1:],
+            float(nomp.parse_target(target)[0]),
+            nomp.parse_target(target)[1],
             bit_options=np.arange(3, dtype=int),
             budget=budget,
             grid=grid,
