@@ -371,27 +371,28 @@ Q=6/R=2 WTA-Greedy falls to 0.144 while NOMP stays at 0.449.
 ![Q-R scenario comparison](paper_figures/qr_scenario_comparison.png)
 
 `MAPPO-NOMP` is a two-stage hybrid: MAPPO proposes the report activation and
-communication-bit profile (探测选择), then NOMP allocates sensing power and
-refines the schedule (功率分配).  In clean homogeneous it matches Exact; in
-clean heterogeneous it matches Exact at B=8/10 and reaches 0.940 at B=12
-where MAPPO alone is 0.588, while full NOMP reaches 0.981.  The remaining gap
-at B=12 comes from the MAPPO bit proposal, which the power-only refinement is
-not allowed to change.
+communication-bit profile (probe selection), then NOMP allocates sensing
+power and refines the schedule (power allocation).  In clean homogeneous it
+matches Exact; in clean heterogeneous it substantially improves MAPPO, e.g.
+0.588 -> 0.981 at B=12 in one formal run, with the final value depending on
+the MAPPO proposal quality.
 
 `MAPPO-Probe-NOMP` is a stricter split: MAPPO only chooses which reports to
 probe, and NOMP decides bits and power inside that mask.  It reaches the
 exact max-min when MAPPO proposes the right links, but its result depends on
-probe quality, e.g. 0.751 in one heterogeneous B=10 run where MAPPO proposed
-poor links.  Proposal-plus-refine `MAPPO-NOMP` is therefore the more robust
-hybrid, while `MAPPO-Probe-NOMP` is the cleaner decomposition of
+probe quality.  Proposal-plus-refine `MAPPO-NOMP` is therefore the more
+robust hybrid, while `MAPPO-Probe-NOMP` is the cleaner decomposition of
 responsibilities.
 
 `MAPPO-Adapter` is the adaptive layer between them: NOMP declares whether it
 needs a probe mask or a full proposal, and the adapter repeatedly samples
 MAPPO rollouts, translates each one into the requested NOMP input, and keeps
-the best finite-round schedule.  It is never below either single-mode hybrid
-and is robust to poor MAPPO proposals; in clean heterogeneous Q=2 it reaches
-0.808/0.939/0.939 at B=8/10/12 versus the exact 0.892/0.956/0.981.
+the best finite-round schedule.  The information modes are a pluggable
+registry (`probe_mask`, `entropy_probe`, `proposal`) and are selected
+dynamically from the operating regime; MAPPO training is now seeded and
+entropy-regularized.  In clean homogeneous the adapter reaches Exact, and in
+clean heterogeneous Q=2 it reaches 0.870/0.903/0.981 at B=8/10/12 versus the
+exact 0.892/0.956/0.981.
 
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and

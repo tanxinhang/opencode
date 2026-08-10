@@ -8,8 +8,10 @@ from uav_otfs_isac.nomp_refinement import (
     wta_greedy_joint_multi,
 )
 from uav_otfs_isac.mappo_nomp_adapter import (
+    MODE_REGISTRY,
     NompRequirement,
     build_state,
+    select_modes,
 )
 from uav_otfs_isac.power_split_theory import (
     winner_take_all_proportional_options,
@@ -329,3 +331,11 @@ def test_adapter_requirement_and_state_shape():
     requirement = NompRequirement(modes=("probe_mask",), budget=8)
     assert requirement.budget == 8
     assert requirement.modes == ("probe_mask",)
+
+
+def test_adapter_mode_registry_and_dynamic_selection():
+    assert set(MODE_REGISTRY) >= {
+        "probe_mask", "entropy_probe", "proposal",
+    }
+    assert select_modes([None, None], 8) == ("probe_mask",)
+    assert select_modes([None, None], 20) == ("proposal",)

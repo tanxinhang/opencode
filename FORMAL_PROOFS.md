@@ -1963,13 +1963,16 @@ Let the adapter hold a finite set of NOMP requirement modes, sample MAPPO
 rollouts, translate each rollout into the requested NOMP input, run NOMP, and
 keep the best worst-target value after at most `iters` rounds.  The adapter
 result is no worse than any single mode used alone and is bounded above by
-the full NOMP schedule.
+the full NOMP schedule.  The modes are a pluggable registry and can be
+selected dynamically from the operating regime instead of being fixed.
 
 Proof: the adapter takes a maximum over schedules produced by the individual
 modes, so it dominates every mode by construction.  Each mode is bounded by
 the full NOMP schedule by Lemma 4.83, hence the maximum is too.  The loop is
 finite by the hard `iters` cap.  In the clean heterogeneous gate the adapter
-reaches 0.808/0.939/0.939 at B=8/10/12, above both single-mode hybrids.
+reaches 0.870/0.903/0.981 at B=8/10/12, above both single-mode hybrids.
+MAPPO training is seeded and entropy-regularized so the adapter input
+distribution is reproducible.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is

@@ -164,14 +164,18 @@ def train_mappo(scenarios, budget, episodes, reports):
         power_target = torch.as_tensor(powers, dtype=torch.int64)
         logits_b, logits_p = actor(agent_states)
         lp = 0.0
+        entropy = 0.0
         for r in range(reports):
-            lp += torch.distributions.Categorical(
+            dist_b = torch.distributions.Categorical(
                 logits=logits_b[:, r, :]
-            ).log_prob(bit_target[:, r]).sum()
-            lp += torch.distributions.Categorical(
+            )
+            dist_p = torch.distributions.Categorical(
                 logits=logits_p[:, r, :]
-            ).log_prob(power_target[:, r]).sum()
-        loss = -advantage * lp
+            )
+            lp += dist_b.log_prob(bit_target[:, r]).sum()
+            lp += dist_p.log_prob(power_target[:, r]).sum()
+            entropy += dist_b.entropy().sum() + dist_p.entropy().sum()
+        loss = -advantage * lp - 0.01 * entropy
         vp = critic(global_state.unsqueeze(0))
         loss = loss + nn.functional.mse_loss(vp, returns)
         actor_opt.zero_grad(); critic_opt.zero_grad()
@@ -304,7 +308,7 @@ def evaluate_mappo_adapter_nomp(actor, scenarios, budget, reports, iters=3):
     adapter = MappoNompAdapter(actor)
     for scenario_index, scenario in enumerate(scenarios):
         requirement = NompRequirement(
-            modes=("probe_mask", "proposal"),
+            modes="auto",
             budget=budget,
         )
         result = adapter.propose_and_allocate(
@@ -900,6 +904,8 @@ def main() -> None:
         help="full enumerates power vectors; wta uses the closed-form frontier; auto switches at reports>2",
     )
     args = parser.parse_args()
+    torch.manual_seed(0)
+    np.random.seed(0)
     payload = run_comparison(args)
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
