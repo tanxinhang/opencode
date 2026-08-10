@@ -196,6 +196,140 @@ def train_mappo(scenarios, budget, episodes, reports):
     return actor
 
 
+def train_mappo_ppo(
+    scenarios,
+    budget,
+    episodes,
+    reports,
+    *,
+    ppo_epochs: int = 4,
+    batch_size: int = 8,
+    mini_batch_size: int = 4,
+    clip_epsilon: float = 0.2,
+    entropy_coef: float = 0.01,
+    learning_rate: float = 1e-3,
+):
+    """Real PPO: clipped surrogate, mini-batches, normalized advantages."""
+    state_dim = reports + 2
+    actor = Actor(state_dim, reports, power_options=budget + 1)
+    critic = Critic(state_dim * len(scenarios[0]))
+    actor_opt = torch.optim.Adam(
+        actor.parameters(), lr=learning_rate
+    )
+    critic_opt = torch.optim.Adam(
+        critic.parameters(), lr=learning_rate
+    )
+    buffer = []
+
+    for episode in range(episodes):
+        scenario = scenarios[episode % len(scenarios)]
+        states = [state(float(t[0]), t[1:], budget) for t in scenario]
+        global_state = np.concatenate(states)
+        agent_states = torch.as_tensor(
+            np.stack(states), dtype=torch.float32
+        )
+        with torch.no_grad():
+            logits_b, logits_p = actor(agent_states)
+            dist_b = [
+                torch.distributions.Categorical(logits=logits_b[:, r, :])
+                for r in range(reports)
+            ]
+            dist_p = [
+                torch.distributions.Categorical(logits=logits_p[:, r, :])
+                for r in range(reports)
+            ]
+            bits = torch.stack([
+                dist_b[r].sample() for r in range(reports)
+            ], dim=1)
+            powers = torch.stack([
+                dist_p[r].sample() for r in range(reports)
+            ], dim=1)
+            old_lp = sum(
+                dist_b[r].log_prob(bits[:, r]).sum()
+                + dist_p[r].log_prob(powers[:, r]).sum()
+                for r in range(reports)
+            )
+            value = float(critic(torch.as_tensor(
+                global_state, dtype=torch.float32
+            )))
+        pds = [
+            pd_value(float(t[0]), t[1:], powers[q].numpy(), bits[q].numpy())
+            for q, t in enumerate(scenario)
+        ]
+        used = int(powers.sum().item() + bits.sum().item())
+        reward = float(np.min(pds)) - 0.1 * max(0, used - budget)
+        buffer.append({
+            "agent_states": agent_states,
+            "global_state": torch.as_tensor(
+                global_state, dtype=torch.float32
+            ),
+            "bits": bits,
+            "powers": powers,
+            "old_lp": old_lp,
+            "reward": reward,
+            "value": value,
+        })
+        if len(buffer) < batch_size:
+            continue
+
+        agent_batch = torch.stack([item["agent_states"] for item in buffer])
+        global_batch = torch.stack([item["global_state"] for item in buffer])
+        bits_batch = torch.stack([item["bits"] for item in buffer])
+        powers_batch = torch.stack([item["powers"] for item in buffer])
+        old_lp_batch = torch.stack([item["old_lp"] for item in buffer])
+        returns = torch.as_tensor(
+            [item["reward"] for item in buffer], dtype=torch.float32
+        )
+        values = torch.as_tensor(
+            [item["value"] for item in buffer], dtype=torch.float32
+        )
+        advantage = returns - values
+        advantage = (advantage - advantage.mean()) / (
+            advantage.std() + 1e-8
+        )
+
+        for _ in range(ppo_epochs):
+            order = torch.randperm(batch_size)
+            for start in range(0, batch_size, mini_batch_size):
+                idx = order[start:start + mini_batch_size]
+                logits_b, logits_p = actor(agent_batch[idx])
+                new_lp = 0.0
+                entropy = 0.0
+                for r in range(reports):
+                    dist_b = torch.distributions.Categorical(
+                        logits=logits_b[:, r, :]
+                    )
+                    dist_p = torch.distributions.Categorical(
+                        logits=logits_p[:, r, :]
+                    )
+                    new_lp = new_lp + dist_b.log_prob(
+                        bits_batch[idx][:, r]
+                    ).sum(dim=1) + dist_p.log_prob(
+                        powers_batch[idx][:, r]
+                    ).sum(dim=1)
+                    entropy = entropy + dist_b.entropy().sum(dim=1) + (
+                        dist_p.entropy().sum(dim=1)
+                    )
+                ratio = torch.exp(new_lp - old_lp_batch[idx])
+                adv = advantage[idx]
+                clip = torch.clamp(
+                    ratio, 1.0 - clip_epsilon, 1.0 + clip_epsilon
+                )
+                policy_loss = -torch.mean(torch.min(
+                    ratio * adv, clip * adv
+                )) - entropy_coef * torch.mean(entropy)
+                vpred = critic(global_batch[idx])
+                value_loss = nn.functional.mse_loss(
+                    vpred, returns[idx]
+                )
+                loss = policy_loss + value_loss
+                actor_opt.zero_grad(); critic_opt.zero_grad()
+                loss.backward()
+                actor_opt.step(); critic_opt.step()
+        buffer.clear()
+    return actor
+
+
 def robust_rollout(actor, critic, scenario, budget):
     states = [robust_state(t, budget) for t in scenario]
     global_state = np.concatenate(states)
@@ -896,6 +1030,18 @@ def run_comparison(args) -> dict:
         mappo_worst = evaluate_mappo(
             actor, test_scenarios, budget, args.reports
         )
+        ppo_actor = train_mappo_ppo(
+            train_scenarios,
+            budget,
+            args.episodes,
+            args.reports,
+            ppo_epochs=2,
+            entropy_coef=0.05,
+            learning_rate=1e-3,
+        )
+        mappo_ppo_worst = evaluate_mappo(
+            ppo_actor, test_scenarios, budget, args.reports
+        )
         mappo_nomp_worst = evaluate_mappo_nomp(
             actor, test_scenarios, budget, args.reports
         )
@@ -995,6 +1141,7 @@ def run_comparison(args) -> dict:
         summary.append({
             "budget": budget,
             "mappo_worst_mean": mappo_worst,
+            "mappo_ppo_worst_mean": mappo_ppo_worst,
             "mappo_nomp_worst_mean": mappo_nomp_worst,
             "mappo_probe_nomp_worst_mean": mappo_probe_nomp_worst,
             "mappo_adapter_nomp_worst_mean": mappo_adapter_nomp_worst,

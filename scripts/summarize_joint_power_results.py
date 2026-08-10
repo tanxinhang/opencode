@@ -42,6 +42,7 @@ def main() -> None:
     header = [
         "Budget",
         "MAPPO",
+        "MAPPO-PPO",
         "MAPPO-NOMP",
         "MAPPO-Probe-NOMP",
         "MAPPO-Adapter",
@@ -59,6 +60,7 @@ def main() -> None:
         [[
             row["budget"],
             round(row["mappo_worst_mean"], 4),
+            round(row["mappo_ppo_worst_mean"], 4),
             round(row["mappo_nomp_worst_mean"], 4),
             round(row["mappo_probe_nomp_worst_mean"], 4),
             round(row["mappo_adapter_nomp_worst_mean"], 4),
@@ -77,6 +79,7 @@ def main() -> None:
         [[
             row["budget"],
             round(row["mappo_worst_mean"], 4),
+            round(row["mappo_ppo_worst_mean"], 4),
             round(row["mappo_nomp_worst_mean"], 4),
             round(row["mappo_probe_nomp_worst_mean"], 4),
             round(row["mappo_adapter_nomp_worst_mean"], 4),

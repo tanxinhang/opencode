@@ -392,6 +392,14 @@ adapter.
 
 ![Robust curriculum performance](paper_figures/robust_curriculum.png)
 
+`MAPPO` itself has been upgraded from REINFORCE to a real PPO trainer
+(clipped surrogate, mini-batches, normalized advantage), plus seed,
+entropy, curriculum, and channel-aware state.  In the toy single-step
+setting PPO is not yet stable: it improves B=8 but sometimes collapses at
+B=10/12, so MAPPO is not yet a standalone strong policy.  Its value in this
+system comes from the NOMP middleware (proposal/priority), which guarantees
+no-worse-than-NOMP and can exceed NOMP on hard scenarios.
+
 `scripts/run_priority_middleware_gate.py` replaces 0-1 switching with a true
 middleware optimization: a MAPPO priority policy picks which target receives
 higher QoS weight, NOMP solves the weighted max-min, and the unweighted worst

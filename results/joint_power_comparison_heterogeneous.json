@@ -11,6 +11,7 @@
     {
       "budget": 8,
       "mappo_worst_mean": 0.5160826354728898,
+      "mappo_ppo_worst_mean": 0.7870421912493472,
       "mappo_nomp_worst_mean": 0.8918160488723709,
       "mappo_probe_nomp_worst_mean": 0.8695646406737172,
       "mappo_adapter_nomp_worst_mean": 0.8918160488723709,
@@ -30,13 +31,14 @@
       "nomp_greedy_worst_mean": 0.8918160488723709,
       "exact_worst_mean": 0.8918160488723709,
       "winner_worst_mean": 0.8918160488723709,
-      "train_seconds": 32.593159900046885
+      "train_seconds": 35.22018949966878
     },
     {
       "budget": 10,
-      "mappo_worst_mean": 0.6821736357556522,
+      "mappo_worst_mean": 0.767041221376892,
+      "mappo_ppo_worst_mean": 0.5160826354728898,
       "mappo_nomp_worst_mean": 0.9562384410904323,
-      "mappo_probe_nomp_worst_mean": 0.9562384410904323,
+      "mappo_probe_nomp_worst_mean": 0.7506459132737924,
       "mappo_adapter_nomp_worst_mean": 0.9562384410904323,
       "mappo_bandit_adapter_nomp_worst_mean": 0.9562384410904323,
       "greedy_worst_mean": 0.5047233309635313,
@@ -54,12 +56,13 @@
       "nomp_greedy_worst_mean": 0.9562384410904323,
       "exact_worst_mean": 0.956238441090464,
       "winner_worst_mean": 0.956238441090464,
-      "train_seconds": 61.5888237003237
+      "train_seconds": 47.39869019994512
     },
     {
       "budget": 12,
-      "mappo_worst_mean": 0.7929833397245986,
-      "mappo_nomp_worst_mean": 0.9807706602549221,
+      "mappo_worst_mean": 0.6544123526408421,
+      "mappo_ppo_worst_mean": 0.08735283099227434,
+      "mappo_nomp_worst_mean": 0.9562384410904323,
       "mappo_probe_nomp_worst_mean": 0.9807706602549221,
       "mappo_adapter_nomp_worst_mean": 0.9807706602549221,
       "mappo_bandit_adapter_nomp_worst_mean": 0.9807706602549221,
@@ -78,7 +81,7 @@
       "nomp_greedy_worst_mean": 0.9807706602549221,
       "exact_worst_mean": 0.980770660254969,
       "winner_worst_mean": 0.980770660254969,
-      "train_seconds": 68.99362809956074
+      "train_seconds": 71.36083070002496
     }
   ]
 }
