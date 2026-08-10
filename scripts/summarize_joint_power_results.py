@@ -249,7 +249,7 @@ def main() -> None:
 
     print_table(
         "PPO + NOMP-final reward robustness (average over budgets)",
-        ["Environment", "MAPPO", "PPO-Informed", "PPO+NOMP", "Bandit", "Exact"],
+        ["Environment", "MAPPO", "PPO-Informed", "PPO+NOMP", "Bandit", "Robust PPO", "Robust PPO+NOMP", "Robust Bandit", "Exact"],
         [[
             env,
             round(np.mean([
@@ -266,6 +266,18 @@ def main() -> None:
             ]), 4),
             round(np.mean([
                 row["ppo_informed_bandit_worst_mean"] for row in ppo_robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["robust_ppo_informed_worst_mean"] for row in ppo_robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["robust_ppo_informed_nomp_worst_mean"] for row in ppo_robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["robust_ppo_informed_bandit_worst_mean"] for row in ppo_robust["rows"]
                 if row["environment"] == env
             ]), 4),
             round(np.mean([

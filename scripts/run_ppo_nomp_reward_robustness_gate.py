@@ -29,6 +29,8 @@ from scripts.run_joint_power_comparison import (
     evaluate_mappo,
     evaluate_mappo_bandit_adapter_nomp,
     evaluate_mappo_nomp,
+    evaluate_robust_mappo,
+    evaluate_robust_mappo_nomp,
     make_scenario,
     robust_state,
     train_mappo,
@@ -112,6 +114,31 @@ def main() -> None:
             learning_rate=1e-3,
             reward_mode="nomp",
         )
+        curriculum = []
+        for seed in range(args.train_seeds):
+            curriculum.append(clean_to_tuple(
+                make_scenario(seed, 2, 2, heterogeneous=True)
+            ))
+            curriculum.append(clean_to_tuple(
+                make_shifted_clean(seed, 2, 2, "weak")
+            ))
+            curriculum.append(clean_to_tuple(
+                make_shifted_clean(seed, 2, 2, "strong")
+            ))
+            curriculum.append(make_comm_mismatch_scenario(
+                seed, 2, 2, flip_hi=0.5, success_lo=0.3
+            ))
+        robust_ppo_informed = train_mappo_ppo(
+            curriculum,
+            budget,
+            args.episodes,
+            2,
+            ppo_epochs=2,
+            entropy_coef=0.05,
+            learning_rate=1e-3,
+            reward_mode="nomp",
+            state_builder=robust_state,
+        )
         for env, scenarios in environments.items():
             mappo_scenarios = []
             for scenario in scenarios:
@@ -148,6 +175,19 @@ def main() -> None:
                 2,
                 state_scenarios=mappo_scenarios,
             )
+            robust_informed = evaluate_robust_mappo(
+                robust_ppo_informed, scenarios, budget, 2
+            )
+            robust_informed_nomp = evaluate_robust_mappo_nomp(
+                robust_ppo_informed, scenarios, budget, 2
+            )
+            robust_informed_bandit = evaluate_mappo_bandit_adapter_nomp(
+                robust_ppo_informed,
+                scenarios,
+                budget,
+                2,
+                state_builder=robust_state,
+            )
             nomp = []
             exact = []
             for scenario in scenarios:
@@ -169,6 +209,13 @@ def main() -> None:
                 "ppo_informed_worst_mean": float(informed),
                 "ppo_informed_nomp_worst_mean": float(informed_nomp),
                 "ppo_informed_bandit_worst_mean": float(informed_bandit),
+                "robust_ppo_informed_worst_mean": float(robust_informed),
+                "robust_ppo_informed_nomp_worst_mean": float(
+                    robust_informed_nomp
+                ),
+                "robust_ppo_informed_bandit_worst_mean": float(
+                    robust_informed_bandit
+                ),
                 "nomp_worst_mean": float(np.mean(nomp)),
                 "exact_worst_mean": float(np.mean(exact)),
             })
@@ -191,6 +238,9 @@ def main() -> None:
         ("ppo_informed_worst_mean", "PPO-Informed"),
         ("ppo_informed_nomp_worst_mean", "PPO-Informed+NOMP"),
         ("ppo_informed_bandit_worst_mean", "PPO-Informed Bandit"),
+        ("robust_ppo_informed_worst_mean", "Robust PPO-Informed"),
+        ("robust_ppo_informed_nomp_worst_mean", "Robust PPO+NOMP"),
+        ("robust_ppo_informed_bandit_worst_mean", "Robust PPO Bandit"),
         ("nomp_worst_mean", "NOMP"),
         ("exact_worst_mean", "Exact"),
     ]

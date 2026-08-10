@@ -288,9 +288,14 @@ def train_mappo_ppo(
     entropy_coef: float = 0.01,
     learning_rate: float = 1e-3,
     reward_mode: str = "raw",
+    state_builder=None,
 ):
     """Real PPO: clipped surrogate, mini-batches, normalized advantages."""
-    state_dim = reports + 2
+    if state_builder is None:
+        state_builder = lambda target, budget: state(
+            float(target[0]), target[1:], budget
+        )
+    state_dim = len(state_builder(scenarios[0][0], budget))
     actor = Actor(state_dim, reports, power_options=budget + 1)
     critic = Critic(state_dim * len(scenarios[0]))
     actor_opt = torch.optim.Adam(
@@ -303,7 +308,7 @@ def train_mappo_ppo(
 
     for episode in range(episodes):
         scenario = scenarios[episode % len(scenarios)]
-        states = [state(float(t[0]), t[1:], budget) for t in scenario]
+        states = [state_builder(t, budget) for t in scenario]
         global_state = np.concatenate(states)
         agent_states = torch.as_tensor(
             np.stack(states), dtype=torch.float32
@@ -332,13 +337,19 @@ def train_mappo_ppo(
             value = float(critic(torch.as_tensor(
                 global_state, dtype=torch.float32
             )))
-        pds = [
-            pd_value(float(t[0]), t[1:], powers[q].numpy(), bits[q].numpy())
-            for q, t in enumerate(scenario)
-        ]
-        used = int(powers.sum().item() + bits.sum().item())
-        reward = float(np.min(pds)) - 0.1 * max(0, used - budget)
-        if reward_mode == "nomp":
+        if reward_mode == "raw":
+            pds = [
+                pd_value(
+                    float(t[0]),
+                    t[1:],
+                    powers[q].numpy(),
+                    bits[q].numpy(),
+                )
+                for q, t in enumerate(scenario)
+            ]
+            used = int(powers.sum().item() + bits.sum().item())
+            reward = float(np.min(pds)) - 0.1 * max(0, used - budget)
+        else:
             proposal_powers = powers.numpy()
             proposal_bits = bits.numpy()
             proposal_powers, proposal_bits = _feasible_from_mappo(
@@ -521,6 +532,41 @@ def evaluate_robust_mappo(actor, scenarios, budget, reports):
         )
         pds = nomp.target_scores(scenario, powers, bits, GRID)
         worsts.append(float(np.min(pds)))
+    return float(np.mean(worsts))
+
+
+def evaluate_robust_mappo_nomp(actor, scenarios, budget, reports):
+    """Channel-aware MAPPO proposal refined by NOMP."""
+    worsts = []
+    for scenario in scenarios:
+        states = [robust_state(t, budget) for t in scenario]
+        with torch.no_grad():
+            logits_b, logits_p = actor(torch.as_tensor(
+                np.stack(states), dtype=torch.float32
+            ))
+            bits = torch.stack([
+                torch.argmax(logits_b[:, r, :], dim=1)
+                for r in range(reports)
+            ], dim=1).numpy()
+            powers = torch.stack([
+                torch.argmax(logits_p[:, r, :], dim=1)
+                for r in range(reports)
+            ], dim=1).numpy()
+        powers, bits = _feasible_from_mappo(
+            scenario, powers, bits, budget
+        )
+        powers, bits, _ = nomp.maxmin_refine(
+            scenario,
+            powers,
+            bits,
+            max_power=budget,
+            max_bits=MAX_BITS,
+            max_rounds=100,
+            grid=GRID,
+        )
+        worsts.append(float(min(nomp.target_scores(
+            scenario, powers, bits, GRID
+        ))))
     return float(np.mean(worsts))
 
 

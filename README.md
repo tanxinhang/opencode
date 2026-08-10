@@ -396,6 +396,11 @@ Standalone PPO-Informed improves over vanilla MAPPO in most cells; the
 proposal-plus-refine hybrid stays close to NOMP; and `PPO-Informed Bandit`
 (with the pure NOMP fallback) equals NOMP/Exact in every environment:
 in-distribution 0.945, weak 0.500, channel-shift 0.326, hard channel 0.246.
+A curriculum-trained, channel-aware PPO variant was also evaluated; its
+standalone policy remains unstable in this toy setting, and its
+proposal-plus-refine hybrid does not consistently beat the simpler
+PPO-Informed+NOMP.  The robustness guarantee therefore still comes from the
+NOMP fallback rather than from the learned policy.
 
 ![PPO robustness](paper_figures/ppo_nomp_reward_robustness.png)
 
