@@ -584,11 +584,17 @@ def _feasible_from_mappo(scenario, powers, bits, budget):
     return powers, bits
 
 
-def evaluate_mappo_nomp(actor, scenarios, budget, reports):
+def evaluate_mappo_nomp(
+    actor, scenarios, budget, reports, state_scenarios=None
+):
     """MAPPO proposes report activation/bits, NOMP refines sensing power."""
     worsts = []
-    for scenario in scenarios:
-        states = [state(float(t[0]), t[1:], budget) for t in scenario]
+    for index, scenario in enumerate(scenarios):
+        state_scenario = (
+            state_scenarios[index] if state_scenarios is not None
+            else scenario
+        )
+        states = [state(float(t[0]), t[1:], budget) for t in state_scenario]
         with torch.no_grad():
             logits_b, logits_p = actor(torch.as_tensor(
                 np.stack(states), dtype=torch.float32

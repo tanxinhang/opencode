@@ -333,6 +333,18 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "ppo-nomp-reward-robustness"
+        Args = @(
+            "scripts\run_ppo_nomp_reward_robustness_gate.py",
+            "--budgets", "8", "10", "12",
+            "--episodes", "300",
+            "--train-seeds", "30",
+            "--test-seeds", "10",
+            "--output", "results\ppo_nomp_reward_robustness_gate.json",
+            "--figure", "paper_figures\ppo_nomp_reward_robustness.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

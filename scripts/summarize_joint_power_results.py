@@ -40,6 +40,7 @@ def main() -> None:
     priority = load("priority_middleware_gate.json")
     mappo_reward = load("mappo_nomp_reward_gate.json")
     hard_channel = load("hard_channel_gate.json")
+    ppo_robust = load("ppo_nomp_reward_robustness_gate.json")
 
     header = [
         "Budget",
@@ -244,6 +245,34 @@ def main() -> None:
                 if row["environment"] == env
             ]), 4),
         ] for env in ["baseline", "hard", "extreme"]],
+    )
+
+    print_table(
+        "PPO + NOMP-final reward robustness (average over budgets)",
+        ["Environment", "MAPPO", "PPO-Informed", "PPO+NOMP", "Bandit", "Exact"],
+        [[
+            env,
+            round(np.mean([
+                row["mappo_worst_mean"] for row in ppo_robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["ppo_informed_worst_mean"] for row in ppo_robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["ppo_informed_nomp_worst_mean"] for row in ppo_robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["ppo_informed_bandit_worst_mean"] for row in ppo_robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["exact_worst_mean"] for row in ppo_robust["rows"]
+                if row["environment"] == env
+            ]), 4),
+        ] for env in ["in_distribution", "weak", "channel_shift", "hard"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))

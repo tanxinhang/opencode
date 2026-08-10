@@ -390,6 +390,15 @@ contributing through the bandit middleware.
 
 ![Hard channel robustness](paper_figures/hard_channel.png)
 
+`scripts/run_ppo_nomp_reward_robustness_gate.py` tests the PPO + NOMP-final
+reward policy under unseen weak targets and increasing channel difficulty.
+Standalone PPO-Informed improves over vanilla MAPPO in most cells; the
+proposal-plus-refine hybrid stays close to NOMP; and `PPO-Informed Bandit`
+(with the pure NOMP fallback) equals NOMP/Exact in every environment:
+in-distribution 0.945, weak 0.500, channel-shift 0.326, hard channel 0.246.
+
+![PPO robustness](paper_figures/ppo_nomp_reward_robustness.png)
+
 `scripts/run_robust_curriculum_gate.py` additionally trains a channel-aware
 MAPPO on a curriculum of heterogeneous, weak, strong, and harsh-channel
 scenarios.  The curriculum alone is not enough for the raw REINFORCE policy
