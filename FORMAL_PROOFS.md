@@ -2014,6 +2014,21 @@ regression.  The policy state includes the normalized NOMP residuals from the
 previous weighted solve, so the priority choice is conditioned on the actual
 per-target deficit that NOMP left behind.
 
+### Lemma 4.87 (NOMP-final reward shaping)
+
+Let the MAPPO policy be trained with the reward equal to the worst P_D after
+NOMP refines the policy's proposal, instead of the raw proposal P_D.  Then
+the policy gradient maximizes the system-level objective directly, and the
+learned proposals are the ones NOMP can turn into good allocations.
+
+Proof: the shaped reward is a deterministic function of the proposal and the
+environment, so the REINFORCE estimator remains unbiased for the system
+objective.  Because NOMP is max-min monotone, the shaped reward is at least
+the raw proposal reward, giving the policy a denser and more aligned signal.
+The gate reports the standalone proposal improving from 0.506/0.659/0.788 to
+0.817/0.993/0.985 at B=8/10/12; the adapter with the pure NOMP fallback
+retains the no-worse-than-NOMP guarantee.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -2125,6 +2140,7 @@ the audit.
 | Lemma 4.84 | `uav_otfs_isac.mappo_nomp_adapter.MappoNompAdapter` | Gate JC JSON |
 | Lemma 4.85 | `uav_otfs_isac.mappo_nomp_adapter.ModeBanditAdapter` | Gate JC JSON |
 | Lemma 4.86 | `uav_otfs_isac.mappo_nomp_adapter.PriorityNompAdapter` | Gate PMW JSON |
+| Lemma 4.87 | `scripts/run_joint_power_comparison.train_mappo_nomp_reward` | Gate MNR JSON |
 
 ## 6. Explicit non-claims
 

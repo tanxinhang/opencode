@@ -405,7 +405,9 @@ NOMP-final P_D as its reward instead of the raw proposal P_D.  This is
 middleware-informed reward shaping, so the policy learns proposals that NOMP
 can actually turn into good allocations.  The formal gate shows the
 standalone proposal improves from 0.506/0.659/0.788 to 0.817/0.993/0.985 at
-B=8/10/12, while the hybrid remains no worse than NOMP.
+B=8/10/12; the proposal-plus-refine hybrid stays close to NOMP (0.888 at
+B=8 vs 0.894), and the adapter with the pure NOMP fallback keeps the
+no-worse-than-NOMP guarantee.
 
 `scripts/run_priority_middleware_gate.py` replaces 0-1 switching with a true
 middleware optimization: a MAPPO priority policy picks which target receives
