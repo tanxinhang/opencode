@@ -9,9 +9,11 @@ from uav_otfs_isac.nomp_refinement import (
 )
 from uav_otfs_isac.mappo_nomp_adapter import (
     MODE_REGISTRY,
+    ModeBanditAdapter,
     NompRequirement,
     build_state,
     select_modes,
+    ucb_index,
 )
 from uav_otfs_isac.power_split_theory import (
     winner_take_all_proportional_options,
@@ -339,3 +341,10 @@ def test_adapter_mode_registry_and_dynamic_selection():
     }
     assert select_modes([None, None], 8) == ("probe_mask",)
     assert select_modes([None, None], 20) == ("proposal",)
+
+
+def test_ucb_mode_index_is_finite():
+    assert ucb_index(0.8, 3, 10) > 0.8
+    assert ucb_index(0.8, 0, 10) == np.inf
+    adapter = ModeBanditAdapter(actor=None)
+    assert adapter.beta == 1.0

@@ -1970,9 +1970,25 @@ Proof: the adapter takes a maximum over schedules produced by the individual
 modes, so it dominates every mode by construction.  Each mode is bounded by
 the full NOMP schedule by Lemma 4.83, hence the maximum is too.  The loop is
 finite by the hard `iters` cap.  In the clean heterogeneous gate the adapter
-reaches 0.870/0.903/0.981 at B=8/10/12, above both single-mode hybrids.
+reaches 0.870/0.956/0.981 at B=8/10/12, above both single-mode hybrids.
 MAPPO training is seeded and entropy-regularized so the adapter input
 distribution is reproducible.
+
+### Lemma 4.85 (UCB mode-selection adapter)
+
+Let the information modes have max-min rewards in `[0, 1]`, and let the
+adapter choose modes by the UCB index
+`mean_m + beta sqrt(log(t) / count_m)`.  The adapter pulls every mode at
+least once, then concentrates pulls on promising modes, and keeps the best
+observed schedule after at most `iters` pulls.
+
+Proof: the UCB index is the standard optimistic estimator for bounded
+rewards; each mode is explored at least once, so no mode is starved before
+its first observation.  The kept schedule is the maximum over pulled modes,
+so the result is bounded below by the best observed mode and above by the
+full NOMP schedule.  The loop terminates at `iters`.  In the clean
+heterogeneous gate the bandit adapter keeps the same 0.870/0.956/0.981 worst
+values while learning the mode means online.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
@@ -2083,6 +2099,7 @@ the audit.
 | Lemma 4.82 | `nomp_refinement.qos_scores` + `scripts/run_qos_weighted_maxmin_gate.py` | `tests/test_nomp_refinement.py`, Gate QOS JSON |
 | Lemma 4.83 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp`, `evaluate_mappo_probe_nomp` | Gate JC JSON |
 | Lemma 4.84 | `uav_otfs_isac.mappo_nomp_adapter.MappoNompAdapter` | Gate JC JSON |
+| Lemma 4.85 | `uav_otfs_isac.mappo_nomp_adapter.ModeBanditAdapter` | Gate JC JSON |
 
 ## 6. Explicit non-claims
 

@@ -119,6 +119,15 @@ def select_modes(scenario, budget):
     return ("probe_mask", "entropy_probe", "proposal")
 
 
+def ucb_index(mean, count, total_pulls, beta=1.0):
+    """UCB index for a mode with bounded [0, 1] rewards."""
+    if count <= 0.0:
+        return np.inf
+    return float(mean) + beta * np.sqrt(
+        np.log(max(float(total_pulls), 1.0)) / count
+    )
+
+
 def build_state(owner, deltas, budget):
     """MAPPO state used during training (kept compatible with the actor)."""
     return np.concatenate((
@@ -240,4 +249,93 @@ class MappoNompAdapter:
             "worst_pd": float(best["worst_pd"]),
             "modes": list(modes),
             "trace": trace,
+        }
+
+
+class ModeBanditAdapter:
+    """UCB over MAPPO information modes, with NOMP max-min as reward."""
+
+    def __init__(self, actor, beta: float = 1.0):
+        self.actor = actor
+        self.beta = beta
+
+    def propose_and_allocate(
+        self,
+        scenario,
+        requirement: NompRequirement,
+        *,
+        seed: int = 0,
+        sample: bool = True,
+        iters: int = 5,
+    ):
+        reports = nomp._report_count(scenario[0])
+        if requirement.modes == "auto":
+            modes = list(select_modes(scenario, requirement.budget))
+        elif isinstance(requirement.modes, str):
+            modes = [requirement.modes]
+        else:
+            modes = list(requirement.modes)
+        means = {mode: 0.0 for mode in modes}
+        counts = {mode: 0 for mode in modes}
+        best = None
+        best_mode = None
+        for pull in range(1, iters + 1):
+            chosen = None
+            if pull <= len(modes):
+                chosen = modes[pull - 1]
+            else:
+                scores = {
+                    mode: ucb_index(
+                        means[mode], counts[mode], pull, self.beta
+                    )
+                    for mode in modes
+                }
+                chosen = max(scores, key=lambda mode: scores[mode])
+            states = np.stack([
+                build_state(float(t[0]), t[1:], requirement.budget)
+                for t in scenario
+            ])
+            with torch.no_grad():
+                logits_b, logits_p = self.actor(torch.as_tensor(
+                    states, dtype=torch.float32
+                ))
+                if sample:
+                    bits = torch.stack([
+                        torch.distributions.Categorical(
+                            logits=logits_b[:, r, :]
+                        ).sample()
+                        for r in range(reports)
+                    ], dim=1).numpy()
+                    powers = torch.stack([
+                        torch.distributions.Categorical(
+                            logits=logits_p[:, r, :]
+                        ).sample()
+                        for r in range(reports)
+                    ], dim=1).numpy()
+                else:
+                    bits = torch.stack([
+                        torch.argmax(logits_b[:, r, :], dim=1)
+                        for r in range(reports)
+                    ], dim=1).numpy()
+                    powers = torch.stack([
+                        torch.argmax(logits_p[:, r, :], dim=1)
+                        for r in range(reports)
+                    ], dim=1).numpy()
+            outputs = {
+                "bits": bits,
+                "powers": powers,
+                "bit_logits": logits_b,
+            }
+            result = MODE_REGISTRY[chosen](outputs, scenario, requirement)
+            reward = float(result["worst_pd"])
+            counts[chosen] += 1
+            means[chosen] += (reward - means[chosen]) / counts[chosen]
+            if best is None or reward > best["worst_pd"]:
+                best = result
+                best_mode = chosen
+        return {
+            "worst_pd": float(best["worst_pd"]),
+            "best_mode": best_mode,
+            "means": means,
+            "counts": counts,
         }
