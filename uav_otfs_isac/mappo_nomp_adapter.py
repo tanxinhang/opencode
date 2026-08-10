@@ -423,7 +423,7 @@ class PriorityNompAdapter:
     ):
         torch.manual_seed(seed)
         q_count = len(scenario)
-        policy = PriorityPolicy(self.state_dim, q_count)
+        policy = PriorityPolicy(self.state_dim + q_count, q_count)
         optimizer = torch.optim.Adam(policy.parameters(), lr=1e-2)
         baseline = 0.0
         best = nomp.nomp_wta_greedy_joint_multi(
@@ -442,12 +442,17 @@ class PriorityNompAdapter:
             "weights": None,
             "worst_pd": float(best["worst_pd"]),
         })
+        residuals = np.zeros(q_count, dtype=float)
         floors = [self.floor] * q_count
         for _ in range(episodes):
-            states = np.stack([
+            base_states = np.stack([
                 self.state_builder(t, requirement.budget)
                 for t in scenario
             ])
+            states = np.concatenate((
+                base_states,
+                np.tile(residuals, (q_count, 1)),
+            ), axis=1)
             logits = policy(torch.as_tensor(
                 states, dtype=torch.float32
             )).mean(dim=0)
@@ -468,6 +473,14 @@ class PriorityNompAdapter:
                 weights=weights,
             )
             reward = float(result["worst_pd"])
+            raw = nomp.target_scores(
+                scenario,
+                result["powers"],
+                result["bits"],
+                requirement.grid,
+            )
+            residuals = np.max(raw) - np.asarray(raw, dtype=float)
+            residuals /= max(float(np.max(residuals)), 1e-12)
             advantage = reward - baseline
             baseline = baseline + 0.2 * (reward - baseline)
             loss = -advantage * dist.log_prob(

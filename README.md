@@ -397,8 +397,10 @@ middleware optimization: a MAPPO priority policy picks which target receives
 higher QoS weight, NOMP solves the weighted max-min, and the unweighted worst
 P_D is fed back as reward.  Because plain NOMP is kept as the initial best,
 the result is never below NOMP; on hard R=4 scenarios it exceeds plain NOMP by
-0.008-0.020 (0.852 -> 0.872 and 0.869 -> 0.878), demonstrating a real
-`1 + 1 > 2` collaboration instead of selection.
+0.008-0.012 (0.852 -> 0.864 and 0.869 -> 0.878), demonstrating a real
+`1 + 1 > 2` collaboration instead of selection.  The policy state also
+includes the normalized NOMP residuals from the previous round, so each new
+priority choice is conditioned on what NOMP actually struggled with.
 
 ![Priority middleware](paper_figures/priority_middleware.png)
 
