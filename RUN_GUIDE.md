@@ -127,6 +127,7 @@ python scripts/run_joint_power_comm_mismatch_gate.py --seeds 20 --budgets 8 10 1
 python scripts/summarize_joint_power_results.py
 python scripts/run_nomp_report_scaling_gate.py --reports 2 4 6 --seeds 10 --output results/nomp_report_scaling_gate.json --figure paper_figures/nomp_report_scaling.png
 python scripts/run_qos_weighted_maxmin_gate.py --seeds 10 --budgets 8 10 12 --output results/qos_weighted_maxmin_gate.json
+python scripts/run_qr_scenario_comparison.py --modes homogeneous heterogeneous comm_mismatch --targets 2 4 6 --reports 2 3 4 --seeds 5 --output results/qr_scenario_comparison.json --figure paper_figures/qr_scenario_comparison.png
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/build_paper_tables.py
 ```

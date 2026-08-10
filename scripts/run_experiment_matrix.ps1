@@ -260,6 +260,18 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "qr-scenario-comparison"
+        Args = @(
+            "scripts\run_qr_scenario_comparison.py",
+            "--modes", "homogeneous", "heterogeneous", "comm_mismatch",
+            "--targets", "2", "4", "6",
+            "--reports", "2", "3", "4",
+            "--seeds", "5",
+            "--output", "results\qr_scenario_comparison.json",
+            "--figure", "paper_figures\qr_scenario_comparison.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

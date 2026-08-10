@@ -360,6 +360,15 @@ unweighted max-min P_D to heterogeneous multi-target QoS constraints.  The
 noisy `UCB-NOMP` variant keeps the same QoS worst values with certificate
 stop rates of 0.40/0.50/0.50 and about 12-14 mean feedback rounds.
 
+`scripts/run_qr_scenario_comparison.py` sweeps Q=2/4/6 and R=2/3/4 across
+clean homogeneous, clean heterogeneous, and per-link communication mismatch
+scenarios with budget `4Q` and 5 seeds.  NOMP matches the exact oracle in
+every clean cell.  Under per-link mismatch NOMP/UCB-NOMP beat WTA-Greedy by a
+large margin and match the robust exact oracle whenever R=2; for example at
+Q=6/R=2 WTA-Greedy falls to 0.144 while NOMP stays at 0.449.
+
+![Q-R scenario comparison](paper_figures/qr_scenario_comparison.png)
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
 union-bound UCB widths.  The winner certificate compares the active winner's
