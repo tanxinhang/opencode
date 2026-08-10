@@ -351,6 +351,13 @@ Monte Carlo above it, so the online allocator remains usable as R grows.
 
 ![NOMP report scaling](paper_figures/nomp_report_scaling.png)
 
+`scripts/run_qos_weighted_maxmin_gate.py` adds per-target detection floors
+and priorities: the objective is the worst normalized slack
+`w_q (v_q - l_q) / l_q`.  QoS-aware NOMP matches the exact brute-force
+max-min at every tested budget, while improving the plain NOMP QoS slack by
+0.095-0.122 (B=8/10/12).  The same leximin refinement therefore extends from
+unweighted max-min P_D to heterogeneous multi-target QoS constraints.
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
 union-bound UCB widths.  The winner certificate compares the active winner's

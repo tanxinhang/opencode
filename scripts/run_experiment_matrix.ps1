@@ -251,6 +251,15 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "qos-weighted-maxmin"
+        Args = @(
+            "scripts\run_qos_weighted_maxmin_gate.py",
+            "--seeds", "10",
+            "--budgets", "8", "10", "12",
+            "--output", "results\qos_weighted_maxmin_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

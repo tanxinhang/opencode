@@ -20,8 +20,27 @@ from .power_split_theory import (
 from .robust_joint_power_bit import per_report_communication_target_pd
 
 
-def leximin_improves(old_values, new_values) -> bool:
+def qos_scores(values, floors, weights=None):
+    """Normalized QoS slack ``w * (v - l) / l`` per target."""
+    values = np.asarray(values, dtype=float)
+    floors = np.asarray(floors, dtype=float)
+    if weights is None:
+        weights = np.ones_like(floors)
+    weights = np.asarray(weights, dtype=float)
+    return weights * (values - floors) / np.maximum(floors, 1e-12)
+
+
+def leximin_improves(
+    old_values,
+    new_values,
+    *,
+    floors=None,
+    weights=None,
+) -> bool:
     """True when the sorted target vector improves lexicographically."""
+    if floors is not None:
+        old_values = qos_scores(old_values, floors, weights)
+        new_values = qos_scores(new_values, floors, weights)
     a = np.sort(np.asarray(old_values, dtype=float))
     b = np.sort(np.asarray(new_values, dtype=float))
     for x, y in zip(a, b):
@@ -428,18 +447,25 @@ def maxmin_refine(
     grid: int = 16,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
+    floors=None,
+    weights=None,
 ):
     """NOMP-style discrete refinement with a hard iteration cap."""
     rounds_used = 0
     for _ in range(max_rounds):
-        old_values = np.sort(target_scores(
+        old_raw = target_scores(
             scenario,
             powers,
             bits,
             grid,
             flip_probability,
             success_probability,
-        ))
+        )
+        old_values = (
+            np.sort(qos_scores(old_raw, floors, weights))
+            if floors is not None
+            else np.sort(old_raw)
+        )
         best = None
         for candidate in _iter_candidates(
             scenario,
@@ -451,14 +477,19 @@ def maxmin_refine(
             success_probability=success_probability,
             grid=grid,
         ):
-            new_values = np.sort(target_scores(
+            new_raw = target_scores(
                 scenario,
                 candidate[0],
                 candidate[1],
                 grid,
                 flip_probability,
                 success_probability,
-            ))
+            )
+            new_values = (
+                np.sort(qos_scores(new_raw, floors, weights))
+                if floors is not None
+                else np.sort(new_raw)
+            )
             if leximin_improves(old_values, new_values):
                 if best is None or new_values.tolist() > best[0]:
                     best = (new_values.tolist(), candidate)
@@ -479,6 +510,8 @@ def wta_greedy_joint_multi(
     grid: int = 16,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
+    floors=None,
+    weights=None,
 ):
     """Online WTA greedy allocation with optional per-target minimum cover."""
     if max_power is None:
@@ -500,14 +533,17 @@ def wta_greedy_joint_multi(
     steps = 0
 
     def current_mean():
-        return float(np.mean(target_scores(
+        raw = target_scores(
             scenario,
             powers,
             bits,
             grid,
             flip_probability,
             success_probability,
-        )))
+        )
+        if floors is not None:
+            return float(np.mean(qos_scores(raw, floors, weights)))
+        return float(np.mean(raw))
 
     while True:
         mean_before = current_mean()
@@ -599,6 +635,8 @@ def nomp_wta_greedy_joint_multi(
     grid: int = 16,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
+    floors=None,
+    weights=None,
 ):
     """WTA greedy with minimum cover, followed by NOMP-style refinement."""
     if max_power is None:
@@ -612,6 +650,8 @@ def nomp_wta_greedy_joint_multi(
         grid=grid,
         flip_probability=flip_probability,
         success_probability=success_probability,
+        floors=floors,
+        weights=weights,
     )
     powers, bits, refine_rounds = maxmin_refine(
         scenario,
@@ -623,18 +663,26 @@ def nomp_wta_greedy_joint_multi(
         grid=grid,
         flip_probability=flip_probability,
         success_probability=success_probability,
+        floors=floors,
+        weights=weights,
+    )
+    raw = target_scores(
+        scenario,
+        powers,
+        bits,
+        grid,
+        flip_probability,
+        success_probability,
     )
     return {
         "powers": powers,
         "bits": bits,
-        "worst_pd": float(min(target_scores(
-            scenario,
-            powers,
-            bits,
-            grid,
-            flip_probability,
-            success_probability,
-        ))),
+        "worst_pd": float(min(raw)),
+        "qos_worst": (
+            float(np.min(qos_scores(raw, floors, weights)))
+            if floors is not None
+            else None
+        ),
         "used": int(sum(
             int(powers[q].sum()) + int(bits[q].sum())
             for q in range(len(scenario))

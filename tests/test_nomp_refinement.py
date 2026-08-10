@@ -18,6 +18,7 @@ from uav_otfs_isac.robust_joint_power_bit import (
 from scripts.run_joint_power_comm_mismatch_gate import (
     make_comm_mismatch_scenario,
 )
+from scripts.run_qos_weighted_maxmin_gate import exact_qos_worst
 from scripts.run_joint_power_comparison import (
     make_scenario,
     ucb_wta_greedy_joint_multi,
@@ -265,3 +266,14 @@ def test_ucb_nomp_per_link_is_finite_and_close_to_deterministic():
     assert noisy["steps_used"] <= 100
     assert noisy["feedback_rounds"] <= 10
     assert abs(noisy["worst_pd"] - deterministic["worst_pd"]) < 1e-3
+
+
+def test_qos_nomp_matches_exact_weighted_maxmin():
+    scenario = make_comm_mismatch_scenario(10000, 2, 2)
+    floors = [0.30, 0.45]
+    weights = [1.0, 1.3]
+    result = nomp_wta_greedy_joint_multi(
+        scenario, 8, floors=floors, weights=weights
+    )
+    exact = exact_qos_worst(scenario, 8, floors, weights, 16)
+    assert abs(result["qos_worst"] - exact) < 1e-6

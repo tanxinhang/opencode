@@ -1916,6 +1916,20 @@ For report counts above R=8 the erasure expectation is estimated by
 independent Monte Carlo draws instead of enumerating all received subsets;
 the estimator is unbiased and the gate records mean runtime per scenario.
 
+### Lemma 4.82 (QoS-scaled leximin refinement)
+
+Let target `q` have detection floor `l_q > 0` and priority weight `w_q > 0`,
+and define the normalized QoS slack `u_q = w_q (v_q - l_q) / l_q`.  If the
+refinement accepts only moves whose sorted QoS-slack vector improves
+lexicographically, then the worst normalized slack never decreases and the
+loop terminates at a finite local optimum or at `max_rounds`.
+
+Proof: the QoS transform is a strictly increasing affine function of `v_q`
+for fixed positive `(l_q, w_q)`, so the argument of Lemma 4.80 applies
+unchanged to `u`.  The gate compares QoS-aware NOMP with an exact brute-force
+over per-target robust frontiers and reports zero gap at the tested budgets,
+while plain NOMP's QoS slack improves by 0.095-0.122.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -2022,6 +2036,7 @@ the audit.
 | Lemma 4.80 | `nomp_refinement.maxmin_refine` | `tests/test_nomp_refinement.py` |
 | Corollary 4.80A | `nomp_refinement.nomp_wta_greedy_joint_multi` | `tests/test_nomp_refinement.py`, Gate JC JSON |
 | Lemma 4.81 | `nomp_refinement` channel parameters + `scripts/run_joint_power_comm_mismatch_gate.py` | `tests/test_nomp_refinement.py`, Gate CMM JSON |
+| Lemma 4.82 | `nomp_refinement.qos_scores` + `scripts/run_qos_weighted_maxmin_gate.py` | `tests/test_nomp_refinement.py`, Gate QOS JSON |
 
 ## 6. Explicit non-claims
 

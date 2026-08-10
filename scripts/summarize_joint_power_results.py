@@ -33,6 +33,7 @@ def main() -> None:
     heterogeneous = load("joint_power_comparison_heterogeneous.json")
     scaling = load("joint_power_scaling.json")
     comm_mismatch = load("joint_power_comm_mismatch_gate.json")
+    qos = load("qos_weighted_maxmin_gate.json")
 
     header = [
         "Budget",
@@ -99,6 +100,19 @@ def main() -> None:
             round(row["wta_gap_to_exact"], 4),
             round(row["nomp_gap_to_exact"], 4),
         ] for row in comm_mismatch["summary"]],
+    )
+
+    print_table(
+        "QoS-weighted max-min",
+        ["Budget", "Plain NOMP QoS", "QoS-NOMP QoS", "Exact QoS", "Improvement", "Gap"],
+        [[
+            row["budget"],
+            round(row["plain_nomp_qos_worst_mean"], 4),
+            round(row["qos_nomp_qos_worst_mean"], 4),
+            round(row["exact_qos_worst_mean"], 4),
+            round(row["qos_improvement"], 4),
+            round(row["qos_nomp_gap_to_exact"], 4),
+        ] for row in qos["summary"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))
