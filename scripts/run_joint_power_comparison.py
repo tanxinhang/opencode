@@ -24,6 +24,10 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from uav_otfs_isac.joint_power_bit import exact_joint_power_bit_maxmin
+from uav_otfs_isac.mappo_nomp_adapter import (
+    MappoNompAdapter,
+    NompRequirement,
+)
 from uav_otfs_isac import nomp_refinement as nomp
 from uav_otfs_isac.power_split_theory import (
     power_gain_coefficient,
@@ -290,6 +294,26 @@ def evaluate_mappo_probe_nomp(actor, scenarios, budget, reports):
             )
         else:
             result = nomp.nomp_wta_greedy_joint_multi(scenario, budget)
+        worsts.append(float(result["worst_pd"]))
+    return float(np.mean(worsts))
+
+
+def evaluate_mappo_adapter_nomp(actor, scenarios, budget, reports, iters=3):
+    """Adapter repeatedly translates MAPPO rollouts into NOMP inputs."""
+    worsts = []
+    adapter = MappoNompAdapter(actor)
+    for scenario_index, scenario in enumerate(scenarios):
+        requirement = NompRequirement(
+            modes=("probe_mask", "proposal"),
+            budget=budget,
+        )
+        result = adapter.propose_and_allocate(
+            scenario,
+            requirement,
+            seed=scenario_index,
+            sample=True,
+            iters=iters,
+        )
         worsts.append(float(result["worst_pd"]))
     return float(np.mean(worsts))
 
@@ -717,6 +741,9 @@ def run_comparison(args) -> dict:
         mappo_probe_nomp_worst = evaluate_mappo_probe_nomp(
             actor, test_scenarios, budget, args.reports
         )
+        mappo_adapter_nomp_worst = evaluate_mappo_adapter_nomp(
+            actor, test_scenarios, budget, args.reports
+        )
         train_seconds = time.perf_counter() - start
         greedy_worsts = []
         greedy_winner_init_worsts = []
@@ -806,6 +833,7 @@ def run_comparison(args) -> dict:
             "mappo_worst_mean": mappo_worst,
             "mappo_nomp_worst_mean": mappo_nomp_worst,
             "mappo_probe_nomp_worst_mean": mappo_probe_nomp_worst,
+            "mappo_adapter_nomp_worst_mean": mappo_adapter_nomp_worst,
             "greedy_worst_mean": float(np.mean(greedy_worsts)),
             "greedy_winner_init_worst_mean": float(np.mean(
                 greedy_winner_init_worsts

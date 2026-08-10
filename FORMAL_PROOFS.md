@@ -1957,6 +1957,20 @@ the MAPPO probe mask.  It reaches the exact max-min only when the mask
 contains the optimal active set, so its guarantee is conditioned on probe
 accuracy; proposal-plus-refine remains the robust form of the decomposition.
 
+### Lemma 4.84 (MAPPO-NOMP adapter)
+
+Let the adapter hold a finite set of NOMP requirement modes, sample MAPPO
+rollouts, translate each rollout into the requested NOMP input, run NOMP, and
+keep the best worst-target value after at most `iters` rounds.  The adapter
+result is no worse than any single mode used alone and is bounded above by
+the full NOMP schedule.
+
+Proof: the adapter takes a maximum over schedules produced by the individual
+modes, so it dominates every mode by construction.  Each mode is bounded by
+the full NOMP schedule by Lemma 4.83, hence the maximum is too.  The loop is
+finite by the hard `iters` cap.  In the clean heterogeneous gate the adapter
+reaches 0.808/0.939/0.939 at B=8/10/12, above both single-mode hybrids.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -2065,6 +2079,7 @@ the audit.
 | Lemma 4.81 | `nomp_refinement` channel parameters + `scripts/run_joint_power_comm_mismatch_gate.py` | `tests/test_nomp_refinement.py`, Gate CMM JSON |
 | Lemma 4.82 | `nomp_refinement.qos_scores` + `scripts/run_qos_weighted_maxmin_gate.py` | `tests/test_nomp_refinement.py`, Gate QOS JSON |
 | Lemma 4.83 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp`, `evaluate_mappo_probe_nomp` | Gate JC JSON |
+| Lemma 4.84 | `uav_otfs_isac.mappo_nomp_adapter.MappoNompAdapter` | Gate JC JSON |
 
 ## 6. Explicit non-claims
 

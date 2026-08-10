@@ -7,6 +7,10 @@ from uav_otfs_isac.nomp_refinement import (
     nomp_wta_greedy_joint_multi,
     wta_greedy_joint_multi,
 )
+from uav_otfs_isac.mappo_nomp_adapter import (
+    NompRequirement,
+    build_state,
+)
 from uav_otfs_isac.power_split_theory import (
     winner_take_all_proportional_options,
 )
@@ -317,3 +321,11 @@ def test_probe_mask_restricts_nomp_activation():
     result = nomp_wta_greedy_joint_multi(scenario, 8, probe_mask=mask)
     assert result["bits"][0][1] == 0
     assert result["bits"][1][0] == 0
+
+
+def test_adapter_requirement_and_state_shape():
+    state = build_state(0.4, np.array([1.0, 2.0]), 8)
+    assert state.shape == (4,)
+    requirement = NompRequirement(modes=("probe_mask",), budget=8)
+    assert requirement.budget == 8
+    assert requirement.modes == ("probe_mask",)

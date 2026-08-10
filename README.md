@@ -386,6 +386,13 @@ poor links.  Proposal-plus-refine `MAPPO-NOMP` is therefore the more robust
 hybrid, while `MAPPO-Probe-NOMP` is the cleaner decomposition of
 responsibilities.
 
+`MAPPO-Adapter` is the adaptive layer between them: NOMP declares whether it
+needs a probe mask or a full proposal, and the adapter repeatedly samples
+MAPPO rollouts, translates each one into the requested NOMP input, and keeps
+the best finite-round schedule.  It is never below either single-mode hybrid
+and is robust to poor MAPPO proposals; in clean heterogeneous Q=2 it reaches
+0.808/0.939/0.939 at B=8/10/12 versus the exact 0.892/0.956/0.981.
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
 union-bound UCB widths.  The winner certificate compares the active winner's
