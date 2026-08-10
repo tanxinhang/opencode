@@ -1,0 +1,35 @@
+{
+  "gate": "priority-middleware",
+  "episodes": 8,
+  "samples": 512,
+  "candidate_budget": 8,
+  "rows": [
+    {
+      "seed": 10000,
+      "reports": 4,
+      "budget": 32,
+      "plain_nomp_worst": 0.8694517254222391,
+      "priority_nomp_worst": 0.877742651561823,
+      "gain": 0.00829092613958382,
+      "best_priority": 1
+    },
+    {
+      "seed": 10001,
+      "reports": 4,
+      "budget": 24,
+      "plain_nomp_worst": 0.8520655890194135,
+      "priority_nomp_worst": 0.8723159034244754,
+      "gain": 0.020250314405061864,
+      "best_priority": 1
+    },
+    {
+      "seed": 10000,
+      "reports": 3,
+      "budget": 18,
+      "plain_nomp_worst": 0.6940906337094086,
+      "priority_nomp_worst": 0.6940906337094086,
+      "gain": 0.0,
+      "best_priority": 1
+    }
+  ]
+}

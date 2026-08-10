@@ -11,6 +11,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import torch
+import torch.nn as nn
 
 from . import nomp_refinement as nomp
 
@@ -24,6 +25,9 @@ class NompRequirement:
     max_bits: int = 2
     grid: int = 16
     max_refine_rounds: int = 100
+    max_exact_reports: int = 8
+    samples: int = 2048
+    candidate_budget: int = 32
 
 
 def _probe_mask_allocate(outputs, scenario, requirement):
@@ -377,4 +381,109 @@ class ModeBanditAdapter:
             "best_mode": best_mode,
             "means": means,
             "counts": counts,
+        }
+
+
+class PriorityPolicy(nn.Module):
+    """Small policy that chooses which target to prioritize each round."""
+
+    def __init__(self, state_dim, q_count):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(state_dim, 32),
+            nn.Tanh(),
+            nn.Linear(32, q_count),
+        )
+
+    def forward(self, states):
+        return self.net(states)
+
+
+class PriorityNompAdapter:
+    """MAPPO-guided priority middleware for weighted NOMP solving.
+
+    Each round the policy picks the target that receives higher QoS weight;
+    NOMP then solves the weighted max-min problem.  The middleware feeds the
+    resulting unweighted worst P_D back as reward, so the policy learns which
+    priority vector helps NOMP escape its own local optima.
+    """
+
+    def __init__(self, state_dim, state_builder=None, floor: float = 0.2):
+        self.state_dim = state_dim
+        self.state_builder = state_builder or _default_state_builder
+        self.floor = floor
+
+    def propose_and_allocate(
+        self,
+        scenario,
+        requirement: NompRequirement,
+        *,
+        episodes: int = 8,
+        seed: int = 0,
+    ):
+        torch.manual_seed(seed)
+        q_count = len(scenario)
+        policy = PriorityPolicy(self.state_dim, q_count)
+        optimizer = torch.optim.Adam(policy.parameters(), lr=1e-2)
+        baseline = 0.0
+        best = nomp.nomp_wta_greedy_joint_multi(
+            scenario,
+            requirement.budget,
+            max_bits=requirement.max_bits,
+            grid=requirement.grid,
+            max_rounds=requirement.max_refine_rounds,
+            max_exact_reports=requirement.max_exact_reports,
+            samples=requirement.samples,
+            candidate_budget=requirement.candidate_budget,
+        )
+        trace = []
+        trace.append({
+            "priority_target": None,
+            "weights": None,
+            "worst_pd": float(best["worst_pd"]),
+        })
+        floors = [self.floor] * q_count
+        for _ in range(episodes):
+            states = np.stack([
+                self.state_builder(t, requirement.budget)
+                for t in scenario
+            ])
+            logits = policy(torch.as_tensor(
+                states, dtype=torch.float32
+            )).mean(dim=0)
+            dist = torch.distributions.Categorical(logits=logits)
+            action = int(dist.sample().item())
+            weights = [0.5] * q_count
+            weights[action] = 2.0
+            result = nomp.nomp_wta_greedy_joint_multi(
+                scenario,
+                requirement.budget,
+                max_bits=requirement.max_bits,
+                grid=requirement.grid,
+                max_rounds=requirement.max_refine_rounds,
+                max_exact_reports=requirement.max_exact_reports,
+                samples=requirement.samples,
+                candidate_budget=requirement.candidate_budget,
+                floors=floors,
+                weights=weights,
+            )
+            reward = float(result["worst_pd"])
+            advantage = reward - baseline
+            baseline = baseline + 0.2 * (reward - baseline)
+            loss = -advantage * dist.log_prob(
+                torch.as_tensor(action, dtype=torch.int64)
+            )
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            if best is None or reward > best["worst_pd"]:
+                best = result
+            trace.append({
+                "priority_target": action,
+                "weights": weights,
+                "worst_pd": reward,
+            })
+        return {
+            "worst_pd": float(best["worst_pd"]),
+            "trace": trace,
         }

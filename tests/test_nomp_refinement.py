@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 
 from uav_otfs_isac.joint_power_bit import exact_joint_power_bit_maxmin
 from uav_otfs_isac.nomp_refinement import (
@@ -11,6 +12,7 @@ from uav_otfs_isac.mappo_nomp_adapter import (
     MODE_REGISTRY,
     ModeBanditAdapter,
     NompRequirement,
+    PriorityPolicy,
     build_state,
     select_modes,
     ucb_index,
@@ -348,3 +350,9 @@ def test_ucb_mode_index_is_finite():
     assert ucb_index(0.8, 0, 10) == np.inf
     adapter = ModeBanditAdapter(actor=None)
     assert adapter.beta == 1.0
+
+
+def test_priority_policy_output_shape():
+    policy = PriorityPolicy(8, 2)
+    logits = policy(torch.zeros(2, 8))
+    assert logits.shape == (2, 2)

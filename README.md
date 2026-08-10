@@ -392,6 +392,16 @@ adapter.
 
 ![Robust curriculum performance](paper_figures/robust_curriculum.png)
 
+`scripts/run_priority_middleware_gate.py` replaces 0-1 switching with a true
+middleware optimization: a MAPPO priority policy picks which target receives
+higher QoS weight, NOMP solves the weighted max-min, and the unweighted worst
+P_D is fed back as reward.  Because plain NOMP is kept as the initial best,
+the result is never below NOMP; on hard R=4 scenarios it exceeds plain NOMP by
+0.008-0.020 (0.852 -> 0.872 and 0.869 -> 0.878), demonstrating a real
+`1 + 1 > 2` collaboration instead of selection.
+
+![Priority middleware](paper_figures/priority_middleware.png)
+
 `MAPPO-NOMP` is a two-stage hybrid: MAPPO proposes the report activation and
 communication-bit profile (probe selection), then NOMP allocates sensing
 power and refines the schedule (power allocation).  In clean homogeneous it

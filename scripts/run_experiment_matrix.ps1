@@ -298,6 +298,17 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "priority-middleware"
+        Args = @(
+            "scripts\run_priority_middleware_gate.py",
+            "--episodes", "8",
+            "--samples", "512",
+            "--candidate-budget", "8",
+            "--output", "results\priority_middleware_gate.json",
+            "--figure", "paper_figures\priority_middleware.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",
