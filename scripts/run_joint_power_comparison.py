@@ -351,6 +351,8 @@ def ucb_wta_greedy_joint_multi(
     max_feedback_rounds: int = 20,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
+    floors=None,
+    weights=None,
 ):
     """Online WTA-Greedy whose winner/activation use UCB error estimates."""
     reports = nomp._report_count(scenario[0])
@@ -391,7 +393,7 @@ def ucb_wta_greedy_joint_multi(
     prior_noise_scale = max(noise_scale, 0.1)
 
     def scores():
-        return np.asarray(nomp.target_scores(
+        raw = np.asarray(nomp.target_scores(
             scenario,
             powers,
             bits,
@@ -399,6 +401,9 @@ def ucb_wta_greedy_joint_multi(
             flip_probability,
             success_probability,
         ))
+        if floors is not None:
+            return np.asarray(nomp.qos_scores(raw, floors, weights))
+        return raw
 
     def width(q):
         return beta * prior_noise_scale / np.sqrt(counts[q])
@@ -515,6 +520,8 @@ def ucb_wta_greedy_joint_multi(
             grid=GRID,
             flip_probability=flip_probability,
             success_probability=success_probability,
+            floors=floors,
+            weights=weights,
         )
         for q, target in enumerate(scenario):
             for r in range(reports):
@@ -548,8 +555,23 @@ def ucb_wta_greedy_joint_multi(
             success_probability,
         )
     )
+    qos_worst = None
+    if floors is not None:
+        qos_worst = float(np.min(nomp.qos_scores(
+            np.asarray(nomp.target_scores(
+                scenario,
+                powers,
+                bits,
+                GRID,
+                flip_probability,
+                success_probability,
+            )),
+            floors,
+            weights,
+        )))
     return {
         "worst_pd": worst_pd,
+        "qos_worst": qos_worst,
         "steps_used": steps_used,
         "stopped_by_certificate": stopped_by_certificate,
         "refine_rounds": refine_rounds,

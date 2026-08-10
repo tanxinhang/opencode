@@ -104,11 +104,12 @@ def main() -> None:
 
     print_table(
         "QoS-weighted max-min",
-        ["Budget", "Plain NOMP QoS", "QoS-NOMP QoS", "Exact QoS", "Improvement", "Gap"],
+        ["Budget", "Plain NOMP", "QoS-NOMP", "UCB-NOMP", "Exact", "Improvement", "Gap"],
         [[
             row["budget"],
             round(row["plain_nomp_qos_worst_mean"], 4),
             round(row["qos_nomp_qos_worst_mean"], 4),
+            round(row["ucb_nomp_qos_worst_mean"], 4),
             round(row["exact_qos_worst_mean"], 4),
             round(row["qos_improvement"], 4),
             round(row["qos_nomp_gap_to_exact"], 4),

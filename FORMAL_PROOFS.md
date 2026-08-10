@@ -1928,7 +1928,10 @@ Proof: the QoS transform is a strictly increasing affine function of `v_q`
 for fixed positive `(l_q, w_q)`, so the argument of Lemma 4.80 applies
 unchanged to `u`.  The gate compares QoS-aware NOMP with an exact brute-force
 over per-target robust frontiers and reports zero gap at the tested budgets,
-while plain NOMP's QoS slack improves by 0.095-0.122.
+while plain NOMP's QoS slack improves by 0.095-0.122.  The per-link
+UCB-NOMP variant with the same floors and weights keeps the QoS worst values
+under noisy observations and stops its feedback loop by the all-report
+certificate.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is

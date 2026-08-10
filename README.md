@@ -356,7 +356,9 @@ and priorities: the objective is the worst normalized slack
 `w_q (v_q - l_q) / l_q`.  QoS-aware NOMP matches the exact brute-force
 max-min at every tested budget, while improving the plain NOMP QoS slack by
 0.095-0.122 (B=8/10/12).  The same leximin refinement therefore extends from
-unweighted max-min P_D to heterogeneous multi-target QoS constraints.
+unweighted max-min P_D to heterogeneous multi-target QoS constraints.  The
+noisy `UCB-NOMP` variant keeps the same QoS worst values with certificate
+stop rates of 0.40/0.50/0.50 and about 12-14 mean feedback rounds.
 
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and

@@ -32,6 +32,7 @@ from uav_otfs_isac.robust_joint_power_bit import (
 from scripts.run_joint_power_comm_mismatch_gate import (
     make_comm_mismatch_scenario,
 )
+from scripts.run_joint_power_comparison import ucb_wta_greedy_joint_multi
 
 
 def exact_qos_worst(scenario, budget, floors, weights, grid):
@@ -76,6 +77,10 @@ def main() -> None:
     for budget in args.budgets:
         plain_qos = []
         qos_worst = []
+        ucb_qos_worst = []
+        ucb_certificates = []
+        ucb_feedback_rounds = []
+        ucb_refine_rounds = []
         exact = []
         qos_raw_pd = []
         for seed in range(args.seeds):
@@ -103,6 +108,25 @@ def main() -> None:
             )
             qos_worst.append(float(qos_result["qos_worst"]))
             qos_raw_pd.append(float(qos_result["worst_pd"]))
+            ucb_result = ucb_wta_greedy_joint_multi(
+                scenario,
+                budget,
+                noise_scale=0.2,
+                seed=seed,
+                min_cover=True,
+                refine=True,
+                max_feedback_rounds=20,
+                floors=floors,
+                weights=weights,
+            )
+            ucb_qos_worst.append(float(ucb_result["qos_worst"]))
+            ucb_certificates.append(
+                bool(ucb_result["stopped_by_certificate"])
+            )
+            ucb_feedback_rounds.append(
+                int(ucb_result["feedback_rounds"])
+            )
+            ucb_refine_rounds.append(int(ucb_result["refine_rounds"]))
             exact.append(exact_qos_worst(
                 scenario, budget, floors, weights, args.grid
             ))
@@ -111,6 +135,16 @@ def main() -> None:
             "plain_nomp_qos_worst_mean": float(np.mean(plain_qos)),
             "qos_nomp_qos_worst_mean": float(np.mean(qos_worst)),
             "qos_nomp_worst_pd_mean": float(np.mean(qos_raw_pd)),
+            "ucb_nomp_qos_worst_mean": float(np.mean(ucb_qos_worst)),
+            "ucb_nomp_certificate_stop_rate": float(np.mean(
+                ucb_certificates
+            )),
+            "ucb_nomp_mean_feedback_rounds": float(np.mean(
+                ucb_feedback_rounds
+            )),
+            "ucb_nomp_mean_refine_rounds": float(np.mean(
+                ucb_refine_rounds
+            )),
             "exact_qos_worst_mean": float(np.mean(exact)),
             "qos_improvement": float(np.mean(qos_worst) - np.mean(plain_qos)),
             "qos_nomp_gap_to_exact": float(
@@ -126,6 +160,7 @@ def main() -> None:
         "targets": 2,
         "reports": 2,
         "per_link_channels": True,
+        "ucb_noise_scale": 0.2,
         "summary": summary,
     }
     output = Path(args.output)

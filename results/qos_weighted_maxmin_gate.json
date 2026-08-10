@@ -12,12 +12,17 @@
   "targets": 2,
   "reports": 2,
   "per_link_channels": true,
+  "ucb_noise_scale": 0.2,
   "summary": [
     {
       "budget": 8,
       "plain_nomp_qos_worst_mean": 0.2804670883583108,
       "qos_nomp_qos_worst_mean": 0.3951909217462238,
       "qos_nomp_worst_pd_mean": 0.47172586264634664,
+      "ucb_nomp_qos_worst_mean": 0.3951909217462238,
+      "ucb_nomp_certificate_stop_rate": 0.4,
+      "ucb_nomp_mean_feedback_rounds": 13.9,
+      "ucb_nomp_mean_refine_rounds": 1.4,
       "exact_qos_worst_mean": 0.3951909217462238,
       "qos_improvement": 0.11472383338791298,
       "qos_nomp_gap_to_exact": 0.0
@@ -27,6 +32,10 @@
       "plain_nomp_qos_worst_mean": 0.5345875238470461,
       "qos_nomp_qos_worst_mean": 0.6287372067489961,
       "qos_nomp_worst_pd_mean": 0.5345794813645262,
+      "ucb_nomp_qos_worst_mean": 0.6287372067489961,
+      "ucb_nomp_certificate_stop_rate": 0.5,
+      "ucb_nomp_mean_feedback_rounds": 12.2,
+      "ucb_nomp_mean_refine_rounds": 2.1,
       "exact_qos_worst_mean": 0.6287372067489961,
       "qos_improvement": 0.09414968290195003,
       "qos_nomp_gap_to_exact": 0.0
@@ -36,6 +45,10 @@
       "plain_nomp_qos_worst_mean": 0.6659063705306062,
       "qos_nomp_qos_worst_mean": 0.7876676078186999,
       "qos_nomp_worst_pd_mean": 0.573669775829325,
+      "ucb_nomp_qos_worst_mean": 0.7876676078186999,
+      "ucb_nomp_certificate_stop_rate": 0.5,
+      "ucb_nomp_mean_feedback_rounds": 12.8,
+      "ucb_nomp_mean_refine_rounds": 2.6,
       "exact_qos_worst_mean": 0.7876676078186999,
       "qos_improvement": 0.12176123728809374,
       "qos_nomp_gap_to_exact": 0.0

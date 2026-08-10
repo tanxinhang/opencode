@@ -277,3 +277,25 @@ def test_qos_nomp_matches_exact_weighted_maxmin():
     )
     exact = exact_qos_worst(scenario, 8, floors, weights, 16)
     assert abs(result["qos_worst"] - exact) < 1e-6
+
+
+def test_ucb_nomp_qos_matches_deterministic():
+    scenario = make_comm_mismatch_scenario(10000, 2, 2)
+    floors = [0.30, 0.45]
+    weights = [1.0, 1.3]
+    noisy = ucb_wta_greedy_joint_multi(
+        scenario,
+        8,
+        noise_scale=0.2,
+        seed=0,
+        min_cover=True,
+        refine=True,
+        max_feedback_rounds=10,
+        floors=floors,
+        weights=weights,
+    )
+    deterministic = nomp_wta_greedy_joint_multi(
+        scenario, 8, floors=floors, weights=weights
+    )
+    assert noisy["feedback_rounds"] <= 10
+    assert abs(noisy["qos_worst"] - deterministic["qos_worst"]) < 1e-6
