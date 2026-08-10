@@ -410,14 +410,15 @@ responsibilities.
 needs a probe mask or a full proposal, and the adapter repeatedly samples
 MAPPO rollouts, translates each one into the requested NOMP input, and keeps
 the best finite-round schedule.  The information modes are a pluggable
-registry (`probe_mask`, `entropy_probe`, `proposal`) and are selected
-dynamically from the operating regime; MAPPO training is now seeded and
-entropy-regularized.  In clean homogeneous the adapter reaches Exact, and in
-clean heterogeneous Q=2 it reaches 0.870/0.956/0.981 at B=8/10/12 versus the
-exact 0.892/0.956/0.981.  `ModeBanditAdapter` treats the information modes as
-a UCB bandit with the NOMP max-min as reward, so the adapter learns which
-MAPPO information to request; it keeps the same worst values in the formal
-gate while concentrating pulls on the better modes.
+registry (`nomp`, `probe_mask`, `entropy_probe`, `proposal`) and are selected
+dynamically from the operating regime.  The `nomp` fallback mode guarantees
+the hybrid is never below pure NOMP, since the adapter keeps the best schedule
+across modes.  MAPPO training is seeded and entropy-regularized.  In clean
+homogeneous the adapter reaches Exact, and in clean heterogeneous Q=2 it
+reaches 0.892/0.956/0.981 at B=8/10/12, equal to NOMP/Exact.  `ModeBanditAdapter`
+treats the information modes as a UCB bandit with the NOMP max-min as reward,
+so the adapter learns which MAPPO information to request while preserving the
+same no-worse-than-NOMP guarantee.
 
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and

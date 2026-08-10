@@ -102,7 +102,19 @@ def _proposal_allocate(outputs, scenario, requirement):
     }
 
 
+def _nomp_allocate(outputs, scenario, requirement):
+    """Pure NOMP fallback: guarantees the hybrid is never below NOMP."""
+    return nomp.nomp_wta_greedy_joint_multi(
+        scenario,
+        requirement.budget,
+        max_bits=requirement.max_bits,
+        grid=requirement.grid,
+        max_rounds=requirement.max_refine_rounds,
+    )
+
+
 MODE_REGISTRY = {
+    "nomp": _nomp_allocate,
     "probe_mask": _probe_mask_allocate,
     "entropy_probe": _entropy_probe_allocate,
     "proposal": _proposal_allocate,
@@ -113,10 +125,10 @@ def select_modes(scenario, budget):
     """Pick information modes from NOMP's current operating regime."""
     target_count = len(scenario)
     if budget <= 4 * target_count:
-        return ("probe_mask",)
+        return ("nomp", "probe_mask")
     if budget >= 8 * target_count:
-        return ("proposal",)
-    return ("probe_mask", "entropy_probe", "proposal")
+        return ("nomp", "proposal")
+    return ("nomp", "probe_mask", "entropy_probe", "proposal")
 
 
 def ucb_index(mean, count, total_pulls, beta=1.0):

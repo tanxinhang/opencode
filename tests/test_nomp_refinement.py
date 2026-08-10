@@ -337,10 +337,10 @@ def test_adapter_requirement_and_state_shape():
 
 def test_adapter_mode_registry_and_dynamic_selection():
     assert set(MODE_REGISTRY) >= {
-        "probe_mask", "entropy_probe", "proposal",
+        "nomp", "probe_mask", "entropy_probe", "proposal",
     }
-    assert select_modes([None, None], 8) == ("probe_mask",)
-    assert select_modes([None, None], 20) == ("proposal",)
+    assert select_modes([None, None], 8) == ("nomp", "probe_mask")
+    assert select_modes([None, None], 20) == ("nomp", "proposal")
 
 
 def test_ucb_mode_index_is_finite():

@@ -1964,13 +1964,16 @@ rollouts, translate each rollout into the requested NOMP input, run NOMP, and
 keep the best worst-target value after at most `iters` rounds.  The adapter
 result is no worse than any single mode used alone and is bounded above by
 the full NOMP schedule.  The modes are a pluggable registry and can be
-selected dynamically from the operating regime instead of being fixed.
+selected dynamically from the operating regime instead of being fixed.  The
+registry always contains the pure NOMP mode, so the adapter result is at
+least the full NOMP value.
 
 Proof: the adapter takes a maximum over schedules produced by the individual
 modes, so it dominates every mode by construction.  Each mode is bounded by
 the full NOMP schedule by Lemma 4.83, hence the maximum is too.  The loop is
 finite by the hard `iters` cap.  In the clean heterogeneous gate the adapter
-reaches 0.870/0.956/0.981 at B=8/10/12, above both single-mode hybrids.
+reaches 0.892/0.956/0.981 at B=8/10/12, equal to NOMP/Exact and above both
+single-mode hybrids.
 MAPPO training is seeded and entropy-regularized so the adapter input
 distribution is reproducible.
 
@@ -1986,8 +1989,9 @@ Proof: the UCB index is the standard optimistic estimator for bounded
 rewards; each mode is explored at least once, so no mode is starved before
 its first observation.  The kept schedule is the maximum over pulled modes,
 so the result is bounded below by the best observed mode and above by the
-full NOMP schedule.  The loop terminates at `iters`.  In the clean
-heterogeneous gate the bandit adapter keeps the same 0.870/0.956/0.981 worst
+full NOMP schedule.  Because the pure NOMP mode is always in the registry,
+the result is at least NOMP.  The loop terminates at `iters`.  In the clean
+heterogeneous gate the bandit adapter keeps the 0.892/0.956/0.981 NOMP/Exact
 values while learning the mode means online.
 
 The deployment gates use an empirical Lipschitz constant computed from
