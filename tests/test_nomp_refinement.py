@@ -309,3 +309,11 @@ def test_mappo_nomp_feasibility_helper_respects_budget():
     powers, bits = _feasible_from_mappo(scenario, powers, bits, 8)
     used = int(sum(powers[q].sum() + bits[q].sum() for q in range(2)))
     assert used <= 8
+
+
+def test_probe_mask_restricts_nomp_activation():
+    scenario = make_comm_mismatch_scenario(10000, 2, 2)
+    mask = [np.array([1, 0]), np.array([0, 1])]
+    result = nomp_wta_greedy_joint_multi(scenario, 8, probe_mask=mask)
+    assert result["bits"][0][1] == 0
+    assert result["bits"][1][0] == 0

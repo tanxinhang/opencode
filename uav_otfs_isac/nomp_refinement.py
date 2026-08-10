@@ -320,6 +320,7 @@ def _iter_candidates(
     max_exact_reports: int = 8,
     samples: int = 2048,
     rng_seed: int = 0,
+    probe_mask=None,
 ):
     """Yield feasible single-exchange power/bit/atom moves."""
     q_count = len(scenario)
@@ -346,6 +347,8 @@ def _iter_candidates(
                     or powers[q][s] + bits[q][s] < 2
                 ):
                     continue
+                if probe_mask is not None and probe_mask[q][d] == 0:
+                    continue
                 if powers[q][s] >= 2:
                     new_p = [row.copy() for row in powers]
                     new_b = [row.copy() for row in bits]
@@ -365,6 +368,8 @@ def _iter_candidates(
                 freed = int(powers[q][s] + bits[q][s])
                 for d in range(reports):
                     if d == s:
+                        continue
+                    if probe_mask is not None and probe_mask[q][d] == 0:
                         continue
                     new_p = [row.copy() for row in powers]
                     new_b = [row.copy() for row in bits]
@@ -478,7 +483,13 @@ def _iter_candidates(
                         if remaining == 0:
                             yield new_p, new_b
                     for dd in range(reports):
-                        if bits[d][dd] > 0:
+                        if (
+                            bits[d][dd] > 0
+                            or (
+                                probe_mask is not None
+                                and probe_mask[d][dd] == 0
+                            )
+                        ):
                             continue
                         new_p = [row.copy() for row in powers]
                         new_b = [row.copy() for row in bits]
@@ -517,6 +528,7 @@ def maxmin_refine(
     samples: int = 2048,
     rng_seed: int = 0,
     candidate_budget: int = 32,
+    probe_mask=None,
 ):
     """NOMP-style discrete refinement with a hard iteration cap."""
     rounds_used = 0
@@ -550,6 +562,7 @@ def maxmin_refine(
             max_exact_reports=max_exact_reports,
             samples=samples,
             rng_seed=rng_seed,
+            probe_mask=probe_mask,
         ))
         if not candidates:
             break
@@ -606,11 +619,14 @@ def wta_greedy_joint_multi(
     max_exact_reports: int = 8,
     samples: int = 2048,
     rng_seed: int = 0,
+    probe_mask=None,
 ):
     """Online WTA greedy allocation with optional per-target minimum cover."""
     if max_power is None:
         max_power = int(budget)
     reports = _report_count(scenario[0])
+    if probe_mask is not None:
+        min_cover = False
     if min_cover:
         powers, bits, used = initial_min_cover(
             scenario,
@@ -651,7 +667,14 @@ def wta_greedy_joint_multi(
         for q, target in enumerate(scenario):
             active = _active_reports(bits[q])
             for r in range(reports):
-                if bits[q][r] > 0 or used + 2 > budget:
+                if (
+                    bits[q][r] > 0
+                    or used + 2 > budget
+                    or (
+                        probe_mask is not None
+                        and probe_mask[q][r] == 0
+                    )
+                ):
                     continue
                 old_b, old_p = bits[q].copy(), powers[q].copy()
                 bits[q][r] = 1
@@ -747,6 +770,7 @@ def nomp_wta_greedy_joint_multi(
     samples: int = 2048,
     rng_seed: int = 0,
     candidate_budget: int = 32,
+    probe_mask=None,
 ):
     """WTA greedy with minimum cover, followed by NOMP-style refinement."""
     if max_power is None:
@@ -754,7 +778,7 @@ def nomp_wta_greedy_joint_multi(
     greedy = wta_greedy_joint_multi(
         scenario,
         budget,
-        min_cover=True,
+        min_cover=probe_mask is None,
         max_bits=max_bits,
         max_power=max_power,
         grid=grid,
@@ -765,6 +789,7 @@ def nomp_wta_greedy_joint_multi(
         max_exact_reports=max_exact_reports,
         samples=samples,
         rng_seed=rng_seed,
+        probe_mask=probe_mask,
     )
     powers, bits, refine_rounds = maxmin_refine(
         scenario,
@@ -782,6 +807,7 @@ def nomp_wta_greedy_joint_multi(
         samples=samples,
         rng_seed=rng_seed,
         candidate_budget=candidate_budget,
+        probe_mask=probe_mask,
     )
     raw = target_scores(
         scenario,

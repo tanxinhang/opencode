@@ -270,6 +270,30 @@ def evaluate_mappo_nomp(actor, scenarios, budget, reports):
     return float(np.mean(worsts))
 
 
+def evaluate_mappo_probe_nomp(actor, scenarios, budget, reports):
+    """MAPPO chooses which reports to probe, NOMP allocates bits/power."""
+    worsts = []
+    for scenario in scenarios:
+        states = [state(float(t[0]), t[1:], budget) for t in scenario]
+        with torch.no_grad():
+            logits_b, _ = actor(torch.as_tensor(
+                np.stack(states), dtype=torch.float32
+            ))
+            bits = torch.stack([
+                torch.argmax(logits_b[:, r, :], dim=1)
+                for r in range(reports)
+            ], dim=1).numpy()
+        mask = [np.asarray(bits[q] > 0, dtype=int) for q in range(len(scenario))]
+        if any(int(row.sum()) > 0 for row in mask):
+            result = nomp.nomp_wta_greedy_joint_multi(
+                scenario, budget, probe_mask=mask
+            )
+        else:
+            result = nomp.nomp_wta_greedy_joint_multi(scenario, budget)
+        worsts.append(float(result["worst_pd"]))
+    return float(np.mean(worsts))
+
+
 def greedy_joint_multi(scenario, budget, initialization="equal", max_power=None):
     if max_power is None:
         max_power = budget
@@ -690,6 +714,9 @@ def run_comparison(args) -> dict:
         mappo_nomp_worst = evaluate_mappo_nomp(
             actor, test_scenarios, budget, args.reports
         )
+        mappo_probe_nomp_worst = evaluate_mappo_probe_nomp(
+            actor, test_scenarios, budget, args.reports
+        )
         train_seconds = time.perf_counter() - start
         greedy_worsts = []
         greedy_winner_init_worsts = []
@@ -778,6 +805,7 @@ def run_comparison(args) -> dict:
             "budget": budget,
             "mappo_worst_mean": mappo_worst,
             "mappo_nomp_worst_mean": mappo_nomp_worst,
+            "mappo_probe_nomp_worst_mean": mappo_probe_nomp_worst,
             "greedy_worst_mean": float(np.mean(greedy_worsts)),
             "greedy_winner_init_worst_mean": float(np.mean(
                 greedy_winner_init_worsts

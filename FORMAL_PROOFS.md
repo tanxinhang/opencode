@@ -1952,6 +1952,11 @@ in clean heterogeneous it matches exact at B=8/10 and stays 0.040 below the
 full NOMP schedule at B=12 because the fixed MAPPO bit profile is the only
 remaining restriction.
 
+The stricter `MAPPO-Probe-NOMP` variant restricts NOMP's report activation to
+the MAPPO probe mask.  It reaches the exact max-min only when the mask
+contains the optimal active set, so its guarantee is conditioned on probe
+accuracy; proposal-plus-refine remains the robust form of the decomposition.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -2059,7 +2064,7 @@ the audit.
 | Corollary 4.80A | `nomp_refinement.nomp_wta_greedy_joint_multi` | `tests/test_nomp_refinement.py`, Gate JC JSON |
 | Lemma 4.81 | `nomp_refinement` channel parameters + `scripts/run_joint_power_comm_mismatch_gate.py` | `tests/test_nomp_refinement.py`, Gate CMM JSON |
 | Lemma 4.82 | `nomp_refinement.qos_scores` + `scripts/run_qos_weighted_maxmin_gate.py` | `tests/test_nomp_refinement.py`, Gate QOS JSON |
-| Lemma 4.83 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp` | Gate JC JSON |
+| Lemma 4.83 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp`, `evaluate_mappo_probe_nomp` | Gate JC JSON |
 
 ## 6. Explicit non-claims
 

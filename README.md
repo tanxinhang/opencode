@@ -378,6 +378,14 @@ where MAPPO alone is 0.588, while full NOMP reaches 0.981.  The remaining gap
 at B=12 comes from the MAPPO bit proposal, which the power-only refinement is
 not allowed to change.
 
+`MAPPO-Probe-NOMP` is a stricter split: MAPPO only chooses which reports to
+probe, and NOMP decides bits and power inside that mask.  It reaches the
+exact max-min when MAPPO proposes the right links, but its result depends on
+probe quality, e.g. 0.751 in one heterogeneous B=10 run where MAPPO proposed
+poor links.  Proposal-plus-refine `MAPPO-NOMP` is therefore the more robust
+hybrid, while `MAPPO-Probe-NOMP` is the cleaner decomposition of
+responsibilities.
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
 union-bound UCB widths.  The winner certificate compares the active winner's
