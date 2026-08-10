@@ -4,6 +4,7 @@ from uav_otfs_isac.joint_power_bit import exact_joint_power_bit_maxmin
 from uav_otfs_isac.robust_joint_power_bit import (
     enumerate_robust_power_bit_options,
     pareto_options,
+    per_report_communication_target_pd,
 )
 
 
@@ -92,3 +93,35 @@ def test_robust_gate_scenario_shows_positive_improvement():
             chosen = min(candidates, key=lambda option: option.cost_bits)
             clean_schedule_robust.append(chosen.robust_pd)
         assert robust > min(clean_schedule_robust) + 1e-6
+
+
+def test_sampled_expected_pd_approximates_exact_for_many_reports():
+    rng = np.random.default_rng(5)
+    deltas = rng.uniform(0.8, 2.0, 10)
+    flips = rng.uniform(0.0, 0.1, 10)
+    successes = rng.uniform(0.7, 0.95, 10)
+    powers = np.full(10, 2.0)
+    bits = np.ones(10, dtype=int)
+    exact = per_report_communication_target_pd(
+        0.4,
+        deltas,
+        powers,
+        bits,
+        flips,
+        successes,
+        grid=8,
+        max_exact_reports=10,
+    )
+    sampled = per_report_communication_target_pd(
+        0.4,
+        deltas,
+        powers,
+        bits,
+        flips,
+        successes,
+        grid=8,
+        max_exact_reports=4,
+        samples=4000,
+        rng=np.random.default_rng(1),
+    )
+    assert abs(sampled - exact) < 0.02

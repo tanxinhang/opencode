@@ -34,6 +34,9 @@ def _target_pd(
     flip_probability: float,
     success_probability: float,
     grid: int,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng=None,
 ) -> float:
     return _expected_communication_pd(
         owner_delta,
@@ -43,6 +46,9 @@ def _target_pd(
         np.full(len(report_deltas), float(flip_probability)),
         np.full(len(report_deltas), float(success_probability)),
         grid,
+        max_exact_reports=max_exact_reports,
+        samples=samples,
+        rng=rng,
     )
 
 
@@ -54,6 +60,9 @@ def communication_target_pd(
     flip_probability: float,
     success_probability: float,
     grid: int = 32,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng=None,
 ) -> float:
     """P_D of one target with a shared communication channel state."""
     return _target_pd(
@@ -64,7 +73,32 @@ def communication_target_pd(
         flip_probability,
         success_probability,
         grid,
+        max_exact_reports=max_exact_reports,
+        samples=samples,
+        rng=rng,
     )
+
+
+def _pd_for_mask(owner_delta, entries, mask, grid):
+    mu0 = [0.0]
+    mu1 = [float(owner_delta)]
+    var0 = [1.0]
+    var1 = [1.0]
+    for j, (m0, m1, v0, v1, _) in enumerate(entries):
+        if mask >> j & 1:
+            mu0.append(m0)
+            mu1.append(m1)
+            var0.append(v0)
+            var1.append(v1)
+    return float(optimal_gaussian_detection_probability(
+        np.asarray(mu0),
+        np.asarray(mu1),
+        np.diag(var0),
+        np.diag(var1),
+        set(range(len(mu0))),
+        0.05,
+        grid=grid,
+    ))
 
 
 def _expected_communication_pd(
@@ -75,8 +109,17 @@ def _expected_communication_pd(
     flip_probabilities: np.ndarray,
     success_probabilities: np.ndarray,
     grid: int,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng=None,
 ) -> float:
-    """Expected P_D over independent report erasures."""
+    """Expected P_D over independent report erasures.
+
+    Below ``max_exact_reports`` the erasure law is marginalized exactly over
+    all ``2^R`` received subsets.  Above it, independent Monte Carlo draws
+    estimate the same expectation, so the cost stays linear in the number of
+    samples instead of exponential in the report count.
+    """
     deltas = np.asarray(report_deltas, dtype=float)
     powers = np.asarray(powers, dtype=float)
     bits = np.asarray(bits, dtype=int)
@@ -89,35 +132,35 @@ def _expected_communication_pd(
         scaled = float(deltas[i]) * np.sqrt(max(float(powers[i]), 0.0))
         m0, m1, v0, v1 = moments(scaled, int(bits[i]), float(flips[i]))
         entries.append((m0, m1, v0, v1, float(successes[i])))
+    if len(entries) <= max_exact_reports:
+        total = 0.0
+        for mask in range(1 << len(entries)):
+            probability = 1.0
+            for j, (_, _, _, _, success) in enumerate(entries):
+                if mask >> j & 1:
+                    probability *= success
+                else:
+                    probability *= 1.0 - success
+            if probability <= 0.0:
+                continue
+            total += probability * _pd_for_mask(
+                owner_delta, entries, mask, grid
+            )
+        return float(total)
+    if rng is None:
+        rng = np.random.default_rng(0)
+    success_vector = np.asarray([
+        float(success) for _, _, _, _, success in entries
+    ])
     total = 0.0
-    for mask in range(1 << len(entries)):
-        probability = 1.0
-        mu0 = [0.0]
-        mu1 = [float(owner_delta)]
-        var0 = [1.0]
-        var1 = [1.0]
-        for j, (m0, m1, v0, v1, success) in enumerate(entries):
-            if mask >> j & 1:
-                probability *= success
-                mu0.append(m0)
-                mu1.append(m1)
-                var0.append(v0)
-                var1.append(v1)
-            else:
-                probability *= 1.0 - success
-        if probability <= 0.0:
-            continue
-        pd = optimal_gaussian_detection_probability(
-            np.asarray(mu0),
-            np.asarray(mu1),
-            np.diag(var0),
-            np.diag(var1),
-            set(range(len(mu0))),
-            0.05,
-            grid=grid,
-        )
-        total += probability * float(pd)
-    return float(total)
+    for _ in range(samples):
+        received = rng.random(len(entries)) < success_vector
+        mask = 0
+        for j, value in enumerate(received):
+            if value:
+                mask |= 1 << j
+        total += _pd_for_mask(owner_delta, entries, mask, grid)
+    return float(total / samples)
 
 
 def per_report_communication_target_pd(
@@ -128,6 +171,9 @@ def per_report_communication_target_pd(
     flip_probabilities: np.ndarray,
     success_probabilities: np.ndarray,
     grid: int = 32,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng=None,
 ) -> float:
     """Expected P_D with per-report BSC flip and erasure."""
     return _expected_communication_pd(
@@ -138,6 +184,9 @@ def per_report_communication_target_pd(
         np.asarray(flip_probabilities, dtype=float),
         np.asarray(success_probabilities, dtype=float),
         grid,
+        max_exact_reports=max_exact_reports,
+        samples=samples,
+        rng=rng,
     )
 
 

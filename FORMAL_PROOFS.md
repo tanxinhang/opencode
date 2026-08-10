@@ -1912,6 +1912,9 @@ per-link UCB-NOMP variant observes noisy per-link coefficients, runs the
 all-report winner certificate from Lemma 4.78 on the feedback loop, and then
 applies the same expected-P_D refinement; in the gate it keeps the
 deterministic NOMP worst values with certificate stop rates of 0.60/0.55/0.55.
+For report counts above R=8 the erasure expectation is estimated by
+independent Monte Carlo draws instead of enumerating all received subsets;
+the estimator is unbiased and the gate records mean runtime per scenario.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is

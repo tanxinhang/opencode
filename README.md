@@ -343,6 +343,14 @@ proxy-ranked single exchange would miss.  Minimum cover is adaptive: a report
 is activated only when it improves the target's expected P_D, so harmful
 low-reliability links are not forced in.
 
+`scripts/run_nomp_report_scaling_gate.py` sweeps the report count with
+per-link channels and budget `6R`: NOMP improves WTA-Greedy at every R
+(0.631 vs 0.585 at R=2, 0.893 vs 0.864 at R=4, 0.962 vs 0.952 at R=6).
+Expected P_D is marginalized over erasures exactly up to R=8 and switches to
+Monte Carlo above it, so the online allocator remains usable as R grows.
+
+![NOMP report scaling](paper_figures/nomp_report_scaling.png)
+
 The same comparison also reports `UCB-WTA-Greedy`, which runs the online
 greedy with noisy coefficient estimates, sub-Gaussian observation noise, and
 union-bound UCB widths.  The winner certificate compares the active winner's

@@ -241,6 +241,16 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "nomp-report-scaling"
+        Args = @(
+            "scripts\run_nomp_report_scaling_gate.py",
+            "--reports", "2", "4", "6",
+            "--seeds", "10",
+            "--output", "results\nomp_report_scaling_gate.json",
+            "--figure", "paper_figures\nomp_report_scaling.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

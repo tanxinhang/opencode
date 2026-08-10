@@ -1,0 +1,33 @@
+{
+  "gate": "nomp-report-scaling",
+  "seeds": 10,
+  "budget_multiplier": 3,
+  "targets": 2,
+  "per_link_channels": true,
+  "rows": [
+    {
+      "reports": 2,
+      "budget": 12,
+      "wta_greedy_worst_mean": 0.5851409001117351,
+      "nomp_greedy_worst_mean": 0.63065148307004,
+      "nomp_mean_refine_rounds": 1.9,
+      "nomp_mean_seconds": 0.46852909997105596
+    },
+    {
+      "reports": 4,
+      "budget": 24,
+      "wta_greedy_worst_mean": 0.8640224828541647,
+      "nomp_greedy_worst_mean": 0.8927032704564543,
+      "nomp_mean_refine_rounds": 3.6,
+      "nomp_mean_seconds": 4.4462166899815205
+    },
+    {
+      "reports": 6,
+      "budget": 36,
+      "wta_greedy_worst_mean": 0.9520608511788925,
+      "nomp_greedy_worst_mean": 0.9619781922286729,
+      "nomp_mean_refine_rounds": 3.5,
+      "nomp_mean_seconds": 17.394825959950687
+    }
+  ]
+}
