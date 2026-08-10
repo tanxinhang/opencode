@@ -390,6 +390,13 @@ and matches Exact when R=2.
 
 ![Physical hard channel robustness](paper_figures/physical_hard_channel.png)
 
+`scripts/run_physical_ppo_nomp_gate.py` evaluates PPO + NOMP on the same
+physical channels.  The PPO proposal and its proposal-plus-refine hybrid are
+not robust (e.g., hard R=2: PPO 0.145, PPO+NOMP 0.186, NOMP 0.549), but the
+PPO Bandit with the pure NOMP fallback reaches NOMP/Exact (hard R=2 0.549,
+extreme R=2 0.206, hard R=4 0.719).  Robustness therefore still comes from
+the NOMP fallback.
+
 `scripts/run_ppo_nomp_reward_robustness_gate.py` tests the PPO + NOMP-final
 reward policy under unseen weak targets and increasing channel difficulty.
 Standalone PPO-Informed improves over vanilla MAPPO in most cells; the

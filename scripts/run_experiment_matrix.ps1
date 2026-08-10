@@ -355,6 +355,18 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "physical-ppo-nomp"
+        Args = @(
+            "scripts\run_physical_ppo_nomp_gate.py",
+            "--reports", "2", "4",
+            "--episodes", "100",
+            "--train-seeds", "20",
+            "--test-seeds", "10",
+            "--output", "results\physical_ppo_nomp_gate.json",
+            "--figure", "paper_figures\physical_ppo_nomp.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

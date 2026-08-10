@@ -42,6 +42,7 @@ def main() -> None:
     hard_channel = load("hard_channel_gate.json")
     ppo_robust = load("ppo_nomp_reward_robustness_gate.json")
     physical = load("physical_hard_channel_gate.json")
+    physical_ppo = load("physical_ppo_nomp_gate.json")
 
     header = [
         "Budget",
@@ -299,6 +300,20 @@ def main() -> None:
             round(row["nomp_worst_mean"], 4),
             round(row["exact_worst_mean"], 4) if row["exact_worst_mean"] else "-",
         ] for row in physical["rows"]],
+    )
+
+    print_table(
+        "Physical channels: PPO + NOMP",
+        ["Difficulty", "R", "PPO", "PPO+NOMP", "PPO Bandit", "NOMP", "Exact"],
+        [[
+            row["difficulty"],
+            row["reports"],
+            round(row["ppo_worst_mean"], 4),
+            round(row["ppo_nomp_worst_mean"], 4),
+            round(row["ppo_bandit_worst_mean"], 4),
+            round(row["nomp_worst_mean"], 4),
+            round(row["exact_worst_mean"], 4) if row["exact_worst_mean"] else "-",
+        ] for row in physical_ppo["rows"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))

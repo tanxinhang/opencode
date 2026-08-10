@@ -412,9 +412,9 @@ def train_mappo_ppo(
                         logits=logits_p[:, r, :]
                     )
                     new_lp = new_lp + dist_b.log_prob(
-                        bits_batch[idx][:, r]
+                        bits_batch[idx][:, :, r]
                     ).sum(dim=1) + dist_p.log_prob(
-                        powers_batch[idx][:, r]
+                        powers_batch[idx][:, :, r]
                     ).sum(dim=1)
                     entropy = entropy + dist_b.entropy().sum(dim=1) + (
                         dist_p.entropy().sum(dim=1)

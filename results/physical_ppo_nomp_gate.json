@@ -1,0 +1,68 @@
+{
+  "gate": "physical-ppo-nomp",
+  "episodes": 100,
+  "train_seeds": 20,
+  "test_seeds": 10,
+  "rows": [
+    {
+      "reports": 2,
+      "budget": 16,
+      "difficulty": "baseline",
+      "ppo_worst_mean": 0.23128463820507722,
+      "ppo_nomp_worst_mean": 0.35160642018694543,
+      "ppo_bandit_worst_mean": 0.9989843912836942,
+      "nomp_worst_mean": 0.9989843912836942,
+      "exact_worst_mean": 0.998984391290192
+    },
+    {
+      "reports": 2,
+      "budget": 16,
+      "difficulty": "hard",
+      "ppo_worst_mean": 0.14524222617636764,
+      "ppo_nomp_worst_mean": 0.1856130388943314,
+      "ppo_bandit_worst_mean": 0.5494672284671587,
+      "nomp_worst_mean": 0.5494349868509688,
+      "exact_worst_mean": 0.5494672284671587
+    },
+    {
+      "reports": 2,
+      "budget": 16,
+      "difficulty": "extreme",
+      "ppo_worst_mean": 0.1034762727014443,
+      "ppo_nomp_worst_mean": 0.1162016557114304,
+      "ppo_bandit_worst_mean": 0.20609810092896214,
+      "nomp_worst_mean": 0.20551284516422932,
+      "exact_worst_mean": 0.20610359126257866
+    },
+    {
+      "reports": 4,
+      "budget": 32,
+      "difficulty": "baseline",
+      "ppo_worst_mean": 0.3206233075133874,
+      "ppo_nomp_worst_mean": 0.9999999999975501,
+      "ppo_bandit_worst_mean": 1.0,
+      "nomp_worst_mean": 1.0,
+      "exact_worst_mean": null
+    },
+    {
+      "reports": 4,
+      "budget": 32,
+      "difficulty": "hard",
+      "ppo_worst_mean": 0.17660015804698187,
+      "ppo_nomp_worst_mean": 0.6607882448073925,
+      "ppo_bandit_worst_mean": 0.7188855122802096,
+      "nomp_worst_mean": 0.7061222939008406,
+      "exact_worst_mean": null
+    },
+    {
+      "reports": 4,
+      "budget": 32,
+      "difficulty": "extreme",
+      "ppo_worst_mean": 0.11949691091496388,
+      "ppo_nomp_worst_mean": 0.2605746053743627,
+      "ppo_bandit_worst_mean": 0.27726019786204403,
+      "nomp_worst_mean": 0.26746953759082603,
+      "exact_worst_mean": null
+    }
+  ]
+}
