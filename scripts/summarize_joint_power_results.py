@@ -8,6 +8,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RESULTS = PROJECT_ROOT / "results"
@@ -34,6 +35,7 @@ def main() -> None:
     scaling = load("joint_power_scaling.json")
     comm_mismatch = load("joint_power_comm_mismatch_gate.json")
     qos = load("qos_weighted_maxmin_gate.json")
+    unknown = load("unknown_environment_gate.json")
 
     header = [
         "Budget",
@@ -126,6 +128,38 @@ def main() -> None:
             round(row["qos_improvement"], 4),
             round(row["qos_nomp_gap_to_exact"], 4),
         ] for row in qos["summary"]],
+    )
+
+    print_table(
+        "Unknown environments (average over budgets)",
+        ["Environment", "MAPPO", "Adapter", "Bandit", "UCB-NOMP", "NOMP", "Exact"],
+        [[
+            env,
+            round(np.mean([
+                row["mappo_worst_mean"] for row in unknown["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["mappo_adapter_worst_mean"] for row in unknown["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["mappo_bandit_worst_mean"] for row in unknown["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["ucb_nomp_worst_mean"] for row in unknown["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["nomp_greedy_worst_mean"] for row in unknown["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["exact_worst_mean"] for row in unknown["rows"]
+                if row["environment"] == env
+            ]), 4),
+        ] for env in ["in_distribution", "channel_shift", "weak", "strong"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))

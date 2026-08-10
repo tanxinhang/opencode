@@ -186,7 +186,9 @@ class MappoNompAdapter:
         seed: int = 0,
         sample: bool = True,
         iters: int = 3,
+        state_scenario=None,
     ):
+        state_scenario = scenario if state_scenario is None else state_scenario
         reports = nomp._report_count(scenario[0])
         if requirement.modes == "auto":
             modes = select_modes(scenario, requirement.budget)
@@ -199,7 +201,7 @@ class MappoNompAdapter:
         for _ in range(iters):
             states = np.stack([
                 build_state(float(t[0]), t[1:], requirement.budget)
-                for t in scenario
+                for t in state_scenario
             ])
             with torch.no_grad():
                 logits_b, logits_p = self.actor(torch.as_tensor(
@@ -267,7 +269,9 @@ class ModeBanditAdapter:
         seed: int = 0,
         sample: bool = True,
         iters: int = 5,
+        state_scenario=None,
     ):
+        state_scenario = scenario if state_scenario is None else state_scenario
         reports = nomp._report_count(scenario[0])
         if requirement.modes == "auto":
             modes = list(select_modes(scenario, requirement.budget))
@@ -293,7 +297,7 @@ class ModeBanditAdapter:
                 chosen = max(scores, key=lambda mode: scores[mode])
             states = np.stack([
                 build_state(float(t[0]), t[1:], requirement.budget)
-                for t in scenario
+                for t in state_scenario
             ])
             with torch.no_grad():
                 logits_b, logits_p = self.actor(torch.as_tensor(

@@ -370,6 +370,16 @@ Q=6/R=2 WTA-Greedy falls to 0.144 while NOMP stays at 0.449.
 
 ![Q-R scenario comparison](paper_figures/qr_scenario_comparison.png)
 
+`scripts/run_unknown_environment_gate.py` trains MAPPO on the heterogeneous
+distribution and evaluates it on unseen channel shifts, weak targets, and
+strong targets.  NOMP/UCB-NOMP track the exact oracle in every unseen
+environment, e.g. channel shift 0.292/0.331/0.354 at B=8/10/12, while MAPPO
+alone degrades to 0.226/0.166/0.213.  MAPPO-Adapter/Bandit improve MAPPO but
+stay below NOMP because their proposals come from a policy trained on a
+different distribution.
+
+![Unknown environment performance](paper_figures/unknown_environment.png)
+
 `MAPPO-NOMP` is a two-stage hybrid: MAPPO proposes the report activation and
 communication-bit profile (probe selection), then NOMP allocates sensing
 power and refines the schedule (power allocation).  In clean homogeneous it

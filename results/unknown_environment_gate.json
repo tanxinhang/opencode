@@ -1,0 +1,152 @@
+{
+  "gate": "unknown-environment",
+  "episodes": 300,
+  "train_seeds": 30,
+  "test_seeds": 10,
+  "rows": [
+    {
+      "environment": "in_distribution",
+      "budget": 8,
+      "greedy_worst_mean": 0.5058651938692804,
+      "wta_greedy_worst_mean": 0.8590010943574267,
+      "ucb_nomp_worst_mean": 0.8936653247694796,
+      "nomp_greedy_worst_mean": 0.8936653247694796,
+      "exact_worst_mean": 0.8936653247694796,
+      "mappo_worst_mean": 0.6209941656724356,
+      "mappo_adapter_worst_mean": 0.8936653247694796,
+      "mappo_bandit_worst_mean": 0.8936653247694796
+    },
+    {
+      "environment": "in_distribution",
+      "budget": 10,
+      "greedy_worst_mean": 0.49928537248397065,
+      "wta_greedy_worst_mean": 0.943553335939669,
+      "ucb_nomp_worst_mean": 0.9560360217435202,
+      "nomp_greedy_worst_mean": 0.9560360217435202,
+      "exact_worst_mean": 0.9560360217435202,
+      "mappo_worst_mean": 0.5268802279809355,
+      "mappo_adapter_worst_mean": 0.9443897604606388,
+      "mappo_bandit_worst_mean": 0.9286728481663078
+    },
+    {
+      "environment": "in_distribution",
+      "budget": 12,
+      "greedy_worst_mean": 0.49928537248397065,
+      "wta_greedy_worst_mean": 0.9850397551805017,
+      "ucb_nomp_worst_mean": 0.9850397551805017,
+      "nomp_greedy_worst_mean": 0.9850397551805017,
+      "exact_worst_mean": 0.9850397551805017,
+      "mappo_worst_mean": 0.7338596597928719,
+      "mappo_adapter_worst_mean": 0.970761410427637,
+      "mappo_bandit_worst_mean": 0.9748491250624747
+    },
+    {
+      "environment": "channel_shift",
+      "budget": 8,
+      "greedy_worst_mean": null,
+      "wta_greedy_worst_mean": 0.22339400193072914,
+      "ucb_nomp_worst_mean": 0.2922418672086732,
+      "nomp_greedy_worst_mean": 0.2922418672086732,
+      "exact_worst_mean": 0.2922418672086732,
+      "mappo_worst_mean": 0.2259528655494623,
+      "mappo_adapter_worst_mean": 0.27395195869673333,
+      "mappo_bandit_worst_mean": 0.27395195869673333
+    },
+    {
+      "environment": "channel_shift",
+      "budget": 10,
+      "greedy_worst_mean": null,
+      "wta_greedy_worst_mean": 0.2691979157127053,
+      "ucb_nomp_worst_mean": 0.33060557513567385,
+      "nomp_greedy_worst_mean": 0.33060557513567385,
+      "exact_worst_mean": 0.33060557513567385,
+      "mappo_worst_mean": 0.16648812821789058,
+      "mappo_adapter_worst_mean": 0.31956703152071364,
+      "mappo_bandit_worst_mean": 0.3096484606850745
+    },
+    {
+      "environment": "channel_shift",
+      "budget": 12,
+      "greedy_worst_mean": null,
+      "wta_greedy_worst_mean": 0.31305294831084374,
+      "ucb_nomp_worst_mean": 0.353608680481409,
+      "nomp_greedy_worst_mean": 0.353608680481409,
+      "exact_worst_mean": 0.353608680481409,
+      "mappo_worst_mean": 0.21285035374196917,
+      "mappo_adapter_worst_mean": 0.33941100468926894,
+      "mappo_bandit_worst_mean": 0.34210176956887794
+    },
+    {
+      "environment": "weak",
+      "budget": 8,
+      "greedy_worst_mean": 0.24278631221818917,
+      "wta_greedy_worst_mean": 0.0823524592892186,
+      "ucb_nomp_worst_mean": 0.3864144900256675,
+      "nomp_greedy_worst_mean": 0.3864144900256675,
+      "exact_worst_mean": 0.3864144900256675,
+      "mappo_worst_mean": 0.25856959307927274,
+      "mappo_adapter_worst_mean": 0.0823524592892186,
+      "mappo_bandit_worst_mean": 0.0823524592892186
+    },
+    {
+      "environment": "weak",
+      "budget": 10,
+      "greedy_worst_mean": 0.24278631221818917,
+      "wta_greedy_worst_mean": 0.19061666372844496,
+      "ucb_nomp_worst_mean": 0.5050467272230896,
+      "nomp_greedy_worst_mean": 0.5050467272230896,
+      "exact_worst_mean": 0.5050467272230896,
+      "mappo_worst_mean": 0.24571113188386703,
+      "mappo_adapter_worst_mean": 0.488266249197897,
+      "mappo_bandit_worst_mean": 0.4646696439311223
+    },
+    {
+      "environment": "weak",
+      "budget": 12,
+      "greedy_worst_mean": 0.24278631221818917,
+      "wta_greedy_worst_mean": 0.3554305969556122,
+      "ucb_nomp_worst_mean": 0.6070410937439562,
+      "nomp_greedy_worst_mean": 0.6070410937439562,
+      "exact_worst_mean": 0.6070410937439562,
+      "mappo_worst_mean": 0.3751919632110464,
+      "mappo_adapter_worst_mean": 0.558989378374794,
+      "mappo_bandit_worst_mean": 0.5620018020885303
+    },
+    {
+      "environment": "strong",
+      "budget": 8,
+      "greedy_worst_mean": 0.8110720791524049,
+      "wta_greedy_worst_mean": 0.995341355904292,
+      "ucb_nomp_worst_mean": 0.995341355904292,
+      "nomp_greedy_worst_mean": 0.995341355904292,
+      "exact_worst_mean": 0.995341355904292,
+      "mappo_worst_mean": 0.8796456527657319,
+      "mappo_adapter_worst_mean": 0.995341355904292,
+      "mappo_bandit_worst_mean": 0.995341355904292
+    },
+    {
+      "environment": "strong",
+      "budget": 10,
+      "greedy_worst_mean": 0.7753227769204861,
+      "wta_greedy_worst_mean": 0.9999501486283627,
+      "ucb_nomp_worst_mean": 0.9999501486283627,
+      "nomp_greedy_worst_mean": 0.9999501486283627,
+      "exact_worst_mean": 0.9999501486283627,
+      "mappo_worst_mean": 0.8881471582233214,
+      "mappo_adapter_worst_mean": 0.9999501482489425,
+      "mappo_bandit_worst_mean": 0.9998538570648352
+    },
+    {
+      "environment": "strong",
+      "budget": 12,
+      "greedy_worst_mean": 0.7753227769204861,
+      "wta_greedy_worst_mean": 0.9999999535074311,
+      "ucb_nomp_worst_mean": 0.9999999535074311,
+      "nomp_greedy_worst_mean": 0.9999999535074311,
+      "exact_worst_mean": 0.9999999535074429,
+      "mappo_worst_mean": 0.9975555432566843,
+      "mappo_adapter_worst_mean": 0.9999999493966374,
+      "mappo_bandit_worst_mean": 0.9999999493353396
+    }
+  ]
+}

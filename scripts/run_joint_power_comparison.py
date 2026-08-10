@@ -303,11 +303,18 @@ def evaluate_mappo_probe_nomp(actor, scenarios, budget, reports):
     return float(np.mean(worsts))
 
 
-def evaluate_mappo_adapter_nomp(actor, scenarios, budget, reports, iters=3):
+def evaluate_mappo_adapter_nomp(
+    actor, scenarios, budget, reports, iters=3, state_scenarios=None
+):
     """Adapter repeatedly translates MAPPO rollouts into NOMP inputs."""
     worsts = []
     adapter = MappoNompAdapter(actor)
     for scenario_index, scenario in enumerate(scenarios):
+        state_scenario = (
+            state_scenarios[scenario_index]
+            if state_scenarios is not None
+            else scenario
+        )
         requirement = NompRequirement(
             modes="auto",
             budget=budget,
@@ -318,18 +325,24 @@ def evaluate_mappo_adapter_nomp(actor, scenarios, budget, reports, iters=3):
             seed=scenario_index,
             sample=True,
             iters=iters,
+            state_scenario=state_scenario,
         )
         worsts.append(float(result["worst_pd"]))
     return float(np.mean(worsts))
 
 
 def evaluate_mappo_bandit_adapter_nomp(
-    actor, scenarios, budget, reports, iters=5
+    actor, scenarios, budget, reports, iters=5, state_scenarios=None
 ):
     """UCB adapter learns which MAPPO information NOMP should request."""
     worsts = []
     adapter = ModeBanditAdapter(actor)
     for scenario_index, scenario in enumerate(scenarios):
+        state_scenario = (
+            state_scenarios[scenario_index]
+            if state_scenarios is not None
+            else scenario
+        )
         requirement = NompRequirement(
             modes="auto",
             budget=budget,
@@ -340,6 +353,7 @@ def evaluate_mappo_bandit_adapter_nomp(
             seed=scenario_index,
             sample=True,
             iters=iters,
+            state_scenario=state_scenario,
         )
         worsts.append(float(result["worst_pd"]))
     return float(np.mean(worsts))
