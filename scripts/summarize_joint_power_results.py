@@ -205,13 +205,15 @@ def main() -> None:
 
     print_table(
         "MAPPO trained with NOMP-final reward",
-        ["Budget", "MAPPO", "Informed MAPPO", "MAPPO+NOMP", "Informed+NOMP"],
+        ["Budget", "MAPPO", "Informed", "PPO-Informed", "MAPPO+NOMP", "Informed+NOMP", "PPO+NOMP"],
         [[
             row["budget"],
             round(row["mappo_worst_mean"], 4),
             round(row["informed_mappo_worst_mean"], 4),
+            round(row["ppo_informed_mappo_worst_mean"], 4),
             round(row["mappo_nomp_worst_mean"], 4),
             round(row["informed_mappo_nomp_worst_mean"], 4),
+            round(row["ppo_informed_mappo_nomp_worst_mean"], 4),
         ] for row in mappo_reward["rows"]],
     )
 

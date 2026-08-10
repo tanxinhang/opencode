@@ -6,24 +6,30 @@
   "rows": [
     {
       "budget": 8,
-      "mappo_worst_mean": 0.5058651938692804,
+      "mappo_worst_mean": 0.4756419726273872,
       "mappo_nomp_worst_mean": 0.8936653247694796,
-      "informed_mappo_worst_mean": 0.8166675452804014,
-      "informed_mappo_nomp_worst_mean": 0.8875057317891868
+      "informed_mappo_worst_mean": 0.807658000649283,
+      "informed_mappo_nomp_worst_mean": 0.8875057317891868,
+      "ppo_informed_mappo_worst_mean": 0.9884836327182137,
+      "ppo_informed_mappo_nomp_worst_mean": 0.8936653247694796
     },
     {
       "budget": 10,
-      "mappo_worst_mean": 0.6592824461817075,
-      "mappo_nomp_worst_mean": 0.9560360217435202,
-      "informed_mappo_worst_mean": 0.9934262185315607,
-      "informed_mappo_nomp_worst_mean": 0.9560360217435202
+      "mappo_worst_mean": 0.6947984101993355,
+      "mappo_nomp_worst_mean": 0.8936653247694796,
+      "informed_mappo_worst_mean": 0.8994414524982745,
+      "informed_mappo_nomp_worst_mean": 0.9560360217435202,
+      "ppo_informed_mappo_worst_mean": 0.9206869901396748,
+      "ppo_informed_mappo_nomp_worst_mean": 0.950101425490088
     },
     {
       "budget": 12,
       "mappo_worst_mean": 0.7880842309558209,
       "mappo_nomp_worst_mean": 0.9850397551805017,
-      "informed_mappo_worst_mean": 0.9845663254089038,
-      "informed_mappo_nomp_worst_mean": 0.9850397551805017
+      "informed_mappo_worst_mean": 0.8160912459730987,
+      "informed_mappo_nomp_worst_mean": 0.96200149884332,
+      "ppo_informed_mappo_worst_mean": 0.9992201758373775,
+      "ppo_informed_mappo_nomp_worst_mean": 0.9850397551805017
     }
   ]
 }

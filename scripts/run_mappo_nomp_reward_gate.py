@@ -27,6 +27,7 @@ from scripts.run_joint_power_comparison import (
     make_scenario,
     train_mappo,
     train_mappo_nomp_reward,
+    train_mappo_ppo,
 )
 
 
@@ -54,6 +55,16 @@ def main() -> None:
         informed = train_mappo_nomp_reward(
             train_scenarios, budget, args.episodes, 2
         )
+        ppo_informed = train_mappo_ppo(
+            train_scenarios,
+            budget,
+            args.episodes,
+            2,
+            ppo_epochs=2,
+            entropy_coef=0.05,
+            learning_rate=1e-3,
+            reward_mode="nomp",
+        )
         rows.append({
             "budget": budget,
             "mappo_worst_mean": float(evaluate_mappo(
@@ -67,6 +78,12 @@ def main() -> None:
             )),
             "informed_mappo_nomp_worst_mean": float(evaluate_mappo_nomp(
                 informed, test_scenarios, budget, 2
+            )),
+            "ppo_informed_mappo_worst_mean": float(evaluate_mappo(
+                ppo_informed, test_scenarios, budget, 2
+            )),
+            "ppo_informed_mappo_nomp_worst_mean": float(evaluate_mappo_nomp(
+                ppo_informed, test_scenarios, budget, 2
             )),
         })
         print(json.dumps(rows[-1], indent=2))
@@ -88,8 +105,10 @@ def main() -> None:
     fields = [
         ("mappo_worst_mean", "MAPPO"),
         ("informed_mappo_worst_mean", "MAPPO-NOMP-reward"),
+        ("ppo_informed_mappo_worst_mean", "PPO-NOMP-reward"),
         ("mappo_nomp_worst_mean", "MAPPO+NOMP"),
         ("informed_mappo_nomp_worst_mean", "Informed+NOMP"),
+        ("ppo_informed_mappo_nomp_worst_mean", "PPO-Informed+NOMP"),
     ]
     plt.figure(figsize=(8, 5))
     for i, (field, name) in enumerate(fields):

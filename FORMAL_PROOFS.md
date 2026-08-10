@@ -2026,8 +2026,10 @@ environment, so the REINFORCE estimator remains unbiased for the system
 objective.  Because NOMP is max-min monotone, the shaped reward is at least
 the raw proposal reward, giving the policy a denser and more aligned signal.
 The gate reports the standalone proposal improving from 0.506/0.659/0.788 to
-0.817/0.993/0.985 at B=8/10/12; the adapter with the pure NOMP fallback
-retains the no-worse-than-NOMP guarantee.
+0.988/0.921/0.999 when the same NOMP-final reward is used with the PPO
+trainer, and the proposal-plus-refine hybrid reaches NOMP/Exact at B=8/12;
+the adapter with the pure NOMP fallback retains the no-worse-than-NOMP
+guarantee.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is

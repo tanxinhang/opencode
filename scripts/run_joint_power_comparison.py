@@ -287,6 +287,7 @@ def train_mappo_ppo(
     clip_epsilon: float = 0.2,
     entropy_coef: float = 0.01,
     learning_rate: float = 1e-3,
+    reward_mode: str = "raw",
 ):
     """Real PPO: clipped surrogate, mini-batches, normalized advantages."""
     state_dim = reports + 2
@@ -337,6 +338,24 @@ def train_mappo_ppo(
         ]
         used = int(powers.sum().item() + bits.sum().item())
         reward = float(np.min(pds)) - 0.1 * max(0, used - budget)
+        if reward_mode == "nomp":
+            proposal_powers = powers.numpy()
+            proposal_bits = bits.numpy()
+            proposal_powers, proposal_bits = _feasible_from_mappo(
+                scenario, proposal_powers, proposal_bits, budget
+            )
+            proposal_powers, proposal_bits, _ = nomp.maxmin_refine(
+                scenario,
+                proposal_powers,
+                proposal_bits,
+                max_power=budget,
+                max_bits=MAX_BITS,
+                max_rounds=50,
+                grid=GRID,
+            )
+            reward = float(min(nomp.target_scores(
+                scenario, proposal_powers, proposal_bits, GRID
+            )))
         buffer.append({
             "agent_states": agent_states,
             "global_state": torch.as_tensor(
