@@ -1,0 +1,29 @@
+{
+  "gate": "mappo-nomp-reward",
+  "episodes": 300,
+  "train_seeds": 30,
+  "test_seeds": 10,
+  "rows": [
+    {
+      "budget": 8,
+      "mappo_worst_mean": 0.5058651938692804,
+      "mappo_nomp_worst_mean": 0.8936653247694796,
+      "informed_mappo_worst_mean": 0.8166675452804014,
+      "informed_mappo_nomp_worst_mean": 0.8875057317891868
+    },
+    {
+      "budget": 10,
+      "mappo_worst_mean": 0.6592824461817075,
+      "mappo_nomp_worst_mean": 0.9560360217435202,
+      "informed_mappo_worst_mean": 0.9934262185315607,
+      "informed_mappo_nomp_worst_mean": 0.9560360217435202
+    },
+    {
+      "budget": 12,
+      "mappo_worst_mean": 0.7880842309558209,
+      "mappo_nomp_worst_mean": 0.9850397551805017,
+      "informed_mappo_worst_mean": 0.9845663254089038,
+      "informed_mappo_nomp_worst_mean": 0.9850397551805017
+    }
+  ]
+}

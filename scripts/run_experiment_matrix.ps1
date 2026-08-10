@@ -309,6 +309,18 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "mappo-nomp-reward"
+        Args = @(
+            "scripts\run_mappo_nomp_reward_gate.py",
+            "--budgets", "8", "10", "12",
+            "--episodes", "300",
+            "--train-seeds", "30",
+            "--test-seeds", "10",
+            "--output", "results\mappo_nomp_reward_gate.json",
+            "--figure", "paper_figures\mappo_nomp_reward.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

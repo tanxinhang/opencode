@@ -173,8 +173,87 @@ def train_mappo(scenarios, budget, episodes, reports):
         )
         returns = torch.as_tensor([reward], dtype=torch.float32)
         advantage = returns - torch.as_tensor([value], dtype=torch.float32)
-        bit_target = torch.as_tensor(bits, dtype=torch.int64)
-        power_target = torch.as_tensor(powers, dtype=torch.int64)
+        bit_target = torch.as_tensor(
+            np.asarray(bits), dtype=torch.int64
+        )
+        power_target = torch.as_tensor(
+            np.asarray(powers), dtype=torch.int64
+        )
+        logits_b, logits_p = actor(agent_states)
+        lp = 0.0
+        entropy = 0.0
+        for r in range(reports):
+            dist_b = torch.distributions.Categorical(
+                logits=logits_b[:, r, :]
+            )
+            dist_p = torch.distributions.Categorical(
+                logits=logits_p[:, r, :]
+            )
+            lp += dist_b.log_prob(bit_target[:, r]).sum()
+            lp += dist_p.log_prob(power_target[:, r]).sum()
+            entropy += dist_b.entropy().sum() + dist_p.entropy().sum()
+        loss = -advantage * lp - 0.01 * entropy
+        vp = critic(global_state.unsqueeze(0))
+        loss = loss + nn.functional.mse_loss(vp, returns)
+        actor_opt.zero_grad(); critic_opt.zero_grad()
+        loss.backward(); actor_opt.step(); critic_opt.step()
+    return actor
+
+
+def train_mappo_nomp_reward(scenarios, budget, episodes, reports):
+    """Train MAPPO with NOMP-final P_D as reward (middleware-informed)."""
+    state_dim = reports + 2
+    actor = Actor(state_dim, reports, power_options=budget + 1)
+    critic = Critic(state_dim * len(scenarios[0]))
+    actor_opt = torch.optim.Adam(actor.parameters(), lr=3e-3)
+    critic_opt = torch.optim.Adam(critic.parameters(), lr=3e-3)
+    for episode in range(episodes):
+        scenario = scenarios[episode % len(scenarios)]
+        states = [state(float(t[0]), t[1:], budget) for t in scenario]
+        global_state = torch.as_tensor(
+            np.concatenate(states), dtype=torch.float32
+        )
+        agent_states = torch.as_tensor(
+            np.stack(states), dtype=torch.float32
+        )
+        with torch.no_grad():
+            logits_b, logits_p = actor(agent_states)
+            bits = torch.stack([
+                torch.distributions.Categorical(
+                    logits=logits_b[:, r, :]
+                ).sample()
+                for r in range(reports)
+            ], dim=1).numpy()
+            powers = torch.stack([
+                torch.distributions.Categorical(
+                    logits=logits_p[:, r, :]
+                ).sample()
+                for r in range(reports)
+            ], dim=1).numpy()
+            value = float(critic(global_state))
+        powers, bits = _feasible_from_mappo(
+            scenario, powers, bits, budget
+        )
+        powers, bits, _ = nomp.maxmin_refine(
+            scenario,
+            powers,
+            bits,
+            max_power=budget,
+            max_bits=MAX_BITS,
+            max_rounds=50,
+            grid=GRID,
+        )
+        reward = float(min(nomp.target_scores(
+            scenario, powers, bits, GRID
+        )))
+        returns = torch.as_tensor([reward], dtype=torch.float32)
+        advantage = returns - torch.as_tensor([value], dtype=torch.float32)
+        bit_target = torch.as_tensor(
+            np.asarray(bits), dtype=torch.int64
+        )
+        power_target = torch.as_tensor(
+            np.asarray(powers), dtype=torch.int64
+        )
         logits_b, logits_p = actor(agent_states)
         lp = 0.0
         entropy = 0.0

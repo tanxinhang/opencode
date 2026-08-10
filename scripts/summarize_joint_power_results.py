@@ -38,6 +38,7 @@ def main() -> None:
     unknown = load("unknown_environment_gate.json")
     robust = load("robust_curriculum_gate.json")
     priority = load("priority_middleware_gate.json")
+    mappo_reward = load("mappo_nomp_reward_gate.json")
 
     header = [
         "Budget",
@@ -200,6 +201,18 @@ def main() -> None:
             round(row["priority_nomp_worst"], 4),
             round(row["gain"], 4),
         ] for row in priority["rows"]],
+    )
+
+    print_table(
+        "MAPPO trained with NOMP-final reward",
+        ["Budget", "MAPPO", "Informed MAPPO", "MAPPO+NOMP", "Informed+NOMP"],
+        [[
+            row["budget"],
+            round(row["mappo_worst_mean"], 4),
+            round(row["informed_mappo_worst_mean"], 4),
+            round(row["mappo_nomp_worst_mean"], 4),
+            round(row["informed_mappo_nomp_worst_mean"], 4),
+        ] for row in mappo_reward["rows"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))

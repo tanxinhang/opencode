@@ -131,6 +131,7 @@ python scripts/run_qr_scenario_comparison.py --modes homogeneous heterogeneous c
 python scripts/run_unknown_environment_gate.py --budgets 8 10 12 --episodes 300 --train-seeds 30 --test-seeds 10 --output results/unknown_environment_gate.json --figure paper_figures/unknown_environment.png
 python scripts/run_robust_curriculum_gate.py --budgets 8 10 12 --episodes 300 --train-seeds 20 --test-seeds 10 --output results/robust_curriculum_gate.json --figure paper_figures/robust_curriculum.png
 python scripts/run_priority_middleware_gate.py --episodes 12 --samples 512 --candidate-budget 8 --output results/priority_middleware_gate.json --figure paper_figures/priority_middleware.png
+python scripts/run_mappo_nomp_reward_gate.py --budgets 8 10 12 --episodes 300 --train-seeds 30 --test-seeds 10 --output results/mappo_nomp_reward_gate.json --figure paper_figures/mappo_nomp_reward.png
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/build_paper_tables.py
 ```
