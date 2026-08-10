@@ -301,7 +301,7 @@ $cells = @(
         Name = "priority-middleware"
         Args = @(
             "scripts\run_priority_middleware_gate.py",
-            "--episodes", "8",
+            "--episodes", "12",
             "--samples", "512",
             "--candidate-budget", "8",
             "--output", "results\priority_middleware_gate.json",

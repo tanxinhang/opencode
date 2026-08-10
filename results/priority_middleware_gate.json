@@ -1,6 +1,6 @@
 {
   "gate": "priority-middleware",
-  "episodes": 8,
+  "episodes": 12,
   "samples": 512,
   "candidate_budget": 8,
   "rows": [
@@ -11,7 +11,7 @@
       "plain_nomp_worst": 0.8694517254222391,
       "priority_nomp_worst": 0.877742651561823,
       "gain": 0.00829092613958382,
-      "best_priority": 1
+      "best_priority": 0
     },
     {
       "seed": 10001,
@@ -23,11 +23,29 @@
       "best_priority": 1
     },
     {
-      "seed": 10000,
-      "reports": 3,
-      "budget": 18,
-      "plain_nomp_worst": 0.6940906337094086,
-      "priority_nomp_worst": 0.6940906337094086,
+      "seed": 10002,
+      "reports": 4,
+      "budget": 32,
+      "plain_nomp_worst": 0.8897459618016107,
+      "priority_nomp_worst": 0.8897459618016107,
+      "gain": 0.0,
+      "best_priority": 1
+    },
+    {
+      "seed": 10003,
+      "reports": 4,
+      "budget": 24,
+      "plain_nomp_worst": 0.8935723105269539,
+      "priority_nomp_worst": 0.8935723105269539,
+      "gain": 0.0,
+      "best_priority": 0
+    },
+    {
+      "seed": 10004,
+      "reports": 4,
+      "budget": 32,
+      "plain_nomp_worst": 0.9527999615070373,
+      "priority_nomp_worst": 0.9527999615070373,
       "gain": 0.0,
       "best_priority": 1
     }

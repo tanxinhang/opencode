@@ -2008,10 +2008,11 @@ solves.  Therefore the result dominates plain NOMP by construction and is
 bounded above by the exact oracle.  The policy is trained online with a
 finite episode cap.  The gate reports hard R=4 scenarios where plain NOMP is
 stuck in a local optimum and the priority middleware improves 0.852 to 0.864
-and 0.869 to 0.878, a genuine `1 + 1 > 2` collaboration.  The policy state
-includes the normalized NOMP residuals from the previous weighted solve, so
-the priority choice is conditioned on the actual per-target deficit that
-NOMP left behind.
+and 0.869 to 0.878, a genuine `1 + 1 > 2` collaboration; in the five-scenario
+R=4 gate two scenarios improve and three match plain NOMP, so there is no
+regression.  The policy state includes the normalized NOMP residuals from the
+previous weighted solve, so the priority choice is conditioned on the actual
+per-target deficit that NOMP left behind.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is

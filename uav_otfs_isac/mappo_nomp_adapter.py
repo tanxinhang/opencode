@@ -486,6 +486,7 @@ class PriorityNompAdapter:
             loss = -advantage * dist.log_prob(
                 torch.as_tensor(action, dtype=torch.int64)
             )
+            loss = loss - 0.05 * dist.entropy()
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
