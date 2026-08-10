@@ -345,6 +345,16 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "physical-hard-channel"
+        Args = @(
+            "scripts\run_physical_hard_channel_gate.py",
+            "--reports", "2", "4", "6",
+            "--seeds", "10",
+            "--output", "results\physical_hard_channel_gate.json",
+            "--figure", "paper_figures\physical_hard_channel.png"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

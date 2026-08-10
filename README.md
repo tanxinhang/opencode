@@ -380,15 +380,15 @@ different distribution.
 
 ![Unknown environment performance](paper_figures/unknown_environment.png)
 
-`scripts/run_hard_channel_gate.py` raises channel difficulty from
-`(flip 0.2, success 0.7)` to `(0.5, 0.3)` and `(0.7, 0.15)`.
-NOMP/UCB-NOMP/Robust Bandit track Exact at every difficulty
-(0.530/0.606/0.670 baseline, 0.229/0.249/0.261 hard, 0.161/0.170/0.177
-extreme), while WTA-Greedy drops to 0.123-0.235 and standalone Robust MAPPO
-to 0.116-0.421.  Channel robustness therefore comes from NOMP, with MAPPO
-contributing through the bandit middleware.
+`scripts/run_physical_hard_channel_gate.py` derives channels from physical
+BPSK bit-flip and log-normal outage models instead of arbitrary
+flip/success values (0.5/0.7 exceed the BPSK baseline, so they are not used).
+Baseline uses reference SNR 25 dB, hard 8 dB, and extreme 3 dB; the UAV count
+R is swept over 2/4/6.  NOMP beats WTA-Greedy at hard and extreme channels
+for every R, e.g. hard R=6 0.878 vs 0.863 and extreme R=6 0.414 vs 0.395,
+and matches Exact when R=2.
 
-![Hard channel robustness](paper_figures/hard_channel.png)
+![Physical hard channel robustness](paper_figures/physical_hard_channel.png)
 
 `scripts/run_ppo_nomp_reward_robustness_gate.py` tests the PPO + NOMP-final
 reward policy under unseen weak targets and increasing channel difficulty.

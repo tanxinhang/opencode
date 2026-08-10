@@ -1,0 +1,88 @@
+{
+  "gate": "physical-hard-channel",
+  "seeds": 10,
+  "budget_multiplier": 4,
+  "rows": [
+    {
+      "difficulty": "baseline",
+      "reports": 2,
+      "budget": 16,
+      "wta_worst_mean": 0.9989843911015495,
+      "ucb_nomp_worst_mean": 0.9989843912836942,
+      "nomp_worst_mean": 0.9989843912836942,
+      "exact_worst_mean": 0.998984391290192
+    },
+    {
+      "difficulty": "baseline",
+      "reports": 4,
+      "budget": 32,
+      "wta_worst_mean": 1.0,
+      "ucb_nomp_worst_mean": 0.9999999999902913,
+      "nomp_worst_mean": 1.0,
+      "exact_worst_mean": null
+    },
+    {
+      "difficulty": "baseline",
+      "reports": 6,
+      "budget": 48,
+      "wta_worst_mean": 1.0,
+      "ucb_nomp_worst_mean": 0.9999999914280636,
+      "nomp_worst_mean": 1.0,
+      "exact_worst_mean": null
+    },
+    {
+      "difficulty": "hard",
+      "reports": 2,
+      "budget": 16,
+      "wta_worst_mean": 0.5223264385338487,
+      "ucb_nomp_worst_mean": 0.5488110516944388,
+      "nomp_worst_mean": 0.5494672284671587,
+      "exact_worst_mean": 0.5494672284671587
+    },
+    {
+      "difficulty": "hard",
+      "reports": 4,
+      "budget": 32,
+      "wta_worst_mean": 0.6988085793396135,
+      "ucb_nomp_worst_mean": 0.6947922846708203,
+      "nomp_worst_mean": 0.7188807092630443,
+      "exact_worst_mean": null
+    },
+    {
+      "difficulty": "hard",
+      "reports": 6,
+      "budget": 48,
+      "wta_worst_mean": 0.862741818580014,
+      "ucb_nomp_worst_mean": 0.8260527094923047,
+      "nomp_worst_mean": 0.8781788637769476,
+      "exact_worst_mean": null
+    },
+    {
+      "difficulty": "extreme",
+      "reports": 2,
+      "budget": 16,
+      "wta_worst_mean": 0.19049131502075528,
+      "ucb_nomp_worst_mean": 0.20609810092896214,
+      "nomp_worst_mean": 0.20609810092896214,
+      "exact_worst_mean": 0.20610359126257866
+    },
+    {
+      "difficulty": "extreme",
+      "reports": 4,
+      "budget": 32,
+      "wta_worst_mean": 0.2599246286029523,
+      "ucb_nomp_worst_mean": 0.27609264668313843,
+      "nomp_worst_mean": 0.27726019786204403,
+      "exact_worst_mean": null
+    },
+    {
+      "difficulty": "extreme",
+      "reports": 6,
+      "budget": 48,
+      "wta_worst_mean": 0.39463782827920674,
+      "ucb_nomp_worst_mean": 0.40518796522678135,
+      "nomp_worst_mean": 0.4135725694275673,
+      "exact_worst_mean": null
+    }
+  ]
+}

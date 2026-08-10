@@ -41,6 +41,7 @@ def main() -> None:
     mappo_reward = load("mappo_nomp_reward_gate.json")
     hard_channel = load("hard_channel_gate.json")
     ppo_robust = load("ppo_nomp_reward_robustness_gate.json")
+    physical = load("physical_hard_channel_gate.json")
 
     header = [
         "Budget",
@@ -285,6 +286,19 @@ def main() -> None:
                 if row["environment"] == env
             ]), 4),
         ] for env in ["in_distribution", "weak", "channel_shift", "hard"]],
+    )
+
+    print_table(
+        "Physical hard channels",
+        ["Difficulty", "R", "WTA", "UCB-NOMP", "NOMP", "Exact"],
+        [[
+            row["difficulty"],
+            row["reports"],
+            round(row["wta_worst_mean"], 4),
+            round(row["ucb_nomp_worst_mean"], 4),
+            round(row["nomp_worst_mean"], 4),
+            round(row["exact_worst_mean"], 4) if row["exact_worst_mean"] else "-",
+        ] for row in physical["rows"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))
