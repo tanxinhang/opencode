@@ -39,6 +39,7 @@ def main() -> None:
     robust = load("robust_curriculum_gate.json")
     priority = load("priority_middleware_gate.json")
     mappo_reward = load("mappo_nomp_reward_gate.json")
+    hard_channel = load("hard_channel_gate.json")
 
     header = [
         "Budget",
@@ -215,6 +216,34 @@ def main() -> None:
             round(row["informed_mappo_nomp_worst_mean"], 4),
             round(row["ppo_informed_mappo_nomp_worst_mean"], 4),
         ] for row in mappo_reward["rows"]],
+    )
+
+    print_table(
+        "Hard channel robustness (average over budgets)",
+        ["Difficulty", "WTA", "Robust MAPPO", "Robust Bandit", "NOMP", "Exact"],
+        [[
+            env,
+            round(np.mean([
+                row["wta_worst_mean"] for row in hard_channel["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["robust_mappo_worst_mean"] for row in hard_channel["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["robust_bandit_worst_mean"] for row in hard_channel["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["nomp_worst_mean"] for row in hard_channel["rows"]
+                if row["environment"] == env
+            ]), 4),
+            round(np.mean([
+                row["exact_worst_mean"] for row in hard_channel["rows"]
+                if row["environment"] == env
+            ]), 4),
+        ] for env in ["baseline", "hard", "extreme"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))

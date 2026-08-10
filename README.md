@@ -380,6 +380,16 @@ different distribution.
 
 ![Unknown environment performance](paper_figures/unknown_environment.png)
 
+`scripts/run_hard_channel_gate.py` raises channel difficulty from
+`(flip 0.2, success 0.7)` to `(0.5, 0.3)` and `(0.7, 0.15)`.
+NOMP/UCB-NOMP/Robust Bandit track Exact at every difficulty
+(0.530/0.606/0.670 baseline, 0.229/0.249/0.261 hard, 0.161/0.170/0.177
+extreme), while WTA-Greedy drops to 0.123-0.235 and standalone Robust MAPPO
+to 0.116-0.421.  Channel robustness therefore comes from NOMP, with MAPPO
+contributing through the bandit middleware.
+
+![Hard channel robustness](paper_figures/hard_channel.png)
+
 `scripts/run_robust_curriculum_gate.py` additionally trains a channel-aware
 MAPPO on a curriculum of heterogeneous, weak, strong, and harsh-channel
 scenarios.  The curriculum alone is not enough for the raw REINFORCE policy
