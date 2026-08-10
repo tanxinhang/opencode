@@ -244,8 +244,10 @@ $cells = @(
         Name = "nomp-report-scaling"
         Args = @(
             "scripts\run_nomp_report_scaling_gate.py",
-            "--reports", "2", "4", "6",
-            "--seeds", "10",
+            "--reports", "2", "4", "6", "8", "10",
+            "--seeds", "5",
+            "--samples", "512",
+            "--candidate-budget", "32",
             "--output", "results\nomp_report_scaling_gate.json",
             "--figure", "paper_figures\nomp_report_scaling.png"
         )

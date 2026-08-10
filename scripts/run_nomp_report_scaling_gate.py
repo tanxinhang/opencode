@@ -36,9 +36,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="results/nomp_report_scaling_gate.json")
     parser.add_argument("--figure", default="paper_figures/nomp_report_scaling.png")
-    parser.add_argument("--reports", type=int, nargs="+", default=[2, 4, 6])
+    parser.add_argument("--reports", type=int, nargs="+", default=[2, 4, 6, 8, 10])
     parser.add_argument("--seeds", type=int, default=10)
     parser.add_argument("--budget-multiplier", type=int, default=3)
+    parser.add_argument("--samples", type=int, default=512)
+    parser.add_argument("--candidate-budget", type=int, default=32)
     args = parser.parse_args()
 
     rows = []
@@ -56,7 +58,14 @@ def main() -> None:
                 scenario, budget, min_cover=False
             )["worst_pd"]))
             start = time.perf_counter()
-            result = nomp_wta_greedy_joint_multi(scenario, budget)
+            result = nomp_wta_greedy_joint_multi(
+                scenario,
+                budget,
+                max_exact_reports=8,
+                samples=args.samples,
+                rng_seed=1,
+                candidate_budget=args.candidate_budget,
+            )
             nomp_seconds.append(time.perf_counter() - start)
             nomp_worsts.append(float(result["worst_pd"]))
             nomp_rounds.append(int(result["refine_rounds"]))

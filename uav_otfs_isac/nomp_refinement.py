@@ -30,6 +30,34 @@ def qos_scores(values, floors, weights=None):
     return weights * (values - floors) / np.maximum(floors, 1e-12)
 
 
+def deflection_proxy(
+    scenario,
+    powers,
+    bits,
+    flip_probability: float = 0.0,
+    success_probability: float = 1.0,
+):
+    """Cheap per-target deflection proxy for ranking refinement candidates."""
+    values = []
+    for q, target in enumerate(scenario):
+        _, deltas, flips, successes = _parse_target(
+            target, flip_probability, success_probability
+        )
+        total = 0.0
+        for r in range(deltas.size):
+            if bits[q][r] > 0:
+                total += float(powers[q][r]) * float(
+                    power_gain_coefficient(
+                        float(deltas[r]),
+                        int(bits[q][r]),
+                        float(flips[r]),
+                        float(successes[r]),
+                    )
+                )
+        values.append(total)
+    return values
+
+
 def leximin_improves(
     old_values,
     new_values,
@@ -85,6 +113,9 @@ def initial_min_cover(
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
     grid: int = 16,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng_seed: int = 0,
 ):
     """Activate one best report per target when the budget allows it."""
     reports = _report_count(scenario[0])
@@ -103,6 +134,9 @@ def initial_min_cover(
             grid,
             flip_probability,
             success_probability,
+            max_exact_reports,
+            samples,
+            rng_seed,
         )
         best_value = baseline
         best_winner = None
@@ -118,6 +152,9 @@ def initial_min_cover(
                 grid,
                 flip_probability,
                 success_probability,
+                max_exact_reports,
+                samples,
+                rng_seed,
             )
             if candidate > best_value:
                 best_value = candidate
@@ -137,6 +174,9 @@ def target_scores(
     grid: int = 16,
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng_seed: int = 0,
 ):
     """Per-target P_D under the current allocation."""
     return [
@@ -147,6 +187,9 @@ def target_scores(
             grid,
             flip_probability,
             success_probability,
+            max_exact_reports,
+            samples,
+            rng_seed,
         ))
         for q, target in enumerate(scenario)
     ]
@@ -159,6 +202,9 @@ def _target_pd(
     grid,
     flip_probability,
     success_probability,
+    max_exact_reports=8,
+    samples=2048,
+    rng_seed=0,
 ):
     owner_delta, deltas, flips, successes = _parse_target(
         target, flip_probability, success_probability
@@ -173,6 +219,9 @@ def _target_pd(
         flips,
         successes,
         grid,
+        max_exact_reports=max_exact_reports,
+        samples=samples,
+        rng=np.random.default_rng(rng_seed),
     )
 
 
@@ -187,6 +236,9 @@ def _winner_index(
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
     grid: int = 16,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng_seed: int = 0,
 ):
     active = _active_reports(bits)
     if not active:
@@ -202,6 +254,9 @@ def _winner_index(
             grid,
             flip_probability,
             success_probability,
+            max_exact_reports,
+            samples,
+            rng_seed,
         )
         best = None
         for r in active:
@@ -215,6 +270,9 @@ def _winner_index(
                 grid,
                 flip_probability,
                 success_probability,
+                max_exact_reports,
+                samples,
+                rng_seed,
             ) - base
             if best is None or value > best[0]:
                 best = (float(value), r)
@@ -259,6 +317,9 @@ def _iter_candidates(
     flip_probability: float = 0.0,
     success_probability: float = 1.0,
     grid: int = 16,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng_seed: int = 0,
 ):
     """Yield feasible single-exchange power/bit/atom moves."""
     q_count = len(scenario)
@@ -273,6 +334,9 @@ def _iter_candidates(
             flip_probability,
             success_probability,
             grid,
+            max_exact_reports,
+            samples,
+            rng_seed,
         )
         for s in range(reports):
             for d in range(reports):
@@ -449,6 +513,10 @@ def maxmin_refine(
     success_probability: float = 1.0,
     floors=None,
     weights=None,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng_seed: int = 0,
+    candidate_budget: int = 32,
 ):
     """NOMP-style discrete refinement with a hard iteration cap."""
     rounds_used = 0
@@ -460,6 +528,9 @@ def maxmin_refine(
             grid,
             flip_probability,
             success_probability,
+            max_exact_reports,
+            samples,
+            rng_seed,
         )
         old_values = (
             np.sort(qos_scores(old_raw, floors, weights))
@@ -467,7 +538,7 @@ def maxmin_refine(
             else np.sort(old_raw)
         )
         best = None
-        for candidate in _iter_candidates(
+        candidates = list(_iter_candidates(
             scenario,
             powers,
             bits,
@@ -476,7 +547,24 @@ def maxmin_refine(
             flip_probability=flip_probability,
             success_probability=success_probability,
             grid=grid,
-        ):
+            max_exact_reports=max_exact_reports,
+            samples=samples,
+            rng_seed=rng_seed,
+        ))
+        if not candidates:
+            break
+
+        def proxy_key(candidate):
+            return tuple(np.sort(deflection_proxy(
+                scenario,
+                candidate[0],
+                candidate[1],
+                flip_probability,
+                success_probability,
+            )))
+
+        candidates.sort(key=proxy_key, reverse=True)
+        for candidate in candidates[:candidate_budget]:
             new_raw = target_scores(
                 scenario,
                 candidate[0],
@@ -484,6 +572,9 @@ def maxmin_refine(
                 grid,
                 flip_probability,
                 success_probability,
+                max_exact_reports,
+                samples,
+                rng_seed,
             )
             new_values = (
                 np.sort(qos_scores(new_raw, floors, weights))
@@ -512,6 +603,9 @@ def wta_greedy_joint_multi(
     success_probability: float = 1.0,
     floors=None,
     weights=None,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng_seed: int = 0,
 ):
     """Online WTA greedy allocation with optional per-target minimum cover."""
     if max_power is None:
@@ -525,6 +619,9 @@ def wta_greedy_joint_multi(
             flip_probability=flip_probability,
             success_probability=success_probability,
             grid=grid,
+            max_exact_reports=max_exact_reports,
+            samples=samples,
+            rng_seed=rng_seed,
         )
     else:
         powers = [np.zeros(reports, dtype=int) for _ in scenario]
@@ -540,6 +637,9 @@ def wta_greedy_joint_multi(
             grid,
             flip_probability,
             success_probability,
+            max_exact_reports,
+            samples,
+            rng_seed,
         )
         if floors is not None:
             return float(np.mean(qos_scores(raw, floors, weights)))
@@ -581,6 +681,9 @@ def wta_greedy_joint_multi(
                     flip_probability,
                     success_probability,
                     grid,
+                    max_exact_reports,
+                    samples,
+                    rng_seed,
                 )
                 if powers[q][winner] < max_power and used + 1 <= budget:
                     old_p = powers[q].copy()
@@ -616,6 +719,9 @@ def wta_greedy_joint_multi(
             grid,
             flip_probability,
             success_probability,
+            max_exact_reports,
+            samples,
+            rng_seed,
         ))),
         "used": int(sum(
             int(powers[q].sum()) + int(bits[q].sum())
@@ -637,6 +743,10 @@ def nomp_wta_greedy_joint_multi(
     success_probability: float = 1.0,
     floors=None,
     weights=None,
+    max_exact_reports: int = 8,
+    samples: int = 2048,
+    rng_seed: int = 0,
+    candidate_budget: int = 32,
 ):
     """WTA greedy with minimum cover, followed by NOMP-style refinement."""
     if max_power is None:
@@ -652,6 +762,9 @@ def nomp_wta_greedy_joint_multi(
         success_probability=success_probability,
         floors=floors,
         weights=weights,
+        max_exact_reports=max_exact_reports,
+        samples=samples,
+        rng_seed=rng_seed,
     )
     powers, bits, refine_rounds = maxmin_refine(
         scenario,
@@ -665,6 +778,10 @@ def nomp_wta_greedy_joint_multi(
         success_probability=success_probability,
         floors=floors,
         weights=weights,
+        max_exact_reports=max_exact_reports,
+        samples=samples,
+        rng_seed=rng_seed,
+        candidate_budget=candidate_budget,
     )
     raw = target_scores(
         scenario,
@@ -673,6 +790,9 @@ def nomp_wta_greedy_joint_multi(
         grid,
         flip_probability,
         success_probability,
+        max_exact_reports,
+        samples,
+        rng_seed,
     )
     return {
         "powers": powers,

@@ -1914,7 +1914,9 @@ applies the same expected-P_D refinement; in the gate it keeps the
 deterministic NOMP worst values with certificate stop rates of 0.60/0.55/0.55.
 For report counts above R=8 the erasure expectation is estimated by
 independent Monte Carlo draws instead of enumerating all received subsets;
-the estimator is unbiased and the gate records mean runtime per scenario.
+the estimator is unbiased.  The refinement additionally ranks candidates by a
+cheap deflection proxy and verifies only the top-`candidate_budget` moves
+exactly, so the per-scenario runtime stays 0.4-42s in the R=2..10 sweep.
 
 ### Lemma 4.82 (QoS-scaled leximin refinement)
 

@@ -345,9 +345,10 @@ low-reliability links are not forced in.
 
 `scripts/run_nomp_report_scaling_gate.py` sweeps the report count with
 per-link channels and budget `6R`: NOMP improves WTA-Greedy at every R
-(0.631 vs 0.585 at R=2, 0.893 vs 0.864 at R=4, 0.962 vs 0.952 at R=6).
-Expected P_D is marginalized over erasures exactly up to R=8 and switches to
-Monte Carlo above it, so the online allocator remains usable as R grows.
+(0.680/0.868/0.938/0.981/0.997 versus 0.634/0.827/0.928/0.979/0.997 at
+R=2/4/6/8/10).  Expected P_D is marginalized over erasures exactly up to R=8
+and switches to Monte Carlo above it; proxy-ranked candidate evaluation keeps
+the mean per-scenario runtime between 0.4s and 42s across the sweep.
 
 ![NOMP report scaling](paper_figures/nomp_report_scaling.png)
 

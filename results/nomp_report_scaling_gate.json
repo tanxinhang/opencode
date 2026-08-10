@@ -1,6 +1,6 @@
 {
   "gate": "nomp-report-scaling",
-  "seeds": 10,
+  "seeds": 5,
   "budget_multiplier": 3,
   "targets": 2,
   "per_link_channels": true,
@@ -8,26 +8,42 @@
     {
       "reports": 2,
       "budget": 12,
-      "wta_greedy_worst_mean": 0.5851409001117351,
-      "nomp_greedy_worst_mean": 0.63065148307004,
-      "nomp_mean_refine_rounds": 1.9,
-      "nomp_mean_seconds": 0.46852909997105596
+      "wta_greedy_worst_mean": 0.6343371588709996,
+      "nomp_greedy_worst_mean": 0.6804817486798579,
+      "nomp_mean_refine_rounds": 2.0,
+      "nomp_mean_seconds": 0.44845607997849585
     },
     {
       "reports": 4,
       "budget": 24,
-      "wta_greedy_worst_mean": 0.8640224828541647,
-      "nomp_greedy_worst_mean": 0.8927032704564543,
-      "nomp_mean_refine_rounds": 3.6,
-      "nomp_mean_seconds": 4.4462166899815205
+      "wta_greedy_worst_mean": 0.826835526911424,
+      "nomp_greedy_worst_mean": 0.8682977127476563,
+      "nomp_mean_refine_rounds": 4.0,
+      "nomp_mean_seconds": 2.663574600033462
     },
     {
       "reports": 6,
       "budget": 36,
-      "wta_greedy_worst_mean": 0.9520608511788925,
-      "nomp_greedy_worst_mean": 0.9619781922286729,
-      "nomp_mean_refine_rounds": 3.5,
-      "nomp_mean_seconds": 17.394825959950687
+      "wta_greedy_worst_mean": 0.9278787654035842,
+      "nomp_greedy_worst_mean": 0.9381915694912492,
+      "nomp_mean_refine_rounds": 1.6,
+      "nomp_mean_seconds": 6.020149560086429
+    },
+    {
+      "reports": 8,
+      "budget": 48,
+      "wta_greedy_worst_mean": 0.9794847956362343,
+      "nomp_greedy_worst_mean": 0.9812785550968679,
+      "nomp_mean_refine_rounds": 1.0,
+      "nomp_mean_seconds": 17.290163900051265
+    },
+    {
+      "reports": 10,
+      "budget": 60,
+      "wta_greedy_worst_mean": 0.9965376269396543,
+      "nomp_greedy_worst_mean": 0.9966469151184196,
+      "nomp_mean_refine_rounds": 0.8,
+      "nomp_mean_seconds": 41.60706932004541
     }
   ]
 }
