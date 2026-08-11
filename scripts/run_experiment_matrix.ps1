@@ -378,6 +378,17 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "physical-mappo-adapt"
+        Args = @(
+            "scripts\run_physical_mappo_adapt_gate.py",
+            "--episodes", "120",
+            "--train-seeds", "15",
+            "--test-seeds", "3",
+            "--budget", "16",
+            "--output", "results\physical_mappo_adapt_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

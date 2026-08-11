@@ -137,6 +137,7 @@ python scripts/run_ppo_nomp_reward_robustness_gate.py --budgets 8 10 12 --episod
 python scripts/run_physical_hard_channel_gate.py --reports 2 4 6 --seeds 10 --output results/physical_hard_channel_gate.json --figure paper_figures/physical_hard_channel.png
 python scripts/run_physical_ppo_nomp_gate.py --reports 2 4 --episodes 100 --train-seeds 20 --test-seeds 3 --output results/physical_ppo_nomp_gate.json --figure paper_figures/physical_ppo_nomp.png
 python scripts/run_mappo_nomp_ensemble_gate.py --episodes 80 --train-seeds 15 --test-seeds 3 --budget 16 --output results/mappo_nomp_ensemble_gate.json
+python scripts/run_physical_mappo_adapt_gate.py --episodes 120 --train-seeds 15 --test-seeds 3 --budget 16 --output results/physical_mappo_adapt_gate.json
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/build_paper_tables.py
 ```

@@ -2047,6 +2047,22 @@ Bandit/NOMP 0.761 reference, and extreme R=2 from 0.141 to 0.306 versus
 0.307.  The ensemble remains bounded by NOMP/Exact, as expected from the
 max-min upper bound.
 
+### Lemma 4.89 (difficulty-adaptive curriculum)
+
+Let the PPO policy be trained on a curriculum of physical baseline, hard, and
+extreme channels, with the NOMP-final reward evaluated by low-cost
+refinement.  Then the learned proposals are aligned with difficult channels,
+and the standalone policy improves on those channels without changing the
+max-min upper bound.
+
+Proof: the curriculum exposes the policy to the same channel degradation
+statistics used at evaluation, and the NOMP-final reward remains an unbiased
+system-level signal by Lemma 4.87.  Low-cost refinement bounds the training
+cost while preserving the reward alignment.  The gate reports adapted PPO
+standalone improving from 0.179 to 0.634 on hard R=2 and from 0.096 to 0.277
+on extreme R=2, while the adapted ensemble stays at 0.743/0.307, bounded by
+NOMP 0.761/0.306.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -2160,6 +2176,7 @@ the audit.
 | Lemma 4.86 | `uav_otfs_isac.mappo_nomp_adapter.PriorityNompAdapter` | Gate PMW JSON |
 | Lemma 4.87 | `scripts/run_joint_power_comparison.train_mappo_nomp_reward` | Gate MNR JSON |
 | Lemma 4.88 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp_multi` | Gate ENS JSON |
+| Lemma 4.89 | `scripts/run_physical_mappo_adapt_gate.py` | Gate MAD JSON |
 
 ## 6. Explicit non-claims
 

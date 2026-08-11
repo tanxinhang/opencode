@@ -289,6 +289,8 @@ def train_mappo_ppo(
     learning_rate: float = 1e-3,
     reward_mode: str = "raw",
     state_builder=None,
+    reward_max_rounds: int = 50,
+    reward_candidate_budget: int = 32,
 ):
     """Real PPO: clipped surrogate, mini-batches, normalized advantages."""
     if state_builder is None:
@@ -361,8 +363,9 @@ def train_mappo_ppo(
                 proposal_bits,
                 max_power=budget,
                 max_bits=MAX_BITS,
-                max_rounds=50,
+                max_rounds=reward_max_rounds,
                 grid=GRID,
+                candidate_budget=reward_candidate_budget,
             )
             reward = float(min(nomp.target_scores(
                 scenario, proposal_powers, proposal_bits, GRID
@@ -686,6 +689,7 @@ def evaluate_mappo_nomp_multi(
     seed: int = 0,
     residual_adaptive: bool = True,
     alpha: float = 2.0,
+    state_builder=None,
 ):
     """PPO+NOMP with multiple sampled proposals, keeping the best refined one.
 
@@ -700,7 +704,13 @@ def evaluate_mappo_nomp_multi(
             state_scenarios[index] if state_scenarios is not None
             else scenario
         )
-        states = [state(float(t[0]), t[1:], budget) for t in state_scenario]
+        if state_builder is None:
+            states = [
+                state(float(t[0]), t[1:], budget)
+                for t in state_scenario
+            ]
+        else:
+            states = [state_builder(t, budget) for t in state_scenario]
         with torch.no_grad():
             logits_b, logits_p = actor(torch.as_tensor(
                 np.stack(states), dtype=torch.float32

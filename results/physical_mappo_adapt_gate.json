@@ -1,0 +1,24 @@
+{
+  "gate": "physical-mappo-adapt",
+  "episodes": 120,
+  "train_seeds": 15,
+  "test_seeds": 3,
+  "rows": [
+    {
+      "difficulty": "hard",
+      "adapted_ppo_worst_mean": 0.6340431216274837,
+      "adapted_ensemble_worst_mean": 0.7434541166409007,
+      "adapted_bandit_worst_mean": 0.7607966095231843,
+      "nomp_worst_mean": 0.7607966095231843,
+      "exact_worst_mean": 0.7607966095231843
+    },
+    {
+      "difficulty": "extreme",
+      "adapted_ppo_worst_mean": 0.27727620079015497,
+      "adapted_ensemble_worst_mean": 0.30695328639350966,
+      "adapted_bandit_worst_mean": 0.3073541089488642,
+      "nomp_worst_mean": 0.30591204687488244,
+      "exact_worst_mean": 0.3073541089488642
+    }
+  ]
+}

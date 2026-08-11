@@ -44,6 +44,7 @@ def main() -> None:
     physical = load("physical_hard_channel_gate.json")
     physical_ppo = load("physical_ppo_nomp_gate.json")
     ensemble = load("mappo_nomp_ensemble_gate.json")
+    adapt = load("physical_mappo_adapt_gate.json")
 
     header = [
         "Budget",
@@ -329,6 +330,19 @@ def main() -> None:
             round(row["nomp_worst_mean"], 4),
             round(row["exact_worst_mean"], 4),
         ] for row in ensemble["rows"]],
+    )
+
+    print_table(
+        "Difficulty-adaptive curriculum",
+        ["Difficulty", "Adapted PPO", "Adapted ensemble", "Bandit", "NOMP", "Exact"],
+        [[
+            row["difficulty"],
+            round(row["adapted_ppo_worst_mean"], 4),
+            round(row["adapted_ensemble_worst_mean"], 4),
+            round(row["adapted_bandit_worst_mean"], 4),
+            round(row["nomp_worst_mean"], 4),
+            round(row["exact_worst_mean"], 4),
+        ] for row in adapt["rows"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))

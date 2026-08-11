@@ -406,6 +406,13 @@ on hard R=2 and from 0.141 to 0.306 on extreme R=2, approaching the
 NOMP/Exact reference 0.761/0.307 without exceeding it.  The result is
 reproducible (fixed seed) and bounded by the NOMP/Exact upper bound.
 
+`scripts/run_physical_mappo_adapt_gate.py` adds a difficulty-adaptive
+curriculum: PPO is trained on physical baseline/hard/extreme channels with
+the NOMP-final reward using low-cost refinement.  The adapted PPO standalone
+improves from 0.179 to 0.634 on hard R=2 and from 0.096 to 0.277 on extreme
+R=2, while the adapted multi-temperature ensemble reaches 0.743/0.307 versus
+NOMP 0.761/0.306.
+
 `scripts/run_ppo_nomp_reward_robustness_gate.py` tests the PPO + NOMP-final
 reward policy under unseen weak targets and increasing channel difficulty.
 Standalone PPO-Informed improves over vanilla MAPPO in most cells; the
