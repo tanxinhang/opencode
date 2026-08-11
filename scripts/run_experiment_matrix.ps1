@@ -367,6 +367,17 @@ $cells = @(
         )
     },
     [pscustomobject]@{
+        Name = "mappo-nomp-ensemble"
+        Args = @(
+            "scripts\run_mappo_nomp_ensemble_gate.py",
+            "--episodes", "80",
+            "--train-seeds", "15",
+            "--test-seeds", "3",
+            "--budget", "16",
+            "--output", "results\mappo_nomp_ensemble_gate.json"
+        )
+    },
+    [pscustomobject]@{
         Name = "error-feedback"
         Args = @(
             "scripts\run_error_feedback_gate.py",

@@ -2031,6 +2031,20 @@ trainer, and the proposal-plus-refine hybrid reaches NOMP/Exact at B=8/12;
 the adapter with the pure NOMP fallback retains the no-worse-than-NOMP
 guarantee.
 
+### Lemma 4.88 (multi-temperature proposal ensemble)
+
+Let the joint allocator sample PPO proposals at multiple temperatures,
+refine each with NOMP, and keep the best refined schedule.  The best-of-K
+value is monotone in the number of proposals, and the loop stops after
+`patience` consecutive proposals with no improvement or at a hard sample cap.
+
+Proof: the retained value is the maximum over the refined proposals, so
+adding a proposal cannot decrease it.  The early-stop rule only observes
+whether the maximum increased, so it cannot discard the current best; the
+hard cap guarantees termination.  The gate reports hard R=2 PPO+NOMP
+improving from 0.592 (single proposal) to 0.732 (ensemble), close to the
+Bandit/NOMP 0.761 reference.
+
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
 therefore valid under that empirical constant, not under a proven global
@@ -2143,6 +2157,7 @@ the audit.
 | Lemma 4.85 | `uav_otfs_isac.mappo_nomp_adapter.ModeBanditAdapter` | Gate JC JSON |
 | Lemma 4.86 | `uav_otfs_isac.mappo_nomp_adapter.PriorityNompAdapter` | Gate PMW JSON |
 | Lemma 4.87 | `scripts/run_joint_power_comparison.train_mappo_nomp_reward` | Gate MNR JSON |
+| Lemma 4.88 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp_multi` | Gate ENS JSON |
 
 ## 6. Explicit non-claims
 

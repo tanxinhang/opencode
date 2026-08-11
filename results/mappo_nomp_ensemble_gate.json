@@ -1,0 +1,26 @@
+{
+  "gate": "mappo-nomp-ensemble",
+  "episodes": 80,
+  "train_seeds": 15,
+  "test_seeds": 3,
+  "rows": [
+    {
+      "difficulty": "hard",
+      "ppo_worst_mean": 0.2995813881507441,
+      "ppo_nomp_single_worst_mean": 0.5915318363082146,
+      "ppo_nomp_ensemble_worst_mean": 0.732313581034608,
+      "ppo_bandit_worst_mean": 0.7607966095231843,
+      "nomp_worst_mean": 0.7607966095231843,
+      "exact_worst_mean": 0.7607966095231843
+    },
+    {
+      "difficulty": "extreme",
+      "ppo_worst_mean": 0.10707356029345505,
+      "ppo_nomp_single_worst_mean": 0.27796097568008993,
+      "ppo_nomp_ensemble_worst_mean": 0.30113490280926086,
+      "ppo_bandit_worst_mean": 0.3073541089488642,
+      "nomp_worst_mean": 0.30591204687488244,
+      "exact_worst_mean": 0.3073541089488642
+    }
+  ]
+}

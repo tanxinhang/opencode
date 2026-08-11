@@ -397,6 +397,13 @@ the best.  The fixed PPO+NOMP is now close to NOMP/Exact, e.g. hard R=2 0.758
 vs 0.761, extreme R=4 0.441 vs NOMP 0.436, and the PPO Bandit with the pure
 NOMP fallback remains the upper reference.
 
+`scripts/run_mappo_nomp_ensemble_gate.py` adds a multi-temperature proposal
+ensemble: sampling at temperatures 1 and 2 explores both argmax and
+high-entropy regions, NOMP refines each proposal, and early stopping after no
+improvement keeps the loop finite.  Hard R=2 PPO+NOMP rises from 0.592
+(single proposal) to 0.732 (ensemble), close to Bandit/NOMP 0.761; extreme
+rises from 0.278 to 0.301 versus 0.307.
+
 `scripts/run_ppo_nomp_reward_robustness_gate.py` tests the PPO + NOMP-final
 reward policy under unseen weak targets and increasing channel difficulty.
 Standalone PPO-Informed improves over vanilla MAPPO in most cells; the

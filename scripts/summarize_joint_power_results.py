@@ -43,6 +43,7 @@ def main() -> None:
     ppo_robust = load("ppo_nomp_reward_robustness_gate.json")
     physical = load("physical_hard_channel_gate.json")
     physical_ppo = load("physical_ppo_nomp_gate.json")
+    ensemble = load("mappo_nomp_ensemble_gate.json")
 
     header = [
         "Budget",
@@ -314,6 +315,20 @@ def main() -> None:
             round(row["nomp_worst_mean"], 4),
             round(row["exact_worst_mean"], 4) if row["exact_worst_mean"] else "-",
         ] for row in physical_ppo["rows"]],
+    )
+
+    print_table(
+        "Multi-temperature PPO+NOMP ensemble",
+        ["Difficulty", "PPO", "PPO+NOMP single", "PPO+NOMP ensemble", "Bandit", "NOMP", "Exact"],
+        [[
+            row["difficulty"],
+            round(row["ppo_worst_mean"], 4),
+            round(row["ppo_nomp_single_worst_mean"], 4),
+            round(row["ppo_nomp_ensemble_worst_mean"], 4),
+            round(row["ppo_bandit_worst_mean"], 4),
+            round(row["nomp_worst_mean"], 4),
+            round(row["exact_worst_mean"], 4),
+        ] for row in ensemble["rows"]],
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))

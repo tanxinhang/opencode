@@ -681,6 +681,8 @@ def evaluate_mappo_nomp_multi(
     state_scenarios=None,
     max_rounds: int = 100,
     candidate_budget: int = 32,
+    temperatures=(1.0, 2.0),
+    patience: int = 2,
 ):
     """PPO+NOMP with multiple sampled proposals, keeping the best refined one.
 
@@ -708,13 +710,32 @@ def evaluate_mappo_nomp_multi(
                 for r in range(reports)
             ]
             best_score = -1.0
-            for _ in range(samples):
-                bits = torch.stack([
-                    dist_b[r].sample() for r in range(reports)
-                ], dim=1).numpy()
-                powers = torch.stack([
-                    dist_p[r].sample() for r in range(reports)
-                ], dim=1).numpy()
+            stalled = 0
+            per_temperature = max(int(np.ceil(samples / len(temperatures))), 1)
+            for temperature in temperatures:
+                for _ in range(per_temperature):
+                    if temperature is None:
+                        bits = torch.stack([
+                            torch.argmax(logits_b[:, r, :], dim=1)
+                            for r in range(reports)
+                        ], dim=1).numpy()
+                        powers = torch.stack([
+                            torch.argmax(logits_p[:, r, :], dim=1)
+                            for r in range(reports)
+                        ], dim=1).numpy()
+                    else:
+                        bits = torch.stack([
+                            torch.distributions.Categorical(
+                                logits=logits_b[:, r, :] / float(temperature)
+                            ).sample()
+                            for r in range(reports)
+                        ], dim=1).numpy()
+                        powers = torch.stack([
+                            torch.distributions.Categorical(
+                                logits=logits_p[:, r, :] / float(temperature)
+                            ).sample()
+                            for r in range(reports)
+                        ], dim=1).numpy()
                 powers, bits = _feasible_from_mappo(
                     scenario, powers, bits, budget
                 )
@@ -731,7 +752,15 @@ def evaluate_mappo_nomp_multi(
                 score = float(min(nomp.target_scores(
                     scenario, powers, bits, GRID
                 )))
+                if score <= best_score + 1e-12:
+                    stalled += 1
+                else:
+                    stalled = 0
                 best_score = max(best_score, score)
+                if stalled >= patience:
+                    break
+            if stalled >= patience:
+                break
         worsts.append(best_score)
     return float(np.mean(worsts))
 
