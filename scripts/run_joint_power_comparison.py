@@ -684,6 +684,8 @@ def evaluate_mappo_nomp_multi(
     temperatures=(1.0, 2.0),
     patience: int = 2,
     seed: int = 0,
+    residual_adaptive: bool = True,
+    alpha: float = 2.0,
 ):
     """PPO+NOMP with multiple sampled proposals, keeping the best refined one.
 
@@ -703,38 +705,47 @@ def evaluate_mappo_nomp_multi(
             logits_b, logits_p = actor(torch.as_tensor(
                 np.stack(states), dtype=torch.float32
             ))
-            dist_b = [
-                torch.distributions.Categorical(logits=logits_b[:, r, :])
-                for r in range(reports)
-            ]
-            dist_p = [
-                torch.distributions.Categorical(logits=logits_p[:, r, :])
-                for r in range(reports)
-            ]
+            q_count = len(scenario)
+            residuals = np.zeros(q_count, dtype=float)
             best_score = -1.0
             stalled = 0
             per_temperature = max(int(np.ceil(samples / len(temperatures))), 1)
             for temperature in temperatures:
+                temp_scale = np.ones(q_count, dtype=float)
+                if residual_adaptive:
+                    temp_scale = 1.0 + alpha * residuals
+                scaled_b = (
+                    logits_b
+                    / torch.as_tensor(
+                        temp_scale, dtype=torch.float32
+                    )[None, :, None]
+                )
+                scaled_p = (
+                    logits_p
+                    / torch.as_tensor(
+                        temp_scale, dtype=torch.float32
+                    )[None, :, None]
+                )
                 for _ in range(per_temperature):
                     if temperature is None:
                         bits = torch.stack([
-                            torch.argmax(logits_b[:, r, :], dim=1)
+                            torch.argmax(scaled_b[:, r, :], dim=1)
                             for r in range(reports)
                         ], dim=1).numpy()
                         powers = torch.stack([
-                            torch.argmax(logits_p[:, r, :], dim=1)
+                            torch.argmax(scaled_p[:, r, :], dim=1)
                             for r in range(reports)
                         ], dim=1).numpy()
                     else:
                         bits = torch.stack([
                             torch.distributions.Categorical(
-                                logits=logits_b[:, r, :] / float(temperature)
+                                logits=scaled_b[:, r, :] / float(temperature)
                             ).sample()
                             for r in range(reports)
                         ], dim=1).numpy()
                         powers = torch.stack([
                             torch.distributions.Categorical(
-                                logits=logits_p[:, r, :] / float(temperature)
+                                logits=scaled_p[:, r, :] / float(temperature)
                             ).sample()
                             for r in range(reports)
                         ], dim=1).numpy()
@@ -756,6 +767,10 @@ def evaluate_mappo_nomp_multi(
                 )))
                 if not np.isfinite(score):
                     continue
+                if residual_adaptive:
+                    raw = nomp.target_scores(scenario, powers, bits, GRID)
+                    residuals = np.max(raw) - np.asarray(raw, dtype=float)
+                    residuals /= max(float(np.max(residuals)), 1e-12)
                 if score <= best_score + 1e-12:
                     stalled += 1
                 else:
@@ -763,8 +778,8 @@ def evaluate_mappo_nomp_multi(
                 best_score = max(best_score, score)
                 if stalled >= patience:
                     break
-            if stalled >= patience:
-                break
+                if stalled >= patience:
+                    break
         if best_score < 0.0:
             with torch.no_grad():
                 bits = torch.stack([
@@ -793,7 +808,9 @@ def evaluate_mappo_nomp_multi(
             )))
             if np.isfinite(fallback):
                 best_score = fallback
-        worsts.append(best_score)
+        if not np.isfinite(best_score) or best_score < 0.0:
+            best_score = 0.0
+        worsts.append(float(np.clip(best_score, 0.0, 1.0)))
     return float(np.mean(worsts))
 
 

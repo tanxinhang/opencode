@@ -2042,8 +2042,8 @@ Proof: the retained value is the maximum over the refined proposals, so
 adding a proposal cannot decrease it.  The early-stop rule only observes
 whether the maximum increased, so it cannot discard the current best; the
 hard cap guarantees termination.  The gate reports hard R=2 PPO+NOMP
-improving from 0.215 (single proposal) to 0.668 (ensemble) versus the
-Bandit/NOMP 0.761 reference, and extreme R=2 from 0.141 to 0.289 versus
+improving from 0.215 (single proposal) to 0.748 (ensemble) versus the
+Bandit/NOMP 0.761 reference, and extreme R=2 from 0.141 to 0.306 versus
 0.307.  The ensemble remains bounded by NOMP/Exact, as expected from the
 max-min upper bound.
 

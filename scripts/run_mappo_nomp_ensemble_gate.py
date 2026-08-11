@@ -94,12 +94,14 @@ def main() -> None:
             scenarios,
             args.budget,
             2,
-            samples=6,
+            samples=9,
             max_rounds=50,
             candidate_budget=8,
             state_scenarios=mappo_scenarios,
             temperatures=(1.0, 2.0, 3.0),
             seed=0,
+            residual_adaptive=True,
+            alpha=4.0,
         )
         bandit = evaluate_mappo_bandit_adapter_nomp(
             actor,
