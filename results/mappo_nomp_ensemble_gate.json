@@ -8,7 +8,7 @@
       "difficulty": "hard",
       "ppo_worst_mean": 0.17926235220066214,
       "ppo_nomp_single_worst_mean": 0.21546524541475112,
-      "ppo_nomp_ensemble_worst_mean": 0.7484107393326852,
+      "ppo_nomp_ensemble_worst_mean": 0.7496840402639605,
       "ppo_bandit_worst_mean": 0.7607966095231843,
       "nomp_worst_mean": 0.7607966095231843,
       "exact_worst_mean": 0.7607966095231843
@@ -17,7 +17,7 @@
       "difficulty": "extreme",
       "ppo_worst_mean": 0.09591657373598235,
       "ppo_nomp_single_worst_mean": 0.14133921702433622,
-      "ppo_nomp_ensemble_worst_mean": 0.3056810339997671,
+      "ppo_nomp_ensemble_worst_mean": 0.305354110971032,
       "ppo_bandit_worst_mean": 0.3073541089488642,
       "nomp_worst_mean": 0.30591204687488244,
       "exact_worst_mean": 0.3073541089488642

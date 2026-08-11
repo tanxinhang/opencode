@@ -28,6 +28,7 @@ from uav_otfs_isac.mappo_nomp_adapter import (
     MappoNompAdapter,
     ModeBanditAdapter,
     NompRequirement,
+    ucb_index,
 )
 from uav_otfs_isac import nomp_refinement as nomp
 from uav_otfs_isac.power_split_theory import (
@@ -719,8 +720,20 @@ def evaluate_mappo_nomp_multi(
             residuals = np.zeros(q_count, dtype=float)
             best_score = -1.0
             stalled = 0
-            per_temperature = max(int(np.ceil(samples / len(temperatures))), 1)
-            for temperature in temperatures:
+            temp_list = list(temperatures)
+            counts = {temperature: 0.0 for temperature in temp_list}
+            means = {temperature: 0.0 for temperature in temp_list}
+            total_proposals = 0
+            for _ in range(samples):
+                if total_proposals < len(temp_list):
+                    temperature = temp_list[total_proposals]
+                else:
+                    temperature = max(
+                        temp_list,
+                        key=lambda t: ucb_index(
+                            means[t], counts[t], total_proposals
+                        ),
+                    )
                 temp_scale = np.ones(q_count, dtype=float)
                 if residual_adaptive:
                     temp_scale = 1.0 + alpha * residuals
@@ -736,29 +749,28 @@ def evaluate_mappo_nomp_multi(
                         temp_scale, dtype=torch.float32
                     )[None, :, None]
                 )
-                for _ in range(per_temperature):
-                    if temperature is None:
-                        bits = torch.stack([
-                            torch.argmax(scaled_b[:, r, :], dim=1)
-                            for r in range(reports)
-                        ], dim=1).numpy()
-                        powers = torch.stack([
-                            torch.argmax(scaled_p[:, r, :], dim=1)
-                            for r in range(reports)
-                        ], dim=1).numpy()
-                    else:
-                        bits = torch.stack([
-                            torch.distributions.Categorical(
-                                logits=scaled_b[:, r, :] / float(temperature)
-                            ).sample()
-                            for r in range(reports)
-                        ], dim=1).numpy()
-                        powers = torch.stack([
-                            torch.distributions.Categorical(
-                                logits=scaled_p[:, r, :] / float(temperature)
-                            ).sample()
-                            for r in range(reports)
-                        ], dim=1).numpy()
+                if temperature is None:
+                    bits = torch.stack([
+                        torch.argmax(scaled_b[:, r, :], dim=1)
+                        for r in range(reports)
+                    ], dim=1).numpy()
+                    powers = torch.stack([
+                        torch.argmax(scaled_p[:, r, :], dim=1)
+                        for r in range(reports)
+                    ], dim=1).numpy()
+                else:
+                    bits = torch.stack([
+                        torch.distributions.Categorical(
+                            logits=scaled_b[:, r, :] / float(temperature)
+                        ).sample()
+                        for r in range(reports)
+                    ], dim=1).numpy()
+                    powers = torch.stack([
+                        torch.distributions.Categorical(
+                            logits=scaled_p[:, r, :] / float(temperature)
+                        ).sample()
+                        for r in range(reports)
+                    ], dim=1).numpy()
                 powers, bits = _feasible_from_mappo(
                     scenario, powers, bits, budget
                 )
@@ -777,6 +789,11 @@ def evaluate_mappo_nomp_multi(
                 )))
                 if not np.isfinite(score):
                     continue
+                counts[temperature] += 1.0
+                means[temperature] += (
+                    score - means[temperature]
+                ) / counts[temperature]
+                total_proposals += 1
                 if residual_adaptive:
                     raw = nomp.target_scores(scenario, powers, bits, GRID)
                     residuals = np.max(raw) - np.asarray(raw, dtype=float)
@@ -786,8 +803,6 @@ def evaluate_mappo_nomp_multi(
                 else:
                     stalled = 0
                 best_score = max(best_score, score)
-                if stalled >= patience:
-                    break
                 if stalled >= patience:
                     break
         if best_score < 0.0:

@@ -2060,8 +2060,22 @@ statistics used at evaluation, and the NOMP-final reward remains an unbiased
 system-level signal by Lemma 4.87.  Low-cost refinement bounds the training
 cost while preserving the reward alignment.  The gate reports adapted PPO
 standalone improving from 0.179 to 0.634 on hard R=2 and from 0.096 to 0.277
-on extreme R=2, while the adapted ensemble stays at 0.743/0.307, bounded by
+on extreme R=2, while the adapted ensemble stays at 0.750/0.306, bounded by
 NOMP 0.761/0.306.
+
+### Lemma 4.90 (UCB temperature allocation)
+
+Let the adapter allocate its finite proposal budget among sampling
+temperatures by the UCB index, using the refined worst P_D as the reward of
+the chosen temperature.  Every temperature is sampled at least once, and the
+adapter keeps the best refined schedule.
+
+Proof: the UCB index is the standard optimistic estimator for bounded
+rewards; the first round explores all temperatures, so no regime is starved,
+and later rounds concentrate samples on the temperature with the best
+refined reward.  The retained value is the maximum over all proposals, so
+the result is monotone and bounded by the NOMP/Exact upper bound.  The gate
+reports the ensemble reaching 0.750/0.306 at hard/extreme R=2.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is
@@ -2177,6 +2191,7 @@ the audit.
 | Lemma 4.87 | `scripts/run_joint_power_comparison.train_mappo_nomp_reward` | Gate MNR JSON |
 | Lemma 4.88 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp_multi` | Gate ENS JSON |
 | Lemma 4.89 | `scripts/run_physical_mappo_adapt_gate.py` | Gate MAD JSON |
+| Lemma 4.90 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp_multi` | Gate ENS JSON |
 
 ## 6. Explicit non-claims
 

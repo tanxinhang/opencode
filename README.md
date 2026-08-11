@@ -402,9 +402,10 @@ ensemble: sampling at temperatures 1 and 2 explores both argmax and
 high-entropy regions, NOMP refines each proposal, and early stopping after no
 improvement keeps the loop finite.  With temperatures 1/2/3 the ensemble
 and residual-adaptive target temperatures raise PPO+NOMP from 0.215 to 0.748
-on hard R=2 and from 0.141 to 0.306 on extreme R=2, approaching the
-NOMP/Exact reference 0.761/0.307 without exceeding it.  The result is
-reproducible (fixed seed) and bounded by the NOMP/Exact upper bound.
+on hard R=2 and from 0.141 to 0.306 on extreme R=2.  With UCB temperature
+allocation, the ensemble reaches 0.750/0.306, approaching the NOMP/Exact
+reference 0.761/0.307 without exceeding it.  The result is reproducible
+(fixed seed) and bounded by the NOMP/Exact upper bound.
 
 `scripts/run_physical_mappo_adapt_gate.py` adds a difficulty-adaptive
 curriculum: PPO is trained on physical baseline/hard/extreme channels with
