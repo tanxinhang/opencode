@@ -401,9 +401,10 @@ NOMP fallback remains the upper reference.
 ensemble: sampling at temperatures 1 and 2 explores both argmax and
 high-entropy regions, NOMP refines each proposal, and early stopping after no
 improvement keeps the loop finite.  With temperatures 1/2/3 the ensemble
-exceeds the NOMP reference on physical channels: hard R=2 0.788 versus NOMP
-0.761, extreme R=2 0.442 versus 0.307, so the joint allocator finds schedules
-that single NOMP misses.
+raises PPO+NOMP from 0.215 to 0.668 on hard R=2 and from 0.141 to 0.289 on
+extreme R=2, approaching the NOMP/Exact reference 0.761/0.307 without
+exceeding it.  The result is reproducible (fixed seed) and bounded by the
+NOMP/Exact upper bound.
 
 `scripts/run_ppo_nomp_reward_robustness_gate.py` tests the PPO + NOMP-final
 reward policy under unseen weak targets and increasing channel difficulty.

@@ -14,6 +14,7 @@ from pathlib import Path
 import sys
 
 import numpy as np
+import torch
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -44,6 +45,7 @@ def main() -> None:
     parser.add_argument("--grid", type=int, default=16)
     args = parser.parse_args()
 
+    torch.manual_seed(0)
     train_scenarios = [
         make_scenario(seed, 2, 2, heterogeneous=True)
         for seed in range(args.train_seeds)
@@ -97,6 +99,7 @@ def main() -> None:
             candidate_budget=8,
             state_scenarios=mappo_scenarios,
             temperatures=(1.0, 2.0, 3.0),
+            seed=0,
         )
         bandit = evaluate_mappo_bandit_adapter_nomp(
             actor,

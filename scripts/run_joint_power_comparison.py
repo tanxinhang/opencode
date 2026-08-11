@@ -683,6 +683,7 @@ def evaluate_mappo_nomp_multi(
     candidate_budget: int = 32,
     temperatures=(1.0, 2.0),
     patience: int = 2,
+    seed: int = 0,
 ):
     """PPO+NOMP with multiple sampled proposals, keeping the best refined one.
 
@@ -690,6 +691,7 @@ def evaluate_mappo_nomp_multi(
     NOMP refines several PPO proposals and the best max-min schedule is kept,
     so a single bad argmax proposal cannot drag the hybrid down.
     """
+    torch.manual_seed(seed)
     worsts = []
     for index, scenario in enumerate(scenarios):
         state_scenario = (
@@ -763,6 +765,34 @@ def evaluate_mappo_nomp_multi(
                     break
             if stalled >= patience:
                 break
+        if best_score < 0.0:
+            with torch.no_grad():
+                bits = torch.stack([
+                    torch.argmax(logits_b[:, r, :], dim=1)
+                    for r in range(reports)
+                ], dim=1).numpy()
+                powers = torch.stack([
+                    torch.argmax(logits_p[:, r, :], dim=1)
+                    for r in range(reports)
+                ], dim=1).numpy()
+            powers, bits = _feasible_from_mappo(
+                scenario, powers, bits, budget
+            )
+            powers, bits, _ = nomp.maxmin_refine(
+                scenario,
+                powers,
+                bits,
+                max_power=budget,
+                max_bits=MAX_BITS,
+                max_rounds=max_rounds,
+                grid=GRID,
+                candidate_budget=candidate_budget,
+            )
+            fallback = float(min(nomp.target_scores(
+                scenario, powers, bits, GRID
+            )))
+            if np.isfinite(fallback):
+                best_score = fallback
         worsts.append(best_score)
     return float(np.mean(worsts))
 

@@ -6,18 +6,18 @@
   "rows": [
     {
       "difficulty": "hard",
-      "ppo_worst_mean": 0.2833632740070822,
-      "ppo_nomp_single_worst_mean": 0.630770521773183,
-      "ppo_nomp_ensemble_worst_mean": 0.7880870340772601,
+      "ppo_worst_mean": 0.17926235220066214,
+      "ppo_nomp_single_worst_mean": 0.21546524541475112,
+      "ppo_nomp_ensemble_worst_mean": 0.6684138335927607,
       "ppo_bandit_worst_mean": 0.7607966095231843,
       "nomp_worst_mean": 0.7607966095231843,
       "exact_worst_mean": 0.7607966095231843
     },
     {
       "difficulty": "extreme",
-      "ppo_worst_mean": 0.10123059081467976,
-      "ppo_nomp_single_worst_mean": 0.29639335886991197,
-      "ppo_nomp_ensemble_worst_mean": 0.44198442029077634,
+      "ppo_worst_mean": 0.09591657373598235,
+      "ppo_nomp_single_worst_mean": 0.14133921702433622,
+      "ppo_nomp_ensemble_worst_mean": 0.28900932575640687,
       "ppo_bandit_worst_mean": 0.3073541089488642,
       "nomp_worst_mean": 0.30591204687488244,
       "exact_worst_mean": 0.3073541089488642
