@@ -752,6 +752,8 @@ def evaluate_mappo_nomp_multi(
                 score = float(min(nomp.target_scores(
                     scenario, powers, bits, GRID
                 )))
+                if not np.isfinite(score):
+                    continue
                 if score <= best_score + 1e-12:
                     stalled += 1
                 else:

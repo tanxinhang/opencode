@@ -2042,8 +2042,9 @@ Proof: the retained value is the maximum over the refined proposals, so
 adding a proposal cannot decrease it.  The early-stop rule only observes
 whether the maximum increased, so it cannot discard the current best; the
 hard cap guarantees termination.  The gate reports hard R=2 PPO+NOMP
-improving from 0.592 (single proposal) to 0.732 (ensemble), close to the
-Bandit/NOMP 0.761 reference.
+improving from 0.631 (single proposal) to 0.788 (ensemble), above the
+Bandit/NOMP 0.761 reference; extreme R=2 reaches 0.442 versus 0.307, so the
+multi-temperature ensemble explores schedules that single NOMP misses.
 
 The deployment gates use an empirical Lipschitz constant computed from
 evaluated deployments and doubled as a safety factor.  The certificate is

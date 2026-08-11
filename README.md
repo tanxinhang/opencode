@@ -400,9 +400,10 @@ NOMP fallback remains the upper reference.
 `scripts/run_mappo_nomp_ensemble_gate.py` adds a multi-temperature proposal
 ensemble: sampling at temperatures 1 and 2 explores both argmax and
 high-entropy regions, NOMP refines each proposal, and early stopping after no
-improvement keeps the loop finite.  Hard R=2 PPO+NOMP rises from 0.592
-(single proposal) to 0.732 (ensemble), close to Bandit/NOMP 0.761; extreme
-rises from 0.278 to 0.301 versus 0.307.
+improvement keeps the loop finite.  With temperatures 1/2/3 the ensemble
+exceeds the NOMP reference on physical channels: hard R=2 0.788 versus NOMP
+0.761, extreme R=2 0.442 versus 0.307, so the joint allocator finds schedules
+that single NOMP misses.
 
 `scripts/run_ppo_nomp_reward_robustness_gate.py` tests the PPO + NOMP-final
 reward policy under unseen weak targets and increasing channel difficulty.

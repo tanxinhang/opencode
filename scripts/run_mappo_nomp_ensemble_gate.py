@@ -96,6 +96,7 @@ def main() -> None:
             max_rounds=50,
             candidate_budget=8,
             state_scenarios=mappo_scenarios,
+            temperatures=(1.0, 2.0, 3.0),
         )
         bandit = evaluate_mappo_bandit_adapter_nomp(
             actor,
