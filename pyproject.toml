@@ -8,9 +8,14 @@ version = "0.1.0"
 description = "Selective soft-information fusion for distributed UAV-OTFS-ISAC detection"
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.24", "scipy>=1.10", "PyYAML>=6.0"]
+# matplotlib is used by figure-producing scripts; torch is required by the
+# MAPPO/PPO modules and their gates, and is kept as an optional extra because
+# of its large install size and CUDA-specific wheels.
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
+ml = ["torch>=2.0"]
+figures = ["matplotlib>=3.5"]
 
 [tool.setuptools.packages.find]
 include = ["uav_otfs_isac*"]

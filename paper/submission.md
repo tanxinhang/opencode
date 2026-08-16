@@ -862,11 +862,11 @@ certificate, not as a general proof; the remaining DFS is exhaustive, so the
 returned minimum is exact for those audited models.
 
 As a learning-based baseline, we train a parameter-sharing MAPPO with a
-centralized critic on the same two-target environment (3000 episodes per
-budget, 40 training scenarios, 20 held-out test scenarios).  Its
-deterministic worst-target $P_D$ is 0.782/0.786/0.800 at $B=14/16/18$,
-versus 0.845/0.857/0.867 for the exact joint optimum and
-0.791/0.828/0.841 for greedy; it uses only 10.0/10.2/14.0 bits on average and
+centralized critic on the same two-target environment (5000 episodes per
+budget, 50 training scenarios, 30 held-out test scenarios).  Its
+deterministic worst-target $P_D$ is 0.786/0.803/0.834 at $B=14/16/18$,
+versus 0.849/0.860/0.870 for the exact joint optimum and
+0.798/0.832/0.841 for greedy; it uses only 8.0/12.0/13.9 bits on average and
 never exceeds the budget.  MAPPO therefore underperforms both structured
 baselines on this discrete budget-allocation problem, in part because the
 terminal reward does not force full budget utilization; we report it as a

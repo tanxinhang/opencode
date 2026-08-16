@@ -1,4 +1,4 @@
-# Run Matrix
+﻿# Run Matrix
 
 Target runtime for the remote machine:
 
@@ -18,9 +18,9 @@ error.
 
 | ID | Experiment | Command | Output |
 | --- | --- | --- | --- |
-| `mappo-q2` | Q=2 MAPPO / Greedy / Exact Joint | `& "E:\anaconda\conda\python.exe" scripts\run_mappo_baseline.py --train-seeds 40 --test-seeds 20 --episodes 3000 --budgets 14 16 18 --output results\mappo_baseline.json` | `results/mappo_baseline.json` |
-| `mappo-q4` | Q=4 MAPPO / Greedy / Exact Joint | `& "E:\anaconda\conda\python.exe" scripts\run_mappo_baseline.py --targets 4 --reports 4 --train-seeds 40 --test-seeds 20 --episodes 3000 --budgets 28 32 36 --output results\mappo_q4_baseline.json` | `results/mappo_q4_baseline.json` |
-| `mappo-q4-limited` | Q=4 weakened Exact Joint (max 3 bits) | `& "E:\anaconda\conda\python.exe" scripts\run_mappo_baseline.py --targets 4 --reports 4 --train-seeds 40 --test-seeds 20 --episodes 3000 --budgets 28 32 36 --exact-max-bits 3 --output results\mappo_q4_limited_bits_baseline.json` | `results/mappo_q4_limited_bits_baseline.json` |
+| `mappo-q2` | Q=2 MAPPO / Greedy / Exact Joint | `& "E:\anaconda\conda\python.exe" scripts\run_mappo_baseline.py --train-seeds 50 --test-seeds 30 --episodes 5000 --budgets 14 16 18 --output results\mappo_baseline.json` | `results/mappo_baseline.json` |
+| `mappo-q4` | Q=4 MAPPO / Greedy / Exact Joint | `& "E:\anaconda\conda\python.exe" scripts\run_mappo_baseline.py --targets 4 --reports 4 --train-seeds 50 --test-seeds 30 --episodes 5000 --budgets 28 32 36 --output results\mappo_q4_baseline.json` | `results/mappo_q4_baseline.json` |
+| `mappo-q4-limited` | Q=4 weakened Exact Joint (max 3 bits) | `& "E:\anaconda\conda\python.exe" scripts\run_mappo_baseline.py --targets 4 --reports 4 --train-seeds 50 --test-seeds 30 --episodes 5000 --budgets 28 32 36 --exact-max-bits 3 --output results\mappo_q4_limited_bits_baseline.json` | `results/mappo_q4_limited_bits_baseline.json` |
 | `mappo-scaling` | Cross-target scaling figure | `& "E:\anaconda\conda\python.exe" scripts\run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8 --output results\mappo_greedy_scaling.json --figure paper_figures\mappo_greedy_scaling.png` | `results/mappo_greedy_scaling.json`, `paper_figures/mappo_greedy_scaling.png` |
 | `robust-allocation` | Robust multi-baseline allocation | `& "E:\anaconda\conda\python.exe" scripts\run_robust_stress_allocation.py --config config\demo.yaml --seeds 5 --budgets 16 20 24 --qos-target 0.7 --violation-limit 0.2 --output results\robust_stress_allocation_comparison.json` | `results/robust_stress_allocation_comparison.json` |
 | `joint-power-bit` | Joint sensing-power and communication-bit allocation | `& "E:\anaconda\conda\python.exe" scripts\run_joint_power_bit_gate.py --budgets 8 12 16 --grid 32 --output results\joint_power_bit_gate.json` | `results/joint_power_bit_gate.json` |

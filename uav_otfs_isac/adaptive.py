@@ -258,7 +258,7 @@ def two_stage_hidden_state_model(
         for local_report, original_report in enumerate(reporters):
             marginal = float(model.success_prob[original_report])
             path_mean = 1.0 - path_risk_allocation_factor * (1.0 - marginal)
-            resource_mean = marginal / path_mean
+            resource_mean = marginal / max(path_mean, 1e-12)
             path_displacement = strength * min(path_mean, 1.0 - path_mean)
             resource_displacement = strength * min(
                 resource_mean, 1.0 - resource_mean

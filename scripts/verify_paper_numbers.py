@@ -291,11 +291,11 @@ def main() -> None:
           scale20["dp_wall_seconds_mean"] < 0.01)
 
     mappo = load("mappo_baseline.json")
-    check("MAPPO 3000 episodes", mappo["episodes"] == 3000)
-    check("MAPPO 20 test seeds", mappo["test_seeds"] == 20)
+    check("MAPPO 5000 episodes", mappo["episodes"] == 5000)
+    check("MAPPO 30 test seeds", mappo["test_seeds"] == 30)
     mappo14 = next(r for r in mappo["summary"] if r["budget_bits"] == 14)
     check("MAPPO B14 below exact",
-          close(mappo14["mappo_gap_to_exact_pp"], 6.370, 1e-3))
+          close(mappo14["mappo_gap_to_exact_pp"], 6.250, 1e-3))
     check("MAPPO B14 below greedy",
           mappo14["mappo_worst_mean"] < mappo14["greedy_worst_mean"])
 

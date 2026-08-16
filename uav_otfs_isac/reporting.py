@@ -30,6 +30,18 @@ def quantize(values: ArrayLike, edges: ArrayLike) -> NDArray[np.int64]:
 
 
 def bsc_transition(bits: int, bit_flip_probability: float) -> NDArray[np.float64]:
+    if bits < 0:
+        raise ValueError("bits must be nonnegative")
+    if bits > 12:
+        raise ValueError(
+            f"bsc_transition matrix is 2^bits x 2^bits; bits={bits} "
+            f"would allocate {2**bits} x {2**bits} entries"
+        )
+    p = float(bit_flip_probability)
+    if not 0.0 <= p <= 1.0:
+        raise ValueError("bit_flip_probability must lie in [0, 1]")
+    if bits == 0:
+        return np.array([[1.0]])
     levels = 2**bits
     indices = np.arange(levels, dtype=np.uint64)
     xor = np.bitwise_xor(indices[:, None], indices[None, :])
@@ -38,8 +50,18 @@ def bsc_transition(bits: int, bit_flip_probability: float) -> NDArray[np.float64
     for _ in range(bits):
         distances += (work & 1).astype(int)
         work >>= 1
-    p = float(bit_flip_probability)
-    return (p**distances) * ((1.0 - p) ** (bits - distances))
+    if p > 0.0:
+        log_prob = distances * np.log(p)
+    else:
+        log_prob = np.full(distances.shape, -np.inf, dtype=float)
+        log_prob = np.where(distances == 0, 0.0, log_prob)
+    if p < 1.0:
+        log_prob = log_prob + (bits - distances) * np.log1p(-p)
+    else:
+        log_prob = log_prob - np.where(distances == bits, 0.0, np.inf)
+    transition = np.exp(log_prob - log_prob.max(axis=1, keepdims=True))
+    transition /= transition.sum(axis=1, keepdims=True)
+    return transition
 
 
 def transmit_indices(

@@ -11,6 +11,7 @@ selection DP in :mod:`uav_otfs_isac.exact_quota_selection`.
 from __future__ import annotations
 
 import itertools
+from functools import lru_cache
 
 import numpy as np
 from scipy.stats import norm
@@ -21,12 +22,8 @@ from .models import TargetEvidenceModel
 from .reporting import post_bsc_moments, quantizer_from_gaussian_range
 
 
-def moments(
-    delta: float,
-    bits: int,
-    bit_flip_probability: float = 0.0,
-):
-    """Post-BSC H0/H1 moments of a b-bit quantized Gaussian report."""
+@lru_cache(maxsize=1 << 16)
+def _moments_cached(delta: float, bits: int, bit_flip_probability: float):
     edges, values = quantizer_from_gaussian_range(
         [0.0], [1.0], [delta], [1.0], bits,
     )
@@ -37,6 +34,17 @@ def moments(
         float(delta), 1.0, edges, values, bits, bit_flip_probability,
     )
     return m0, m1, v0, v1
+
+
+def moments(
+    delta: float,
+    bits: int,
+    bit_flip_probability: float = 0.0,
+):
+    """Post-BSC H0/H1 moments of a b-bit quantized Gaussian report."""
+    return _moments_cached(
+        float(delta), int(bits), float(bit_flip_probability)
+    )
 
 
 def model_from_bits(

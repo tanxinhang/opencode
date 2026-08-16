@@ -86,11 +86,29 @@ def vectorized_power_bit_target_options(
     bit_cost: float = 1.0,
     grid: int = 32,
     batch_size: int = 50_000,
+    max_combos: int = 4_000_000,
 ) -> list[tuple[int, float]]:
     """Batched exact Pareto frontier over power and bit choices."""
     deltas = np.asarray(report_deltas, dtype=float)
     reports = list(range(deltas.size))
-    choices = list(itertools.product(power_levels, bit_options))
+    choices = [
+        (float(p), int(b))
+        for p, b in itertools.product(power_levels, bit_options)
+        if float(power_cost) * float(p) + float(bit_cost) * int(b) <= float(budget)
+    ]
+    if len(choices) == 0:
+        return [(0, _target_pd(
+            owner_delta, deltas,
+            np.zeros(deltas.size), np.zeros(deltas.size, dtype=int), grid,
+        ))]
+    total_combos = len(choices) ** deltas.size
+    if total_combos > max_combos:
+        raise ValueError(
+            f"power-bit enumeration would materialize {total_combos} "
+            f"combinations (reports={deltas.size}, choices={len(choices)}); "
+            f"cap is {max_combos}. Reduce report count, coarsen power_levels/"
+            f"bit_options, lower budget, or raise max_combos."
+        )
     pre_a = np.zeros((deltas.size, len(choices)), dtype=float)
     pre_q = np.ones((deltas.size, len(choices)), dtype=float)
     pre_cost = np.zeros((deltas.size, len(choices)), dtype=float)

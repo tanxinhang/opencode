@@ -42,6 +42,21 @@ not a physical-layer claim.
 
 ## Run
 
+Environment notes (see also `RUN_MATRIX.md` for the remote batch matrix):
+
+- The validated runtime on this machine is
+  `E:\anaconda\conda\python.exe`; the repository `.venv` is currently
+  empty (no packages installed) and is not the runtime.
+- `conftest.py` at the repository root sets
+  `KMP_DUPLICATE_LIB_OK=TRUE` before test collection, so `pytest` works
+  out of the box despite the torch/MKL `libiomp5md.dll` duplication on
+  Windows.  Scripts that import torch (MAPPO/PPO gates) still need the
+  variable set in the shell, e.g.
+  `$env:KMP_DUPLICATE_LIB_OK='TRUE'`.
+- Install dependencies with
+  `python -m pip install -e .[test,ml,figures]` (torch is an optional
+  extra; the figure scripts need matplotlib).
+
 ```powershell
 python scripts/run_demo.py --config config/demo.yaml
 python scripts/run_benchmarks.py --config config/demo.yaml
@@ -57,9 +72,9 @@ python scripts/run_joint_multi_gate.py --seeds 20 --budgets 14 16 18 --grid 64
 python scripts/run_joint_scale_gate.py --seeds 10 --grid 32
 python scripts/run_joint_scale_gate.py --seeds 5 --grid 32 --reports 5 --output results/joint_scale_r5_gate.json
 python scripts/run_joint_scale_gate.py --seeds 2 --grid 32 --reports 8 --budget-multiplier 7 --output results/joint_scale_r8_gate.json
-python scripts/run_mappo_baseline.py --train-seeds 40 --test-seeds 20 --episodes 3000
-python scripts/run_mappo_baseline.py --targets 4 --train-seeds 40 --test-seeds 20 --episodes 3000 --budgets 28 32 36
-python scripts/run_mappo_baseline.py --targets 4 --train-seeds 40 --test-seeds 20 --episodes 3000 --budgets 28 32 36 --exact-max-bits 3
+python scripts/run_mappo_baseline.py --train-seeds 50 --test-seeds 30 --episodes 5000
+python scripts/run_mappo_baseline.py --targets 4 --train-seeds 50 --test-seeds 30 --episodes 5000 --budgets 28 32 36
+python scripts/run_mappo_baseline.py --targets 4 --train-seeds 50 --test-seeds 30 --episodes 5000 --budgets 28 32 36 --exact-max-bits 3
 python scripts/run_mappo_greedy_scaling.py --targets 2 4 6 8 --train-seeds 20 --test-seeds 20 --episodes 800 --budget-multiplier 8
 python scripts/run_channel_difficulty_gate.py --seeds 10 --grid 32
 python scripts/run_robustness_stress_suite.py --seeds 2 --grid 64 --budgets 20 30 40
@@ -166,6 +181,111 @@ experiments are listed with that interpreter in `RUN_MATRIX.md`.  The batch
 runner is `scripts/run_experiment_matrix.ps1`; use `-DryRun` to print the
 matrix, `-Only <id>` to run one cell, or no filter to run everything.
 
+Additional gates and studies not listed above (all under `scripts/`):
+
+- Quantization and reporting: `run_quantization_study.py`,
+  `run_quantization_joint_gate.py`, `run_joint_multi_gate.py`,
+  `run_joint_scale_gate.py`, `run_channel_difficulty_gate.py`,
+  `run_winner_take_all_power_gate.py`,
+  `run_winner_take_all_joint_proportional_gate.py`.
+- Selection studies: `run_exact_budget_gate.py`, `run_exact_min_majority_gate.py`,
+  `run_exact_rate_certificate_gate.py`, `run_exact_selection_target_scalability.py`,
+  `run_scaled_maxmin_gate.py`, `run_scalable_repair_study.py`,
+  `run_threshold_bundle_study.py`.
+- Communication-awareness: `run_communication_aware_gate.py`,
+  `run_communication_ambiguity_gate.py`, `run_error_feedback_gate.py`,
+  `run_ucb_error_feedback_gate.py`, `run_mappo_nomp_reward_gate.py`.
+- OTFS physical layer and identity: `run_dd_gate1_oracle_audit.py`,
+  `run_dd_gate1_spacing_sweep.py`, `run_dd_gate1a_codebook_audit.py`,
+  `run_dd_spatial_gate.py`, `run_dd_spatial_monte_carlo.py`,
+  `run_fixed_identity_gate.py`, `run_full_3d_code_audit.py`,
+  `run_full_3d_gate.py`, `run_joint_gram_gate.py`,
+  `run_markov_signature_gate.py`, `run_probe_coded_3d_gate.py`,
+  `run_probe_mismatch_gate.py`, `run_robust_minimal_probe_gate.py`,
+  `run_partial_confirmation_gate.py`, `run_confirmation_energy_curve.py`,
+  `run_confirmation_fairness_gate.py`, `run_confirmation_mismatch_gate.py`,
+  `run_end_to_end_adaptive_probe_gate.py`.
+- Multistatic association: `run_multistatic_baseline_comparison.py`,
+  `run_multistatic_calibrated_gate.py`, `run_multistatic_cascade_glrt_gate.py`,
+  `run_multistatic_cascade_multiseed_audit.py`,
+  `run_multistatic_configuration_stepdown_gate.py`,
+  `run_multistatic_conformal_glrt_gate.py`,
+  `run_multistatic_covariance_state_audit.py`,
+  `run_multistatic_density_stepdown_audit.py`,
+  `run_multistatic_final_refinement_audit.py`,
+  `run_multistatic_frame_stratified_glrt_gate.py`, `run_multistatic_g0b.py`,
+  `run_multistatic_glrt_complementarity_audit.py`,
+  `run_multistatic_glrt_fusion_audit.py`,
+  `run_multistatic_glrt_information_audit.py`,
+  `run_multistatic_mixed_null_audit.py`,
+  `run_multistatic_physics_glrt_gate.py`,
+  `run_multistatic_position_covariance_audit.py`,
+  `run_multistatic_refined_glrt_audit.py`,
+  `run_multistatic_robust_velocity_audit.py`,
+  `run_multistatic_stepdown_glrt_gate.py`.
+- G2 sweeps and adaptive smokes: `run_g1a_grouped_consistency_gate.py`,
+  `run_g2_correlation_sweep_gate.py`, `run_g2_nonsaturated_stress_gate.py`,
+  `run_g2_scaling_gate.py`, `run_g2_scaling_stress_gate.py`,
+  `run_general_adaptive_smoke.py`, `run_controlled_adaptive_smoke.py`,
+  `run_real_target_adaptive_smoke.py`, `run_hard_channel_gate.py`,
+  `run_joint_sensing_communication_gate.py`, `run_resource_fairness_gate.py`.
+- Figure/demo helpers: `summarize_joint_power_results.py`.
+
+## Theoretical guarantees and distributed consensus
+
+`uav_otfs_isac/theory_guarantees.py` records the scale-agnostic bounds that
+make the allocation theory valid for general target/UAV counts:
+
+- **Complexity (Theorem)** — the NOMP greedy+refine pipeline
+  (`nomp_wta_greedy_joint_multi`) runs in
+  `O(Q R^2 T (1 + log(Q R^2)))` time and `O(Q R)` space for `Q` targets,
+  `R` report links per target, and `T` steps; the UAV count `N` enters only
+  linearly through `R`, so adding UAVs without report links adds zero cost.
+- **Submodularity (Lemma)** — under the proportional-covariance model with
+  deterministic reception, `P_D(D) = Phi((sqrt(D) - z)/sqrt(c))` is concave
+  in the deflection whenever `c >= z^2/4` (the equal-variance instance
+  `c = 1` satisfies this for every `P_FA <= 0.32`), so the activated-report
+  set function is monotone submodular.
+- **Greedy bound (Theorem)** — single-target cardinality-constrained
+  activation (the `initial_min_cover` stage) achieves at least
+  `(1 - 1/e)` of the optimum by the classical submodularity argument.
+  `verify_submodularity`, `verify_greedy_ratio`,
+  `verify_refinement_monotone`, and `verify_concavity_grid` check the
+  statements numerically; see `tests/test_theory_guarantees.py`.
+- **Upper bounds on the erasure expectation** — for more than
+  `max_exact_reports` report links the expectation is Monte-Carlo
+  estimated in count-stratified (Rao-Blackwell) form: the received-count
+  law is exact (Poisson-binomial) and each count stratum is averaged
+  separately, so `E[P_D] = sum_n P(N=n) E[P_D | N=n]` is unbiased and its
+  variance `E[Var(P_D | N)] / samples` never exceeds plain Monte Carlo
+  (law of total variance; empirically ~40% lower on random instances).
+  `robust_joint_power_bit.hoeffding_upper_bound` gives the
+  `1 - delta` Hoeffding confidence bound and
+  `erasure_deterministic_upper_bound` gives a no-sampling, almost-sure
+  bound via set-monotonicity (the no-erasure value dominates every
+  received subset).  The new `count_conditional_upper_bound` is also
+  almost-sure and pointwise no looser than the no-erasure value: it
+  conditions on the received-report count `N` (exactly Poisson-binomial),
+  so `E[P_D] <= sum_n P(N=n) max_{|S|=n} P_D(S)`,
+  and the maximum over `n`-subsets is attained at the `n` strongest reports
+  because the fused P_D is non-decreasing in each report's deflection
+  (positive per-report shifts and independent diagonal covariances).
+  Empirically it tightens the guarantee by roughly 20% on random
+  instances.  `communication_pd_with_upper_bound` returns all three
+  alongside the estimate.  See `tests/test_upper_bounds.py`.
+
+`uav_otfs_isac/distributed_consensus.py` implements the two-phase broadcast
+protocol that removes the centralized solver: every UAV holds only its own
+per-target summaries `(delta, flip, success)` (Phase A), broadcasts them for
+`K` rounds, and then every node independently runs the identical
+deterministic allocation algorithm on the received summary set (Phase B).
+Because the solver is a pure deterministic function of its input, all nodes
+reach the same schedule without a coordinator (consensus theorem); the
+protocol exchanges `O(N K)` constant-size summaries instead of `O(N^2)`
+channel-state collection (communication theorem); on a topology where every
+node receives every summary, the output equals the centralized solver's
+(equivalence theorem).  See `tests/test_distributed_consensus.py`.
+
 ## Progressive robustness stress suite (stage 1)
 
 `uav_otfs_isac/robustness_stress.py` defines `StressProfile` and
@@ -214,7 +334,10 @@ scales evidence separation) or quantizer bits (which improve report
 fidelity).  `scripts/run_joint_power_bit_gate.py` compares the exact joint
 allocation with sensing-only and communication-only baselines; Lemma 4.66
 shows the joint feasible set contains both baselines, and Lemma 4.67 records
-the vectorized option-enumeration complexity.  Scaling is checked by
+the vectorized option-enumeration complexity.  The gate runs on a fixed
+synthetic target pair by default; `--from-scenario` derives the owner/report
+evidence deltas from `build_models` instead (the robust channel-aware
+counterpart is `run_robust_joint_power_bit_gate.py`).  Scaling is checked by
 `scripts/benchmark_joint_power_bit_scaling.py`.
 
 `uav_otfs_isac/communication_aware.py` proves the communication-aware

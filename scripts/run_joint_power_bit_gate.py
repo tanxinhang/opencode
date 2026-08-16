@@ -25,6 +25,30 @@ from uav_otfs_isac.joint_power_bit import (
 )
 
 
+def _scenario_targets(rng_seed: int) -> list[tuple[float, np.ndarray]]:
+    """Derive owner/report deltas from the standard physical scenario.
+
+    The joint power-bit model evaluates the ideal-channel P_D, so only the
+    owner/report evidence separation is carried over from
+    :func:`uav_otfs_isac.scenario.build_models`; channel flips and erasures
+    are handled by the robust variant in ``robust_joint_power_bit``.
+    """
+    from uav_otfs_isac.config import ExperimentConfig
+    from uav_otfs_isac.scenario import build_models
+
+    cfg = ExperimentConfig(num_uavs=4, num_targets=2)
+    models = build_models(cfg, np.random.default_rng(rng_seed))
+    targets = []
+    for model in models:
+        report_deltas = np.asarray([
+            float(model.delta[i])
+            for i in range(model.num_uavs)
+            if i != model.owner
+        ])
+        targets.append((float(model.delta[model.owner]), report_deltas))
+    return targets
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="results/joint_power_bit_gate.json")
@@ -32,12 +56,21 @@ def main() -> None:
     parser.add_argument("--grid", type=int, default=32)
     parser.add_argument("--max-power", type=float, default=2.0)
     parser.add_argument("--max-bits", type=int, default=2)
+    parser.add_argument(
+        "--from-scenario", action="store_true",
+        help="derive owner/report deltas from build_models instead of "
+        "using the fixed synthetic target list",
+    )
+    parser.add_argument("--scenario-seed", type=int, default=0)
     args = parser.parse_args()
 
-    targets = [
-        (0.4, np.array([1.8, 2.0])),
-        (0.3, np.array([1.2, 1.4])),
-    ]
+    if args.from_scenario:
+        targets = _scenario_targets(args.scenario_seed)
+    else:
+        targets = [
+            (0.4, np.array([1.8, 2.0])),
+            (0.3, np.array([1.2, 1.4])),
+        ]
     power_levels = np.linspace(0.0, args.max_power, 3)
     bit_options = np.arange(args.max_bits + 1, dtype=int)
     summary = []

@@ -4,19 +4,19 @@
     {
       "reports": 2,
       "grid": 32,
-      "seconds": 0.00270990002900362,
+      "seconds": 0.0030064000166021287,
       "frontier_options": 5
     },
     {
       "reports": 4,
       "grid": 32,
-      "seconds": 0.03161399997770786,
+      "seconds": 0.020837000047322363,
       "frontier_options": 9
     },
     {
       "reports": 6,
       "grid": 32,
-      "seconds": 3.3942905999720097,
+      "seconds": 2.235290300042834,
       "frontier_options": 13
     }
   ]

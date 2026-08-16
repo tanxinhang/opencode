@@ -4,33 +4,33 @@
   "smoke": [
     {
       "label": "enumerate_robust_options_S2_R7",
-      "seconds": 0.07110279996413738
+      "seconds": 0.09017649997258559
     },
     {
       "label": "common_dp_S2_B20",
-      "seconds": 0.20316730008926243
+      "seconds": 0.25674089998938143
     },
     {
       "label": "independent_dp_S2_B20",
-      "seconds": 0.17982239997945726
+      "seconds": 0.2238194000092335
     },
     {
       "label": "survival_envelope_4x2x1_g64",
-      "seconds": 0.7657951000146568
+      "seconds": 1.0073140999884345
     },
     {
       "label": "bsc_roc_gate_default",
-      "seconds": 0.12642950005829334
+      "seconds": 0.1575837000273168
     },
     {
       "label": "build_physical_link_models",
-      "seconds": 0.006060100044123828
+      "seconds": 0.008799699950031936
     }
   ],
-  "smoke_max_seconds": 0.7657951000146568,
+  "smoke_max_seconds": 1.0073140999884345,
   "formal": {
-    "stress_suite": 20.3339276999468,
-    "stress_allocation": 10.861575999995694
+    "stress_suite": 24.2817275999696,
+    "stress_allocation": 12.817624599963892
   },
-  "formal_max_seconds": 20.3339276999468
+  "formal_max_seconds": 24.2817275999696
 }

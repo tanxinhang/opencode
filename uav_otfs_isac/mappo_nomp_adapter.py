@@ -171,7 +171,7 @@ def _default_state_builder(target, budget):
 
 
 def _feasible(scenario, powers, bits, budget, grid):
-    """Drop power units until the proposal is budget feasible."""
+    """Drop power and bit units until the proposal is budget feasible."""
     q_count = len(scenario)
     reports = len(powers[0])
     powers = [np.asarray(row, dtype=int).copy() for row in powers]
@@ -194,13 +194,29 @@ def _feasible(scenario, powers, bits, budget, grid):
                 trial_p = [row.copy() for row in powers]
                 trial_p[q][r] -= 1
                 loss = score(powers, bits) - score(trial_p, bits)
-                key = (loss, q, r)
+                key = (loss, q, r, "power")
                 if best is None or key < best[0]:
-                    best = (key, q, r)
+                    best = (key, q, r, "power")
+        for q in range(q_count):
+            for r in range(reports):
+                if bits[q][r] <= 0:
+                    continue
+                trial_b = [row.copy() for row in bits]
+                trial_b[q][r] -= 1
+                loss = score(powers, bits) - score(powers, trial_b)
+                key = (loss, q, r, "bits")
+                if best is None or key < best[0]:
+                    best = (key, q, r, "bits")
         if best is None:
-            break
-        _, q, r = best
-        powers[q][r] -= 1
+            raise ValueError(
+                f"budget {budget} cannot accommodate any power or bit unit "
+                f"from proposal using {used} units"
+            )
+        _, q, r, kind = best
+        if kind == "power":
+            powers[q][r] -= 1
+        else:
+            bits[q][r] -= 1
         used -= 1
     return powers, bits
 
@@ -234,7 +250,9 @@ class MappoNompAdapter:
             modes = requirement.modes
         best = None
         trace = []
-        for _ in range(iters):
+        for it in range(iters):
+            if sample:
+                torch.manual_seed(seed + it)
             states = np.stack([
                 self.state_builder(t, requirement.budget)
                 for t in state_scenario
@@ -323,6 +341,8 @@ class ModeBanditAdapter:
         best = None
         best_mode = None
         for pull in range(1, iters + 1):
+            if sample:
+                torch.manual_seed(seed + pull)
             chosen = None
             if pull <= len(modes):
                 chosen = modes[pull - 1]

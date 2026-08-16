@@ -18,15 +18,15 @@
     {
       "budget_bits": 20,
       "label": "clean",
-      "worst_pd_mean": 0.7715506045280026,
+      "worst_pd_mean": 0.7715506045280025,
       "worst_pd_min": 0.7170255659847268,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 20,
       "label": "spatial_interference_low",
-      "worst_pd_mean": 0.7710354256813623,
-      "worst_pd_min": 0.7162481964399504,
+      "worst_pd_mean": 0.7710354256813624,
+      "worst_pd_min": 0.7162481964399507,
       "qos_rate": 1.0
     },
     {
@@ -39,92 +39,92 @@
     {
       "budget_bits": 20,
       "label": "channel_mild",
-      "worst_pd_mean": 0.8003321091366263,
-      "worst_pd_min": 0.7776251828558063,
+      "worst_pd_mean": 0.8003321091366266,
+      "worst_pd_min": 0.7776251828558068,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 20,
       "label": "channel_hard",
-      "worst_pd_mean": 0.45985349979387513,
-      "worst_pd_min": 0.43777982987620834,
+      "worst_pd_mean": 0.45985349979387546,
+      "worst_pd_min": 0.4377798298762087,
       "qos_rate": 0.0
     },
     {
       "budget_bits": 20,
       "label": "link_unreliable",
-      "worst_pd_mean": 0.530600249622101,
-      "worst_pd_min": 0.5051795501353636,
+      "worst_pd_mean": 0.5306002496221008,
+      "worst_pd_min": 0.5051795501353635,
       "qos_rate": 0.0
     },
     {
       "budget_bits": 20,
       "label": "mobility",
-      "worst_pd_mean": 0.7807196218048995,
-      "worst_pd_min": 0.7526421471853604,
+      "worst_pd_mean": 0.7807196218048992,
+      "worst_pd_min": 0.7526421471853602,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 20,
       "label": "combined",
-      "worst_pd_mean": 0.5519099361125368,
-      "worst_pd_min": 0.49462400078772994,
+      "worst_pd_mean": 0.5519099361125367,
+      "worst_pd_min": 0.49462400078772983,
       "qos_rate": 0.0
     },
     {
       "budget_bits": 30,
       "label": "clean",
-      "worst_pd_mean": 0.811753636971447,
+      "worst_pd_mean": 0.8117536369714472,
       "worst_pd_min": 0.7899705751254782,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 30,
       "label": "spatial_interference_low",
-      "worst_pd_mean": 0.8113236062494978,
-      "worst_pd_min": 0.7896465063015623,
+      "worst_pd_mean": 0.8113236062494982,
+      "worst_pd_min": 0.7896465063015626,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 30,
       "label": "spatial_interference_high",
       "worst_pd_mean": 0.8073973331867741,
-      "worst_pd_min": 0.786642379275137,
+      "worst_pd_min": 0.7866423792751371,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 30,
       "label": "channel_mild",
-      "worst_pd_mean": 0.828417107281853,
-      "worst_pd_min": 0.7960884938499513,
+      "worst_pd_mean": 0.8284171072818532,
+      "worst_pd_min": 0.7960884938499516,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 30,
       "label": "channel_hard",
-      "worst_pd_mean": 0.47558456205221766,
-      "worst_pd_min": 0.45122987098748507,
+      "worst_pd_mean": 0.47558456205221783,
+      "worst_pd_min": 0.4512298709874848,
       "qos_rate": 0.0
     },
     {
       "budget_bits": 30,
       "label": "link_unreliable",
       "worst_pd_mean": 0.5510169008966674,
-      "worst_pd_min": 0.5220469773619509,
+      "worst_pd_min": 0.5220469773619507,
       "qos_rate": 0.0
     },
     {
       "budget_bits": 30,
       "label": "mobility",
-      "worst_pd_mean": 0.8101771450478725,
-      "worst_pd_min": 0.7635342457086041,
+      "worst_pd_mean": 0.8101771450478721,
+      "worst_pd_min": 0.7635342457086038,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 30,
       "label": "combined",
-      "worst_pd_mean": 0.5714462567365427,
-      "worst_pd_min": 0.5075460790601279,
+      "worst_pd_mean": 0.5714462567365424,
+      "worst_pd_min": 0.5075460790601277,
       "qos_rate": 0.0
     },
     {
@@ -137,49 +137,49 @@
     {
       "budget_bits": 40,
       "label": "spatial_interference_low",
-      "worst_pd_mean": 0.8200121507768243,
-      "worst_pd_min": 0.7896465063015623,
+      "worst_pd_mean": 0.8200121507768247,
+      "worst_pd_min": 0.7896465063015626,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 40,
       "label": "spatial_interference_high",
       "worst_pd_mean": 0.8156241235576314,
-      "worst_pd_min": 0.786642379275137,
+      "worst_pd_min": 0.7866423792751371,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 40,
       "label": "channel_mild",
-      "worst_pd_mean": 0.8347842894711459,
-      "worst_pd_min": 0.8071743502120886,
+      "worst_pd_mean": 0.834784289471146,
+      "worst_pd_min": 0.8071743502120892,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 40,
       "label": "channel_hard",
-      "worst_pd_mean": 0.47558456205221766,
-      "worst_pd_min": 0.45122987098748507,
+      "worst_pd_mean": 0.47558456205221783,
+      "worst_pd_min": 0.4512298709874848,
       "qos_rate": 0.0
     },
     {
       "budget_bits": 40,
       "label": "link_unreliable",
       "worst_pd_mean": 0.5510169008966674,
-      "worst_pd_min": 0.5220469773619509,
+      "worst_pd_min": 0.5220469773619507,
       "qos_rate": 0.0
     },
     {
       "budget_bits": 40,
       "label": "mobility",
-      "worst_pd_mean": 0.8179409804258881,
-      "worst_pd_min": 0.7688301184277541,
+      "worst_pd_mean": 0.8179409804258878,
+      "worst_pd_min": 0.7688301184277537,
       "qos_rate": 1.0
     },
     {
       "budget_bits": 40,
       "label": "combined",
-      "worst_pd_mean": 0.5720309065970381,
+      "worst_pd_mean": 0.5720309065970378,
       "worst_pd_min": 0.5104693283626052,
       "qos_rate": 0.0
     }

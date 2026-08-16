@@ -4,25 +4,25 @@
   "rows": [
     {
       "reports": 2,
-      "full_seconds": 0.06820439966395497,
-      "winner_seconds": 0.03665679972618818,
-      "speedup": 1.860620680839978,
+      "full_seconds": 0.08758970000781119,
+      "winner_seconds": 0.03144949994748458,
+      "speedup": 2.785090387893969,
       "equal_frontier": true,
       "frontier_options": 4
     },
     {
       "reports": 3,
-      "full_seconds": 0.26412490010261536,
-      "winner_seconds": 0.0832801996730268,
-      "speedup": 3.171520975449359,
+      "full_seconds": 0.23674510000273585,
+      "winner_seconds": 0.07152270001824945,
+      "speedup": 3.310069389750791,
       "equal_frontier": true,
       "frontier_options": 4
     },
     {
       "reports": 4,
-      "full_seconds": 0.7591802002862096,
-      "winner_seconds": 0.17261220002546906,
-      "speedup": 4.398183906897612,
+      "full_seconds": 0.7690197000047192,
+      "winner_seconds": 0.1223384999902919,
+      "speedup": 6.285999093218769,
       "equal_frontier": true,
       "frontier_options": 4
     }
