@@ -1,0 +1,112 @@
+{
+  "gate": "detection-information-predictive-value",
+  "instances": 400,
+  "seed": 0,
+  "l_acc": 4,
+  "alpha": 0.05,
+  "pd_star": 0.9,
+  "max_n": 16,
+  "contraction_fraction": 1.0,
+  "unreachable_fraction": 0.16,
+  "best_predictor_per_outcome": {
+    "pd4": "chernoff",
+    "pd4_rho": 0.9869277932987081,
+    "pd8": "chernoff",
+    "pd8_rho": 0.9976089850561565,
+    "inv_nstar": "chernoff",
+    "inv_nstar_rho": 0.9939167692634342
+  },
+  "spearman_table": {
+    "pd4": {
+      "snr_raw": {
+        "spearman": 0.60254607841299,
+        "pvalue": 6.842521204528639e-41
+      },
+      "deflection": {
+        "spearman": 0.6896054975343596,
+        "pvalue": 9.596289518629183e-58
+      },
+      "delta_pd1": {
+        "spearman": 0.8544939285529584,
+        "pvalue": 2.8828105328598726e-115
+      },
+      "kl_plus": {
+        "spearman": 0.9783216770104812,
+        "pvalue": 2.775819936425742e-274
+      },
+      "chernoff": {
+        "spearman": 0.9869277932987081,
+        "pvalue": 1.256257e-317
+      },
+      "kl_quant": {
+        "spearman": 0.6663371646072787,
+        "pvalue": 1.1111050566975344e-52
+      },
+      "kl_sensing": {
+        "spearman": 0.60254607841299,
+        "pvalue": 6.842521204528639e-41
+      }
+    },
+    "pd8": {
+      "snr_raw": {
+        "spearman": 0.6551534697091856,
+        "pvalue": 2.0907995257320283e-50
+      },
+      "deflection": {
+        "spearman": 0.7364140400877505,
+        "pvalue": 1.5425135272598653e-69
+      },
+      "delta_pd1": {
+        "spearman": 0.8475779612034028,
+        "pvalue": 1.4242258600090442e-111
+      },
+      "kl_plus": {
+        "spearman": 0.9759049744060898,
+        "pvalue": 2.9734442278690687e-265
+      },
+      "chernoff": {
+        "spearman": 0.9976089850561565,
+        "pvalue": 0.0
+      },
+      "kl_quant": {
+        "spearman": 0.7148440927755797,
+        "pvalue": 8.290436608632985e-64
+      },
+      "kl_sensing": {
+        "spearman": 0.6551534697091856,
+        "pvalue": 2.0907995257320283e-50
+      }
+    },
+    "inv_nstar": {
+      "snr_raw": {
+        "spearman": 0.6401948889820248,
+        "pvalue": 1.6423193293906143e-47
+      },
+      "deflection": {
+        "spearman": 0.7315208321587907,
+        "pvalue": 3.4425903248127202e-68
+      },
+      "delta_pd1": {
+        "spearman": 0.8416691073283658,
+        "pvalue": 1.468297329125806e-108
+      },
+      "kl_plus": {
+        "spearman": 0.9752758116836796,
+        "pvalue": 4.7179185596890656e-263
+      },
+      "chernoff": {
+        "spearman": 0.9939167692634342,
+        "pvalue": 0.0
+      },
+      "kl_quant": {
+        "spearman": 0.6986667142280006,
+        "pvalue": 7.554852553368733e-60
+      },
+      "kl_sensing": {
+        "spearman": 0.6401948889820248,
+        "pvalue": 1.6423193293906143e-47
+      }
+    }
+  },
+  "passed": true
+}

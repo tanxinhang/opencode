@@ -1,0 +1,282 @@
+{
+  "gate": "posterior-state-bellman-active-detection",
+  "params": {
+    "horizon": 6,
+    "grid": 401,
+    "l_max": 10.0,
+    "c10": 20.0,
+    "c01": 20.0,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "n_runs": 4000
+  },
+  "part_d1": {
+    "link": {
+      "mu0": 4.0,
+      "var0": 4.0,
+      "links": [
+        [
+          10.0,
+          16.0
+        ],
+        [
+          7.0,
+          12.0
+        ]
+      ]
+    },
+    "n_actions": 32,
+    "oracle_agreement_alpha_vs_grid": 0.00010187992345311869,
+    "policies": {
+      "bellman": {
+        "delay0": 3.19025,
+        "delay1": 2.09925,
+        "p_fa": 0.111,
+        "p_md": 0.13549999999999995,
+        "cost0": 3.19025,
+        "cost1": 2.09925,
+        "info1": 1.6333246687608622,
+        "total_cost": 5.10975
+      },
+      "tau_pred": {
+        "delay0": 5.86275,
+        "delay1": 2.4225,
+        "p_fa": 0.01075,
+        "p_md": 0.03249999999999997,
+        "cost0": 11.7255,
+        "cost1": 4.845,
+        "info1": 4.255232750819383,
+        "total_cost": 8.717749999999999
+      },
+      "chernoff": {
+        "delay0": 6.7135,
+        "delay1": 4.82675,
+        "p_fa": 0.0215,
+        "p_md": 0.04225000000000001,
+        "cost0": 6.7135,
+        "cost1": 4.82675,
+        "info1": 3.7554602095707956,
+        "total_cost": 6.407625
+      },
+      "dpd": {
+        "delay0": 3.003,
+        "delay1": 1.8495,
+        "p_fa": 0.14575,
+        "p_md": 0.123,
+        "cost0": 3.003,
+        "cost1": 1.8495,
+        "info1": 1.4390062998086055,
+        "total_cost": 5.11375
+      },
+      "static": {
+        "delay0": 6.6055,
+        "delay1": 4.82925,
+        "p_fa": 0.02025,
+        "p_md": 0.03925000000000001,
+        "cost0": 6.6055,
+        "cost1": 4.82925,
+        "info1": 3.757405338389137,
+        "total_cost": 6.312375
+      }
+    },
+    "cost_gap_vs_bellman": {
+      "bellman": 0.0,
+      "tau_pred": 0.7061010812662065,
+      "chernoff": 0.25399970644356384,
+      "dpd": 0.0007828171632662184,
+      "static": 0.23535887274328496
+    }
+  },
+  "part_d1b": {
+    "scale": {
+      "q": 1,
+      "links": 3,
+      "bits": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "powers": [
+        1.0,
+        2.0
+      ],
+      "horizon": 6,
+      "budget": 6
+    },
+    "n_actions_raw": 24,
+    "n_actions_after_blackwell": 11,
+    "policies": {
+      "bellman_budget": {
+        "delay0": 3.125,
+        "delay1": 2.11325,
+        "p_fa": 0.098,
+        "p_md": 0.14449999999999996,
+        "cost0": 3.17275,
+        "cost1": 2.06475,
+        "info1": 1.6064818910677579,
+        "total_cost": 5.04375
+      },
+      "tau_pred": {
+        "delay0": 5.37025,
+        "delay1": 3.95725,
+        "p_fa": 0.0355,
+        "p_md": 0.12050000000000005,
+        "cost0": 5.36075,
+        "cost1": 3.9105,
+        "info1": 3.042570497648852,
+        "total_cost": 6.195625000000001
+      },
+      "chernoff": {
+        "delay0": 5.3765,
+        "delay1": 3.9415,
+        "p_fa": 0.03375,
+        "p_md": 0.12749999999999995,
+        "cost0": 5.387,
+        "cost1": 3.98825,
+        "info1": 3.103064003899254,
+        "total_cost": 6.3001249999999995
+      },
+      "dpd": {
+        "delay0": 3.0195,
+        "delay1": 1.83475,
+        "p_fa": 0.1395,
+        "p_md": 0.125,
+        "cost0": 3.007,
+        "cost1": 1.82775,
+        "info1": 1.4220836790890394,
+        "total_cost": 5.062374999999999
+      },
+      "static_floor_cover": {
+        "delay0": 5.3785,
+        "delay1": 3.94075,
+        "p_fa": 0.034,
+        "p_md": 0.13049999999999995,
+        "cost0": 5.381,
+        "cost1": 3.9605,
+        "info1": 3.08147307401567,
+        "total_cost": 6.3157499999999995
+      }
+    },
+    "best_myopic": "dpd",
+    "cost_gain_vs_best_myopic": 0.003679103187732878,
+    "cycles_gain_vs_best_myopic": -0.15179179724758127,
+    "errors_within_myopic": true,
+    "meaningful_improvement": false,
+    "verdict": "Bellman does not materially beat the myopic strategies; agent-ifying the static pipeline is not worth it at this scale"
+  },
+  "part_d1c": {
+    "scenarios": {
+      "correct_model": {
+        "tau": 0.03812280374562339,
+        "triggered": false,
+        "mode": "bellman",
+        "modes_seen": [
+          "bellman"
+        ],
+        "naive_bayes_cost": 5.546,
+        "adaptive_bayes_cost": 5.546,
+        "adaptive_gain": 0.0
+      },
+      "success_0.5": {
+        "tau": 0.6664068674232962,
+        "triggered": true,
+        "mode": "explore",
+        "modes_seen": [
+          "bellman",
+          "explore",
+          "robust"
+        ],
+        "naive_bayes_cost": 7.5691250000000005,
+        "adaptive_bayes_cost": 7.5691250000000005,
+        "adaptive_gain": 0.0
+      },
+      "flip_0.45": {
+        "tau": 0.017080323863655933,
+        "triggered": false,
+        "mode": "bellman",
+        "modes_seen": [
+          "bellman"
+        ],
+        "naive_bayes_cost": 11.8125,
+        "adaptive_bayes_cost": 11.8125,
+        "adaptive_gain": 0.0
+      },
+      "flip_0.35_success_0.7": {
+        "tau": 0.024953486571868366,
+        "triggered": false,
+        "mode": "bellman",
+        "modes_seen": [
+          "bellman",
+          "explore",
+          "robust"
+        ],
+        "naive_bayes_cost": 11.473375,
+        "adaptive_bayes_cost": 11.473375,
+        "adaptive_gain": 0.0
+      }
+    },
+    "limitation": "flip-only mismatches preserve the LLR atom magnitudes and are not detected by the residual mean statistic (documented limitation)"
+  },
+  "part_d2": {
+    "n_actions_library": 32,
+    "n_pruned_blackwell": 28,
+    "chernoff_best_action": 0,
+    "fraction_continuation_states": 0.14962593516209477,
+    "fraction_states_leaving_chernoff_action": 0.0,
+    "adaptive_gain_vs_fixed_chernoff": 0.19814041075737054,
+    "fixed_chernoff_cost": 6.372374999999999
+  },
+  "part_d3": {
+    "joint_value_star": 11.783295816581704,
+    "joint_worst_delay": 4.569,
+    "joint_mean_delays": [
+      4.569,
+      4.569
+    ],
+    "joint_bayes_cost": 6.2745,
+    "best_dual_bound": 0.26771403697139423,
+    "weak_duality_gap": 11.51558177961031,
+    "dual_best_row": {
+      "nu1": 0.3,
+      "lam": 1.0,
+      "worst_delay": 1.579,
+      "mean_delays": [
+        0.0,
+        1.579
+      ],
+      "mean_costs": [
+        0.0,
+        1.579
+      ],
+      "p_fa": [
+        0.0,
+        NaN
+      ],
+      "p_md": [
+        NaN,
+        0.24850000000000005
+      ],
+      "bayes_cost": 3.2745
+    },
+    "dual_bayes_cost": 3.2745,
+    "worst_delay_gap_vs_joint": -2.99
+  },
+  "part_d4": {
+    "p_fa": 0.111,
+    "p_md": 0.13549999999999995,
+    "d_1": 1.5195984260958122,
+    "i_max_plus": 1.7565460271700237,
+    "rho_plus": 0.8782730135850119,
+    "e1_sum_i_plus": 1.6333246687608622,
+    "info_bound_holds": true,
+    "t_lower": 0.8651059537244472,
+    "t_bellman": 2.09925,
+    "t_tau_pred": 2.4225,
+    "bellman_over_lower": 2.426581381115603,
+    "tau_over_lower": 2.800235034299177,
+    "c_lower": 1.7302119074488944,
+    "c_bellman": 2.09925
+  },
+  "passed": true
+}

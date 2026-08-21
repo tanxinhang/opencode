@@ -1,0 +1,368 @@
+{
+  "gate": "f0-distributed-information-audit",
+  "params": {
+    "k_uavs": 6,
+    "q_targets": 3,
+    "n_runs": 800,
+    "seeds": 4,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "scenario_seed": 0,
+    "eta": 0.5,
+    "token_llr_bits": 5,
+    "calib_seed": 100,
+    "calib_verify_runs": 2000
+  },
+  "runtime_s": 831.2,
+  "token_feasibility": {
+    "4": {
+      "feasible": false
+    },
+    "5": {
+      "feasible": true,
+      "bounds": [
+        [
+          2.278,
+          -2.278
+        ],
+        [
+          2.944,
+          -2.611
+        ],
+        [
+          1.944,
+          -2.611
+        ]
+      ]
+    },
+    "6": {
+      "feasible": true,
+      "bounds": [
+        [
+          1.944,
+          -3.278
+        ],
+        [
+          2.944,
+          -2.278
+        ],
+        [
+          1.944,
+          -2.611
+        ]
+      ]
+    }
+  },
+  "calibration_seed_sensitivity": {
+    "100": {
+      "bounds_exact": [
+        [
+          2.278,
+          -2.944
+        ],
+        [
+          2.611,
+          -3.278
+        ],
+        [
+          1.944,
+          -2.611
+        ]
+      ],
+      "bounds_token": [
+        [
+          2.611,
+          -2.278
+        ],
+        [
+          3.278,
+          -2.278
+        ],
+        [
+          1.944,
+          -2.278
+        ]
+      ],
+      "J_full_message": 5.277,
+      "J_compact_token": 5.372,
+      "Delta_comm": 0.094,
+      "Delta_comm_relative": 0.0179
+    },
+    "200": {
+      "bounds_exact": [
+        [
+          2.278,
+          -2.944
+        ],
+        [
+          2.611,
+          -2.611
+        ],
+        [
+          1.944,
+          -2.944
+        ]
+      ],
+      "bounds_token": [
+        [
+          2.944,
+          -2.611
+        ],
+        [
+          3.278,
+          -2.278
+        ],
+        [
+          1.944,
+          -2.611
+        ]
+      ],
+      "J_full_message": 5.502,
+      "J_compact_token": 5.849,
+      "Delta_comm": 0.348,
+      "Delta_comm_relative": 0.0632
+    },
+    "300": {
+      "bounds_exact": [
+        [
+          1.944,
+          -2.611
+        ],
+        [
+          2.611,
+          -2.944
+        ],
+        [
+          1.944,
+          -2.944
+        ]
+      ],
+      "bounds_token": [
+        [
+          2.611,
+          -2.278
+        ],
+        [
+          3.611,
+          -2.611
+        ],
+        [
+          1.944,
+          -2.611
+        ]
+      ],
+      "J_full_message": 5.39,
+      "J_compact_token": 5.638,
+      "Delta_comm": 0.248,
+      "Delta_comm_relative": 0.046
+    }
+  },
+  "bounds_exact": [
+    [
+      2.278,
+      -2.944
+    ],
+    [
+      2.611,
+      -3.278
+    ],
+    [
+      1.944,
+      -2.611
+    ]
+  ],
+  "bounds_token": [
+    [
+      2.611,
+      -2.278
+    ],
+    [
+      3.278,
+      -2.278
+    ],
+    [
+      1.944,
+      -2.278
+    ]
+  ],
+  "calibration": {
+    "seed": 100,
+    "scan_runs": 300,
+    "verify_runs": 2000
+  },
+  "modes": {
+    "centralized": {
+      "worst_target_delay": 4.487169457145756,
+      "e1_delays": [
+        2.908625500638537,
+        4.487169457145756,
+        1.9958478365237906
+      ],
+      "p_fa": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "p_md": [
+        0.02634423306495015,
+        0.011377516185897302,
+        0.035183906529805076
+      ],
+      "mean_u2u_bits_per_cycle": 0.0,
+      "conflict_rate": 0.6937084113065021,
+      "duplicate_sensing_rate": 1.0,
+      "role_switch_rate": 0.0,
+      "belief_disagreement": null,
+      "mean_sense_cost": 78.9646875
+    },
+    "full_message": {
+      "worst_target_delay": 5.256406279408023,
+      "e1_delays": [
+        3.3303889183534463,
+        5.256406279408023,
+        2.5781079723080573
+      ],
+      "p_fa": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "p_md": [
+        0.027007519471625246,
+        0.018932850656782213,
+        0.039538745648517115
+      ],
+      "mean_u2u_bits_per_cycle": 252.0,
+      "conflict_rate": 0.6648679659589776,
+      "duplicate_sensing_rate": 1.0,
+      "role_switch_rate": 0.0,
+      "belief_disagreement": 0.7482090739690496,
+      "mean_sense_cost": 91.5859375
+    },
+    "compact_token": {
+      "worst_target_delay": 5.361120649620314,
+      "e1_delays": [
+        3.0496158972246676,
+        5.361120649620314,
+        2.308734399777559
+      ],
+      "p_fa": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "p_md": [
+        0.022386080245514195,
+        0.01924335898537663,
+        0.03177694469854481
+      ],
+      "mean_u2u_bits_per_cycle": 114.0,
+      "conflict_rate": 0.6670395329434563,
+      "duplicate_sensing_rate": 1.0,
+      "role_switch_rate": 0.0,
+      "belief_disagreement": 0.7827999470921783,
+      "mean_sense_cost": 91.9321875
+    },
+    "local_only": {
+      "worst_target_delay": 32.53057992879661,
+      "e1_delays": [
+        12.396658532697796,
+        32.53057992879661,
+        29.166163555358477
+      ],
+      "p_fa": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "p_md": [
+        0.14776921792458556,
+        0.2867679193961274,
+        0.47764398207959824
+      ],
+      "mean_u2u_bits_per_cycle": 0.0,
+      "conflict_rate": 0.4275389333139425,
+      "duplicate_sensing_rate": 1.0,
+      "role_switch_rate": 0.0,
+      "belief_disagreement": 3.439579493686374,
+      "mean_sense_cost": 449.6115625
+    }
+  },
+  "gaps": {
+    "decentralization": {
+      "definition": "J_full_message - J_centralized",
+      "value": 0.7692368222622674,
+      "relative": 0.17143030358197603
+    },
+    "communication": {
+      "definition": "J_compact_token - J_full_message",
+      "value": 0.10471437021229058,
+      "relative": 0.019921285503083967
+    },
+    "cooperation": {
+      "definition": "J_local_only - J_compact_token",
+      "value": 27.169459279176298,
+      "relative": 5.0678693979962
+    }
+  },
+  "questions": {
+    "cooperation_value": {
+      "answer": true,
+      "comment": "cooperation (tokens) materially helps the worst target"
+    },
+    "communication_loss": {
+      "answer": false,
+      "comment": "token quantization at the tested layout is nearly free; not the bottleneck"
+    },
+    "decentralization_penalty": {
+      "answer": true,
+      "comment": "removing the fusion center costs materially; study ownership / conflict / distributed price"
+    }
+  },
+  "stability": {
+    "conflict_rate": {
+      "centralized": 0.6937084113065021,
+      "full_message": 0.6648679659589776,
+      "compact_token": 0.6670395329434563,
+      "local_only": 0.4275389333139425
+    },
+    "duplicate_sensing_rate": {
+      "centralized": 1.0,
+      "full_message": 1.0,
+      "compact_token": 1.0,
+      "local_only": 1.0
+    },
+    "role_switch_rate": {
+      "centralized": 0.0,
+      "full_message": 0.0,
+      "compact_token": 0.0,
+      "local_only": 0.0
+    },
+    "belief_disagreement": {
+      "centralized": null,
+      "full_message": 0.7482090739690496,
+      "compact_token": 0.7827999470921783,
+      "local_only": 3.439579493686374
+    }
+  },
+  "token_bits": {
+    "q": 2,
+    "llr": 5,
+    "u": 2,
+    "r": 2,
+    "chi": 2,
+    "intent": 2,
+    "stamp": 4,
+    "total": 19,
+    "full_message_total": 42
+  },
+  "passed": true,
+  "ordering_holds": true,
+  "error_constraints_met": true,
+  "local_only_error_constraints_met": false,
+  "local_only_finding": {
+    "met_constraints": false,
+    "comment": "the zero-communication baseline cannot meet the error constraints at the tested horizon; cooperation is necessary, not merely helpful"
+  }
+}

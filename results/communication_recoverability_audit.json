@@ -1,0 +1,391 @@
+{
+  "gate": {
+    "G12_A_comm_recoverability": {
+      "mean_recovered_delay": 0.056553068705910266,
+      "median_recovered_delay": -0.006514851093823029,
+      "per_scenario": [
+        -0.05397379709785832,
+        0.23014785430941215,
+        -0.006514851093823029
+      ],
+      "close_communication": true,
+      "verdict": "the perfect-U2U gap is NOT robustly recoverable under fixed U2U resources (median recovered -0.7% < 5%; the mean 5.7% is inflated by a single favorable scenario; 2/3 scenarios show no benefit, consistent with the F0-E token-fidelity ~0% finding) -- the 12.5% is a LINK-BUDGET (hardware) gap, not an algorithm space; CLOSE communication optimization"
+    },
+    "G12_B_feasibility_region": {
+      "token_bits": 19.0,
+      "cells": {
+        "s95_B100": {
+          "s": 0.95,
+          "B_U2U": 100.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 2.85,
+          "zone": "communication-limited"
+        },
+        "s95_B200": {
+          "s": 0.95,
+          "B_U2U": 200.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 1.425,
+          "zone": "communication-limited"
+        },
+        "s95_B400": {
+          "s": 0.95,
+          "B_U2U": 400.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 0.7125,
+          "zone": "feasible"
+        },
+        "s95_B800": {
+          "s": 0.95,
+          "B_U2U": 800.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 0.35625,
+          "zone": "feasible"
+        },
+        "s95_B1000000000": {
+          "s": 0.95,
+          "B_U2U": 1000000000.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 2.85e-07,
+          "zone": "feasible"
+        },
+        "s70_B100": {
+          "s": 0.7,
+          "B_U2U": 100.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 2.85,
+          "zone": "communication-limited"
+        },
+        "s70_B200": {
+          "s": 0.7,
+          "B_U2U": 200.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 1.425,
+          "zone": "communication-limited"
+        },
+        "s70_B400": {
+          "s": 0.7,
+          "B_U2U": 400.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 0.7125,
+          "zone": "feasible"
+        },
+        "s70_B800": {
+          "s": 0.7,
+          "B_U2U": 800.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 0.35625,
+          "zone": "feasible"
+        },
+        "s70_B1000000000": {
+          "s": 0.7,
+          "B_U2U": 1000000000.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 2.85e-07,
+          "zone": "feasible"
+        },
+        "s40_B100": {
+          "s": 0.4,
+          "B_U2U": 100.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 2.85,
+          "zone": "communication-limited"
+        },
+        "s40_B200": {
+          "s": 0.4,
+          "B_U2U": 200.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 1.425,
+          "zone": "communication-limited"
+        },
+        "s40_B400": {
+          "s": 0.4,
+          "B_U2U": 400.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 0.7125,
+          "zone": "feasible"
+        },
+        "s40_B800": {
+          "s": 0.4,
+          "B_U2U": 800.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 0.35625,
+          "zone": "feasible"
+        },
+        "s40_B1000000000": {
+          "s": 0.4,
+          "B_U2U": 1000000000.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 2.85e-07,
+          "zone": "feasible"
+        },
+        "s20_B100": {
+          "s": 0.2,
+          "B_U2U": 100.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 2.85,
+          "zone": "communication-limited"
+        },
+        "s20_B200": {
+          "s": 0.2,
+          "B_U2U": 200.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 1.425,
+          "zone": "communication-limited"
+        },
+        "s20_B400": {
+          "s": 0.2,
+          "B_U2U": 400.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 0.7125,
+          "zone": "feasible"
+        },
+        "s20_B800": {
+          "s": 0.2,
+          "B_U2U": 800.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 0.35625,
+          "zone": "feasible"
+        },
+        "s20_B1000000000": {
+          "s": 0.2,
+          "B_U2U": 1000000000.0,
+          "rho_I_star": 0.03273066123756507,
+          "rho_C": 2.85e-07,
+          "zone": "feasible"
+        }
+      },
+      "classes": {
+        "feasible": 12,
+        "coordination-limited": 0,
+        "communication-limited": 8,
+        "sensing/info-limited": 0
+      }
+    },
+    "research_problem_frozen": true,
+    "verdict": "communication optimization CLOSED (fixed-resource recoverable gap < 5%); the feasibility region is the paper's Q1 boundary; FRIDS-v2 is the frozen online layer -- no new research point from residual headroom"
+  },
+  "params": {
+    "K": 16,
+    "Q": 8,
+    "n_runs": 120,
+    "seeds": 2,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "calib_seed": 100,
+    "calib_verify": 250,
+    "b_delta": 1.0,
+    "scenario_seeds": 3,
+    "frozen": [
+      "FRIDS-v2",
+      "token (19-bit)",
+      "owner",
+      "full mesh",
+      "R_coord=1",
+      "calibration protocol"
+    ],
+    "research_problem": "Distributed Task-Oriented Sequential Detection under Communication Constraints (fixed physical resources)"
+  },
+  "runtime_s": 639.0,
+  "G12_A": {
+    "0": {
+      "J_current": 2.8110661268556005,
+      "J_perfect_u2u": 2.747727272727273,
+      "gap": 0.06333885412832752,
+      "realloc": {
+        "lloyd_max": 2.962790039615167,
+        "lhat10": 3.469235364396655
+      },
+      "best_realloc": 2.962790039615167,
+      "recovered_fraction_of_gap": -2.3954319169110136,
+      "recovered_delay": -0.05397379709785832
+    },
+    "1": {
+      "J_current": 4.12280701754386,
+      "J_perfect_u2u": 3.7189048239895697,
+      "gap": 0.4039021935542899,
+      "realloc": {
+        "lloyd_max": 3.4094405594405597,
+        "lhat10": 3.1739518287243533
+      },
+      "best_realloc": 3.1739518287243533,
+      "recovered_fraction_of_gap": 2.3492201923185823,
+      "recovered_delay": 0.23014785430941215
+    },
+    "2": {
+      "J_current": 3.4583333333333335,
+      "J_perfect_u2u": 2.404017857142857,
+      "gap": 1.0543154761904763,
+      "realloc": {
+        "lloyd_max": 3.480863860032805,
+        "lhat10": 3.65
+      },
+      "best_realloc": 3.480863860032805,
+      "recovered_fraction_of_gap": -0.02136981502052889,
+      "recovered_delay": -0.006514851093823029
+    }
+  },
+  "G12_A_summary": {
+    "mean_recovered_delay": 0.056553068705910266,
+    "median_recovered_delay": -0.006514851093823029,
+    "per_scenario": [
+      -0.05397379709785832,
+      0.23014785430941215,
+      -0.006514851093823029
+    ],
+    "close_communication": true,
+    "verdict": "the perfect-U2U gap is NOT robustly recoverable under fixed U2U resources (median recovered -0.7% < 5%; the mean 5.7% is inflated by a single favorable scenario; 2/3 scenarios show no benefit, consistent with the F0-E token-fidelity ~0% finding) -- the 12.5% is a LINK-BUDGET (hardware) gap, not an algorithm space; CLOSE communication optimization"
+  },
+  "G12_B": {
+    "token_bits": 19.0,
+    "cells": {
+      "s95_B100": {
+        "s": 0.95,
+        "B_U2U": 100.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 2.85,
+        "zone": "communication-limited"
+      },
+      "s95_B200": {
+        "s": 0.95,
+        "B_U2U": 200.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 1.425,
+        "zone": "communication-limited"
+      },
+      "s95_B400": {
+        "s": 0.95,
+        "B_U2U": 400.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 0.7125,
+        "zone": "feasible"
+      },
+      "s95_B800": {
+        "s": 0.95,
+        "B_U2U": 800.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 0.35625,
+        "zone": "feasible"
+      },
+      "s95_B1000000000": {
+        "s": 0.95,
+        "B_U2U": 1000000000.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 2.85e-07,
+        "zone": "feasible"
+      },
+      "s70_B100": {
+        "s": 0.7,
+        "B_U2U": 100.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 2.85,
+        "zone": "communication-limited"
+      },
+      "s70_B200": {
+        "s": 0.7,
+        "B_U2U": 200.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 1.425,
+        "zone": "communication-limited"
+      },
+      "s70_B400": {
+        "s": 0.7,
+        "B_U2U": 400.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 0.7125,
+        "zone": "feasible"
+      },
+      "s70_B800": {
+        "s": 0.7,
+        "B_U2U": 800.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 0.35625,
+        "zone": "feasible"
+      },
+      "s70_B1000000000": {
+        "s": 0.7,
+        "B_U2U": 1000000000.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 2.85e-07,
+        "zone": "feasible"
+      },
+      "s40_B100": {
+        "s": 0.4,
+        "B_U2U": 100.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 2.85,
+        "zone": "communication-limited"
+      },
+      "s40_B200": {
+        "s": 0.4,
+        "B_U2U": 200.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 1.425,
+        "zone": "communication-limited"
+      },
+      "s40_B400": {
+        "s": 0.4,
+        "B_U2U": 400.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 0.7125,
+        "zone": "feasible"
+      },
+      "s40_B800": {
+        "s": 0.4,
+        "B_U2U": 800.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 0.35625,
+        "zone": "feasible"
+      },
+      "s40_B1000000000": {
+        "s": 0.4,
+        "B_U2U": 1000000000.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 2.85e-07,
+        "zone": "feasible"
+      },
+      "s20_B100": {
+        "s": 0.2,
+        "B_U2U": 100.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 2.85,
+        "zone": "communication-limited"
+      },
+      "s20_B200": {
+        "s": 0.2,
+        "B_U2U": 200.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 1.425,
+        "zone": "communication-limited"
+      },
+      "s20_B400": {
+        "s": 0.2,
+        "B_U2U": 400.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 0.7125,
+        "zone": "feasible"
+      },
+      "s20_B800": {
+        "s": 0.2,
+        "B_U2U": 800.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 0.35625,
+        "zone": "feasible"
+      },
+      "s20_B1000000000": {
+        "s": 0.2,
+        "B_U2U": 1000000000.0,
+        "rho_I_star": 0.03273066123756507,
+        "rho_C": 2.85e-07,
+        "zone": "feasible"
+      }
+    },
+    "classes": {
+      "feasible": 12,
+      "coordination-limited": 0,
+      "communication-limited": 8,
+      "sensing/info-limited": 0
+    }
+  }
+}

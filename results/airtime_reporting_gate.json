@@ -1,0 +1,861 @@
+{
+  "gate": {
+    "best_value_mode": "deficit",
+    "per_mode": {
+      "deficit": {
+        "non_congested": {
+          "delta_J": -0.004391848388481735,
+          "airtime_reduction": 0.5276524355744896,
+          "delta_J_ok": true,
+          "reduction_ok": true,
+          "errors_ok": true,
+          "pass": true
+        },
+        "critical": {
+          "value_J": 2.8445652110035673,
+          "always_J": 2.85711321909054,
+          "delta_J": 0.004391848388481735,
+          "airtime_reduction": 0.5276524355744896
+        },
+        "congested": {
+          "value_J": 3.4228549228549228,
+          "always_J": 3.311327476544868,
+          "random_J": 3.3376068376068377,
+          "delta_J_vs_always": -0.0336805849315833,
+          "delta_J_vs_random": -0.025541679831052364,
+          "delta_J_ok": false,
+          "errors_ok": true,
+          "pass": false
+        }
+      },
+      "info": {
+        "non_congested": {
+          "delta_J": 0.011775452733787915,
+          "airtime_reduction": 0.043702792718449235,
+          "delta_J_ok": true,
+          "reduction_ok": false,
+          "errors_ok": true,
+          "pass": false
+        },
+        "critical": {
+          "value_J": 2.8907570207570212,
+          "always_J": 2.85711321909054,
+          "delta_J": -0.011775452733787915,
+          "airtime_reduction": 0.043702792718449235
+        },
+        "congested": {
+          "value_J": 3.2289671506538977,
+          "always_J": 3.311327476544868,
+          "random_J": 3.3376068376068377,
+          "delta_J_vs_always": 0.024872298639851614,
+          "delta_J_vs_random": 0.03255017509217409,
+          "delta_J_ok": false,
+          "errors_ok": true,
+          "pass": false
+        }
+      }
+    },
+    "adopt": false,
+    "verdict": "adopted with caution (one gate passed)"
+  },
+  "params": {
+    "K": 16,
+    "Q": 8,
+    "n_runs": 150,
+    "seeds": 3,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "calib_seed": 100,
+    "calib_verify": 500,
+    "b_delta": 1.0,
+    "bandwidth_hz": 1000000.0,
+    "rho_grid": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "lambda_base_grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.4,
+      0.8,
+      1.6
+    ],
+    "value_modes": [
+      "deficit",
+      "info"
+    ],
+    "mu_c": 0.05,
+    "ema_rho": 0.8,
+    "frozen": [
+      "FRIDS-v2 index/mirror-descent",
+      "policy-matched B",
+      "compact scale-aware token",
+      "fixed owner",
+      "full mesh",
+      "communication-domain beliefs",
+      "current scenario gen (seed 0)"
+    ]
+  },
+  "runtime_s": 183.9,
+  "airtime_model": {
+    "rate_model": "W_c log2(1 + gamma)  (Shannon capacity UPPER BOUND, not claimed throughput)",
+    "snr_model": "inverse log-normal outage: SNR = threshold + sigma * Phi^-1(s_ij)",
+    "tau": "b_tok / R_ij",
+    "budget": "T_air s/cycle; overflow thinning survival min(1, T_air / L_i)"
+  },
+  "regimes": {
+    "0.5": {
+      "rho_target": 0.5,
+      "rho_full": 0.5,
+      "T_air_s": 0.0002235197393010621,
+      "b_tok": 19.0,
+      "cells": {
+        "always_report": {
+          "J": 2.85711321909054,
+          "J_sd": 0.33284743210391404,
+          "p_md_max": 0.028169014084507005,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0017191916199993332,
+            "tx_reports_per_uav": 1.0,
+            "rx_load_per_uav": 0.000597896641177546,
+            "max_load_ratio": 0.49999999999999983,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        },
+        "value_triggered": {
+          "deficit": {
+            "selected_lambda_base": 0.8,
+            "configs": {
+              "0.0": {
+                "J": 2.85711321909054,
+                "J_sd": 0.33284743210391404,
+                "p_md_max": 0.028169014084507005,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0017191916199993332,
+                  "tx_reports_per_uav": 1.0,
+                  "rx_load_per_uav": 0.000597896641177546,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.1": {
+                "J": 2.803247502614591,
+                "J_sd": 0.14284443854406756,
+                "p_md_max": 0.026666666666666616,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0015885548478757894,
+                  "tx_reports_per_uav": 0.924000006060994,
+                  "rx_load_per_uav": 0.0005618232845285269,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.2": {
+                "J": 2.8200198964014955,
+                "J_sd": 0.09808478392123222,
+                "p_md_max": 0.05633802816901412,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0014545254579741175,
+                  "tx_reports_per_uav": 0.8461761766247268,
+                  "rx_load_per_uav": 0.0005444927534641351,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.4": {
+                "J": 2.9699410067057124,
+                "J_sd": 0.2885321469911074,
+                "p_md_max": 0.02941176470588236,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.001181973179477605,
+                  "tx_reports_per_uav": 0.6878349624799694,
+                  "rx_load_per_uav": 0.000525724962792769,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.8": {
+                "J": 2.8445652110035673,
+                "J_sd": 0.19325483248590236,
+                "p_md_max": 0.03529411764705881,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0008120559744874326,
+                  "tx_reports_per_uav": 0.47279397969259307,
+                  "rx_load_per_uav": 0.0004747336461088807,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "1.6": {
+                "J": 3.9737327689134916,
+                "J_sd": 0.24671349215800475,
+                "p_md_max": 0.02898550724637683,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.00045908398404662906,
+                  "tx_reports_per_uav": 0.2676563174266454,
+                  "rx_load_per_uav": 0.0004550005227902033,
+                  "max_load_ratio": 0.4172664626094659,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              }
+            },
+            "delta_J": -0.004391848388481735,
+            "airtime_reduction": 0.5276524355744896
+          },
+          "info": {
+            "selected_lambda_base": 0.2,
+            "configs": {
+              "0.0": {
+                "J": 2.85711321909054,
+                "J_sd": 0.33284743210391404,
+                "p_md_max": 0.028169014084507005,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0017191916199993332,
+                  "tx_reports_per_uav": 1.0,
+                  "rx_load_per_uav": 0.000597896641177546,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.1": {
+                "J": 2.796683489545783,
+                "J_sd": 0.039928263867340684,
+                "p_md_max": 0.02941176470588236,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0016778061189596499,
+                  "tx_reports_per_uav": 0.9759501964085299,
+                  "rx_load_per_uav": 0.0005872768223561116,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.2": {
+                "J": 2.8907570207570212,
+                "J_sd": 0.12749061139321777,
+                "p_md_max": 0.02985074626865669,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0016440581449872075,
+                  "tx_reports_per_uav": 0.9562966884354752,
+                  "rx_load_per_uav": 0.0005789338518278797,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.4": {
+                "J": 3.0346354558683326,
+                "J_sd": 0.1426198438493464,
+                "p_md_max": 0.03703703703703709,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.001609084255456505,
+                  "tx_reports_per_uav": 0.9359818853829182,
+                  "rx_load_per_uav": 0.0005693433250462491,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.8": {
+                "J": 3.055425143453313,
+                "J_sd": 0.1945283938730247,
+                "p_md_max": 0.04347826086956519,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0014624608142113956,
+                  "tx_reports_per_uav": 0.8507333885456291,
+                  "rx_load_per_uav": 0.0005564350879621239,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "1.6": {
+                "J": 2.9932339132836234,
+                "J_sd": 0.14409140326620148,
+                "p_md_max": 0.02564102564102566,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0011684967981672055,
+                  "tx_reports_per_uav": 0.6798992065822196,
+                  "rx_load_per_uav": 0.00048741122517498704,
+                  "max_load_ratio": 0.49999999999999983,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              }
+            },
+            "delta_J": 0.011775452733787915,
+            "airtime_reduction": 0.043702792718449235
+          }
+        },
+        "random_drop": {
+          "p": 0.47279397969259307,
+          "J": 3.6870405599004203,
+          "J_sd": 0.09319800220016464,
+          "p_md_max": 0.0273972602739726,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0008215816089531418,
+            "tx_reports_per_uav": 0.477901551434414,
+            "rx_load_per_uav": 0.0004347708272389288,
+            "max_load_ratio": 0.3521636914368202,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        },
+        "periodic": {
+          "period": 2,
+          "J": 3.6893117431092115,
+          "J_sd": 0.11343626568665101,
+          "p_md_max": 0.04705882352941182,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0008592945573809657,
+            "tx_reports_per_uav": 0.5,
+            "rx_load_per_uav": 0.0004397989299459977,
+            "max_load_ratio": 0.2678428428588409,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        },
+        "oracle": {
+          "J": 2.85711321909054,
+          "J_sd": 0.33284743210391404,
+          "p_md_max": 0.028169014084507005,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0017191916199993332,
+            "tx_reports_per_uav": 1.0,
+            "rx_load_per_uav": 0.000597896641177546,
+            "max_load_ratio": 0.49999999999999983,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        }
+      }
+    },
+    "1.0": {
+      "rho_target": 1.0,
+      "rho_full": 1.0,
+      "T_air_s": 0.00011175986965053104,
+      "b_tok": 19.0,
+      "cells": {
+        "always_report": {
+          "J": 2.85711321909054,
+          "J_sd": 0.33284743210391404,
+          "p_md_max": 0.028169014084507005,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0017191916199993332,
+            "tx_reports_per_uav": 1.0,
+            "rx_load_per_uav": 0.000597896641177546,
+            "max_load_ratio": 0.9999999999999997,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        },
+        "value_triggered": {
+          "deficit": {
+            "selected_lambda_base": 0.4,
+            "configs": {
+              "0.0": {
+                "J": 2.85711321909054,
+                "J_sd": 0.33284743210391404,
+                "p_md_max": 0.028169014084507005,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0017191916199993332,
+                  "tx_reports_per_uav": 1.0,
+                  "rx_load_per_uav": 0.000597896641177546,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.1": {
+                "J": 2.8200198964014955,
+                "J_sd": 0.09808478392123222,
+                "p_md_max": 0.05633802816901412,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0014545254579741175,
+                  "tx_reports_per_uav": 0.8461761766247268,
+                  "rx_load_per_uav": 0.0005444927534641351,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.2": {
+                "J": 2.9699410067057124,
+                "J_sd": 0.2885321469911074,
+                "p_md_max": 0.02941176470588236,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.001181973179477605,
+                  "tx_reports_per_uav": 0.6878349624799694,
+                  "rx_load_per_uav": 0.000525724962792769,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.4": {
+                "J": 2.8445652110035673,
+                "J_sd": 0.19325483248590236,
+                "p_md_max": 0.03529411764705881,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0008120559744874326,
+                  "tx_reports_per_uav": 0.47279397969259307,
+                  "rx_load_per_uav": 0.0004747336461088807,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.8": {
+                "J": 3.9737327689134916,
+                "J_sd": 0.24671349215800475,
+                "p_md_max": 0.02898550724637683,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.00045908398404662906,
+                  "tx_reports_per_uav": 0.2676563174266454,
+                  "rx_load_per_uav": 0.0004550005227902033,
+                  "max_load_ratio": 0.8345329252189319,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "1.6": {
+                "J": 5.6612463485881195,
+                "J_sd": 0.21944691470266897,
+                "p_md_max": 0.02777777777777779,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.00032551410673995195,
+                  "tx_reports_per_uav": 0.19011624885722664,
+                  "rx_load_per_uav": 0.00046475005518143136,
+                  "max_load_ratio": 0.6448697199235424,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              }
+            },
+            "delta_J": -0.004391848388481735,
+            "airtime_reduction": 0.5276524355744896
+          },
+          "info": {
+            "selected_lambda_base": 0.1,
+            "configs": {
+              "0.0": {
+                "J": 2.85711321909054,
+                "J_sd": 0.33284743210391404,
+                "p_md_max": 0.028169014084507005,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0017191916199993332,
+                  "tx_reports_per_uav": 1.0,
+                  "rx_load_per_uav": 0.000597896641177546,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.1": {
+                "J": 2.8907570207570212,
+                "J_sd": 0.12749061139321777,
+                "p_md_max": 0.02985074626865669,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0016440581449872075,
+                  "tx_reports_per_uav": 0.9562966884354752,
+                  "rx_load_per_uav": 0.0005789338518278797,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.2": {
+                "J": 3.0346354558683326,
+                "J_sd": 0.1426198438493464,
+                "p_md_max": 0.03703703703703709,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.001609084255456505,
+                  "tx_reports_per_uav": 0.9359818853829182,
+                  "rx_load_per_uav": 0.0005693433250462491,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.4": {
+                "J": 3.055425143453313,
+                "J_sd": 0.1945283938730247,
+                "p_md_max": 0.04347826086956519,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0014624608142113956,
+                  "tx_reports_per_uav": 0.8507333885456291,
+                  "rx_load_per_uav": 0.0005564350879621239,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "0.8": {
+                "J": 2.9932339132836234,
+                "J_sd": 0.14409140326620148,
+                "p_md_max": 0.02564102564102566,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0011684967981672055,
+                  "tx_reports_per_uav": 0.6798992065822196,
+                  "rx_load_per_uav": 0.00048741122517498704,
+                  "max_load_ratio": 0.9999999999999997,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              },
+              "1.6": {
+                "J": 3.961678321678322,
+                "J_sd": 0.34747404136241156,
+                "p_md_max": 0.02898550724637683,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0005438065551803842,
+                  "tx_reports_per_uav": 0.31711839618971044,
+                  "rx_load_per_uav": 0.00037936431518429764,
+                  "max_load_ratio": 0.8060213673878268,
+                  "budget_feasible_fraction": 1.0,
+                  "thinned_tokens_per_cycle": 0.0
+                }
+              }
+            },
+            "delta_J": 0.011775452733787915,
+            "airtime_reduction": 0.043702792718449235
+          }
+        },
+        "random_drop": {
+          "p": 0.47279397969259307,
+          "J": 3.6870405599004203,
+          "J_sd": 0.09319800220016464,
+          "p_md_max": 0.0273972602739726,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0008215816089531418,
+            "tx_reports_per_uav": 0.477901551434414,
+            "rx_load_per_uav": 0.0004347708272389288,
+            "max_load_ratio": 0.7043273828736404,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        },
+        "periodic": {
+          "period": 2,
+          "J": 3.6893117431092115,
+          "J_sd": 0.11343626568665101,
+          "p_md_max": 0.04705882352941182,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0008592945573809657,
+            "tx_reports_per_uav": 0.5,
+            "rx_load_per_uav": 0.0004397989299459977,
+            "max_load_ratio": 0.5356856857176818,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        },
+        "oracle": {
+          "J": 2.85711321909054,
+          "J_sd": 0.33284743210391404,
+          "p_md_max": 0.028169014084507005,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0017191916199993332,
+            "tx_reports_per_uav": 1.0,
+            "rx_load_per_uav": 0.000597896641177546,
+            "max_load_ratio": 0.9999999999999997,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        }
+      }
+    },
+    "1.5": {
+      "rho_target": 1.5,
+      "rho_full": 1.5,
+      "T_air_s": 7.45065797670207e-05,
+      "b_tok": 19.0,
+      "cells": {
+        "always_report": {
+          "J": 3.311327476544868,
+          "J_sd": 0.0821413297836456,
+          "p_md_max": 0.026666666666666616,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0017191916199993332,
+            "tx_reports_per_uav": 1.0,
+            "rx_load_per_uav": 0.0007428340458080452,
+            "max_load_ratio": 1.4999999999999998,
+            "budget_feasible_fraction": 0.0,
+            "thinned_tokens_per_cycle": 73.48898892209986
+          }
+        },
+        "value_triggered": {
+          "deficit": {
+            "selected_lambda_base": 0.1,
+            "configs": {
+              "0.0": {
+                "J": 3.4854320987654326,
+                "J_sd": 0.16063962987816932,
+                "p_md_max": 0.031746031746031744,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.001339921150277196,
+                  "tx_reports_per_uav": 0.7798617372097764,
+                  "rx_load_per_uav": 0.0006244928409066281,
+                  "max_load_ratio": 1.4999999999999998,
+                  "budget_feasible_fraction": 0.2733028278910632,
+                  "thinned_tokens_per_cycle": 47.564145786864174
+                }
+              },
+              "0.1": {
+                "J": 3.4228549228549228,
+                "J_sd": 0.057455908078364405,
+                "p_md_max": 0.02777777777777779,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0010508704007507104,
+                  "tx_reports_per_uav": 0.6115722703216417,
+                  "rx_load_per_uav": 0.0005779861213181809,
+                  "max_load_ratio": 1.4999999999999998,
+                  "budget_feasible_fraction": 0.4575464528499272,
+                  "thinned_tokens_per_cycle": 34.48869240145172
+                }
+              },
+              "0.2": {
+                "J": 3.4643175010697473,
+                "J_sd": 0.32960583217393585,
+                "p_md_max": 0.014084507042253502,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0008187085896660387,
+                  "tx_reports_per_uav": 0.4766880431990355,
+                  "rx_load_per_uav": 0.000545556004419229,
+                  "max_load_ratio": 1.4999999999999998,
+                  "budget_feasible_fraction": 0.5933550293668027,
+                  "thinned_tokens_per_cycle": 23.515283222039148
+                }
+              },
+              "0.4": {
+                "J": 3.7997064875332853,
+                "J_sd": 0.4307745434104101,
+                "p_md_max": 0.03749999999999998,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0005483924849018252,
+                  "tx_reports_per_uav": 0.31949871969875826,
+                  "rx_load_per_uav": 0.000471576483358711,
+                  "max_load_ratio": 1.3884585491244072,
+                  "budget_feasible_fraction": 0.7714045014860522,
+                  "thinned_tokens_per_cycle": 7.268892635431999
+                }
+              },
+              "0.8": {
+                "J": 4.851496138996139,
+                "J_sd": 0.24775430959151845,
+                "p_md_max": 0.03797468354430378,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.00034020076104741994,
+                  "tx_reports_per_uav": 0.19867399339833577,
+                  "rx_load_per_uav": 0.00044405541370300306,
+                  "max_load_ratio": 1.0256359985824395,
+                  "budget_feasible_fraction": 0.9610843042201708,
+                  "thinned_tokens_per_cycle": 1.0146720817254746
+                }
+              },
+              "1.6": {
+                "J": 5.400281005544163,
+                "J_sd": 0.4390498751969897,
+                "p_md_max": 0.028169014084507005,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0003016969468985228,
+                  "tx_reports_per_uav": 0.17615375894118898,
+                  "rx_load_per_uav": 0.0004552482240742062,
+                  "max_load_ratio": 0.8778661525953083,
+                  "budget_feasible_fraction": 0.9817266656609198,
+                  "thinned_tokens_per_cycle": 0.3872470362166996
+                }
+              }
+            },
+            "delta_J": 0.0336805849315833,
+            "airtime_reduction": 0.38874155240989483
+          },
+          "info": {
+            "selected_lambda_base": 0.1,
+            "configs": {
+              "0.0": {
+                "J": 3.327583774250441,
+                "J_sd": 0.26628355643944,
+                "p_md_max": 0.015151515151515138,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0016153771505599938,
+                  "tx_reports_per_uav": 0.9396909629722129,
+                  "rx_load_per_uav": 0.0006841027837478767,
+                  "max_load_ratio": 1.4999999999999998,
+                  "budget_feasible_fraction": 0.06145234703568037,
+                  "thinned_tokens_per_cycle": 64.52752870000516
+                }
+              },
+              "0.1": {
+                "J": 3.2289671506538977,
+                "J_sd": 0.3262808743755904,
+                "p_md_max": 0.02777777777777779,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.001526947884786125,
+                  "tx_reports_per_uav": 0.8882831462632321,
+                  "rx_load_per_uav": 0.0006595309343071697,
+                  "max_load_ratio": 1.4999999999999998,
+                  "budget_feasible_fraction": 0.11408332263234222,
+                  "thinned_tokens_per_cycle": 56.91214200846218
+                }
+              },
+              "0.2": {
+                "J": 3.265138056110741,
+                "J_sd": 0.12448716249189061,
+                "p_md_max": 0.027027027027026973,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0014575822124096435,
+                  "tx_reports_per_uav": 0.847860707670144,
+                  "rx_load_per_uav": 0.0006271481704083014,
+                  "max_load_ratio": 1.4999999999999998,
+                  "budget_feasible_fraction": 0.14478661029564022,
+                  "thinned_tokens_per_cycle": 50.536576852946574
+                }
+              },
+              "0.4": {
+                "J": 3.4403329596877987,
+                "J_sd": 0.19659052721024625,
+                "p_md_max": 0.05063291139240511,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0012458478311458885,
+                  "tx_reports_per_uav": 0.7248142948746139,
+                  "rx_load_per_uav": 0.0005585092757889173,
+                  "max_load_ratio": 1.4999999999999998,
+                  "budget_feasible_fraction": 0.29840200549483137,
+                  "thinned_tokens_per_cycle": 35.06794335836841
+                }
+              },
+              "0.8": {
+                "J": 3.6255365071154544,
+                "J_sd": 0.3265383942849092,
+                "p_md_max": 0.038961038961038974,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.0007662956001078286,
+                  "tx_reports_per_uav": 0.4459797892382545,
+                  "rx_load_per_uav": 0.000442309991697065,
+                  "max_load_ratio": 1.3546743064787554,
+                  "budget_feasible_fraction": 0.669871397058254,
+                  "thinned_tokens_per_cycle": 9.871236750417285
+                }
+              },
+              "1.6": {
+                "J": 6.260565330111505,
+                "J_sd": 0.35051658162615945,
+                "p_md_max": 0.026666666666666616,
+                "p_fa_max": 0.0,
+                "comm": {
+                  "airtime_per_cycle": 0.00031102496888066127,
+                  "tx_reports_per_uav": 0.18177898909165538,
+                  "rx_load_per_uav": 0.00035535638496684896,
+                  "max_load_ratio": 0.7357251239997465,
+                  "budget_feasible_fraction": 0.9998412698412699,
+                  "thinned_tokens_per_cycle": 0.0004993143336511021
+                }
+              }
+            },
+            "delta_J": -0.024872298639851614,
+            "airtime_reduction": 0.11182216861508587
+          }
+        },
+        "random_drop": {
+          "p": 0.8882831462632321,
+          "J": 3.3376068376068377,
+          "J_sd": 0.16029913960265865,
+          "p_md_max": 0.03658536585365857,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0015283587673879037,
+            "tx_reports_per_uav": 0.888960849477845,
+            "rx_load_per_uav": 0.0006608885201882237,
+            "max_load_ratio": 1.4850110583056606,
+            "budget_feasible_fraction": 0.003850088183421517,
+            "thinned_tokens_per_cycle": 47.06242436705414
+          }
+        },
+        "periodic": {
+          "period": 1,
+          "J": 3.311327476544868,
+          "J_sd": 0.0821413297836456,
+          "p_md_max": 0.026666666666666616,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0017191916199993332,
+            "tx_reports_per_uav": 1.0,
+            "rx_load_per_uav": 0.0007428340458080452,
+            "max_load_ratio": 1.4999999999999998,
+            "budget_feasible_fraction": 0.0,
+            "thinned_tokens_per_cycle": 73.48898892209986
+          }
+        },
+        "oracle": {
+          "J": 3.427634335104624,
+          "J_sd": 0.1262393491039341,
+          "p_md_max": 0.04166666666666663,
+          "p_fa_max": 0.0,
+          "comm": {
+            "airtime_per_cycle": 0.0010746468241546849,
+            "tx_reports_per_uav": 0.6241339270297604,
+            "rx_load_per_uav": 0.0004756822470556963,
+            "max_load_ratio": 0.9973459294132544,
+            "budget_feasible_fraction": 1.0,
+            "thinned_tokens_per_cycle": 0.0
+          }
+        }
+      }
+    }
+  }
+}

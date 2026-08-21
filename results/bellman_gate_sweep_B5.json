@@ -1,0 +1,229 @@
+{
+  "gate": "posterior-state-bellman-active-detection",
+  "params": {
+    "horizon": 6,
+    "grid": 401,
+    "l_max": 10.0,
+    "c10": 20.0,
+    "c01": 20.0,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "n_runs": 2000
+  },
+  "part_d1": {
+    "link": {
+      "mu0": 4.0,
+      "var0": 4.0,
+      "links": [
+        [
+          10.0,
+          16.0
+        ],
+        [
+          7.0,
+          12.0
+        ]
+      ]
+    },
+    "n_actions": 32,
+    "oracle_agreement_alpha_vs_grid": 0.00010187992345311869,
+    "policies": {
+      "bellman": {
+        "delay0": 3.15,
+        "delay1": 2.114,
+        "p_fa": 0.1165,
+        "p_md": 0.14100000000000001,
+        "cost0": 3.15,
+        "cost1": 2.114,
+        "info1": 1.644800928789074,
+        "total_cost": 5.207
+      },
+      "tau_pred": {
+        "delay0": 5.8925,
+        "delay1": 2.398,
+        "p_fa": 0.009,
+        "p_md": 0.03500000000000003,
+        "cost0": 11.785,
+        "cost1": 4.796,
+        "info1": 4.2121973731537175,
+        "total_cost": 8.7305
+      },
+      "chernoff": {
+        "delay0": 6.7395,
+        "delay1": 4.812,
+        "p_fa": 0.0265,
+        "p_md": 0.03849999999999998,
+        "cost0": 6.7395,
+        "cost1": 4.812,
+        "info1": 3.743983949542584,
+        "total_cost": 6.42575
+      },
+      "dpd": {
+        "delay0": 3.0005,
+        "delay1": 1.8435,
+        "p_fa": 0.148,
+        "p_md": 0.12050000000000005,
+        "cost0": 3.0005,
+        "cost1": 1.8435,
+        "info1": 1.4343379906445872,
+        "total_cost": 5.107000000000001
+      },
+      "static": {
+        "delay0": 6.6745,
+        "delay1": 4.8295,
+        "p_fa": 0.021,
+        "p_md": 0.038000000000000034,
+        "cost0": 6.6745,
+        "cost1": 4.8295,
+        "info1": 3.757599851270971,
+        "total_cost": 6.3420000000000005
+      }
+    },
+    "cost_gap_vs_bellman": {
+      "bellman": 0.0,
+      "tau_pred": 0.6766852314192432,
+      "chernoff": 0.23405991933935089,
+      "dpd": -0.019204916458613167,
+      "static": 0.21797580180526227
+    }
+  },
+  "part_d1b": {
+    "scale": {
+      "q": 1,
+      "links": 3,
+      "bits": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "powers": [
+        1.0,
+        2.0
+      ],
+      "horizon": 6,
+      "budget": 5
+    },
+    "n_actions_raw": 24,
+    "n_actions_after_blackwell": 11,
+    "policies": {
+      "bellman_budget": {
+        "delay0": 3.094,
+        "delay1": 2.029,
+        "p_fa": 0.1015,
+        "p_md": 0.14800000000000002,
+        "cost0": 3.087,
+        "cost1": 2.0065,
+        "info1": 1.5611603896004145,
+        "total_cost": 5.04175
+      },
+      "tau_pred": {
+        "delay0": 4.9725,
+        "delay1": 3.692,
+        "p_fa": 0.0615,
+        "p_md": 0.14900000000000002,
+        "cost0": 4.9815,
+        "cost1": 3.615,
+        "info1": 2.8126562713209564,
+        "total_cost": 6.40325
+      },
+      "chernoff": {
+        "delay0": 4.9795,
+        "delay1": 3.6885,
+        "p_fa": 0.059,
+        "p_md": 0.16200000000000003,
+        "cost0": 4.9815,
+        "cost1": 3.645,
+        "info1": 2.8359978171410476,
+        "total_cost": 6.523250000000001
+      },
+      "dpd": {
+        "delay0": 3.031,
+        "delay1": 1.86,
+        "p_fa": 0.1395,
+        "p_md": 0.13,
+        "cost0": 3.016,
+        "cost1": 1.8455,
+        "info1": 1.43589409369926,
+        "total_cost": 5.12575
+      },
+      "static_floor_cover": {
+        "delay0": 4.9805,
+        "delay1": 3.6375,
+        "p_fa": 0.0595,
+        "p_md": 0.15800000000000003,
+        "cost0": 4.9795,
+        "cost1": 3.6345,
+        "info1": 2.8278282761040154,
+        "total_cost": 6.482000000000001
+      }
+    },
+    "best_myopic": "dpd",
+    "cost_gain_vs_best_myopic": 0.016387845681119763,
+    "cycles_gain_vs_best_myopic": -0.09086021505376334,
+    "errors_within_myopic": true,
+    "meaningful_improvement": false,
+    "verdict": "Bellman does not materially beat the myopic strategies; agent-ifying the static pipeline is not worth it at this scale"
+  },
+  "part_d2": {
+    "n_actions_library": 32,
+    "n_pruned_blackwell": 28,
+    "chernoff_best_action": 0,
+    "fraction_continuation_states": 0.14962593516209477,
+    "fraction_states_leaving_chernoff_action": 0.0,
+    "adaptive_gain_vs_fixed_chernoff": 0.19533302426209256,
+    "fixed_chernoff_cost": 6.471000000000001
+  },
+  "part_d3": {
+    "joint_value_star": 11.783295816581704,
+    "joint_worst_delay": 4.578,
+    "joint_mean_delays": [
+      4.578,
+      4.578
+    ],
+    "joint_bayes_cost": 6.259,
+    "best_dual_bound": 0.26771403697139423,
+    "weak_duality_gap": 11.51558177961031,
+    "dual_best_row": {
+      "nu1": 0.3,
+      "lam": 1.0,
+      "worst_delay": 1.592,
+      "mean_delays": [
+        0.0,
+        1.592
+      ],
+      "mean_costs": [
+        0.0,
+        1.592
+      ],
+      "p_fa": [
+        0.0,
+        NaN
+      ],
+      "p_md": [
+        NaN,
+        0.246
+      ],
+      "bayes_cost": 3.2560000000000002
+    },
+    "dual_bayes_cost": 3.2560000000000002,
+    "worst_delay_gap_vs_joint": -2.986
+  },
+  "part_d4": {
+    "p_fa": 0.1165,
+    "p_md": 0.14100000000000001,
+    "d_1": 1.4574233728777282,
+    "i_max_plus": 1.7565460271700237,
+    "rho_plus": 0.8782730135850119,
+    "e1_sum_i_plus": 1.644800928789074,
+    "info_bound_holds": true,
+    "t_lower": 0.8297097544467918,
+    "t_bellman": 2.114,
+    "t_tau_pred": 2.398,
+    "bellman_over_lower": 2.547878928348272,
+    "tau_over_lower": 2.8901672990440668,
+    "c_lower": 1.6594195088935837,
+    "c_bellman": 2.114
+  },
+  "passed": false
+}

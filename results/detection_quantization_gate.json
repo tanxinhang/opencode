@@ -1,0 +1,64 @@
+{
+  "gate": "detection-aware-quantization-and-information-gradient",
+  "bits": 3,
+  "alpha": 0.05,
+  "part_a": {
+    "instances": 48,
+    "span_agreement_with_pd4_opt": {
+      "i_plus": 9,
+      "chernoff": 29,
+      "pd4": 48
+    },
+    "i_plus_failure_fraction": 0.625,
+    "chernoff_failure_fraction": 0.14583333333333334,
+    "i_plus_span_distribution": {
+      "2.0": 0,
+      "3.0": 0,
+      "4.0": 0,
+      "5.0": 0,
+      "6.0": 0,
+      "8.0": 0,
+      "10.0": 0,
+      "12.0": 0,
+      "16.0": 0,
+      "20.0": 0,
+      "24.0": 48
+    },
+    "chernoff_span_distribution": {
+      "2.0": 0,
+      "3.0": 0,
+      "4.0": 0,
+      "5.0": 5,
+      "6.0": 8,
+      "8.0": 9,
+      "10.0": 6,
+      "12.0": 0,
+      "16.0": 0,
+      "20.0": 0,
+      "24.0": 20
+    }
+  },
+  "part_b": {
+    "instances": 20,
+    "window_gain_mean": 0.00017001298114104751,
+    "window_gain_max": 0.0005127786703459369,
+    "structures": {
+      "two_sided_window": 20
+    }
+  },
+  "part_c": {
+    "instances": 12,
+    "budget": 8,
+    "mean_worst_pd_sum_i_plus": 0.4631605937985864,
+    "mean_worst_pd_maxmin_i_plus": 0.5073521576716499,
+    "mean_worst_pd_floor_cover": 0.7942451399035361,
+    "floor_cover_exactness_fraction": 1.0,
+    "mean_worst_pd_exact": 0.7942451399035361,
+    "mean_worst_chernoff_exact": 0.1996813534315158,
+    "mean_worst_pd_of_chernoff_opt": 0.7724188362657715,
+    "chernoff_opt_matches_exact_pd": 0.6666666666666666,
+    "exact_wins_over_sum_i_plus": 1.0,
+    "exact_wins_over_maxmin_i_plus": 1.0
+  },
+  "passed": true
+}

@@ -1,0 +1,410 @@
+{
+  "gate": "f0s-scaling-audit",
+  "params": {
+    "scales": [
+      [
+        6,
+        3
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        12,
+        6
+      ],
+      [
+        16,
+        8
+      ]
+    ],
+    "n_runs": 400,
+    "seeds": 4,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "scenario_seed": 0,
+    "calib_seed": 100,
+    "calib_verify_runs": 2000,
+    "token_llr_bits": 5,
+    "frozen": [
+      "fixed owner",
+      "full mesh",
+      "19-bit token",
+      "dual-G + congestion price",
+      "calibrated two-threshold stopping",
+      "current scenario gen"
+    ]
+  },
+  "runtime_s": 2788.7,
+  "rows": {
+    "6_3": {
+      "k": 6,
+      "q": 3,
+      "bounds_exact": [
+        [
+          2.278,
+          -2.944
+        ],
+        [
+          2.611,
+          -3.278
+        ],
+        [
+          1.944,
+          -2.611
+        ]
+      ],
+      "bounds_token": [
+        [
+          2.611,
+          -2.278
+        ],
+        [
+          3.278,
+          -2.278
+        ],
+        [
+          1.944,
+          -2.278
+        ]
+      ],
+      "modes": {
+        "centralized": {
+          "J": 4.4451622128552275,
+          "J_sd": 0.08624466071403565,
+          "p_md_max": 0.05882352941176472,
+          "p_fa_max": 0.0
+        },
+        "full_message": {
+          "J": 5.277415089038582,
+          "J_sd": 0.14233004939396374,
+          "p_md_max": 0.0714285714285714,
+          "p_fa_max": 0.0
+        },
+        "compact_token": {
+          "J": 5.371643436157316,
+          "J_sd": 0.19822000131996598,
+          "p_md_max": 0.06077348066298338,
+          "p_fa_max": 0.0
+        },
+        "local_only": {
+          "J": 32.506375854156126,
+          "J_sd": 0.31427484885943835,
+          "p_md_max": 0.5163043478260869,
+          "p_fa_max": 0.0
+        }
+      },
+      "u2u_bits_per_uav_per_cycle": {
+        "transmit": 19.0,
+        "receive_full_mesh": 95.0
+      },
+      "decision_us_per_uav": 501.49194430559874,
+      "runtime_s": 296.4
+    },
+    "8_4": {
+      "k": 8,
+      "q": 4,
+      "bounds_exact": [
+        [
+          2.278,
+          -2.944
+        ],
+        [
+          1.944,
+          -2.944
+        ],
+        [
+          1.944,
+          -2.611
+        ],
+        [
+          2.611,
+          -2.944
+        ]
+      ],
+      "bounds_token": [
+        [
+          2.611,
+          -2.278
+        ],
+        [
+          1.944,
+          -2.611
+        ],
+        [
+          1.944,
+          -2.278
+        ],
+        [
+          2.611,
+          -2.278
+        ]
+      ],
+      "modes": {
+        "centralized": {
+          "J": 3.632053690026365,
+          "J_sd": 0.10877370718132566,
+          "p_md_max": 0.03141361256544506,
+          "p_fa_max": 0.0
+        },
+        "full_message": {
+          "J": 4.536871222990305,
+          "J_sd": 0.06928320977890443,
+          "p_md_max": 0.032258064516129004,
+          "p_fa_max": 0.0
+        },
+        "compact_token": {
+          "J": 3.973679594237926,
+          "J_sd": 0.1890623278434665,
+          "p_md_max": 0.041884816753926746,
+          "p_fa_max": 0.0
+        },
+        "local_only": {
+          "J": 36.6381029538591,
+          "J_sd": 0.15395218645612366,
+          "p_md_max": 0.5729729729729729,
+          "p_fa_max": 0.0
+        }
+      },
+      "u2u_bits_per_uav_per_cycle": {
+        "transmit": 19.0,
+        "receive_full_mesh": 133.0
+      },
+      "decision_us_per_uav": 630.8106250799028,
+      "runtime_s": 412.0
+    },
+    "12_6": {
+      "k": 12,
+      "q": 6,
+      "bounds_exact": [
+        [
+          2.611,
+          -2.944
+        ],
+        [
+          2.278,
+          -2.611
+        ],
+        [
+          1.944,
+          -2.611
+        ],
+        [
+          2.278,
+          -2.944
+        ],
+        [
+          1.944,
+          -2.611
+        ],
+        [
+          2.278,
+          -2.611
+        ]
+      ],
+      "bounds_token": [
+        [
+          2.944,
+          -3.611
+        ],
+        [
+          2.278,
+          -3.278
+        ],
+        [
+          1.944,
+          -2.278
+        ],
+        [
+          2.278,
+          -2.611
+        ],
+        [
+          2.278,
+          -3.278
+        ],
+        [
+          2.278,
+          -2.278
+        ]
+      ],
+      "modes": {
+        "centralized": {
+          "J": 4.831121412676087,
+          "J_sd": 0.14840471216734777,
+          "p_md_max": 0.05670103092783507,
+          "p_fa_max": 0.0
+        },
+        "full_message": {
+          "J": 5.2809728272915635,
+          "J_sd": 0.12822338852245738,
+          "p_md_max": 0.053475935828877,
+          "p_fa_max": 0.0
+        },
+        "compact_token": {
+          "J": 5.3205626237115125,
+          "J_sd": 0.15268562327374838,
+          "p_md_max": 0.07035175879396982,
+          "p_fa_max": 0.0
+        },
+        "local_only": {
+          "J": 39.73376180666296,
+          "J_sd": 0.0364805370829003,
+          "p_md_max": 0.7386934673366834,
+          "p_fa_max": 0.0
+        }
+      },
+      "u2u_bits_per_uav_per_cycle": {
+        "transmit": 19.0,
+        "receive_full_mesh": 209.0
+      },
+      "decision_us_per_uav": 841.1345832832416,
+      "runtime_s": 822.8
+    },
+    "16_8": {
+      "k": 16,
+      "q": 8,
+      "bounds_exact": [
+        [
+          2.611,
+          -2.944
+        ],
+        [
+          2.278,
+          -2.944
+        ],
+        [
+          1.944,
+          -3.278
+        ],
+        [
+          2.611,
+          -2.944
+        ],
+        [
+          2.278,
+          -3.278
+        ],
+        [
+          1.944,
+          -2.944
+        ],
+        [
+          2.278,
+          -2.944
+        ],
+        [
+          2.278,
+          -3.278
+        ]
+      ],
+      "bounds_token": [
+        [
+          2.944,
+          -3.611
+        ],
+        [
+          2.611,
+          -2.278
+        ],
+        [
+          1.944,
+          -2.278
+        ],
+        [
+          2.611,
+          -2.278
+        ],
+        [
+          2.611,
+          -2.278
+        ],
+        [
+          1.944,
+          -3.611
+        ],
+        [
+          2.611,
+          -2.278
+        ],
+        [
+          2.944,
+          -2.278
+        ]
+      ],
+      "modes": {
+        "centralized": {
+          "J": 4.69872650898275,
+          "J_sd": 0.12184852283113366,
+          "p_md_max": 0.027906976744186074,
+          "p_fa_max": 0.0
+        },
+        "full_message": {
+          "J": 5.944519482165907,
+          "J_sd": 0.08145470425195586,
+          "p_md_max": 0.04040404040404044,
+          "p_fa_max": 0.0
+        },
+        "compact_token": {
+          "J": 6.075276895385591,
+          "J_sd": 0.13718619077277833,
+          "p_md_max": 0.040000000000000036,
+          "p_fa_max": 0.0
+        },
+        "local_only": {
+          "J": 40.0,
+          "J_sd": 0.0,
+          "p_md_max": 1.0,
+          "p_fa_max": 0.0
+        }
+      },
+      "u2u_bits_per_uav_per_cycle": {
+        "transmit": 19.0,
+        "receive_full_mesh": 285.0
+      },
+      "decision_us_per_uav": 892.6123958493312,
+      "runtime_s": 1257.5
+    }
+  },
+  "verdicts": {
+    "gate_a_detection_scales": {
+      "J_6_3": 5.372,
+      "J_16_8": 6.075,
+      "relative_growth": 0.131,
+      "p_md_max_all_scales": 0.0704,
+      "p_fa_max_all_scales": 0.0,
+      "passed": false
+    },
+    "gate_b_local_compute": {
+      "decision_us_per_uav": {
+        "6_3": 501.5,
+        "8_4": 630.8,
+        "12_6": 841.1,
+        "16_8": 892.6
+      },
+      "linear_in_q_allowance_ratio": 3.467,
+      "passed": true
+    },
+    "gate_c_communication": {
+      "transmit_bits_per_uav_per_cycle": {
+        "6_3": 19.0,
+        "8_4": 19.0,
+        "12_6": 19.0,
+        "16_8": 19.0
+      },
+      "receive_bits_per_uav_per_cycle_full_mesh": {
+        "6_3": 95.0,
+        "8_4": 133.0,
+        "12_6": 209.0,
+        "16_8": 285.0
+      },
+      "transmit_constant": true,
+      "receive_linear_in_k": true,
+      "passed": true,
+      "finding": "per-UAV transmit cost is constant (19 bits/cycle); per-UAV receive load grows linearly with K in full mesh (19*(K-1) bits/cycle) -- the receiver-side topology is the communication scaling cost"
+    },
+    "first_bottleneck": "detection delay growth exceeds 10% over the sweep (J 5.37 -> 6.08, +13.1%); target allocation / resource competition is the next problem"
+  }
+}

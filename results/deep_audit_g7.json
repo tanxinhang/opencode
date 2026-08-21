@@ -1,0 +1,165 @@
+{
+  "audit": "deep-audit-A-v2-g7-robustness",
+  "params": {
+    "K": 16,
+    "Q": 8,
+    "n_runs": 120,
+    "seeds": 3,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "calib_seed": 100,
+    "calib_verify": 400,
+    "b_delta": 1.0,
+    "scenario_seeds": 3,
+    "rho_grid": [
+      0.5,
+      1.5
+    ],
+    "lambda_base_grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.4,
+      0.8,
+      1.6
+    ],
+    "value_modes": [
+      "deficit",
+      "info"
+    ],
+    "mu_c": 0.05,
+    "ema_rho": 0.8
+  },
+  "runtime_s": 323.7,
+  "per_scenario": {
+    "0": {
+      "non_congested": {
+        "deficit": {
+          "lb": 0.4,
+          "dJ": 0.0016931297176119675,
+          "red": 0.3102394796805542,
+          "p_md": 0.031746031746031744
+        },
+        "info": {
+          "lb": 0.8,
+          "dJ": 0.005362335320973218,
+          "red": 0.1354443754814526,
+          "p_md": 0.032258064516129004
+        }
+      },
+      "non_congested_life_gate": true,
+      "congested": {
+        "deficit": {
+          "lb": 0.0,
+          "J": 3.7662777910802494,
+          "always_J": 3.579492883831037,
+          "random_J": 3.7557032125782066,
+          "dJ_vs_always": -0.05218194680395663,
+          "dJ_vs_random": -0.002815605468139104,
+          "p_md": 0.031746031746031744
+        },
+        "info": {
+          "lb": 0.2,
+          "J": 3.619076797385621,
+          "always_J": 3.579492883831037,
+          "random_J": 3.53800460178604,
+          "dJ_vs_always": -0.011058525561927723,
+          "dJ_vs_random": -0.022914666520968987,
+          "p_md": 0.04477611940298509
+        }
+      },
+      "congested_life_gate": false
+    },
+    "1": {
+      "non_congested": {
+        "deficit": {
+          "lb": 0.1,
+          "dJ": 0.013552394344059592,
+          "red": 0.0501647857354004,
+          "p_md": 0.049180327868852514
+        },
+        "info": {
+          "lb": 0.2,
+          "dJ": 0.01784224938376886,
+          "red": 0.023921755392608213,
+          "p_md": 0.018181818181818188
+        }
+      },
+      "non_congested_life_gate": false,
+      "congested": {
+        "deficit": {
+          "lb": 0.0,
+          "J": 4.806630790391659,
+          "always_J": 4.680331690167756,
+          "random_J": 4.71023373117363,
+          "dJ_vs_always": -0.02698507468802418,
+          "dJ_vs_random": -0.02046545133844353,
+          "p_md": 0.036363636363636376
+        },
+        "info": {
+          "lb": 0.2,
+          "J": 4.716465643274854,
+          "always_J": 4.680331690167756,
+          "random_J": 4.792424242424242,
+          "dJ_vs_always": -0.007720382976917478,
+          "dJ_vs_random": 0.01584972350255959,
+          "p_md": 0.0357142857142857
+        }
+      },
+      "congested_life_gate": false
+    },
+    "2": {
+      "non_congested": {
+        "deficit": {
+          "lb": 0.4,
+          "dJ": 0.008292934150977592,
+          "red": 0.27602229318336324,
+          "p_md": 0.03448275862068961
+        },
+        "info": {
+          "lb": 0.8,
+          "dJ": -0.005509760421990256,
+          "red": 0.11046416668352566,
+          "p_md": 0.03389830508474578
+        }
+      },
+      "non_congested_life_gate": false,
+      "congested": {
+        "deficit": {
+          "lb": 0.0,
+          "J": 4.162129461584997,
+          "always_J": 4.207490079365079,
+          "random_J": 4.2267563703311986,
+          "dJ_vs_always": 0.010780920911149685,
+          "dJ_vs_random": 0.01528995359179821,
+          "p_md": 0.054545454545454564
+        },
+        "info": {
+          "lb": 0.0,
+          "J": 4.263367259676719,
+          "always_J": 4.207490079365079,
+          "random_J": 4.472592893645525,
+          "dJ_vs_always": -0.013280406907120273,
+          "dJ_vs_random": 0.04677949434344124,
+          "p_md": 0.0357142857142857
+        }
+      },
+      "congested_life_gate": false
+    }
+  },
+  "summary": {
+    "non_congested_passes": {
+      "0": true,
+      "1": false,
+      "2": false
+    },
+    "congested_passes": {
+      "0": false,
+      "1": false,
+      "2": false
+    },
+    "non_congested_fraction": 0.3333333333333333,
+    "congested_fraction": 0.0
+  }
+}

@@ -1,0 +1,562 @@
+{
+  "gate": {
+    "decomposition_ok": true,
+    "stopping_tail_ok": true,
+    "service_gap_ok": true,
+    "verdict": "FRIDS-v2 frozen; Theorem A bound numerically holds, Theorem B gap explained by sqrt(logQ/T)+eps_loc"
+  },
+  "params": {
+    "scales": [
+      [
+        6,
+        3
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        12,
+        6
+      ],
+      [
+        16,
+        8
+      ]
+    ],
+    "n_runs": 300,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "calib_scan": 120,
+    "calib_verify": 300,
+    "mu": 0.5,
+    "eps": 0.1,
+    "frozen": [
+      "FRIDS-v2",
+      "fixed owner",
+      "full mesh",
+      "19-bit token",
+      "communication-domain beliefs",
+      "two-threshold stopping"
+    ],
+    "bridge": "recorded per (run, cycle, target) owner LLR, predictable reliable service A_q, variance V_q, realized delivered service S_q, normalized service r_q, stopping time T_q"
+  },
+  "runtime_s": 104.7,
+  "rows": {
+    "6_3": {
+      "k": 6,
+      "q": 3,
+      "n_scenarios": 2,
+      "per_scenario": {
+        "0": {
+          "J": 3.1180555555555554,
+          "p_md_max": 0.02515723270440251,
+          "decomposition": {
+            "decomposition_max_abs_error": 3.552713678800501e-15,
+            "martingale_residual_mean": -0.11543255742005556,
+            "martingale_residual_sd": 1.0405307819995377,
+            "b_q": 60.75,
+            "freedman": {
+              "max_ratio": 1.0,
+              "violation_fraction": 0.0,
+              "n_cases": 480
+            },
+            "freedman_n_cases": 480,
+            "empirical_pM_lower_avg": 0.8003222772126312,
+            "empirical_pM_lower_max": 1.0,
+            "target_alpha": 0.05,
+            "target_beta": 0.05
+          },
+          "stopping_tail": {
+            "cases": 2,
+            "empirical_survive_max": 1.0,
+            "bound_survive_max": 1.0,
+            "violation_fraction": 0.0,
+            "empirical_survive_avg": 0.6761006289308176,
+            "bound_survive_avg": 1.0,
+            "satisfied": true
+          },
+          "service": {
+            "z_star_static": 0.5536977858385344,
+            "eps_T_est": 0.021375933712384998,
+            "min_q_time_avg_r_static": 0.5323218521261494,
+            "per_target_r_static": [
+              0.5892517392190237,
+              0.5323218521261494,
+              1.4093250774349266
+            ],
+            "sqrt_logQ_over_T": 0.16572660382902543,
+            "min_q_time_avg_r_real": 6.556170676141188,
+            "min_q_time_avg_r_pred": 4.0597858225493555,
+            "per_target_r_real": [
+              6.556170676141188,
+              10.123403902179724,
+              23.704696160086712
+            ],
+            "per_target_r_pred": [
+              4.0597858225493555,
+              5.401347481278264,
+              14.663772635824825
+            ],
+            "eps_loc_mean": 5.419788266251726,
+            "target_beta": 0.05
+          }
+        },
+        "1": {
+          "J": 2.592857142857143,
+          "p_md_max": 0.09999999999999998,
+          "decomposition": {
+            "decomposition_max_abs_error": 3.552713678800501e-15,
+            "martingale_residual_mean": -0.11416499722803282,
+            "martingale_residual_sd": 0.9844354946086447,
+            "b_q": 60.75,
+            "freedman": {
+              "max_ratio": 1.0,
+              "violation_fraction": 0.0,
+              "n_cases": 480
+            },
+            "freedman_n_cases": 480,
+            "empirical_pM_lower_avg": 0.8638085317460319,
+            "empirical_pM_lower_max": 1.0,
+            "target_alpha": 0.05,
+            "target_beta": 0.05
+          },
+          "stopping_tail": {
+            "cases": 3,
+            "empirical_survive_max": 1.0,
+            "bound_survive_max": 1.0,
+            "violation_fraction": 0.0,
+            "empirical_survive_avg": 0.6266666666666666,
+            "bound_survive_avg": 1.0,
+            "satisfied": true
+          },
+          "service": {
+            "z_star_static": 0.6412208583455556,
+            "eps_T_est": 0.01832786203691239,
+            "min_q_time_avg_r_static": 0.6228929963086433,
+            "per_target_r_static": [
+              0.754769457630609,
+              0.6228929963086433,
+              1.0400438790456796
+            ],
+            "sqrt_logQ_over_T": 0.16572660382902543,
+            "min_q_time_avg_r_real": 11.539569256167075,
+            "min_q_time_avg_r_pred": 5.698800068076692,
+            "per_target_r_real": [
+              11.539569256167075,
+              11.668940110643755,
+              15.510130319572077
+            ],
+            "per_target_r_pred": [
+              6.029561156033327,
+              5.698800068076692,
+              7.9399840186329
+            ],
+            "eps_loc_mean": 6.350098147879996,
+            "target_beta": 0.05
+          }
+        }
+      }
+    },
+    "8_4": {
+      "k": 8,
+      "q": 4,
+      "n_scenarios": 2,
+      "per_scenario": {
+        "0": {
+          "J": 3.0,
+          "p_md_max": 0.021897810218978075,
+          "decomposition": {
+            "decomposition_max_abs_error": 3.552713678800501e-15,
+            "martingale_residual_mean": -0.1062506733007956,
+            "martingale_residual_sd": 0.9707425229981465,
+            "b_q": 81.0,
+            "freedman": {
+              "max_ratio": 1.0,
+              "violation_fraction": 0.0,
+              "n_cases": 640
+            },
+            "freedman_n_cases": 640,
+            "empirical_pM_lower_avg": 0.8405974793311364,
+            "empirical_pM_lower_max": 1.0,
+            "target_alpha": 0.05,
+            "target_beta": 0.05
+          },
+          "stopping_tail": {
+            "cases": 7,
+            "empirical_survive_max": 1.0,
+            "bound_survive_max": 1.0,
+            "violation_fraction": 0.0,
+            "empirical_survive_avg": 0.7338891066782504,
+            "bound_survive_avg": 1.0,
+            "satisfied": true
+          },
+          "service": {
+            "z_star_static": 0.6227367099130512,
+            "eps_T_est": -0.041070873424358334,
+            "min_q_time_avg_r_static": 0.6638075833374095,
+            "per_target_r_static": [
+              0.6968970897380667,
+              0.9781882477462238,
+              1.123650789007697,
+              0.6638075833374095
+            ],
+            "sqrt_logQ_over_T": 0.1861648705529517,
+            "min_q_time_avg_r_real": 8.630722450637972,
+            "min_q_time_avg_r_pred": 5.219024194176197,
+            "per_target_r_real": [
+              8.630722450637972,
+              16.49442119863986,
+              19.55924834179172,
+              12.791501943804747
+            ],
+            "per_target_r_pred": [
+              5.219024194176197,
+              7.747334409217974,
+              10.239249503511395,
+              6.53408139805091
+            ],
+            "eps_loc_mean": 6.934051107479455,
+            "target_beta": 0.05
+          }
+        },
+        "1": {
+          "J": 2.9568345323741005,
+          "p_md_max": 0.03378378378378377,
+          "decomposition": {
+            "decomposition_max_abs_error": 3.552713678800501e-15,
+            "martingale_residual_mean": -0.08960182132094173,
+            "martingale_residual_sd": 0.9617659513020038,
+            "b_q": 81.0,
+            "freedman": {
+              "max_ratio": 1.0,
+              "violation_fraction": 0.0,
+              "n_cases": 640
+            },
+            "freedman_n_cases": 640,
+            "empirical_pM_lower_avg": 0.878846809519696,
+            "empirical_pM_lower_max": 1.0,
+            "target_alpha": 0.05,
+            "target_beta": 0.05
+          },
+          "stopping_tail": {
+            "cases": 8,
+            "empirical_survive_max": 1.0,
+            "bound_survive_max": 1.0,
+            "violation_fraction": 0.0,
+            "empirical_survive_avg": 0.6502571315315812,
+            "bound_survive_avg": 1.0,
+            "satisfied": true
+          },
+          "service": {
+            "z_star_static": 0.9269476238024119,
+            "eps_T_est": 0.18277247852993694,
+            "min_q_time_avg_r_static": 0.744175145272475,
+            "per_target_r_static": [
+              0.744175145272475,
+              1.601430846315017,
+              1.5214292733789345,
+              1.1760366572196628
+            ],
+            "sqrt_logQ_over_T": 0.1861648705529517,
+            "min_q_time_avg_r_real": 9.068918595888698,
+            "min_q_time_avg_r_pred": 5.185251250495499,
+            "per_target_r_real": [
+              9.068918595888698,
+              29.234896961978247,
+              28.996297001690497,
+              15.993931298567738
+            ],
+            "per_target_r_pred": [
+              5.185251250495499,
+              15.384288387307349,
+              14.226911306479645,
+              9.189638864385522
+            ],
+            "eps_loc_mean": 9.826988512364291,
+            "target_beta": 0.05
+          }
+        }
+      }
+    },
+    "12_6": {
+      "k": 12,
+      "q": 6,
+      "n_scenarios": 2,
+      "per_scenario": {
+        "0": {
+          "J": 2.6344827586206896,
+          "p_md_max": 0.0331125827814569,
+          "decomposition": {
+            "decomposition_max_abs_error": 7.105427357601002e-15,
+            "martingale_residual_mean": -0.08259272062766779,
+            "martingale_residual_sd": 0.864142604722803,
+            "b_q": 121.5,
+            "freedman": {
+              "max_ratio": 1.0,
+              "violation_fraction": 0.0,
+              "n_cases": 960
+            },
+            "freedman_n_cases": 960,
+            "empirical_pM_lower_avg": 0.863706491121665,
+            "empirical_pM_lower_max": 1.0,
+            "target_alpha": 0.05,
+            "target_beta": 0.05
+          },
+          "stopping_tail": {
+            "cases": 7,
+            "empirical_survive_max": 1.0,
+            "bound_survive_max": 1.0,
+            "violation_fraction": 0.0,
+            "empirical_survive_avg": 0.6933461152204904,
+            "bound_survive_avg": 1.0,
+            "satisfied": true
+          },
+          "service": {
+            "z_star_static": 0.7495602376666991,
+            "eps_T_est": -0.140587351738377,
+            "min_q_time_avg_r_static": 0.8901475894050761,
+            "per_target_r_static": [
+              0.8937680569031369,
+              1.0534957141955221,
+              1.6558053376712827,
+              1.178252228010109,
+              0.9534259030140423,
+              0.8901475894050761
+            ],
+            "sqrt_logQ_over_T": 0.21164589939495965,
+            "min_q_time_avg_r_real": 10.58072080999248,
+            "min_q_time_avg_r_pred": 5.9607452909555905,
+            "per_target_r_real": [
+              10.58072080999248,
+              17.693891330311594,
+              29.764855575508225,
+              24.329106516356088,
+              15.530638486030774,
+              13.81059976398686
+            ],
+            "per_target_r_pred": [
+              5.9607452909555905,
+              9.413270873567667,
+              15.366067263770146,
+              12.387329925417284,
+              8.203797061753816,
+              7.06290527772749
+            ],
+            "eps_loc_mean": 8.885949464832338,
+            "target_beta": 0.05
+          }
+        },
+        "1": {
+          "J": 2.4507042253521125,
+          "p_md_max": 0.052238805970149294,
+          "decomposition": {
+            "decomposition_max_abs_error": 3.552713678800501e-15,
+            "martingale_residual_mean": -0.07192231583399657,
+            "martingale_residual_sd": 0.9041523618092884,
+            "b_q": 139.5,
+            "freedman": {
+              "max_ratio": 1.0,
+              "violation_fraction": 0.0,
+              "n_cases": 960
+            },
+            "freedman_n_cases": 960,
+            "empirical_pM_lower_avg": 0.871125850694857,
+            "empirical_pM_lower_max": 1.0,
+            "target_alpha": 0.05,
+            "target_beta": 0.05
+          },
+          "stopping_tail": {
+            "cases": 11,
+            "empirical_survive_max": 1.0,
+            "bound_survive_max": 1.0,
+            "violation_fraction": 0.0,
+            "empirical_survive_avg": 0.634148291232588,
+            "bound_survive_avg": 1.0,
+            "satisfied": true
+          },
+          "service": {
+            "z_star_static": 0.9379128299662172,
+            "eps_T_est": -0.055119195424020884,
+            "min_q_time_avg_r_static": 0.993032025390238,
+            "per_target_r_static": [
+              1.0040208662097347,
+              0.993032025390238,
+              1.3145889760284486,
+              1.5986781316807328,
+              1.2321956635768114,
+              1.5331907044540087
+            ],
+            "sqrt_logQ_over_T": 0.21164589939495965,
+            "min_q_time_avg_r_real": 12.298535566768452,
+            "min_q_time_avg_r_pred": 5.901416966435438,
+            "per_target_r_real": [
+              12.298535566768452,
+              19.156151504034423,
+              22.4221120489359,
+              33.19302760764021,
+              18.63731098582168,
+              27.85750553663143
+            ],
+            "per_target_r_pred": [
+              5.901416966435438,
+              9.679275118219815,
+              12.492198108815344,
+              18.186218278500128,
+              9.947644766240588,
+              13.523243111601527
+            ],
+            "eps_loc_mean": 10.639107816669876,
+            "target_beta": 0.05
+          }
+        }
+      }
+    },
+    "16_8": {
+      "k": 16,
+      "q": 8,
+      "n_scenarios": 2,
+      "per_scenario": {
+        "0": {
+          "J": 2.5853658536585367,
+          "p_md_max": 0.058394160583941646,
+          "decomposition": {
+            "decomposition_max_abs_error": 7.105427357601002e-15,
+            "martingale_residual_mean": -0.06423809741700896,
+            "martingale_residual_sd": 0.8941158917096534,
+            "b_q": 186.0,
+            "freedman": {
+              "max_ratio": 1.0,
+              "violation_fraction": 0.0,
+              "n_cases": 1280
+            },
+            "freedman_n_cases": 1280,
+            "empirical_pM_lower_avg": 0.8726199813543953,
+            "empirical_pM_lower_max": 1.0,
+            "target_alpha": 0.05,
+            "target_beta": 0.05
+          },
+          "stopping_tail": {
+            "cases": 10,
+            "empirical_survive_max": 1.0,
+            "bound_survive_max": 1.0,
+            "violation_fraction": 0.0,
+            "empirical_survive_avg": 0.6536861345832633,
+            "bound_survive_avg": 1.0,
+            "satisfied": true
+          },
+          "service": {
+            "z_star_static": 0.7461380072519262,
+            "eps_T_est": 0.058941218728693734,
+            "min_q_time_avg_r_static": 0.6871967885232325,
+            "per_target_r_static": [
+              0.8894462398296373,
+              1.575415183267838,
+              0.9847891128823033,
+              1.0536374161487514,
+              0.9885302658520171,
+              1.919949356455149,
+              0.867983239908937,
+              0.6871967885232325
+            ],
+            "sqrt_logQ_over_T": 0.22800447044300665,
+            "min_q_time_avg_r_real": 9.687323923718026,
+            "min_q_time_avg_r_pred": 6.387331919929337,
+            "per_target_r_real": [
+              9.687323923718026,
+              38.84785618801158,
+              22.08745760817458,
+              24.75641079359628,
+              20.139764563376843,
+              38.20877115290194,
+              19.020196818825198,
+              12.952688714009625
+            ],
+            "per_target_r_pred": [
+              6.387331919929337,
+              20.452876232716214,
+              10.655476800678295,
+              14.040451490569874,
+              9.698819244917788,
+              20.29240673974923,
+              10.09209938348521,
+              6.768795778164608
+            ],
+            "eps_loc_mean": 10.91402652155044,
+            "target_beta": 0.05
+          }
+        },
+        "1": {
+          "J": 4.027397260273973,
+          "p_md_max": 0.047945205479452024,
+          "decomposition": {
+            "decomposition_max_abs_error": 3.552713678800501e-15,
+            "martingale_residual_mean": -0.061466571259830745,
+            "martingale_residual_sd": 0.931857830907194,
+            "b_q": 186.0,
+            "freedman": {
+              "max_ratio": 1.0,
+              "violation_fraction": 0.0,
+              "n_cases": 1280
+            },
+            "freedman_n_cases": 1280,
+            "empirical_pM_lower_avg": 0.8759080179250912,
+            "empirical_pM_lower_max": 1.0,
+            "target_alpha": 0.05,
+            "target_beta": 0.05
+          },
+          "stopping_tail": {
+            "cases": 13,
+            "empirical_survive_max": 1.0,
+            "bound_survive_max": 1.0,
+            "violation_fraction": 0.0,
+            "empirical_survive_avg": 0.6583407750194208,
+            "bound_survive_avg": 1.0,
+            "satisfied": true
+          },
+          "service": {
+            "z_star_static": 0.7886844644093188,
+            "eps_T_est": 0.25873780720700734,
+            "min_q_time_avg_r_static": 0.5299466572023115,
+            "per_target_r_static": [
+              0.5504447851979972,
+              0.8113583145779791,
+              1.7730795407369835,
+              1.1106416805006265,
+              1.2468096826549324,
+              0.5299466572023115,
+              3.326019200373584,
+              2.5089306026271823
+            ],
+            "sqrt_logQ_over_T": 0.22800447044300665,
+            "min_q_time_avg_r_real": 14.163456352215247,
+            "min_q_time_avg_r_pred": 7.835965345115625,
+            "per_target_r_real": [
+              14.163456352215247,
+              15.773834576766927,
+              34.49887674945254,
+              20.755958400238644,
+              24.55181026391489,
+              20.579740387058536,
+              64.03780779410526,
+              45.859969151014326
+            ],
+            "per_target_r_pred": [
+              7.847005341062401,
+              7.835965345115625,
+              17.588279965491,
+              11.489335746958995,
+              13.727457398843038,
+              10.395976200084663,
+              34.99851170027348,
+              26.267243771762235
+            ],
+            "eps_loc_mean": 13.758959775646868,
+            "target_beta": 0.05
+          }
+        }
+      }
+    }
+  }
+}

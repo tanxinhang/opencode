@@ -1,0 +1,170 @@
+{
+  "gate": {
+    "mean_gap_common_vs_local": -0.018322441840370855,
+    "per_scenario_gap": [
+      0.001629949623599476,
+      -0.04142848747890772,
+      -0.015168787665804328
+    ],
+    "min_certificate_fraction": 0.0,
+    "per_scenario_certificate": [
+      4.6296296296296294e-05,
+      4.792944785276074e-05,
+      0.0
+    ],
+    "max_action_change_rate": 0.6686087570621468,
+    "per_scenario_action_change": [
+      0.6515987210231815,
+      0.6543447121338161,
+      0.6686087570621468
+    ],
+    "action_change_price_rate_mean": 0.49912343171405293,
+    "action_change_deficit_rate_mean": 0.5206697952447079,
+    "d_y_mean": 0.23302161340509145,
+    "d_v_mean": 0.29310040241236773,
+    "deficit_gap_mean": 2.1121960026913524,
+    "eps_y_mean": 0.27768932822290204,
+    "eps_v_mean": 16.844508883304872,
+    "gap_ok_2pct": true,
+    "certificate_ok_95pct": false,
+    "action_change_ok_5pct": false,
+    "freeze_frids_v2": true,
+    "verdict": "FRIDS-v2 is sufficient on the DELAY objective: the common-price oracle gains only -1.8% < 2% -- the local dual disagreement is NOT a delay bottleneck; freeze the algorithm.  Boundary: the strict action-invariance certificate does NOT hold (P(m>2E) ~ 0, realized action-change ~ 67% driven ~equally by price (~50%) and deficit (~52%) disagreement), so the local actions DO differ from the common-price/owner-anchored ideal -- but the worst-target delay is total-information-driven and robust to which UAVs serve which targets"
+  },
+  "params": {
+    "K": 16,
+    "Q": 8,
+    "n_runs": 150,
+    "seeds": 2,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "calib_seed": 100,
+    "calib_verify": 500,
+    "b_delta": 1.0,
+    "scenario_seeds": 3,
+    "frozen": [
+      "FRIDS-v2",
+      "fixed owner",
+      "full mesh",
+      "compact token",
+      "policy-matched B",
+      "current scenario gen"
+    ],
+    "oracle": "common price y = mean_i y^(i) in the action index; everything else local"
+  },
+  "runtime_s": 121.7,
+  "per_scenario": {
+    "0": {
+      "local": {
+        "J": 2.809766214177979,
+        "p_md_max": 0.02352941176470591,
+        "audit": {
+          "d_y": 0.22597724266401098,
+          "d_v": 0.2502264956592231,
+          "deficit_gap": 2.146232354301395,
+          "eps_y_max": 0.2100943535464972,
+          "eps_v_max": 16.87217688732246,
+          "v_max": 17.421859647000726,
+          "margin_ok_fraction": 4.6296296296296294e-05,
+          "margin_samples": 10960.0,
+          "action_change_rate": 0.6515987210231815,
+          "action_change_price_rate": 0.47207467359445776,
+          "action_change_deficit_rate": 0.5135028643751665
+        }
+      },
+      "common_price": {
+        "J": 2.814345991561181,
+        "p_md_max": 0.027027027027026973,
+        "audit": {
+          "d_y": 0.22580621931087486,
+          "d_v": 0.2569363783178764,
+          "deficit_gap": 2.173137277233211,
+          "eps_y_max": 0.0,
+          "eps_v_max": 16.94268070237369,
+          "v_max": 17.421859647000726,
+          "margin_ok_fraction": 0.03536062987561489,
+          "margin_samples": 11120.0,
+          "action_change_rate": 0.6447948929228018,
+          "action_change_price_rate": 0.4666574192159266,
+          "action_change_deficit_rate": 0.5219513949848452
+        }
+      },
+      "gap_vs_common": 0.001629949623599476
+    },
+    "1": {
+      "local": {
+        "J": 4.158950617283951,
+        "p_md_max": 0.025000000000000022,
+        "audit": {
+          "d_y": 0.2417196544549241,
+          "d_v": 0.3303606175348356,
+          "deficit_gap": 2.1668642791154307,
+          "eps_y_max": 0.35366604789998307,
+          "eps_v_max": 15.94148411139847,
+          "v_max": 16.184253364010395,
+          "margin_ok_fraction": 4.792944785276074e-05,
+          "margin_samples": 10408.0,
+          "action_change_rate": 0.6543447121338161,
+          "action_change_price_rate": 0.5274584040335769,
+          "action_change_deficit_rate": 0.5240096993250589
+        }
+      },
+      "common_price": {
+        "J": 3.9866515837104073,
+        "p_md_max": 0.038461538461538436,
+        "audit": {
+          "d_y": 0.23680441064857288,
+          "d_v": 0.3051218655285918,
+          "deficit_gap": 2.2118142879716336,
+          "eps_y_max": 0.0,
+          "eps_v_max": 15.88306047160313,
+          "v_max": 16.184253364010395,
+          "margin_ok_fraction": 0.05231169443350031,
+          "margin_samples": 10448.0,
+          "action_change_rate": 0.6576861245567625,
+          "action_change_price_rate": 0.5168931516294253,
+          "action_change_deficit_rate": 0.528230591358511
+        }
+      },
+      "gap_vs_common": -0.04142848747890772
+    },
+    "2": {
+      "local": {
+        "J": 3.3945221445221447,
+        "p_md_max": 0.03947368421052633,
+        "audit": {
+          "d_y": 0.23136794309633923,
+          "d_v": 0.29871409404304444,
+          "deficit_gap": 2.0234913746572314,
+          "eps_y_max": 0.26930758322222587,
+          "eps_v_max": 17.71986565119368,
+          "v_max": 18.066969561408783,
+          "margin_ok_fraction": 0.0,
+          "margin_samples": 11328.0,
+          "action_change_rate": 0.6686087570621468,
+          "action_change_price_rate": 0.49783721751412424,
+          "action_change_deficit_rate": 0.5244968220338984
+        }
+      },
+      "common_price": {
+        "J": 3.3430313588850176,
+        "p_md_max": 0.01449275362318836,
+        "audit": {
+          "d_y": 0.23130807559908928,
+          "d_v": 0.25011872448870504,
+          "deficit_gap": 2.0795862542139996,
+          "eps_y_max": 0.0,
+          "eps_v_max": 17.75370302214884,
+          "v_max": 18.066969561408783,
+          "margin_ok_fraction": 0.053563059942069155,
+          "margin_samples": 11536.0,
+          "action_change_rate": 0.6560951889488726,
+          "action_change_price_rate": 0.49231020910919293,
+          "action_change_deficit_rate": 0.523998900564874
+        }
+      },
+      "gap_vs_common": -0.015168787665804328
+    }
+  }
+}

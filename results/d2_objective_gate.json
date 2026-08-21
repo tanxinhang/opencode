@@ -1,0 +1,172 @@
+{
+  "gate": "objective-aligned-sequential-detection",
+  "params": {
+    "horizon": 14,
+    "budget": 30,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "n_runs": 600
+  },
+  "part_d2a": {
+    "horizon": 14,
+    "budget": 16,
+    "rows": {
+      "delay_bellman": {
+        "e1_delay": 3.846667,
+        "e0_delay": 4.493333,
+        "p_fa": 0.046667,
+        "p_md": 0.04,
+        "mean_cost": 7.11,
+        "a_bound": 2.611106,
+        "b_bound": -3.611106
+      },
+      "one_step_pd": {
+        "e1_delay": 2.426667,
+        "e0_delay": 5.74,
+        "p_fa": 0.013333,
+        "p_md": 0.046667,
+        "mean_cost": 8.9,
+        "a_bound": 3.277772,
+        "b_bound": -3.611106
+      },
+      "chernoff": {
+        "e1_delay": 4.593333,
+        "e0_delay": 6.266667,
+        "p_fa": 0.026667,
+        "p_md": 0.04,
+        "mean_cost": 5.43,
+        "a_bound": 2.611106,
+        "b_bound": -2.611106
+      },
+      "info_myopic_ic": {
+        "e1_delay": 4.593333,
+        "e0_delay": 6.266667,
+        "p_fa": 0.026667,
+        "p_md": 0.04,
+        "mean_cost": 5.43,
+        "a_bound": 2.611106,
+        "b_bound": -2.611106
+      },
+      "old_cost_bellman": {
+        "e1_delay": 2.053333,
+        "e0_delay": 3.256667,
+        "p_fa": 0.101667,
+        "p_md": 0.118333,
+        "mean_cost": 2.655
+      }
+    },
+    "e1_delay": {
+      "delay_bellman": 3.8466666666666667,
+      "one_step_pd": 2.4266666666666667,
+      "chernoff": 4.593333333333334,
+      "info_myopic_ic": 4.593333333333334,
+      "old_cost_bellman": 2.0533333333333332
+    },
+    "gain_vs_best_myopic": -0.5851648351648351,
+    "meaningful_improvement": false,
+    "verdict": "single-target: no material long-horizon planning value (objective-aligned Bellman within 5% of one-step)"
+  },
+  "part_d2b": {
+    "scenario": {
+      "strong": "10/16, flip 0.02, success 0.98",
+      "weak": "7/11, flip 0.08, success 0.9"
+    },
+    "bounds": [
+      [
+        1.944,
+        -2.611
+      ],
+      [
+        2.611,
+        -3.278
+      ]
+    ],
+    "policies": {
+      "myopic_dpd": {
+        "worst_target_delay": 6.48,
+        "e1_delays": [
+          2.015,
+          6.48
+        ],
+        "p_fa": [
+          NaN,
+          NaN
+        ],
+        "p_md": [
+          0.04500000000000004,
+          0.08499999999999996
+        ],
+        "mean_costs": [
+          2.4916666666666667,
+          9.286666666666667
+        ]
+      },
+      "tau_pred": {
+        "worst_target_delay": 16.975,
+        "e1_delays": [
+          15.59,
+          15.94
+        ],
+        "p_fa": [
+          NaN,
+          NaN
+        ],
+        "p_md": [
+          0.18833333333333335,
+          0.15333333333333332
+        ],
+        "mean_costs": [
+          2.1083333333333334,
+          14.866666666666667
+        ]
+      },
+      "static_floor_cover": {
+        "worst_target_delay": 11.395,
+        "e1_delays": [
+          2.401666666666667,
+          11.395
+        ],
+        "p_fa": [
+          NaN,
+          NaN
+        ],
+        "p_md": [
+          0.08999999999999997,
+          0.06999999999999995
+        ],
+        "mean_costs": [
+          2.401666666666667,
+          8.993333333333334
+        ]
+      },
+      "joint_bellman": {
+        "worst_target_delay": 5.568333333333333,
+        "e1_delays": [
+          5.568333333333333,
+          5.568333333333333
+        ],
+        "p_fa": [
+          NaN,
+          NaN
+        ],
+        "p_md": [
+          0.033333333333333326,
+          0.07666666666666666
+        ],
+        "mean_costs": [
+          6.605,
+          10.49
+        ]
+      },
+      "joint_nu1": 0.5
+    },
+    "summary": {
+      "best_heuristic": "myopic_dpd",
+      "joint_nu1": 0.5,
+      "gain_vs_best_heuristic": 0.1406893004115227,
+      "meaningful_improvement": true,
+      "verdict": "multi-target competition creates planning value: the exact joint oracle materially beats every heuristic in the worst-target H1 detection delay"
+    }
+  },
+  "passed": true
+}

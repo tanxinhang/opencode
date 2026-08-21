@@ -1,0 +1,48 @@
+{
+  "gate": "active-vs-static-vs-myopic-sequential-detection",
+  "seeds": 40,
+  "targets": 2,
+  "reports": 3,
+  "alpha": 0.05,
+  "pd_star": 0.9,
+  "max_n": 14,
+  "budget": 9.0,
+  "summary": {
+    "static": {
+      "worst_T": 3.1,
+      "mean_T": 1.8875,
+      "final_min_pd": 0.23394641939915034,
+      "decided_fraction": 0.375,
+      "budget_used": 8.925
+    },
+    "myopic": {
+      "worst_T": 2.325,
+      "mean_T": 1.7875,
+      "final_min_pd": 0.5637955150363035,
+      "decided_fraction": 0.0625,
+      "budget_used": 8.9
+    },
+    "active": {
+      "worst_T": 2.075,
+      "mean_T": 1.5125,
+      "final_min_pd": 0.5988591266749789,
+      "decided_fraction": 0.05,
+      "budget_used": 8.05
+    },
+    "bellman": {
+      "worst_T": 3.5,
+      "mean_T": 2.5,
+      "final_min_pd": 0.5708480005789863,
+      "decided_fraction": 0.025,
+      "budget_used": 8.95
+    },
+    "oracle_worst_T": 5.75
+  },
+  "closed_loop": {
+    "bellman_worst_T": 3.5,
+    "best_baseline_worst_T": 2.075,
+    "closed_loop_gain": -0.4071428571428571,
+    "bellman_passed": false
+  },
+  "passed": true
+}
