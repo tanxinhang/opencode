@@ -2192,6 +2192,515 @@ the audit.
 | Lemma 4.88 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp_multi` | Gate ENS JSON |
 | Lemma 4.89 | `scripts/run_physical_mappo_adapt_gate.py` | Gate MAD JSON |
 | Lemma 4.90 | `scripts/run_joint_power_comparison.evaluate_mappo_nomp_multi` | Gate ENS JSON |
+| Theorem 4.91 | `maxmin_pd_allocation` | `test_maxmin_allocation_matches_bruteforce_exactly`, Gate C JSON |
+| Fact 4.92 | `verify_pd_bits_monotonicity` | `test_bits_monotonicity_is_provable_and_holds` |
+| Theorem 4.94 | `frids.g_reliable` | `test_reliable_information_identity`, F0-G5 JSON |
+| Theorem 4.95 | `frids.simulate_frids_v2` | `test_frids_v2_runs_and_deterministic`, F0-G4 JSON |
+| Theorem 4.96 | `frids.simulate_frids_v2` (exponentiated gradient) | F0-G4 JSON |
+| Theorem 4.97 | `frids.load_cut` | `test_load_cut_math`, F0-G4 JSON |
+| Theorem 4.98 | `feasibility.strongest_load_cut` | `test_rho_star_matches_bruteforce`, F0-G6 JSON |
+| Theorem 4.99 | `uav_otfs_isac/airtime.py` report/no-report gate | `tests/test_airtime.py`, Gate G7 JSON |
+| Theorem 4.100/4.101 | `uav_otfs_isac/airtime.py` token-airtime/value forms | `tests/test_airtime.py`, Gate G7 JSON |
+| Theorem 4.102/4.103 | `uav_otfs_isac/airtime.py` full-mesh load / dual ascent | `tests/test_airtime.py`, Gate G7 JSON |
+| Theorem 4.104/4.105 | `uav_otfs_isac/covariance_conditional.py` joint-KL chain form | `tests/test_covariance_conditional.py` |
+| Theorem 4.106 | `uav_otfs_isac/covariance_conditional.py` delay consequence | `tests/test_covariance_conditional.py` |
+| Theorem 4.107 | `uav_otfs_isac/conditional_frids.py` | `tests/test_conditional_frids.py` |
+| Theorem 4.108 | `uav_otfs_isac/covariance_conditional.py` Schur form | `tests/test_covariance_conditional.py` |
+| Theorem 4.109 | `frids.simulate_frids_v2 (audit=True)`, `_audit_cycle` | `run_local_dual_audit.py`, F0-G9A JSON |
+| Theorem 4.110 (service-delay bridge) | `frids.simulate_frids_v2 (bridge=True)`, `reliable_service_bridge` | `test_reliable_service_bridge`, `run_delay_bridge_gate.py` |
+| Theorem 4.111 (normalized-service guarantee) | `reliable_service_bridge.static_relaxation_optimum`, `normalized_service_time_average` | `test_reliable_service_bridge`, `run_delay_bridge_gate.py` |
+
+## 5A. Theorem 4.91 (floor-cover): exact max-min P_D allocation
+
+**Setting.** `T` targets; target `t` has options `o` (report/power choices),
+each with an exact metric curve `f_{t,o}(b)` for `b = 1..b_max` (the exact
+terminal `P_D(n)` of the NP test for `metric="pd"`; Chernoff or KL curves
+for the proxy variants).  The allocation problem is
+
+    max  min_t  max_o  f_{t,o}(b_{t,o})   s.t.   sum_{t,o} b_{t,o} <= B.
+
+**Theorem.** For any candidate level `L`, the minimal budget target `t`
+needs to reach `L` on at least one option is
+
+    c_t(L) = min_o  min{ b >= 1 : f_{t,o}(b) >= L },
+
+and the optimum value equals the largest `L` in the union of all curve
+values with `sum_t c_t(L) <= B`.  The cost-minimizing allocation for that
+`L` attains it; leftover budget can only raise floors further.  No
+concavity or monotonicity assumption is required.
+
+**Proof.** (Upper bound) If `min_t max_o f_{t,o}(b_{t,o}) >= L` under a
+budget-feasible assignment, then for each `t` the option achieving the
+target's maximum has `f >= L`, hence `b_{t,argmax} >= c_t(L)`, and
+`sum_t c_t(L) <= sum b <= B`.  (Lower bound) For `L` with `sum_t c_t(L) <=
+B`, give target `t` exactly `c_t(L)` bits on a minimizing option; the
+assignment is feasible and every target reaches `L`.  The largest such `L`
+is therefore the exact optimum; it is attained by the constructed
+assignment.  Leftover budget `B - sum c_t(L)` assigned greedily to the
+currently lowest target cannot decrease any floor (its curve value at the
+option's current bits is recomputed after each unit).
+
+**Empirical verification.** Gate C (12 instances, 3 targets x 2 reports,
+budget 8, options 0..5 bits): the floor-cover value equals the exhaustive
+max-min worst-target `P_D(4)` on every instance (exactness fraction 1.00);
+the I+ water-fillers never match it (exact max-min wins 100% of instances,
+worst `P_D` 0.794 vs 0.463/0.507).
+
+**Fact 4.92 (NP admissibility / refinement monotonicity).**  In the
+uniform-refinement quantizer family, the `b`-bit observation is a
+deterministic function (LSB drop) of the `b+1`-bit one; therefore any
+size-`alpha` test on `b` bits is a valid test on `b+1` bits, and the
+likelihood-ratio test on the finer alphabet is most powerful among
+size-`alpha` tests, so the *true* `P_D(n)` is nondecreasing in `b` (and,
+by the BSC cascade identity of Theorem 4.59, nonincreasing in the flip
+probability and nondecreasing in the success probability).
+
+**Non-claim.** The grid implementation of `sequential_pd` bins the
+accumulated LLR with `rint` at the atom and accumulation level; this
+slightly suboptimal statistic is not the exact likelihood ratio, so the
+*computed* `P_D(b)` can violate monotonicity by a small amount (measured
+`<= 0.008` on the test family, always with the finer test at a more
+conservative `P_FA`).  `verify_pd_bits_monotonicity` reports these
+violations as a diagnostic; the floor-cover theorem does not rely on
+monotonicity and stays exact.
+
+## 5B. FRIDS theory (Gates F0-G3/G4/G5, advice/009-011)
+
+This section formalizes the FRIDS framework: the reliable-information
+identity, the primal-dual derivation of the local index, the
+mirror-descent finite-time bound, and the information-load infeasibility
+cut.  All quantities follow `SYSTEM_MODEL.md` sections 12.13: `D_q` the
+residual detection deficit, `g_iq` the reliable post-communication
+marginal information, `y_q` the dual target price on the simplex, `H`
+the remaining horizon.
+
+### Theorem 4.94 (reliable-information identity)
+
+Let the post-communication kernel of one action be `(P_0^post,
+P_1^post)` over a finite alphabet that includes a detectable erasure
+atom `e` with equal mass under both hypotheses (`P_0^post(e) =
+P_1^post(e) = 1 - s_k`, where `s_k` is the kernel's own report success).
+Let the U2U delivery from the observing UAV to the target owner be an
+independent erasure channel with success `s_d` (the token arrives with
+probability `s_d`, otherwise the owner observes only the erasure atom).
+The final observable kernel is
+
+    P_h^final = s_d * P_h^post + (1 - s_d) * delta_e,   h in {0, 1}.
+
+Then
+
+    D_KL(P_1^final || P_0^final) = s_d * D_KL(P_1^post || P_0^post)
+                                 = s_d * s_k * D_KL(P_1^rec || P_0^rec),
+
+where `(P_0^rec, P_1^rec)` are the non-erasure symbols of the
+post-communication kernel.
+
+Proof sketch.  The erasure identity: for an erasure channel with success
+`s` applied to a binary hypothesis pair, every erased symbol carries
+LLR 0 and its mass `1 - s` is identical under both hypotheses, so the
+divergence of the channel output equals `s` times the divergence of the
+received (non-erased) symbols.  This is the identity `I+ = s * KL(rec)`
+already used by `detection_information`.  The composition of two
+independent erasure channels (kernel report erasure with success `s_k`,
+U2U token erasure with success `s_d`) is again an erasure channel with
+success `s_k * s_d`; applying the identity to the composed channel gives
+`D_KL(P_1^final || P_0^final) = s_k s_d D_KL(P_1^rec || P_0^rec)`, and
+applying it once more to the post kernel gives
+`D_KL(P_1^post || P_0^post) = s_k D_KL(P_1^rec || P_0^rec)`.  The two
+lines are equal to the claimed identities.  Consequently the FRIDS gain
+`g_iq = I+_{iq}^post * s_{i,o_q}` equals the KL divergence of the final
+observable kernel -- FRIDS schedules the true end-to-end detection
+information rate, not a proxy (verified numerically by
+`test_reliable_information_identity`).
+
+### Theorem 4.95 (FRIDS primal-dual derivation of the local index)
+
+Fix one cycle with `D_q > 0` for all `q` and `g_iq >= 0`.  Consider the
+demand-normalized fractional assignment LP
+
+    max_{x, z}  z
+    s.t.  sum_i x_iq * g_iq / D_q >= z,   for all q
+          sum_q x_iq <= 1,   x_iq >= 0,   for all i.
+
+This LP satisfies strong duality.  Its Lagrangian with dual prices
+`y_q >= 0` (target constraints) and `mu_i >= 0` (UAV capacity) is
+
+    L = z + sum_q y_q (sum_i x_iq g_iq / D_q - z)
+          + sum_i mu_i (1 - sum_q x_iq).
+
+The stationarity of `z` gives `1 = sum_q y_q` (the ordinary simplex),
+and the stationarity of `x_iq` gives `mu_i >= y_q g_iq / D_q` for every
+(i, q), tight at the optimum, so UAV `i`'s dual cost is
+`mu_i = max_q y_q g_iq / D_q`.  Hence, given the price `y` on the
+simplex, every UAV's optimal assignment is `q_i* = argmax_q y_q
+g_iq / D_q`, i.e. the local index
+
+    J_iq = y_q * g_iq / D_q.
+
+This is the strict derivation of the FRIDS-v2 index (the
+demand-normalized form of advice/010 section 3); it replaces the earlier
+statement "inspired by primal-dual" with the actual dual variable
+structure.  Scope: the theorem covers the per-cycle static relaxation
+with frozen `(D_q, g_iq)`; the dynamic tracking of the price is covered
+by Theorem 4.96 and is not a global sequential-MDP optimality claim.
+
+### Theorem 4.96 (mirror-descent finite-time bound)
+
+Let the price update be the exponentiated gradient on the simplex
+
+    y_q(t+1) = y_q(t) * exp[mu * e_q(t)] / sum_k y_k(t) * exp[mu * e_k(t)]
+
+with `|e_q(t)| <= G` for all `q, t`, and let `R_T = sum_{t=1}^T
+< y(t) - y*, e(t) >` be the regret against the best fixed dual vector
+`y*`.  Then, for any `mu > 0`,
+
+    R_T <= (log Q) / mu + mu * G^2 * T / 2,
+
+and with the tuned step `mu = sqrt(2 log Q) / (G sqrt(T))`,
+
+    R_T <= G * sqrt(2 T log Q)  =  O( sqrt(T log Q) ).
+
+Proof sketch.  This is the standard exponentiated-gradient bound with
+the negative entropy regularizer (Bregman divergence = relative
+entropy): the per-step drift of the Bregman divergence telescopes to
+`(log Q)/mu`, and the linearization error of `log sum y exp(mu e)` is
+bounded by `mu G^2 / 2` per step (the log-sum-exp Lipschitz bound with
+bounded `e`).  Combining the two gives the display.  Honest scope: the
+bound holds for the frozen or slowly-varying instantaneous relaxation
+(the `(D_q, g_iq)` and the normalized service are fixed or change
+slowly within the analysis window); it is a tracking guarantee for the
+per-cycle target prices, NOT a global optimality proof for the
+sequential detection MDP.  The boundedness `|e_q| <= G` holds when the
+normalized service `S_q / (D_q + eps)` is bounded (e.g., `S_q` bounded
+and `eps > 0`).
+
+### Theorem 4.97 (information-load infeasibility cut)
+
+Define the information-load of a target subset `S` over the remaining
+horizon `H` as
+
+    rho(S) = sum_{q in S} D_q^info / ( H * sum_i max_{q in S} g_iq ),
+
+with `D_q^info = d(1 - beta || alpha)` the residual information deficit
+and the denominator the maximum reliable information the UAVs can
+deliver to the subset per cycle (each UAV contributes at most its best
+link to the subset).  If `rho(S) > 1`, then no schedule can satisfy the
+detection information requirements of all targets in `S` within the
+horizon.
+
+Proof sketch.  Per cycle, the total reliable information received by the
+subset `S` is at most `sum_i max_{q in S} g_iq` (each UAV serves one
+target and its contribution to any member of `S` is bounded by its best
+link to `S`).  Over `H` cycles the total received information of the
+subset is therefore at most `H * sum_i max_{q in S} g_iq < sum_{q in S}
+D_q^info` when `rho(S) > 1`.  By the Wald-type converse, meeting the
+error constraints `P_FA <= alpha`, `P_MD <= beta` for target `q`
+requires `E_1[sum_t I+_t] >= d(1 - beta || alpha)` (the information
+lower bound), so at least one target of `S` must violate its error
+constraint -- the subset cannot all finish.  The cut is a necessary
+condition (not sufficient); empirically `rho(full) ~ 0.03-0.05 << 1` in
+the tested scenario family, i.e. the information capacity is not the
+binding constraint there, and the cut becomes active in the extreme
+`Q/K` or low-reliability regimes (the feasibility-region boundary of
+advice/011).
+
+**Non-claims (FRIDS).**  (i) Theorem 4.96 is a static-relaxation
+tracking bound, not a sequential-MDP optimality proof; (ii) Theorem
+4.97 is necessary, not sufficient; (iii) the FRIDS scheduler is a
+heuristic for the *dynamic* problem (the per-cycle relaxation is solved
+by dual tracking); (iv) the reliability robustness of F0-G5 uses the
+worst-point reduction `s -> s^- = max(0, s_hat - delta)` which is exact
+for the interval uncertainty set because `g(s) = s I+` is monotone
+linear in `s`, but the interval model itself is an assumption about the
+uncertainty class.
+
+### Theorem 4.98 (strongest information-load cut: bottleneck-subset law)
+
+Define the strongest cut over all nonempty subsets,
+
+    rho* = max_{empty != S subset Q}  rho(S),
+    rho(S) = sum_{q in S} D_q^info / ( H * sum_i max_{q in S} g_iq ).
+
+For every UAV `i`, `f_i(S) = max_{q in S} g_iq` is monotone submodular
+(diminishing returns: adding a target to a larger set cannot increase
+the marginal max by more than adding it to a smaller set), hence
+`F(S) = sum_i f_i(S)` is monotone submodular, and `D(S) = sum_{q in S}
+D_q^info` is modular.  Consequently `lambda H F(S) - D(S)` is
+submodular, `rho* > lambda` holds iff
+`min_S [lambda H F(S) - D(S)] < 0` (the empty set attains 0, so the
+feasibility check is `min >= 0`), and `rho*` is computable by binary
+search with a submodular-minimization oracle (Fujishige-Wolfe
+minimum-norm-point on the base polytope, greedy linear oracle) in
+polynomial time, NOT by `2^Q` enumeration.  By Theorem 4.97 applied to
+the maximizing subset, `rho* > 1` implies that SOME target subset is
+information-theoretically infeasible within the horizon -- the
+bottleneck-subset feasibility law.  The implementation is verified
+against exhaustive enumeration at Q <= 8 (`test_rho_star_matches_
+bruteforce`); in the tested scenario family `rho* <= 0.11` even at
+`Q/K = 2, s = 0.2`, so the information capacity is not the binding
+constraint there (the F0-G6 envelope is Green/Yellow only).
+
+**Non-claims (F0-G6).**  (i) `rho* < 1` is necessary, not sufficient;
+(ii) the envelope is computed for one scenario draw per (K, Q) cell and
+a uniform reliability sweep; (iii) the feasibility utilization
+`Gamma = lambda_FRIDS / lambda_cut` uses the largest green Q/K per s and
+the QoS pattern is non-monotone near the boundary (the 3 yellow cells
+are marginal P_MD exceedances of 0.071-0.083 vs beta + 2pp), so Gamma ~
+0.75-1.0 means "at or near the achievable boundary", not a theorem.
+
+## 5C. Physical-airtime reporting theory (Gate F0-G7, advice/013)
+
+This section formalizes the G7 upgrade: the U2U ledger becomes a
+waveform-derived airtime constraint (rate `R_ij`, token airtime
+`tau_ij = b_tok / R_ij`, per-cycle budget `T_air`) and the report/no-
+report gate `z_i` is added to the frozen FRIDS-v2 scheduler.  All
+quantities follow `uav_otfs_isac/airtime.py` and `SYSTEM_MODEL.md`
+section 12.14: `y_q` the dual target price on the simplex, `g_iq` the
+reliable post-communication marginal information, `D_q` the residual
+LLR deficit, `c_air(i,j) = tau_ij / T_air` the fractional budget of one
+token at receiver `j`.
+
+### Theorem 4.99 (an airtime price without the idle action is a NO-OP)
+
+Fix UAV `i` and per-target scores `J_iq` (e.g. `y_q g_iq / (D_q +
+eps)`).  If the only available actions are the target choices (no
+report/no-report option) and the communication cost is common,
+`c_iq = c_i` for every `q`, then for any price `lambda >= 0`,
+
+    argmax_q ( J_iq - lambda * c_i )  =  argmax_q J_iq,
+
+i.e. the additive price never changes a decision.  If instead a
+no-report action is available, the threshold `lambda` separates reports
+that are worth their airtime from those that are not.
+
+**Empirical verdict (Gate F0-G7, `scripts/run_airtime_reporting_gate.py`,
+K=16, Q=8):** the deficit value mode cuts U2U airtime ~52% with
+`Delta J` ~ -0.4% in the un-congested region (the life gate passes:
+`Delta J <= 2%` and `cut >= 30%`), so ~half the U2U overhead is
+low-value reporting; in the congested region the worst-target delay is
+total-information-driven and the report-level lever stays below the 5%
+bar (honest negative for the "delay" claim; the value sits in the
+feasibility/comms-efficiency layer instead).
+
+### Theorem 4.100/4.101 (token airtime and its value forms)
+
+(Reconstructed from `THEORY_DEVELOPMENT_HISTORY.md` stage 34; the FRIDS
+sections of this appendix were accidentally lost to a `git checkout .`
+in a prior edit and are being rebuilt -- see `docs/P1_SERVICE_DELAY_
+BRIDGE.md`.)  With the Shannon capacity upper bound `R_ij = W log2(1 +
+gamma_ij)` (capacity and delivery share the outage/link statistics,
+sensing channel independent), the token airtime is `tau_ij = b_tok /
+R_ij`.  The per-UAV budget form is unit-consistent with the FRIDS dual
+value: value mode "deficit" keeps the strict joint-LP dual contribution
+`y_q g_iq / (D_q + eps) - lambda * c_air(i,j)`; value mode "info"
+normalizes the price by the deficit so the `D` cancels and the choice
+reduces to comparing `y_q g_iq` against `lambda * c_air(i,j)` -- so the
+airtime price becomes a per-token communication opportunity-cost.
+
+### Theorem 4.102/4.103 (full-mesh receive load and load dual ascent)
+
+(Reconstructed from `THEORY_DEVELOPMENT_HISTORY.md` stage 34.)  In the
+full-mesh topology the per-UAV receive load is
+`L_i = sum_{j != i} z_j * tau_ji`, an overflow beyond `T_air` is dropped
+with survival `min(1, T_air / L_i)` (the decode loss enters the delivery
+quality, so the budget caps the feasible delivery), and the airtime
+price is `lambda = lambda_base + lambda_dual` -- a task opportunity-cost
+baseline plus a locally computed load dual ascent, cold-started by the
+local scarcity `rho_est = sum tau / T_air` so the price acts
+immediately instead of after a long warm-up.  The report gate `z_i`
+stays the only extra degree of freedom; target selection remains the
+frozen FRIDS-v2 argmax (the price must not leak into the target
+choice).
+
+## 5D. Conditional reliable information (Gates F0-G8, advice/015-018)
+
+This section formalizes the correlation/covariance audit and the
+conditional-information upgrade candidates.  All were evaluated against
+the frozen FRIDS-v2 (Gate F0-G8A audit, G8-B conditional scheduler,
+G8-C covariance-native form); all scheduling upgrades were ultimately
+closed (the final line stays FRIDS-v2).
+
+### Theorem 4.104/4.105 (joint-KL common factor and chain-rule conditional marginal)
+
+(Reconstructed from `THEORY_DEVELOPMENT_HISTORY.md` stage 35.)  For
+common-state-correlated Gaussian reports the joint H0/H1 moments have a
+closed KL form (`G_q(S)`), and the KL chain rule gives the conditional
+innovation marginal `Delta G_{i|S,q} = G_q(S union {i}) - G_q(S)`.  The
+marginal is nonnegative but is NOT bounded above by the singleton `g_iq`
+in general (the joint family is not submodular): at high `rho` the
+conditional information can exceed the singleton, with recorded
+super-additive witnesses -- the G8-A audit's warning that `sum_i g_iq`
+overstates `G_q(S)` persists as a statement about the *regime*, not an
+identity violation.
+
+### Theorem 4.106 (delay consequence of the redundancy)
+
+(Reconstructed from `THEORY_DEVELOPMENT_HISTORY.md` stage 35.)  If the
+conditional marginals show redundancy ratio `R_q = 1 - G_q(S) / sum
+g_iq`, the joint sequential test needs `~1/(1 - R_q)` as many
+observations as the singleton model suggests; at `rho = 0.5` in the
+tested family the worst-target redundancy reaches `R ~ 0.8` and the
+analytical delay underestimate scales ~5x (sequential check: ~2x for a
+top-4 joint test after the Wald overshoot correction).
+
+### Theorem 4.107 (conditional FRIDS: the conditional innovation effect)
+
+Under the conditional scheduler the FRIDS index uses the conditional
+marginal `Delta G_{i|S_q,q}` (the coalition `S_q` inferred from the
+delivered intents/tokens, strictly local `a_i = pi_i(I_{i,t})`) instead
+of the singleton `g_iq`: at `rho_s = 0` the conditional scheduler
+decides the actions exactly like FRIDS-v2 (equivalence verified
+delay-for-delay), and for `rho_s > 0` the redundancy discount
+concentrates the service on the marginal innovators -- a principled
+anti-herding mechanism, not an extra fitted parameter.
+
+### Theorem 4.108 (covariance-native conditional information: Schur form)
+
+The covariance-native conditional information is the Schur complement
+marginal `Delta G_{i|S} = (1/2) delta_{i|S}^2 / v_{i|S}` for the
+conditional Gaussian model (with the general-Gaussian KL form as the
+non-degenerate extension), unified across redundancy (`delta^2 / v`
+small, discount) and synergy (`delta^2 / v` large, gain).  The formula
+is verified as a theoretical object (Schur identity
+`Delta G = G(S union {i}) - G(S)` numerically, redundancy/synergy cases,
+independent-world identity), but its scheduler gain is NOT robust across
+profiles -- the scheduling upgrade stays closed.
+
+### Theorem 4.109 (distributed action-invariance certificate)
+
+Let the ideal score be `J_iq = y_q * v_iq` with `v_iq = g_iq / (D_q +
+eps)` (the common shadow price of Theorem 4.95 and the owner-anchored
+deficit `D_q`), and the local score be `hat J_iq = hat y_iq * hat v_iq`
+(the strictly-local price and deficit).  If `|hat y_iq - y_q| <= eps_y`,
+`|hat v_iq - v_iq| <= eps_v` and `v_iq <= V_max`, then
+
+    |hat J_iq - J_iq| <= E_i := V_max * eps_y + eps_v + eps_y * eps_v.
+
+If the ideal action margin `m_i = J_{i,q*} - max_{q != q*} J_iq`
+satisfies `m_i > 2 E_i`, then the local argmax equals the ideal argmax
+`q*` -- the distributed action-invariance certificate: local beliefs and
+prices need not agree across UAVs, only remain below the action-sorting
+margin.  Proof: `|hat y hat v - y v| <= |hat y - y| hat v + y |hat v -
+v| <= eps_y (V_max + eps_v) + eps_v`; the margin argument gives
+`hat J_{i,q*} - hat J_{i,q} >= m_i - 2 E_i > 0` for every `q != q*`.
+
+Token-age bound (advice/020 section 7): if the owner-belief token is
+`a` cycles stale, the per-cycle LLR increments are bounded
+`|ell_q| <= L_q^max`, and the quantization error is `eps_L`, then
+`|L_{o_q,q} - hat L_{i,q}| <= a L_q^max + eps_L`, hence the owner-vs-local
+deficit error `|D_q^o - hat D_{i,q}| <= a L_q^max + eps_L`, which feeds
+`eps_v` through `v = g/(D + eps)` -- token age -> belief uncertainty ->
+score uncertainty -> action stability.
+
+**F0-G9A empirical verdict (advice/020; `scripts/run_local_dual_audit.py`,
+K=16, Q=8, 3 scenario draws, FRIDS-v2 frozen):** the common-price oracle
+gains only `-1.8%` on the worst-target delay (< 2%), so the local dual
+disagreement is NOT a delay bottleneck -- **FRIDS-v2 is frozen**.  The
+strict certificate does NOT hold empirically: `P(m_i > 2 E_i) ~ 0`,
+realized action-change ~ 67% driven ~equally by price (~50%) and deficit
+(~52%) disagreement, with the owner-vs-local deficit gap ~ 2.11.  The
+local actions DO differ from the common-price/owner-anchored ideal, but
+the worst-target delay is total-information-driven and robust to which
+UAVs serve which targets.
+
+**Non-claims (F0-G9A).**  (i) The action-invariance certificate is a
+SUFFICIENT condition that does not hold empirically -- the paper must
+NOT claim action-for-action equality of the distributed and centralized
+decisions; it can claim DELAY robustness to local dual disagreement;
+(ii) the certificate bound is conservative (the `V_max * eps_y` term
+blows up near zero deficit).
+
+## 5E. Service-delay bridge (Gate P1/P0.5, advice/003 + advice/004)
+
+(Reconstructed and hardened by advice/004 P0.5; full numerical record in
+`docs/P1_SERVICE_DELAY_BRIDGE.md`.)  The deployed owner LLR is the
+QUANTIZED token score `hat L = Q(L)`, not the exact LLR of the quantized
+symbol (`Q(log p1/p0) != log P1(Q)/P0(Q)` in general).  The theory is
+therefore stated for the deployed score process.
+
+### Theorem 4.110 (service-delay decomposition and stopping tail bound)
+
+Let `hat Z_{q,t}` be the delivered quantized atom of target `q` at
+cycle `t` (owner's own observation plus delivered tokens), and let
+`tilde g_{iq,t}` be its predictable H1 drift
+(`tilde g_{iq} = E_1[hat Z | F]/x` for a served pair).  With actions
+chosen as functions of the past (P-DIST) the score decomposes into its
+predictable part and a martingale residual exactly:
+
+    hat L_q(t) = tilde A_q(t) + M_q(t),   M_q martingale,  M_q(0) = 0,
+
+`tilde A_q(t) = sum_{tau<=t, i} x_{iq,tau} tilde g_{iq,tau}`.  The exact
+reliable information `g_{iq}` (Theorem 4.94) is tied to the deployed
+drift by the recorded quantization correction `delta_Q = |g - tilde g|`
+(measured 4-10% at 5 bits -- no finite-threshold FRIDS needed).
+
+Because the post-communication alphabet is finite, the increments are
+bounded a.s. by `b_q`, so the martingale satisfies the JOINT-event
+Freedman bound for any deterministic `(eta, v)` pair
+
+    P_1( M_q(t) <= -eta,  V_q(t) <= v ) <= exp[ -eta^2 / (2(v + b_q eta / 3)) ],
+
+and the time-uniform / line-crossing (Freedman maximal) form
+
+    P_1( exists t <= T: M_q(t) <= -eta,  V_q(t) <= v ) <= exp[ -eta^2 / (2(v + b_q eta / 3)) ].
+
+The recorded processes are fill-forwarded after stopping (`M_{t wedge
+T}`, the stopped martingale of optional stopping).  Stopping:
+`D_q = A_q* - L_q(0)`; the H1-survive tail is verified PATH-WISE with
+the per-path exponent integrated over the H1 paths,
+
+    P_1(T_q > t) <= beta_q + E[ exp[ -(A_q(t) - D_q)_+^2 /
+        (2(V_q(t) + b_q (A_q(t) - D_q)_+/3)) ] ],
+
+where `beta_q` bounds the H1 crossing of the lower threshold (the miss
+budget; calibrated `P_MD <= beta`).
+
+**Empirical verification (advice/003 P1 + advice/004 P0.5;
+`scripts/run_delay_bridge_gate.py`, `results/delay_bridge_gate_p05.json`,
+FRIDS-v2 frozen):** the decomposition is exact to float precision; the
+joint-event Freedman bound and the time-uniform form both have
+`violation_fraction = 0` on all 8 scenarios (pointwise max-ratio
+0.25-0.41 -- the bound now bites instead of being trivially 1); the
+fill-forwarded stopping tail is verified pathwise with 0 violations on
+117-314 active cases per scenario.  HONEST boundary: the tail bound is a
+sufficient structural inequality (Case B); it explains the failure
+channels and binds near the feasibility boundary, not the delay
+predictor inside the feasible region.
+
+### Theorem 4.111 (normalized-service time-average guarantee)
+
+Let `r_q(t) = sum_i x_{iq,t} g_{iq,t} / (D_q(t) + eps)` be the
+demand-normalized service of target `q` (the FRIDS-v2 dual tracks its
+mirror-descent gap), and the static relaxation optimum
+`z* = max_x min_q sum_i x_iq g_iq / (a_thr_q + eps)` (Theorem 4.95 LP
+with the initial deficits).  Then in the static regime the mirror-descent
+rule satisfies
+
+    min_q (1/T) sum_t r_q(t) >=  z* - O(sqrt(log Q / T)) - eps_loc,
+
+where `eps_loc` is the distributed-information loss: the local-vs-common
+price effect on the time-averaged static service (measured at the
+BOTTLENECK target, the delay-relevant quantity; the mid-target swings
+are diagnostic), under common random numbers.
+
+**Empirical verification (advice/004 P0.5):** (i) the Static-MD shadow
+(no stopping, fixed `D/g`, common shadow price, decaying exp-gradient
+step, T in {20,40,80,160,320}) closes `z* - min_q r_q(T)` at the theory
+rate or faster -- log-log slope in [-1.10, -0.63], i.e. `<= -0.5`
+(theory rate) on every scenario -- a per-UAV local-dual herd does NOT
+close it (gap ~0.16 constant): the herd IS the `eps_loc` mechanism;
+(ii) the bottleneck `eps_loc` is <= 0.05 on all 8 scenarios (consistent
+with the F0-G9A ~1.8% delay cost of the same disagreement).
+
+**Non-claims (P1).**  (i) The stopping tail bound is a sufficient
+structural inequality that is NOT the tight delay predictor inside the
+feasible region (advice/003 Case B); (ii) Theorem 4.111 is verified in
+the static normalization; the deployed owner-accounting `r_real` can
+overshoot the scheduled service near the boundary; (iii) the bridge is
+NOT a one-step `R_T -> Delta T` theorem -- the two bridges are stated
+separately (Theorem 4.110 for service->delay, Theorem 4.111 for
+FRIDS->service), composed in the paper only with the empirical
+`Gamma in [0.75, 1]`.
 
 ## 6. Explicit non-claims
 

@@ -742,6 +742,22 @@ def simulate_frids_v2(
                 elif l_own <= bounds[qq][1]:
                     decided[qq] = True
                     delays[r, qq] = float(t + 1)
+            # bridge (advice/004 P0.5-1): fill-forward the recorded
+            # processes after the target stops, so the audit verifies the
+            # standard STOPPED process ``M_{t wedge T}`` (M_t stays at
+            # M_T after T) rather than a process that abruptly returns to
+            # zero -- optional-stopping form of the martingale claim.
+            if bridge:
+                for qq in range(q):
+                    tt = int(delays[r, qq])
+                    if tt > max_steps:
+                        continue
+                    last = max(tt - 1, 0)
+                    for name in ("L", "A", "A_raw", "V", "M", "S",
+                                 "r_pred", "r_real", "n_served"):
+                        val = float(br[name][r, last, qq])
+                        for tt_ in range(tt, max_steps):
+                            br[name][r, tt_, qq] = val
 
     e1 = [float(delays[H_all[:, qq], qq].mean()) for qq in range(q)]
     p_fa = [float(declared_h1[~H_all[:, qq], qq].mean()) for qq in range(q)]

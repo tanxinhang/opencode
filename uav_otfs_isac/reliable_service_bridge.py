@@ -1,28 +1,48 @@
 """P1 service-delay bridge theory (advice/003, Theorem 4.110/4.111).
 
-The LLR decomposition
+The deployed owner LLR is the QUANTIZED token score (advice/004 section
+3): ``hat L = Q(LLR)`` is not the exact LLR of the quantized symbol, so
+the theory is stated for the deployed score process
 
-    L_q(t)  =  L_q(0) + A_q(t) + M_q(t),
+    hat L_q(t)  =  tilde A_q(t) + M_q(t),     (M a martingale)
 
-with ``A_q(t) = sum_tau sum_i x_{iq,tau} g_{iq,tau}`` the cumulative
-predictable reliable service and ``M_q`` a martingale, holds exactly when
-the rule chooses actions as functions of the past (``a_i = pi_i(I_{i,t})``,
-P-DIST): given the history, the H1 drift of the delivered LLR increment is
-the reliable information ``g_iq`` (Theorem 4.94).  The increments are
-bounded by the finite (quantized + erasure) alphabet, ``|Z - E[Z|F]| <=
-b_q``, so martingale concentration does not need a Gaussian shortcut --
-the Freedman-type two-sided deviation bound
+where ``tilde A_q(t) = sum_tau sum_i x_{iq,tau} E_1[hat Z_{iq,tau} |
+F_{tau-1}]`` is the cumulative predictable drift of the deployed atom
+(``hat Z`` the delivered quantized atom, its H1 conditional mean is
+``tilde g_{iq}``), and the quantization correction between the exact
+reliable information and the deployed score drift is recorded
+separately: ``delta_Q = |g_{iq} - tilde g_{iq}|`` (measured 4-10% at 5
+bits -- too small to justify a finite-threshold FRIDS; advice/003
+section 4, advice/004 section 3).  The increments are bounded by the
+finite (quantized + erasure) alphabet, ``|Z - E[Z|F]| <= b_q``, so
+martingale concentration does not need a Gaussian shortcut.
 
-    P( M_q(t) <= -eta ) <= exp[ -eta^2 / (2(V_q(t) + b_q eta / 3)) ]
+THEOREM-CONSISTENT GATE (advice/004 section 2): a Freedman-type bound
+is a statement about the JOINT event ``{M_t <= -eta, V_t <= v}`` for a
+DETERMINISTIC ``(eta, v)`` pair,
 
-with ``V_q(t) = sum_tau Var(Z_{q,tau} | F_{tau-1})``.  Stopping: target q
-stops on the owner LLR crossing ``A_q*`` (H1) or ``B_q`` (H0); with
-``D_q = A_q* - L_q(0)`` and ``beta_q`` the H1 miss-probability budget, if
-the predictable service reached ``A_q(t) >= D_q + eta`` while the target
-has still not crossed H1, a deviation of size >= eta happened, so
+    P_1( M_t <= -eta,  V_t <= v )  <=  exp[ -eta^2 / (2(v + b_q eta / 3)) ],
 
-    P_1(T_q > t)  <=  beta_q
-        + exp[ - (A_q(t) - D_q)^2 / (2(V_q(t) + b_q (A_q(t) - D_q)/3)) ].
+not about replacing the path ``V_t`` by its Monte-Carlo mean.  The gate
+therefore verifies the joint event on a deterministic ``(eta, v)`` grid,
+and, because the deployed object is a STOPPING TIME, additionally the
+time-uniform/line-crossing (Freedman maximal) form
+
+    P_1( exists t<=T: M_t <= -eta,  V_t <= v )  <=  exp[ -eta^2 / (2(v + b_q eta / 3)) ].
+
+The recorded processes are fill-forwarded after stopping
+(``M_{t wedge T}``, advice/004 P0.5-1) so the audit checks the stopped
+martingale, not a process that returns to zero.
+
+Stopping: target q stops on the owner LLR crossing ``A_q*`` (H1) or
+``B_q`` (H0); with ``D_q = A_q* - L_q(0)`` and ``beta_q`` the H1
+miss-probability budget, if the predictable service reached
+``A_q(t) >= D_q + eta`` while the target has still not crossed H1, a
+deviation of size >= eta happened, so (integrated over paths with the
+H1-miss budget ``beta_q``)
+
+    P_1(T_q > t)  <=  beta_q + E[ exp[ - (A_q(t) - D_q)_+^2 /
+        (2(V_q(t) + b_q (A_q(t) - D_q)_+/3)) ] ].
 
 Theorem B (bridge 2, advice/003 section 5): the mirror-descent rule
 approaches the demand-normalized relaxation optimum ``z* = max_x min_q
@@ -126,16 +146,24 @@ def martingale_decomposition(
     q: int,
     target_alpha: float = 0.05,
     target_beta: float = 0.05,
-    max_eta_ratio: float = 0.25,
+    eta_fractions: tuple = (0.5, 1.0, 1.5, 2.0),
+    v_fractions: tuple = (0.5, 1.0, 2.0),
 ) -> dict:
-    """Verify ``L = A + M`` (advice/003 section 1): (i) the realized
-    increment ``Z_t`` equals the recorded drift ``A`` plus a martingale
-    residual ``M``; (ii) the empirical deviation tail fits the
-    Freedman-type bound at a grid of ``eta`` thresholds; (iii) the
-    per-cycle residual is the realized minus predictable increment.
+    """Theorem-consistent martingale verification (advice/004 section 2):
+    (i) the joint event ``{M_q(t) <= -eta, V_q(t) <= v}`` is verified on
+    a deterministic ``(eta, v)`` grid against the Freedman bound (NOT
+    by replacing ``V`` with its MC mean -- that is not the object of the
+    inequality); (ii) the time-uniform / line-crossing form ``{exists t:
+    M_q(t) <= -eta, V_q(t) <= v}`` (the natural object for a stopping
+    time) is verified likewise; (iii) ``delta_Q`` the quantization
+    correction of the deployed score drift vs exact ``g``.
 
-    Distances/``eta`` are in nats (LLR units), ``V`` in nats^2, ``b`` in
-    nats -- dimensionless accounting of the quantized+erasure alphabet.
+    ``eta`` grid: ``sqrt(V_ref) * eta_fraction`` with ``V_ref`` the
+    deterministic per-target variance UPPER bound (the 100pct quantile
+    of the recorded ``V``); ``v`` grid: ``V_ref * v_fraction``.  All
+    quantities are in nats (LLR units).  The recorded processes are the
+    fill-forwarded stopped processes ``M_{t wedge T}`` (advice/004
+    P0.5-1).
     """
     L = np.asarray(bridge_out["L"])            # (R, T, Q)
     A = np.asarray(bridge_out["A"])
@@ -158,39 +186,49 @@ def martingale_decomposition(
     b_theo = 2.0 * max_conc * max_b
     bq = max(b_theo, 1e-9)
 
-    def tail_rows(which: str):
-        rows = []        # (v_avg, empirical_LHS, bound_RHS, H1_only)
+    # deterministic per-target variance UPPER bound over the stopped
+    # paths (the ``V_t <= v`` side of the Freedman joint event)
+    v_up = [float(np.max(V[H[:, qq] == True, :, qq]))  # noqa: E712
+            if np.any(H[:, qq] == True) else 0.0  # noqa: E712
+            for qq in range(q)]
+
+    def joint_rows(which: str):
+        """Deterministic (eta, v) grid joint events over the H1 stopped
+        paths: pointwise ``{M(t)<=-eta, V(t)<=v}`` or time-uniform
+        ``{exists t: M(t)<=-eta, V(t)<=v}`` vs the Freedman bound."""
+        rows = []        # (eta, v, empirical_LHS, bound_RHS)
         for qq in range(q):
             mask = H[:, qq] == True  # noqa: E712
             if not np.any(mask):
                 continue
-            l_sub = L[mask, :, qq]
-            a_sub = A[mask, :, qq]
-            v_sub = V[mask, :, qq]
             m_sub = M[mask, :, qq]
-            # residual-decomposition error for the martingale claim
-            resid = l_sub - (a_sub + m_sub)
-            err_abs = float(np.max(np.abs(resid)))
-            # (unconditional) realized deviation tail per time
-            for t in range(max_steps):
-                mcol = m_sub[:, t]
-                vcol = v_sub[:, t]
-                for f in (0.05, 0.1, 0.25, 0.5):
-                    eta = (float(np.mean(vcol)) ** 0.5) * f
-                    emp_lhs = 0.0
-                    bound = freedman_tail(eta, float(np.mean(vcol)), bq)
-                    if which == "one-sided":
-                        emp_lhs = float(np.mean(mcol <= -eta))
+            v_sub = V[mask, :, qq]
+            v_ref = max(v_up[qq], 1e-9)
+            for vf in v_fractions:
+                v = v_ref * vf
+                for ef in eta_fractions:
+                    eta = float(np.sqrt(v)) * ef
+                    joint = (m_sub <= -eta) & (v_sub <= v)   # (R, T)
+                    if which == "uniform":
+                        # line-crossing: the first time the stopped
+                        # martingale crosses -eta while V stays <= v
+                        emp = float(np.mean(np.any(joint, axis=1)))
                     else:
-                        emp_lhs = float(np.mean(np.abs(mcol) >= eta))
-                    rows.append((vcol.mean(), emp_lhs, bound))
-        return [r for r in rows if r[2] > 0.0]
+                        # fixed-time worst case: sup over t of the joint
+                        # event probability (each single t is the object
+                        # of the pointwise Freedman inequality)
+                        emp = float(np.mean(np.any(joint, axis=1)))
+                    bound = freedman_tail(eta, v, bq)
+                    if which != "uniform":
+                        # pointwise: worst over t of the single-time joint
+                        emp = float(np.max(np.mean(joint, axis=0)))
+                    rows.append((eta, v, emp, bound))
+        return [r for r in rows if r[3] > 0.0]
 
-    # quantization/token correction (advice/003 section 4): the scheduler
-    # books the unquantized ``g`` (A_raw) while the deployed belief uses
-    # the token atoms (A).  If the relative gap is tiny, the
-    # finite-threshold correction of FRIDS-v2 is negligible and the
-    # g-only scheduler stays frozen.
+    # quantization/token correction (advice/003 section 4, advice/004
+    # section 3): ``delta_Q`` the deployed-score drift vs the exact g.
+    # If the relative gap is tiny, the finite-threshold correction of
+    # FRIDS-v2 is negligible and the g-only scheduler stays frozen.
     corr_ratio = []
     for qq in range(q):
         a_raw_q = A_raw[:, :, qq]
@@ -201,10 +239,14 @@ def martingale_decomposition(
                 np.abs(a_raw_q[keep] - a_q[keep]) / a_raw_q[keep])))
     quant_gap_mean = float(np.mean(corr_ratio)) if corr_ratio else 0.0
     quant_gap_max = float(np.max(corr_ratio)) if corr_ratio else 0.0
-    rows = tail_rows("one-sided")
-    viols = np.array([r[1] for r in rows], dtype=float)
-    probs = np.array([r[2] for r in rows], dtype=float)
+    rows = joint_rows("pointwise")
+    viols = np.array([r[2] for r in rows], dtype=float)
+    probs = np.array([r[3] for r in rows], dtype=float)
     br = relative_error_bound(viols, probs)
+    rows_u = joint_rows("uniform")
+    viols_u = np.array([r[2] for r in rows_u], dtype=float)
+    probs_u = np.array([r[3] for r in rows_u], dtype=float)
+    br_u = relative_error_bound(viols_u, probs_u)
     # residual statistics over H1 (run, target) pairs, over all cycles
     m_vals = []
     for qq in range(q):
@@ -222,7 +264,12 @@ def martingale_decomposition(
         "quantization_gap_max": quant_gap_max,
         "b_q": float(bq),
         "freedman": br,
+        "freedman_uniform": br_u,
         "freedman_n_cases": br["n_cases"],
+        "v_upper_per_target": v_up,
+        "eta_grid": [float(np.sqrt(np.max(v_up)) * ef)
+                     for ef in eta_fractions],
+        "v_grid": [float(np.max(v_up) * vf) for vf in v_fractions],
         "empirical_pM_lower_avg": float(
             viols.mean() if len(viols) else 0.0),
         "empirical_pM_lower_max": float(
@@ -237,11 +284,19 @@ def stopping_tail_verify(
     q: int,
     target_beta: float = 0.05,
 ) -> dict:
-    """Theorem 4.110 direct check: at each (target, cycle) with
-    ``A_q(t) >= A_q*`` the empirical H1-survive fraction
-    ``Pr_1(T_q > t)`` is compared to the theoretical tail bound.  The
-    H0-side is omitted (``beta_q`` is the H0/miss budget on H1)."""
-    L = np.asarray(bridge_out["L"])
+    """Theorem 4.110 direct check: at each (target, cycle) with the
+    pathwise premise ``A_q(t) >= A_q*`` the empirical H1-survive
+    fraction ``Pr_1(T_q > t)`` is compared to the PATH-INTEGRATED
+    bound
+
+        Pr_1(T_q > t) <= beta_q + E[ exp[ -(A_q(t)-D_q)_+^2 /
+            (2(V_q(t) + b_q (A_q(t)-D_q)_+/3)) ] ]
+
+    (each path contributes its own ``(A_q(t), V_q(t))`` -- the
+    pointwise Freedman argument is per-path, so averaging the
+    nonlinear exponent is NOT the same as plugging the means, which
+    was the advice/004 section 2 criticism of the earlier gate).
+    The H0-side is omitted (``beta_q`` is the H1 miss budget)."""
     A = np.asarray(bridge_out["A"])
     V = np.asarray(bridge_out["V"])
     H = np.asarray(bridge_out["H"])
@@ -252,9 +307,9 @@ def stopping_tail_verify(
     max_conc = float(np.max(np.asarray(bridge_out["n_served"]))) \
         if bridge_out["n_served"].size > 0 else 1.0
     bq = max(2.0 * max_conc * max_b, 1e-9)
-    n_runs, max_steps, _ = L.shape
+    n_runs, max_steps, _ = A.shape
     surv_emp = []        # empirical Pr_1(T_q > t)
-    surv_bound = []      # theoretical bound
+    surv_bound = []      # path-integrated bound
     for qq in range(q):
         mask = H[:, qq] == True  # noqa: E712
         hh = np.arange(n_runs)[mask]
@@ -266,12 +321,16 @@ def stopping_tail_verify(
         for t in range(max_steps):
             a_col = la[:, t]
             v_col = lv[:, t]
-            pred = float(np.mean(a_col))
-            if pred < a_thr[qq] - 1e-9:
-                continue          # premise not met: service not at D_q
+            # pathwise premise: at least one path has service past D_q
+            if not np.any(a_col >= a_thr[qq] - 1e-9):
+                continue
             emp = float(np.mean(lt > t))       # still undecided at t
-            bnd = stopping_tail_bound(pred, a_thr[qq], float(np.mean(v_col)),
-                                      bq, target_beta)
+            eta_p = np.maximum(a_col - a_thr[qq], 0.0)
+            # per-path exponent, integrated over the H1 paths
+            expo = np.array([
+                freedman_tail(float(e), float(v), bq)
+                for e, v in zip(eta_p, v_col)])
+            bnd = float(min(target_beta + float(np.mean(expo)), 1.0))
             surv_emp.append(emp)
             surv_bound.append(bnd)
     emp = np.array(surv_emp, dtype=float)
@@ -400,4 +459,164 @@ def normalized_service_time_average(
         "eps_loc_mean": eps_loc,
         "eps_loc_static_mean": float(eps_loc_static),
         "target_beta": target_beta,
+    }
+
+
+def run_static_mirror_descent(
+    g: np.ndarray,
+    d0: np.ndarray,
+    horizon: int,
+    mu: float = 0.5,
+    eps: float = 0.1,
+    seed: int = 0,
+) -> dict:
+    """Static shadow experiment (advice/004 P0.5-4): the frozen-relaxation
+    FRIDS mirror descent with NO stopping and NO erasure randomness --
+    targets never decide, ``D_q(t) = D_q(0)`` fixed, ``g`` fixed, every
+    cycle every UAV serves ``argmax_q y^{(i)}_q g_{iq}/(D_q+eps)`` and
+    the per-UAV price follows the exponentiated gradient on the
+    normalized service gap.  This isolates the pure convergence of the
+    dual rule to the static optimum ``z* = max_x min_q sum_i x_iq g_iq /
+    (D_q + eps)`` (the object of Theorem 4.111's ``eps_T ~ O(sqrt(logQ
+    / T))`` claim), WITHOUT the stopping / active-set-change confound of
+    the deployed system (the advice/004 section 5 criticism of comparing
+    against the LP of a different system).
+
+    Deterministic (no RNG), so a single run per horizon is exact.
+    """
+    k, q = np.asarray(g, dtype=float).shape
+    g = np.asarray(g, dtype=float).clip(min=0.0)
+    d = np.asarray(d0, dtype=float).clip(min=0.0) + eps
+    # THEOREM-consistent object (advice/004 P0.5-4): the static relaxation
+    # of Theorem 4.95/4.111 has ONE common shadow price ``y`` on the
+    # simplex, not K per-UAV local duals.  The per-UAV local-dual herd
+    # (every UAV chases the same best target against its own price) is
+    # EXACTLY the distributed-information loss ``eps_loc`` measured by
+    # ``local_vs_common_gap`` and does NOT close here; the common-price
+    # form is the object whose ``gap(T) = z* - min_q bar r_q(T)`` decays
+    # as O(sqrt(log Q / T)).
+    y = np.full(q, 1.0 / q)                 # single common price
+    z_acc = np.zeros(q)                     # per-target service accum.
+    for t in range(1, horizon + 1):
+        # exponentiated-gradient (exp-gradient) step on the normalized
+        # service gap, tuned as mu_t = mu / sqrt(t) -- the O(sqrt(logQ/T))
+        # regret rate of Theorem 4.96 requires the DECAYING step; a fixed
+        # step does not close the gap in time average.
+        mu_t = float(mu) / float(np.sqrt(t))
+        # deterministic best-response of every UAV against the common
+        # price (ties: first target)
+        serve = np.zeros((k, q))
+        for i in range(k):
+            scores = g[i] * y / d
+            best = int(np.argmax(scores))
+            if scores[best] > 0.0:
+                serve[i, best] = 1.0
+        # per-target normalized service from the served UAVs
+        r_q = np.zeros(q)
+        for qq in range(q):
+            r_q[qq] = float(np.sum(g[:, qq] * serve[:, qq]) / d[qq])
+        # mirror descent on the common normalized service gap
+        rbar = float(np.mean(r_q))
+        e = rbar - r_q
+        num = y * np.exp(mu_t * e)
+        y = num / max(np.sum(num), 1e-12)
+        z_acc += r_q
+    z_star = static_relaxation_optimum(g, np.asarray(d0, dtype=float),
+                                       eps=eps)
+    # time-averaged per-target service, min over targets
+    serv_pred = z_acc / max(horizon, 1)
+    return {
+        "z_star": float(z_star),
+        "horizon": int(horizon),
+        "min_q_time_avg_r": float(np.min(serv_pred)),
+        "per_target_r": [float(x) for x in serv_pred],
+        "gap": float(z_star - float(np.min(serv_pred))),
+        "sqrt_logQ_over_T": float(np.sqrt(np.log(max(q, 2)) / horizon)),
+    }
+
+
+def static_md_convergence(
+    g: np.ndarray,
+    d0: np.ndarray,
+    horizons: tuple = (20, 40, 80, 160, 320),
+    mu: float = 0.5,
+    eps: float = 0.1,
+) -> dict:
+    """Run the static mirror descent on a sweep of horizons and report
+    the ``gap(T) = z* - min_q r_q(T)`` scaling: advice/004 P0.5-4 wants
+    ``gap(T) ~ O(sqrt(log Q / T))`` i.e. a log-log slope close to -1/2.
+    """
+    rows = {}
+    for T in horizons:
+        rows[str(T)] = run_static_mirror_descent(g, d0, int(T), mu=mu, eps=eps)
+    gaps = np.array([rows[str(T)]["gap"] for T in horizons], dtype=float)
+    # a well-conditioned instance can reach z* immediately (gap ~ 0); the
+    # log-log slope is then undefined (and is a STRONGER result), so the
+    # slope is measured only over strictly-positive gaps
+    pos = gaps > 1e-6
+    Ts = np.array([int(T) for T in horizons], dtype=float)
+    slope = None
+    if pos.sum() >= 2:
+        slope = float(np.polyfit(np.log(Ts[pos]), np.log(gaps[pos]), 1)[0])
+    return {
+        "rows": rows,
+        "gaps": [float(x) for x in gaps],
+        "horizons": [int(T) for T in horizons],
+        "loglog_slope": slope,
+        "gap_max": float(np.max(gaps)) if len(gaps) else 0.0,
+        "converged_immediately": bool(np.max(gaps) <= 1e-6),
+        "slope_target": -0.5,
+    }
+
+
+def local_vs_common_gap(
+    bridge_local: dict,
+    bridge_common: dict,
+    q: int,
+    eps: float = 0.1,
+) -> dict:
+    """Advice/004 P0.5-5: ``eps_loc`` redefined as the local-vs-common
+    price effect on the time-averaged static normalized service, under
+    COMMON RANDOM NUMBERS (both bridge recordings come from the SAME
+    scenario seed; common-price uses ``price_mode=\"common\"`` with
+    ``y = mean_i y^{(i)}``, the F0-G9A offline oracle).  The two runs
+    share the observations, so the gap isolates the price disagreement
+    cost, not the delivery randomness."""
+    def static_r(b):
+        a_thr = np.asarray(b["a_thr"], dtype=float)
+        A = np.asarray(b["A"], dtype=float)
+        S = np.asarray(b["S"], dtype=float)
+        H = np.asarray(b["H"])
+        T_stop = np.asarray(b["T"], dtype=float)
+        n_runs, max_steps, _ = A.shape
+        d0 = a_thr + eps
+        A_prev = np.concatenate([np.zeros((n_runs, 1, q)), A[:, :-1, :]],
+                                axis=1)
+        r_st = (A - A_prev) / d0[None, None, :]
+        out = []
+        for qq in range(q):
+            ts = np.arange(max_steps)[None, :]
+            mask = ts < T_stop[:, qq][:, None]
+            xq = r_st[:, :, qq] * mask
+            avg = np.sum(xq, axis=1) / np.maximum(np.sum(mask, axis=1), 1e-12)
+            out.append(float(np.mean(avg)))
+        return out
+
+    r_l = np.array(static_r(bridge_local))
+    r_c = np.array(static_r(bridge_common))
+    # the DELAY-relevant loss is the one on the BOTTLENECK (binding)
+    # target, not the largest mid-target swing: F0-G9A showed the local
+    # dual disagreement costs delay only through the weakest target's
+    # service, so the honest eps_loc_dual is the gap at the min-service
+    # target (the one that sets the worst-target delay).
+    min_l = float(np.min(r_l))
+    min_c = float(np.min(r_c))
+    return {
+        "per_target_local": [float(x) for x in r_l],
+        "per_target_common": [float(x) for x in r_c],
+        "eps_loc_dual": float(np.max(np.abs(r_l - r_c))),
+        "eps_loc_dual_mean": float(np.mean(np.abs(r_l - r_c))),
+        "eps_loc_bottleneck": float(abs(min_l - min_c)),
+        "min_service_local": min_l,
+        "min_service_common": min_c,
     }

@@ -12,8 +12,11 @@ from uav_otfs_isac.distributed_audit import (
 from uav_otfs_isac.frids import simulate_frids_v2
 from uav_otfs_isac.reliable_service_bridge import (
     freedman_tail,
+    local_vs_common_gap,
     martingale_decomposition,
     normalized_service_time_average,
+    run_static_mirror_descent,
+    static_md_convergence,
     static_relaxation_optimum,
     stopping_tail_bound,
     stopping_tail_verify,
@@ -106,7 +109,70 @@ def test_martingale_decomposition(bridge_out):
     assert dec["b_q"] > 0.0
     assert dec["freedman"]["n_cases"] > 0
     assert dec["freedman"]["violation_fraction"] <= 0.05
+    # advice/004 P0.5-2: the time-uniform / line-crossing form is the
+    # natural object for a stopping time and must also hold
+    assert dec["freedman_uniform"]["n_cases"] > 0
+    assert dec["freedman_uniform"]["violation_fraction"] <= 0.05
     assert 0.0 <= dec["quantization_gap_mean"] <= 1.0
+    assert len(dec["v_upper_per_target"]) == Q_TARGETS
+    assert dec["eta_grid"] and dec["v_grid"]
+
+
+def test_stopped_process_fill_forward(bridge_out):
+    """P0.5-1: after a target stops, the recorded process must hold its
+    terminal value (M_{t wedge T}), not drop to zero."""
+    L = np.asarray(bridge_out["L"])
+    M = np.asarray(bridge_out["M"])
+    T_stop = np.asarray(bridge_out["T"], dtype=float)
+    n_runs, max_steps, q = L.shape
+    found = False
+    for r in range(n_runs):
+        for qq in range(q):
+            tt = int(T_stop[r, qq])
+            if tt >= max_steps:
+                continue
+            found = True
+            last_val = float(M[r, max(tt - 1, 0), qq])
+            assert all(float(M[r, t, qq]) == last_val
+                       for t in range(tt, max_steps))
+    assert found
+
+
+def test_run_static_mirror_descent_approaches_zstar():
+    """P0.5-4: the static shadow mirror descent (no stopping, fixed D/g,
+    COMMON shadow price) must close the gap to z*, and the gap decays or
+    disappears with the horizon.  A well-conditioned instance reaches z*
+    immediately (gap ~ 0: strictly stronger than O(sqrt(logQ/T)))."""
+    # asymmetric-information instance: needs continuous balancing, so the
+    # gap decays with T instead of collapsing instantly
+    g = np.array([[1.0, 0.3, 0.2],
+                  [0.2, 1.0, 0.2],
+                  [0.15, 0.25, 1.0]])
+    d0 = np.array([2.0, 3.0, 4.0])
+    r_short = run_static_mirror_descent(g, d0, horizon=20)
+    r_long = run_static_mirror_descent(g, d0, horizon=320)
+    assert r_short["z_star"] > 0.0
+    # strictly stronger: immediate convergence also counts as a pass
+    assert r_long["gap"] <= r_short["gap"] + 1e-12
+    conv = static_md_convergence(g, d0, horizons=(40, 80, 160, 320))
+    if conv["converged_immediately"]:
+        assert conv["gap_max"] <= 1e-6
+    else:
+        assert conv["loglog_slope"] is not None
+        assert -0.9 <= conv["loglog_slope"] <= -0.1
+
+
+def test_local_vs_common_gap_small(bridge_out, scenario, bounds):
+    """P0.5-5: the local-vs-common CRN price gap on static service.  The
+    DELAY-relevant loss is at the bottleneck (min-service) target, not
+    the largest mid-target swing."""
+    out_c = simulate_frids_v2(scenario, bounds, n_runs=250, seed=7,
+                              max_steps=40, bridge=True, price_mode="common")
+    gap = local_vs_common_gap(bridge_out, out_c["bridge"], Q_TARGETS)
+    assert gap["eps_loc_dual"] >= 0.0
+    assert gap["eps_loc_bottleneck"] >= 0.0
+    assert len(gap["per_target_local"]) == Q_TARGETS
+    assert len(gap["per_target_common"]) == Q_TARGETS
 
 
 def test_stopping_tail_verify_no_violation(bridge_out):

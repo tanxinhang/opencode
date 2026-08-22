@@ -80,16 +80,24 @@ def main() -> None:
         bounds = [[bt[qq][0], bt[qq][1] - args.b_delta]
                   for qq in range(q)]
         owner = sc["owner_of"]
-        rho_star = strongest_load_cut(sc, owner,
-                                      horizon=args.max_steps,
-                                      beta=args.beta,
-                                      alpha=args.alpha)
-        rho_star_by_q[q] = rho_star
         b_tok = float(token_bits(q)["total"])
         rho_c = communication_load(K_FIXED, b_tok, RX_BUDGET)
         for s in S_GRID:
             u2u = np.full((K_FIXED, K_FIXED), float(s))
             np.fill_diagonal(u2u, 1.0)
+            # advice/004 P0.5-7: rho_I* must be recomputed on the SAME
+            # swept reliability, not on the raw scenario draw -- the cut
+            # reads ``scenario["u2u_success"]``, so the swept matrix must
+            # enter the scenario before ``strongest_load_cut`` (otherwise
+            # ``rho_I*`` stays constant across the s sweep and the whole
+            # information/communication phase split is dead).
+            sc_s = dict(sc)
+            sc_s["u2u_success"] = u2u
+            rho_star = strongest_load_cut(sc_s, owner,
+                                          horizon=args.max_steps,
+                                          beta=args.beta,
+                                          alpha=args.alpha)
+            rho_star_by_q[(q, s)] = rho_star
             J, md, fa = [], [], []
             for seed in range(args.seeds):
                 out = simulate_frids_v2(
@@ -167,7 +175,8 @@ def main() -> None:
         },
         "runtime_s": round(time.time() - t0, 1),
         "cells": cells,
-        "rho_star_by_Q": {str(q): rho_star_by_q[q] for q in Q_GRID},
+        "rho_star_by_Q_s": {str((q, s)): rho_star_by_q[(q, s)]
+                         for q in Q_GRID for s in S_GRID},
         "gamma": gamma,
         "summary": {
             "counts": {

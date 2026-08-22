@@ -204,6 +204,19 @@
 - **相图(K=16,Q/K∈{0.25..2} × s∈{0.95..0.2})**: **27 Green / 3 Yellow(边缘 P_MD 0.071-0.083)/ 0 Red**;`ρ_I* ≤ 0.11`(信息容量从不绑定)、`ρ_C=0.71`(通信预算不绑定)⇒ 三类不可行分离: 唯一活性区域为边缘 coordination-limited(3 格)。
 - **可行性利用率 Γ∈[0.75,1.0]**: FRIDS 已贴近可实现边界 ⇒ **停止调度器优化**(advice/012 规则);Q>K 的 owner 循环分配与 token 级联记账为审计基础修复。
 
+### 1.28 最新: P1 证明口径加固(2026-08-22,advice/004 P0.5,Gate P1-hardened)
+
+advice/004 审计 P1 gate 后指出 7 处"理论结构正确但 Gate 未验证到所声称对象"。全部闭合(FRIDS-v2 全程未动):
+
+- **停止鞅 fill-forward**: `simulate_frids_v2(bridge=True)` 在目标停止后对 L/A/V/M/S/r/n_served 保持终值成 `M_{t∧T}`(optional stopping 形式),不再回零。
+- **Freedman 口径**: 验证对象改为**联合事件** `P(M_t≤−η, V_t≤v)`(确定性 (η,v) grid,`η` 用方差上界分数、`v` 用 V_up 上界分数),并新增 **time-uniform / line-crossing(Freedman maximal)** 形式 `P(∃t: M_t≤−η, V_t≤v)` ── stopping time 的自然对象。全部 8 场景点态+时一致 0 违例(max_ratio 0.25-0.41,界开始有信息量)。
+- **量化 score drift 口径**: 定理改为部署 score 过程 `L̂ = Ã + M`(`Ã` 用部署量化原子 H1 条件漂移,非精确 KL),`δ_Q = |g − g̃|` 单独记录(5-10%);**不再称 A 为 KL(final observable kernel)**。
+- **Pathwise stopping tail**: `stopping_tail_verify` 对每条 H1 路径各自算 `(A_q(t)−D_q)_+` 的指数项再求期望(每路径自身 A/V),不再把 mean(A)/mean(V) 塞入非线性界。fill-forward 后停时尾界前提真正激活(117-314 案例/场景),0 违例。
+- **Static-MD shadow(定理 4.111 真正关闭)**: 永不停止、固定 D/g、**单一公共 shadow price** + 衰减步长 `μ_t=μ/√t` exp-gradient,T∈{20,40,80,160,320}。**关键发现**: per-UAV local dual 会 herd(全体追同一目标,gap 不收敛 ≈0.16)── 这本身就是 eps_loc 机制;理论对象是公共价格,其 `z* − min_q ṝ_q(T)` 按 `O(√(logQ/T))` 或更快衰减(实测 log-log 斜率 −0.63..−1.10)。
+- **eps_loc 重定义**: 边界归一化爆炸(D→0)是量纲伪影;新增 `eps_loc_static_mean`(固定初始缺陷,0.014-0.028)与 **bottleneck `eps_loc`**(local-vs-common CRN 瓶颈目标服务差,≤0.05 全场景,对应 F0-G9A ~1.8% 延迟)。
+- **cross-scenario verdict**: 遍历全部 8 场景(4 档 × 2 draw)。
+- 注: 门 `results/delay_bridge_gate_p05.json`;测试 `tests/test_reliable_service_bridge.py`(11 项);FORMAL_PROOFS §5E(4.110/4.111)已按加固口径重写。
+
 ### 1.27 最新: 服务-时延理论桥(2026-08-22,advice/003 P1,Gate P1)
 
 - **问题**: mirror-descent regret `R_T` 是瞬时松弛的,最终指标是序贯检测时延;缺一句站得住的理论回答"为什么 FRIDS-v2 逼近可行边界"。
