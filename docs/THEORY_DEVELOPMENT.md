@@ -217,6 +217,16 @@
 
 结论: **P1 permanently closed**;下一步正式多 seed phase diagram(P2 正式跑)。
 
+### 1.30 最新: 联合容量理论 / Dual-Bus CA-FRIDS 与 P2.1a 认证(2026-08-22,advice/008 驱动,P3.1/P3.2/P2.1a/P3.4)
+
+`advice/008` 的系统级重构路线落地的第一批:
+
+- **P3.1 结构精确瓶颈割(advice/008 §9)**: `feasibility.py` 增加 `mincut_closure_oracle` / `strongest_load_cut_exact`。`min_S[λHF(S)−D(S)]` 的可行性判定从 SLSQP-in-Fujishige-Wolfe 数值 oracle 换成**同一多面体证书上的精确 s-t min-cut**: 每个 UAV 的 `max_{q∈S} g_iq` 按排序等级 `ΣΔγ·1{S触及该等级}` 展开成 weighted-OR closure 图(Dinic max-flow,无 stall/无迭代截断)。与 `rho_bruteforce` 在 60 组随机 + 真实场景下逐点一致(`|Δ|<1e-4`),瓶颈子集即 min-cut 源侧;`strongest_load_cut` 主入口已路由到精确路径(旧 FW 保留为泛化 SFM 工具)。测试 `tests/test_ca_frids.py`(P3.1 组)。
+- **P2.1a QoS 认证修复(advice/008 §13)**: 新增 `uav_otfs_isac/qos.py` —— **原始条件计数** Clopper-Pearson 同时置信(`δ_q=δ_cell/(2Q)`): **FAIL 仅当 LCB(P_err,q)>p_max**(认证违规),PASS 仅当全部 UCB 达标,**UNCERTAIN 永远 unresolved**(不再被必要条件推理改标);`simulate_frids_v2(raw_counts=True)` 暴露真实 `N_H0,N_H1,N_FA,N_MD`(旧 runner 用 `p̂×n_runs` 反推 successes 的随机分母是 P0 口径错误)。`scripts/run_phase_diagram_gate.py` 同步修复: comm 轴与 P2-C 用**真实 per-geom 场景**(不再单一 `full0`),λ_nec 按 per-geom 平均切割,右截尾负载的 `Gamma_dual/Γ_envelope` 输出 `null`(不再把截尾当成 Γ=1)。
+- **P3.2 Dual-Bus / CA-FRIDS(advice/008 §5-8)**: 新模块 `uav_otfs_isac/ca_frids.py`。联合 sensing–communication primal 的对偶索引
+  `J^CA_{iqa} = π_q·g_{iqa} − λ_{o(q)}·c_{iqa}`(`g` 可靠检测信息,`c` token airtime 分数,`π_q=y_q/(D_q+ε)` owner 锚定,`λ_j` 接收端 airtime dual);**idle 选项**使 airtime 价格真正改变 argmax(Lemma 4.99,纯共同加性价格是 no-op);**evidence plane 只发 owner** 取代 full-mesh evidence gossip。价格广播按 pre-registered range 均匀量化(`pi_bits/lam_bits`),审计实现 action-invariance 证书 `P(m_i > 2(g_max·ε_π+c_max·ε_λ))`(advice/008 §8),与 bits 单调。
+- **P3.4 生死门(`scripts/run_ca_frids_gate.py`)**: 固定校准 B(同一 stopping policy 的双调度器对比,避免 per-algorithm delta 变成\"比较不同停时规则\")。**正式多 seed(5 geom × 4 MC × 300 runs/格,`--geoms 5 --mc-seeds 4 --n-runs 300`,252 s)**: congested(ρ_full=1.8)CA 最差目标时延改善 ≈3.3%(低于 5% 门槛),airtime 负载被价格压制(rho_full 1.8→CA max_load≈1.5-1.6);**uncongested 回退 ≈12%**(>2% 门槛,5 档一致性回归)── 这是 owner-单目标收敛为纯 deficit 归一化的已知代价(F0-G7 预算模式):每个 owner 只持一个目标时 `y_q=1` 固定,任务价退化为 `1/(D_q+ε)`,丢失 v2 的全 simplex starvation balancing。**结论(诚实负结果)**: FRIDS-v2 保持冻结,联合容量+相图法则作为论文贡献(advice/008 §14 的负结果分支;两分支都有研究价值)。测试 `tests/test_ca_frids.py`。
+
 ### 1.28 最新: P1 证明口径加固(2026-08-22,advice/004 P0.5,Gate P1-hardened)
 
 advice/004 审计 P1 gate 后指出 7 处"理论结构正确但 Gate 未验证到所声称对象"。全部闭合(FRIDS-v2 全程未动):

@@ -59,6 +59,8 @@ error.
 | `benchmark-smoke` | Robustness performance smoke | `& "E:\anaconda\conda\python.exe" scripts\benchmark_robustness_performance.py --output results\robustness_performance_benchmark.json` | `results/robustness_performance_benchmark.json` |
 | `benchmark-formal` | Robustness performance formal sweep | `& "E:\anaconda\conda\python.exe" scripts\benchmark_robustness_performance.py --formal --output results\robustness_performance_benchmark.json` | `results/robustness_performance_benchmark.json` |
 | `verify-tests` | Full regression tests | `& "E:\anaconda\conda\python.exe" -m pytest -q -p no:cacheprovider --basetemp .pytest_tmp_run_matrix` | console |
+| `phase-diagram` | P2.1 phase diagram (info SNR + comm rho_C axes, 4+1 zones) | `& "E:\anaconda\conda\python.exe" scripts\run_phase_diagram_gate.py --output results\phase_diagram_gate.json` | `results/phase_diagram_gate.json` |
+| `ca-frids-gate` | P3.4 CA-FRIDS Dual-Bus live-or-die (vs FRIDS-v2, uncongested + congested) | `& "E:\anaconda\conda\python.exe" scripts\run_ca_frids_gate.py --output results\ca_frids_gate.json` | `results/ca_frids_gate.json` |
 
 ## Batch runner
 

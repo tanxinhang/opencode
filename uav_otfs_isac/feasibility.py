@@ -23,11 +23,82 @@ two infeasibilities must not be mixed.
 
 from __future__ import annotations
 
+from collections import deque
+
 import numpy as np
 from scipy.optimize import minimize
 
 from uav_otfs_isac.difficulty_decomposition import d_kl_binary
 from uav_otfs_isac.frids import g_reliable
+
+
+class _DinicMaxFlow:
+    """Dinic's algorithm for s-t max flow (float capacities).  Used by the
+    structure-exact bottleneck cut (advice/008 section 9): the min-cut
+    certificate replaces the SLSQP-in-FW numeric oracle with an exact
+    combinatorial graph algorithm on the *same* polyhedral certificate."""
+
+    __slots__ = ("n", "graph", "level", "it")
+
+    def __init__(self, n: int):
+        self.n = n
+        self.graph: list[list] = [[] for _ in range(n)]
+
+    def add_edge(self, u: int, v: int, cap: float):
+        self.graph[u].append([v, float(cap), len(self.graph[v])])
+        self.graph[v].append([u, 0.0, len(self.graph[u]) - 1])
+
+    def _bfs(self, s: int, t: int) -> bool:
+        self.level = [-1] * self.n
+        dq = deque([s])
+        self.level[s] = 0
+        while dq:
+            u = dq.popleft()
+            for v, cap, _ in self.graph[u]:
+                if cap > 1e-12 and self.level[v] < 0:
+                    self.level[v] = self.level[u] + 1
+                    dq.append(v)
+        return self.level[t] >= 0
+
+    def _dfs(self, u: int, t: int, f: float) -> float:
+        if u == t:
+            return f
+        for i in range(self.it[u], len(self.graph[u])):
+            v, cap, rev = self.graph[u][i]
+            if cap > 1e-12 and self.level[v] == self.level[u] + 1:
+                d = self._dfs(v, t, min(f, cap))
+                if d > 1e-12:
+                    self.graph[u][i][1] -= d
+                    self.graph[v][rev][1] += d
+                    return d
+            self.it[u] = i + 1
+        return 0.0
+
+    def maxflow(self, s: int, t: int) -> float:
+        flow = 0.0
+        inf = 1e18
+        while self._bfs(s, t):
+            self.it = [0] * self.n
+            while True:
+                f = self._dfs(s, t, inf)
+                if f <= 1e-12:
+                    break
+                flow += f
+        return flow
+
+    def reachable_from(self, s: int) -> list[bool]:
+        """Nodes reachable from the source in the RESIDUAL graph after the
+        max flow -- the maximum-weight-closure side of the min cut."""
+        seen = [False] * self.n
+        dq = deque([s])
+        seen[s] = True
+        while dq:
+            u = dq.popleft()
+            for v, cap, _ in self.graph[u]:
+                if cap > 1e-12 and not seen[v]:
+                    seen[v] = True
+                    dq.append(v)
+        return seen
 
 
 def f_submodular_oracle(scenario, owner_of, lam: float, horizon: int,
@@ -133,44 +204,126 @@ def submodular_minimize(f, n: int, iters: int = 400) -> tuple:
     return S, float(f(S))
 
 
-def strongest_load_cut(scenario, owner_of, horizon: int,
-                       beta: float = 0.05, alpha: float = 0.05,
-                       info_floor: float | None = None,
-                       lo: float = 0.0, hi: float = 8.0,
-                       bisect_iters: int = 45,
-                       smf_iters: int = 400) -> dict:
-    """The strongest information-load cut ``rho*`` by submodular
-    minimization + binary search: ``rho* > lambda`` iff
-    ``min_S [lambda H F(S) - D(S)] < 0``.  Returns the cut value, the
-    bottleneck subset (at the largest infeasible lambda), and the
-    feasibility flag."""
+def strongest_load_cut(scenario, owner_of, horizon, beta=0.05, alpha=0.05,
+                       info_floor=None, lo=0.0, hi=8.0, bisect_iters=45,
+                       smf_iters=400):
+    """Strongest information-load cut ``rho*`` (the Bottleneck-Subset
+    Feasibility Law) with the STRUCTURE-EXACT certificate (advice/008
+    section 9): the ``min_S [lambda H F(S) - D(S)]`` feasibility oracle
+    is one s-t min-cut on the AND-or-OR closure graph -- NOT the
+    SLSQP-in-Fujishige-Wolfe numeric oracle (same polyhedral
+    certificate, exact combinatorial algorithm instead of a stall
+    cutoff).  Identity documented by ``rho_bruteforce``."""
+    out = strongest_load_cut_exact(scenario, owner_of, horizon,
+                                   beta=beta, alpha=alpha,
+                                   info_floor=info_floor, lo=lo, hi=hi,
+                                   bisect_iters=bisect_iters)
+    return out
+
+
+def mincut_closure_oracle(g: np.ndarray, D: np.ndarray, lam: float,
+                          H: int) -> tuple[float, list]:
+    """Structure-exact bottleneck-subset certificate for the *special*
+    information cut (advice/008 section 9).
+
+    Minimizes, over all target subsets ``S`` (empty included; empty gives
+    0), the submodular function
+
+        lam * H * F(S) - D(S),   F(S) = sum_i max_{q in S} g_iq,
+
+    exactly by an s-t min-cut on a minimum-weight-closure graph.  The
+    ``max_{q in S} g_iq`` terms are expanded over the sorted per-UAV
+    distinct ``g`` levels,
+
+        0 = gamma_{i0} < gamma_{i1} < ... < gamma_{iL_i},
+        max_{q in S} g_iq = sum_l (gamma_{i,l} - gamma_{i,l-1})
+                            * 1{ exists q in S: g_iq >= gamma_{i,l} },
+
+    turning ``F(S)`` into a weighted OR-over-cover of auxiliaries.  The
+    AND-or-OR graph is a minimum weight closure, solved to machine
+    precision by one s-t max-flow (NO SLSQP, NO iteration/stall cutoff --
+    this is the exact combinatorial certificate, not a numeric oracle).
+
+    Returns ``(min_val, S*)`` with ``S*`` the minimizing subset (the
+    targets on the source side of the min cut)."""
+    k, q = g.shape
+    # per-UAV sorted distinct positive g levels (the ``gamma_{i,l}``)
+    levels = {
+        i: sorted({float(g[i, qq]) for qq in range(q) if g[i, qq] > 0.0})
+        for i in range(k)
+    }
+    # graph nodes: targets 0..q-1, one auxiliary node per (i, level) gap
+    aux = []
+    for i in sorted(levels):
+        prev = 0.0
+        for ga in levels[i]:
+            aux.append((i, prev, ga))
+            prev = ga
+    n = q + len(aux)
+    s, t = n, n + 1
+    mf = _DinicMaxFlow(n + 2)
+    inf = 1e15
+    # target nodes carry the deficit bounty (min closure sees them as
+    # negative weight); source->target capacity = D_q
+    for qq in range(q):
+        mf.add_edge(s, qq, float(D[qq]))
+    # auxiliary (i, level) nodes carry the lambda*H*d-gap cost;
+    # a target that reaches the level forces the aux on (OR closure edge)
+    for idx, (i, prev, ga) in enumerate(aux):
+        v = q + idx
+        mf.add_edge(v, t, lam * H * (ga - prev))
+        for qq in range(q):
+            if g[i, qq] >= ga - 1e-12:
+                mf.add_edge(qq, v, inf)
+    cut = mf.maxflow(s, t)
+    # min over S of lam H F(S) - D(S) = maxflow - sum(D):
+    # the closure side collects sum(D) - (min over S) = -min(...),
+    # so ``cut - C`` with the constant ``C = sum D`` telescopes; the
+    # residual sink-side reachability gives the minimizing subset.
+    side = mf.reachable_from(s)
+    S_star = [qq for qq in range(q) if side[qq]]
+    return float(cut - float(np.sum(D))), S_star
+
+
+def strongest_load_cut_exact(scenario, owner_of, horizon, beta=0.05,
+                             alpha=0.05, info_floor=None,
+                             lo=0.0, hi=8.0, bisect_iters=45) -> dict:
+    """Strongest information-load cut ``rho*`` by the structure-exact
+    min-cut certificate (advice/008 section 9) + binary search on the
+    dual ``lambda``:
+
+        rho* > lambda   iff   min_{S} [ lambda H F(S) - D(S) ] < 0.
+
+    Each oracle call is ONE s-t max-flow on the AND-or-OR closure graph
+    (exact combinatorial certificate).  Returns the cut, the bottleneck
+    subset and the feasibility flag -- the direct replacement for the
+    SLSQP-inside-Fujishige-Wolfe numeric oracle (same polyhedral
+    certificate, exact graph algorithm instead of a stall-cutoff)."""
     if info_floor is None:
         info_floor = float(d_kl_binary(1.0 - beta, alpha))
+    k = scenario["k"]
     q = scenario["q"]
+    g = np.zeros((k, q))
+    for i in range(k):
+        for qq in range(q):
+            g[i, qq] = g_reliable(scenario, i, qq, owner_of)
+    D = info_floor * np.ones(q)
 
-    def feasible(lam: float) -> bool:
-        f = f_submodular_oracle(scenario, owner_of, lam, horizon,
-                                info_floor)
-        _, val = submodular_minimize(f, q, iters=smf_iters)
+    def bounded(side: float) -> bool:
+        # min_S [ lam H F(S) - D(S) ] >= 0  <=>  lam >= rho*
+        val, _ = mincut_closure_oracle(g, D, side, horizon)
         return val >= -1e-9
 
-    # binary search for the SMALLEST lambda with min_S f >= 0
-    # (feasible(lam) is True iff lam >= rho*; the cut is the crossing)
-    lo, hi = 0.0, hi
-    while not feasible(hi):
+    while not bounded(hi):
         hi *= 2.0
     for _ in range(bisect_iters):
         mid = 0.5 * (lo + hi)
-        if feasible(mid):
+        if bounded(mid):
             hi = mid
         else:
             lo = mid
     rho = hi
-    # bottleneck subset: the minimizer on the infeasible side (argmax
-    # of rho(S))
-    f = f_submodular_oracle(scenario, owner_of, rho - 1e-6,
-                            horizon, info_floor)
-    S, _ = submodular_minimize(f, q, iters=smf_iters)
+    val, S = mincut_closure_oracle(g, D, rho - 1e-6, horizon)
     bottleneck = sorted(S)
     return {
         "rho_star": float(rho),

@@ -407,6 +407,7 @@ def simulate_frids_v2(
     power_cap: np.ndarray | None = None,
     bridge: bool = False,
     rx_cap_tokens: np.ndarray | None = None,
+    raw_counts: bool = False,
 ) -> dict:
     """FRIDS-v2 (advice/010): demand-normalized primal + dual-consistent
     mirror descent, strictly distributed.
@@ -573,6 +574,7 @@ def simulate_frids_v2(
                 for i in range(k)))
     # realized reliable info delivered to the owner (own observation
     # counts, token deliveries count), the i_plus-based counterpart of S
+    decided_upper = np.zeros((n_runs, q)) if raw_counts else None
     if bridge:
         br = {
             "L": np.zeros((n_runs, max_steps, q)),
@@ -831,6 +833,8 @@ def simulate_frids_v2(
                     delays[r, qq] = float(t + 1)
                     if H[qq]:
                         declared_h1[r, qq] = 1.0
+                    if raw_counts:
+                        decided_upper[r, qq] = 1.0
                 elif l_own <= bounds[qq][1]:
                     decided[qq] = True
                     delays[r, qq] = float(t + 1)
@@ -898,6 +902,31 @@ def simulate_frids_v2(
             "b_llr": b_llr, "mu_llr": mu_llr, "v_llr": v_llr,
             "v2_max": v2_max, "mu2_max": mu2_max,
             "v_up_analytic": v_up_analytic,
+        }
+    if raw_counts:
+        # P2.1a (advice/008 section 13): raw per-target conditional
+        # counts so the QoS certificate uses the ACTUAL binomial
+        # denominators (the frozen non-raw output is byte-identical).
+        # ``decided_upper`` is the RAW decision record (upper-threshold
+        # crossing), independent of the declared_h1 bookkeeping that only
+        # counts H1 runs -- N_FA = H0 runs crossing the upper bound,
+        # N_MD = H1 runs NOT crossing it (lower-side or never decided
+        # within the horizon).  N_H0/N_H1 are the realized per-target
+        # run counts (random denominators, NOT equal to n_runs, so the
+        # P2.1 QoS must NOT invert the conditional error probability
+        # times n_runs -- that was the P0 flaw advice/008 section 13
+        # flagged).
+        n_H0, n_H1 = [], []
+        n_fa, n_md = [], []
+        for qq in range(q):
+            h0 = int(np.sum(~H_all[:, qq]))
+            h1 = int(np.sum(H_all[:, qq]))
+            n_H0.append(h0)
+            n_H1.append(h1)
+            n_fa.append(int(np.sum(decided_upper[~H_all[:, qq], qq])))
+            n_md.append(int(h1 - np.sum(decided_upper[H_all[:, qq], qq])))
+        out["raw_counts"] = {
+            "n_H0": n_H0, "n_H1": n_H1, "n_FA": n_fa, "n_MD": n_md,
         }
     return out
     k = scenario["k"]

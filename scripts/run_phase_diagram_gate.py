@@ -65,6 +65,7 @@ from uav_otfs_isac.distributed_audit import (
 )
 from uav_otfs_isac.feasibility import strongest_load_cut
 from uav_otfs_isac.frids import simulate_frids_v2
+from uav_otfs_isac.qos import pool_raw_counts, raw_qos_status
 
 K_FIXED = 16
 Q_MAX = 64
@@ -118,35 +119,40 @@ def rho_com_of(scenario: dict, rx_budget: float) -> float:
 def run_qos(scenario, bounds, n_runs, mc_seed, max_steps=40,
             delivery_matrix=None, s_for_g=None, price_mode="local",
             rx_cap_tokens=None) -> dict:
+    """One (scenario, MC-seed) QoS block with the RAW conditional counts
+    (advice/008 section 13): ``N_H0,q``/``N_H1,q`` are the REALIZED per-
+    target trial counts and ``N_FA,q``/``N_MD,q`` the REALIZED errors --
+    NOT the conditional error probability reversed times ``n_runs``
+    (that inference had the wrong randomized denominator and is the P0
+    flaw the advice/008 audit flags)."""
     out = simulate_frids_v2(
         scenario, bounds, n_runs=n_runs, seed=mc_seed, max_steps=max_steps,
         delivery_matrix=delivery_matrix, s_for_g=s_for_g,
-        price_mode=price_mode, rx_cap_tokens=rx_cap_tokens)
-    return {"J": float(out["worst_target_delay"]),
-            "p_md": list(out["p_md"]), "p_fa": list(out["p_fa"])}
+        price_mode=price_mode, rx_cap_tokens=rx_cap_tokens,
+        raw_counts=True)
+    return {
+        "J": float(out["worst_target_delay"]),
+        "p_md": list(out["p_md"]), "p_fa": list(out["p_fa"]),
+        "raw_counts": out["raw_counts"],
+    }
 
 
-def hoeffding_ucb(successes: int, n: int, delta: float = 0.05) -> float:
-    """Hoeffding upper confidence bound ``p_hat + sqrt(log(1/delta) /
-    2n)`` of a binomial proportion (one-sided)."""
-    p = successes / max(n, 1)
-    return p + np.sqrt(np.log(1.0 / max(delta, 1e-12)) / (2.0 * max(n, 1)))
+def qos_status(rows: list[dict], alpha: float, beta: float,
+               delta_cell: float = 0.05) -> str:
+    """Dual-QoS cell status from the RAW pooled per-target counts with the
+    SIMULTANEOUS confidence (advice/008 section 13):
 
+    - pool ``N_H0/q, N_H1/q, N_FA/q, N_MD/q`` over geoms and MC seeds;
+    - ``delta_q = delta_cell/(2Q)`` (Bonferroni over the two error axes
+      of every target);
+    - exact two-sided Clopper-Pearson intervals per target error;
 
-def qos_status(errs: np.ndarray, alpha: float, beta: float,
-               n_runs: int, delta: float = 0.05) -> str:
-    """Dual-QoS statistical status of one (target) cell row of P_FA/P_MD
-    estimates: PASS / FAIL / UNCERTAIN via Hoeffding UCB (advice/006
-    section 7).  ``errs`` shape ``(2, q)`` = (p_fa, p_md) point
-    estimates per target; the UCB check is over every target."""
-    p_fa = np.asarray(errs[0]); p_md = np.asarray(errs[1])
-    ucb_fa = hoeffding_ucb(np.round(p_fa * n_runs).astype(int), n_runs, delta)
-    ucb_md = hoeffding_ucb(np.round(p_md * n_runs).astype(int), n_runs, delta)
-    if np.all(ucb_fa <= alpha + 0.01) and np.all(ucb_md <= beta + 0.01):
-        return "PASS"
-    if np.any(p_fa > alpha + 0.02) or np.any(p_md > beta + 0.02):
-        return "FAIL"
-    return "UNCERTAIN"
+    PASS only when every certified UPPER bound is within spec, FAIL only
+    when some certified LOWER bound EXCEEDS its spec (a certified QoS
+    violation), UNCERTAIN otherwise.  UNCERTAIN is NEVER relabelled."""
+    pooled = pool_raw_counts(rows)
+    return raw_qos_status(pooled["n_H0"], pooled["n_H1"], pooled["n_FA"],
+                          pooled["n_MD"], alpha, beta, delta_cell)
 
 
 def main() -> None:
@@ -184,19 +190,30 @@ def main() -> None:
           f"({time.time()-t0:.0f}s)", flush=True)
 
     # ---------- nested-Q lambda brackets (P2.1-7, censoring) ----------
+    # P2.1a (advice/008 section 13): the necessary-region scan uses
+    # REAL per-geom workloads (a mean over geometry seeds), NOT the
+    # single ``full0`` workload -- the previous scan implicitly assumed
+    # one geometry represented all of them.
     lambdas = {"Q": [], "rho_I_pre": [], "rho_C": [], "rho_nec_ok": []}
     for q in Q_GRID:
-        sc = nested_scenario(full0, q)
-        rho_i = rho_info_of(sc)
+        rho_io = []
+        for geom in range(args.s_geom):
+            full_g = build_distributed_scenario(
+                np.random.default_rng(11 * geom + 7),
+                k_uavs=K_FIXED, q_targets=Q_MAX)
+            sc_g = nested_scenario(full_g, q)
+            rho_io.append(rho_info_of(sc_g))
+        rho_i = float(np.mean(rho_io))
         b_tok = float(token_bits(q)["total"])
         rho_c = b_tok * (K_FIXED - 1) / max(args.rx_budget, 1e-12)
         lambdas["Q"].append(q)
         lambdas["rho_I_pre"].append(rho_i)
         lambdas["rho_C"].append(rho_c)
         lambdas["rho_nec_ok"].append(rho_i <= 1.0 and rho_c <= 1.0)
-    # lambda_nec = largest Q/K with both necessary conditions met;
-    # right-censored when the top of the scan is still feasible (the
-    # boundary is beyond the tested load, not achieved)
+    # lambda_nec = largest Q/K with both necessary conditions met (on the
+    # per-geom-averaged cuts); right-censored when the top of the scan is
+    # still feasible (the boundary is beyond the tested load, not
+    # achieved)
     q_nec = max((q for q, ok in zip(Q_GRID, lambdas["rho_nec_ok"]) if ok),
                 default=0)
     lambda_nec = q_nec / K_FIXED
@@ -227,21 +244,22 @@ def main() -> None:
                     "rho_C": rho_com_of(sc, args.rx_budget),
                 })
                 continue
-            # MC trials aggregated at the cell (advice/006 sections 4,7):
-            # geom seeds vary the geometry, each MC draw is an
-            # independent detection trial; the per-target error point
-            # estimate pools across geoms and the Hoeffding UCB uses the
-            # TOTAL pooled trial count (not the number of geom seeds).
+            # MC trials aggregated at the cell (advice/008 section 13):
+            # geom seeds vary the geometry; the per-target QoS uses the
+            # RAW pooled conditional counts (realized N_H0/q and N_H1/q
+            # per target -- NOT ``p_hat * total_runs``, whose denominator
+            # was the wrong randomized one) with the SIMULTANEOUS
+            # Clopper-Pearson confidence ``delta_q = delta_cell/(2Q)``.
             qos_rows = [run_qos(sc, bounds, args.mc_runs, mc_seed=mc)
                         for mc in range(args.s_geom)]
             n_trials = args.s_geom * args.mc_runs
             pfa = np.mean([row["p_fa"] for row in qos_rows], axis=0)
             pmd = np.mean([row["p_md"] for row in qos_rows], axis=0)
-            status = qos_status(np.vstack([pfa, pmd]), args.alpha,
-                                args.beta, n_trials)
-            # P2.1 (advice/006 sections 7,12): UNCERTAIN boundary cells
-            # escalate to the (s_geom_boundary x mc_boundary) protocol
-            # until they become PASS/FAIL (bounded; no full-grid blow-up)
+            status = qos_status(qos_rows, args.alpha, args.beta)
+            # P2.1a (advice/008 section 13): UNCERTAIN cells escalate to
+            # the (s_geom_boundary x mc_boundary) protocol -- but only to
+            # NARROW the certificate; if it remains UNCERTAIN the cell
+            # STAYS unresolved (never relabelled by necessity arguments).
             if status == "UNCERTAIN":
                 qos_rows = [run_qos(sc, bounds, args.mc_boundary,
                                     mc_seed=mc)
@@ -249,8 +267,7 @@ def main() -> None:
                 n_trials = args.s_geom_boundary * args.mc_boundary
                 pfa = np.mean([row["p_fa"] for row in qos_rows], axis=0)
                 pmd = np.mean([row["p_md"] for row in qos_rows], axis=0)
-                status = qos_status(np.vstack([pfa, pmd]), args.alpha,
-                                    args.beta, n_trials)
+                status = qos_status(qos_rows, args.alpha, args.beta)
             rho_i = rho_info_of(sc, beta=args.beta, alpha=args.alpha)
             rho_c = rho_com_of(sc, args.rx_budget)
             if rho_i > 1.0 and rho_c > 1.0:
@@ -261,8 +278,13 @@ def main() -> None:
                 zone = "communication-limited"
             elif status == "PASS":
                 zone = "feasible"
-            else:
+            elif status in ("FAIL", "coordination-limited"):
                 zone = "coordination-limited"
+            else:
+                # UNCERTAIN stays UNRESOLVED (advice/008 section 13 -- a
+                # cell whose necessary conditions hold but whose QoS is
+                # not yet certified is NOT coordination-limited)
+                zone = "unresolved"
             cells.setdefault(str(shift), []).append({
                 "geom": geom, "zone": zone, "qos_status": status,
                 "rho_I_pre": rho_i, "rho_C": rho_c,
@@ -276,13 +298,19 @@ def main() -> None:
 
     # ---------- communication (rho_C) axis with hard admission ---------
     cells_comm = {}
-    sc8 = nested_scenario(full0, 8)
     for rho_c in RHO_C_GRID:
         b_tok = float(token_bits(8)["total"])
         b_rx = b_tok * (K_FIXED - 1) / float(rho_c)
         cap_tokens = b_rx / b_tok          # per-receiver hard cap (tokens)
         for geom in range(args.s_geom):
-            sc = nested_scenario(full0, 8)
+            # P2.1a (advice/008 section 13): the comm axis uses a FRESH
+            # per-geom geometry, NOT the shared ``full0`` nested workload
+            # (the previous single-workload comm/P2-C slice was the P0
+            # issue the audit flagged).
+            sc_full = build_distributed_scenario(
+                np.random.default_rng(3000 + geom),
+                k_uavs=K_FIXED, q_targets=Q_MAX)
+            sc = nested_scenario(sc_full, 8)
             try:
                 bt = calibrate_target_bounds(
                     sc, args.alpha, args.beta, n_runs=args.calib_scan,
@@ -304,11 +332,11 @@ def main() -> None:
             pfa = np.mean([r["p_fa"] for r in rows], axis=0)
             pmd = np.mean([r["p_md"] for r in rows], axis=0)
             n_trials = args.s_geom * args.mc_runs
-            status = qos_status(np.vstack([pfa, pmd]), args.alpha,
-                                args.beta, n_trials)
-            # P2.1 (advice/006 sections 7,12): UNCERTAIN boundary cells
-            # escalate to the (s_geom_boundary x mc_boundary) protocol
-            # until they become PASS/FAIL (same rule as the info axis)
+            status = qos_status(rows, args.alpha, args.beta)
+            # P2.1a (advice/008 section 13): UNCERTAIN boundary cells
+            # escalate the protocol (same rule as the info axis); if the
+            # certificate still does not resolve, the cell stays
+            # UNCERTAIN -- it is NEVER re-labelled.
             if status == "UNCERTAIN":
                 rows = [run_qos(
                     sc, bounds, args.mc_boundary, mc_seed=mc * 131 + 7,
@@ -318,13 +346,18 @@ def main() -> None:
                 n_trials = args.s_geom_boundary * args.mc_boundary
                 pfa = np.mean([r["p_fa"] for r in rows], axis=0)
                 pmd = np.mean([r["p_md"] for r in rows], axis=0)
-                status = qos_status(np.vstack([pfa, pmd]), args.alpha,
-                                    args.beta, n_trials)
+                status = qos_status(rows, args.alpha, args.beta)
             # rho_I^eff uses the effective (drop-reduced) g
             sc_eff = _apply_drop(sc, cap_tokens)
             rho_i_eff = rho_info_of(sc_eff, beta=args.beta, alpha=args.alpha)
-            zone = "communication-limited" if rho_c > 1.0 else (
-                "feasible" if status == "PASS" else "coordination-limited")
+            if rho_c > 1.0:
+                zone = "communication-limited"
+            elif status == "PASS":
+                zone = "feasible"
+            elif status == "FAIL":
+                zone = "coordination-limited"
+            else:
+                zone = "unresolved"
             cells_comm.setdefault(str(rho_c), []).append({
                 "geom": geom, "zone": zone, "qos_status": status,
                 "rho_I_pre": rho_info_of(sc),
@@ -343,42 +376,60 @@ def main() -> None:
                    ">= Q/K of the scan top; NOT an achieved equality",
            "Gamma_dual": None, "Gamma_envelope": None}
     # feasibility of FRIDS (local) and common-price audit at nested Q
+    # (P2.1a: real per-geom Q_max scenarios per nested q, NOT a single
+    # shared `full0` workload across all geoms)
     q_f, q_c = 0, 0
+    no_geom = 0
     for q in Q_GRID:
-        sc = nested_scenario(full0, q)
-        try:
-            bt = calibrate_target_bounds(
-                sc, args.alpha, args.beta, n_runs=args.calib_scan,
-                seed=args.calib_seed, llr_bits=TOKEN_LLR_BITS,
-                verify_runs=args.calib_verify)
-        except ValueError:
-            continue
-        bounds = [[bt[qq][0], bt[qq][1] - 1.0] for qq in range(q)]
+        full = build_distributed_scenario(np.random.default_rng(5000),
+                                          k_uavs=K_FIXED, q_targets=Q_MAX)
+        sc = nested_scenario(full, q)
         rho_c_q = float(token_bits(q)["total"]) * (K_FIXED - 1) \
             / max(args.rx_budget, 1e-12)
         if rho_info_of(sc) > 1.0 or rho_c_q > 1.0:
             continue          # not in the doubly-feasible necessary region
-        for price_mode in ("local", "common"):
-            rows = [run_qos(sc, bounds, args.mc_runs, mc_seed=mc * 131 + 7,
-                            price_mode=price_mode)
-                    for mc in range(args.s_geom)]
-            pfa = np.mean([r["p_fa"] for r in rows], axis=0)
-            pmd = np.mean([r["p_md"] for r in rows], axis=0)
-            n_trials = args.s_geom * args.mc_runs
-            if qos_status(np.vstack([pfa, pmd]), args.alpha, args.beta,
-                          n_trials) == "PASS":
-                if price_mode == "local":
-                    q_f = q
-                else:
-                    q_c = q
+        for geom in range(args.s_geom):
+            # P2.1a: per-geom Q_max scenario + PER-GEOM calibration
+            # (bounds are not shared across different geometries)
+            sc_g = nested_scenario(
+                build_distributed_scenario(
+                    np.random.default_rng(9000 + geom + 500 * q),
+                    k_uavs=K_FIXED, q_targets=Q_MAX), q)
+            try:
+                bt_g = calibrate_target_bounds(
+                    sc_g, args.alpha, args.beta, n_runs=args.calib_scan,
+                    seed=args.calib_seed, llr_bits=TOKEN_LLR_BITS,
+                    verify_runs=args.calib_verify)
+            except ValueError:
+                no_geom += 1
+                continue
+            bounds_g = [[bt_g[qq][0], bt_g[qq][1] - 1.0] for qq in range(q)]
+            for price_mode in ("local", "common"):
+                rows = [run_qos(sc_g, bounds_g, args.mc_runs,
+                                mc_seed=mc * 131 + 7,
+                                price_mode=price_mode)
+                        for mc in range(1)]
+                if qos_status(rows, args.alpha, args.beta) == "PASS":
+                    if price_mode == "local":
+                        q_f = q
+                    else:
+                        q_c = q
     p2c["lambda_F"] = q_f / K_FIXED
     p2c["lambda_C"] = q_c / K_FIXED
+    p2c["geom_infeasible"] = int(no_geom)
     p2c["censored"] = bool(q_f >= Q_GRID[-1] or q_c >= Q_GRID[-1]
                         or lambda_nec >= Q_GRID[-1] / K_FIXED)
-    p2c["Gamma_dual"] = round(p2c["lambda_F"] / max(p2c["lambda_C"], 1e-12),
-                              3)
-    p2c["Gamma_envelope"] = round(
-        p2c["lambda_F"] / max(p2c["lambda_nec"], 1e-12), 3)
+    # P2.1a (advice/008 section 13): a right-censored load ceiling is a
+    # lower bound on the load, NOT an achieved equality.  The Gamma
+    # ratios stay ``null / unidentified`` when either lambda sits at the
+    # scan ceiling -- it is a P0-claiming error to report Gamma = 1 for
+    # a censored scan.
+    if p2c["censored"] or q_f == 0 or q_c == 0 or lambda_nec == 0:
+        p2c["Gamma_dual"] = None
+        p2c["Gamma_envelope"] = None
+    else:
+        p2c["Gamma_dual"] = round(p2c["lambda_F"] / p2c["lambda_C"], 3)
+        p2c["Gamma_envelope"] = round(p2c["lambda_F"] / p2c["lambda_nec"], 3)
     print(f"P2-C lambda_F {p2c['lambda_F']} lambda_C {p2c['lambda_C']} "
           f"lambda_nec {p2c['lambda_nec']} censored {p2c['censored']} "
           f"Gamma_dual {p2c['Gamma_dual']} Gamma_envelope "

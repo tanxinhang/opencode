@@ -1,0 +1,177 @@
+{
+  "gate": {
+    "uncongested_regression": 0.10409096267570342,
+    "no_regression_uncongested": false,
+    "congested_improvement": 0.08567369183001873,
+    "congested_win_5pct": true,
+    "ca_qos_ok": true,
+    "adopt_ca": false,
+    "verdict": "FRIDS-v2 stays the frozen core; joint capacity + phase law remain the paper contributions"
+  },
+  "params": {
+    "scale": [
+      16,
+      8
+    ],
+    "n_runs": 120,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "pi_bits": 10,
+    "lam_bits": 10,
+    "uncongested_rho": 0.5,
+    "congested_rho": 1.8,
+    "protocol": [
+      "policy-matched B (delta 1->2->3)",
+      "raw conditional counts, simultaneous Clopper-Pearson confidence (P2.1a, advice/008 s13)",
+      "uncongested: joint index must not regress (<=2%)",
+      "congested: >=5% worst-delay win and certified QoS",
+      "airtime price + idle option (Lemma 4.99)",
+      "evidence plane to owner only (Dual-Bus)"
+    ],
+    "frozen": [
+      "FRIDS-v2",
+      "fixed owner",
+      "two-threshold stopping",
+      "calibrated policy-matched B"
+    ]
+  },
+  "runtime_s": 86.3,
+  "scenarios": [
+    {
+      "geom": 0,
+      "regime": "uncongested",
+      "v2": {
+        "J": 3.404929577464789,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.032786885245901676
+      },
+      "ca": {
+        "J": 3.3885964912280704,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.03508771929824561
+      },
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 0.5,
+        "v2_tx": 1.0,
+        "ca_tx": 0.6704708167989418,
+        "ca_feasible": 1.0
+      }
+    },
+    {
+      "geom": 0,
+      "regime": "congested",
+      "v2": {
+        "J": 3.6414555389965226,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.019607843137254943
+      },
+      "ca": {
+        "J": 3.307291666666667,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.03389830508474578
+      },
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 1.8,
+        "v2_tx": 1.0,
+        "ca_tx": 0.5758365838443963,
+        "ca_max_load": 1.6243415698807993,
+        "ca_feasible": 0.5015085377585378
+      }
+    },
+    {
+      "geom": 1,
+      "regime": "uncongested",
+      "v2": {
+        "J": 3.7082931533269043,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.044117647058823484
+      },
+      "ca": {
+        "J": 4.255090497737557,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.054545454545454564
+      },
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 0.5,
+        "v2_tx": 1.0,
+        "ca_tx": 0.7055828373015873,
+        "ca_feasible": 1.0
+      }
+    },
+    {
+      "geom": 1,
+      "regime": "congested",
+      "v2": {
+        "J": 4.746466930469191,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.028169014084507005
+      },
+      "ca": {
+        "J": 4.243055555555555,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.052631578947368474
+      },
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 1.8,
+        "v2_tx": 1.0,
+        "ca_tx": 0.595674396494709,
+        "ca_max_load": 1.6592924997993341,
+        "ca_feasible": 0.521223544973545
+      }
+    },
+    {
+      "geom": 2,
+      "regime": "uncongested",
+      "v2": {
+        "J": 2.7599291677207183,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.01851851851851849
+      },
+      "ca": {
+        "J": 3.2571707953063886,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.032786885245901676
+      },
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 0.5,
+        "v2_tx": 1.0,
+        "ca_tx": 0.752282723063973,
+        "ca_feasible": 1.0
+      }
+    },
+    {
+      "geom": 2,
+      "regime": "congested",
+      "v2": {
+        "J": 3.541935483870968,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.037735849056603765
+      },
+      "ca": {
+        "J": 3.357435757244396,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.01754385964912286
+      },
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 1.8,
+        "v2_tx": 1.0,
+        "ca_tx": 0.6452982231888481,
+        "ca_max_load": 1.6593955012692854,
+        "ca_feasible": 0.5006891025641026
+      }
+    }
+  ]
+}
