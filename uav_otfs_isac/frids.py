@@ -406,6 +406,7 @@ def simulate_frids_v2(
     mobility: float | None = None,
     power_cap: np.ndarray | None = None,
     bridge: bool = False,
+    rx_cap_tokens: np.ndarray | None = None,
 ) -> dict:
     """FRIDS-v2 (advice/010): demand-normalized primal + dual-consistent
     mirror descent, strictly distributed.
@@ -469,6 +470,16 @@ def simulate_frids_v2(
     ``L_q = L_q(0) + A_q + M_q`` (M a martingale) and the Freedman-type
     stopping tail bound (Theorem 4.110) can be verified numerically.
     Default ``False`` keeps the output identical.
+
+    Hard receiver admission (P2.1-1, advice/006 section 6):
+    ``rx_cap_tokens`` (per-UAV, token units) turns the receive side into a
+    HARD per-receiver, per-cycle budget: physical Bernoulli offers first,
+    then an overloaded receiver admits ``floor(cap_i)`` tokens uniformly
+    without replacement plus one more with the fractional-surplus
+    probability, so PATHWISE ``sum_{j!=i} b_tok z_{ji,t} <= ceil(cap_i)``
+    and ``E[N_adm] = B_rx / b_tok`` -- ``rho_C > 1`` becomes real
+    contention -> token loss -> ``g^eff`` -> ``T_q``.  Default ``None``
+    keeps the frozen independent-delivery path byte-identical.
     """
     k = scenario["k"]
     q = scenario["q"]
@@ -686,19 +697,69 @@ def simulate_frids_v2(
             # was delivered to IT (strictly local)
             S_loc = np.zeros((k, q))
             intents_next = np.full((k, k), -1, dtype=int)
-            for uav in range(k):
-                qq = int(obs_target[uav])
-                if qq < 0:
-                    continue
-                for neighbor in range(k):
-                    if neighbor == uav:
+            if rx_cap_tokens is None:
+                for uav in range(k):
+                    qq = int(obs_target[uav])
+                    if qq < 0:
                         continue
-                    if rng.random() > delivery[uav, neighbor]:
+                    for neighbor in range(k):
+                        if neighbor == uav:
+                            continue
+                        if rng.random() > delivery[uav, neighbor]:
+                            continue
+                        if not decided[qq]:
+                            L[neighbor, qq] += obs_llr[uav]
+                            S_loc[neighbor, qq] += obs_iplus[uav]
+                        intents_next[neighbor, uav] = int(intents[uav])
+            else:
+                # P2.1-1 (advice/006 section 6): HARD per-receiver,
+                # per-cycle receive admission.  Phase 1: physical
+                # Bernoulli offers (identical draws).  Phase 2: an
+                # overloaded receiver admits ``m_i = floor(cap_i)`` tokens
+                # uniformly WITHOUT replacement, plus one more with the
+                # fractional surplus probability -- so ``E[N_adm] =
+                # B_rx/b_tok`` and ``sum_{j!=i} b_tok z_{ji,t} <=
+                # ceil(cap_i)`` pathwise.  This makes ``rho_C > 1`` a real
+                # contention -> token loss -> g^eff -> T_q, not a label.
+                offer = [[] for _ in range(k)]   # per receiver: senders
+                for uav in range(k):
+                    qq = int(obs_target[uav])
+                    if qq < 0:
                         continue
-                    if not decided[qq]:
-                        L[neighbor, qq] += obs_llr[uav]
-                        S_loc[neighbor, qq] += obs_iplus[uav]
-                    intents_next[neighbor, uav] = int(intents[uav])
+                    for neighbor in range(k):
+                        if neighbor == uav:
+                            continue
+                        if rng.random() > delivery[uav, neighbor]:
+                            continue
+                        offer[neighbor].append(uav)
+                admit = [[] for _ in range(k)]
+                for nb in range(k):
+                    offered = offer[nb]
+                    if not offered:
+                        continue
+                    cap = float(rx_cap_tokens[nb])
+                    m_i = int(np.floor(cap))
+                    theta = cap - m_i
+                    keep = offered
+                    if len(offered) > m_i:
+                        idx = rng.choice(len(offered), size=m_i,
+                                         replace=False)
+                        keep = [offered[i] for i in sorted(idx)]
+                    if theta > 0.0 and len(offered) > m_i \
+                            and rng.random() < theta:
+                        extra = [u for u in offered if u not in keep]
+                        if extra and len(keep) < len(offered):
+                            keep = keep + [extra[0]]
+                    admit[nb] = keep
+                for nb in range(k):
+                    for uav in admit[nb]:
+                        qq = int(obs_target[uav])
+                        if qq < 0:
+                            continue
+                        if not decided[qq]:
+                            L[nb, qq] += obs_llr[uav]
+                            S_loc[nb, qq] += obs_iplus[uav]
+                        intents_next[nb, uav] = int(intents[uav])
             intents_recv = intents_next
             if bridge:
                 # P1 service-delay bridge: per-cycle, per-undecided-target
