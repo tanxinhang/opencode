@@ -158,8 +158,22 @@ def main() -> None:
                             == "green"],
         }
     yellow = [k for k, c in cells.items() if c["zone"] == "yellow"]
+    # advice/005 section 6 (P0.6-5): the previous committed
+    # ``results/feasibility_envelope_gate.json`` was generated before the
+    # P0.5-7 fix (rho_I* computed on the RAW scenario, not the swept s),
+    # so it is STALE.  This regenerated output is what P2 should consume;
+    # scripts must not silently read the old file.
     payload = {
         "gate": "f0g6-feasibility-envelope",
+        "provenance": {
+            "code_fix": "P0.5-7: rho_I* recomputed per swept s "
+                        "(scenario u2u_success = swept matrix)",
+            "stale_superseded": "results/feasibility_envelope_gate.json "
+                                "before this run carries the unfixed "
+                                "rho_I*, treat as historical/superseded",
+            "note": "advice/005 section 6: G6-code-fixed != "
+                    "G6-result-regenerated; this run regenerates it",
+        },
         "params": {
             "K": K_FIXED, "Q_grid": list(Q_GRID), "s_grid": list(S_GRID),
             "n_runs": args.n_runs, "seeds": args.seeds,

@@ -1,26 +1,28 @@
-"""Gate P1/P0.5 (advice/003 + advice/004): the service-delay bridge.
+"""Gate P1/P0.5/P0.6 (advice/003 + advice/004 + advice/005).
 
-The advice/003 P1 (theory bridge) is made numerically concrete and the
-advice/004 P0.5 hardening is applied:
+The advice/003 P1 theory bridge and the advice/004 P0.5 hardening carry
+the numerical theorem verification; advice/005 P0.6 closes the last
+three harness gaps:
 
-- Theorem A (bridge 1, Theorem 4.110): ``hat L = tilde A + M`` with
-  ``tilde A`` the cumulative predictable drift of the deployed (quantized)
-  atom -- NOT the exact-KL claim (advice/004 section 3) -- and ``M`` a
-  martingale.  The recorded processes are fill-forwarded after stopping
-  (``M_{t wedge T}``).  Freedman is verified as the JOINT event
-  ``{M <= -eta, V <= v}`` on a deterministic (eta, v) grid plus the
-  time-uniform / line-crossing form (advice/004 section 2), and the
-  stopping tail is verified PATH-WISE (integrated over the per-path
-  exponent, not by plugging MC means).
-- Theorem B (bridge 2): the mirror-descent rule's time-averaged
-  normalized service against the static relaxation optimum ``z*`` (LP).
-  The static-convergence claim is isolated in a Static-MD shadow gate
-  (no stopping, fixed D/g, horizon sweep, log-log slope ~ -1/2,
-  advice/004 P0.5-4), and ``eps_loc`` is measured as the local-vs-common
-  price CRN gap on the static normalized service (advice/004 P0.5-5).
+- **verdict wiring**: the verdict depends on ALL six sub-gates
+  ``gate_ok = D & U & S & B & L & M`` (decomposition, dec-uniform,
+  stopping-tail, service gap, bottleneck eps_loc, static-MD).
+- **PRE-REGISTERED v grid**: the Freedman ``v`` side uses the analytic
+  deterministic bound ``V_q(t) <= t * sum_i max_a [s sigma^2 +
+  s(1-s) g~^2]`` (recorded per scenario), NOT the sample max of the
+  audit MC draws.
+- **stopping tail**: the PATH-INTEGRATED ``E[exp f(A,V)]`` claim is
+  REMOVED (advice/005 section 4: A,V are random historical processes);
+  the verified objects are the deterministic joint event
+  ``{T_q>t, A-D >= eta, V <= v}`` against the Freedman bound and the
+  safe union decomposition of ``P_1(T_q>t)``.
+- **Static-MD**: reported as a NUMERICAL RATE-CONSISTENCY CHECK
+  ``C_emp(T) = gap(T)/sqrt(logQ/T)`` bounded by ``C_max = 1`` (the
+  formal theorem stays the mirror-descent regret of Theorem 4.111); the
+  log-log slope is a diagnostic, not a proof.
 
-Verdict: all 8 scenarios (4 scales x 2 draws) enter the cross-scenario
-verdict (advice/004 P0.5-6); FRIDS-v2 stays frozen throughout.
+All 8 scenarios enter the cross-scenario verdict; FRIDS-v2 stays frozen
+throughout.
 """
 
 from __future__ import annotations
@@ -127,7 +129,8 @@ def main() -> None:
             print(f"({k},{q}) s{s}: J {out['worst_target_delay']:.2f} "
                   f"dec-err {dec['decomposition_max_abs_error']:.3e} "
                   f"freedman-n {dec['freedman_n_cases']} "
-                  f"stop-viol {stop['violation_fraction']:.3f} "
+                  f"stop-joint {stop['joint_event_violation_fraction']:.3f} "
+                  f"stop-dec {stop['decomposition_violation_fraction']:.3f} "
                   f"z* {serv['z_star_static']:.3f} "
                   f"min_r {serv['min_q_time_avg_r_static']:.3f} "
                   f"eps_T {serv['eps_T_est']} ({time.time()-t0:.0f}s)",
@@ -146,7 +149,9 @@ def main() -> None:
     dec_ok_u = all(v["decomposition"]["freedman_uniform"]
                    ["violation_fraction"] <= 0.05
                    for v in all_rows)
-    stop_ok = all(v["stopping_tail"]["violation_fraction"] <= 0.05
+    stop_ok = all(v["stopping_tail"]["joint_event_violation_fraction"] <= 0.05
+                  and v["stopping_tail"]
+                  ["decomposition_violation_fraction"] <= 0.05
                   for v in all_rows)
 
     def serv_ok(v):
@@ -163,15 +168,30 @@ def main() -> None:
                   for v in all_rows)
     dual_max_swing = max(v["local_vs_common"]["eps_loc_dual"]
                          for v in all_rows)
-    # the static-MD gap decays AT LEAST as fast as O(sqrt(logQ/T)); a
-    # slope <= -0.5 is the theory rate, and a STEEPER (more negative)
-    # slope is strictly stronger (up to immediate convergence), so any
-    # slope <= -0.15 counts as the closed shadow gate
-    static_slopes = [v["loglog_slope"] for v in static_rows.values()
-                     if v["loglog_slope"] is not None]
-    static_ok = bool(static_slopes) and \
-        all(sl <= -0.15 for sl in static_slopes)
+    # the static-MD gate is a NUMERICAL RATE-CONSISTENCY CHECK (advice/005
+    # section 5), NOT a proof: the formal theorem is the mirror-descent
+    # regret `gap(T) <= C sqrt(logQ/T)` (Theorem 4.111); the empirical
+    # constant `C_emp(T) = gap(T)/sqrt(logQ/T)` must be bounded
+    # (`sup_T C_emp(T) <= C_max = 1.0`) for the measured gap to be
+    # consistent with (not slower than) the theory rate.  The log-log
+    # slope is reported as a diagnostic only (steeper-than-theory is
+    # allowed; immediate convergence is strictly stronger and has no
+    # slope).
+    static_c_emp_max = [v["C_emp_max"] for v in static_rows.values()]
+    static_ok = bool(static_c_emp_max) and \
+        all(cm <= 1.0 for cm in static_c_emp_max)
+    static_c_emp_sup = (max(static_c_emp_max) if static_c_emp_max else None)
+    static_slopes = [v["loglog_slope_diagnostic"]
+                     for v in static_rows.values()
+                     if v["loglog_slope_diagnostic"] is not None]
     static_fastest = (min(static_slopes) if static_slopes else None)
+    # P0.6 (advice/005 section 2): the verdict must depend on ALL six
+    # sub-gates -- the P0.5 harness computed static_ok/dual_ok but wired
+    # the verdict to only D and U and S and serv; the fixed wiring is
+    # gate_ok = D & U & S & B & L & M (decomposition, uniform,
+    # stopping_tail, service gap, bottleneck loc, static-MD).
+    gate_ok = bool(dec_ok and dec_ok_u and stop_ok and serv_ok
+                    and dual_ok and static_ok)
     gate = {
         "decomposition_ok": bool(dec_ok),
         "decomposition_uniform_ok": bool(dec_ok_u),
@@ -179,19 +199,20 @@ def main() -> None:
         "service_gap_ok": bool(serv_ok),
         "local_vs_common_bottleneck_ok": bool(dual_ok),
         "local_vs_common_max_swing": float(dual_max_swing),
-        "static_md_slope_ok": bool(static_ok),
-        "static_md_slopes": static_slopes,
-        "static_md_slope_fastest": static_fastest,
+        "static_md_rate_ok": bool(static_ok),
+        "static_md_C_emp_max": static_c_emp_sup,
+        "static_md_slopes_diagnostic": static_slopes,
+        "static_md_slope_fastest_diag": static_fastest,
+        "gate_ok": bool(gate_ok),
         "verdict": (
-            "FRIDS-v2 frozen; Theorem A (pointwise+time-uniform) holds, "
-            "Theorem B holds on all 8 scenarios, static-MD decays at the "
-            "theory rate or faster (slope <= -0.5), bottleneck eps_loc small"
-            if dec_ok and dec_ok_u and stop_ok and serv_ok
-            else "Case C: bridge does not close on all scenarios; restrict "
-                 "to feasibility law + empirical Gamma"),
+            "FRIDS-v2 frozen; P1 mechanism + harness both close "
+            "(all six sub-gates, advice/005 section 2); proceed to P2"
+            if gate_ok
+            else "gate_ok false: one of D/U/S/B/L/M failed; P1 harness "
+                 "NOT closed; fix before P2"),
     }
     payload = {
-        "gate": "p1-service-delay-bridge-p0.5",
+        "gate": "p1-service-delay-bridge-p0.6",
         "params": {
             "scales": [list(s) for s in SCALES_ALL],
             "n_runs": args.n_runs, "max_steps": args.max_steps,
@@ -209,13 +230,15 @@ def main() -> None:
                       "S_q, normalized service r_q, stopping time T_q; "
                       "fill-forwarded after stop (M_{t wedge T})",
             "hardening": [
-                "stopped-process fill-forward",
-                "Freedman joint event V<=v (deterministic grid)",
+                "stopped-process fill-forward (M_{t wedge T})",
+                "Freedman joint event V<=v (PRE-REGISTERED analytic v grid)",
                 "time-uniform line-crossing form",
-                "pathwise stopping tail (no MC-mean plug-in)",
+                "deterministic joint-event stopping tail + safe decomposition",
+                "(path-integrated claim removed, advice/005 section 4)",
                 "delta_Q = |g - tilde g| quantization correction",
-                "Static-MD shadow convergence (slope ~ -1/2)",
-                "eps_loc_dual = local-vs-common CRN gap",
+                "Static-MD rate-consistency C_emp <= C_max (not a proof)",
+                "eps_loc_dual = local-vs-common CRN gap (bottleneck)",
+                "verdict = D & U & S & B & L & M (all six sub-gates)",
                 "cross-scenario verdict over all 8 scenarios",
             ],
         },

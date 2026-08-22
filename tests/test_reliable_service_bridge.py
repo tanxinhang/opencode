@@ -158,8 +158,10 @@ def test_run_static_mirror_descent_approaches_zstar():
     if conv["converged_immediately"]:
         assert conv["gap_max"] <= 1e-6
     else:
-        assert conv["loglog_slope"] is not None
-        assert -0.9 <= conv["loglog_slope"] <= -0.1
+        # P0.6 (advice/005 section 5): rate-consistency check
+        # C_emp(T) = gap(T)/sqrt(logQ/T); sup C_emp <= C_max = 1
+        assert conv["rate_consistent"] is True
+        assert conv["C_emp_max"] <= 1.0
 
 
 def test_local_vs_common_gap_small(bridge_out, scenario, bounds):
@@ -177,9 +179,16 @@ def test_local_vs_common_gap_small(bridge_out, scenario, bounds):
 
 def test_stopping_tail_verify_no_violation(bridge_out):
     ver = stopping_tail_verify(bridge_out, Q_TARGETS)
-    assert ver["violation_fraction"] <= 0.05
+    # P0.6 (advice/005 section 4): the verified objects are the
+    # deterministic joint event {T_q>t, A-D>=eta, V<=v} against the
+    # Freedman bound and the safe union decomposition of P_1(T_q>t); the
+    # path-integrated claim was removed
+    assert ver["joint_event_violation_fraction"] <= 0.05
+    assert ver["decomposition_violation_fraction"] <= 0.05
     assert ver["satisfied"] is True
-    assert 0.0 <= ver["empirical_survive_max"] <= 1.0
+    assert 0.0 <= ver["joint_emp_max"] <= 1.0
+    assert 0.0 <= ver["decomp_emp_max"] <= 1.0
+    assert ver["v_upper_source"] == "analytic"
 
 
 def test_normalized_service_time_average(bridge_out, scenario):

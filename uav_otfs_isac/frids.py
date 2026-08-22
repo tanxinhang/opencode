@@ -499,7 +499,15 @@ def simulate_frids_v2(
     b_llr = np.zeros((k, q))           # max |atom| of the chosen kernel
     mu_llr = np.zeros((k, q))          # E_1[quantized atom]
     v_llr = np.zeros((k, q))           # Var_1[quantized atom]
+    # analytic deterministic V upper bound (advice/005 section 3): the
+    # ``v`` side of the Freedman joint event is PRE-REGISTERED as
+    # ``V_q(t) <= t * sum_i max_a [ s sigma^2 + s (1-s) g~^2 ]`` (per-UAV
+    # max over the quantized-kernel atoms), NOT the sample-max of the
+    # audit MC draws.
+    v2_max = np.zeros((k, q))          # max_a Var_1[Q(atom)]
+    mu2_max = np.zeros((k, q))         # max_a (E_1[Q(atom)])^2
     rel_mat = np.zeros((k, q))         # TRUE delivery to the owner
+    v_up_analytic = np.zeros(q)        # nats^2/cycle upper bound per target
     if bridge:
         for i in range(k):
             for qq in range(q):
@@ -513,6 +521,18 @@ def simulate_frids_v2(
                             > float(power_cap[qq]):
                         continue
                     v = float(act["i_plus"]) * rel
+                    # analytic bound needs the max over actions of the
+                    # deployed-atom variance and drift^2
+                    atoms_a = np.array([
+                        (quantize_with(quantizer, float(x))
+                         if quantizer is not None else quantize_llr(float(x)))
+                        for x in act["llr"]
+                    ])
+                    p1a = np.asarray(act["p1"], dtype=float)
+                    mua = float(np.sum(p1a * atoms_a))
+                    vva = float(np.sum(p1a * atoms_a * atoms_a)) - mua * mua
+                    mu2_max[i, qq] = max(mu2_max[i, qq], mua * mua)
+                    v2_max[i, qq] = max(v2_max[i, qq], max(vva, 0.0))
                     if v > best_v:
                         best_v = v
                         best_act = act
@@ -529,6 +549,17 @@ def simulate_frids_v2(
                 mu_llr[i, qq] = mu
                 v_llr[i, qq] = max(vv, 0.0)
                 b_llr[i, qq] = float(np.max(np.abs(atoms)))
+        # PRE-REGISTERED per-target per-cycle variance upper bound
+        # (advice/005 section 3): ``V_q(t) <= t * sum_i max_a [ s sigma^2
+        # + s(1-s) g~^2 ]`` (each UAV serves <= 1 target/cycle, so the
+        # conditional variance of the Bernoulli-scaled deliverable atom
+        # is bounded by the action-max; the v grid is fixed before the
+        # audit MC draws, not derived from their max).
+        for qq in range(q):
+            v_up_analytic[qq] = float(sum(
+                rel_mat[i, qq] * v2_max[i, qq]
+                + rel_mat[i, qq] * (1.0 - rel_mat[i, qq]) * mu2_max[i, qq]
+                for i in range(k)))
     # realized reliable info delivered to the owner (own observation
     # counts, token deliveries count), the i_plus-based counterpart of S
     if bridge:
@@ -804,6 +835,8 @@ def simulate_frids_v2(
             "delivery_matrix": np.asarray(br["delivery_matrix"]),
             "H": H_all, "T": delays,
             "b_llr": b_llr, "mu_llr": mu_llr, "v_llr": v_llr,
+            "v2_max": v2_max, "mu2_max": mu2_max,
+            "v_up_analytic": v_up_analytic,
         }
     return out
     k = scenario["k"]

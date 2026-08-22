@@ -2199,12 +2199,12 @@ the audit.
 | Theorem 4.96 | `frids.simulate_frids_v2` (exponentiated gradient) | F0-G4 JSON |
 | Theorem 4.97 | `frids.load_cut` | `test_load_cut_math`, F0-G4 JSON |
 | Theorem 4.98 | `feasibility.strongest_load_cut` | `test_rho_star_matches_bruteforce`, F0-G6 JSON |
-| Theorem 4.99 | `uav_otfs_isac/airtime.py` report/no-report gate | `tests/test_airtime.py`, Gate G7 JSON |
-| Theorem 4.100/4.101 | `uav_otfs_isac/airtime.py` token-airtime/value forms | `tests/test_airtime.py`, Gate G7 JSON |
-| Theorem 4.102/4.103 | `uav_otfs_isac/airtime.py` full-mesh load / dual ascent | `tests/test_airtime.py`, Gate G7 JSON |
+| Lemma 4.99 | `uav_otfs_isac/airtime.py` report/no-report gate | `tests/test_airtime.py`, Gate G7 JSON |
+| Proposition 4.100/4.101 | `uav_otfs_isac/airtime.py` token-airtime/value forms | `tests/test_airtime.py`, Gate G7 JSON |
+| Proposition 4.102/4.103 | `uav_otfs_isac/airtime.py` full-mesh load / dual ascent | `tests/test_airtime.py`, Gate G7 JSON |
 | Theorem 4.104/4.105 | `uav_otfs_isac/covariance_conditional.py` joint-KL chain form | `tests/test_covariance_conditional.py` |
-| Theorem 4.106 | `uav_otfs_isac/covariance_conditional.py` delay consequence | `tests/test_covariance_conditional.py` |
-| Theorem 4.107 | `uav_otfs_isac/conditional_frids.py` | `tests/test_conditional_frids.py` |
+| Proposition 4.106 | `uav_otfs_isac/covariance_conditional.py` delay consequence (approx.) | `tests/test_covariance_conditional.py` |
+| Empirical Obs. 4.107 | `uav_otfs_isac/conditional_frids.py` (gate mechanism finding) | `tests/test_conditional_frids.py` |
 | Theorem 4.108 | `uav_otfs_isac/covariance_conditional.py` Schur form | `tests/test_covariance_conditional.py` |
 | Theorem 4.109 | `frids.simulate_frids_v2 (audit=True)`, `_audit_cycle` | `run_local_dual_audit.py`, F0-G9A JSON |
 | Theorem 4.110 (service-delay bridge) | `frids.simulate_frids_v2 (bridge=True)`, `reliable_service_bridge` | `test_reliable_service_bridge`, `run_delay_bridge_gate.py` |
@@ -2460,7 +2460,7 @@ reliable post-communication marginal information, `D_q` the residual
 LLR deficit, `c_air(i,j) = tau_ij / T_air` the fractional budget of one
 token at receiver `j`.
 
-### Theorem 4.99 (an airtime price without the idle action is a NO-OP)
+### Lemma 4.99 (an airtime price without the idle action is a NO-OP)
 
 Fix UAV `i` and per-target scores `J_iq` (e.g. `y_q g_iq / (D_q +
 eps)`).  If the only available actions are the target choices (no
@@ -2482,7 +2482,7 @@ total-information-driven and the report-level lever stays below the 5%
 bar (honest negative for the "delay" claim; the value sits in the
 feasibility/comms-efficiency layer instead).
 
-### Theorem 4.100/4.101 (token airtime and its value forms)
+### Proposition 4.100/4.101 (token airtime and its value forms)
 
 (Reconstructed from `THEORY_DEVELOPMENT_HISTORY.md` stage 34; the FRIDS
 sections of this appendix were accidentally lost to a `git checkout .`
@@ -2497,7 +2497,7 @@ normalizes the price by the deficit so the `D` cancels and the choice
 reduces to comparing `y_q g_iq` against `lambda * c_air(i,j)` -- so the
 airtime price becomes a per-token communication opportunity-cost.
 
-### Theorem 4.102/4.103 (full-mesh receive load and load dual ascent)
+### Proposition 4.102/4.103 (full-mesh receive load and load dual ascent)
 
 (Reconstructed from `THEORY_DEVELOPMENT_HISTORY.md` stage 34.)  In the
 full-mesh topology the per-UAV receive load is
@@ -2533,7 +2533,13 @@ super-additive witnesses -- the G8-A audit's warning that `sum_i g_iq`
 overstates `G_q(S)` persists as a statement about the *regime*, not an
 identity violation.
 
-### Theorem 4.106 (delay consequence of the redundancy)
+### Proposition 4.106 (delay consequence of the redundancy; approximation, not a stopping-time theorem)
+
+Reclassification (advice/005 section 7): the `~1/(1-R)` delay ratio is
+an approximation relation with experimental parameters, NOT a formal
+stopping-time asymptotic claim; it stays as a Proposition with its
+empirical constants, and will only be upgraded to a Theorem if a proper
+stopping-time asymptotic proof is given.
 
 (Reconstructed from `THEORY_DEVELOPMENT_HISTORY.md` stage 35.)  If the
 conditional marginals show redundancy ratio `R_q = 1 - G_q(S) / sum
@@ -2543,7 +2549,12 @@ tested family the worst-target redundancy reaches `R ~ 0.8` and the
 analytical delay underestimate scales ~5x (sequential check: ~2x for a
 top-4 joint test after the Wald overshoot correction).
 
-### Theorem 4.107 (conditional FRIDS: the conditional innovation effect)
+### Empirical Observation 4.107 (conditional FRIDS: the conditional innovation effect)
+
+Reclassification (advice/005 section 7): the "concentrates service on
+marginal innovators / principled anti-herding mechanism" wording is a
+mechanistic description of a gate finding, not a theorem consequence; it
+is recorded as an Empirical Observation.
 
 Under the conditional scheduler the FRIDS index uses the conditional
 marginal `Delta G_{i|S_q,q}` (the coalition `S_q` inferred from the

@@ -44,6 +44,52 @@
 
 # 一、实现了什么
 
+## P0.6 补充记录(2026-08-22, advice/005)
+
+`advice/005` 复核 `dc09109`(P0.5) 后指出 3 个 harness 口径需封死,已全部修复并重跑:
+
+1. **verdict wiring(§2)**: P0.5 计算了 `static_ok`/`dual_ok` 却没放进最终 verdict;
+   已改为 `gate_ok = dec & decU & stop & serv & dual & static`(六子门全取,advice/005 §2),
+   verdict 只依赖 `gate_ok`。P0.6 门输出 `gate_ok=true`。
+2. **预注册 v(§3)**: Freedman 的 `v` 从"同一批 MC 样本的 max V"改为**解析确定性上界**
+   `V_q(t) ≤ t·Σ_i max_a[s·σ²+s(1−s)·g̃²]`(`v_up_analytic`,每场景预注册,非样本 max)。
+   - P0.6 门所有场景 `v_upper_source="analytic"`,点态/时一致 Freedman 仍 0 违例。
+3. **删除 path-integrated stopping theorem claim(§4)**: `E[exp f(A,V)]` 不是标准 Freedman
+   对象(A,V 是随机历史过程);已改为 **确定性联合事件** `{T_q>t, A−D≥η, V≤v}` 对
+   Freedman 界 + **安全分解** `P_1(T_q>t)≤β+e^{−η²/(2(v+bη/3))}+P(A−D<η)+P(V>v)` 的验证。
+   门: joint-event 与 decomposition 违例均 0。
+4. **Static-MD 不叫证明(§5)**: 改为数值 rate-consistency `C_emp(T)=gap/√(logQ/T)`,
+   `sup C_emp ≤ C_max=1`;log-log slope 仅诊断(实测 −0.63..−1.10,即不慢于理论率)。
+   - P0.6 门: 8 场景 `rate_consistent=true`,`C_emp_max` 0.077-0.253。
+5. **G6 旧结果标 stale(§6)**: `results/feasibility_envelope_gate.json`(旧 ρ* 不随 s 变)
+   标记 superseded;P2 统一 phase-boundary 输出为新链路。
+6. **FORMAL_PROOFS 重分类(§7)**: 4.99→Lemma, 4.100–4.103, 4.106→Proposition(近似,
+   4.106 明确"等待真正 stopping-time 证明才能升级 Theorem"), 4.107→Empirical
+   Observation(机制性), 4.104/4.105/4.108 保留 Theorem(公式对象)。
+
+## P2 smoke 记录(2026-08-22, advice/005 §8-14)
+
+`scripts/run_phase_boundary_gate.py` -> `results/phase_boundary_smoke.json`,
+三正交失效模式首次以真实机制验证:
+
+- **P2-A1(解析诊断)**: `g→ξ_g g` 的 `ρ_I*(ξ_g)` 单调(1.0→0.075 时 ρ 0.033→0.436);
+  这是 cut 级诊断,不是物理实验(advice/005 §8)。
+- **P2-A2(物理信息边界)**: 缩放 sensing SNR(非中心参数重生成 p0/p1/LLR/I+),
+  `ρ_I*` 在 ≈−12..−14dB 穿过 1(-14dB: 3.253 = info-infeasible)。
+  **诚实发现**: 物理降 SNR 时检测器本身先于 ρ* 失效(-6dB 起 P_MD→1,
+  calibration-infeasible)—— 这正说明"只缩调度器 g"会伪造信息边界,真实边界是
+  detector-infeasible 先出现。
+- **P2-B(通信边界)**: `ρ_C=S 扫描且真实执行 admission/drop`
+  `s_eff=s_phy·min(1,B_rx/(b_tok·offered))`;ρ_C=1.2/1.5 时 surv 0.833/0.667,
+  负载真正进入 g→T 链路(P_MD 0.05/0.019)。
+- **P2-C(协调边界)**: 双可行区(ρ_I*<1, ρ_C<1)比较
+  `λ_FRIDS/λ_common=Γ_alg`(=1.0)与 `λ_common/λ_nec=Γ_law`(=1.0),Γ=Γ_alg·Γ_law=1.0;
+  当前工作点 **Γ_alg≈1 ⇒ 调度器贴近分布式可实现边界,继续冻结 FRIDS**。
+
+P2 smoke 表明三类边界都能被真实机制激活,且当前工作点 FRIDS 无算法 gap——按
+advice/005 可进入正式多 seed phase diagram(ρ_I* 用物理证据、ρ_C 用真实 drop、
+Γ 用 common-price 分解)。
+
 advice/003 建议的 P1 是：把 FRIDS-v2 从"实验上贴近边界"提升为"能够解释
 为什么贴近边界，以及误差由哪些项决定"。本次落地为两个可证明定理的数值
 验证链（严格尊重 advice/003 §一 的拆分要求，**不做一步式 R_T⇒ΔT**）：

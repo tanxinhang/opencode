@@ -204,6 +204,19 @@
 - **相图(K=16,Q/K∈{0.25..2} × s∈{0.95..0.2})**: **27 Green / 3 Yellow(边缘 P_MD 0.071-0.083)/ 0 Red**;`ρ_I* ≤ 0.11`(信息容量从不绑定)、`ρ_C=0.71`(通信预算不绑定)⇒ 三类不可行分离: 唯一活性区域为边缘 coordination-limited(3 格)。
 - **可行性利用率 Γ∈[0.75,1.0]**: FRIDS 已贴近可实现边界 ⇒ **停止调度器优化**(advice/012 规则);Q>K 的 owner 循环分配与 token 级联记账为审计基础修复。
 
+### 1.29 最新: P1 封板与 P2 相图 smoke(2026-08-22,advice/005 P0.6+Gate P2)
+
+`advice/005` 复核确认 P0.5 修复成立,又指出 3 个 harness 末节口径并给出 P2 正交化原则,已全部落地:
+
+- **P0.6-1 verdict wiring**: 六子门全取 `gate_ok = dec∧decU∧stop∧serv∧dual∧static`,verdict 只依赖 `gate_ok`(P0.5 漏接 static/dual)。
+- **P0.6-2 预注册 v**: `V_q(t) ≤ t·Σ_i max_a[s·σ²+s(1−s)·g̃²]` 解析上界计入 `v_up_analytic`,Freedman 的 `(η,v)` grid 真正预注册(不再用 MC 样本的 max V)。
+- **P0.6-3 删 path-integrated claim**: `E[exp f(A,V)]` 不是标准 Freedman 对象,改为确定性联合事件 `{T_q>t, A−D≥η, V≤v}` 对 Freedman 界 + 安全分解 `P(T_q>t)≤β+e^{...}+P(A−D<η)+P(V>v)` 的验证。
+- **P0.6-4 Static-MD 是 rate-consistency 非证明**: `C_emp(T)=gap/√(logQ/T)`,`sup C_emp≤1`;slope 仅诊断。
+- **P0.6-5** 旧 G6 JSON 标 stale;**P0.6-6** FORMAL_PROOFS 4.99-4.108 重分类(Lemma/Proposition/Empirical Obs,4.106 不再称 Theorem)。
+- **P2 smoke**(`scripts/run_phase_boundary_gate.py` → `results/phase_boundary_smoke.json`): 三失效模式正交化并用真实机制激活 —— P2-A1 解析 ρ*(ξ_g) 单调;P2-A2 物理 SNR 使 ρ* 穿 1(−14dB,3.25),且 **detector-infeasible 先于 ρ* 失效**(−6dB,P_MD→1,严禁只缩调度器 g);P2-B ρ_C 扫描执行真实 drop(s_eff=s·min(1,B_rx/(b_tok·offered)));P2-C 双可行区 **Γ=Γ_alg·Γ_law=1.0**(λ_FRIDS/λ_common 与 λ_common/λ_nec)⇒ FRIDS 无算法 gap,继续冻结。
+
+结论: **P1 permanently closed**;下一步正式多 seed phase diagram(P2 正式跑)。
+
 ### 1.28 最新: P1 证明口径加固(2026-08-22,advice/004 P0.5,Gate P1-hardened)
 
 advice/004 审计 P1 gate 后指出 7 处"理论结构正确但 Gate 未验证到所声称对象"。全部闭合(FRIDS-v2 全程未动):

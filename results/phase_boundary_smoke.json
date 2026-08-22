@@ -1,0 +1,185 @@
+{
+  "gate": "p2-phase-boundary-smoke",
+  "params": {
+    "K": 16,
+    "Q": 8,
+    "n_runs": 120,
+    "seeds": 2,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "xi_g_grid": [
+      1.0,
+      0.5,
+      0.25,
+      0.15,
+      0.1,
+      0.075
+    ],
+    "snr_shift_db": [
+      0.0,
+      -3.0,
+      -6.0,
+      -10.0,
+      -14.0,
+      -18.0
+    ],
+    "rho_C_grid": [
+      0.5,
+      0.8,
+      1.0,
+      1.2,
+      1.5
+    ],
+    "frozen": [
+      "FRIDS-v2",
+      "fixed owner",
+      "full mesh",
+      "19-bit token",
+      "two-threshold stopping"
+    ],
+    "principles": [
+      "P2-A1: analytical cut only (scheduler-g scale diagnostic)",
+      "P2-A2: physical via SNR/noncentrality (evidence regenerated)",
+      "P2-B: real admission/drop survival, not a table label",
+      "P2-C: Gamma = Gamma_alg * Gamma_law in doubly-feasible region"
+    ]
+  },
+  "runtime_s": 197.5,
+  "p2a1": {
+    "1.0": {
+      "xi_g": 1.0,
+      "rho_I": 0.03273066123756507
+    },
+    "0.5": {
+      "xi_g": 0.5,
+      "rho_I": 0.06546132247490277
+    },
+    "0.25": {
+      "xi_g": 0.25,
+      "rho_I": 0.13092264494980554
+    },
+    "0.15": {
+      "xi_g": 0.15,
+      "rho_I": 0.21820440824944853
+    },
+    "0.1": {
+      "xi_g": 0.1,
+      "rho_I": 0.3273066123742865
+    },
+    "0.075": {
+      "xi_g": 0.075,
+      "rho_I": 0.43640881649889707
+    }
+  },
+  "p2a2": {
+    "0.0": {
+      "snr_shift_db": 0.0,
+      "rho_I": 0.03273066123756507,
+      "zone": "green",
+      "J": 3.2452830188679247,
+      "p_md_max": 0.018181818181818188,
+      "calibration_infeasible": false
+    },
+    "-3.0": {
+      "snr_shift_db": -3.0,
+      "rho_I": 0.0418280905141728,
+      "zone": "green",
+      "J": 5.233333333333333,
+      "p_md_max": 0.0,
+      "calibration_infeasible": false
+    },
+    "-6.0": {
+      "snr_shift_db": -6.0,
+      "rho_I": 0.08617234966777687,
+      "zone": "detector-infeasible",
+      "J": 40.0,
+      "p_md_max": 1.0,
+      "calibration_infeasible": true
+    },
+    "-10.0": {
+      "snr_shift_db": -10.0,
+      "rho_I": 0.5232235913197201,
+      "zone": "detector-infeasible",
+      "J": 40.0,
+      "p_md_max": 1.0,
+      "calibration_infeasible": true
+    },
+    "-14.0": {
+      "snr_shift_db": -14.0,
+      "rho_I": 3.253077321855244,
+      "zone": "info-infeasible",
+      "J": 40.0,
+      "p_md_max": 1.0,
+      "calibration_infeasible": true
+    },
+    "-18.0": {
+      "snr_shift_db": -18.0,
+      "rho_I": 20.379245293527674,
+      "zone": "info-infeasible",
+      "J": 40.0,
+      "p_md_max": 1.0,
+      "calibration_infeasible": true
+    }
+  },
+  "p2b": {
+    "0.5": {
+      "rho_C": 0.5,
+      "b_rx": 570.0,
+      "drop_survival": 1.0,
+      "zone": "green",
+      "J": 3.107142857142857,
+      "p_md_max": 0.017857142857142905
+    },
+    "0.8": {
+      "rho_C": 0.8,
+      "b_rx": 356.25,
+      "drop_survival": 1.0,
+      "zone": "green",
+      "J": 3.107142857142857,
+      "p_md_max": 0.017857142857142905
+    },
+    "1.0": {
+      "rho_C": 1.0,
+      "b_rx": 285.0,
+      "drop_survival": 1.0,
+      "zone": "green",
+      "J": 3.107142857142857,
+      "p_md_max": 0.017857142857142905
+    },
+    "1.2": {
+      "rho_C": 1.2,
+      "b_rx": 237.5,
+      "drop_survival": 0.8333333333333334,
+      "zone": "comm-load>1",
+      "J": 3.044776119402985,
+      "p_md_max": 0.050000000000000044
+    },
+    "1.5": {
+      "rho_C": 1.5,
+      "b_rx": 190.0,
+      "drop_survival": 0.6666666666666666,
+      "zone": "comm-load>1",
+      "J": 3.5217391304347827,
+      "p_md_max": 0.019230769230769273
+    }
+  },
+  "p2c": {
+    "rho_I_base": 0.03273066123756507,
+    "rho_C_base": 0.7125,
+    "doubly_feasible": true,
+    "lambda_FRIDS": 1.0,
+    "lambda_common": 1.0,
+    "lambda_nec": 1.0,
+    "Gamma_alg": 1.0,
+    "Gamma_law": 1.0,
+    "Gamma": 1.0
+  },
+  "verdict": {
+    "a1_rho_monotone": true,
+    "a2_info_boundary_crossed": true,
+    "a2_detector_infeasible_before_info": true,
+    "b_survival_degrades": true,
+    "c_gamma_alg_near_one": true
+  }
+}

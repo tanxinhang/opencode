@@ -186,11 +186,29 @@ def martingale_decomposition(
     b_theo = 2.0 * max_conc * max_b
     bq = max(b_theo, 1e-9)
 
-    # deterministic per-target variance UPPER bound over the stopped
-    # paths (the ``V_t <= v`` side of the Freedman joint event)
-    v_up = [float(np.max(V[H[:, qq] == True, :, qq]))  # noqa: E712
-            if np.any(H[:, qq] == True) else 0.0  # noqa: E712
-            for qq in range(q)]
+    # PRE-REGISTERED deterministic per-target variance upper bound
+    # (advice/005 section 3): ``V_q(t) <= t * sum_i max_a [s sigma^2 +
+    # s(1-s) g~^2]`` -- each UAV serves at most one target per cycle
+    # (``sum_q x_iq <= 1``), so the per-cycle conditionally-Bernoulli
+    # deliverable variance is bounded by the max over the deployed
+    # quantized kernels.  NOT the sample-max of the audit MC (the v grid
+    # is fixed before the draws).
+    # PRE-REGISTERED per-target variance bound: the bridge recording
+    # already carries ``v_up_analytic[q]`` (nats^2 per cycle, computed
+    # from the deployed kernels BEFORE the audit draws), so the v grid is
+    # ``v_ref = max_steps * v_up_analytic[q]`` -- deterministic and
+    # experiment-independent.  Only if the recording lacks it (older
+    # snapshot) do we fall back to the path max, flagged as sample-derived.
+    v_up_an = np.asarray(bridge_out.get(
+        "v_up_analytic", np.zeros(q)), dtype=float)
+    if np.max(v_up_an) > 0.0:
+        v_up = [float(max_steps) * float(v_up_an[qq]) for qq in range(q)]
+        vup_source = "pre-registered analytic (t * sum_i max_a [...] )"
+    else:
+        v_up = [float(np.max(V[H[:, qq] == True, :, qq]))  # noqa: E712
+                if np.any(H[:, qq] == True) else 0.0  # noqa: E712
+                for qq in range(q)]
+        vup_source = "sample-max (fallback: v_up_analytic absent)"
 
     def joint_rows(which: str):
         """Deterministic (eta, v) grid joint events over the H1 stopped
@@ -267,6 +285,7 @@ def martingale_decomposition(
         "freedman_uniform": br_u,
         "freedman_n_cases": br["n_cases"],
         "v_upper_per_target": v_up,
+        "v_upper_source": vup_source,
         "eta_grid": [float(np.sqrt(np.max(v_up)) * ef)
                      for ef in eta_fractions],
         "v_grid": [float(np.max(v_up) * vf) for vf in v_fractions],
@@ -284,19 +303,26 @@ def stopping_tail_verify(
     q: int,
     target_beta: float = 0.05,
 ) -> dict:
-    """Theorem 4.110 direct check: at each (target, cycle) with the
-    pathwise premise ``A_q(t) >= A_q*`` the empirical H1-survive
-    fraction ``Pr_1(T_q > t)`` is compared to the PATH-INTEGRATED
-    bound
+    """Theorem 4.110 SAFE form (advice/005 section 4): the claimed
+    object is the DETERMINISTIC joint event
 
-        Pr_1(T_q > t) <= beta_q + E[ exp[ -(A_q(t)-D_q)_+^2 /
-            (2(V_q(t) + b_q (A_q(t)-D_q)_+/3)) ] ]
+        E_t(eta, v) = { T_q > t,  A_q(t) - D_q >= eta,  V_q(t) <= v }
 
-    (each path contributes its own ``(A_q(t), V_q(t))`` -- the
-    pointwise Freedman argument is per-path, so averaging the
-    nonlinear exponent is NOT the same as plugging the means, which
-    was the advice/004 section 2 criticism of the earlier gate).
-    The H0-side is omitted (``beta_q`` is the H1 miss budget)."""
+    with ``D_q = a_thr_q`` (owner 0-deficit), for pre-registered
+    deterministic ``(eta, v)`` pairs:
+
+        P_1( E_t(eta,v) ) <= beta_q + exp[ -eta^2 / (2(v + b_q eta / 3)) ],
+
+    and the fully safe decomposition of the survive fraction
+
+        P_1(T_q > t) <= beta_q + exp[ -eta^2 / (2(v + b_q eta/3)) ]
+                      + P_1( A_q(t) - D_q < eta ) + P_1( V_q(t) > v ).
+
+    The PATH-INTEGRATED ``E[exp f(A,V)]`` form is NOT a theorem (A,V
+    are random historical processes), so it is removed entirely; the
+    joint-event form plus the union decomposition are the honest
+    structural bounds (advice/005: delete the path-integrated claim).
+    The H0-side is ``beta_q`` (the H1 miss budget)."""
     A = np.asarray(bridge_out["A"])
     V = np.asarray(bridge_out["V"])
     H = np.asarray(bridge_out["H"])
@@ -307,9 +333,22 @@ def stopping_tail_verify(
     max_conc = float(np.max(np.asarray(bridge_out["n_served"]))) \
         if bridge_out["n_served"].size > 0 else 1.0
     bq = max(2.0 * max_conc * max_b, 1e-9)
-    n_runs, max_steps, _ = A.shape
-    surv_emp = []        # empirical Pr_1(T_q > t)
-    surv_bound = []      # path-integrated bound
+    n_runs, max_steps, _ = np.asarray(bridge_out["A"]).shape
+    # pre-registered deterministic v bound (analytic per-target)
+    v_up_an = np.asarray(bridge_out.get(
+        "v_up_analytic", np.zeros(q)), dtype=float)
+    if np.max(v_up_an) > 0.0:
+        v_ref_q = [float(max_steps) * float(v_up_an[qq]) for qq in range(q)]
+        vup_source = "analytic"
+    else:
+        v_ref_q = [float(np.max(V[H[:, qq] == True, :, qq]))  # noqa: E712
+                   if np.any(H[:, qq] == True) else 0.0  # noqa: E712
+                   for qq in range(q)]
+        vup_source = "sample-max"
+    joint_emp = []
+    joint_bnd = []
+    decomp_emp = []
+    decomp_bnd = []
     for qq in range(q):
         mask = H[:, qq] == True  # noqa: E712
         hh = np.arange(n_runs)[mask]
@@ -318,34 +357,56 @@ def stopping_tail_verify(
         la = A[hh, :, qq]
         lv = V[hh, :, qq]
         lt = T_stop[hh, qq]
-        for t in range(max_steps):
-            a_col = la[:, t]
-            v_col = lv[:, t]
-            # pathwise premise: at least one path has service past D_q
-            if not np.any(a_col >= a_thr[qq] - 1e-9):
-                continue
-            emp = float(np.mean(lt > t))       # still undecided at t
-            eta_p = np.maximum(a_col - a_thr[qq], 0.0)
-            # per-path exponent, integrated over the H1 paths
-            expo = np.array([
-                freedman_tail(float(e), float(v), bq)
-                for e, v in zip(eta_p, v_col)])
-            bnd = float(min(target_beta + float(np.mean(expo)), 1.0))
-            surv_emp.append(emp)
-            surv_bound.append(bnd)
-    emp = np.array(surv_emp, dtype=float)
-    bnd = np.array(surv_bound, dtype=float)
-    ok = bool(np.all(emp <= bnd + 1e-12)) if len(emp) else True
+        d_q = float(a_thr[qq])
+        v_ref = max(v_ref_q[qq], 1e-9)
+        for vf in (0.5, 1.0):
+            v = v_ref * vf
+            for ef in (0.5, 1.0):
+                eta = float(np.sqrt(v)) * ef
+                # joint event E_t(eta, v)
+                joint_ev = (lt[:, None] > np.arange(max_steps)[None, :]) \
+                    & (la - d_q >= eta) & (lv <= v)
+                emp_j = 0.0
+                # only count (t) pairs where at least one path meets the
+                # premise A-D >= eta (otherwise the event is empty)
+                act = np.any((la - d_q >= eta) & (lv <= v), axis=0)
+                if np.any(act):
+                    emp_j = float(np.mean(
+                        np.any(joint_ev[:, act], axis=0)))
+                bnd_j = float(min(target_beta + freedman_tail(
+                    eta, v, bq), 1.0))
+                joint_emp.append(emp_j)
+                joint_bnd.append(bnd_j)
+                # survive decomposition at the same (eta, v)
+                for t in range(max_steps):
+                    emp_s = float(np.mean(lt > t))
+                    pA = float(np.mean(la[:, t] - d_q < eta))
+                    pV = float(np.mean(lv[:, t] > v))
+                    bnd_s = float(min(
+                        target_beta + freedman_tail(eta, v, bq) + pA + pV,
+                        1.0))
+                    decomp_emp.append(emp_s)
+                    decomp_bnd.append(bnd_s)
+    j_emp = np.array(joint_emp, dtype=float)
+    j_bnd = np.array(joint_bnd, dtype=float)
+    d_emp = np.array(decomp_emp, dtype=float)
+    d_bnd = np.array(decomp_bnd, dtype=float)
+    j_ok = bool(np.all(j_emp <= j_bnd + 1e-12)) if len(j_emp) else True
+    d_ok = bool(np.all(d_emp <= d_bnd + 1e-12)) if len(d_emp) else True
     return {
-        "cases": len(emp),
-        "empirical_survive_max": float(np.max(emp)) if len(emp) else 0.0,
-        "bound_survive_max": float(np.max(bnd)) if len(bnd) else 0.0,
-        "violation_fraction": float(
-            np.mean(emp > bnd + 1e-12)) if len(emp) else 0.0,
-        "empirical_survive_avg": float(
-            float(np.mean(emp)) if len(emp) else 0.0),
-        "bound_survive_avg": float(float(np.mean(bnd)) if len(bnd) else 0.0),
-        "satisfied": bool(ok),
+        "cases": len(j_emp),
+        "joint_event_violation_fraction": float(
+            np.mean(j_emp > j_bnd + 1e-12)) if len(j_emp) else 0.0,
+        "decomposition_violation_fraction": float(
+            np.mean(d_emp > d_bnd + 1e-12)) if len(d_emp) else 0.0,
+        "joint_event_satisfied": bool(j_ok),
+        "decomposition_satisfied": bool(d_ok),
+        "joint_emp_max": float(np.max(j_emp)) if len(j_emp) else 0.0,
+        "joint_bnd_max": float(np.max(j_bnd)) if len(j_bnd) else 0.0,
+        "decomp_emp_max": float(np.max(d_emp)) if len(d_emp) else 0.0,
+        "decomp_bnd_max": float(np.max(d_bnd)) if len(d_bnd) else 0.0,
+        "v_upper_source": vup_source,
+        "satisfied": bool(j_ok and d_ok),
     }
 
 
@@ -543,18 +604,29 @@ def static_md_convergence(
     eps: float = 0.1,
 ) -> dict:
     """Run the static mirror descent on a sweep of horizons and report
-    the ``gap(T) = z* - min_q r_q(T)`` scaling: advice/004 P0.5-4 wants
-    ``gap(T) ~ O(sqrt(log Q / T))`` i.e. a log-log slope close to -1/2.
-    """
+    the rate-consistency constant (advice/005 section 5)
+
+        C_emp(T) = gap(T) / sqrt(log Q / T),
+        gap(T)   = z* - min_q r_q(T).
+
+    The formal theorem remains the mirror-descent regret
+    ``gap(T) <= C sqrt(logQ/T)`` (Theorem 4.111); the empirical ``slope``
+    is NOT a proof, so the gate checks ``sup_T C_emp(T) < C_max`` (a
+    bounded empirical constant), and the log-log slope is reported only
+    as a diagnostic (a well-conditioned instance can reach ``z*``\n    immediately with gap ~ 0 -- strictly stronger than the rate)."""
     rows = {}
     for T in horizons:
         rows[str(T)] = run_static_mirror_descent(g, d0, int(T), mu=mu, eps=eps)
     gaps = np.array([rows[str(T)]["gap"] for T in horizons], dtype=float)
+    Ts = np.array([int(T) for T in horizons], dtype=float)
+    logq_over_T = np.array([rows[str(T)]["sqrt_logQ_over_T"] for T in horizons],
+                           dtype=float)
+    c_emp = np.divide(gaps, logq_over_T, out=np.zeros_like(gaps),
+                      where=logq_over_T > 0.0)
     # a well-conditioned instance can reach z* immediately (gap ~ 0); the
     # log-log slope is then undefined (and is a STRONGER result), so the
-    # slope is measured only over strictly-positive gaps
+    # slope is measured only over strictly-positive gaps (diagnostic)
     pos = gaps > 1e-6
-    Ts = np.array([int(T) for T in horizons], dtype=float)
     slope = None
     if pos.sum() >= 2:
         slope = float(np.polyfit(np.log(Ts[pos]), np.log(gaps[pos]), 1)[0])
@@ -562,10 +634,14 @@ def static_md_convergence(
         "rows": rows,
         "gaps": [float(x) for x in gaps],
         "horizons": [int(T) for T in horizons],
-        "loglog_slope": slope,
+        "loglog_slope_diagnostic": slope,
+        "sqrt_logQ_over_T": [float(x) for x in logq_over_T],
+        "C_emp": [float(x) for x in c_emp],
+        "C_emp_max": float(np.max(c_emp)) if len(c_emp) else 0.0,
         "gap_max": float(np.max(gaps)) if len(gaps) else 0.0,
         "converged_immediately": bool(np.max(gaps) <= 1e-6),
-        "slope_target": -0.5,
+        "rate_consistent": bool(np.max(c_emp) <= 1.0),
+        "rate_budget_sqrt_logQ": 1.0,
     }
 
 
