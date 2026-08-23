@@ -50,3 +50,9 @@ def test_report_budget_from_total_keeps_fractional_overhead():
     assert overhead == 0.32
     assert abs(total - (report + overhead + residual)) < 1e-12
     assert residual == pytest.approx(0.68)  # the untruncated fractional part
+
+
+def test_report_budget_from_total_rejects_overhead_overflow():
+    from uav_otfs_isac.ledger import report_budget_from_total
+    with pytest.raises(ValueError):
+        report_budget_from_total(10.0, 12.0)

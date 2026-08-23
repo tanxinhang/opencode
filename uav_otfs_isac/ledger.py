@@ -58,9 +58,22 @@ def report_budget_from_total(
 ) -> tuple[int, float, float]:
     """Split ``B_total`` into (integerized report budget, residual bits,
     control-overhead bits) so ``B_total = B_report + B_control + residual``
-    holds exactly; the fractional part of the overhead is never dropped."""
+    holds exactly; the fractional part of the overhead is never dropped.
+    Raises ``ValueError`` when ``control_overhead > total_budget_bits``:
+    no nonnegative split can keep the identity in that regime
+    (advice/012 section 6), so silently returning ``(0, 0, overhead)``
+    would fabricate a non-reconciling ledger."""
     overhead = max(float(control_overhead), 0.0)
     total = max(float(total_budget_bits), 0.0)
+    if overhead > total:
+        # advice/012 section 6: no nonnegative split can keep B_total =
+        # B_report + B_control + residual here, so returning (0, 0,
+        # overhead) would fabricate a ledger that does not reconcile.
+        raise ValueError(
+            f"control overhead {overhead} exceeds total budget {total}; "
+            "the ledger identity B_total = B_report + B_control + residual "
+            "cannot be satisfied"
+        )
     report = int(max(total - overhead, 0.0))
     residual = max(total - overhead - report, 0.0)
     return report, float(residual), float(overhead)

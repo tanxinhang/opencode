@@ -40,6 +40,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from uav_otfs_isac.admission import airtime_admit
 from uav_otfs_isac.crn_tape import ExogenousTape, draw_atom
 from uav_otfs_isac.distributed_audit import (
     calibrate_target_bounds,
@@ -410,6 +411,7 @@ def simulate_frids_v2(
     rx_cap_tokens: np.ndarray | None = None,
     raw_counts: bool = False,
     exog: ExogenousTape | None = None,
+    airtime: dict | None = None,
 ) -> dict:
     """FRIDS-v2 (advice/010): demand-normalized primal + dual-consistent
     mirror descent, strictly distributed.
@@ -610,6 +612,19 @@ def simulate_frids_v2(
     a_thr = np.array([float(bounds[qq][0]) for qq in range(q)])
     power_used = 0.0
     power_cycles = 0.0
+    # P4.1 shared-capacity comm ledger (advice/012): the same
+    # offer/admitted/delivered/link-drop/capacity-drop split as CA-FRIDS,
+    # so the two schedulers are compared on one physical capacity model.
+    comm_offer_attempts = np.zeros(n_runs)
+    comm_admitted_tx = np.zeros(n_runs)
+    comm_rx_delivered = np.zeros(n_runs)
+    comm_rx_link_dropped = np.zeros(n_runs)
+    comm_rx_capacity_dropped = np.zeros(n_runs)
+    comm_airtime = np.zeros(n_runs)
+    comm_rx_load = np.zeros(n_runs)
+    comm_max_ratio = np.zeros(n_runs)
+    comm_feasible = np.zeros(n_runs)
+    comm_cycles = np.zeros(n_runs)
 
     for r in range(n_runs):
         # CRN tape (advice/010 P0-2): both schedulers read the SAME target
@@ -715,7 +730,22 @@ def simulate_frids_v2(
             # was delivered to IT (strictly local)
             S_loc = np.zeros((k, q))
             intents_next = np.full((k, k), -1, dtype=int)
-            if rx_cap_tokens is None:
+            if airtime is not None:
+                # P4.1 shared-capacity closure (advice/012): the SAME
+                # airtime primitive as CA-FRIDS.  Offers are generated (all
+                # (src, receiver) pairs a sensed UAV would send to),
+                # admission keeps ``sum tau/T_air <= 1`` per receiver with
+                # NEUTRAL exchangeable priority, and the link outcome is
+                # drawn AFTER admission -- an admitted transmission is
+                # charged even when the link drops.  In the uncongested
+                # regime the budget is non-binding, so this coincides with
+                # independent delivery while reporting the shared ledger.
+                tau_mat = np.asarray(airtime["tau"], dtype=float)
+                t_air = float(airtime["t_air"])
+                policy_rng = np.random.default_rng([seed, r, 9021])
+                tie_keys = policy_rng.random(k)
+                offers_by_receiver = [[] for _ in range(k)]
+                load_now = np.zeros(k)
                 for uav in range(k):
                     qq = int(obs_target[uav])
                     if qq < 0:
@@ -723,16 +753,64 @@ def simulate_frids_v2(
                     for neighbor in range(k):
                         if neighbor == uav:
                             continue
+                        c = float(tau_mat[uav, neighbor]) / max(t_air, 1e-12)
+                        comm_offer_attempts[r] += 1.0
+                        offers_by_receiver[neighbor].append(
+                            (uav, 0.0, c, qq))
+                admitted, dropped = airtime_admit(
+                    offers_by_receiver, t_air, policy="neutral",
+                    tie_keys=tie_keys,
+                )
+                comm_rx_capacity_dropped[r] += float(dropped)
+                for nb, uav, c_air, qq in admitted:
+                    comm_admitted_tx[r] += 1.0
+                    load_now[nb] += float(tau_mat[uav, nb])
+                    delivered = (
+                        (exog is not None
+                         and float(exog.U_link[r, t, uav, nb])
+                         <= delivery[uav, nb])
+                        or (exog is None
+                            and rng.random() <= delivery[uav, nb])
+                    )
+                    if delivered:
+                        comm_rx_delivered[r] += 1.0
+                        if not decided[qq]:
+                            L[nb, qq] += obs_llr[uav]
+                            S_loc[nb, qq] += obs_iplus[uav]
+                    else:
+                        comm_rx_link_dropped[r] += 1.0
+                    intents_next[nb, uav] = int(intents[uav])
+                comm_airtime[r] += float(np.sum(load_now))
+                comm_rx_load[r] += float(np.mean(load_now)) if k else 0.0
+                comm_max_ratio[r] = max(
+                    comm_max_ratio[r],
+                    float(np.max(load_now) / max(t_air, 1e-12)) if k else 0.0)
+                comm_feasible[r] += float(
+                    float(np.max(load_now)) <= t_air + 1e-12) if k else 0.0
+                comm_cycles[r] += 1.0
+            elif rx_cap_tokens is None:
+                for uav in range(k):
+                    qq = int(obs_target[uav])
+                    if qq < 0:
+                        continue
+                    for neighbor in range(k):
+                        if neighbor == uav:
+                            continue
+                        comm_offer_attempts[r] += 1.0
+                        comm_admitted_tx[r] += 1.0
                         if (exog is not None
                                 and exog.U_link[r, t, uav, neighbor]
                                 > delivery[uav, neighbor]) or (
                             exog is None
                             and rng.random() > delivery[uav, neighbor]):
+                            comm_rx_link_dropped[r] += 1.0
                             continue
+                        comm_rx_delivered[r] += 1.0
                         if not decided[qq]:
                             L[neighbor, qq] += obs_llr[uav]
                             S_loc[neighbor, qq] += obs_iplus[uav]
                         intents_next[neighbor, uav] = int(intents[uav])
+                comm_cycles[r] += 1.0
             else:
                 # P2.1-1 (advice/006 section 6): HARD per-receiver,
                 # per-cycle receive admission.  Phase 1: physical
@@ -751,11 +829,13 @@ def simulate_frids_v2(
                     for neighbor in range(k):
                         if neighbor == uav:
                             continue
+                        comm_offer_attempts[r] += 1.0
                         if (exog is not None
                                 and exog.U_link[r, t, uav, neighbor]
                                 > delivery[uav, neighbor]) or (
                             exog is None
                             and rng.random() > delivery[uav, neighbor]):
+                            comm_rx_link_dropped[r] += 1.0
                             continue
                         offer[neighbor].append(uav)
                 admit = [[] for _ in range(k)]
@@ -798,8 +878,12 @@ def simulate_frids_v2(
                                 pick = int(rng.choice(extra))
                             keep = keep + [pick]
                     admit[nb] = keep
+                    comm_rx_capacity_dropped[r] += float(
+                        max(len(offered) - len(admit[nb]), 0))
                 for nb in range(k):
                     for uav in admit[nb]:
+                        comm_admitted_tx[r] += 1.0
+                        comm_rx_delivered[r] += 1.0
                         qq = int(obs_target[uav])
                         if qq < 0:
                             continue
@@ -807,6 +891,7 @@ def simulate_frids_v2(
                             L[nb, qq] += obs_llr[uav]
                             S_loc[nb, qq] += obs_iplus[uav]
                         intents_next[nb, uav] = int(intents[uav])
+                comm_cycles[r] += 1.0
             intents_recv = intents_next
             if bridge:
                 # P1 service-delay bridge: per-cycle, per-undecided-target
@@ -922,6 +1007,43 @@ def simulate_frids_v2(
                          for qq in range(q)],
         "sum2_h1_delay": [float(np.sum(delays[H_all[:, qq], qq] ** 2))
                           for qq in range(q)],
+    }
+    # P4.1 shared-capacity ledger (advice/012 section 5): the same split
+    # offer/admitted/delivered/link-drop/capacity-drop accounting as
+    # CA-FRIDS, so "CA reduces transmissions" is never read off the offer
+    # rate alone.  Canonical names; ``tx_attempts_per_uav`` etc. are kept
+    # only as compatibility aliases.
+    _active = np.maximum(comm_cycles, 1.0)
+    out["comm"] = {
+        "offer_attempts_per_uav": float(
+            np.mean(comm_offer_attempts / _active) / k),
+        "admitted_tx_per_uav": float(
+            np.mean(comm_admitted_tx / _active) / k),
+        "delivered_tx_per_uav": float(
+            np.mean(comm_rx_delivered / _active) / k),
+        "link_dropped_tx_per_uav": float(
+            np.mean(comm_rx_link_dropped / _active) / k),
+        "capacity_dropped_tx_per_uav": float(
+            np.mean(comm_rx_capacity_dropped / _active) / k),
+        "airtime_per_cycle": float(np.mean(comm_airtime / _active)),
+        "rx_load_per_uav": float(np.mean(comm_rx_load / _active)),
+        "max_load_ratio": float(np.mean(comm_max_ratio)),
+        "budget_feasible_fraction": float(
+            np.mean(comm_feasible / _active)),
+        "control_bits_per_cycle": 0.0,
+        # compatibility aliases (deprecated): offered count was historically
+        # called ``tx_attempts_per_uav``; the physical TX rate is
+        # ``admitted_tx_per_uav``.
+        "tx_attempts_per_uav": float(
+            np.mean(comm_offer_attempts / _active) / k),
+        "rx_admitted_per_uav": float(
+            np.mean(comm_admitted_tx / _active) / k),
+        "rx_delivered_per_uav": float(
+            np.mean(comm_rx_delivered / _active) / k),
+        "rx_link_dropped_per_uav": float(
+            np.mean(comm_rx_link_dropped / _active) / k),
+        "rx_capacity_dropped_per_uav": float(
+            np.mean(comm_rx_capacity_dropped / _active) / k),
     }
     if audit:
         out["audit"] = {

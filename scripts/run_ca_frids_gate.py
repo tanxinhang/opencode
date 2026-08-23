@@ -67,6 +67,53 @@ def _git_sha() -> str:
     except Exception:
         return "unknown"
 
+
+def _git_tree() -> str:
+    """Full tree sha so a reader can pin the EXACT working tree a result
+    json was produced on (advice/012 section 5)."""
+    import subprocess
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "HEAD^{tree}"],
+            cwd=str(PROJECT_ROOT), text=True,
+        ).strip()
+    except Exception:
+        return "unknown"
+
+
+def _git_dirty() -> bool:
+    """True if the working tree had uncommitted changes when the gate ran
+    (advice/012: results must be rerun on a CLEAN committed HEAD before
+    the paper cites them)."""
+    import subprocess
+    try:
+        out = subprocess.check_output(
+            ["git", "status", "--porcelain"], cwd=str(PROJECT_ROOT),
+            text=True,
+        )
+        return bool(out.strip())
+    except Exception:
+        return True
+
+
+def _config_hash(args) -> str:
+    """sha256 over the run-scoped parameters, so the recorded config that
+    produced a JSON is verifiable without trusting the file (advice/012
+    section 5 provenance)."""
+    import hashlib
+    fields = {
+        "n_runs": args.n_runs, "max_steps": args.max_steps,
+        "geoms": args.geoms, "mc_seeds": args.mc_seeds,
+        "alpha": args.alpha, "beta": args.beta,
+        "pi_bits": args.pi_bits, "lam_bits": args.lam_bits,
+        "uncongested_rho": args.uncongested_rho,
+        "congested_rho": args.congested_rho,
+        "price_mode": args.price_mode,
+        "calib_seed": args.calib_seed, "calib_verify": args.calib_verify,
+    }
+    canonical = json.dumps(fields, sort_keys=True, indent=0)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
+
 SCALES = ((6, 3), (8, 4), (12, 6), (16, 8))
 
 
@@ -157,6 +204,36 @@ def j_pooled(rows):
     return float(np.max(values))
 
 
+def _air_row(am, rows_v2, rows_ca):
+    """P4.1 unified airtime ledger per cell (advice/012 section 5): the
+    canonical offer/admitted/delivered/link-drop/capacity-drop split for
+    BOTH schedulers, so the physical TX rate (``*_admitted_tx``) is never
+    confused with the OFFER count (``*_offer_attempts``, whose legacy
+    aliases are the ``*_tx`` names)."""
+    return {
+        "rho_full": am["rho_full"],
+        "v2_offer_attempts": comm_pooled(rows_v2, "offer_attempts_per_uav"),
+        "v2_admitted_tx": comm_pooled(rows_v2, "admitted_tx_per_uav"),
+        "v2_delivered_tx": comm_pooled(rows_v2, "delivered_tx_per_uav"),
+        "v2_link_dropped": comm_pooled(rows_v2, "link_dropped_tx_per_uav"),
+        "v2_capacity_dropped": comm_pooled(rows_v2, "capacity_dropped_tx_per_uav"),
+        "v2_control_bits_per_cycle": comm_pooled(rows_v2, "control_bits_per_cycle"),
+        "v2_feasible": comm_pooled(rows_v2, "budget_feasible_fraction"),
+        "v2_max_load": comm_pooled(rows_v2, "max_load_ratio"),
+        "ca_offer_attempts": comm_pooled(rows_ca, "offer_attempts_per_uav"),
+        "ca_admitted_tx": comm_pooled(rows_ca, "admitted_tx_per_uav"),
+        "ca_delivered_tx": comm_pooled(rows_ca, "delivered_tx_per_uav"),
+        "ca_link_dropped": comm_pooled(rows_ca, "link_dropped_tx_per_uav"),
+        "ca_capacity_dropped": comm_pooled(rows_ca, "capacity_dropped_tx_per_uav"),
+        "ca_control_bits_per_cycle": comm_pooled(rows_ca, "control_bits_per_cycle"),
+        "ca_feasible": comm_pooled(rows_ca, "budget_feasible_fraction"),
+        "ca_max_load": comm_pooled(rows_ca, "max_load_ratio"),
+        # deprecated aliases: the ``*_tx`` names are the OFFER counts
+        "v2_tx": comm_pooled(rows_v2, "tx_attempts_per_uav"),
+        "ca_tx": comm_pooled(rows_ca, "tx_attempts_per_uav"),
+    }
+
+
 def comm_pooled(rows, key):
     """advice/010 section 4: metric averaged over ALL MC cells of the
     geometry (the legacy gate only read ``rows[0]``)."""
@@ -232,7 +309,8 @@ def main() -> None:
                                         args.n_runs, 7, args.max_steps,
                                         args.alpha, args.beta,
                                         mc_seeds=args.mc_seeds,
-                                        crn=True, price_mode="local")
+                                        crn=True, price_mode="local",
+                                        airtime=am)
             if reg == "uncongested":
                 # v2 baseline in the free regime: independent delivery
                 # (the frozen mainline); CA-FRIDS on the same budget
@@ -264,41 +342,18 @@ def main() -> None:
                     "j_ca_pooled": j_pooled(rows_ca),
                     "v2_qos": _qos(rows_v2, args.alpha, args.beta),
                     "ca_qos": _qos(rows_ca, args.alpha, args.beta),
-                    "air": {"rho_full": am["rho_full"],
-                            # v2 is the frozen full-mesh always-report
-                            # baseline (tx = 1.0); the uncongested gate is
-                            # about worst-target delay regression only
-                            "v2_tx": 1.0,
-                            # aggregated over ALL MC cells, not rows[0]
-                            "ca_tx": comm_pooled(rows_ca,
-                                                 "tx_attempts_per_uav"),
-                            # P0-C split ledger: attempts = admitted +
-                            # capacity-dropped (identity preserved per cell)
-                            "ca_admitted_tx": comm_pooled(
-                                rows_ca, "rx_admitted_per_uav"),
-                            "ca_control_bits_per_cycle": comm_pooled(
-                                rows_ca, "control_bits_per_cycle"),
-                            "ca_feasible": comm_pooled(
-                                rows_ca, "budget_feasible_fraction")},
+                    "air": _air_row(am, rows_v2, rows_ca),
                 })
             else:
-                # congested regime: FRIDS-v2 with HARD receive admission
-                # (the P2.1 baseline that treats the bottleneck as a real
-                # drop) versus CA-FRIDS whose airtime price REORDERS the
-                # sensing before the drop (the joint capacity claim)
-                # hard per-receiver token cap giving the congested load ratio of the
-                # always-report full mesh (rho_C = rho_full at the cap)
-                cap_tokens = (k - 1) / max(am["rho_full"], 1e-3)
-                b_v2h = matched_bounds(bt, q, 1.0)
-                rows_v2_hard = []
-                for mc in range(args.mc_seeds):
-                    tape = build_exogenous_tape(
-                        7 + mc, args.n_runs, q, k, args.max_steps)
-                    rows_v2_hard.append(run_cell(
-                        simulate_frids_v2, sc, b_v2h, args.n_runs,
-                        7 + mc, args.max_steps, price_mode="local",
-                        exog=tape,
-                        rx_cap_tokens=np.full(k, max(cap_tokens, 1))))
+                # P4.1 shared-capacity closure (advice/012): the congested
+                # comparison uses the SAME "airtime_admit" primitive for
+                # FRIDS-v2 (exchangeable neutral priority) and CA-FRIDS
+                # (density priority) -- "sum tau/T_air <= 1" per receiver
+                # and the physical order "offer -> admission -> link" are
+                # shared.  The old token-cap hard admission is no longer the
+                # congested v2 baseline, so "+11.7%" is measured against a
+                # capacity-matched scheduler (v2 keeps the token-cap path
+                # when its callers pass airtime=None).
                 b_ca, rows_ca = matched_qos(simulate_ca_frids, sc, bt,
                                             args.n_runs, 7, args.max_steps,
                                             args.alpha, args.beta,
@@ -310,26 +365,15 @@ def main() -> None:
                                             lam_bits=args.lam_bits)
                 scen_rows.append({
                     "geom": geom, "regime": reg,
-                    "v2": summarize(rows_v2_hard),
+                    "v2": summarize(rows_v2),
                     "ca": summarize(rows_ca),
-                    "j_v2": j_worst(rows_v2_hard).tolist(),
+                    "j_v2": j_worst(rows_v2).tolist(),
                     "j_ca": j_worst(rows_ca).tolist(),
-                    "j_v2_pooled": j_pooled(rows_v2_hard),
+                    "j_v2_pooled": j_pooled(rows_v2),
                     "j_ca_pooled": j_pooled(rows_ca),
-                    "v2_qos": _qos(rows_v2_hard, args.alpha, args.beta),
+                    "v2_qos": _qos(rows_v2, args.alpha, args.beta),
                     "ca_qos": _qos(rows_ca, args.alpha, args.beta),
-                    "air": {"rho_full": am["rho_full"],
-                            "v2_tx": 1.0,
-                            "ca_tx": comm_pooled(rows_ca,
-                                                 "tx_attempts_per_uav"),
-                            "ca_admitted_tx": comm_pooled(
-                                rows_ca, "rx_admitted_per_uav"),
-                            "ca_control_bits_per_cycle": comm_pooled(
-                                rows_ca, "control_bits_per_cycle"),
-                            "ca_max_load": comm_pooled(rows_ca,
-                                                       "max_load_ratio"),
-                            "ca_feasible": comm_pooled(
-                                rows_ca, "budget_feasible_fraction")},
+                    "air": _air_row(am, rows_v2, rows_ca),
                 })
         print(f"geom {geom} done ({time.time()-t0:.0f}s)", flush=True)
 
@@ -410,7 +454,10 @@ def main() -> None:
                    # P3.6-R (advice/010 P0-1b): provenance of the exact
                    # scheduler variant actually executed.
                    "price_mode": args.price_mode,
-                   "git_sha": _git_sha(),
+                   "git_commit": _git_sha(),
+                   "git_tree": _git_tree(),
+                   "git_dirty": _git_dirty(),
+                   "config_hash": _config_hash(args),
                    "seed_scheme": ("CRN exogenous tape (advice/010 P0-2): "
                                   "shared U_H/U_obs/U_link per (r,t); "
                                   "dedicated policy RNG for admission "

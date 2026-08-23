@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from uav_otfs_isac.admission import airtime_admit
 from uav_otfs_isac.crn_tape import ExogenousTape, draw_atom
 from uav_otfs_isac.difficulty_decomposition import d_kl_binary
 from uav_otfs_isac.distributed_audit import (
@@ -240,6 +241,7 @@ def simulate_ca_frids(
     lam_cap: float = 2.0,
     power_cap: np.ndarray | None = None,
     price_mode: str = "owner_local",
+    admission_policy: str = "density",
     audit: bool = False,
     raw_counts: bool = False,
     exog: ExogenousTape | None = None,
@@ -464,25 +466,27 @@ def simulate_ca_frids(
                     offered_load[owner] += float(tau[uav, owner])
             admitted = set()
             load_now = np.zeros(k)
+            # P4.1 shared-capacity closure (advice/012): admission goes
+            # through the SAME ``airtime_admit`` primitive as FRIDS-v2
+            # (the constraint ``sum tau/T_air <= 1`` per receiver is
+            # identical); only the priority differs -- CA uses the density
+            # ``J^+/c`` order, v2 uses the exchangeable neutral order.  The
+            # physical order ``offer -> admission -> link outcome`` (an
+            # admitted send is charged even on link outage) is shared too.
+            offers_by_receiver = [[] for _ in range(k)]
             for owner, off in offers.items():
-                if not off:
-                    continue
-                # density J^+/c, descending; exchangeable ties via a
-                # DEDICATED policy RNG when the CRN tape is present
-                # (advice/011 P0-B); legacy keeps the plain density order,
-                # so no old result changes.
-                if exog is not None:
-                    off = _density_sorted_offers(off, rng_r.random(k))
-                else:
-                    off.sort(key=lambda o: -o[3] / max(o[2], 1e-15))
-                used = 0.0
                 for (uav, qq, c_air, score_b, c) in off:
-                    if used + c_air <= 1.0 + 1e-12:
-                        admitted.add((owner, uav))
-                        load_now[owner] += float(tau[uav, owner])
-                        used += c_air
-                    else:
-                        comm_rx_capacity_dropped[r] += 1.0
+                    offers_by_receiver[owner].append(
+                        (uav, float(score_b), float(c_air), qq))
+            tie_keys = rng_r.random(k) if exog is not None else None
+            admitted_list, dropped = airtime_admit(
+                offers_by_receiver, t_air, policy=admission_policy,
+                tie_keys=tie_keys,
+            )
+            comm_rx_capacity_dropped[r] += float(dropped)
+            for nb, uav, c_air, qq in admitted_list:
+                admitted.add((nb, uav))
+                load_now[nb] += float(tau[uav, nb])
             S = np.zeros(q)
             for uav in range(k):
                 c = choices[uav]
@@ -602,24 +606,36 @@ def simulate_ca_frids(
         },
         "comm": {
             "airtime_per_cycle": float(np.mean(comm_airtime / active)),
-            # P3.5-B ledger (advice/009 section 15): a TRANSMISSION attempt
-            # is a send whose airtime is committed (it is charged even if
-            # the link outage or the admission drops it); the delivered /
-            # link-dropped / capacity-dropped counts are the receiver side
+            # P4.1 split ledger (advice/012 section 5): CANONICAL names.
+            # ``offer_attempts_per_uav`` counts every cross-UAV OFFER; the
+            # physical TX rate is ``admitted_tx_per_uav`` (the sends whose
+            # airtime is charged even on link outage); the identities
+            #   offers = admitted + capacity_dropped,
+            #   admitted = delivered + link_dropped
+            # hold exactly per active cycle.  Historically the offer count
+            # was mislabelled ``tx_attempts_per_uav`` -- do NOT claim a
+            # transmission-rate reduction from the offer count.
+            "offer_attempts_per_uav": float(
+                np.mean(comm_tx_attempts / active) / k),
+            "admitted_tx_per_uav": float(
+                np.mean(comm_admitted_tx / active) / k),
+            "delivered_tx_per_uav": float(
+                np.mean(comm_rx_delivered / active) / k),
+            "link_dropped_tx_per_uav": float(
+                np.mean(comm_rx_link_dropped / active) / k),
+            "capacity_dropped_tx_per_uav": float(
+                np.mean(comm_rx_capacity_dropped / active) / k),
+            # deprecated aliases (kept for existing readers):
             "tx_attempts_per_uav": float(
                 np.mean(comm_tx_attempts / active) / k),
+            "rx_admitted_per_uav": float(
+                np.mean(comm_admitted_tx / active) / k),
             "rx_delivered_per_uav": float(
                 np.mean(comm_rx_delivered / active) / k),
             "rx_link_dropped_per_uav": float(
                 np.mean(comm_rx_link_dropped / active) / k),
             "rx_capacity_dropped_per_uav": float(
                 np.mean(comm_rx_capacity_dropped / active) / k),
-            # P0-C (advice/011 section 6): admitted sends whose airtime
-            # was charged, per active cycle; the split ledger is
-            # attempts = admitted + capacity_dropped and
-            # admitted = delivered + link_dropped.
-            "rx_admitted_per_uav": float(
-                np.mean(comm_admitted_tx / active) / k),
             # rx_load per ACTIVE cycle (P3.5-B, advice/009 section 15: the
             # accumulator is accumulated per cycle, so it must be divided
             # by the active cycles, not only by n_runs)

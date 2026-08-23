@@ -396,6 +396,68 @@ def test_density_admission_is_label_equivariant():
     assert order_p == [perm[uav] for uav in order]
 
 
+def test_p41_airtime_v2_matches_legacy_uncongested(
+        scenario, bounds, air_fair):
+    """P4.1 (advice/012): under the CRN tape the airtime-neutral v2 path
+    is EXACTLY the legacy independent-delivery path when the budget is
+    non-binding (rho<1): the delivered set is decided by the SAME
+    positional U_link cells, so delays are unchanged and only the split
+    ledger is added."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    from uav_otfs_isac.frids import simulate_frids_v2
+    q = scenario["q"]
+    k = int(scenario["k"])
+    n_runs = 80
+    tape = build_exogenous_tape(23, n_runs, q, k, 40)
+    b = bounds_v2(bounds, 3)
+    legacy = simulate_frids_v2(
+        scenario, b, n_runs=n_runs, seed=23, max_steps=40, exog=tape)
+    airtime = simulate_frids_v2(
+        scenario, b, n_runs=n_runs, seed=23, max_steps=40, exog=tape,
+        airtime=air_fair)
+    assert np.allclose(legacy["e1_delays"], airtime["e1_delays"])
+    assert np.allclose(legacy["pool"]["sum_h1_delay"],
+                       airtime["pool"]["sum_h1_delay"])
+    # the non-binding budget admits every offer, so no capacity drops
+    assert airtime["comm"]["capacity_dropped_tx_per_uav"] == 0.0
+    assert np.isclose(airtime["comm"]["offer_attempts_per_uav"],
+                      airtime["comm"]["admitted_tx_per_uav"], atol=1e-9)
+
+
+def test_p41_congested_split_ledger_identities(
+        scenario, bounds, air_cong):
+    """P4.1 (advice/012 section 5): under the shared airtime capacity the
+    split ledger identities hold for BOTH schedulers on the congested
+    regime: offers = admitted + capacity-dropped and
+    admitted = delivered + link-dropped."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    from uav_otfs_isac.ca_frids import simulate_ca_frids
+    from uav_otfs_isac.frids import simulate_frids_v2
+    q = scenario["q"]
+    k = int(scenario["k"])
+    n_runs = 80
+    tape = build_exogenous_tape(31, n_runs, q, k, 40)
+    b = bounds_v2(bounds, 3)
+    for out in (
+        simulate_frids_v2(
+            scenario, b, n_runs=n_runs, seed=31, max_steps=40, exog=tape,
+            airtime=air_cong),
+        simulate_ca_frids(
+            scenario, b, air_cong, n_runs=n_runs, seed=31, max_steps=40,
+            exog=tape),
+    ):
+        cm = out["comm"]
+        assert np.isclose(
+            cm["offer_attempts_per_uav"],
+            cm["admitted_tx_per_uav"]
+            + cm["capacity_dropped_tx_per_uav"], atol=1e-9)
+        assert np.isclose(
+            cm["admitted_tx_per_uav"],
+            cm["delivered_tx_per_uav"]
+            + cm["link_dropped_tx_per_uav"], atol=1e-9)
+
+
+
 def test_global_simplex_only_scalar_normalizer_is_networked():
     """P3.6 (advice/009 section 8): the only global quantity is the scalar
     ``Z = sum_p w_p`` -- the update has NO global ``rbar`` factor (the

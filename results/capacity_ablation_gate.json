@@ -1,0 +1,57 @@
+{
+  "gate": {
+    "d_steering_congested": -1.5351930096515591,
+    "d_admission_congested": -0.019442017589842358,
+    "j_v2_neutral_mean": 4.958110283031876,
+    "j_ca_neutral_mean": 3.4229172733803175,
+    "j_ca_density_mean": 3.4034752557904753,
+    "offer_vs_admitted_v2": 6.7955902777777775,
+    "offer_vs_admitted_ca_density": 0.15009657664866005
+  },
+  "params": {
+    "geoms": 3,
+    "mc_seeds": 4,
+    "n_runs": 150,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "price_mode": "global_simplex",
+    "admission_primitive": "airtime_admit (sum tau/T_air <= 1)",
+    "arms": [
+      "v2+neutral",
+      "CA+neutral",
+      "CA+density"
+    ]
+  },
+  "cells": [
+    {
+      "geom": 0,
+      "j_v2_neutral": 4.017064846416382,
+      "j_ca_neutral": 2.847457627118644,
+      "j_ca_density": 2.8101694915254236,
+      "offers_v2": 15.0,
+      "admitted_v2": 8.204895833333333,
+      "offers_ca_d": 0.8229281543109669,
+      "admitted_ca_d": 0.6825393518518519
+    },
+    {
+      "geom": 1,
+      "j_v2_neutral": 5.633898305084746,
+      "j_ca_neutral": 3.8508474576271188,
+      "j_ca_density": 3.8813559322033897,
+      "offers_v2": 15.0,
+      "admitted_v2": 8.113229166666667,
+      "offers_ca_d": 0.8470168913840789,
+      "admitted_ca_d": 0.6939744581228955
+    },
+    {
+      "geom": 2,
+      "j_v2_neutral": 5.223367697594502,
+      "j_ca_neutral": 3.570446735395189,
+      "j_ca_density": 3.5189003436426116,
+      "offers_v2": 15.0,
+      "admitted_v2": 8.295104166666667,
+      "offers_ca_d": 0.9340825144184519,
+      "admitted_ca_d": 0.7772240201927701
+    }
+  ]
+}
