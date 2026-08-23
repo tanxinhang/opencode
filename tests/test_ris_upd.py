@@ -37,4 +37,8 @@ def test_upd_gain_matrix_shape_and_lower_bound():
         phase_per_target=phases,
     )
     assert gain.shape == (3, 4)
-    assert np.all(gain >= 1.0)
+    # P1-1: clean targets keep the >= 1 floor; the blocked weak target is
+    # ``direct_blockage + P_ris/P_dir`` and stays below 1.
+    strong = np.delete(gain, 2, axis=0)
+    assert np.all(strong >= 1.0)
+    assert np.all(gain[2] >= 0.01)

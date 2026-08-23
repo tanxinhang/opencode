@@ -93,14 +93,15 @@ def upd_physics_gain_matrix(
             ris_target = float(np.linalg.norm(config.position - target))
             if min(tx_target, target_rx, tx_ris, ris_target) == 0.0:
                 raise ValueError("degenerate zero-length channel path")
-            direct = 1.0 / (tx_target**2 * target_rx**2)
-            if config.weak_target_id == q:
-                direct *= direct_blockage
+            direct_power = 1.0 / (tx_target**2 * target_rx**2)
+            direct_gain = (
+                direct_blockage if q == config.weak_target_id else 1.0
+            )
             ris_power = (
                 config.num_elements**2
                 * array_gain**2
                 * aperture_scale
                 / (tx_ris**2 * ris_target**2 * target_rx**2)
             )
-            gains[q, i] = 1.0 + ris_power / max(direct, 1e-30)
+            gains[q, i] = direct_gain + ris_power / max(direct_power, 1e-30)
     return gains

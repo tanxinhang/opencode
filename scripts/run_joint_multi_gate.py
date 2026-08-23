@@ -252,6 +252,12 @@ def run_gate(*, output: Path, seeds: int, budgets, grid: int) -> None:
 
     payload = {
         "gate": "multi-target-exact-joint-bit-allocation",
+        # P1-2: this oracle prices quantizer PAYLOAD bits only.  The mainline
+        # G4/G5 ledger charges b_i = payload + 2 transmitted bits per
+        # non-owner report (owner free); budgets here are NOT comparable to
+        # the mainline budgets without the +2 conversion.
+        "units": "quantizer payload bits (toy oracle; mainline ledger charges "
+                 "payload + 2 per non-owner report)",
         "seeds": seeds,
         "grid": grid,
         "rows": rows,

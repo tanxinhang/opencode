@@ -300,6 +300,76 @@ def test_single_target_owner_price_can_still_change_globally():
     assert y[1] > 0.0 and y[2] > 0.0
 
 
+def test_crn_tape_deterministic_and_reproducible(scenario, bounds, air_fair):
+    """P0-2 (advice/010): the exogenous tape is deterministic and
+    reproducible, so a scheduler run with a tape is byte-identical across
+    two builds of the same tape."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    q = scenario["q"]
+    k = int(scenario["k"])
+    b = bounds_v2(bounds, 3)
+    a1 = simulate_ca_frids(scenario, b, air_fair, n_runs=60, seed=5,
+                           max_steps=40,
+                           exog=build_exogenous_tape(7, 60, q, k, 40))
+    a2 = simulate_ca_frids(scenario, b, air_fair, n_runs=60, seed=5,
+                           max_steps=40,
+                           exog=build_exogenous_tape(7, 60, q, k, 40))
+    assert a1["worst_target_delay"] == a2["worst_target_delay"]
+    assert np.allclose(a1["pool"]["sum_h1_delay"],
+                       a2["pool"]["sum_h1_delay"])
+    assert np.allclose(a1["pool"]["sum2_h1_delay"],
+                       a2["pool"]["sum2_h1_delay"])
+
+
+def test_crn_tape_shares_target_presence_between_v2_and_ca(
+        scenario, bounds, air_fair):
+    """P0-2 (advice/010): FRIDS-v2 and CA-FRIDS read the SAME tape H, so
+    the per-target H1 denominators agree and the paired comparison is over
+    identical exogenous presence draws."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    from uav_otfs_isac.frids import simulate_frids_v2
+    q = scenario["q"]
+    k = int(scenario["k"])
+    n_runs = 80
+    tape = build_exogenous_tape(9, n_runs, q, k, 40)
+    b = bounds_v2(bounds, q)
+    out_v2 = simulate_frids_v2(scenario, b, n_runs=n_runs, seed=9,
+                               max_steps=40, exog=tape)
+    out_ca = simulate_ca_frids(scenario, b, air_fair, n_runs=n_runs, seed=9,
+                               max_steps=40, exog=tape)
+    expected = [int(np.sum(tape.U_H[:, qq] < 0.5)) for qq in range(q)]
+    assert out_v2["pool"]["n_h1"] == expected
+    assert out_ca["pool"]["n_h1"] == expected
+    assert out_v2["pool"]["n_h1"] == out_ca["pool"]["n_h1"]
+
+
+def test_pool_ledger_is_per_target_pooled():
+    """P0-5 (advice/010 section 3): the ``pool`` block carries raw
+    per-target H1 counts and delay sums so a geometry can compute
+    J_g = max_q sum_h1_delay[q]/n_h1[q] without the per-cell
+    worst-then-average selection bias."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    rng = np.random.default_rng(11)
+    sc = build_distributed_scenario(rng, k_uavs=6, q_targets=3)
+    bt = calibrate_target_bounds(sc, n_runs=40, seed=100, verify_runs=0)
+    b = bounds_v2(bt, 3)
+    am = build_airtime_model(sc, rho_target=0.5)
+    q = sc["q"]
+    k = int(sc["k"])
+    tape = build_exogenous_tape(13, 50, q, k, 40)
+    out = simulate_ca_frids(sc, b, am, n_runs=50, seed=13, max_steps=40,
+                            exog=tape)
+    pool = out["pool"]
+    assert len(pool["n_h1"]) == q
+    assert all(int(v) >= 0 for v in pool["n_h1"])
+    assert all(float(v) >= 0.0 for v in pool["sum_h1_delay"])
+    # every H1 run has a positive delay, so sum/n in [1, max_steps]
+    for count, total in zip(pool["n_h1"], pool["sum_h1_delay"]):
+        if count > 0:
+            mean = total / count
+            assert 1.0 <= mean <= 40.0
+
+
 def test_global_simplex_only_scalar_normalizer_is_networked():
     """P3.6 (advice/009 section 8): the only global quantity is the scalar
     ``Z = sum_p w_p`` -- the update has NO global ``rbar`` factor (the

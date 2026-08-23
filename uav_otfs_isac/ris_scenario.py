@@ -199,10 +199,12 @@ def ris_physics_gain_matrix(
 
     ``P_ris = N^2 array_gain^2 aperture_scale / (R_1^2 R_2^2 R_3^2)``.
 
-    The evidence SNR gain is ``1 + P_ris / P_dir``, with an optional
-    ``direct_blockage`` factor that reduces the direct path of the weak
-    target.  The channel is monotone in array alignment and never reduces a
-    link, matching the sensing principle used by the controlled G5 model.
+    The evidence SNR gain is ``1 + P_ris / P_dir`` for a clean link and
+    ``direct_blockage + P_ris / P_dir`` for the weak target: the blockage
+    attenuates ONLY the direct term, while the RIS boost stays referenced
+    to the unblocked ``P_dir``.  The channel never amplifies a link beyond
+    its clean baseline and never reduces a link below its blocked floor
+    (array alignment only ever adds RIS power).
     """
     transmitters = [np.asarray(position, dtype=float) for position in transmitter_positions]
     targets = [np.asarray(position, dtype=float) for position in target_positions]
@@ -231,8 +233,9 @@ def ris_physics_gain_matrix(
             if min(tx_target, target_rx, tx_ris, ris_target) == 0.0:
                 raise ValueError("degenerate zero-length channel path")
             direct_power = 1.0 / (tx_target**2 * target_rx**2)
-            if config.weak_target_id == target_index:
-                direct_power *= direct_blockage
+            direct_gain = (
+                direct_blockage if config.weak_target_id == target_index else 1.0
+            )
             ris_power = (
                 config.num_elements**2
                 * array_gain_value**2
@@ -240,7 +243,7 @@ def ris_physics_gain_matrix(
                 / (tx_ris**2 * ris_target**2 * target_rx**2)
             )
             gains[target_index, transmitter_index] = (
-                1.0 + ris_power / max(direct_power, 1e-30)
+                direct_gain + ris_power / max(direct_power, 1e-30)
             )
     return gains
 

@@ -53,4 +53,8 @@ def test_shared_phase_gain_matrix_shape_and_lower_bound():
         aperture_scale=1e-2, phase=phase,
     )
     assert gain.shape == (3, 2)
-    assert np.all(gain >= 1.0)
+    # P1-1: the blocked weak target is ``direct_blockage + P_ris/P_dir``
+    # and stays below the clean baseline; clean rows keep the >= 1 floor.
+    strong = np.delete(gain, config.weak_target_id, axis=0)
+    assert np.all(strong >= 1.0)
+    assert np.all(gain[config.weak_target_id] >= 0.01)

@@ -76,10 +76,11 @@ def multi_ris_physics_gain_matrix(
             tx_target = float(np.linalg.norm(transmitter - target))
             target_rx = float(np.linalg.norm(target - receiver))
             direct_power = 1.0 / (tx_target**2 * target_rx**2)
-            if any(
-                ris.weak_target_id == q for ris in ris_configs
-            ):
-                direct_power *= direct_blockage
+            direct_gain = (
+                direct_blockage
+                if any(ris.weak_target_id == q for ris in ris_configs)
+                else 1.0
+            )
             ris_power = 0.0
             for ris, phases in zip(ris_configs, phases_per_ris):
                 if len(phases) != len(targets):
@@ -99,5 +100,5 @@ def multi_ris_physics_gain_matrix(
                     * aperture_scale
                     / (tx_ris**2 * ris_target**2 * target_rx**2)
                 )
-            gains[q, i] = 1.0 + ris_power / max(direct_power, 1e-30)
+            gains[q, i] = direct_gain + ris_power / max(direct_power, 1e-30)
     return gains

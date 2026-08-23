@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from uav_otfs_isac.crn_tape import ExogenousTape, draw_atom
 from uav_otfs_isac.difficulty_decomposition import d_kl_binary
 from uav_otfs_isac.distributed_audit import (
     quantize_llr,
@@ -63,18 +64,21 @@ def _global_simplex(mu: float, ratios: np.ndarray, y: np.ndarray,
     which the owner-local per-owner simplex of CA-v0 breaks (advice/009
     section 6: with M active owners the v0 prices sum to ``M``, and a
     single-target owner is frozen at ``y_q = 1``)."""
-    # log-sum-exp safe form (advice/009 section 10 normalized-step hint):
-    # max-shift ``r`` before exponentiating, so ``exp(-mu r)`` lives in
-    # the stable tail and the common factor ``e^{-mu*max r}`` cancels in
-    # the simplex -- the update is exactly invariant to adding any
-    # constant to every ratio (``rbar`` is never needed), and no absolute
-    # floor can distort the result.
+    # P3.6-R (advice/010 section 11): STANDARD log-sum-exp in log space.
+    # ``ell_q = log y_q - mu * r_q`` then ``ell_q <- ell_q - max_p ell_p``
+    # before exponentiating -- this is the numerically-safe softmax tail
+    # (the previous max-shift of ``r`` could still exponentiate a large
+    # positive ``-mu*(r-rmax)`` when ``mu`` is large; log-space centering
+    # centres the FULL argument, not just ``r``).  The update is exactly
+    # invariant to adding any constant to every ``log w_q``, so the
+    # global ``log Z`` (and ``rbar``) never needs to be known -- only the
+    # scalar normaliser ``Z`` of the price bus is a networked quantity.
     und = list(undecided)
     if not und:
         return y.copy()
-    rmax = float(np.max(ratios[und]))
-    r_shift = ratios[und] - rmax
-    w = y[und] * np.exp(-mu * r_shift)
+    ell = np.log(np.clip(y[und], 1e-300, None)) - mu * ratios[und]
+    ell = ell - float(np.max(ell))
+    w = np.exp(ell)
     Z = float(np.sum(w))
     out = y.copy()
     out[und] = w / max(Z, 1e-300)
@@ -149,15 +153,23 @@ def _best_g_matrix(scenario, owner_of, s_for_g, power_cap):
 
 def _quantize_price(v: np.ndarray, lo: float, hi: float,
                     bits: int) -> np.ndarray:
-    """Uniform mid-rise quantization of a broadcast price vector over a
-    PRE-REGISTERED range (the price error bound for the action-
-    invariance certificate is ``eps = (hi-lo)/2^bits``)."""
+    """P3.6-R (advice/010 section 11): uniform MID-TREAD quantization of a
+    broadcast price vector over a PRE-REGISTERED range ``[lo, hi]``.
+
+    ``lo`` is EXACTLY one of the ``2^bits`` levels (codeword ``0`` prints
+    the true ``lo``), so a zero ``lambda`` (the structural no-congestion
+    state) broadcasts as EXACTLY ``0`` instead of a half-bin ``lo+step/2``
+    -- the mid-rise quantizer would keep a phantom congestion price at
+    ``lambda == 0``, which is a price-plane systematic error.  The
+    action-invariance error bound is still ``step = (hi-lo)/2^bits``."""
     levels = int(2 ** max(0, int(bits)))
+    if levels <= 1:
+        return np.full_like(v, lo, dtype=float)
     step = (hi - lo) / max(levels, 1)
     x = np.clip(v, lo, hi - 1e-9)
     idx = np.floor((x - lo) / step).astype(int)
     idx = np.clip(idx, 0, levels - 1)
-    return lo + (idx + 0.5) * step
+    return lo + idx * step
 
 
 def _audit_cycle(act_lists, choices, ideal, perturbed, g_max, c_max,
@@ -210,6 +222,7 @@ def simulate_ca_frids(
     price_mode: str = "owner_local",
     audit: bool = False,
     raw_counts: bool = False,
+    exog: ExogenousTape | None = None,
 ) -> dict:
     """MC run of the CA-FRIDS Dual-Bus scheduler (advice/008 P3.2).
 
@@ -270,6 +283,16 @@ def simulate_ca_frids(
     comm_max_ratio = np.zeros(n_runs)
     comm_feasible = np.zeros(n_runs)
     comm_cycles = np.zeros(n_runs)
+    # P3.6-R (advice/010 section 4): the CONTROL plane is a real comm
+    # cost that the evidence ledger never counted.  Every cycle the
+    # Dual-Bus broadcasts ``Q`` task prices ``pi_q`` and ``K`` receiver
+    # airtime prices ``lambda_j`` (plus the global-simplex scalar ``Z``
+    # normaliser in ``global_simplex`` mode -- here counted as one extra
+    # scalar worth of ``pi_bits``).  The evidence ledger above only
+    # counts token transmissions, so the control overhead must be added
+    # separately to report the SYSTEM total (advice/010: 8*10+16*10 =
+    # 240 bits/cycle at Q=8, K=16, b=10).
+    comm_control_bits = np.zeros(n_runs)
     aud = {
         "margin_ok": 0.0, "margin_total": 0.0,
         "action_change": 0.0, "action_total": 0.0, "n_cycles": 0.0,
@@ -282,7 +305,11 @@ def simulate_ca_frids(
 
     for r in range(n_runs):
         rng_r = np.random.default_rng([seed, r])
-        H = rng_r.random(q) < 0.5
+        # CRN (advice/010 P0-2): the shared tape drives target presence so
+        # FRIDS-v2 and CA-FRIDS evaluate the SAME H[r, q]; legacy keeps the
+        # per-run stream.
+        H = (exog.U_H[r] < 0.5) if exog is not None \
+            else (rng_r.random(q) < 0.5)
         H_all[r] = H
         L = np.zeros((k, q))
         decided = np.zeros(q, dtype=bool)
@@ -297,6 +324,13 @@ def simulate_ca_frids(
             if not undecided:
                 break
             comm_cycles[r] += 1.0
+            # control-plane overhead (advice/010 section 4): Q pi prices,
+            # K lambda prices, plus the global-simplex scalar ``Z`` in the
+            # global-simplex mode (one scalar at pi resolution)
+            comm_control_bits[r] += (q * max(pi_bits, 1)
+                                     + k * max(lam_bits, 1)
+                                     + (max(pi_bits, 1) if price_mode
+                                        == "global_simplex" else 0))
             # task-price plane: owner-anchored prices, then broadcast
             D = np.maximum(a_thr - np.array(
                 [L[owner_of[qq], qq] for qq in range(q)]), 0.0)
@@ -349,8 +383,17 @@ def simulate_ca_frids(
                 if c is None:
                     continue
                 qq, g_eff, c_air, i_plus, rel, act, score_b = c
-                y_obs = int(rng_r.choice(len(act["p1"]),
-                                         p=act["p1"] if H[qq] else act["p0"]))
+                # CRN: same base observation uniform mapped through the
+                # kernel this scheduler chose (legacy uses rng_r.choice).
+                y_obs = (
+                    draw_atom(
+                        act["p1"] if H[qq] else act["p0"],
+                        float(exog.U_obs[r, t, uav, qq]),
+                    )
+                    if exog is not None
+                    else int(rng_r.choice(len(act["p1"]),
+                                          p=act["p1"] if H[qq] else act["p0"]))
+                )
                 llr_obs = (quantize_with(quantizer, float(act["llr"][y_obs]))
                            if quantizer is not None
                            else quantize_llr(float(act["llr"][y_obs])))
@@ -396,8 +439,16 @@ def simulate_ca_frids(
             for owner, off in offers.items():
                 if not off:
                     continue
-                # density J^+/c, descending; exchangeable ties by rng_r
-                off.sort(key=lambda o: -o[3] / max(o[2], 1e-15))
+                # density J^+/c, descending; exchangeable ties via the tape
+                # uniform when the CRN tape is present (legacy keeps the
+                # plain density order, so no old result changes).
+                if exog is not None:
+                    off.sort(key=lambda o: (
+                        -o[3] / max(o[2], 1e-15),
+                        -float(exog.U_adm[r, t, o[0]]),
+                    ))
+                else:
+                    off.sort(key=lambda o: -o[3] / max(o[2], 1e-15))
                 used = 0.0
                 for (uav, qq, c_air, score_b, c) in off:
                     if used + c_air <= 1.0 + 1e-12:
@@ -420,8 +471,15 @@ def simulate_ca_frids(
                     continue
                 # the physical Bernoulli is drawn for every ADMITTED
                 # token (its airtime was already spent -- the link outage
-                # is NOT a capacity loss, P3.5-B ledger)
-                if rng_r.random() <= delivery[uav, owner]:
+                # is NOT a capacity loss, P3.5-B ledger); with the CRN tape
+                # the SAME (src, owner) link uniform drives v2 and CA.
+                delivered = (
+                    exog is not None
+                    and float(exog.U_link[r, t, uav, owner])
+                    <= delivery[uav, owner]
+                ) or (exog is None
+                      and rng_r.random() <= delivery[uav, owner])
+                if delivered:
                     L[owner, qq] += obs_llr[uav]
                     S[qq] += obs_iplus[uav]
                     comm_rx_delivered[r] += 1.0
@@ -502,6 +560,16 @@ def simulate_ca_frids(
         "p_fa": p_fa,
         "p_md": p_md,
         "infeasible_cycle_fraction": [0.0] * q,
+        # pooled-J (advice/010 P0-5): raw per-target H1 delay statistics
+        # pooled across ALL runs of this cell (geometry-level pooled
+        # worst-target E[T_q | H1] = max_q sum_h1_delay[q]/n_h1[q]).
+        "pool": {
+            "n_h1": [int(np.sum(H_all[:, qq])) for qq in range(q)],
+            "sum_h1_delay": [float(np.sum(delays[H_all[:, qq], qq]))
+                             for qq in range(q)],
+            "sum2_h1_delay": [float(np.sum(delays[H_all[:, qq], qq] ** 2))
+                              for qq in range(q)],
+        },
         "comm": {
             "airtime_per_cycle": float(np.mean(comm_airtime / active)),
             # P3.5-B ledger (advice/009 section 15): a TRANSMISSION attempt
@@ -523,6 +591,12 @@ def simulate_ca_frids(
             "max_load_ratio": float(np.mean(comm_max_ratio)),
             "budget_feasible_fraction": float(
                 np.mean(comm_feasible / active)),
+            # P3.6-R (advice/010 section 4): the control plane cost per
+            # cycle -- Q task prices, K airtime prices, plus one global
+            # simplex scalar (global_simplex mode).  The evidence ledger
+            # alone would under-report the SYSTEM communication cost.
+            "control_bits_per_cycle": float(
+                np.mean(comm_control_bits / active)),
         },
     }
     if audit:

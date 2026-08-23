@@ -47,9 +47,16 @@ and a three-leg cascaded loss for the RIS path,
 `P_ris = N_ris^2 array_gain(theta)^2 aperture_scale /
          (R_1^2 R_2^2 R_3^2)`,
 
-so the evidence SNR gain is `1 + P_ris / P_dir`, with an optional direct-path
-blockage for the weak target.  Both models are monotone in array alignment
-and never reduce a link's evidence SNR.
+so the evidence SNR gain is `1 + P_ris / P_dir`.  The weak target has an
+optional direct-path blockage that attenuates ONLY the direct term:
+
+`gain_weak = direct_blockage + P_ris / P_dir`,
+
+with `direct_blockage in (0, 1]`; the RIS boost stays referenced to the
+unblocked `P_dir` and never re-scales the ratio by `1/direct_blockage`.
+The channel is monotone in array alignment, never amplifies a clean link
+above `1 + P_ris/P_dir`, and never drops a blocked link below
+`direct_blockage` (array alignment only ever adds RIS power).
 
 ## 4. OTFS evidence moments
 
@@ -64,7 +71,10 @@ and never reduce a link's evidence SNR.
 
 ## 5. Reporting channel
 
-- Per-UAV report cost `b_i` bits; quantization levels `2^{b_i}`.
+- Per-UAV payload has `p_i` quantizer bits with `2^{p_i}` levels; the
+  transmitted report cost is `b_i = p_i + 2` bits (packet overhead; the
+  owner's own report costs `b_owner = 0`).  The BSC acts on the payload
+  word, so quantization levels are `2^{p_i} = 2^{b_i - 2}`, not `2^{b_i}`.
 - BSC transition with bit-flip probability `epsilon_i`.
 - Detectable erasure modeled by the reception law `gamma` over the scheduled
   report set, which may be independent, common-state, or grouped.
@@ -121,7 +131,9 @@ maximize expected-`P_D` gain per report bit.
 
 ## 8. Resource identities
 
-- Report bits: `B_report = sum_q sum_{i in S_q} b_i`.
+- Report bits: `B_report = sum_q sum_{i in S_q} b_i`, where `b_i = p_i + 2`
+  is the transmitted report cost in section 5 (`p_i` quantizer payload bits
+  plus 2 overhead bits) and the owner contributes `b_owner = 0`.
 - RIS control bits (amortized): `B_control = N_ris * phase_bits /
   coherence_frames`.
 - Total bits per frame: `B_total = B_report + B_control`.

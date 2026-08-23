@@ -205,6 +205,12 @@ def run_gate(*, output: Path, seeds: int, budgets, grid: int) -> None:
 
     payload = {
         "gate": "quantization-variable-vs-fixed",
+        # P1-2: this study prices quantizer PAYLOAD bits only.  The mainline
+        # G4/G5 ledger charges b_i = payload + 2 transmitted bits per
+        # non-owner report (owner free); budgets here are NOT comparable to
+        # the mainline budgets without the +2 conversion.
+        "units": "quantizer payload bits (toy line; mainline ledger charges "
+                 "payload + 2 per non-owner report)",
         "seeds": seeds,
         "grid": grid,
         "rows": rows,

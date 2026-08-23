@@ -56,6 +56,60 @@ def test_variable_report_bits_change_model():
     assert not np.allclose(variable[0].mu1, baseline[0].mu1)
 
 
+def test_report_bits_are_payload_plus_two_and_owner_free():
+    """P1-2 regression: the ledger denomination is
+    ``report_bits = quantizer_bits + 2`` for every non-owner UAV and
+    exactly 0 for the owner, so ``B_report`` always uses transmitted bits
+    and the quantization levels stay ``2^{report_bits - 2}``."""
+    cfg = load_config("config/demo.yaml")
+    models = build_models(cfg, np.random.default_rng(cfg.seed))
+    for model in models:
+        non_owner = [u for u in range(model.num_uavs) if u != model.owner]
+        assert int(model.report_bits[model.owner]) == 0
+        assert np.all(model.report_bits[non_owner]
+                      == cfg.quantizer_bits + 2), (
+            "report cost b_i must be payload bits + 2 in every model"
+        )
+
+
+def test_comm_noise_only_decorrelates_and_owner_block_is_invariant():
+    """P1-3 regression: per-UAV BSC/quantization noise is independent, so
+    higher flip probabilities must strictly reduce the modelled post-comm
+    correlation between two non-owner UAVs (never pin it), and the owner
+    block (moment + row/column) must be invariant to the communication
+    channel (SYSTEM_MODEL section 5)."""
+    cfg = load_config("config/demo.yaml")
+    n = cfg.num_uavs
+    q = cfg.num_targets
+    success = np.full((q, n), 0.9)
+    flip_lo = np.full((q, n), 0.001)
+    flip_hi = np.full((q, n), 0.08)
+    low = build_models(
+        cfg, np.random.default_rng(1),
+        report_bit_flip_probabilities=flip_lo,
+        report_success_probabilities=success,
+    )
+    high = build_models(
+        cfg, np.random.default_rng(1),
+        report_bit_flip_probabilities=flip_hi,
+        report_success_probabilities=success,
+    )
+    for m_lo, m_hi in zip(low, high):
+        owner = m_lo.owner
+        pair = [u for u in range(n) if u != owner][:2]
+        i, j = pair
+        r_lo = m_lo.sigma0[i, j] / np.sqrt(m_lo.sigma0[i, i] * m_lo.sigma0[j, j])
+        r_hi = m_hi.sigma0[i, j] / np.sqrt(m_hi.sigma0[i, i] * m_hi.sigma0[j, j])
+        # P1-3: more comm noise must reduce (never raise) the correlation
+        assert m_hi.sigma0[i, i] > m_lo.sigma0[i, i]
+        assert r_hi <= r_lo + 1e-12
+        # owner block invariant to communication-channel parameters
+        assert np.allclose(m_lo.mu0[owner], m_hi.mu0[owner])
+        assert np.allclose(m_lo.mu1[owner], m_hi.mu1[owner])
+        assert np.allclose(m_lo.sigma0[owner], m_hi.sigma0[owner])
+        assert np.allclose(m_lo.sigma0[:, owner], m_hi.sigma0[:, owner])
+
+
 def test_interference_reduces_deflection():
     cfg = load_config("config/demo.yaml")
     rng = np.random.default_rng(cfg.seed)

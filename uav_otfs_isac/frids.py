@@ -40,6 +40,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from uav_otfs_isac.crn_tape import ExogenousTape, draw_atom
 from uav_otfs_isac.distributed_audit import (
     calibrate_target_bounds,
     quantize_llr,
@@ -408,6 +409,7 @@ def simulate_frids_v2(
     bridge: bool = False,
     rx_cap_tokens: np.ndarray | None = None,
     raw_counts: bool = False,
+    exog: ExogenousTape | None = None,
 ) -> dict:
     """FRIDS-v2 (advice/010): demand-normalized primal + dual-consistent
     mirror descent, strictly distributed.
@@ -610,7 +612,10 @@ def simulate_frids_v2(
     power_cycles = 0.0
 
     for r in range(n_runs):
-        H = rng.random(q) < 0.5
+        # CRN tape (advice/010 P0-2): both schedulers read the SAME target
+        # presence uniforms; legacy keeps the sequential stream.
+        H = (exog.U_H[r] < 0.5) if exog is not None \
+            else (rng.random(q) < 0.5)
         H_all[r] = H
         L = np.zeros((k, q))
         decided = np.zeros(q, dtype=bool)
@@ -629,8 +634,13 @@ def simulate_frids_v2(
             # frozen-policy mobility: bounded random walk of the evidence
             if mfac is not None:
                 m = float(mobility)
-                mfac = np.clip(mfac + rng.uniform(-m, m, (k, q)),
-                               1.0 - m, 1.0 + m)
+                # CRN: the frozen-mobility walk uses the pre-registered
+                # tape uniforms when supplied (legacy keeps rng.uniform).
+                mfac = np.clip(
+                    mfac + ((-m + 2.0 * m * exog.U_mfac[r, t])
+                            if exog is not None
+                            else rng.uniform(-m, m, (k, q))),
+                    1.0 - m, 1.0 + m)
             g_eff = g_mat if mfac is None else g_mat * mfac
             # per-UAV local deficit from its OWN belief
             D_loc = np.maximum(
@@ -684,7 +694,13 @@ def simulate_frids_v2(
                     continue
                 qq, act = choice
                 p = act["p1"] if H[qq] else act["p0"]
-                y_obs = int(rng.choice(len(p), p=p))
+                # CRN: same base observation uniform mapped through whatever
+                # kernel this scheduler chose (legacy uses rng.choice).
+                y_obs = (
+                    draw_atom(p, float(exog.U_obs[r, t, uav, qq]))
+                    if exog is not None
+                    else int(rng.choice(len(p), p=p))
+                )
                 llr_obs = (quantize_with(quantizer,
                                          float(act["llr"][y_obs]))
                            if quantizer is not None
@@ -707,7 +723,11 @@ def simulate_frids_v2(
                     for neighbor in range(k):
                         if neighbor == uav:
                             continue
-                        if rng.random() > delivery[uav, neighbor]:
+                        if (exog is not None
+                                and exog.U_link[r, t, uav, neighbor]
+                                > delivery[uav, neighbor]) or (
+                            exog is None
+                            and rng.random() > delivery[uav, neighbor]):
                             continue
                         if not decided[qq]:
                             L[neighbor, qq] += obs_llr[uav]
@@ -731,7 +751,11 @@ def simulate_frids_v2(
                     for neighbor in range(k):
                         if neighbor == uav:
                             continue
-                        if rng.random() > delivery[uav, neighbor]:
+                        if (exog is not None
+                                and exog.U_link[r, t, uav, neighbor]
+                                > delivery[uav, neighbor]) or (
+                            exog is None
+                            and rng.random() > delivery[uav, neighbor]):
                             continue
                         offer[neighbor].append(uav)
                 admit = [[] for _ in range(k)]
@@ -744,19 +768,35 @@ def simulate_frids_v2(
                     theta = cap - m_i
                     keep = offered
                     if len(offered) > m_i:
-                        idx = rng.choice(len(offered), size=m_i,
-                                         replace=False)
-                        keep = [offered[i] for i in sorted(idx)]
-                    if theta > 0.0 and len(offered) > m_i \
-                            and rng.random() < theta:
+                        # CRN: the m_i subsample is selected by the same
+                        # pre-registered admission uniforms when the tape is
+                        # present; legacy keeps rng.choice.
+                        if exog is not None:
+                            order = np.argsort(exog.U_adm[r, t, offered])
+                            keep = [offered[i] for i in order[:m_i]]
+                        else:
+                            idx = rng.choice(len(offered), size=m_i,
+                                             replace=False)
+                            keep = [offered[i] for i in sorted(idx)]
+                    theta_gate = (
+                        exog is not None
+                        and float(exog.U_adm[r, t, nb]) < theta
+                    ) or (exog is None and rng.random() < theta) \
+                        and theta > 0.0 and len(offered) > m_i
+                    if theta_gate:
                         extra = [u for u in offered if u not in keep]
                         if extra and len(keep) < len(offered):
                             # P1-14 (advice/009 section 14): the fractional
-                            # extra slot must be chosen EXCHANGEABLY --
-                            # ``rng.choice``, not ``extra[0]`` (the fixed
-                            # index pickup biases low-index UAVs whenever
-                            # sender index correlates with geometry)
-                            keep = keep + [int(rng.choice(extra))]
+                            # extra slot must be chosen EXCHANGEABLY.
+                            # With the tape, the exchangeable pick is the
+                            # same pre-registered uniform (legacy rng.choice).
+                            if exog is not None:
+                                pick = extra[int(exog.U_adm_extra[r, t, nb]
+                                                 * len(extra))]
+                                pick = int(pick)
+                            else:
+                                pick = int(rng.choice(extra))
+                            keep = keep + [pick]
                     admit[nb] = keep
                 for nb in range(k):
                     for uav in admit[nb]:
@@ -870,6 +910,18 @@ def simulate_frids_v2(
         "p_fa": p_fa,
         "p_md": p_md,
         "infeasible_cycle_fraction": [0.0] * q,
+    }
+    # pooled-J (advice/010 P0-5): raw per-target H1 delay statistics pooled
+    # across ALL runs of this cell, so a geometry can compute the pooled
+    # worst-target E[T_q | H1] = max_q sum_h1_delay[q]/n_h1[q] without the
+    # per-run worst-then-average selection bias (E[max_q hatT_q] >=
+    # max_q E[hatT_q]).
+    out["pool"] = {
+        "n_h1": [int(np.sum(H_all[:, qq])) for qq in range(q)],
+        "sum_h1_delay": [float(np.sum(delays[H_all[:, qq], qq]))
+                         for qq in range(q)],
+        "sum2_h1_delay": [float(np.sum(delays[H_all[:, qq], qq] ** 2))
+                          for qq in range(q)],
     }
     if audit:
         out["audit"] = {

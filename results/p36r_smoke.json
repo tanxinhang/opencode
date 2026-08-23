@@ -1,0 +1,265 @@
+{
+  "gate": {
+    "uncongested_regression_mean": -0.018817499762861557,
+    "uncongested_regression_ci95": [
+      -0.025347464274905973,
+      -0.006100104039785033
+    ],
+    "no_regression_uncongested_ucb": true,
+    "congested_improvement_mean": 0.1818167913244314,
+    "congested_improvement_ci95": [
+      0.14940577249575554,
+      0.2258064516129032
+    ],
+    "congested_win_5pct_lcb": true,
+    "qos_all_pass": false,
+    "qos_count": {
+      "PASS": 0,
+      "FAIL": 0,
+      "UNCERTAIN": 6
+    },
+    "qos_any_fail": false,
+    "qos_any_uncertain": true,
+    "adopt_ca": false,
+    "verdict": "FRIDS-v2 stays the frozen core; joint capacity + phase law remain the paper contributions"
+  },
+  "params": {
+    "scale": [
+      16,
+      8
+    ],
+    "n_runs": 150,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "pi_bits": 10,
+    "lam_bits": 10,
+    "uncongested_rho": 0.5,
+    "congested_rho": 1.8,
+    "price_mode": "global_simplex",
+    "git_sha": "282ef84",
+    "seed_scheme": "CRN exogenous tape (advice/010 P0-2): shared U_H/U_obs/U_link per (r,t)",
+    "capacity_model": "v2: independent delivery / hard token cap (rx_cap_tokens); CA: airtime budget sum tau <= T_air (distinct capacity primitives remain a documented open item)",
+    "evidence_mode": "owner-only evidence plane (Dual-Bus)",
+    "crn_tape": true,
+    "objective": "geometry-pooled worst-target E[T|H1] (advice/010 P0-5)",
+    "protocol": [
+      "FIXED calibrated policy B (delta 1, same stopping policy for both schedulers -- the fair scheduler-only comparison)",
+      "raw conditional counts, simultaneous Clopper-Pearson confidence (P2.1a, advice/008 s13)",
+      "uncongested: joint index must not regress (<=2%)",
+      "congested: >=5% worst-delay win and certified QoS",
+      "airtime price + idle option (Lemma 4.99)",
+      "evidence plane to owner only (Dual-Bus)"
+    ],
+    "frozen": [
+      "FRIDS-v2",
+      "fixed owner",
+      "two-threshold stopping",
+      "calibrated policy-matched B"
+    ]
+  },
+  "runtime_s": 115.2,
+  "scenarios": [
+    {
+      "geom": 0,
+      "regime": "uncongested",
+      "v2": {
+        "J": 3.1129227053140096,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.02898550724637683
+      },
+      "ca": {
+        "J": 3.004528985507246,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.026666666666666616
+      },
+      "j_v2": [
+        3.0869565217391304,
+        3.138888888888889
+      ],
+      "j_ca": [
+        2.8840579710144927,
+        3.125
+      ],
+      "j_v2_pooled": 3.089041095890411,
+      "j_ca_pooled": 3.0,
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 0.5,
+        "v2_tx": 1.0,
+        "ca_tx": 0.8617818963443964,
+        "ca_control_bits_per_cycle": 250.0,
+        "ca_feasible": 1.0
+      }
+    },
+    {
+      "geom": 0,
+      "regime": "congested",
+      "v2": {
+        "J": 3.5201489686783805,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.040000000000000036
+      },
+      "ca": {
+        "J": 2.904891304347826,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.014925373134328401
+      },
+      "j_v2": [
+        3.4558823529411766,
+        3.5844155844155843
+      ],
+      "j_ca": [
+        2.7681159420289854,
+        3.0416666666666665
+      ],
+      "j_v2_pooled": 3.5,
+      "j_ca_pooled": 2.8714285714285714,
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 1.8,
+        "v2_tx": 1.0,
+        "ca_tx": 0.8233324615199615,
+        "ca_control_bits_per_cycle": 250.0,
+        "ca_max_load": 0.965994193420347,
+        "ca_feasible": 1.0
+      }
+    },
+    {
+      "geom": 1,
+      "regime": "uncongested",
+      "v2": {
+        "J": 4.064133986928105,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.02898550724637683
+      },
+      "ca": {
+        "J": 4.044934640522875,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.02985074626865669
+      },
+      "j_v2": [
+        4.0588235294117645,
+        4.069444444444445
+      ],
+      "j_ca": [
+        4.117647058823529,
+        3.9722222222222223
+      ],
+      "j_v2_pooled": 4.064285714285714,
+      "j_ca_pooled": 4.042857142857143,
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 0.5,
+        "v2_tx": 1.0,
+        "ca_tx": 0.9080840773809524,
+        "ca_control_bits_per_cycle": 250.0,
+        "ca_feasible": 1.0
+      }
+    },
+    {
+      "geom": 1,
+      "regime": "congested",
+      "v2": {
+        "J": 4.877450980392156,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.03703703703703709
+      },
+      "ca": {
+        "J": 3.9219771241830066,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.03703703703703709
+      },
+      "j_v2": [
+        5.088235294117647,
+        4.666666666666667
+      ],
+      "j_ca": [
+        3.9411764705882355,
+        3.9027777777777777
+      ],
+      "j_v2_pooled": 4.871428571428571,
+      "j_ca_pooled": 3.9214285714285713,
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 1.8,
+        "v2_tx": 1.0,
+        "ca_tx": 0.8459036571067821,
+        "ca_control_bits_per_cycle": 250.0,
+        "ca_max_load": 0.9436416153676108,
+        "ca_feasible": 1.0
+      }
+    },
+    {
+      "geom": 2,
+      "regime": "uncongested",
+      "v2": {
+        "J": 3.364750322461765,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.02898550724637683
+      },
+      "ca": {
+        "J": 3.2935323383084576,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.02898550724637683
+      },
+      "j_v2": [
+        3.1492537313432836,
+        3.580246913580247
+      ],
+      "j_ca": [
+        3.253731343283582,
+        3.3333333333333335
+      ],
+      "j_v2_pooled": 3.385135135135135,
+      "j_ca_pooled": 3.2972972972972974,
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 0.5,
+        "v2_tx": 1.0,
+        "ca_tx": 0.9610476115319866,
+        "ca_control_bits_per_cycle": 250.0,
+        "ca_feasible": 1.0
+      }
+    },
+    {
+      "geom": 2,
+      "regime": "congested",
+      "v2": {
+        "J": 4.236134144094343,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.02941176470588236
+      },
+      "ca": {
+        "J": 3.53150912106136,
+        "p_fa_max": 0.0,
+        "p_md_max": 0.04166666666666663
+      },
+      "j_v2": [
+        4.08955223880597,
+        4.382716049382716
+      ],
+      "j_ca": [
+        3.5074626865671643,
+        3.5555555555555554
+      ],
+      "j_v2_pooled": 4.25,
+      "j_ca_pooled": 3.5337837837837838,
+      "v2_qos": "UNCERTAIN",
+      "ca_qos": "UNCERTAIN",
+      "air": {
+        "rho_full": 1.8,
+        "v2_tx": 1.0,
+        "ca_tx": 0.9354047173890923,
+        "ca_control_bits_per_cycle": 250.0,
+        "ca_max_load": 0.9802581429699055,
+        "ca_feasible": 1.0
+      }
+    }
+  ]
+}

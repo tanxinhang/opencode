@@ -40,7 +40,16 @@ def aperture_constants(
     aperture_scale: float,
     direct_blockage: float = 0.01,
 ) -> np.ndarray:
-    """Per-target constants ``K_q = P_ris / P_dir / a_q^2``."""
+    """Per-target constants ``K_q = P_ris / P_dir / a_q^2``.
+
+    The ratio is always referenced to the UNBLOCKED direct path: the weak
+    target's ``direct_blockage`` attenuation lives in ``base_deflections``
+    (built from the fixed physics gain models), never inside ``K_q``.  With
+    the old formulation the blockage entered the ratio denominator, which
+    inflated the weak-target RIS boost by ``1/direct_blockage`` (~100x at
+    the default 0.01) while the surrogate's ``+1`` direct term stayed at
+    its clean level -- an internal contradiction with the physics gain
+    models (P1-1 fix)."""
     transmitters = [np.asarray(position, dtype=float) for position in transmitter_positions]
     targets = [np.asarray(position, dtype=float) for position in target_positions]
     receiver = np.asarray(receiver_position, dtype=float)
@@ -53,8 +62,6 @@ def aperture_constants(
             tx_ris = float(np.linalg.norm(transmitter - config.position))
             ris_target = float(np.linalg.norm(config.position - target))
             direct = 1.0 / (tx_target**2 * target_rx**2)
-            if config.weak_target_id == q:
-                direct *= direct_blockage
             ris_power = aperture_scale / (
                 tx_ris**2 * ris_target**2 * target_rx**2
             )

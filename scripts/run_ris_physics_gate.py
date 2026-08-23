@@ -85,9 +85,17 @@ def run_gate(
                         aperture_scale, direct_blockage=0.01,
                         phase_per_target=random_phases,
                     )
+                    # P1-1 control: the honest weak-target baseline is
+                    # "blocked, NO RIS" (the direct-path floor), NOT the
+                    # clean no-RIS scenario.  Comparing aligned to the clean
+                    # no-RIS conflates the blockage itself with the RIS
+                    # benefit (the pre-fix inflation masked this entirely).
+                    blocked_gain = np.ones_like(aligned_gain)
+                    blocked_gain[cfg.num_targets - 1, :] = 0.01
                     scenarios = {
                         "ris_aligned": aligned_gain,
                         "ris_random": random_gain,
+                        "blocked_no_ris": blocked_gain,
                     }
                     for name, gain in scenarios.items():
                         models = build_models(
@@ -124,6 +132,8 @@ def run_gate(
                     and row["aperture_scale"] == aperture_scale
                 ]
                 aligned = [row for row in group if row["scenario"] == "ris_aligned"]
+                blocked = [row for row in group
+                           if row["scenario"] == "blocked_no_ris"]
                 random_ris = [row for row in group if row["scenario"] == "ris_random"]
                 summary.append({
                     "budget_bits": budget,
@@ -151,6 +161,15 @@ def run_gate(
                     "worst_gain_aligned_vs_no_ris": float(np.mean([
                         row["worst_expected_pd"] - row["no_ris_worst"]
                         for row in aligned
+                    ])),
+                    # P1-1: the correct control for the RIS-rescue claim is
+                    # the "blocked, no RIS" direct-path floor.
+                    "blocked_no_ris_worst": float(np.mean([
+                        row["worst_expected_pd"] for row in blocked
+                    ])),
+                    "worst_gain_aligned_vs_blocked_no_ris": float(np.mean([
+                        af["worst_expected_pd"] - bf["worst_expected_pd"]
+                        for af, bf in zip(aligned, blocked)
                     ])),
                     "mean_gain_aligned_vs_random": float(np.mean([
                         aligned_row["mean_expected_pd"]

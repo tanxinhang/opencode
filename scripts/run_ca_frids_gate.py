@@ -46,6 +46,7 @@ from uav_otfs_isac.airtime import (
     simulate_frids_v2_air,
 )
 from uav_otfs_isac.ca_frids import simulate_ca_frids
+from uav_otfs_isac.crn_tape import build_exogenous_tape
 from uav_otfs_isac.distributed_audit import (
     TOKEN_LLR_BITS,
     build_distributed_scenario,
@@ -53,6 +54,18 @@ from uav_otfs_isac.distributed_audit import (
 )
 from uav_otfs_isac.frids import simulate_frids_v2
 from uav_otfs_isac.qos import raw_qos_status, pool_raw_counts
+
+
+def _git_sha() -> str:
+    """Short HEAD sha for result provenance (advice/010 P0-1b)."""
+    import subprocess
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=str(PROJECT_ROOT), text=True,
+        ).strip()
+    except Exception:
+        return "unknown"
 
 SCALES = ((6, 3), (8, 4), (12, 6), (16, 8))
 
@@ -77,7 +90,7 @@ def run_cell(sim, sc, bounds, n_runs, seed, max_steps, **kw):
 
 
 def matched_qos(sim, sc, bt, n_runs, seed, max_steps, alpha, beta,
-                mc_seeds=2, **kw):
+                mc_seeds=2, crn=False, **kw):
     """FIXED calibrated policy B (the frozen calibration, delta = 1) for
     BOTH algorithms: the P3.4 comparison is the SAME TWO-THRESHOLD
     STOPPING POLICY under two schedulers -- the only fair "same policy /
@@ -85,11 +98,25 @@ def matched_qos(sim, sc, bt, n_runs, seed, max_steps, alpha, beta,
     compare different stopping rules, not different schedulers.  The
     certified QoS is reported separately (RAW conditional counts + the
     simultaneous Clopper-Pearson certificate, P2.1a).  ``mc_seeds``
-    independent MC draws per cell (advice/008 P3.4: multi-seed MC)."""
+    independent MC draws per cell (advice/008 P3.4: multi-seed MC).
+
+    ``crn=True`` (advice/010 P0-2): one shared exogenous tape is built per
+    MC seed with ``build_exogenous_tape(seed + mc, ...)`` and forwarded to
+    the simulator, so FRIDS-v2 and CA-FRIDS consume the SAME target
+    presence, observation, and link uniforms at every ``(r, t)`` -- the
+    paired comparison is then over the same exogenous realizations (their
+    different actions still map the same base uniforms through different
+    kernels/admission rules, exactly as the CRN prescription requires)."""
     q = sc["q"]
+    k = int(sc["k"])
     bounds = matched_bounds(bt, q, 1.0)
-    rows = [run_cell(sim, sc, bounds, n_runs, seed + mc, max_steps,
-                     **kw) for mc in range(mc_seeds)]
+    rows = []
+    for mc in range(mc_seeds):
+        tape = None
+        if crn:
+            tape = build_exogenous_tape(seed + mc, n_runs, q, k, max_steps)
+        rows.append(run_cell(sim, sc, bounds, n_runs, seed + mc, max_steps,
+                             exog=tape, **kw))
     return bounds, rows
 
 
@@ -107,8 +134,33 @@ def air_comm(out, key):
 
 
 def j_worst(rows):
-    """Worst-target E1 per aligned MC cell (the paired-CRN unit)."""
+    """Per-cell worst-target E1 (legacy max-then-average diagnostic; the
+    formal gate uses ``j_pooled``)."""
     return np.max([r["e1_delays"] for r in rows], axis=1)
+
+
+def j_pooled(rows):
+    """advice/010 P0-5: GEOMETRY-POOLED worst-target E[T_q | H1].
+
+    ``rows`` are all MC cells of ONE geometry and regime.  Target delay
+    sums and H1 counts are pooled across every run and every MC seed,
+    then ``J_g = max_q sum_h1_delay[q]/n_h1[q]`` -- the pooled objective,
+    not the per-cell worst-then-average with the selection bias
+    ``E[max_q hatT_q] >= max_q E[hatT_q]``.
+    """
+    total_n = np.asarray(rows[0]["pool"]["n_h1"], dtype=float)
+    total_s = np.asarray(rows[0]["pool"]["sum_h1_delay"], dtype=float)
+    for r in rows[1:]:
+        total_n = total_n + np.asarray(r["pool"]["n_h1"], dtype=float)
+        total_s = total_s + np.asarray(r["pool"]["sum_h1_delay"], dtype=float)
+    values = np.where(total_n > 0, total_s / np.maximum(total_n, 1e-12), 0.0)
+    return float(np.max(values))
+
+
+def comm_pooled(rows, key):
+    """advice/010 section 4: metric averaged over ALL MC cells of the
+    geometry (the legacy gate only read ``rows[0]``)."""
+    return float(np.mean([r["comm"][key] for r in rows]))
 
 
 def paired_bootstrap_ci(js_v2, js_ca, b_iters=10000, seed=0):
@@ -180,7 +232,7 @@ def main() -> None:
                                         args.n_runs, 7, args.max_steps,
                                         args.alpha, args.beta,
                                         mc_seeds=args.mc_seeds,
-                                        price_mode="local")
+                                        crn=True, price_mode="local")
             if reg == "uncongested":
                 # v2 baseline in the free regime: independent delivery
                 # (the frozen mainline); CA-FRIDS on the same budget
@@ -188,12 +240,28 @@ def main() -> None:
                                             args.n_runs, 7, args.max_steps,
                                             args.alpha, args.beta,
                                             mc_seeds=args.mc_seeds,
+                                            crn=True,
+                                            # P3.6-R (advice/010 P0-1): the
+                                            # price mode MUST be forwarded --
+                                            # the CA default is owner_local
+                                            # and the gate previously ran the
+                                            # wrong scheduler variant.
+                                            price_mode=args.price_mode,
                                             airtime=am, pi_bits=args.pi_bits,
                                             lam_bits=args.lam_bits)
                 scen_rows.append({
                     "geom": geom, "regime": reg,
                     "v2": summarize(rows_v2),
                     "ca": summarize(rows_ca),
+                    # P3.6-R paired cells (advice/010 P0-2/3): the CRN tape
+                    # aligns the exogenous H/obs/link draws per (r, t); the
+                    # per-cell arrays are diagnostics only.
+                    "j_v2": j_worst(rows_v2).tolist(),
+                    "j_ca": j_worst(rows_ca).tolist(),
+                    # P0-5: GEOMETRY-POOLED worst-target E1 (the formal
+                    # objective; the MC blocks only provide variance).
+                    "j_v2_pooled": j_pooled(rows_v2),
+                    "j_ca_pooled": j_pooled(rows_ca),
                     "v2_qos": _qos(rows_v2, args.alpha, args.beta),
                     "ca_qos": _qos(rows_ca, args.alpha, args.beta),
                     "air": {"rho_full": am["rho_full"],
@@ -201,10 +269,13 @@ def main() -> None:
                             # baseline (tx = 1.0); the uncongested gate is
                             # about worst-target delay regression only
                             "v2_tx": 1.0,
-                            "ca_tx": air_comm(rows_ca[0],
-                                              "tx_attempts_per_uav"),
-                            "ca_feasible": air_comm(rows_ca[0],
-                                                    "budget_feasible_fraction")},
+                            # aggregated over ALL MC cells, not rows[0]
+                            "ca_tx": comm_pooled(rows_ca,
+                                                 "tx_attempts_per_uav"),
+                            "ca_control_bits_per_cycle": comm_pooled(
+                                rows_ca, "control_bits_per_cycle"),
+                            "ca_feasible": comm_pooled(
+                                rows_ca, "budget_feasible_fraction")},
                 })
             else:
                 # congested regime: FRIDS-v2 with HARD receive admission
@@ -215,15 +286,21 @@ def main() -> None:
                 # always-report full mesh (rho_C = rho_full at the cap)
                 cap_tokens = (k - 1) / max(am["rho_full"], 1e-3)
                 b_v2h = matched_bounds(bt, q, 1.0)
-                rows_v2_hard = [
-                    run_cell(simulate_frids_v2, sc, b_v2h, args.n_runs,
-                             7 + mc, args.max_steps, price_mode="local",
-                             rx_cap_tokens=np.full(k, max(cap_tokens, 1)))
-                    for mc in range(args.mc_seeds)]
+                rows_v2_hard = []
+                for mc in range(args.mc_seeds):
+                    tape = build_exogenous_tape(
+                        7 + mc, args.n_runs, q, k, args.max_steps)
+                    rows_v2_hard.append(run_cell(
+                        simulate_frids_v2, sc, b_v2h, args.n_runs,
+                        7 + mc, args.max_steps, price_mode="local",
+                        exog=tape,
+                        rx_cap_tokens=np.full(k, max(cap_tokens, 1))))
                 b_ca, rows_ca = matched_qos(simulate_ca_frids, sc, bt,
                                             args.n_runs, 7, args.max_steps,
                                             args.alpha, args.beta,
                                             mc_seeds=args.mc_seeds,
+                                            crn=True,
+                                            price_mode=args.price_mode,
                                             airtime=am,
                                             pi_bits=args.pi_bits,
                                             lam_bits=args.lam_bits)
@@ -231,42 +308,88 @@ def main() -> None:
                     "geom": geom, "regime": reg,
                     "v2": summarize(rows_v2_hard),
                     "ca": summarize(rows_ca),
+                    "j_v2": j_worst(rows_v2_hard).tolist(),
+                    "j_ca": j_worst(rows_ca).tolist(),
+                    "j_v2_pooled": j_pooled(rows_v2_hard),
+                    "j_ca_pooled": j_pooled(rows_ca),
                     "v2_qos": _qos(rows_v2_hard, args.alpha, args.beta),
                     "ca_qos": _qos(rows_ca, args.alpha, args.beta),
                     "air": {"rho_full": am["rho_full"],
                             "v2_tx": 1.0,
-                            "ca_tx": air_comm(rows_ca[0],
-                                             "tx_attempts_per_uav"),
-                            "ca_max_load": air_comm(rows_ca[0],
-                                                    "max_load_ratio"),
-                            "ca_feasible": air_comm(rows_ca[0],
-                                                    "budget_feasible_fraction")},
+                            "ca_tx": comm_pooled(rows_ca,
+                                                 "tx_attempts_per_uav"),
+                            "ca_control_bits_per_cycle": comm_pooled(
+                                rows_ca, "control_bits_per_cycle"),
+                            "ca_max_load": comm_pooled(rows_ca,
+                                                       "max_load_ratio"),
+                            "ca_feasible": comm_pooled(
+                                rows_ca, "budget_feasible_fraction")},
                 })
         print(f"geom {geom} done ({time.time()-t0:.0f}s)", flush=True)
 
-    # aggregate and gate
-    def agg(reg, algo):
-        vals = [r[algo]["J"] for r in scen_rows if r["regime"] == reg]
-        return float(np.mean(vals))
+    # P3.6-R (advice/010 P0-4, P0-3): independent sub-gates.
+    # QoS sub-gate: PASS-only certification.  UNCERTAIN is UNRESOLVED, it
+    # is never relabelled as OK by "!= FAIL" (that P0 let 4 PASS + 2
+    # UNCERTAIN cells certify as "qos_ok").  We report PASS/FAIL/UNCERTAIN
+    # counts separately and require ALL PASS for adoption.
+    ca_pass = sum(1 for r in scen_rows if r["ca_qos"] == "PASS")
+    ca_fail = sum(1 for r in scen_rows if r["ca_qos"] == "FAIL")
+    ca_unc = sum(1 for r in scen_rows if r["ca_qos"] == "UNCERTAIN")
+    qos_all_pass = (ca_fail == 0 and ca_unc == 0 and ca_pass == len(scen_rows))
+    qos_any_fail = bool(ca_fail > 0)
+    qos_any_uncertain = bool(ca_unc > 0)
 
-    j_unc_v2 = agg("uncongested", "v2")
-    j_unc_ca = agg("uncongested", "ca")
-    j_cong_v2 = agg("congested", "v2")
-    j_cong_ca = agg("congested", "ca")
-    unc_reg = (j_unc_ca - j_unc_v2) / max(j_unc_v2, 1e-12)
-    cong_gain = (j_cong_v2 - j_cong_ca) / max(j_cong_v2, 1e-12)
-    qos_all_ok = all(
-        (r["ca_qos"] != "FAIL") for r in scen_rows)
+    # P3.6-R (advice/010 P0-3/P0-5): PAIRED performance gate on the
+    # GEOMETRY-POOLED worst-target E1 (advice/010 section 3): each
+    # geometry pools ALL runs and ALL MC seeds and reports
+    # J_g = max_q sum_h1_delay[q]/n_h1[q]; the geometry is the paired
+    # sample unit and the MC blocks provide only variance -- exactly the
+    # pooled-objective prescription (no per-cell max-then-average bias).
+    # The legacy per-MC-cell ``j_v2``/``j_ca`` arrays remain in the rows
+    # as diagnostics only.  The CRN tape (P0-2) makes the H/obs/link
+    # exogenous draws identical between the two schedulers, so the
+    # geometry pairs are genuine paired comparisons.
+    def paired_j(reg, key):
+        return np.asarray(
+            [float(r[key]) for r in scen_rows if r["regime"] == reg],
+            dtype=float,
+        )
+
+    unc_v2 = paired_j("uncongested", "j_v2_pooled")
+    unc_ca = paired_j("uncongested", "j_ca_pooled")
+    cong_v2 = paired_j("congested", "j_v2_pooled")
+    cong_ca = paired_j("congested", "j_ca_pooled")
+    d_unc, ci_unc_lo, ci_unc_hi = paired_bootstrap_ci(unc_v2, unc_ca)
+    d_cong, ci_cong_lo, ci_cong_hi = paired_bootstrap_ci(cong_ca, cong_v2)
+    j_unc_v2_mean = float(np.mean(unc_v2)) if len(unc_v2) else 0.0
+    j_cong_v2_mean = float(np.mean(cong_v2)) if len(cong_v2) else 0.0
+    # relative regression (CA worse) and relative gain (CA better)
+    unc_ucb = ci_unc_hi / max(j_unc_v2_mean, 1e-12)
+    cong_lcb = ci_cong_lo / max(j_cong_v2_mean, 1e-12)
+    unc_reg_mean = d_unc / max(j_unc_v2_mean, 1e-12)
+    cong_gain_mean = d_cong / max(j_cong_v2_mean, 1e-12)
+    unc_ci_lo = ci_unc_lo / max(j_unc_v2_mean, 1e-12)
+    unc_ci_hi = ci_unc_hi / max(j_unc_v2_mean, 1e-12)
+    cong_ci_lo = ci_cong_lo / max(j_cong_v2_mean, 1e-12)
+    cong_ci_hi = ci_cong_hi / max(j_cong_v2_mean, 1e-12)
+    no_regression_uncongested = bool(unc_ucb <= 0.02)
+    congested_win_5pct = bool(cong_lcb >= 0.05)
     gate = {
-        "uncongested_regression": float(unc_reg),
-        "no_regression_uncongested": bool(unc_reg <= 0.02),
-        "congested_improvement": float(cong_gain),
-        "congested_win_5pct": bool(cong_gain >= 0.05),
-        "ca_qos_ok": bool(qos_all_ok),
-        "adopt_ca": bool(unc_reg <= 0.02 and cong_gain >= 0.05
-                         and qos_all_ok),
+        "uncongested_regression_mean": float(unc_reg_mean),
+        "uncongested_regression_ci95": [float(unc_ci_lo), float(unc_ci_hi)],
+        "no_regression_uncongested_ucb": bool(no_regression_uncongested),
+        "congested_improvement_mean": float(cong_gain_mean),
+        "congested_improvement_ci95": [float(cong_ci_lo), float(cong_ci_hi)],
+        "congested_win_5pct_lcb": bool(congested_win_5pct),
+        "qos_all_pass": bool(qos_all_pass),
+        "qos_count": {"PASS": ca_pass, "FAIL": ca_fail, "UNCERTAIN": ca_unc},
+        "qos_any_fail": bool(qos_any_fail),
+        "qos_any_uncertain": bool(qos_any_uncertain),
+        "adopt_ca": bool(no_regression_uncongested and congested_win_5pct
+                         and qos_all_pass),
         "verdict": ("CA-FRIDS adopted as the joint-capacity main scheduler"
-                    if unc_reg <= 0.02 and cong_gain >= 0.05 and qos_all_ok
+                    if no_regression_uncongested and congested_win_5pct
+                    and qos_all_pass
                     else ("FRIDS-v2 stays the frozen core; joint capacity "
                           "+ phase law remain the paper contributions")),
     }
@@ -278,6 +401,21 @@ def main() -> None:
                    "lam_bits": args.lam_bits,
                    "uncongested_rho": args.uncongested_rho,
                    "congested_rho": args.congested_rho,
+                   # P3.6-R (advice/010 P0-1b): provenance of the exact
+                   # scheduler variant actually executed.
+                   "price_mode": args.price_mode,
+                   "git_sha": _git_sha(),
+                   "seed_scheme": "CRN exogenous tape (advice/010 P0-2): "
+                                  "shared U_H/U_obs/U_link per (r,t)",
+                   "capacity_model": ("v2: independent delivery / hard "
+                                      "token cap (rx_cap_tokens); CA: "
+                                      "airtime budget sum tau <= T_air "
+                                      "(distinct capacity primitives remain "
+                                      "a documented open item)"),
+                   "evidence_mode": "owner-only evidence plane (Dual-Bus)",
+                   "crn_tape": True,
+                   "objective": "geometry-pooled worst-target E[T|H1] "
+                                "(advice/010 P0-5)",
                    "protocol": [
                        "FIXED calibrated policy B (delta 1, same stopping "
                        "policy for both schedulers -- the fair scheduler-"
@@ -294,6 +432,9 @@ def main() -> None:
         "scenarios": scen_rows,
         "gate": gate,
     }
+    assert payload["params"]["price_mode"] == args.price_mode, (
+        "formal gate must record the price-mode it actually ran"
+    )
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2), encoding="utf-8")

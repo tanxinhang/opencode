@@ -140,11 +140,59 @@ def test_ris_physics_gain_increases_with_elements():
             phase_per_target=phases,
         )
         means.append(float(np.mean(gains[2])))
+    # P1-1: the weak-target gain is ``direct_blockage + P_ris/P_dir``: it
+    # grows with aperture (the N^2 RIS lift), never falls below blockage,
+    # and the direct term never carries the old ~100x ``1/blockage`` boost.
     assert means[0] < means[1] < means[2]
-    assert means[2] > 5.0
+    assert all(value >= 0.01 for value in means)
 
 
-def test_ris_physics_aligned_beats_random_phase():
+def test_blockage_attenuates_only_the_direct_term():
+    """P1-1 regression: for the weak target the gain is
+    ``direct_blockage + P_ris/P_dir`` (unblocked reference), never
+    ``1 + P_ris/(blockage*P_dir)``."""
+    tx = np.array([180.0, 0.0, 100.0])
+    targets = [np.array([40.0, 20.0, 0.0]), np.array([10.0, 35.0, 0.0])]
+    receiver = np.array([0.0, 0.0, 0.0])
+    config = RisConfig(
+        position=np.array([55.0, 15.0, 12.0]),
+        num_elements=256,
+        weak_target_id=1,
+    )
+    phases = [ris_beam_phase(target, config) for target in targets]
+    gains = ris_physics_gain_matrix(
+        config, [tx], targets, receiver,
+        aperture_scale=1e-2, direct_blockage=0.01, phase_per_target=phases,
+    )
+    weak = gains[1, 0]
+    # P_dir = 1/(R_tx^2 R_rx^2); P_ris = N^2 G^2 A/(R1^2 R2^2 R3^2)
+    tx_ris = float(np.linalg.norm(tx - config.position))
+    ris_target = float(np.linalg.norm(config.position - targets[1]))
+    target_rx = float(np.linalg.norm(targets[1] - receiver))
+    tx_target = float(np.linalg.norm(tx - targets[1]))
+    array_gain = ris_array_gain(phases[1], targets[1], config)
+    direct = 1.0 / (tx_target**2 * target_rx**2)
+    ris = (
+        config.num_elements**2 * array_gain**2 * 1e-2
+        / (tx_ris**2 * ris_target**2 * target_rx**2)
+    )
+    assert np.isclose(weak, 0.01 + ris / direct, atol=1e-12)
+    assert weak < 1.0  # blocked weak target cannot reach the clean baseline
+    # strong target stays at the clean 1 + P_ris/P_dir floor
+    array_gain_strong = ris_array_gain(phases[0], targets[0], config)
+    tx_ris_s = float(np.linalg.norm(tx - config.position))
+    ris_t_s = float(np.linalg.norm(config.position - targets[0]))
+    rx_s = float(np.linalg.norm(targets[0] - receiver))
+    tx_s = float(np.linalg.norm(tx - targets[0]))
+    direct_s = 1.0 / (tx_s**2 * rx_s**2)
+    ris_s = (
+        config.num_elements**2 * array_gain_strong**2 * 1e-2
+        / (tx_ris_s**2 * ris_t_s**2 * rx_s**2)
+    )
+    assert np.isclose(gains[0, 0], 1.0 + ris_s / direct_s, atol=1e-12)
+
+
+def test_ris_physics_aligned_beats_random():
     transmitters, targets, receiver = _physics_geometry()
     rng = np.random.default_rng(20260805)
     config = RisConfig(
@@ -167,4 +215,9 @@ def test_ris_physics_aligned_beats_random_phase():
         phase_per_target=random_phases,
     )
     assert float(np.mean(aligned_gain[2])) > float(np.mean(random_gain[2]))
-    assert np.all(aligned_gain >= 1.0)
+    # P1-1: strong targets keep the clean ``1 + P_ris/P_dir`` floor; the
+    # blocked weak target never falls below ``direct_blockage`` (alignment
+    # only ever adds RIS power on top of it).
+    strong = np.delete(aligned_gain, 2, axis=0)
+    assert np.all(strong >= 1.0)
+    assert np.all(aligned_gain[2] >= 0.01)

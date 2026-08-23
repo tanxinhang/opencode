@@ -219,8 +219,19 @@ def build_models(
                 bits_i, p_flip[i],
             )
         # Propagate local dependence through moment-matched attenuation factors.
-        g0 = np.sqrt(np.maximum(post_var0 - cfg.reporting.calibration_std**2, 1e-12) / np.diag(sigma0_local))
-        g1 = np.sqrt(np.maximum(post_var1 - cfg.reporting.calibration_std**2, 1e-12) / np.diag(sigma1_local))
+        # P1-3: comm noise is per-UAV independent, so it can only DECORRELATE
+        # the shared process; the attenuation factor is clamped to <= 1
+        # (before the clamp it exceeded 1 whenever quantization/BSC added
+        # variance, which pinned the correlation coefficient at its pre-comm
+        # level and even inflated it for owner-column entries).
+        signal_share0 = np.maximum(
+            np.diag(sigma0_local) / np.maximum(post_var0, 1e-12), 1e-12
+        )
+        g0 = np.minimum(np.sqrt(signal_share0), 1.0)
+        signal_share1 = np.maximum(
+            np.diag(sigma1_local) / np.maximum(post_var1, 1e-12), 1e-12
+        )
+        g1 = np.minimum(np.sqrt(signal_share1), 1.0)
         sigma0 = np.outer(g0, g0) * sigma0_local
         sigma1 = np.outer(g1, g1) * sigma1_local
         np.fill_diagonal(sigma0, post_var0 + cfg.reporting.calibration_std**2)
