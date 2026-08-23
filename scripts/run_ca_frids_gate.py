@@ -444,7 +444,7 @@ def main() -> None:
                           "+ phase law remain the paper contributions")),
     }
     payload = {
-        "gate": "p3.4-ca-frids-live-or-die",
+        "gate_id": "p3.4-ca-frids-live-or-die",
         "params": {"scale": [k, q], "n_runs": args.n_runs,
                    "max_steps": args.max_steps, "alpha": args.alpha,
                    "beta": args.beta, "pi_bits": args.pi_bits,
@@ -458,15 +458,13 @@ def main() -> None:
                    "git_tree": _git_tree(),
                    "git_dirty": _git_dirty(),
                    "config_hash": _config_hash(args),
-                   "seed_scheme": ("CRN exogenous tape (advice/010 P0-2): "
-                                  "shared U_H/U_obs/U_link per (r,t); "
-                                  "dedicated policy RNG for admission "
-                                  "tie-breaking only (advice/011 P0-B)"),
-                   "capacity_model": ("v2: independent delivery / hard "
-                                      "token cap (rx_cap_tokens); CA: "
-                                      "airtime budget sum tau <= T_air "
-                                      "(distinct capacity primitives remain "
-                                      "a documented open item)"),
+                   "seed_scheme": ("CRN exogenous tape U_H/U_obs/U_link "
+                                   "per (r,t) + policy tie tape "
+                                   "U_policy[r,t,receiver,source] (P4.1a)"),
+                   "capacity_model": ("shared airtime primitive: "
+                                      "sum tau_ij/T_air <= 1; offer -> "
+                                      "admission -> link; v2 neutral "
+                                      "admission; CA density admission"),
                    "evidence_mode": "owner-only evidence plane (Dual-Bus)",
                    "crn_tape": True,
                    "objective": "geometry-pooled worst-target E[T|H1] "
@@ -483,9 +481,15 @@ def main() -> None:
                        "evidence plane to owner only (Dual-Bus)"],
                    "frozen": ["FRIDS-v2", "fixed owner", "two-threshold "
                               "stopping", "calibrated policy-matched B"]},
-        "runtime_s": round(time.time() - t0, 1),
+        "metrics": gate,
         "scenarios": scen_rows,
-        "gate": gate,
+        "runtime_s": round(time.time() - t0, 1),
+        "provenance": {
+            "git_commit": _git_sha(),
+            "git_tree": _git_tree(),
+            "git_dirty": _git_dirty(),
+            "config_hash": _config_hash(args),
+        },
     }
     assert payload["params"]["price_mode"] == args.price_mode, (
         "formal gate must record the price-mode it actually ran"

@@ -472,3 +472,88 @@ def test_global_simplex_only_scalar_normalizer_is_networked():
     # the normalization removes -- ``rbar`` never needs to be known
     y2 = _global_simplex(0.5, ratios + 100.0, y, [0, 1, 2])
     assert np.allclose(y1, y2, atol=1e-9)
+
+
+# ---------------------------------------------------------------------------
+# P4.1a credibility regression tests (advice/014 section 4)
+# ---------------------------------------------------------------------------
+
+
+def test_p41a_neutral_admission_requires_tie_keys():
+    """P4.1a regression (advice/014 section 4 #1): the shared airtime
+    primitive refuses ``policy="neutral"`` with ``tie_keys=None`` -- the
+    source-index fallback would silently reintroduce fixed low-index
+    bias."""
+    from uav_otfs_isac.admission import airtime_admit
+    with pytest.raises(ValueError):
+        airtime_admit([[(0, 0.0, 0.5, None)]], t_air=1.0,
+                      policy="neutral", tie_keys=None)
+
+
+def test_p41a_policy_tape_identical_on_rebuild():
+    """P4.1a regression (advice/014 section 4 #2): building the CRN tape
+    twice with the same seed reproduces the SAME ``U_policy`` block -- the
+    same (r, t, receiver, source) cells, hence identical admission tie
+    keys for every episode and cycle."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    a = build_exogenous_tape(77, 8, 3, 6, 40)
+    b = build_exogenous_tape(77, 8, 3, 6, 40)
+    assert a.U_policy.shape == (8, 40, 6, 6)
+    assert np.array_equal(a.U_policy, b.U_policy)
+
+
+def test_p41a_policy_tape_temporal_refresh():
+    """P4.1a regression (advice/014 section 4 #3): the policy tape
+    REFRESHES every cycle -- ``U_policy[r,t]`` differs from
+    ``U_policy[r,t']`` for ``t != t'``, so admission tie keys are not
+    frozen across an episode (no persistent source favoritism)."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    tape = build_exogenous_tape(78, 4, 3, 6, 40)
+    assert not np.array_equal(tape.U_policy[0, 0], tape.U_policy[0, 1])
+
+
+def test_p41a_policy_tape_receiver_independent():
+    """P4.1a regression (advice/014 section 4 #4): the tie key is
+    (receiver, source)-indexed -- for the same source the keys of two
+    receivers differ, so admission ties are receiver-independent (no
+    shared per-source key that couples every receiver)."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    tape = build_exogenous_tape(79, 4, 3, 6, 40)
+    r, t = 0, 0
+    assert not np.array_equal(tape.U_policy[r, t, 0, :],
+                              tape.U_policy[r, t, 1, :])
+
+
+def test_p41a_four_arms_share_exogenous_tape(scenario, bounds, air_cong):
+    """P4.1a regression (advice/014 section 4 #5): the four causal arms
+    A (v2+neutral), B0 (CA+lambda=0+neutral), B1 (CA+lambda+neutral) and
+    C (CA+lambda+density) all run through the SAME CRN tape (shared
+    U_H/U_obs/U_link/U_policy), so the per-target H1 counts -- driven only
+    by the shared presence draws -- are EXACTLY equal across all four
+    arms."""
+    from scripts.run_ca_frids_gate import matched_qos
+    from uav_otfs_isac.frids import simulate_frids_v2
+    price_mode = "global_simplex"
+    _, rows_a = matched_qos(
+        simulate_frids_v2, scenario, bounds, 40, 9, 40, 0.05, 0.05,
+        mc_seeds=1, crn=True, price_mode="local", airtime=air_cong)
+    _, rows_b0 = matched_qos(
+        simulate_ca_frids, scenario, bounds, 40, 9, 40, 0.05, 0.05,
+        mc_seeds=1, crn=True, price_mode=price_mode, airtime=air_cong,
+        admission_policy="neutral", airtime_price=False,
+        pi_bits=10, lam_bits=10)
+    _, rows_b1 = matched_qos(
+        simulate_ca_frids, scenario, bounds, 40, 9, 40, 0.05, 0.05,
+        mc_seeds=1, crn=True, price_mode=price_mode, airtime=air_cong,
+        admission_policy="neutral", airtime_price=True,
+        pi_bits=10, lam_bits=10)
+    _, rows_c = matched_qos(
+        simulate_ca_frids, scenario, bounds, 40, 9, 40, 0.05, 0.05,
+        mc_seeds=1, crn=True, price_mode=price_mode, airtime=air_cong,
+        admission_policy="density", airtime_price=True,
+        pi_bits=10, lam_bits=10)
+    a_h1 = rows_a[0]["raw_counts"]["n_H1"]
+    b0_h1 = rows_b0[0]["raw_counts"]["n_H1"]
+    b1_h1 = rows_b1[0]["raw_counts"]["n_H1"]
+    c_h1 = rows_c[0]["raw_counts"]["n_H1"]
+    assert a_h1 == b0_h1 == b1_h1 == c_h1

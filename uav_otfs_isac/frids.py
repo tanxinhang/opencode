@@ -734,7 +734,7 @@ def simulate_frids_v2(
                 # P4.1 shared-capacity closure (advice/012): the SAME
                 # airtime primitive as CA-FRIDS.  Offers are generated (all
                 # (src, receiver) pairs a sensed UAV would send to),
-                # admission keeps ``sum tau/T_air <= 1`` per receiver with
+                # admission keeps ``sum tau <= T_air`` per receiver with
                 # NEUTRAL exchangeable priority, and the link outcome is
                 # drawn AFTER admission -- an admitted transmission is
                 # charged even when the link drops.  In the uncongested
@@ -765,16 +765,16 @@ def simulate_frids_v2(
                     for neighbor in range(k):
                         if neighbor == uav:
                             continue
-                        c = float(tau_mat[uav, neighbor]) / max(t_air, 1e-12)
+                        tau_ij = float(tau_mat[uav, neighbor])
                         comm_offer_attempts[r] += 1.0
                         offers_by_receiver[neighbor].append(
-                            (uav, 0.0, c, qq))
+                            (uav, 0.0, tau_ij, qq))
                 admitted, dropped = airtime_admit(
                     offers_by_receiver, t_air, policy="neutral",
                     tie_keys=tie_keys,
                 )
                 comm_rx_capacity_dropped[r] += float(dropped)
-                for nb, uav, c_air, qq in admitted:
+                for nb, uav, tau_ij, qq in admitted:
                     comm_admitted_tx[r] += 1.0
                     load_now[nb] += float(tau_mat[uav, nb])
                     delivered = (

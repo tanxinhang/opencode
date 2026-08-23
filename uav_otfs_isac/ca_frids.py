@@ -483,7 +483,8 @@ def simulate_ca_frids(
             for owner, off in offers.items():
                 for (uav, qq, c_air, score_b, c) in off:
                     offers_by_receiver[owner].append(
-                        (uav, float(score_b), float(c_air), qq))
+                        (uav, float(score_b),
+                         float(tau[uav, owner]), qq))
             # P4.1a (advice/013 sections 1-2): admission tie keys are the
             # SHARED (episode, cycle, receiver, source)-indexed policy tape
             # ``exog.U_policy[r, t]`` when the tape is present (every arm
@@ -501,7 +502,7 @@ def simulate_ca_frids(
                 tie_keys=tie_keys,
             )
             comm_rx_capacity_dropped[r] += float(dropped)
-            for nb, uav, c_air, qq in admitted_list:
+            for nb, uav, tau_ij, qq in admitted_list:
                 admitted.add((nb, uav))
                 load_now[nb] += float(tau[uav, nb])
             S = np.zeros(q)
