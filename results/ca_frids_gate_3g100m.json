@@ -37,9 +37,9 @@
     "uncongested_rho": 0.5,
     "congested_rho": 1.8,
     "price_mode": "global_simplex",
-    "git_commit": "2d4b1ce",
-    "git_tree": "c3a59ec0fcca5ef0080e154651ac5bccfdef488b",
-    "git_dirty": true,
+    "git_commit": "480a539",
+    "git_tree": "27e7f7e730430f64aef44c776a3e335ff915fecc",
+    "git_dirty": false,
     "config_hash": "7145859962c68099",
     "seed_scheme": "CRN exogenous tape (advice/010 P0-2): shared U_H/U_obs/U_link per (r,t); dedicated policy RNG for admission tie-breaking only (advice/011 P0-B)",
     "capacity_model": "v2: independent delivery / hard token cap (rx_cap_tokens); CA: airtime budget sum tau <= T_air (distinct capacity primitives remain a documented open item)",
@@ -61,7 +61,7 @@
       "calibrated policy-matched B"
     ]
   },
-  "runtime_s": 1755.0,
+  "runtime_s": 1916.0,
   "scenarios": [
     {
       "geom": 0,
