@@ -1,5 +1,44 @@
 {
-  "gate": {
+  "gate_id": "p3.4-ca-frids-live-or-die",
+  "params": {
+    "scale": [
+      16,
+      8
+    ],
+    "n_runs": 300,
+    "max_steps": 40,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "pi_bits": 10,
+    "lam_bits": 10,
+    "uncongested_rho": 0.5,
+    "congested_rho": 1.8,
+    "price_mode": "global_simplex",
+    "git_commit": "ec5812d",
+    "git_tree": "94b1ab891cc7f4bae35a51ba36aaf1975bd8b9e4",
+    "git_dirty": false,
+    "config_hash": "7145859962c68099",
+    "seed_scheme": "CRN exogenous tape U_H/U_obs/U_link per (r,t) + policy tie tape U_policy[r,t,receiver,source] (P4.1a)",
+    "capacity_model": "shared airtime primitive: sum tau_ij/T_air <= 1; offer -> admission -> link; v2 neutral admission; CA density admission",
+    "evidence_mode": "owner-only evidence plane (Dual-Bus)",
+    "crn_tape": true,
+    "objective": "geometry-pooled worst-target E[T|H1] (advice/010 P0-5)",
+    "protocol": [
+      "FIXED calibrated policy B (delta 1, same stopping policy for both schedulers -- the fair scheduler-only comparison)",
+      "raw conditional counts, simultaneous Clopper-Pearson confidence (P2.1a, advice/008 s13)",
+      "uncongested: joint index must not regress (<=2%)",
+      "congested: >=5% worst-delay win and certified QoS",
+      "airtime price + idle option (Lemma 4.99)",
+      "evidence plane to owner only (Dual-Bus)"
+    ],
+    "frozen": [
+      "FRIDS-v2",
+      "fixed owner",
+      "two-threshold stopping",
+      "calibrated policy-matched B"
+    ]
+  },
+  "metrics": {
     "uncongested_regression_mean": -0.058771433379860086,
     "uncongested_regression_ci95": [
       -0.12663601182508508,
@@ -23,45 +62,6 @@
     "adopt_ca": false,
     "verdict": "FRIDS-v2 stays the frozen core; joint capacity + phase law remain the paper contributions"
   },
-  "params": {
-    "scale": [
-      16,
-      8
-    ],
-    "n_runs": 300,
-    "max_steps": 40,
-    "alpha": 0.05,
-    "beta": 0.05,
-    "pi_bits": 10,
-    "lam_bits": 10,
-    "uncongested_rho": 0.5,
-    "congested_rho": 1.8,
-    "price_mode": "global_simplex",
-    "git_commit": "4bc20be",
-    "git_tree": "d4cfe1fc316fb82315209654b90dfd1220f329da",
-    "git_dirty": true,
-    "config_hash": "7145859962c68099",
-    "seed_scheme": "CRN exogenous tape (advice/010 P0-2): shared U_H/U_obs/U_link per (r,t); dedicated policy RNG for admission tie-breaking only (advice/011 P0-B)",
-    "capacity_model": "v2: independent delivery / hard token cap (rx_cap_tokens); CA: airtime budget sum tau <= T_air (distinct capacity primitives remain a documented open item)",
-    "evidence_mode": "owner-only evidence plane (Dual-Bus)",
-    "crn_tape": true,
-    "objective": "geometry-pooled worst-target E[T|H1] (advice/010 P0-5)",
-    "protocol": [
-      "FIXED calibrated policy B (delta 1, same stopping policy for both schedulers -- the fair scheduler-only comparison)",
-      "raw conditional counts, simultaneous Clopper-Pearson confidence (P2.1a, advice/008 s13)",
-      "uncongested: joint index must not regress (<=2%)",
-      "congested: >=5% worst-delay win and certified QoS",
-      "airtime price + idle option (Lemma 4.99)",
-      "evidence plane to owner only (Dual-Bus)"
-    ],
-    "frozen": [
-      "FRIDS-v2",
-      "fixed owner",
-      "two-threshold stopping",
-      "calibrated policy-matched B"
-    ]
-  },
-  "runtime_s": 1677.7,
   "scenarios": [
     {
       "geom": 0,
@@ -1521,5 +1521,12 @@
         "ca_tx": 0.9340602850043477
       }
     }
-  ]
+  ],
+  "runtime_s": 1909.4,
+  "provenance": {
+    "git_commit": "ec5812d",
+    "git_tree": "94b1ab891cc7f4bae35a51ba36aaf1975bd8b9e4",
+    "git_dirty": false,
+    "config_hash": "7145859962c68099"
+  }
 }
