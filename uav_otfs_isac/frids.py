@@ -751,7 +751,12 @@ def simulate_frids_v2(
                             and rng.random() < theta:
                         extra = [u for u in offered if u not in keep]
                         if extra and len(keep) < len(offered):
-                            keep = keep + [extra[0]]
+                            # P1-14 (advice/009 section 14): the fractional
+                            # extra slot must be chosen EXCHANGEABLY --
+                            # ``rng.choice``, not ``extra[0]`` (the fixed
+                            # index pickup biases low-index UAVs whenever
+                            # sender index correlates with geometry)
+                            keep = keep + [int(rng.choice(extra))]
                     admit[nb] = keep
                 for nb in range(k):
                     for uav in admit[nb]:

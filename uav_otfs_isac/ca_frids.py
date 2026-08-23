@@ -45,17 +45,61 @@ from uav_otfs_isac.distributed_audit import (
 )
 
 
+def _global_simplex(mu: float, ratios: np.ndarray, y: np.ndarray,
+                    undecided: list) -> np.ndarray:
+    """P3.6 global-simplex mirror update (advice/009 section 7):
+
+        y_q^+ = y_q * exp(-mu * r_q)  /  sum_p y_p * exp(-mu * r_p)
+
+    over the UNDECIDED targets only.  This is the standard entropic
+    mirror descent of the max-min relaxation with the exact global dual
+    normalizer ``Z = sum_p w_p``: every owner keeps a log-weight
+    ``theta_q`` whose softmax over the whole undecided simplex is the
+    target price ``y_q``.  The public factor ``exp(mu * rbar)`` cancels in
+    the normalization, so NO global ``rbar`` is needed -- the only global
+    quantity is the scalar normalizer ``Z`` (a spanning-tree / gossip
+    reduction), and ``r_q = S_q/(D_q+eps)`` is owner-local (its own
+    received reliable service).  This EXACTLY preserves ``sum_q y_q = 1``,
+    which the owner-local per-owner simplex of CA-v0 breaks (advice/009
+    section 6: with M active owners the v0 prices sum to ``M``, and a
+    single-target owner is frozen at ``y_q = 1``)."""
+    # log-sum-exp safe form (advice/009 section 10 normalized-step hint):
+    # max-shift ``r`` before exponentiating, so ``exp(-mu r)`` lives in
+    # the stable tail and the common factor ``e^{-mu*max r}`` cancels in
+    # the simplex -- the update is exactly invariant to adding any
+    # constant to every ratio (``rbar`` is never needed), and no absolute
+    # floor can distort the result.
+    und = list(undecided)
+    if not und:
+        return y.copy()
+    rmax = float(np.max(ratios[und]))
+    r_shift = ratios[und] - rmax
+    w = y[und] * np.exp(-mu * r_shift)
+    Z = float(np.sum(w))
+    out = y.copy()
+    out[und] = w / max(Z, 1e-300)
+    return out
+
+
 def _g_and_c_actions(scenario: dict, owner_of: list,
                      airtime: dict, s_for_g: np.ndarray | None,
                      power_cap: np.ndarray | None):
     """Per-(UAV, target) list of ``(g_eff, c_air, power, i_plus, rel)``
-    for every kernel: ``g = I+ * s_{i,o(q)}`` (scheduler-believed
-    delivery), ``c = b_tok(action) / (R_{i,o(q)} * T_air)`` (fraction of
-    the owner's per-cycle airtime budget one report consumes -- the
-    physical token airtime ``b/R``, scaled by the airtime budget)."""
+    for every kernel.
+
+    ``g = I+ * s_{i,o(q)}`` (scheduler-believed delivery).  ``c`` is the
+    fraction of the OWNER's per-cycle airtime budget one report consumes,
+    taken DIRECTLY from the outage-inverted airtime ledger ``tau``
+    (advice/009 P0-4): ``c = tau[i, owner] / T_air``.  Because
+    ``build_airtime_model`` fills the diagonal with ``0.0``, an owner's
+    OWN local evidence carries ``c = 0`` (it is local, it consumes NO
+    U2U receive airtime) -- the CA score must not tax owner-local
+    sensing with a communication price it never pays.  The physical
+    token airtime is therefore exactly the receiver-side ``tau``, and no
+    link-rates are recomputed here (``tau`` already is ``b/R``)."""
     k = scenario["k"]
     q = scenario["q"]
-    rate = np.asarray(airtime["rate"], dtype=float)
+    tau = np.asarray(airtime["tau"], dtype=float)
     t_air = float(airtime["t_air"])
     s = s_for_g if s_for_g is not None else scenario["u2u_success"]
     acts: dict = {}
@@ -65,15 +109,13 @@ def _g_and_c_actions(scenario: dict, owner_of: list,
         for qq in range(q):
             owner = owner_of[qq]
             rel = 1.0 if i == owner else float(s[i, owner])
-            rr = float(rate[i, owner])
             row = []
             for act in scenario["by_host"][(i, qq)]:
                 if power_cap is not None and float(act["power"]) \
                         > float(power_cap[qq]):
                     continue
-                b_tok = float(act.get("bits", airtime.get("b_tok", 0.0)))
                 g_eff = float(act["i_plus"]) * rel
-                c_air = b_tok / max(rr * max(t_air, 1e-12), 1e-12)
+                c_air = float(tau[i, owner]) / max(t_air, 1e-15)
                 g_max = max(g_max, g_eff)
                 c_max = max(c_max, c_air)
                 row_act = (g_eff, c_air, float(act["power"]),
@@ -165,6 +207,7 @@ def simulate_ca_frids(
     lam_bits: int = 10,
     lam_cap: float = 2.0,
     power_cap: np.ndarray | None = None,
+    price_mode: str = "owner_local",
     audit: bool = False,
     raw_counts: bool = False,
 ) -> dict:
@@ -207,6 +250,11 @@ def simulate_ca_frids(
     t_air = float(airtime["t_air"])
     pi_hi = 1.0 / max(eps, 1e-9)          # certified pi range (y<=1, D>=0)
 
+    # P3.5-A (advice/009 P0-3): per-MC-run RNGs.  Every realization draws
+    # ``rng_r = default_rng([seed, r])`` (SeedSequence mixing) so episodes
+    # are independent AND individually reproducible, and the Clopper-
+    # Pearson QoS certificate's independent-Bernoulli model is not
+    # violated by algorithmic cross-run state coupling.
     rng = np.random.default_rng(seed)
     H_all = np.zeros((n_runs, q), dtype=bool)
     delays = np.full((n_runs, q), float(max_steps))
@@ -214,10 +262,12 @@ def simulate_ca_frids(
     infeasible_cycles = np.zeros((n_runs, q))
     decided_upper = np.zeros((n_runs, q)) if raw_counts else None
     comm_airtime = np.zeros(n_runs)
-    comm_tx = np.zeros(n_runs)
-    comm_rx = np.zeros(n_runs)
+    comm_tx_attempts = np.zeros(n_runs)
+    comm_rx_delivered = np.zeros(n_runs)
+    comm_rx_link_dropped = np.zeros(n_runs)
+    comm_rx_capacity_dropped = np.zeros(n_runs)
+    comm_rx_load = np.zeros(n_runs)
     comm_max_ratio = np.zeros(n_runs)
-    comm_thinned = np.zeros(n_runs)
     comm_feasible = np.zeros(n_runs)
     comm_cycles = np.zeros(n_runs)
     aud = {
@@ -229,15 +279,19 @@ def simulate_ca_frids(
     # receive-load scarcity forecast (binds immediately in congestion)
     load0 = np.array([float(np.sum(tau[:, j]))
                       for j in range(k)]) / max(t_air, 1e-12)
-    load_smooth = load0 * max(t_air, 1e-30)
 
     for r in range(n_runs):
-        H = rng.random(q) < 0.5
+        rng_r = np.random.default_rng([seed, r])
+        H = rng_r.random(q) < 0.5
         H_all[r] = H
         L = np.zeros((k, q))
         decided = np.zeros(q, dtype=bool)
         y = np.full(q, 1.0 / q)
         lam = np.clip(mu_c * np.maximum(load0 - 1.0, 0.0), 0.0, lam_cap)
+        # P3.5-A (advice/009 P0-3): the airtime-load EMA is an EPISODE
+        # state; it is re-seeded at the t=0 forecast every run so the
+        # (r+1)-th realization does NOT inherit the r-th final load.
+        load_smooth = load0 * max(t_air, 1e-30)
         for t in range(max_steps):
             undecided = [qq for qq in range(q) if not decided[qq]]
             if not undecided:
@@ -277,7 +331,8 @@ def simulate_ca_frids(
                         if score_b > best_score:
                             best_score = score_b
                             best_ideal = score
-                            best = (qq, g_eff, c_air, i_plus, rel, act)
+                            best = (qq, g_eff, c_air, i_plus, rel, act,
+                                    score_b)
                 choices[uav] = best
                 ideal[uav] = sc_ide
                 perturbed[uav] = sc_per
@@ -293,9 +348,9 @@ def simulate_ca_frids(
                 c = choices[uav]
                 if c is None:
                     continue
-                qq, g_eff, c_air, i_plus, rel, act = c
-                y_obs = int(rng.choice(len(act["p1"]),
-                                       p=act["p1"] if H[qq] else act["p0"]))
+                qq, g_eff, c_air, i_plus, rel, act, score_b = c
+                y_obs = int(rng_r.choice(len(act["p1"]),
+                                         p=act["p1"] if H[qq] else act["p0"]))
                 llr_obs = (quantize_with(quantizer, float(act["llr"][y_obs]))
                            if quantizer is not None
                            else quantize_llr(float(act["llr"][y_obs])))
@@ -304,76 +359,122 @@ def simulate_ca_frids(
                 obs_iplus[uav] = float(act["i_plus"])
                 if owner_of[qq] == uav:
                     L[uav, qq] += llr_obs
-            # evidence plane: token to the TARGET OWNER ONLY; physical
-            # Bernoulli delivery, airtime overload thinning at the owner.
-            # The commit load of the owner is the SUM of the airtimes of
-            # the cross-UAV tokens it receives (its own observation is
-            # local and consumes no receive airtime).  The delivery draw
-            # recorded here is THE delivered token (the price-update
-            # service S uses this same outcome -- no second draw).
-            load_now = np.zeros(k)
+            # evidence plane (P3.5-B, advice/009 section 5): the Dual
+            # price STEERS, the receiver HARD-ADMITS.  Stage 1: every
+            # sensing UAV that cleared the idle gate makes ONE offer to
+            # the target owner.  Stage 2: each owner admits a
+            # density-ranked subset ``J^+/c`` under the PATHWISE budget
+            # ``sum_{(uav) in A_j} c <= 1`` (exchangeable ties via
+            # ``rng_r.choice``); ``tau`` diagonal is zero so owner-local
+            # sensing is free (P0-4).  Airtime is charged for ADMITTED
+            # sends and is fully consumed before the link Bernoulli
+            # (transmission airtime/energy are spent on outage too); the
+            # un-admitted offers are receiver-capacity drops (P0-5 --
+            # lambda is the steering mechanism, hard admission is the
+            # pathwise MAC feasibility fuse, and v2/CA now share the same
+            # capacity model).
+            offers = {j: [] for j in range(k)}
+            offered_load = np.zeros(k)
             for uav in range(k):
-                qq = int(obs_target[uav])
-                if qq < 0:
+                c = choices[uav]
+                if c is None:
                     continue
+                qq, g_eff, c_air, i_plus, rel, act, score_b = c
+                if score_b <= 0.0:
+                    continue                    # idle gate (Lemma 4.99)
                 owner = owner_of[qq]
                 if uav != owner:
-                    load_now[owner] += float(tau[uav, owner])
-            thin = np.minimum(1.0, t_air / np.maximum(load_now, 1e-15))
+                    # P3.5-B ledger (advice/009 section 15): a TRANSMISSION
+                    # attempt is a CROSS-UAV send that commits airtime;
+                    # owner-local sensing is a token-less local event and
+                    # is NOT part of the token ledger (it appears in S)
+                    comm_tx_attempts[r] += 1.0
+                    offers[owner].append((uav, qq, c_air, score_b, c))
+                    offered_load[owner] += float(tau[uav, owner])
+            admitted = set()
+            load_now = np.zeros(k)
+            for owner, off in offers.items():
+                if not off:
+                    continue
+                # density J^+/c, descending; exchangeable ties by rng_r
+                off.sort(key=lambda o: -o[3] / max(o[2], 1e-15))
+                used = 0.0
+                for (uav, qq, c_air, score_b, c) in off:
+                    if used + c_air <= 1.0 + 1e-12:
+                        admitted.add((owner, uav))
+                        load_now[owner] += float(tau[uav, owner])
+                        used += c_air
+                    else:
+                        comm_rx_capacity_dropped[r] += 1.0
             S = np.zeros(q)
             for uav in range(k):
-                qq = int(obs_target[uav])
-                if qq < 0:
+                c = choices[uav]
+                if c is None:
                     continue
+                qq, g_eff, c_air, i_plus, rel, act, score_b = c
                 owner = owner_of[qq]
                 if uav == owner:
                     S[qq] += obs_iplus[uav]
                     continue
-                # the overflow-thinning loss mass at the owner (advice/013
-                # ledger): ``1 - thin`` is exactly the airtime-induced drop
-                # probability under the committed load -- the Bernoulli
-                # outage is counted separately (it is physical link loss,
-                # NOT receiver capacity loss)
-                comm_thinned[r] += float(1.0 - thin[owner])
-                if rng.random() <= delivery[uav, owner] * thin[owner]:
+                if score_b <= 0.0 or (owner, uav) not in admitted:
+                    continue
+                # the physical Bernoulli is drawn for every ADMITTED
+                # token (its airtime was already spent -- the link outage
+                # is NOT a capacity loss, P3.5-B ledger)
+                if rng_r.random() <= delivery[uav, owner]:
                     L[owner, qq] += obs_llr[uav]
                     S[qq] += obs_iplus[uav]
-                    comm_tx[r] += 1.0
+                    comm_rx_delivered[r] += 1.0
+                else:
+                    comm_rx_link_dropped[r] += 1.0
             comm_airtime[r] += float(np.sum(load_now))
-            comm_rx[r] += float(np.mean(load_now)) if k else 0.0
+            comm_rx_load[r] += float(np.mean(load_now)) if k else 0.0
             comm_max_ratio[r] = max(comm_max_ratio[r],
                                     float(np.max(load_now) / max(t_air, 1e-15))
                                     if k else 0.0)
             comm_feasible[r] += float(np.max(load_now)
                                       <= t_air + 1e-12) if k else 0.0
-            # owner task-price update (advice/008 section 7): each OWNER
-            # computes ``pi_q = y_q/(D_q+eps)`` from its OWN belief and
-            # its own received service -- no replicated global belief, no
-            # global simplex (every undecided target a UAV does NOT own is
-            # priced by the broadcast ``pi``).  ``y_q`` is the owner's
-            # exponentiated-gradient dual of its own targets' normalized
-            # service gap ``rbar - ratio``, normalized on the owner's own
-            # undecided simplex (a single-target owner keeps ``y=1`` and
-            # its price is set by its residual deficit alone -- the
-            # owner-anchored minimal-messaging variant; the F0-G7
-            # deficit-normalization weakness is the honest cost the P3.4
-            # gate must measure).
-            y_new = y.copy()
+            # owner task-price update.  ``price_mode="owner_local"`` (advice/008
+            # section 7, the P3.5-A baseline): each OWNER computes
+            # ``pi_q = y_q/(D_q+eps)`` from its OWN belief and received
+            # service, normalized on the owner's own undecided simplex
+            # (single-target owner keeps ``y=1``).  ``price_mode=
+            # "global_simplex"`` (P3.6, advice/009 section 7): the same
+            # owner-local ``r_q = S_q/(D_q+eps)`` feeds the EXACT global
+            # entropic mirror descent ``y_q^+ = y_q e^{-mu r_q} / Z``
+            # over the WHOLE undecided simplex -- the global scalar ``Z``
+            # is the only networked quantity (spanning-tree/gossip
+            # reduction), so ``sum_q y_q = 1`` holds strictly and a
+            # single-target owner's price can still change globally.
             ratios = np.array([S[qq] / max(D[qq] + eps, 1e-12)
                                for qq in range(q)])
-            for uav in range(k):
-                owned = [qq for qq in range(q)
-                         if owner_of[qq] == uav and not decided[qq]]
-                if not owned:
-                    continue
-                rbar = float(np.mean(ratios[owned]))
-                for qq in owned:
-                    y_new[qq] = y[qq] * np.exp(mu * (rbar - ratios[qq]))
-                s_own = float(np.sum(y_new[owned]))
-                y_new[owned] = y_new[owned] / max(s_own, 1e-12)
-            y = y_new
-            # receiver airtime price: dual ascent on the EMA load
-            load_smooth = 0.8 * load_now + 0.2 * load_smooth
+            und = [qq for qq in range(q) if not decided[qq]]
+            if price_mode == "global_simplex":
+                y = _global_simplex(mu, ratios, y, und)
+            else:
+                # owner_local (P3.5-A baseline, byte-identical to the
+                # advice/008 owner-anchored variant): per-owner simplex
+                y_new = y.copy()
+                for uav in range(k):
+                    owned = [qq for qq in range(q)
+                             if owner_of[qq] == uav and not decided[qq]]
+                    if not owned:
+                        continue
+                    rbar = float(np.mean(ratios[owned]))
+                    for qq in owned:
+                        y_new[qq] = y[qq] * np.exp(mu * (rbar - ratios[qq]))
+                    s_own = float(np.sum(y_new[owned]))
+                    y_new[owned] = y_new[owned] / max(s_own, 1e-12)
+                y = y_new
+            # receiver airtime price: dual ascent on the EMA of the
+            # OFFERED (pre-admission) load -- the congestion DEMAND the
+            # price must steer, NOT the admitted load.  After a hard
+            # admission the admitted load is always <= T_air (the fuse
+            # holds pathwise), so the admitted-EMA ``rho`` would be pinned
+            # at ~1 forever and lambda would never move (advice/009
+            # sections 5, 10-11: lambda steers, admission is the fuse --
+            # steering must see the demand that would overload).
+            load_smooth = 0.8 * offered_load + 0.2 * load_smooth
             rho = load_smooth / max(t_air, 1e-30)
             lam = np.clip(lam + mu_c * (rho - 1.0), 0.0, lam_cap)
             # stopping on the owner belief (unchanged system rule)
@@ -403,13 +504,25 @@ def simulate_ca_frids(
         "infeasible_cycle_fraction": [0.0] * q,
         "comm": {
             "airtime_per_cycle": float(np.mean(comm_airtime / active)),
-            "tx_reports_per_uav": float(np.mean(comm_tx / active) / k),
-            "rx_load_per_uav": float(np.mean(comm_rx)),
+            # P3.5-B ledger (advice/009 section 15): a TRANSMISSION attempt
+            # is a send whose airtime is committed (it is charged even if
+            # the link outage or the admission drops it); the delivered /
+            # link-dropped / capacity-dropped counts are the receiver side
+            "tx_attempts_per_uav": float(
+                np.mean(comm_tx_attempts / active) / k),
+            "rx_delivered_per_uav": float(
+                np.mean(comm_rx_delivered / active) / k),
+            "rx_link_dropped_per_uav": float(
+                np.mean(comm_rx_link_dropped / active) / k),
+            "rx_capacity_dropped_per_uav": float(
+                np.mean(comm_rx_capacity_dropped / active) / k),
+            # rx_load per ACTIVE cycle (P3.5-B, advice/009 section 15: the
+            # accumulator is accumulated per cycle, so it must be divided
+            # by the active cycles, not only by n_runs)
+            "rx_load_per_uav": float(np.mean(comm_rx_load / active)),
             "max_load_ratio": float(np.mean(comm_max_ratio)),
             "budget_feasible_fraction": float(
                 np.mean(comm_feasible / active)),
-            "thinned_tokens_per_cycle": float(
-                np.mean(comm_thinned / active)),
         },
     }
     if audit:

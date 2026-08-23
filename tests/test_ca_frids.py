@@ -147,11 +147,33 @@ def test_qos_status_uncertain_stays_unresolved():
 
 
 def test_qos_status_fail_only_on_lower_bound():
-    # point estimate above spec but lower bound still below -> the protocol
-    # does NOT claim failure (LCB(P_err) > p_max is required)
-    status = raw_qos_status([100, 100], [100, 100], [16, 16], [18, 18],
+    # point estimate above spec but LOWER bound still below -> the
+    # protocol does NOT claim failure (LCB(P_err) > p_max is required)
+    lo, _ = clopper_pearson(8, 100, 0.05 / 4)
+    md_lo, _ = clopper_pearson(8, 100, 0.05 / 4)
+    assert lo <= 0.05
+    status = raw_qos_status([100, 100], [100, 100], [8, 8], [8, 8],
                             0.05, 0.05, 0.05)
-    assert status in ("UNCERTAIN", "PASS", "FAIL")
+    # point estimates at 0.08 exceed the spec but the simultaneous LCB
+    # clears it -- the protocol must NOT claim FAIL on the point estimate
+    assert status in ("UNCERTAIN", "PASS")
+    # the reverse: LCB > p_max IS a certified FAIL even when the point
+    # estimate alone looks "not too bad"
+    status2 = raw_qos_status([100, 100], [100, 100], [18, 18], [18, 18],
+                             0.05, 0.05, 0.05)
+    assert status2 == "FAIL"
+
+
+def test_qos_uncertain_before_fail_must_return_fail():
+    """P0-1 regression (advice/009 section 1): an EARLIER UNCERTAIN target
+    must NOT mask a LATER certified FAIL.  The certificate scans every
+    target for a certified violation FIRST and only returns UNCERTAIN if
+    no violation exists anywhere."""
+    # target 0: too few trials (UNCERTAIN on its own)
+    # target 1: LCB already above spec (certified FAIL)
+    status = raw_qos_status([10, 100], [10, 100], [2, 60], [2, 60],
+                            0.05, 0.05, 0.05)
+    assert status == "FAIL"
 
 
 def test_pool_raw_counts():
@@ -188,20 +210,39 @@ def test_ca_free_airtime_nodrop(scenario, bounds, air_fair):
     b = bounds_v2(bt, 3)
     out = simulate_ca_frids(scenario, b, air_fair, n_runs=60, seed=3,
                             max_steps=40, pi_bits=12, lam_bits=12)
+    # P3.5-B pathwise invariant: the hard owner admission keeps
+    # ``sum c <= 1`` on EVERY cycle, so the overload ratio never exceeds
+    # 1 and the budget-feasible fraction is 1 -- in the free regime no
+    # capacity drops occur at all (advice/009 sections 5, 11)
     assert out["comm"]["budget_feasible_fraction"] == pytest.approx(1.0)
-    # with lambda ~ 0 and no overload thinning, the evidence plane is the
-    # only difference vs the frozen full mesh: every feasible UAV reports
-    assert out["comm"]["thinned_tokens_per_cycle"] == 0.0
+    assert out["comm"]["max_load_ratio"] <= 1.0 + 1e-9
+    assert out["comm"]["rx_capacity_dropped_per_uav"] == 0.0
+    assert out["comm"]["rx_delivered_per_uav"] > 0.0
 
 
 def test_ca_congested_load_drops(scenario, bounds, air_cong):
     bt = bounds
     b = bounds_v2(bt, 3)
-    free = simulate_ca_frids(scenario, b, air_cong, n_runs=60, seed=4,
-                             max_steps=40, pi_bits=12, lam_bits=12)
-    assert free["comm"]["max_load_ratio"] > 1.0
-    # the dual airtime price must cut reporting on the overloaded path
-    assert free["comm"]["tx_reports_per_uav"] < 1.0
+    out = simulate_ca_frids(scenario, b, air_cong, n_runs=60, seed=4,
+                            max_steps=40, pi_bits=12, lam_bits=12)
+    # P3.5-B (advice/009 sections 5, 11): the receiver HARD-admits a
+    # density-ranked ``J/c`` subset under the PATHWISE budget ``sum c <=
+    # 1`` -- so the overload ratio NEVER exceeds 1 and every cycle is
+    # budget-feasible (lambda is the steering price; hard admission is
+    # the MAC feasibility fuse).  Congestion now shows up as a
+    # capacity-dropped ledger, not as overloaded cycles.
+    assert out["comm"]["max_load_ratio"] <= 1.0 + 1e-9
+    assert out["comm"]["budget_feasible_fraction"] == pytest.approx(1.0)
+    assert out["comm"]["rx_capacity_dropped_per_uav"] > 0.0
+    # the dual airtime price must cut the ATTEMPT rate in overload
+    assert out["comm"]["tx_attempts_per_uav"] < 1.0
+    # ledger identity (advice/009 section 15): attempts = delivered +
+    # link-dropped + capacity-dropped
+    a = out["comm"]["tx_attempts_per_uav"]
+    d = out["comm"]["rx_delivered_per_uav"]
+    ld = out["comm"]["rx_link_dropped_per_uav"]
+    cd = out["comm"]["rx_capacity_dropped_per_uav"]
+    assert a == pytest.approx(d + ld + cd, abs=1e-9)
 
 
 def test_ca_price_coarse_in_flocculated_bits(scenario, bounds, air_cong):
@@ -228,3 +269,48 @@ def test_ca_battery_of_geoms(scenario12, air_cong):
         out = simulate_ca_frids(sc, b, am, n_runs=40, seed=1, max_steps=40)
         assert 0.0 < out["worst_target_delay"] <= 40.0
         assert len(out["e1_delays"]) == 12
+
+
+def test_ca_price_mode_global_simplex_runs(scenario, bounds, air_fair):
+    """P3.6 (advice/009 sections 6-8): the global-simplex task price
+    variant runs end-to-end with deterministic output."""
+    bt = bounds
+    b = bounds_v2(bt, 3)
+    g = simulate_ca_frids(scenario, b, air_fair, n_runs=60, seed=5,
+                          max_steps=40, pi_bits=12, lam_bits=12,
+                          price_mode="global_simplex")
+    assert 0.0 < g["worst_target_delay"] <= 40.0
+    for p in g["p_fa"] + g["p_md"]:
+        assert 0.0 <= p <= 1.0
+
+
+def test_single_target_owner_price_can_still_change_globally():
+    """P3.6 regression (advice/009 section 8): with one target per owner,
+    the owner-local simplex freezes ``y_q = 1`` forever (the v0 failure),
+    while the global-simplex mirror descent keeps ``sum y = 1`` and lets
+    every price move."""
+    from uav_otfs_isac.ca_frids import _global_simplex
+    y = np.array([1.0 / 3.0] * 3)
+    ratios = np.array([2.0, 0.5, 0.5])
+    for _ in range(20):
+        y = _global_simplex(0.5, ratios, y, [0, 1, 2])
+    assert y.sum() == pytest.approx(1.0, abs=1e-9)
+    # the well-served target's price drops below the uniform price
+    assert y[0] < 1.0 / 3.0
+    assert y[1] > 0.0 and y[2] > 0.0
+
+
+def test_global_simplex_only_scalar_normalizer_is_networked():
+    """P3.6 (advice/009 section 8): the only global quantity is the scalar
+    ``Z = sum_p w_p`` -- the update has NO global ``rbar`` factor (the
+    public ``exp(mu*rbar)`` cancels in the simplex normalization), so the
+    reduction is a single-scalar spanning-tree/gossip, not a full-mesh
+    belief exchange."""
+    from uav_otfs_isac.ca_frids import _global_simplex
+    y = np.array([0.5, 0.3, 0.2])
+    ratios = np.array([1.0, 2.0, 3.0])
+    y1 = _global_simplex(0.5, ratios, y, [0, 1, 2])
+    # adding a constant to every ratio scales all ``w`` uniformly, which
+    # the normalization removes -- ``rbar`` never needs to be known
+    y2 = _global_simplex(0.5, ratios + 100.0, y, [0, 1, 2])
+    assert np.allclose(y1, y2, atol=1e-9)

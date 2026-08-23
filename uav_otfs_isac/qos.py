@@ -49,19 +49,24 @@ def raw_qos_status(n_H0, n_H1, n_FA, n_MD, alpha: float, beta: float,
     never relabelled (the protocol keeps it unresolved)."""
     q = len(n_H0)
     delta_q = delta_cell / (2.0 * max(q, 1))
+    # P3.5-A (advice/009 P0-1): scan ALL targets BEFORE deciding.  A
+    # per-target early return lets an earlier UNCERTAIN target mask a
+    # later certified FAIL, contradicting the definition
+    # ``exists q: LCB(P_err,q) > p_max  => FAIL``.  FAIL is the strongest
+    # decision the data can make, so it is checked across every target
+    # first; UNCERTAIN is returned only if some target is unresolved and
+    # none is a certified violation.
+    has_uncertain = False
     for qq in range(q):
         fa_lo, fa_hi = clopper_pearson(int(n_FA[qq]), int(n_H0[qq]),
                                        delta_q)
         md_lo, md_hi = clopper_pearson(int(n_MD[qq]), int(n_H1[qq]),
                                        delta_q)
-        # certified violation check FIRST (FAIL is the strongest decision
-        # the data can make at the simultaneous level)
         if fa_lo > alpha or md_lo > beta:
             return "FAIL"
-        # certified PASS only when every UCB clears the spec
         if fa_hi > alpha or md_hi > beta:
-            return "UNCERTAIN"
-    return "PASS"
+            has_uncertain = True
+    return "UNCERTAIN" if has_uncertain else "PASS"
 
 
 def pool_raw_counts(rows: list[dict]) -> dict:

@@ -106,6 +106,30 @@ def air_comm(out, key):
     return out["comm"][key]
 
 
+def j_worst(rows):
+    """Worst-target E1 per aligned MC cell (the paired-CRN unit)."""
+    return np.max([r["e1_delays"] for r in rows], axis=1)
+
+
+def paired_bootstrap_ci(js_v2, js_ca, b_iters=10000, seed=0):
+    """P3.5-C (advice/009 sections 16-17): PAIRED bootstrap 95% CI of the
+    worst-target-delay difference ``J_CA - J_v2``.  The two schedulers
+    are evaluated on the SAME aligned (geom, MC-seed) exogenous draws
+    (per-run independent RNG, episode-reset state), so ``delta_r`` is a
+    paired comparison and the CI gates the PERFORMANCE claim instead of
+    the point estimate -- the gate decides on the difference interval,
+    not on ``mean(gain)`` alone.  Returns ``(mean_delta, ci_lo, ci_hi)``."""
+    delta = np.asarray(js_ca, dtype=float) - np.asarray(js_v2, dtype=float)
+    n = len(delta)
+    rng = np.random.default_rng(seed)
+    boot = np.empty(b_iters)
+    for b in range(b_iters):
+        idx = rng.integers(0, n, size=n)
+        boot[b] = float(np.mean(delta[idx]))
+    ci = np.percentile(boot, [2.5, 97.5])
+    return float(np.mean(delta)), float(ci[0]), float(ci[1])
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="results/ca_frids_gate.json")
@@ -126,6 +150,12 @@ def main() -> None:
     parser.add_argument("--congested-rho", type=float, default=1.8)
     parser.add_argument("--pi-bits", type=int, default=10)
     parser.add_argument("--lam-bits", type=int, default=10)
+    parser.add_argument("--price-mode", default="global_simplex",
+                        choices=("global_simplex", "owner_local"),
+                        help="P3.6 (advice/009 section 7): the GLOBAL-simplex "
+                             "task price (the only networked quantity is the "
+                             "scalar ``Z`` reduction, ``sum y_q = 1`` holds "
+                             "strictly) vs the P3.5-A owner-local baseline")
     args = parser.parse_args()
     t0 = time.time()
 
@@ -171,7 +201,8 @@ def main() -> None:
                             # baseline (tx = 1.0); the uncongested gate is
                             # about worst-target delay regression only
                             "v2_tx": 1.0,
-                            "ca_tx": air_comm(rows_ca[0], "tx_reports_per_uav"),
+                            "ca_tx": air_comm(rows_ca[0],
+                                              "tx_attempts_per_uav"),
                             "ca_feasible": air_comm(rows_ca[0],
                                                     "budget_feasible_fraction")},
                 })
@@ -204,7 +235,8 @@ def main() -> None:
                     "ca_qos": _qos(rows_ca, args.alpha, args.beta),
                     "air": {"rho_full": am["rho_full"],
                             "v2_tx": 1.0,
-                            "ca_tx": air_comm(rows_ca[0], "tx_reports_per_uav"),
+                            "ca_tx": air_comm(rows_ca[0],
+                                             "tx_attempts_per_uav"),
                             "ca_max_load": air_comm(rows_ca[0],
                                                     "max_load_ratio"),
                             "ca_feasible": air_comm(rows_ca[0],
