@@ -248,6 +248,31 @@ def ris_physics_gain_matrix(
     return gains
 
 
+def blocked_direct_gain_matrix(
+    num_targets: int,
+    num_uavs: int,
+    weak_target_id: int | None = None,
+    clean_gain: float = 1.0,
+    direct_blockage: float = 0.01,
+) -> np.ndarray:
+    """P4 matched-control factory (advice/011 section 5): the
+    \"blocked, no RIS\" reference gain matrix.
+
+    Clean targets keep ``clean_gain`` (the normalized direct path = 1);
+    the weak target gets the ``direct_blockage`` floor and NO RIS benefit.
+    This is the correct control for the RIS-recovery experiment:
+
+    ``eta = (P_M[aligned] - P_M[blocked]) / (P_M[clean] - P_M[blocked])``,
+
+    while ``clean_gain == 1`` (plain build_models) is only the
+    unblocked upper/reference bound.
+    """
+    gain = np.full((int(num_targets), int(num_uavs)), float(clean_gain))
+    if weak_target_id is not None:
+        gain[int(weak_target_id), :] = float(direct_blockage)
+    return gain
+
+
 def build_ris_models(
     cfg: ExperimentConfig,
     rng: np.random.Generator,

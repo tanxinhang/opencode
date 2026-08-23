@@ -37,8 +37,8 @@
     "uncongested_rho": 0.5,
     "congested_rho": 1.8,
     "price_mode": "global_simplex",
-    "git_sha": "282ef84",
-    "seed_scheme": "CRN exogenous tape (advice/010 P0-2): shared U_H/U_obs/U_link per (r,t)",
+    "git_sha": "22ec9d3",
+    "seed_scheme": "CRN exogenous tape (advice/010 P0-2): shared U_H/U_obs/U_link per (r,t); dedicated policy RNG for admission tie-breaking only (advice/011 P0-B)",
     "capacity_model": "v2: independent delivery / hard token cap (rx_cap_tokens); CA: airtime budget sum tau <= T_air (distinct capacity primitives remain a documented open item)",
     "evidence_mode": "owner-only evidence plane (Dual-Bus)",
     "crn_tape": true,
@@ -58,7 +58,7 @@
       "calibrated policy-matched B"
     ]
   },
-  "runtime_s": 1851.5,
+  "runtime_s": 1586.5,
   "scenarios": [
     {
       "geom": 0,
@@ -285,6 +285,7 @@
         "rho_full": 0.5,
         "v2_tx": 1.0,
         "ca_tx": 0.8684538141806111,
+        "ca_admitted_tx": 0.8684538141806111,
         "ca_control_bits_per_cycle": 250.0,
         "ca_feasible": 1.0
       }
@@ -514,6 +515,7 @@
         "rho_full": 1.8,
         "v2_tx": 1.0,
         "ca_tx": 0.8226927371297685,
+        "ca_admitted_tx": 0.676684322499566,
         "ca_control_bits_per_cycle": 250.0,
         "ca_max_load": 0.9708730495987714,
         "ca_feasible": 1.0
@@ -744,6 +746,7 @@
         "rho_full": 0.5,
         "v2_tx": 1.0,
         "ca_tx": 0.898049929803992,
+        "ca_admitted_tx": 0.898049929803992,
         "ca_control_bits_per_cycle": 250.0,
         "ca_feasible": 1.0
       }
@@ -973,6 +976,7 @@
         "rho_full": 1.8,
         "v2_tx": 1.0,
         "ca_tx": 0.8593209507766539,
+        "ca_admitted_tx": 0.7035042489772958,
         "ca_control_bits_per_cycle": 250.0,
         "ca_max_load": 0.942639531950121,
         "ca_feasible": 1.0
@@ -1203,6 +1207,7 @@
         "rho_full": 0.5,
         "v2_tx": 1.0,
         "ca_tx": 0.9592713894670146,
+        "ca_admitted_tx": 0.9592713894670146,
         "ca_control_bits_per_cycle": 250.0,
         "ca_feasible": 1.0
       }
@@ -1432,6 +1437,7 @@
         "rho_full": 1.8,
         "v2_tx": 1.0,
         "ca_tx": 0.9340602850043477,
+        "ca_admitted_tx": 0.7791930846526159,
         "ca_control_bits_per_cycle": 250.0,
         "ca_max_load": 0.9777785253101087,
         "ca_feasible": 1.0

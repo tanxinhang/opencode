@@ -370,6 +370,32 @@ def test_pool_ledger_is_per_target_pooled():
             assert 1.0 <= mean <= 40.0
 
 
+def test_density_admission_is_label_equivariant():
+    """P0-B (advice/011 section 6): the density admission tie-break uses
+    independent policy keys that live on the UAV indices, so a permutation
+    of UAV labels permutes the keys equally and the admitted order is
+    label-equivariant (no fixed low-index bias)."""
+    from uav_otfs_isac.ca_frids import _density_sorted_offers
+    offers = [
+        (0, 0, 0.5, 2.0, None),
+        (1, 0, 0.5, 2.0, None),   # identical density: tie decided below
+        (2, 0, 0.4, 1.0, None),
+    ]
+    keys = np.array([0.3, 0.9, 0.5])
+    order = [o[0] for o in _density_sorted_offers(offers, keys)]
+    assert order[0] == 0          # denser pairs keep their rank
+    assert order[2] == 2          # lowest density last
+    # permute LABELS and permute the keys by the INVERSE permutation: the
+    # key attached to an offer instance must follow that instance through
+    # the relabeling (keys_p[new] = keys[old], old = inv[new]).
+    perm = [2, 0, 1]
+    inv = [perm.index(i) for i in range(len(offers))]
+    offers_p = [(perm[uav], qq, c, score, None)
+                for uav, qq, c, score, _ in offers]
+    order_p = [o[0] for o in _density_sorted_offers(offers_p, keys[inv])]
+    assert order_p == [perm[uav] for uav in order]
+
+
 def test_global_simplex_only_scalar_normalizer_is_networked():
     """P3.6 (advice/009 section 8): the only global quantity is the scalar
     ``Z = sum_p w_p`` -- the update has NO global ``rbar`` factor (the

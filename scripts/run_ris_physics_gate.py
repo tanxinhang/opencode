@@ -30,6 +30,7 @@ from uav_otfs_isac.config import load_config
 from uav_otfs_isac.expected_pd import expected_pd_greedy_select
 from uav_otfs_isac.ris_scenario import (
     RisConfig,
+    blocked_direct_gain_matrix,
     ris_beam_phase,
     ris_physics_gain_matrix,
 )
@@ -85,13 +86,18 @@ def run_gate(
                         aperture_scale, direct_blockage=0.01,
                         phase_per_target=random_phases,
                     )
-                    # P1-1 control: the honest weak-target baseline is
+                    # P1-1 control (P4 matched-control factory, advice/011
+                    # section 5): the honest weak-target baseline is
                     # "blocked, NO RIS" (the direct-path floor), NOT the
-                    # clean no-RIS scenario.  Comparing aligned to the clean
+                    # clean no-RIS scenario; clean no-RIS is only the
+                    # unblocked reference.  Comparing aligned to the clean
                     # no-RIS conflates the blockage itself with the RIS
                     # benefit (the pre-fix inflation masked this entirely).
-                    blocked_gain = np.ones_like(aligned_gain)
-                    blocked_gain[cfg.num_targets - 1, :] = 0.01
+                    blocked_gain = blocked_direct_gain_matrix(
+                        cfg.num_targets, cfg.num_uavs,
+                        weak_target_id=cfg.num_targets - 1,
+                        direct_blockage=0.01,
+                    )
                     scenarios = {
                         "ris_aligned": aligned_gain,
                         "ris_random": random_gain,
@@ -154,6 +160,9 @@ def run_gate(
                     "random_mean": float(np.mean([
                         row["mean_expected_pd"] for row in random_ris
                     ])),
+                    "random_worst": float(np.mean([
+                        row["worst_expected_pd"] for row in random_ris
+                    ])),
                     "mean_gain_aligned_vs_no_ris": float(np.mean([
                         row["mean_expected_pd"] - row["no_ris_mean"]
                         for row in aligned
@@ -175,6 +184,16 @@ def run_gate(
                         aligned_row["mean_expected_pd"]
                         - random_row["mean_expected_pd"]
                         for aligned_row, random_row in zip(aligned, random_ris)
+                    ])),
+                    # P4 recovery metric (advice/011 section 5):
+                    # eta = (P[aligned] - P[blocked]) / (P[clean] -
+                    # P[blocked]) measures how much of the blockage-induced
+                    # detection loss the aligned RIS restores.
+                    "recovery_eta_worst": float(np.mean([
+                        (af["worst_expected_pd"] - bf["worst_expected_pd"])
+                        / max(af["no_ris_worst"] - bf["worst_expected_pd"],
+                              1e-12)
+                        for af, bf in zip(aligned, blocked)
                     ])),
                     "qos_feasible_rate": float(np.mean([
                         row["qos_feasible"] for row in aligned

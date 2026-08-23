@@ -272,6 +272,10 @@ def main() -> None:
                             # aggregated over ALL MC cells, not rows[0]
                             "ca_tx": comm_pooled(rows_ca,
                                                  "tx_attempts_per_uav"),
+                            # P0-C split ledger: attempts = admitted +
+                            # capacity-dropped (identity preserved per cell)
+                            "ca_admitted_tx": comm_pooled(
+                                rows_ca, "rx_admitted_per_uav"),
                             "ca_control_bits_per_cycle": comm_pooled(
                                 rows_ca, "control_bits_per_cycle"),
                             "ca_feasible": comm_pooled(
@@ -318,6 +322,8 @@ def main() -> None:
                             "v2_tx": 1.0,
                             "ca_tx": comm_pooled(rows_ca,
                                                  "tx_attempts_per_uav"),
+                            "ca_admitted_tx": comm_pooled(
+                                rows_ca, "rx_admitted_per_uav"),
                             "ca_control_bits_per_cycle": comm_pooled(
                                 rows_ca, "control_bits_per_cycle"),
                             "ca_max_load": comm_pooled(rows_ca,
@@ -405,8 +411,10 @@ def main() -> None:
                    # scheduler variant actually executed.
                    "price_mode": args.price_mode,
                    "git_sha": _git_sha(),
-                   "seed_scheme": "CRN exogenous tape (advice/010 P0-2): "
-                                  "shared U_H/U_obs/U_link per (r,t)",
+                   "seed_scheme": ("CRN exogenous tape (advice/010 P0-2): "
+                                  "shared U_H/U_obs/U_link per (r,t); "
+                                  "dedicated policy RNG for admission "
+                                  "tie-breaking only (advice/011 P0-B)"),
                    "capacity_model": ("v2: independent delivery / hard "
                                       "token cap (rx_cap_tokens); CA: "
                                       "airtime budget sum tau <= T_air "

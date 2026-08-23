@@ -16,11 +16,13 @@
       "aligned_mean": 0.6215952373673479,
       "aligned_worst": 0.05921493943064402,
       "random_mean": 0.6177261420698903,
+      "random_worst": 0.055288845322243894,
       "mean_gain_aligned_vs_no_ris": -0.21859898009301215,
       "worst_gain_aligned_vs_no_ris": -0.6934440635187403,
       "blocked_no_ris_worst": 0.05528154875122866,
       "worst_gain_aligned_vs_blocked_no_ris": 0.003933390679415352,
       "mean_gain_aligned_vs_random": 0.003869095297457603,
+      "recovery_eta_worst": 0.00572674724723845,
       "qos_feasible_rate": 0.0
     },
     {
@@ -32,11 +34,13 @@
       "aligned_mean": 0.6545600482284957,
       "aligned_worst": 0.09186182354639272,
       "random_mean": 0.6183520752824806,
+      "random_worst": 0.05537584705002616,
       "mean_gain_aligned_vs_no_ris": -0.18563416923186443,
       "worst_gain_aligned_vs_no_ris": -0.6607971794029918,
       "blocked_no_ris_worst": 0.05528154875122866,
       "worst_gain_aligned_vs_blocked_no_ris": 0.036580274795164056,
       "mean_gain_aligned_vs_random": 0.036207972946015056,
+      "recovery_eta_worst": 0.0524927169893555,
       "qos_feasible_rate": 0.0
     },
     {
@@ -48,11 +52,13 @@
       "aligned_mean": 0.6667966271042979,
       "aligned_worst": 0.11500222375939759,
       "random_mean": 0.6178469248076359,
+      "random_worst": 0.05533622449680996,
       "mean_gain_aligned_vs_no_ris": -0.17339759035606211,
       "worst_gain_aligned_vs_no_ris": -0.6376567791899868,
       "blocked_no_ris_worst": 0.05528154875122866,
       "worst_gain_aligned_vs_blocked_no_ris": 0.059720675008168946,
       "mean_gain_aligned_vs_random": 0.048949702296662,
+      "recovery_eta_worst": 0.08566476946375795,
       "qos_feasible_rate": 0.0
     },
     {
@@ -64,11 +70,13 @@
       "aligned_mean": 0.8640635596324364,
       "aligned_worst": 0.6464328905693714,
       "random_mean": 0.6188811280962081,
+      "random_worst": 0.05557146603283823,
       "mean_gain_aligned_vs_no_ris": 0.023869342172076324,
       "worst_gain_aligned_vs_no_ris": -0.10622611238001305,
       "blocked_no_ris_worst": 0.05528154875122866,
       "worst_gain_aligned_vs_blocked_no_ris": 0.5911513418181427,
       "mean_gain_aligned_vs_random": 0.24518243153622823,
+      "recovery_eta_worst": 0.8489337820935177,
       "qos_feasible_rate": 0.0
     },
     {
@@ -80,11 +88,13 @@
       "aligned_mean": 0.6233884727092509,
       "aligned_worst": 0.05950194242981464,
       "random_mean": 0.619274850272222,
+      "random_worst": 0.05651155000980033,
       "mean_gain_aligned_vs_no_ris": -0.2417114656172629,
       "worst_gain_aligned_vs_no_ris": -0.7310504028118695,
       "blocked_no_ris_worst": 0.05650282865075834,
       "worst_gain_aligned_vs_blocked_no_ris": 0.0029991137790562963,
       "mean_gain_aligned_vs_random": 0.0041136224370290405,
+      "recovery_eta_worst": 0.004090602947840867,
       "qos_feasible_rate": 0.0
     },
     {
@@ -96,11 +106,13 @@
       "aligned_mean": 0.6578819615880853,
       "aligned_worst": 0.09624249472910965,
       "random_mean": 0.619901748330747,
+      "random_worst": 0.05660135368773809,
       "mean_gain_aligned_vs_no_ris": -0.2072179767384284,
       "worst_gain_aligned_vs_no_ris": -0.6943098505125744,
       "blocked_no_ris_worst": 0.05650282865075834,
       "worst_gain_aligned_vs_blocked_no_ris": 0.03973966607835132,
       "mean_gain_aligned_vs_random": 0.03798021325733834,
+      "recovery_eta_worst": 0.054120233754167746,
       "qos_feasible_rate": 0.0
     },
     {
@@ -112,11 +124,13 @@
       "aligned_mean": 0.6700588156204329,
       "aligned_worst": 0.12269917193629173,
       "random_mean": 0.6193964656140363,
+      "random_worst": 0.0565605008683447,
       "mean_gain_aligned_vs_no_ris": -0.19504112270608082,
       "worst_gain_aligned_vs_no_ris": -0.6678531733053923,
       "blocked_no_ris_worst": 0.05650282865075834,
       "worst_gain_aligned_vs_blocked_no_ris": 0.0661963432855334,
       "mean_gain_aligned_vs_random": 0.05066235000639667,
+      "recovery_eta_worst": 0.090119409827536,
       "qos_feasible_rate": 0.0
     },
     {
@@ -128,11 +142,13 @@
       "aligned_mean": 0.873000419688297,
       "aligned_worst": 0.673243470736953,
       "random_mean": 0.6204710021580124,
+      "random_worst": 0.0568966288447871,
       "mean_gain_aligned_vs_no_ris": 0.007900481361783184,
       "worst_gain_aligned_vs_no_ris": -0.11730887450473108,
       "blocked_no_ris_worst": 0.05650282865075834,
       "worst_gain_aligned_vs_blocked_no_ris": 0.6167406420861947,
       "mean_gain_aligned_vs_random": 0.25252941753028446,
+      "recovery_eta_worst": 0.8409263859608463,
       "qos_feasible_rate": 0.0
     }
   ],

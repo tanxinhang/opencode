@@ -172,6 +172,26 @@ def _quantize_price(v: np.ndarray, lo: float, hi: float,
     return lo + idx * step
 
 
+def _density_sorted_offers(
+    off: list,
+    tie_keys: np.ndarray,
+) -> list:
+    """P0-B (advice/011 section 6): density-ordered admission list with
+    EXCHANGEABLE ties.
+
+    ``off`` entries are ``(uav, qq, c_air, score, ...)``; the primary key
+    is ``score / c_air`` descending and the tie key is ``tie_keys[uav]``
+    ascending.  The keys live on the UAV INDICES, so a permutation of UAV
+    labels permutes the keys exactly the same way -- the admission is
+    label-equivariant (no fixed low-index bias), which is the property the
+    plain ``sorted`` density break does NOT give.
+    """
+    return sorted(
+        off,
+        key=lambda o: (-o[3] / max(o[2], 1e-15), float(tie_keys[o[0]])),
+    )
+
+
 def _audit_cycle(act_lists, choices, ideal, perturbed, g_max, c_max,
                  eps_pi, eps_lambda, aud, owner_anchor):
     """Advice/008 section 8: the ideal joint score vs the broadcast
@@ -275,7 +295,15 @@ def simulate_ca_frids(
     infeasible_cycles = np.zeros((n_runs, q))
     decided_upper = np.zeros((n_runs, q)) if raw_counts else None
     comm_airtime = np.zeros(n_runs)
-    comm_tx_attempts = np.zeros(n_runs)
+    # P0-C (advice/011 section 6): split the ledger -- every cross-UAV
+    # OFFER is an ``attempt`` (its airtime is only committed once it is
+    # ADMITTED).  ``comm_admitted_tx`` is the admitted token count, so
+    #   attempts = admitted + capacity_dropped    and
+    #   admitted = delivered + link_dropped
+    # hold separately and the communication-cost interpretation cannot
+    # shift between "offered" and "admitted".
+    comm_tx_attempts = np.zeros(n_runs)   # offers committed to airtime intent
+    comm_admitted_tx = np.zeros(n_runs)   # admitted sends (airtime charged)
     comm_rx_delivered = np.zeros(n_runs)
     comm_rx_link_dropped = np.zeros(n_runs)
     comm_rx_capacity_dropped = np.zeros(n_runs)
@@ -439,14 +467,12 @@ def simulate_ca_frids(
             for owner, off in offers.items():
                 if not off:
                     continue
-                # density J^+/c, descending; exchangeable ties via the tape
-                # uniform when the CRN tape is present (legacy keeps the
-                # plain density order, so no old result changes).
+                # density J^+/c, descending; exchangeable ties via a
+                # DEDICATED policy RNG when the CRN tape is present
+                # (advice/011 P0-B); legacy keeps the plain density order,
+                # so no old result changes.
                 if exog is not None:
-                    off.sort(key=lambda o: (
-                        -o[3] / max(o[2], 1e-15),
-                        -float(exog.U_adm[r, t, o[0]]),
-                    ))
+                    off = _density_sorted_offers(off, rng_r.random(k))
                 else:
                     off.sort(key=lambda o: -o[3] / max(o[2], 1e-15))
                 used = 0.0
@@ -469,6 +495,10 @@ def simulate_ca_frids(
                     continue
                 if score_b <= 0.0 or (owner, uav) not in admitted:
                     continue
+                # P0-C: an admitted send is the exact amount whose airtime
+                # is charged (``load_now`` above); count it separately from
+                # the offers that the admission dropped.
+                comm_admitted_tx[r] += 1.0
                 # the physical Bernoulli is drawn for every ADMITTED
                 # token (its airtime was already spent -- the link outage
                 # is NOT a capacity loss, P3.5-B ledger); with the CRN tape
@@ -584,6 +614,12 @@ def simulate_ca_frids(
                 np.mean(comm_rx_link_dropped / active) / k),
             "rx_capacity_dropped_per_uav": float(
                 np.mean(comm_rx_capacity_dropped / active) / k),
+            # P0-C (advice/011 section 6): admitted sends whose airtime
+            # was charged, per active cycle; the split ledger is
+            # attempts = admitted + capacity_dropped and
+            # admitted = delivered + link_dropped.
+            "rx_admitted_per_uav": float(
+                np.mean(comm_admitted_tx / active) / k),
             # rx_load per ACTIVE cycle (P3.5-B, advice/009 section 15: the
             # accumulator is accumulated per cycle, so it must be divided
             # by the active cycles, not only by n_runs)

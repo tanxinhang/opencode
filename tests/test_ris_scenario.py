@@ -221,3 +221,19 @@ def test_ris_physics_aligned_beats_random():
     strong = np.delete(aligned_gain, 2, axis=0)
     assert np.all(strong >= 1.0)
     assert np.all(aligned_gain[2] >= 0.01)
+
+
+def test_blocked_direct_gain_matrix_control():
+    """P4 matched-control (advice/011 section 5): the blocked-without-RIS
+    reference keeps clean gains at 1 and sets exactly the weak-target row
+    to the direct-path floor."""
+    from uav_otfs_isac.ris_scenario import blocked_direct_gain_matrix
+    gain = blocked_direct_gain_matrix(3, 8, weak_target_id=2,
+                                       direct_blockage=0.01)
+    assert gain.shape == (3, 8)
+    strong = np.delete(gain, 2, axis=0)
+    assert np.allclose(strong, 1.0)
+    assert np.allclose(gain[2], 0.01)
+    # no-weak-target variant leaves every target clean
+    clean = blocked_direct_gain_matrix(3, 8)
+    assert np.allclose(clean, 1.0)
