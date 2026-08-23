@@ -742,8 +742,20 @@ def simulate_frids_v2(
                 # independent delivery while reporting the shared ledger.
                 tau_mat = np.asarray(airtime["tau"], dtype=float)
                 t_air = float(airtime["t_air"])
-                policy_rng = np.random.default_rng([seed, r, 9021])
-                tie_keys = policy_rng.random(k)
+                # P4.1a (advice/013 sections 1-2): NEUTRAL admission tie
+                # keys are (episode, cycle, receiver, source)-indexed:
+                # - with the CRN tape, every arm reads the SAME
+                #   ``exog.U_policy[r, t]`` cell (temporal + receiver +
+                #   label exchangeability, no persistent source favoritism);
+                # - without a tape, a dedicated per-cycle policy stream
+                #   ``[seed, r, t, ...]`` (``t`` is INSIDE the seed, so the
+                #   keys are NOT frozen per episode -- the old per-run seed
+                #   without ``t`` recreated the identical keys every cycle,
+                #   which biased the same sources for the whole episode).
+                tie_keys = (exog.U_policy[r, t]
+                            if exog is not None
+                            else np.random.default_rng(
+                                [seed, r, t, 90213]).random((k, k)))
                 offers_by_receiver = [[] for _ in range(k)]
                 load_now = np.zeros(k)
                 for uav in range(k):

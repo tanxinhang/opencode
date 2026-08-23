@@ -242,6 +242,7 @@ def simulate_ca_frids(
     power_cap: np.ndarray | None = None,
     price_mode: str = "owner_local",
     admission_policy: str = "density",
+    airtime_price: bool = True,
     audit: bool = False,
     raw_counts: bool = False,
     exog: ExogenousTape | None = None,
@@ -344,7 +345,12 @@ def simulate_ca_frids(
         L = np.zeros((k, q))
         decided = np.zeros(q, dtype=bool)
         y = np.full(q, 1.0 / q)
-        lam = np.clip(mu_c * np.maximum(load0 - 1.0, 0.0), 0.0, lam_cap)
+        # P4.1a (advice/013 section 3): the ``airtime_price=False`` arm (B0)
+        # keeps the airtime price at zero -- it measures the CA
+        # architecture + task-price gain WITHOUT the congestion price, so
+        # ``Delta_lambda = J_B1 - J_B0`` isolates the price steering.
+        lam = (np.clip(mu_c * np.maximum(load0 - 1.0, 0.0), 0.0, lam_cap)
+               if airtime_price else np.zeros(k))
         # P3.5-A (advice/009 P0-3): the airtime-load EMA is an EPISODE
         # state; it is re-seeded at the t=0 forecast every run so the
         # (r+1)-th realization does NOT inherit the r-th final load.
@@ -478,7 +484,18 @@ def simulate_ca_frids(
                 for (uav, qq, c_air, score_b, c) in off:
                     offers_by_receiver[owner].append(
                         (uav, float(score_b), float(c_air), qq))
-            tie_keys = rng_r.random(k) if exog is not None else None
+            # P4.1a (advice/013 sections 1-2): admission tie keys are the
+            # SHARED (episode, cycle, receiver, source)-indexed policy tape
+            # ``exog.U_policy[r, t]`` when the tape is present (every arm
+            # reads the same cell, so the neutral and density arms differ
+            # ONLY in priority, never in tie randomness), and a dedicated
+            # per-cycle policy stream ``[seed, r, t, ...]`` otherwise
+            # (``t`` is INSIDE the seed: the keys refresh every cycle, so
+            # no persistent source favoritism within an episode).
+            tie_keys = (exog.U_policy[r, t]
+                        if exog is not None
+                        else np.random.default_rng(
+                            [seed, r, t, 90213]).random((k, k)))
             admitted_list, dropped = airtime_admit(
                 offers_by_receiver, t_air, policy=admission_policy,
                 tie_keys=tie_keys,
@@ -568,7 +585,10 @@ def simulate_ca_frids(
             # steering must see the demand that would overload).
             load_smooth = 0.8 * offered_load + 0.2 * load_smooth
             rho = load_smooth / max(t_air, 1e-30)
-            lam = np.clip(lam + mu_c * (rho - 1.0), 0.0, lam_cap)
+            # P4.1a: the airtime_price arm keeps the dual frozen at zero,
+            # so only the task-price plane steers the best response.
+            lam = (np.clip(lam + mu_c * (rho - 1.0), 0.0, lam_cap)
+                   if airtime_price else lam)
             # stopping on the owner belief (unchanged system rule)
             for qq in undecided:
                 l_own = L[owner_of[qq], qq]

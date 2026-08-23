@@ -1,16 +1,25 @@
-"""CAPACITY ablation gate (advice/012 section 4): decompose where the CA
-congested gain comes from under the P4.1 shared-capacity closure.
+"""CAPACITY CAUSAL ablation gate (advice/013 P4.1a): four arms under ONE
+shared airtime-admission primitive (``sum tau/T_air <= 1`` per receiver,
+``offer -> admission -> link``) and ONE shared policy tape
+``exog.U_policy[r, t, receiver, src]`` for admission ties.
 
-Two schedulers, ONE shared ``airtime_admit`` primitive (``sum tau/T_air
-<= 1`` per receiver, ``offer -> admission -> link``):
+Arms:
+- A   = FRIDS-v2 + shared airtime + NEUTRAL admission     (capacity-matched v2)
+- B0  = CA architecture (owner-only, pi_q) + lambda=0 + NEUTRAL admission
+- B1  = CA architecture + lambda_j + NEUTRAL admission
+- C   = CA architecture + lambda_j + DENSITY admission    (production CA)
 
-- A = FRIDS-v2 + exchangeable NEUTRAL admission  (capacity-matched v2)
-- B = CA steering + NEUTRAL admission            (prices steer, admission neutral)
-- C = CA steering + DENSITY admission            (prices steer, admission packed)
+Causal decomposition on the geometry-pooled worst-target E[T|H1]
+(J LOWER is better):
+- D_architecture = J_B0 - J_A     (task-routing / CA-architecture effect)
+- D_lambda       = J_B1 - J_B0    (congestion-PRICE steering)
+- D_admission    = J_C - J_B1     (density packing)
 
-so ``D_steering = B - A`` isolates the congestion-price effect and
-``D_admission = C - B`` isolates the density-packing effect, both on the
-geometry-pooled worst-target E[T|H1] under the same physical capacity.
+Because A/B0/B1/C share the same physical tape AND the same admission
+tie-key tape, the three deltas differ only in exactly one mechanism each
+(advice/013 sections 3-4).  The old two-arm ``d_steering = J_CA_neutral -
+J_v2_neutral`` conflated architecture + price + idle + owner-only routing;
+it is no longer reported as ``steering``.
 """
 
 from __future__ import annotations
@@ -38,7 +47,7 @@ from uav_otfs_isac.distributed_audit import (
 from uav_otfs_isac.frids import simulate_frids_v2
 
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
-from run_ca_frids_gate import matched_bounds, matched_qos, j_pooled
+from run_ca_frids_gate import matched_qos, j_pooled
 
 
 def main() -> None:
@@ -62,8 +71,7 @@ def main() -> None:
     t0 = time.time()
 
     k, q = (16, 8)   # the gate's critical scale
-    rho_to_air = {args.uncongested_rho: "uncongested",
-                  args.congested_rho: "congested"}
+    am = None
 
     rows_cells = []
     for geom in range(args.geoms):
@@ -73,69 +81,84 @@ def main() -> None:
             sc, args.alpha, args.beta, n_runs=300, seed=args.calib_seed,
             llr_bits=TOKEN_LLR_BITS, verify_runs=args.calib_verify)
         am = build_airtime_model(sc, rho_target=args.congested_rho)
-        # A: capacity-matched v2 (neutral admission, shared airtime)
-        _, rows_a = matched_qos(simulate_frids_v2, sc, bt, args.n_runs, 7,
-                                args.max_steps, args.alpha, args.beta,
-                                mc_seeds=args.mc_seeds, crn=True,
-                                price_mode="local", airtime=am)
-        # B: CA steering, neutral admission
-        _, rows_b = matched_qos(simulate_ca_frids, sc, bt, args.n_runs, 7,
-                                args.max_steps, args.alpha, args.beta,
-                                mc_seeds=args.mc_seeds, crn=True,
-                                price_mode=args.price_mode, airtime=am,
-                                admission_policy="neutral",
-                                pi_bits=args.pi_bits, lam_bits=args.lam_bits)
-        # C: CA steering, density admission (the production variant)
-        _, rows_c = matched_qos(simulate_ca_frids, sc, bt, args.n_runs, 7,
-                                args.max_steps, args.alpha, args.beta,
-                                mc_seeds=args.mc_seeds, crn=True,
-                                price_mode=args.price_mode, airtime=am,
-                                admission_policy="density",
-                                pi_bits=args.pi_bits, lam_bits=args.lam_bits)
+        # every arm shares the same exogenous tape (and therefore the same
+        # admission tie-key policy tape U_policy[r, t, :, :])
+        _, rows_a = matched_qos(
+            simulate_frids_v2, sc, bt, args.n_runs, 7,
+            args.max_steps, args.alpha, args.beta,
+            mc_seeds=args.mc_seeds, crn=True,
+            price_mode="local", airtime=am)
+        _, rows_b0 = matched_qos(
+            simulate_ca_frids, sc, bt, args.n_runs, 7,
+            args.max_steps, args.alpha, args.beta,
+            mc_seeds=args.mc_seeds, crn=True,
+            price_mode=args.price_mode, airtime=am,
+            admission_policy="neutral", airtime_price=False,
+            pi_bits=args.pi_bits, lam_bits=args.lam_bits)
+        _, rows_b1 = matched_qos(
+            simulate_ca_frids, sc, bt, args.n_runs, 7,
+            args.max_steps, args.alpha, args.beta,
+            mc_seeds=args.mc_seeds, crn=True,
+            price_mode=args.price_mode, airtime=am,
+            admission_policy="neutral", airtime_price=True,
+            pi_bits=args.pi_bits, lam_bits=args.lam_bits)
+        _, rows_c = matched_qos(
+            simulate_ca_frids, sc, bt, args.n_runs, 7,
+            args.max_steps, args.alpha, args.beta,
+            mc_seeds=args.mc_seeds, crn=True,
+            price_mode=args.price_mode, airtime=am,
+            admission_policy="density", airtime_price=True,
+            pi_bits=args.pi_bits, lam_bits=args.lam_bits)
         rows_cells.append({
             "geom": geom,
-            "j_v2_neutral": j_pooled(rows_a),
-            "j_ca_neutral": j_pooled(rows_b),
-            "j_ca_density": j_pooled(rows_c),
+            "j_a": j_pooled(rows_a),
+            "j_b0": j_pooled(rows_b0),
+            "j_b1": j_pooled(rows_b1),
+            "j_c": j_pooled(rows_c),
             "offers_v2": float(np.mean([
                 r["comm"]["offer_attempts_per_uav"] for r in rows_a])),
             "admitted_v2": float(np.mean([
                 r["comm"]["admitted_tx_per_uav"] for r in rows_a])),
-            "offers_ca_d": float(np.mean([
+            "offers_ca": float(np.mean([
                 r["comm"]["offer_attempts_per_uav"] for r in rows_c])),
-            "admitted_ca_d": float(np.mean([
+            "admitted_ca": float(np.mean([
                 r["comm"]["admitted_tx_per_uav"] for r in rows_c])),
         })
         print(f"geom {geom} done ({time.time()-t0:.0f}s)", flush=True)
 
-    # congested-arm pooled worst J per arm (the geometry is the unit)
-    a_vals = np.array([c["j_v2_neutral"] for c in rows_cells])
-    b_vals = np.array([c["j_ca_neutral"] for c in rows_cells])
-    c_vals = np.array([c["j_ca_density"] for c in rows_cells])
-    d_steering = float(np.mean(b_vals - a_vals))
-    d_admission = float(np.mean(c_vals - b_vals))
+    a = np.array([c["j_a"] for c in rows_cells])
+    b0 = np.array([c["j_b0"] for c in rows_cells])
+    b1 = np.array([c["j_b1"] for c in rows_cells])
+    c = np.array([c["j_c"] for c in rows_cells])
+    d_arch = float(np.mean(b0 - a))
+    d_lambda = float(np.mean(b1 - b0))
+    d_admission = float(np.mean(c - b1))
     gate = {
-        # J is the worst-target delay: LOWER is better, so a negative
+        # J is the worst-target delay: LOWER is better, so a NEGATIVE
         # delta means the later arm is BETTER.
-        "d_steering_congested": d_steering,        # B - A (price effect)
-        "d_admission_congested": d_admission,      # C - B (density effect)
-        "j_v2_neutral_mean": float(np.mean(a_vals)),
-        "j_ca_neutral_mean": float(np.mean(b_vals)),
-        "j_ca_density_mean": float(np.mean(c_vals)),
+        "d_architecture_congested": d_arch,      # B0 - A   (task routing)
+        "d_lambda_congested": d_lambda,          # B1 - B0  (price steering)
+        "d_admission_congested": d_admission,    # C - B1   (density packing)
+        "j_v2_neutral_mean": float(np.mean(a)),
+        "j_ca_neutral_no_price_mean": float(np.mean(b0)),
+        "j_ca_neutral_price_mean": float(np.mean(b1)),
+        "j_ca_density_mean": float(np.mean(c)),
         "offer_vs_admitted_v2": float(np.mean([
             c["offers_v2"] - c["admitted_v2"] for c in rows_cells])),
-        "offer_vs_admitted_ca_density": float(np.mean([
-            c["offers_ca_d"] - c["admitted_ca_d"] for c in rows_cells])),
+        "offer_vs_admitted_ca": float(np.mean([
+            c["offers_ca"] - c["admitted_ca"] for c in rows_cells])),
     }
     payload = {
-        "gate": "p4.1-capacity-ablation",
+        "gate_id": "p4.1a-capacity-causal-ablation",
         "params": {"geoms": args.geoms, "mc_seeds": args.mc_seeds,
                    "n_runs": args.n_runs, "alpha": args.alpha,
                    "beta": args.beta, "price_mode": args.price_mode,
                    "admission_primitive": "airtime_admit (sum tau/T_air <= 1)",
-                   "arms": ["v2+neutral", "CA+neutral", "CA+density"]},
+                   "policy_tape": "shared exog.U_policy[r,t,receiver,src]",
+                   "arms": ["A=v2+neutral", "B0=CA+lambda0+neutral",
+                            "B1=CA+lambda+neutral", "C=CA+lambda+density"]},
         "cells": rows_cells,
-        "gate": gate,
+        "metrics": gate,
     }
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)

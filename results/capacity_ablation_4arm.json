@@ -1,0 +1,65 @@
+{
+  "gate_id": "p4.1a-capacity-causal-ablation",
+  "params": {
+    "geoms": 3,
+    "mc_seeds": 4,
+    "n_runs": 150,
+    "alpha": 0.05,
+    "beta": 0.05,
+    "price_mode": "global_simplex",
+    "admission_primitive": "airtime_admit (sum tau/T_air <= 1)",
+    "policy_tape": "shared exog.U_policy[r,t,receiver,src]",
+    "arms": [
+      "A=v2+neutral",
+      "B0=CA+lambda0+neutral",
+      "B1=CA+lambda+neutral",
+      "C=CA+lambda+density"
+    ]
+  },
+  "cells": [
+    {
+      "geom": 0,
+      "j_a": 4.225255972696246,
+      "j_b0": 3.037542662116041,
+      "j_b1": 2.830508474576271,
+      "j_c": 2.8101694915254236,
+      "offers_v2": 15.0,
+      "admitted_v2": 8.201724987677423,
+      "offers_ca": 0.8229281543109669,
+      "admitted_ca": 0.6825393518518519
+    },
+    {
+      "geom": 1,
+      "j_a": 5.684745762711865,
+      "j_b0": 4.196610169491525,
+      "j_b1": 3.925423728813559,
+      "j_c": 3.8813559322033897,
+      "offers_v2": 15.0,
+      "admitted_v2": 8.109935323357197,
+      "offers_ca": 0.8470168913840789,
+      "admitted_ca": 0.6939744581228955
+    },
+    {
+      "geom": 2,
+      "j_a": 5.219931271477663,
+      "j_b0": 3.3711340206185567,
+      "j_b1": 3.5670103092783507,
+      "j_c": 3.5189003436426116,
+      "offers_v2": 15.0,
+      "admitted_v2": 8.288339920929765,
+      "offers_ca": 0.9340825144184519,
+      "admitted_ca": 0.7772240201927701
+    }
+  ],
+  "metrics": {
+    "d_architecture_congested": -1.5082153848865503,
+    "d_lambda_congested": -0.09411477985264731,
+    "d_admission_congested": -0.03750558176558538,
+    "j_v2_neutral_mean": 5.043311002295258,
+    "j_ca_neutral_no_price_mean": 3.535095617408708,
+    "j_ca_neutral_price_mean": 3.44098083755606,
+    "j_ca_density_mean": 3.4034752557904753,
+    "offer_vs_admitted_v2": 6.799999922678538,
+    "offer_vs_admitted_ca": 0.15009657664866005
+  }
+}

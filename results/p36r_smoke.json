@@ -6,10 +6,10 @@
       -0.006100104039785033
     ],
     "no_regression_uncongested_ucb": true,
-    "congested_improvement_mean": 0.30102714525290564,
+    "congested_improvement_mean": 0.3290992658933876,
     "congested_improvement_ci95": [
-      0.23333916270737615,
-      0.33614515606761775
+      0.27736612278726847,
+      0.3675329976867601
     ],
     "congested_win_5pct_lcb": true,
     "qos_all_pass": false,
@@ -37,8 +37,8 @@
     "uncongested_rho": 0.5,
     "congested_rho": 1.8,
     "price_mode": "global_simplex",
-    "git_commit": "2d4b1ce",
-    "git_tree": "c3a59ec0fcca5ef0080e154651ac5bccfdef488b",
+    "git_commit": "4bc20be",
+    "git_tree": "d4cfe1fc316fb82315209654b90dfd1220f329da",
     "git_dirty": true,
     "config_hash": "20f44a2ef5f32f4a",
     "seed_scheme": "CRN exogenous tape (advice/010 P0-2): shared U_H/U_obs/U_link per (r,t); dedicated policy RNG for admission tie-breaking only (advice/011 P0-B)",
@@ -61,7 +61,7 @@
       "calibrated policy-matched B"
     ]
   },
-  "runtime_s": 109.9,
+  "runtime_s": 125.0,
   "scenarios": [
     {
       "geom": 0,
@@ -114,9 +114,9 @@
       "geom": 0,
       "regime": "congested",
       "v2": {
-        "J": 4.0232448710709585,
+        "J": 4.2897609636740075,
         "p_fa_max": 0.0,
-        "p_md_max": 0.02777777777777779
+        "p_md_max": 0.03703703703703709
       },
       "ca": {
         "J": 2.904891304347826,
@@ -124,27 +124,27 @@
         "p_md_max": 0.014925373134328401
       },
       "j_v2": [
-        4.072463768115942,
-        3.9740259740259742
+        4.202898550724638,
+        4.376623376623376
       ],
       "j_ca": [
         2.7681159420289854,
         3.0416666666666665
       ],
-      "j_v2_pooled": 4.02054794520548,
+      "j_v2_pooled": 4.294520547945205,
       "j_ca_pooled": 2.8714285714285714,
       "v2_qos": "UNCERTAIN",
       "ca_qos": "UNCERTAIN",
       "air": {
         "rho_full": 1.8,
         "v2_offer_attempts": 15.0,
-        "v2_admitted_tx": 8.19875,
-        "v2_delivered_tx": 6.334160399785399,
-        "v2_link_dropped": 1.8645896002146003,
-        "v2_capacity_dropped": 6.80125,
+        "v2_admitted_tx": 8.20053271223262,
+        "v2_delivered_tx": 6.330151001878024,
+        "v2_link_dropped": 1.870381710354596,
+        "v2_capacity_dropped": 6.79946728776738,
         "v2_control_bits_per_cycle": 0.0,
         "v2_feasible": 1.0,
-        "v2_max_load": 0.9957075381627287,
+        "v2_max_load": 0.9995604205494646,
         "ca_offer_attempts": 0.8233324615199615,
         "ca_admitted_tx": 0.6833111922799422,
         "ca_delivered_tx": 0.5355262521043771,
@@ -208,9 +208,9 @@
       "geom": 1,
       "regime": "congested",
       "v2": {
-        "J": 5.565359477124183,
+        "J": 5.808006535947712,
         "p_fa_max": 0.0,
-        "p_md_max": 0.04347826086956519
+        "p_md_max": 0.03703703703703709
       },
       "ca": {
         "J": 3.9219771241830066,
@@ -218,27 +218,27 @@
         "p_md_max": 0.03703703703703709
       },
       "j_v2": [
-        5.602941176470588,
-        5.527777777777778
+        5.838235294117647,
+        5.777777777777778
       ],
       "j_ca": [
         3.9411764705882355,
         3.9027777777777777
       ],
-      "j_v2_pooled": 5.564285714285714,
+      "j_v2_pooled": 5.807142857142857,
       "j_ca_pooled": 3.9214285714285713,
       "v2_qos": "UNCERTAIN",
       "ca_qos": "UNCERTAIN",
       "air": {
         "rho_full": 1.8,
         "v2_offer_attempts": 15.0,
-        "v2_admitted_tx": 8.113125,
-        "v2_delivered_tx": 6.36536086425149,
-        "v2_link_dropped": 1.7477641357485107,
-        "v2_capacity_dropped": 6.886875,
+        "v2_admitted_tx": 8.107387979497354,
+        "v2_delivered_tx": 6.359002735690236,
+        "v2_link_dropped": 1.7483852438071188,
+        "v2_capacity_dropped": 6.8926120205026455,
         "v2_control_bits_per_cycle": 0.0,
         "v2_feasible": 1.0,
-        "v2_max_load": 0.9927649388442281,
+        "v2_max_load": 0.9992890480969884,
         "ca_offer_attempts": 0.8459036571067821,
         "ca_admitted_tx": 0.695321188071188,
         "ca_delivered_tx": 0.5452833092833093,
@@ -302,9 +302,9 @@
       "geom": 2,
       "regime": "congested",
       "v2": {
-        "J": 5.1676801179288745,
+        "J": 5.287359498802285,
         "p_fa_max": 0.0,
-        "p_md_max": 0.026666666666666616
+        "p_md_max": 0.02777777777777779
       },
       "ca": {
         "J": 3.53150912106136,
@@ -312,27 +312,27 @@
         "p_md_max": 0.04166666666666663
       },
       "j_v2": [
-        4.940298507462686,
-        5.395061728395062
+        5.253731343283582,
+        5.320987654320987
       ],
       "j_ca": [
         3.5074626865671643,
         3.5555555555555554
       ],
-      "j_v2_pooled": 5.1891891891891895,
+      "j_v2_pooled": 5.29054054054054,
       "j_ca_pooled": 3.5337837837837838,
       "v2_qos": "UNCERTAIN",
       "ca_qos": "UNCERTAIN",
       "air": {
         "rho_full": 1.8,
         "v2_offer_attempts": 15.0,
-        "v2_admitted_tx": 8.297708333333333,
-        "v2_delivered_tx": 6.504932723815536,
-        "v2_link_dropped": 1.792775609517797,
-        "v2_capacity_dropped": 6.7022916666666665,
+        "v2_admitted_tx": 8.289228745502182,
+        "v2_delivered_tx": 6.48815426934177,
+        "v2_link_dropped": 1.8010744761604138,
+        "v2_capacity_dropped": 6.710771254497818,
         "v2_control_bits_per_cycle": 0.0,
         "v2_feasible": 1.0,
-        "v2_max_load": 0.9978218042476243,
+        "v2_max_load": 0.9997432731391727,
         "ca_offer_attempts": 0.9354047173890923,
         "ca_admitted_tx": 0.7793297668766419,
         "ca_delivered_tx": 0.6178592171717171,

@@ -43,6 +43,15 @@ class ExogenousTape:
     U_mfac: NDArray[np.float64]        # (n_runs, max_steps, k, q)
     U_adm: NDArray[np.float64]         # (n_runs, max_steps, k)
     U_adm_extra: NDArray[np.float64]   # (n_runs, max_steps, k)
+    # P4.1a (advice/013 section 2): ALGORITHMIC policy randomness in its
+    # OWN independent block (never mixed with the physical U_H/U_obs/
+    # U_link blocks).  ``U_policy[r, t, j, i]`` = exchangeable admission
+    # tie key per (episode, cycle, receiver, source), so NEUTRAL
+    # admission has temporal + receiver + label exchangeability -- no
+    # per-episode frozen keys, no persistent source favoritism.  All arms
+    # (v2-neutral, CA-neutral, CA-density ties) read the SAME tape cell
+    # for the same (r, t, receiver, src).
+    U_policy: NDArray[np.float64]      # (n_runs, max_steps, k, k)
 
 
 def build_exogenous_tape(
@@ -52,9 +61,11 @@ def build_exogenous_tape(
     k: int,
     max_steps: int,
 ) -> ExogenousTape:
-    """Deterministically pre-register the six exogenous uniform blocks."""
+    """Deterministically pre-register the seven independent uniform
+    blocks: six PHYSICAL blocks (presence, observation, link, mobility,
+    admission) plus one ALGORITHMIC policy block."""
     base = np.random.SeedSequence(int(seed))
-    children = base.spawn(6)
+    children = base.spawn(7)
     blocks = [np.random.default_rng(child) for child in children]
     return ExogenousTape(
         seed=int(seed),
@@ -70,6 +81,9 @@ def build_exogenous_tape(
         ),
         U_adm=blocks[4].random((int(n_runs), int(max_steps), int(k))),
         U_adm_extra=blocks[5].random((int(n_runs), int(max_steps), int(k))),
+        U_policy=blocks[6].random(
+            (int(n_runs), int(max_steps), int(k), int(k))
+        ),
     )
 
 
