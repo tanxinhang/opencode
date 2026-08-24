@@ -17,11 +17,33 @@ point a reviewer would probe) on an INDEPENDENT calibration stream, then
 evaluates BOTH schedulers at their OWN QoS-matched thresholds on a FRESH
 held-out test stream (same CRN exogen for a paired comparison):
 
-- CASE A: some target of FRIDS-v2 has NO swept ``A_q`` whose certified
-  upper bounds on both error axes clear 0.05 on the calibration stream
-  -> "v2 QoS-infeasible even under its own operating point on this cell".
-- CASE B: both schedulers find matched thresholds -> compare the matched
-  QoS delay ``J_ca^QoS`` vs ``J_v2^QoS`` on the held-out stream.
+Per-scheduler frontier state is THREE-STATE (advice/017 section 12.1):
+
+- ``CERTIFIED FEASIBLE``: every target has a swept ``A_q`` whose certified
+  UPPER bounds on both error axes clear 0.05 on the calibration stream.
+- ``CERTIFIED INFEASIBLE``: some target has NO swept certified-feasible
+  ``A_q`` AND a certified violation persists at the FA-most-favorable
+  extreme (largest ``A_q``) or the MD-most-favorable extreme (smallest
+  ``A_q``) -- i.e. ``LCB_FA(max) > 0.05`` or ``LCB_MD(min) > 0.05``, so the
+  lever CANNOT clear the spec (infeasibility is certified, Case A-certified).
+- ``UNRESOLVED``: some target has no swept certified-feasible ``A_q``, but
+  neither infeasibility certificate fires -- the swept frontier does not
+  certify feasibility AND does not certify infeasibility (grid/MC too thin,
+  Case-A-unresolved: "not certified feasible" must NOT be written as
+  "unfeasible").
+
+Verdicts:
+- CASE B: both schedulers are CERTIFIED FEASIBLE -> compare the matched
+  QoS delay ``J_ca^QoS`` vs ``J_v2^QoS`` on the held-out stream.  The
+  reduction is reported as an OBSERVED held-out reduction with a paired
+  per-cell bootstrap CI (advice/017 section 12.5), and the per-target
+  matched multipliers ``m_q*`` are reported verbatim (no "CA basically
+  1.0x threshold" claim -- the actual CA multipliers are
+  ``[2,1.5,2,1.5,1.5,1,1,1]`` in the registered run).
+- CASE A-certified: "CA feasible while v2 certified infeasible at the
+  swept matched-QoS frontier".
+- CASE A-unresolved: "v2 not certified feasible at the swept frontier;
+  infeasibility NOT certified (unresolved)".
 
 Protocol (frozen, P4.2-style provenance discipline):
 1. Cell: geom=2, congested, rho=1.8 (the registered boundary cell).
@@ -39,16 +61,29 @@ Protocol (frozen, P4.2-style provenance discipline):
    Clopper-Pearson UPPER bounds ``U_FA,q`` and ``U_MD,q`` at per-target
    ``delta_q = cell_delta/(2Q)`` must both be <= 0.05.  The matched ``m_q*``
    is the SMALLEST grid value certified feasible (smallest A => smallest
-   stopping delay).  If no grid value is certified feasible for a target,
-   the scheduler is CASE-A intfeasible at the swept frontier.
-5. Held-out: both schedulers at their own matched thresholds on the same
-   held-out CRN stream; certified QoS (anytime-valid 32-stream familywise,
-   exactly as P4.2) and pooled worst-target delay ``J`` are reported, with
-   the matched-QoS delay comparison.
+   stopping delay).  A target with no swept certified-feasible ``m_q`` is
+   classified three-state (advice/017 section 12.1):
+   - ``CERTIFIED INFEASIBLE`` if the certified LOWER bound persists above
+     0.05 at the FA-most-favorable extreme (largest ``A_q`` -> ``LCB_FA``)
+     or the MD-most-favorable extreme (smallest ``A_q`` -> ``LCB_MD``) --
+     the ``A_q`` lever cannot clear the spec, infeasibility is certified;
+   - ``UNRESOLVED`` otherwise -- "not certified feasible on the swept
+     frontier" only, infeasibility NOT certified.
+   The scheduler frontier is ``CERTIFIED FEASIBLE`` / ``CERTIFIED
+   INFEASIBLE`` / ``UNRESOLVED`` (any target INFEASIBLE dominates; else all
+   targets FEASIBLE; else UNRESOLVED).
+5. Held-out: BOTH schedulers at their OWN matched thresholds on the SAME
+   held-out CRN stream (paired by block); certified QoS (anytime-valid
+   32-stream familywise, exactly as P4.2) and pooled worst-target delay
+   ``J``, with the observed held-out matched-QoS delay reduction reported as
+   ``observed`` with a paired per-block bootstrap CI.
 
-The verdict is worded per advice/016 section 8: the paper may then say
-"CA feasible while v2 infeasible at any swept operating point" (Case A) or
-"CA achieves a lower stopping delay at matched certified QoS" (Case B).
+The verdict is worded per advice/016 section 8 + advice/017 section 12:
+Case B "both schedulers certified feasible; CA achieves a lower stopping
+delay at matched certified QoS (observed held-out reduction with paired
+CI)", Case A-certified "CA feasible while v2 certified infeasible at the
+swept frontier", Case A-unresolved "v2 not certified feasible at the swept
+frontier; infeasibility NOT certified".
 """
 
 from __future__ import annotations
@@ -142,15 +177,18 @@ def _empty_acc(q):
     return {key: [0] * q for key in ("n_H0", "n_H1", "n_FA", "n_MD")}
 
 
-def _certified_upper(acc, q, delta_q):
-    """Per-target certified Clopper-Pearson upper bounds of FA and MD."""
-    u_fa, u_md = [], []
+def _certified_bounds(acc, q, delta_q):
+    """Per-target certified Clopper-Pearson LOWER and UPPER bounds of FA
+    and MD (lo, hi same two-sided interval, per target per error axis)."""
+    l_fa, u_fa, l_md, u_md = [], [], [], []
     for qq in range(q):
-        _, fa_hi = clopper_pearson(acc["n_FA"][qq], acc["n_H0"][qq], delta_q)
-        _, md_hi = clopper_pearson(acc["n_MD"][qq], acc["n_H1"][qq], delta_q)
+        fa_lo, fa_hi = clopper_pearson(acc["n_FA"][qq], acc["n_H0"][qq], delta_q)
+        md_lo, md_hi = clopper_pearson(acc["n_MD"][qq], acc["n_H1"][qq], delta_q)
+        l_fa.append(fa_lo)
         u_fa.append(fa_hi)
+        l_md.append(md_lo)
         u_md.append(md_hi)
-    return u_fa, u_md
+    return l_fa, u_fa, l_md, u_md
 
 
 def _matched_bounds(bt, m_q, delta=1.0):
@@ -159,6 +197,62 @@ def _matched_bounds(bt, m_q, delta=1.0):
     lower threshold unchanged)."""
     return [[bt[qq][0] * float(m_q[qq]), bt[qq][1] - delta]
             for qq in range(len(bt))]
+
+
+def classify_frontier_state(m_star, lc_fa_at_max, lc_md_at_min, spec=SPEC):
+    """Three-state frontier classifier (advice/017 section 12.1).
+
+    Per target:
+    - ``CERTIFIED FEASIBLE`` if a certified-feasible ``m_star`` exists;
+    - ``CERTIFIED INFEASIBLE`` if no ``m_star`` AND a certified violation
+      persists at the FA-most-favorable extreme (largest A_q: ``LCB_FA >
+      spec``) or the MD-most-favorable extreme (smallest A_q: ``LCB_MD >
+      spec``) -- the A_q lever cannot clear the spec;
+    - ``UNRESOLVED`` otherwise (``not certified feasible`` only, NOT
+      ``infeasible``).
+
+    Scheduler level: any ``CERTIFIED INFEASIBLE`` target dominates;
+    else all-certified-feasible -> ``CERTIFIED FEASIBLE``; else
+    ``UNRESOLVED``.
+    """
+    q = len(m_star)
+    target_state = ["UNRESOLVED"] * q
+    for qq in range(q):
+        if m_star[qq] is not None:
+            target_state[qq] = "CERTIFIED FEASIBLE"
+        elif lc_fa_at_max[qq] > spec or lc_md_at_min[qq] > spec:
+            target_state[qq] = "CERTIFIED INFEASIBLE"
+        else:
+            target_state[qq] = "UNRESOLVED"
+    if "CERTIFIED INFEASIBLE" in target_state:
+        scheduler_state = "CERTIFIED INFEASIBLE"
+    elif all(m is not None for m in m_star):
+        scheduler_state = "CERTIFIED FEASIBLE"
+    else:
+        scheduler_state = "UNRESOLVED"
+    return target_state, scheduler_state
+
+
+def paired_reduction_bootstrap(j_v2_blocks, j_ca_blocks, n_boot=2000,
+                               seed=12345, alpha=0.05):
+    """Observed held-out matched-QoS delay reduction with a paired
+    per-block bootstrap 95% CI (advice/017 section 12.5).  Each held-out
+    block is the SAME CRN test stream run under v2 and CA at their OWN
+    matched thresholds, so block reductions ``r_b = (J_v2,b - J_ca,b)/
+    J_v2,b`` are paired observations."""
+    arr_v = np.asarray(j_v2_blocks, dtype=float)
+    arr_c = np.asarray(j_ca_blocks, dtype=float)
+    r = (arr_v - arr_c) / np.maximum(arr_v, 1.0)
+    rng = np.random.default_rng(seed)
+    n = len(r)
+    boot = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n, size=n)
+        boot.append(float(np.mean(r[idx])))
+    boot = np.asarray(boot)
+    return (float(np.mean(r)),
+            float(np.quantile(boot, alpha / 2.0)),
+            float(np.quantile(boot, 1.0 - alpha / 2.0)))
 
 
 def main() -> None:
@@ -229,14 +323,33 @@ def main() -> None:
 
     # ---- per-scheduler per-target A_q sweep on the CALIBRATION stream ----
     def calibrate_scheduler(runner) -> dict:
-        """For every target find the SMALLEST grid multiplier whose
-        certified upper FA/MD both clear the spec.  The same calibration
-        exogen stream (cal_seed + mc) is reused across the A-grid of a
-        scheduler, so the certified-quality comparisons across ``m`` are
-        CRN-paired."""
+        """Three-state frontier certificate per scheduler (advice/017
+        section 12.1).  For every target find the SMALLEST grid multiplier
+        whose certified upper FA/MD both clear the spec; then classify the
+        scheduler frontier:
+
+        - ``CERTIFIED FEASIBLE``: every target has a certified-feasible
+          ``m_star``;
+        - ``CERTIFIED INFEASIBLE``: some target has no certified-feasible
+          ``m_star`` AND a certified violation persists at the
+          FA-most-favorable extreme (largest ``A_q``: ``LCB_FA > 0.05``)
+          or the MD-most-favorable extreme (smallest ``A_q``:
+          ``LCB_MD > 0.05``) -- the A_q lever cannot clear the spec, so
+          infeasibility is certified;
+        - ``UNRESOLVED``: some target has no certified-feasible ``m_star``
+          but neither infeasibility certificate fires -- \"not certified
+          feasible on the swept frontier\" only, infeasibility NOT claimed.
+
+        The same calibration exogen stream (cal_seed + mc) is reused
+        across the A-grid of a scheduler, so the certified-quality
+        comparisons across ``m`` are CRN-paired."""
         frontier = {"m_star": [None] * q, "A_star": [None] * q,
                     "cert_u_fa": [0.0] * q, "cert_u_md": [0.0] * q,
-                    "feasible": True}
+                    "target_state": ["UNRESOLVED"] * q,
+                    "lc_fa_at_max": [0.0] * q, "lc_md_at_min": [0.0] * q,
+                    "feasible": True, "scheduler_state": "UNRESOLVED"}
+        lc_fa_max = [0.0] * q
+        lc_md_min = [1.0] * q
         for qq in range(q):
             for m in grid:
                 acc = _empty_acc(q)
@@ -249,14 +362,26 @@ def main() -> None:
                     out = runner(_matched_bounds(bt, mq, 1.0),
                                  args.cal_cell_runs, args.cal_seed + mc, tape)
                     _acc(out, acc)
-                u_fa, u_md = _certified_upper(acc, q, delta_q)
+                l_fa, u_fa, l_md, u_md = _certified_bounds(acc, q, delta_q)
+                if m == max(grid):
+                    lc_fa_max[qq] = l_fa[qq]
+                if m == min(grid):
+                    lc_md_min[qq] = l_md[qq]
                 if (u_fa[qq] <= SPEC and u_md[qq] <= SPEC
                         and frontier["m_star"][qq] is None):
                     frontier["m_star"][qq] = m
                     frontier["A_star"][qq] = bt[qq][0] * m
                     frontier["cert_u_fa"][qq] = u_fa[qq]
                     frontier["cert_u_md"][qq] = u_md[qq]
-        frontier["feasible"] = all(m is not None for m in frontier["m_star"])
+            frontier["lc_fa_at_max"][qq] = lc_fa_max[qq]
+            frontier["lc_md_at_min"][qq] = lc_md_min[qq]
+        target_state, scheduler_state = classify_frontier_state(
+            frontier["m_star"], frontier["lc_fa_at_max"],
+            frontier["lc_md_at_min"], SPEC)
+        frontier["target_state"] = target_state
+        frontier["scheduler_state"] = scheduler_state
+        frontier["feasible"] = bool(
+            scheduler_state == "CERTIFIED FEASIBLE")
         return frontier
 
     v2_frontier = calibrate_scheduler(run_v2)
@@ -266,6 +391,7 @@ def main() -> None:
     def held_out(runner, m_star):
         acc = _empty_acc(q)
         pool_s, pool_n = np.zeros(q), np.zeros(q)
+        block_J = []
         for mc in range(args.test_mc):
             tape = build_exogenous_tape(args.test_seed + mc,
                                         args.test_cell_runs, q, k,
@@ -275,43 +401,73 @@ def main() -> None:
             _acc(out, acc)
             pool_s += np.asarray(out["pool"]["sum_h1_delay"], dtype=float)
             pool_n += np.asarray(out["pool"]["n_h1"], dtype=float)
+            b_s = np.asarray(out["pool"]["sum_h1_delay"], dtype=float)
+            b_n = np.asarray(out["pool"]["n_h1"], dtype=float)
+            block_J.append(float(np.max(b_s / np.maximum(b_n, 1.0))))
         J = float(np.max(pool_s / np.maximum(pool_n, 1.0)))
         status, streams = anytime_qos_status(
             acc["n_H0"], acc["n_H1"], acc["n_FA"], acc["n_MD"],
             args.alpha, args.beta, delta_fam=0.05, n_streams=N_STREAMS,
             ret_bounds=True)
         return {"J": J, "qos": status, "streams": streams,
-                "counts": acc, "m_star": list(m_star)}
+                "counts": acc, "m_star": list(m_star),
+                "block_J": block_J}
 
-    # CASE A guard: an infeasible scheduler has NO matched thresholds, so a
-    # held-out matched-QoS run is meaningless for it (the calibration
-    # already certified infeasibility).  Only the feasible scheduler gets a
-    # held-out matched-QoS evaluation.
+    # CASE A guard (three-state): a scheduler that is not CERTIFIED FEASIBLE
+    # has NO matched thresholds (m_star has None entries), so a held-out
+    # matched-QoS run is meaningless for it -- whether its frontier is
+    # CERTIFIED INFEASIBLE or UNRESOLVED, no matched operating point exists
+    # to evaluate.  Only the CERTIFIED FEASIBLE scheduler gets a held-out
+    # matched-QoS evaluation.
     v2_held = (held_out(run_v2, v2_frontier["m_star"])
                if v2_frontier["feasible"] else None)
     ca_held = (held_out(run_ca, ca_frontier["m_star"])
                if ca_frontier["feasible"] else None)
 
-    # ---- verdict ----------------------------------------------------------
-    case = "A" if not v2_frontier["feasible"] else "B"
-    if case == "A":
-        verdict = (
-            f"CASE A: FRIDS-v2 finds NO A_q on the swept grid whose "
-            f"certified upper FA/MD both clear 0.05 (infeasible target(s) "
-            f"{[qq for qq in range(q) if v2_frontier['m_star'][qq] is None]})"
-            f" on the fresh calibration stream; CA "
-            f"{'feasible' if ca_frontier['feasible'] else 'also infeasible'}"
-            f" -> 'CA feasible while v2 infeasible at any swept operating "
-            f"point' (or both infeasible under the swept frontier)"
-        )
+    # ---- verdict (three-state frontier, advice/017 section 12.1) --------
+    v2_state = v2_frontier["scheduler_state"]
+    ca_state = ca_frontier["scheduler_state"]
+    if v2_state == "CERTIFIED FEASIBLE" and ca_state == "CERTIFIED FEASIBLE":
+        case = "B"
+    elif "CERTIFIED INFEASIBLE" in (v2_state, ca_state):
+        case = "A-CERTIFIED-INFEASIBLE"
     else:
+        case = "A-UNRESOLVED"
+    reduction = None
+    if case == "B":
+        r_obs, r_ci_lo, r_ci_hi = paired_reduction_bootstrap(
+            v2_held["block_J"], ca_held["block_J"])
+        reduction = {"observed": r_obs,
+                     "ci95_paired": [r_ci_lo, r_ci_hi],
+                     "wording": "observed held-out matched-QoS delay "
+                                "reduction (paired per-block bootstrap CI)"}
         verdict = (
-            f"CASE B: both schedulers reach certifiable matched operating "
-            f"points; held-out matched-QoS delay J_ca={ca_held['J']:.4f} vs "
-            f"J_v2={v2_held['J']:.4f} "
-            f"({'CA lower' if ca_held['J'] < v2_held['J'] else 'v2 lower'})"
+            f"CASE B: both schedulers are CERTIFIED FEASIBLE at matched "
+            f"operating points; observed held-out matched-QoS delay "
+            f"J_ca={ca_held['J']:.4f} vs J_v2={v2_held['J']:.4f} "
+            f"(observed held-out reduction "
+            f"{(v2_held['J'] - ca_held['J']) / v2_held['J'] * 100.0:.1f}%; "
+            f"paired-block bootstrap 95% CI "
+            f"[{r_ci_lo * 100.0:.1f}%, {r_ci_hi * 100.0:.1f}%])"
             f" -> 'CA achieves a lower stopping delay at matched certified "
             f"QoS'"
+        )
+    else:
+        infeas = "CERTIFIED INFEASIBLE" if "CERTIFIED INFEASIBLE" in (
+            v2_state, ca_state) else "UNRESOLVED"
+        which = ("FRIDS-v2" if v2_state != "CERTIFIED FEASIBLE" else "CA")
+        verdict = (
+            f"CASE A-{infeas}: {which} is NOT certified feasible at any "
+            f"swept A_q on the fresh calibration stream; "
+            f"{which} frontier state = {infeas} "
+            f"(target states {dict(zip(range(q), v2_frontier['target_state']))}"
+            f") -> "
+            + (f"CERTIFIED INFEASIBLE: the A_q lever cannot clear the spec "
+               f"(certified violation persists at the favorable extreme)"
+               if infeas == "CERTIFIED INFEASIBLE" else
+               f"UNRESOLVED: 'not certified feasible on the swept frontier' "
+               f"only -- infeasibility NOT certified; no matched-QoS held-out "
+               f"comparison claimed")
         )
     gate = {
         "case": case, "verdict": verdict,
@@ -320,11 +476,13 @@ def main() -> None:
                      "ca": (None if ca_held is None else
                             {"J": ca_held["J"], "qos": ca_held["qos"],
                              "counts": ca_held["counts"],
-                             "streams": ca_held["streams"]})},
+                             "streams": ca_held["streams"],
+                             "block_J": ca_held["block_J"]})},
         "matched_j": {"v2": None if v2_held is None else v2_held["J"],
                       "ca": None if ca_held is None else ca_held["J"]},
         "held_out_qos": {"v2": None if v2_held is None else v2_held["qos"],
                          "ca": None if ca_held is None else ca_held["qos"]},
+        "held_out_reduction": reduction,
     }
     params = {
         "gate_id_base": "p4.2b-qos-matched-operating-point-frontier",

@@ -371,3 +371,12 @@
 8. **F0 定理补入 `FORMAL_PROOFS.md`(阶段 25)**: 信息结构隔离的差距分解定义、通信域信念的量化核校准有效性、token bits 可行性的单调性边界(4-bit 不可行为实例实证而非定理)、拥塞价格 ψ 的稳定性语义。
 9. **F1/F2 冻结,由规模审计结果决定(advice/006)**: 不再预先承诺 token 消融/协调算法对比/稀疏 U2U/动态 owner。规模审计(阶段 26)已给出第一个瓶颈:**检测层延迟增长(最大档)→ 下一步唯一问题是 target allocation / resource competition**;若其后 rx 负载(19×(K−1) bits/周期,线性)先成为约束,再做稀疏/结构化 U2U。待对应方向启动后再细化 F1/F2 内容。
 10. **规模审计扩展(如需要)**: 多场景抽样(每档 3+ 场景种子,消除弱目标占比随 Q 下降的组成效应)、K=24/32 继续外推、rx 负载显式建模(接收侧解码/处理成本)—— 仅在审计结论需要加固时启动。
+
+---
+
+## 44. 阶段 43: P4-CLOSE registered closure(2026-08-24,advice/017 §十二 P0)
+
+- 动机: per advice/017 §十二(P0),P4 只修 credibility、不动算法;做完五项后 P4 正式 CLOSE;然后转 P5-A/P5-B,停止加算法模块。
+- 实现: `scripts/run_p42b_qos_frontier_gate.py` 把 per-scheduler frontier 从二元 feasible 改为**三状态分类**(`CERTIFIED FEASIBLE / UNRESOLVED / CERTIFIED INFEASIBLE`;INFEASIBLE 需要 FA 最大 A_q 端或 MD 最小 A_q 端的 certified LCB 违规,UNRESOLVED 不得写成 infeasible);held-out matched-QoS 比较只对 CERTIFIED FEASIBLE 执行,reduction 改为 **observed held-out reduction + paired per-block bootstrap CI**(39.4% 不再作为无保留数量声明);`scripts/run_p4_meta_cert.py` 的 promotion 谓词改为**只基于正向证据**(P4.1b 性能门 + P4.2 strong gate + P4.2b matched-QoS 支持),历史的 `adopt_ca=false` 不再是 promotion 条件,并把 P4.2b metrics 纳入 META `source_fingerprints`;CA m_star 如实记录(`[2,1.5,2,1.5,1.5,1,1,1]`),不再写"CA basically 1.0× threshold";新增 `tests/test_p42b_three_state.py`、`tests/test_p4_meta_predicate.py`(16 项)。
+- 验证: `pytest tests/test_p42b_three_state.py tests/test_p4_meta_predicate.py` 全过;P4.2b/P4-META 结果 JSON 在 clean HEAD 重跑(provenance git_dirty=false)。
+- 影响: P4 正式 registered CLOSED。下一步 advice/017 §十三-§十五: **P5-A**(architecture-only ablation、task-price ablation、cross-geometry G=20~30、K/Q/ρ scaling 回答"CA 为什么有效、何时有效、规模增大后是否有效")与 **P5-B**(physical control bus、control reliability/staleness、certificate-triggered sparse bus 回答"能否以低协调开销运行")。冻结项: MAPPO/NOMP/RIS 联合/轨迹联合/动态 owner/复杂 λ/admission heuristic/quantizer tricks/sensing detector stacking。

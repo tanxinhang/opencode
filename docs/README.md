@@ -1,14 +1,22 @@
 # UAV-ISAC exact selective soft-information fusion simulator
 
-> **当前状态 (2026-08-24, P4-CLOSE / advice-016):** 本 README 的标题与下方列表是
-> 历史研究演化日志。**当前研究主线已收敛** ——
+> **当前状态 (2026-08-24, P4-CLOSE / advice-017):** 本 README 的标题与下方列表是
+> 历史研究演化日志。**当前研究主线已收敛并完成 registered closure** ——
 > QoS-Certified Task-Oriented Dual-Bus Cooperative Detection：
 > CA-FRIDS（owner-directed evidence + task-price bus + receiver-capacity bus +
 > hard shared-airtime admission + sequential owner detection + anytime-valid
-> QoS certificate）为注册基准主调度器，FRIDS-v2 为 reference / ablation
-> baseline；项目级判决见 `results/p4_meta_cert.json`，统计闭环见
+> QoS certificate）已 PROMOTE 为注册基准主调度器，FRIDS-v2 为 reference /
+> ablation baseline；项目级判决见 `results/p4_meta_cert.json`（P4-META
+> promotion 谓词只使用正向证据：P4.1b 性能门 + P4.2 strong gate + P4.2b
+> matched-QoS 支持，历史的 `adopt_ca=false` 不再是 promotion 条件）。统计闭环见
 > `results/ca_frids_anytime_cert_gate.json`，QoS-matched operating-point 前沿见
-> `results/ca_frids_qos_frontier_gate.json`。
+> `results/ca_frids_qos_frontier_gate.json`（per-scheduler 三状态：CERTIFIED
+> FEASIBLE / UNRESOLVED / CERTIFIED INFEASIBLE；39.4% 只写 observed held-out
+> reduction 并配 paired-block bootstrap CI；CA m_star=[2,1.5,2,1.5,1.5,1,1,1]
+> 如实，不再写 “CA basically 1.0× threshold”）。下一步按 advice/017：P5-A
+> generalization & mechanism（owner/task-price ablation、cross-geometry）与
+> P5-B deployment closure（physical control bus、certificate-triggered sparse
+> bus）；**停止继续增加算法模块**。
 
 This repository implements the system model in
 `paper/submission.md` as a reproducible Python simulation. The current

@@ -1,15 +1,19 @@
 # 存在问题和可能的优化方案
 
-> **当前状态 (2026-08-24, P4-CLOSE / advice-016):** 本文档的日期(2026-08-17)与
-> 下方条目属于 P4 之前的历史问题清单。**当前最重要事实已改变**: 注册边界 cell
+> **当前状态 (2026-08-24, P4-CLOSE / advice-017):** 本文档的日期(2026-08-17)与
+> 下方条目属于 P4 之前的历史问题清单。**P4 已 registered CLOSE**: 注册边界 cell
 > (geom2 congested) 上 CA-FRIDS 已 anytime-valid QoS PASS 而 FRIDS-v2 certified
 > FAIL (`results/ca_frids_anytime_cert_gate.json`); P4.2b QoS-matched frontier 给出
-> Case B(两个调度器都能校准到 certified 匹配 operating point,CA 取得更低的
-> matched-QoS 停止时延)。当前残余优先级(advice-016 §24): 文档对齐(P0)、
-> "v2 infeasible" 表述收紧(P0)、matched-QoS frontier(P1)、held-out geometry(P1)、
-> control-bus physical closure(P1)、CA admission-aware martingale bridge(P1)、
-> B00 architecture ablation 与 sparse certified control bus(P2); **停止继续调
-> λ/density**。旧条目保留为历史参考。
+> 三状态判决(两个调度器都 CERTIFIED FEASIBLE,Case B,CA 取得更低的 matched-QoS
+> 停止时延;39.4% 作为 observed held-out reduction 陈述并配 paired-block CI);
+> P4-META promotion 谓词只使用正向证据(P4.1b 性能门 + P4.2 strong gate +
+> P4.2b matched-QoS 支持),历史的 `adopt_ca=false` 不再是 promotion 条件。
+> 当前残余优先级(advice-017 §十二-§十七): 文档对齐(P0,已修)、P4.2b 三状态/P4-META
+> 谓词(P0,已修)、P5-A generalization & mechanism(B00 owner ablation、task-price
+> ablation、cross-geometry、K/Q/ρ scaling)、P5-B deployment closure(physical
+> control bus、control reliability/staleness、certificate-triggered sparse bus);
+> **停止继续增加算法模块**(MAPPO/NOMP/RIS 联合/动态 owner/复杂 λ/admission
+> heuristic 全部冻结)。旧条目保留为历史参考。
 
 - 日期: 2026-08-17
 - 配套文档: `docs/SYSTEM_RESEARCH_REPORT.md`(整体实验报告)、`docs/FORMAL_PROOFS.md`(形式化证明)、`docs/THEORY_DEVELOPMENT_HISTORY.md`(阶段记录与待办)

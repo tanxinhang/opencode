@@ -12,8 +12,10 @@ The notation follows `SYSTEM_MODEL.md`.
 > `J^CA_{iqa} = pi_q g_{iqa} - lambda_{o(q)} c_{iqa}` + hard admission
 > `sum_i tau_ij <= T_air`（offer→admission→link，pathwise），
 > 配 anytime-valid Beta-mixture e-process QoS 证书（`uav_otfs_isac/qos.py`）。
-> 本文档保留历史定理；P4 正式理论主线正在重建（P0，见系统评审与
-> `results/p4_meta_cert.json`）。
+> 本文档保留历史定理；P4 registered closure 已完成（advice/017）：P4.2
+> strong gate PASS(CA)/FAIL(v2)，P4.2b matched-QoS 前沿三状态分类，P4-META
+> promotion 只基于正向证据（见 `results/p4_meta_cert.json`）；CA m_star 如实
+> 报告，39.4% 只作为 observed held-out reduction 陈述。
 
 ## 1. Notation and standing assumptions
 

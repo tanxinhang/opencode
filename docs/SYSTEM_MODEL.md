@@ -1,12 +1,13 @@
 # Unified System Model and Notation
 
-> **当前状态 (2026-08-24, P4-CLOSE / advice-016):** 下面的模型是历史演进中的
+> **当前状态 (2026-08-24, P4-CLOSE / advice-017):** 下面的模型是历史演进中的
 > **旧论文时代模型**（fixed geometry + one fusion center + BSC/erasure +
 > expected-P_D fusion + RIS + global bit budget）。当前注册主系统已收敛到
 > **CA-FRIDS Dual-Bus 联合容量调度 + 顺序检测 + anytime-valid QoS 认证**
 > （`uav_otfs_isac/ca_frids.py`、`uav_otfs_isac/airtime.py`、`uav_otfs_isac/qos.py`；
-> 注册基准判决见 `results/p4_meta_cert.json`）。本文档保留为历史参考，
-> 论文系统模型请以当前主线（owner-directed evidence + task-price bus +
+> 注册基准判决见 `results/p4_meta_cert.json`；P4.2b matched-QoS 前沿为三状态
+> 分类，P4-META promotion 不再使用历史的 `adopt_ca=false`）。本文档保留为历史
+> 参考，论文系统模型请以当前主线（owner-directed evidence + task-price bus +
 > receiver-capacity bus + hard airtime admission + sequential owner detection +
 > anytime-valid certificate）为准。
 
