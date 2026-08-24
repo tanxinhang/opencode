@@ -39,10 +39,52 @@
     "calib_n_runs": 300,
     "scenario_hash": "a8cae99af909213a",
     "bounds_hash": "b794581abf42ba6d",
-    "git_commit": "273257e",
-    "git_tree": "bd2489d784cecf61762847a53b9499a7ea026025",
+    "git_commit": "fdccec4",
+    "git_tree": "8a152f77b37c76eb2b91fe7ac67c5eea16d30e62",
     "git_dirty": false,
     "config_hash": "aa344c0c44dc9acf",
+    "crn_fingerprints": [
+      "35ec59c10bfcdd0d",
+      "5aeef73b24fa93b8",
+      "62ce7c8b605e3fc6",
+      "169c61e167da5977",
+      "e9c7fa9410661f38",
+      "828b4a1f18910ead",
+      "5b9255d56885f3a5",
+      "03ba325c2c297578",
+      "155a6630de8f457d",
+      "a274c3e70eccc26f",
+      "72b0b204ceb1008a",
+      "82f528afa868604d",
+      "850e918b8c0a3ae4",
+      "086395b2f40f29c9",
+      "09fdc282b042b4a8",
+      "c5ee7335c36eef5d",
+      "d6e98c6a770963cf",
+      "dafeaeb61c058ce6",
+      "3eed51ade342d2f3",
+      "b9d77b307d76c710",
+      "769837baea3dbbf8",
+      "563303a1e331e7f5",
+      "2a89898993613fb8",
+      "f4aeced3c8796e37",
+      "dff344402b1b90c5",
+      "6dd7443b08d3635f",
+      "eeb904976b43f3ae",
+      "c1a10eef15ec9427",
+      "cfe8f50400e5fb07",
+      "e3f318a3d74f4f57",
+      "861efa719c968d94",
+      "4cbcaad29223d9f8",
+      "a99af05536278469",
+      "3d90ed6f7249c2bd",
+      "54089b9c440a0f6a",
+      "e6dc907f74baec84",
+      "f724679abd1495a6",
+      "a26a9daa47cdb5bf",
+      "28ed663d3070b152",
+      "b6913e958e4f5944"
+    ],
     "seed_scheme": "FRESH certification seed namespace: tape seed = cert_seed + mc (disjoint from P4.1b discovery seeds 7 and 100); ONE pre-registered stream, prefixes read cumulatively -- never four fresh randomizations",
     "capacity_model": "shared airtime primitive: sum tau_ij/T_air <= 1; offer -> admission -> link; v2 neutral, CA density admission (frozen P4.1b code)",
     "evidence_mode": "owner-only evidence plane (Dual-Bus)",
@@ -128,7 +170,7 @@
       "prefix_cells": 5,
       "episodes": 7500,
       "delta_s": 0.0015625,
-      "incremental": {
+      "latest_cell": {
         "v2": {
           "n_H0": [
             731,
@@ -211,6 +253,92 @@
             8,
             2,
             5
+          ]
+        }
+      },
+      "stage_increment": {
+        "v2": {
+          "n_H0": [
+            3758,
+            3756,
+            3807,
+            3824,
+            3781,
+            3728,
+            3715,
+            3774
+          ],
+          "n_H1": [
+            3742,
+            3744,
+            3693,
+            3676,
+            3719,
+            3772,
+            3785,
+            3726
+          ],
+          "n_FA": [
+            235,
+            157,
+            201,
+            182,
+            66,
+            78,
+            94,
+            47
+          ],
+          "n_MD": [
+            58,
+            8,
+            17,
+            19,
+            52,
+            27,
+            32,
+            57
+          ]
+        },
+        "ca": {
+          "n_H0": [
+            3758,
+            3756,
+            3807,
+            3824,
+            3781,
+            3728,
+            3715,
+            3774
+          ],
+          "n_H1": [
+            3742,
+            3744,
+            3693,
+            3676,
+            3719,
+            3772,
+            3785,
+            3726
+          ],
+          "n_FA": [
+            152,
+            82,
+            84,
+            136,
+            33,
+            37,
+            67,
+            24
+          ],
+          "n_MD": [
+            30,
+            8,
+            9,
+            9,
+            35,
+            36,
+            17,
+            32
           ]
         }
       },
@@ -399,14 +527,15 @@
       },
       "j_v2_pooled": 5.054951033732317,
       "j_ca_pooled": 3.6836235038084877,
-      "crn_tape_fingerprint": "e9c7fa9410661f38"
+      "latest_cell_fp": "e9c7fa9410661f38",
+      "crn_tape_fingerprint_chain": "58a9cf33d56bcd89"
     },
     {
       "stage": 1,
       "prefix_cells": 10,
       "episodes": 15000,
       "delta_s": 0.0015625,
-      "incremental": {
+      "latest_cell": {
         "v2": {
           "n_H0": [
             742,
@@ -489,6 +618,92 @@
             3,
             3,
             4
+          ]
+        }
+      },
+      "stage_increment": {
+        "v2": {
+          "n_H0": [
+            3720,
+            3748,
+            3743,
+            3745,
+            3678,
+            3803,
+            3652,
+            3780
+          ],
+          "n_H1": [
+            3780,
+            3752,
+            3757,
+            3755,
+            3822,
+            3697,
+            3848,
+            3720
+          ],
+          "n_FA": [
+            225,
+            163,
+            164,
+            180,
+            78,
+            65,
+            102,
+            66
+          ],
+          "n_MD": [
+            53,
+            12,
+            20,
+            30,
+            60,
+            31,
+            29,
+            43
+          ]
+        },
+        "ca": {
+          "n_H0": [
+            3720,
+            3748,
+            3743,
+            3745,
+            3678,
+            3803,
+            3652,
+            3780
+          ],
+          "n_H1": [
+            3780,
+            3752,
+            3757,
+            3755,
+            3822,
+            3697,
+            3848,
+            3720
+          ],
+          "n_FA": [
+            189,
+            85,
+            69,
+            115,
+            62,
+            40,
+            77,
+            30
+          ],
+          "n_MD": [
+            30,
+            11,
+            7,
+            11,
+            26,
+            30,
+            16,
+            30
           ]
         }
       },
@@ -677,14 +892,15 @@
       },
       "j_v2_pooled": 5.053559413268739,
       "j_ca_pooled": 3.6797200915085453,
-      "crn_tape_fingerprint": "a274c3e70eccc26f"
+      "latest_cell_fp": "a274c3e70eccc26f",
+      "crn_tape_fingerprint_chain": "cff35382313bcd81"
     },
     {
       "stage": 2,
       "prefix_cells": 20,
       "episodes": 30000,
       "delta_s": 0.0015625,
-      "incremental": {
+      "latest_cell": {
         "v2": {
           "n_H0": [
             768,
@@ -767,6 +983,92 @@
             10,
             7,
             5
+          ]
+        }
+      },
+      "stage_increment": {
+        "v2": {
+          "n_H0": [
+            7592,
+            7405,
+            7523,
+            7466,
+            7456,
+            7568,
+            7528,
+            7432
+          ],
+          "n_H1": [
+            7408,
+            7595,
+            7477,
+            7534,
+            7544,
+            7432,
+            7472,
+            7568
+          ],
+          "n_FA": [
+            452,
+            340,
+            315,
+            351,
+            121,
+            151,
+            217,
+            101
+          ],
+          "n_MD": [
+            100,
+            23,
+            44,
+            40,
+            96,
+            74,
+            45,
+            100
+          ]
+        },
+        "ca": {
+          "n_H0": [
+            7592,
+            7405,
+            7523,
+            7466,
+            7456,
+            7568,
+            7528,
+            7432
+          ],
+          "n_H1": [
+            7408,
+            7595,
+            7477,
+            7534,
+            7544,
+            7432,
+            7472,
+            7568
+          ],
+          "n_FA": [
+            342,
+            191,
+            165,
+            264,
+            93,
+            80,
+            126,
+            52
+          ],
+          "n_MD": [
+            70,
+            20,
+            41,
+            31,
+            65,
+            59,
+            35,
+            52
           ]
         }
       },
@@ -955,14 +1257,15 @@
       },
       "j_v2_pooled": 5.05158703641831,
       "j_ca_pooled": 3.6925492816572003,
-      "crn_tape_fingerprint": "b9d77b307d76c710"
+      "latest_cell_fp": "b9d77b307d76c710",
+      "crn_tape_fingerprint_chain": "4d9561d3f52e20f8"
     },
     {
       "stage": 3,
       "prefix_cells": 40,
       "episodes": 60000,
       "delta_s": 0.0015625,
-      "incremental": {
+      "latest_cell": {
         "v2": {
           "n_H0": [
             792,
@@ -1045,6 +1348,92 @@
             2,
             4,
             6
+          ]
+        }
+      },
+      "stage_increment": {
+        "v2": {
+          "n_H0": [
+            15062,
+            14882,
+            14827,
+            15048,
+            14984,
+            14855,
+            14898,
+            15008
+          ],
+          "n_H1": [
+            14938,
+            15118,
+            15173,
+            14952,
+            15016,
+            15145,
+            15102,
+            14992
+          ],
+          "n_FA": [
+            829,
+            618,
+            710,
+            712,
+            287,
+            280,
+            381,
+            199
+          ],
+          "n_MD": [
+            194,
+            59,
+            90,
+            64,
+            210,
+            126,
+            115,
+            177
+          ]
+        },
+        "ca": {
+          "n_H0": [
+            15062,
+            14882,
+            14827,
+            15048,
+            14984,
+            14855,
+            14898,
+            15008
+          ],
+          "n_H1": [
+            14938,
+            15118,
+            15173,
+            14952,
+            15016,
+            15145,
+            15102,
+            14992
+          ],
+          "n_FA": [
+            593,
+            338,
+            325,
+            482,
+            200,
+            173,
+            289,
+            97
+          ],
+          "n_MD": [
+            163,
+            40,
+            54,
+            78,
+            118,
+            99,
+            83,
+            122
           ]
         }
       },
@@ -1233,13 +1622,14 @@
       },
       "j_v2_pooled": 5.072801417254404,
       "j_ca_pooled": 3.693451883544473,
-      "crn_tape_fingerprint": "b6913e958e4f5944"
+      "latest_cell_fp": "b6913e958e4f5944",
+      "crn_tape_fingerprint_chain": "28b482a56d312c9b"
     }
   ],
-  "runtime_s": 673.0,
+  "runtime_s": 685.3,
   "provenance": {
-    "git_commit": "273257e",
-    "git_tree": "bd2489d784cecf61762847a53b9499a7ea026025",
+    "git_commit": "fdccec4",
+    "git_tree": "8a152f77b37c76eb2b91fe7ac67c5eea16d30e62",
     "git_dirty": false,
     "config_hash": "aa344c0c44dc9acf",
     "scenario_hash": "a8cae99af909213a",
