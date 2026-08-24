@@ -260,16 +260,26 @@ def main() -> None:
 
     # --- consecutive deltas (paired per-block bootstrap 95% CI) ---------
     def _delta(prev, cur):
+        """Delta verbatim sign-aware (audit/p5-a item 2): ``d = J_prev -
+        J_cur`` -- POSITIVE means the ``cur`` arm IMPROVES worst-target
+        delay (a gain mechanism), NEGATIVE means ``cur`` HURTS it (a loss
+        mechanism, e.g. lambda at the frozen point).  The wording must not
+        print ``J_cur < J_prev by -x`` (self-contradictory): a loss is
+        written ``J_cur > J_prev by |x| (lambda HURTS worst-target delay)``."""
         if cur is None:
             return None
         d, lo, hi = _paired_ci(results[prev]["block_J"],
                                results[cur]["block_J"])
         base = float(np.mean(results[prev]["block_J"]))
-        return {"abs": d, "ci95": [lo, hi],
-                "rel": d / max(base, 1e-12),
-                "wording": f"J_{cur} < J_{prev} by {d:.4f} "
-                           f"({d / max(base, 1e-12) * 100.0:.1f}%; "
-                           f"95% CI [{lo:.4f}, {hi:.4f}])"}
+        rel = d / max(base, 1e-12)
+        sign = "improves worst-target delay" if d >= 0.0 \
+            else "HURTS worst-target delay (a loss mechanism)"
+        return {"point": d, "ci95": [lo, hi], "rel": rel,
+                "is_gain": bool(d >= 0.0),
+                "wording": (
+                    f"J_{cur} {'<' if d >= 0 else '>'} J_{prev} by "
+                    f"{abs(d):.4f} ({abs(rel) * 100.0:.1f}%; "
+                    f"95% CI [{lo:.4f}, {hi:.4f}]; the arm {sign})")}
 
     deltas = {
         "D_owner": _delta("A", "B00"),
@@ -287,46 +297,63 @@ def main() -> None:
         "B1": results["B1"]["J"],
         "C": results["C"]["J"],
         "cumulative_owner_to_full": float(cum),
-        "decomposition": {
-            "D_owner": deltas["D_owner"]["abs"],
-            "D_pi": deltas["D_pi"]["abs"],
-            "D_lambda": deltas["D_lambda"]["abs"],
-            "D_admission": deltas["D_admission"]["abs"],
+"decomposition": {
+            "D_owner": deltas["D_owner"]["point"],
+            "D_pi": deltas["D_pi"]["point"],
+            "D_lambda": deltas["D_lambda"]["point"],
+            "D_admission": deltas["D_admission"]["point"],
         },
     }
 
     # mechanism-dominant verdict (advice/017 section 13): the SINGLE largest
-    # positive consecutive delta names the mechanism that explains most of
-    # the CA-FRIDS gain at the frozen operating point.
-    dom = max(deltas, key=lambda k: deltas[k]["abs"])
-    dominant = dom
-    dominant_abs = deltas[dom]["abs"]
-    dominant_rel = deltas[dom]["rel"]
-    c_total = results["A"]["J"] - results["C"]["J"]
-    dom_share = dominant_abs / max(c_total, 1e-12)
-    if dom == "D_owner":
-        dom_note = ("The ARCHITECTURE (owner-directed evidence) is the "
-                    "dominant mechanism -- architecture innovation matters "
-                    "more than the optimization (advice/017 section 13).")
-    elif dom == "D_pi":
-        dom_note = ("The DETECTION-DEFICIT task coordination (the "
-                    "detection-deficit price pi_q = y_q/(D_q+eps)) is the "
-                    "dominant mechanism -- a first-tier ALGORITHM "
-                    "contribution (advice/017 section 13).")
-    elif dom == "D_lambda":
-        dom_note = ("THE RECEIVER-CAPACITY (airtime) price is the dominant "
-                    "mechanism -- the congestion price is what pays for the "
-                    "gain at this registered congested cell.")
+    # POSITIVE consecutive delta names the mechanism that explains most of
+    # the CA-FRIDS gain at the frozen operating point (audit/017 13 #1: a
+    # NEGATIVE delta -- e.g. D_lambda here -- is a HARM, not a gain, so it
+    # must never be selected as dominant).  The ladder picks the largest
+    # ``is_gain=True`` delta; if NO positive delta exists the verdict is
+    # "no dominant positive mechanism" instead of silently picking a loss.
+    gains = {k: d for k, d in deltas.items() if d["is_gain"]}
+    if gains:
+        dom = max(gains, key=lambda k: gains[k]["point"])
+        dominant = dom
+        dominant_point = gains[dom]["point"]
+        dominant_rel = gains[dom]["rel"]
+        c_total = results["A"]["J"] - results["C"]["J"]
+        dom_share = dominant_point / max(c_total, 1e-12)
+        if dom == "D_owner":
+            dom_note = ("The owner-directed EVIDENCE ARCHITECTURE is the "
+                        "dominant positive mechanism -- architecturally the "
+                        "gain does NOT come from the deficit price alone "
+                        "(advice/017 section 13).")
+        elif dom == "D_pi":
+            dom_note = ("The DETECTION-DEFICIT task coordination (the "
+                        "detection-deficit price pi_q = y_q/(D_q+eps)) is the "
+                        "dominant positive mechanism -- a first-tier "
+                        "ALGORITHM contribution (advice/017 section 13).")
+        elif dom == "D_lambda":
+            dom_note = ("THE RECEIVER-CAPACITY (airtime) price is the "
+                        "dominant positive mechanism -- the congestion "
+                        "price is what pays for the delay gain here.")
+        else:
+            dom_note = ("the density admission is the dominant positive "
+                        "mechanism at this cell.")
     else:
-        dom_note = ("the density admission is the dominant mechanism at "
-                    "this cell.")
+        dominant = None
+        dominant_point = 0.0
+        dominant_rel = 0.0
+        c_total = results["A"]["J"] - results["C"]["J"]
+        dom_share = 0.0
+        dom_note = ("NO positive mechanism dominates: every consecutive "
+                    "delta is <= 0 at this cell (all mechanisms either "
+                    "harm or are ~neutral on worst-target delay) -- the "
+                    "advice/017 section 11 ladder verdict does NOT apply.")
     gate = {
         "objective": "held-out matched-policy worst-target E[T|H1] pooled",
         "arms": results,
         "deltas": deltas,
         "ladder": ladder,
         "dominant_mechanism": {
-            "key": dominant, "abs": dominant_abs,
+            "key": dominant, "point": dominant_point,
             "rel": dominant_rel,
             "share_of_total_gain": float(dom_share),
             "note": dom_note,
