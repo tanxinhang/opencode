@@ -341,7 +341,23 @@ def main() -> None:
             "D_lambda it is the receiver-capacity steering, if "
             "D_admission it is the density admission; the dominant share "
             "is relative to the total CA-vs-v2 gain (advice/017 section "
-            "13).")
+            "13)."),
+        "caveats": [
+            "The ladder runs at the FROZEN policy-B operating point "
+            "(delta=1, shared by every arm), so it answers the "
+            "mechanism-attribution question ONLY at that operating point.  "
+            "It is NOT the matched-QoS frontier (P4.2b answers that) and "
+            "NOT an anytime-valid QoS certificate (P4.2/registered do "
+            "that): every arm QoS is EXPECTED to be UNCERTAIN here.",
+            "D_lambda may be negative (the receiver airtime price steering "
+            "can HURT worst-target E[T|H1] at the frozen point): per "
+            "advice/017 section 7, lambda is registered as a "
+            "feasibility/capacity-steering mechanism (and P4.1b found "
+            "airtime value in the feasibility/comm-efficiency layer, not "
+            "the delay layer), so a negative delay delta at one cell is "
+            "the expected honest reading -- the paper must NOT claim "
+            "lambda reduces stopping delay.",
+        ],
     }
     params = {
         "gate_id_base": "p5a-ablation-ladder",
