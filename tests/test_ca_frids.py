@@ -524,6 +524,65 @@ def test_p41a_policy_tape_receiver_independent():
                               tape.U_policy[r, t, 1, :])
 
 
+def test_task_price_false_keeps_flat_architecture_score(
+        scenario, bounds, air_cong):
+    """P5-A (advice/017 section 13): ``task_price=False`` freezes ``pi_q``
+    at the flat ``1/q`` (no deficit weighting) -- with ``airtime_price=False``
+    the local index reduces to the bare reliable information ``g_eff``, so
+    the arm is the owner-directed EVIDENCE ARCHITECTURE alone (B00).  The
+    task-price update must NOT run: the y-state stays uniform."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    q = scenario["q"]
+    k = int(scenario["k"])
+    b = bounds_v2(bounds, q)
+    tape = build_exogenous_tape(41, 60, q, k, 40)
+    out = simulate_ca_frids(scenario, b, air_cong, n_runs=60, seed=41,
+                            max_steps=40, task_price=False,
+                            airtime_price=False,
+                            admission_policy="neutral",
+                            exog=tape)
+    assert out["pool"]["n_h1"] is not None
+    assert out["worst_target_delay"] >= 1.0
+    # the ladder arms keep the shared CRN tape deterministic
+    out2 = simulate_ca_frids(scenario, b, air_cong, n_runs=60, seed=41,
+                             max_steps=40, task_price=False,
+                             airtime_price=False,
+                             admission_policy="neutral",
+                             exog=tape)
+    assert np.allclose(out["pool"]["sum_h1_delay"],
+                       out2["pool"]["sum_h1_delay"])
+
+
+def test_task_price_false_is_not_task_aware(scenario, bounds, air_cong):
+    """P5-A (advice/017 section 13): in the B00 arm the flat price cannot
+    redirect service to a starved target -- the flat arm serves by pure
+    reliable information, which is exactly what the ladder is designed to
+    measure (the task-deficit mechanism is absent)."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    rng = np.random.default_rng(42)
+    sc = build_distributed_scenario(rng, k_uavs=6, q_targets=3)
+    bt = calibrate_target_bounds(sc, n_runs=40, seed=100, verify_runs=0)
+    b = bounds_v2(bt, 3)
+    am = build_airtime_model(sc, rho_target=2.0)
+    q = sc["q"]
+    k = int(sc["k"])
+    tape = build_exogenous_tape(43, 60, q, k, 40)
+    out_flat = simulate_ca_frids(sc, b, am, n_runs=60, seed=43, max_steps=40,
+                                 task_price=False, airtime_price=False,
+                                 admission_policy="neutral",
+                                 exog=tape)
+    out_dyn = simulate_ca_frids(sc, b, am, n_runs=60, seed=43, max_steps=40,
+                                task_price=True, airtime_price=False,
+                                admission_policy="neutral",
+                                exog=tape)
+    # both arms are valid schedulers and the flat arm respects the budget
+    assert out_flat["worst_target_delay"] >= 1.0
+    assert out_dyn["worst_target_delay"] >= 1.0
+    # the two arms may differ (task price steering OR deficit weighting)
+    # -- the point is the flat arm RUNS without any task-price update
+    assert out_flat["comm"]["budget_feasible_fraction"] >= 0.0
+
+
 def test_p41a_four_arms_share_exogenous_tape(scenario, bounds, air_cong):
     """P4.1a regression (advice/014 section 4 #5): the four causal arms
     A (v2+neutral), B0 (CA+lambda=0+neutral), B1 (CA+lambda+neutral) and

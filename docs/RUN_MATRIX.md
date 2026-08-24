@@ -61,6 +61,7 @@ error.
 | `verify-tests` | Full regression tests | `& "E:\anaconda\conda\python.exe" -m pytest -q -p no:cacheprovider --basetemp .pytest_tmp_run_matrix` | console |
 | `phase-diagram` | P2.1 phase diagram (info SNR + comm rho_C axes, 4+1 zones) | `& "E:\anaconda\conda\python.exe" scripts\run_phase_diagram_gate.py --output results\phase_diagram_gate.json` | `results/phase_diagram_gate.json` |
 | `ca-frids-gate` | P3.4 CA-FRIDS Dual-Bus live-or-die (vs FRIDS-v2, uncongested + congested) | `& "E:\anaconda\conda\python.exe" scripts\run_ca_frids_gate.py --output results\ca_frids_gate.json` | `results/ca_frids_gate.json` |
+| `p5a-ablation-ladder` | P5-A mechanism attribution ladder (A→B00→B0→B1→C; D_owner/D_pi/D_lambda/D_admission with paired per-block bootstrap CI) | `& "E:\anaconda\conda\python.exe" scripts\run_p5a_ablation_ladder.py --output results\p5a_ablation_ladder.json` | `results/p5a_ablation_ladder.json` |
 
 ## Batch runner
 

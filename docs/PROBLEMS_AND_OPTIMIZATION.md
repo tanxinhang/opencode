@@ -14,6 +14,14 @@
 > control bus、control reliability/staleness、certificate-triggered sparse bus);
 > **停止继续增加算法模块**(MAPPO/NOMP/RIS 联合/动态 owner/复杂 λ/admission
 > heuristic 全部冻结)。旧条目保留为历史参考。
+>
+> **P5-A 机制归因阶梯(advice/017 §十三)已启动**: `scripts/run_p5a_ablation_ladder.py`
+> 在注册 congested cell(geom2 rho=1.8, froze policy-B, 共享 held-out CRN blocks)
+> 上运行 `A → B00(owner-only)→ B0(+task price)→ B1(+λ)→ C(+density admission)`,
+> 每个连续 Δ 配 paired-block bootstrap 95% CI; 若 D_owner 主导则该贡献是
+> **架构**(owner-directed evidence), 若 D_pi 主导则是 **detection-deficit 任务协调**
+> —— 这两者都符合 advice/017 §7 的一级贡献定位。结果见
+> `results/p5a_ablation_ladder.json`。
 
 - 日期: 2026-08-17
 - 配套文档: `docs/SYSTEM_RESEARCH_REPORT.md`(整体实验报告)、`docs/FORMAL_PROOFS.md`(形式化证明)、`docs/THEORY_DEVELOPMENT_HISTORY.md`(阶段记录与待办)

@@ -243,6 +243,7 @@ def simulate_ca_frids(
     price_mode: str = "owner_local",
     admission_policy: str = "density",
     airtime_price: bool = True,
+    task_price: bool = True,
     audit: bool = False,
     raw_counts: bool = False,
     exog: ExogenousTape | None = None,
@@ -367,10 +368,18 @@ def simulate_ca_frids(
                                      + k * max(lam_bits, 1)
                                      + (max(pi_bits, 1) if price_mode
                                         == "global_simplex" else 0))
-            # task-price plane: owner-anchored prices, then broadcast
+            # task-price plane: owner-anchored prices, then broadcast.
+            # ``task_price=False`` (P5-A B00 arm, advice/017 section 13):
+            # there is NO deficit weighting -- ``pi_q`` is flat, so the
+            # action index reduces to the bare reliable information
+            # ``g_eff`` (plus the receiver price when ``airtime_price``),
+            # isolating the owner-directed EVIDENCE ARCHITECTURE from the
+            # task-coordination mechanism.  ``D``/``y`` are still tracked
+            # (the stopping rule needs the owner threshold), but they do
+            # NOT enter the local decision index.
             D = np.maximum(a_thr - np.array(
                 [L[owner_of[qq], qq] for qq in range(q)]), 0.0)
-            pi = y / (D + eps)
+            pi = (np.full(q, 1.0 / q) if not task_price else y / (D + eps))
             pi_b = _quantize_price(pi, 0.0, pi_hi, pi_bits)
             lam_b = _quantize_price(lam, 0.0, lam_cap, lam_bits)
             eps_pi = pi_hi / max(int(2 ** pi_bits), 1)
@@ -544,7 +553,9 @@ def simulate_ca_frids(
                                     if k else 0.0)
             comm_feasible[r] += float(np.max(load_now)
                                       <= t_air + 1e-12) if k else 0.0
-            # owner task-price update.  ``price_mode="owner_local"`` (advice/008
+            # owner task-price update (SKIPPED when ``task_price=False`` --
+            # the B00 ladder arm keeps the flat architecture price).
+            # ``price_mode="owner_local"`` (advice/008
             # section 7, the P3.5-A baseline): each OWNER computes
             # ``pi_q = y_q/(D_q+eps)`` from its OWN belief and received
             # service, normalized on the owner's own undecided simplex
@@ -559,9 +570,9 @@ def simulate_ca_frids(
             ratios = np.array([S[qq] / max(D[qq] + eps, 1e-12)
                                for qq in range(q)])
             und = [qq for qq in range(q) if not decided[qq]]
-            if price_mode == "global_simplex":
+            if task_price and price_mode == "global_simplex":
                 y = _global_simplex(mu, ratios, y, und)
-            else:
+            elif task_price:
                 # owner_local (P3.5-A baseline, byte-identical to the
                 # advice/008 owner-anchored variant): per-owner simplex
                 y_new = y.copy()

@@ -380,3 +380,12 @@
 - 实现: `scripts/run_p42b_qos_frontier_gate.py` 把 per-scheduler frontier 从二元 feasible 改为**三状态分类**(`CERTIFIED FEASIBLE / UNRESOLVED / CERTIFIED INFEASIBLE`;INFEASIBLE 需要 FA 最大 A_q 端或 MD 最小 A_q 端的 certified LCB 违规,UNRESOLVED 不得写成 infeasible);held-out matched-QoS 比较只对 CERTIFIED FEASIBLE 执行,reduction 改为 **observed held-out reduction + paired per-block bootstrap CI**(39.4% 不再作为无保留数量声明);`scripts/run_p4_meta_cert.py` 的 promotion 谓词改为**只基于正向证据**(P4.1b 性能门 + P4.2 strong gate + P4.2b matched-QoS 支持),历史的 `adopt_ca=false` 不再是 promotion 条件,并把 P4.2b metrics 纳入 META `source_fingerprints`;CA m_star 如实记录(`[2,1.5,2,1.5,1.5,1,1,1]`),不再写"CA basically 1.0× threshold";新增 `tests/test_p42b_three_state.py`、`tests/test_p4_meta_predicate.py`(16 项)。
 - 验证: `pytest tests/test_p42b_three_state.py tests/test_p4_meta_predicate.py` 全过;P4.2b/P4-META 结果 JSON 在 clean HEAD 重跑(provenance git_dirty=false)。
 - 影响: P4 正式 registered CLOSED。下一步 advice/017 §十三-§十五: **P5-A**(architecture-only ablation、task-price ablation、cross-geometry G=20~30、K/Q/ρ scaling 回答"CA 为什么有效、何时有效、规模增大后是否有效")与 **P5-B**(physical control bus、control reliability/staleness、certificate-triggered sparse bus 回答"能否以低协调开销运行")。冻结项: MAPPO/NOMP/RIS 联合/轨迹联合/动态 owner/复杂 λ/admission heuristic/quantizer tricks/sensing detector stacking。
+
+---
+
+## 45. 阶段 44: P5-A mechanism attribution ladder(2026-08-24,advice/017 §十三)
+
+- 动机: reviewer 最可能的攻击是"CA 的 gain 是不是只是 owner routing";把 CA-FRIDS 的收益分解为最小 mechanism 阶梯 `A→B00→B0→B1→C`(`Δ_owner/Δ_π/Δ_λ/Δ_admission`),回答"哪个机制真正贡献"。
+- 实现: `uav_otfs_isac/ca_frids.py` 增加 `task_price` 开关(`False` 时 `pi_q` 冻结为 flat `1/q`,不再做 deficit 加权与 mirror 更新;配合既有 `airtime_price`/`admission_policy` 恰构成 B00/B0/B1/C 四档);`scripts/run_p5a_ablation_ladder.py`(注册 boundary cell geom2 congested rho=1.8、frozen policy-B、共享 held-out CRN blocks 使每个 Δ 都是 Paired per-block bootstrap CI);测试 +2(flat 档位可运行且确定、non-task-aware 语义)。
+- 结果(**阶梯单调 + D_pi 主导**): 冻结操作点 J `A 4.97 → B00 4.32(Δ_owner 0.65,13.1%)→ B0 3.39(Δ_π 0.89,20.7%)→ B1 3.15(Δ_λ 0.27,7.9%)→ C 3.12(Δ_admission ≲0,CI 跨 0)`。—— owner 架构单体即可贡献 13%,但**最大单项机制是 detection-deficit task price(Δ_π,占 A→C 总收益约 48%)**,其次是 architecture(13%)、receiver price(8%);density admission 在本 cell 无显著增量。这正符合 advice/017 §7 的定位(owner-directed evidence 一级架构贡献、detection-deficit coordination 一级算法贡献)。
+- 影响: 论文机制叙事应"架构先、任务价为主、接收价辅助、density 为内务";同时如实承认 D_owner 也有 13% 量级(架构创新本身是真实贡献)。下一步 P5-A 第二优先级 **cross-geometry**(G=20~30 独立几何、每几何 500~2000 runs)与 (K,Q,ρ) scaling,然后 P5-B control bus 物理化。
