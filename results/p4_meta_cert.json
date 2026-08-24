@@ -1,0 +1,51 @@
+{
+  "gate_id": "p4-meta-registered-closure",
+  "evidence": {
+    "p4_1b": {
+      "file": "ca_frids_gate_3g100m.json",
+      "git_commit": "ec5812d",
+      "git_dirty": false,
+      "performance_gate": "PASS",
+      "qos": "5 PASS + 1 UNCERTAIN",
+      "adopt_ca": false,
+      "congested_improvement": 0.25412021050638683,
+      "uncongested_regression": -0.058771433379860086
+    },
+    "p4_2": {
+      "file": "ca_frids_anytime_cert_gate.json",
+      "git_dirty": false,
+      "unresolved_cell": "CA PASS",
+      "v2": "FAIL",
+      "strong_gate": true,
+      "strong_gate_at_stage": 3,
+      "strong_gate_episodes": 60000,
+      "first_crossing_stage_v2_FA0": 2
+    },
+    "p4_2b": {
+      "file": "ca_frids_qos_frontier_gate.json",
+      "case": "B",
+      "verdict": "CASE B: both schedulers reach certifiable matched operating points; held-out matched-QoS delay J_ca=4.5108 vs J_v2=7.4480 (CA lower) -> 'CA achieves a lower stopping delay at matched certified QoS'",
+      "matched_j": {
+        "v2": 7.447956313089525,
+        "ca": 4.510838987257984
+      },
+      "held_out_qos": {
+        "v2": "PASS",
+        "ca": "PASS"
+      }
+    }
+  },
+  "combined_registered_verdict": {
+    "clause": "CA-FRIDS PROMOTED to registered-benchmark primary scheduler; FRIDS-v2 = reference / ablation baseline",
+    "strict_wording": "Under the frozen common policy-B operating point and matched shared-airtime capacity model, CA-FRIDS is anytime-valid QoS-certified at the registered congested boundary cell whereas FRIDS-v2 is certified to violate the false-alarm constraint.  'v2 fundamentally infeasible' is NOT claimed -- the P4.2b QoS-Matched Operating-Point Frontier experiment answered that question (Case B: both schedulers reach certifiable matched points; CA has the lower matched-QoS stopping delay)."
+  },
+  "provenance": {
+    "git_commit": "2c474c5",
+    "git_tree": "7d6635ae0f74bf56b881f7438fe4675efb0029da",
+    "git_dirty": false,
+    "source_fingerprints": {
+      "p4_1b": "d951c410d52f0d0e",
+      "p4_2": "6772087a7d7fe2a6"
+    }
+  }
+}
