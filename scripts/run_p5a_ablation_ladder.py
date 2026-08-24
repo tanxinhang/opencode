@@ -384,6 +384,18 @@ def main() -> None:
             "the delay layer), so a negative delay delta at one cell is "
             "the expected honest reading -- the paper must NOT claim "
             "lambda reduces stopping delay.",
+            "D_owner is NOT a pure architecture-only ablation (audit "
+            "finding, advice/017 section 13): arm A (FRIDS-v2) is the "
+            "full-mesh local-replica broadcast with its OWN local deficit "
+            "price, while arm B00 is the CA owner-directed evidence plane "
+            "WITH the deficit price removed (flat index).  Delta_owner "
+            "bundles two changes: (i) topology full-mesh -> owner-point "
+            "routing, (ii) dropping v2's local deficit price.  So the "
+            "honest reading is \\\"owner-directed evidence plane (deficit "
+            "price removed)\\\", NOT \\\"owner routing alone\\\".  If "
+            "D_owner dominates, the paper must say: owner-directed "
+            "architecture AND the removal of v2's local-deficit steering "
+            "together explain the gain -- do NOT claim pure routing.",
         ],
     }
     params = {
