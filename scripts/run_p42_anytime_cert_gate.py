@@ -1,6 +1,9 @@
 """P4.2 ANYTIME-valid QoS certification gate (advice/015).
 
-The verdict of P4.1b (``ca_frids_gate_formal.json``) is CODE/CERTIFICATE/
+The verdict of P4.1b (the formal certificate in
+``results/ca_frids_gate_3g100m.json`` at git_commit ec5812d,
+git_dirty=false -- note ``ca_frids_gate_formal.json`` in the tree is a
+STALE P3.4-era file and must not be quoted) is CODE/CERTIFICATE/
 PHYSICAL-MODEL(-conditional) PASS but not full-theory PASS, and the
 single most valuable next step is the STATISTICAL certification upgrade:
 P4.2 certifies the boundary cell on a FRESH stream with TRUE anytime-valid
