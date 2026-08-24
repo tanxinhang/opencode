@@ -361,13 +361,21 @@ def simulate_ca_frids(
             if not undecided:
                 break
             comm_cycles[r] += 1.0
-            # control-plane overhead (advice/010 section 4): Q pi prices,
-            # K lambda prices, plus the global-simplex scalar ``Z`` in the
-            # global-simplex mode (one scalar at pi resolution)
-            comm_control_bits[r] += (q * max(pi_bits, 1)
-                                     + k * max(lam_bits, 1)
-                                     + (max(pi_bits, 1) if price_mode
-                                        == "global_simplex" else 0))
+            # control-plane overhead (advice/010 section 4; ledger fix per
+            # advice/018 section 6): only ENABLED price planes are charged.
+            # ``B_ctrl = 1_task (Q b_pi + b_Z) + 1_lambda K b_lambda`` -- when
+            # ``task_price=False`` (B00) the flat pi = 1/Q and ``Z`` are
+            # static, so NO dynamic price bits/cycle are broadcast; when
+            # ``airtime_price=False`` (B00/B0) lambda is frozen at 0 and no
+            # K b_lambda is broadcast.  A disabled bus must not be billed.
+            ctrl_bits = 0
+            if task_price:
+                ctrl_bits += q * max(pi_bits, 1)
+                if price_mode == "global_simplex":
+                    ctrl_bits += max(pi_bits, 1)   # scalar Z
+            if airtime_price:
+                ctrl_bits += k * max(lam_bits, 1)
+            comm_control_bits[r] += ctrl_bits
             # task-price plane: owner-anchored prices, then broadcast.
             # ``task_price=False`` (P5-A B00 arm, advice/017 section 13):
             # there is NO deficit weighting -- ``pi_q`` is flat, so the
@@ -635,6 +643,15 @@ def simulate_ca_frids(
                              for qq in range(q)],
             "sum2_h1_delay": [float(np.sum(delays[H_all[:, qq], qq] ** 2))
                               for qq in range(q)],
+            # risk-aware delay (advice/018 section 5): under H1, a run that
+            # DECLARED H1 keeps its realized stop time; a run that declared
+            # H0 (an MD error) is charged T_max -- ``E[T_q^risk | H1]`` so a
+            # lower plain ``J`` can never be bought by earlier WRONG H0
+            # decisions.  ``J_risk = max_q sum_h1_delay_risk[q]/n_h1[q]``.
+            "sum_h1_delay_risk": [float(np.sum(
+                np.where(declared_h1[:, qq] == 1.0, delays[:, qq],
+                         float(max_steps))[H_all[:, qq]]))
+                for qq in range(q)],
         },
         "comm": {
             "airtime_per_cycle": float(np.mean(comm_airtime / active)),

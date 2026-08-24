@@ -408,6 +408,7 @@ def simulate_frids_v2(
     mobility: float | None = None,
     power_cap: np.ndarray | None = None,
     bridge: bool = False,
+    task_price: bool = True,
     rx_cap_tokens: np.ndarray | None = None,
     raw_counts: bool = False,
     exog: ExogenousTape | None = None,
@@ -672,10 +673,17 @@ def simulate_frids_v2(
                 for qq in undecided:
                     if g_eff[uav, qq] <= 0.0:
                         continue
-                    price = (y_common[qq] if price_mode == "common"
-                             else y[uav, qq])
-                    score = price * g_eff[uav, qq] \
-                        / (D_loc[uav, qq] + eps)
+                    # task_price=False (advice/018 section 8, the F0 arm of
+                    # the 2x2): FLAT full-mesh score ``J_iq = g_iq`` -- no
+                    # local mirror price, no deficit weighting.  Default
+                    # True keeps the frozen v2 index byte-identical.
+                    if task_price:
+                        price = (y_common[qq] if price_mode == "common"
+                                 else y[uav, qq])
+                        score = price * g_eff[uav, qq] \
+                            / (D_loc[uav, qq] + eps)
+                    else:
+                        score = g_eff[uav, qq]
                     if score > best_g:
                         best_g = score
                         best_q = qq
@@ -955,15 +963,19 @@ def simulate_frids_v2(
                     br["r_real"][r, t, qq] = s_inc / max(d_here + eps, 1e-12)
                     br["n_served"][r, t, qq] = n_serv
             # mirror descent per UAV on the normalized service gap
-            for uav in range(k):
-                ratio = np.zeros(q)
-                for qq in undecided:
-                    ratio[qq] = S_loc[uav, qq] \
-                        / (D_loc[uav, qq] + eps)
-                rbar = float(np.mean(ratio[undecided]))
-                e = rbar - ratio
-                num = y[uav] * np.exp(mu * e)
-                y[uav] = num / max(np.sum(num), 1e-12)
+            # (task_price=False -- advice/018 section 8, F0 arm -- skips the
+            # local mirror entirely: y stays uniform, the flat score has no
+            # deficit weighting.)
+            if task_price:
+                for uav in range(k):
+                    ratio = np.zeros(q)
+                    for qq in undecided:
+                        ratio[qq] = S_loc[uav, qq] \
+                            / (D_loc[uav, qq] + eps)
+                    rbar = float(np.mean(ratio[undecided]))
+                    e = rbar - ratio
+                    num = y[uav] * np.exp(mu * e)
+                    y[uav] = num / max(np.sum(num), 1e-12)
             if audit:
                 _audit_cycle(undecided, y, y_common, D_loc, L, g_mat, eps,
                              owner_of, a_thr, aud, price_mode)
@@ -1019,6 +1031,15 @@ def simulate_frids_v2(
                          for qq in range(q)],
         "sum2_h1_delay": [float(np.sum(delays[H_all[:, qq], qq] ** 2))
                           for qq in range(q)],
+        # risk-adjusted delay (advice/018 section 5): under H1, a run that
+        # DECLARED H1 keeps its realized stop time, a run that declared H0
+        # (a miss) is charged T_max -- so a lower plain J can never be
+        # bought by an EARLIER WRONG H0 decision.  J_risk = max_q
+        # sum_h1_delay_risk[q]/n_h1[q].
+        "sum_h1_delay_risk": [float(np.sum(
+            np.where(declared_h1[:, qq] == 1.0, delays[:, qq],
+                     float(max_steps))[H_all[:, qq]]))
+            for qq in range(q)],
     }
     # P4.1 shared-capacity ledger (advice/012 section 5): the same split
     # offer/admitted/delivered/link-drop/capacity-drop accounting as

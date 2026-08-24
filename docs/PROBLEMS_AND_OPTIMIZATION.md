@@ -15,11 +15,14 @@
 > **停止继续增加算法模块**(MAPPO/NOMP/RIS 联合/动态 owner/复杂 λ/admission
 > heuristic 全部冻结)。旧条目保留为历史参考。
 >
-> **P5-A 机制归因阶梯(advice/017 §十三)已启动**: `scripts/run_p5a_ablation_ladder.py`
+> **P5-A 机制归因阶梯(advice/017 §十三, advice/018 加固)已启动**: `scripts/run_p5a_ablation_ladder.py`
 > 在注册 congested cell(geom2 rho=1.8, froze policy-B, 共享 held-out CRN blocks)
-> 上运行 `A → B00(owner-only)→ B0(+task price)→ B1(+λ)→ C(+density admission)`,
-> 每个连续 Δ 配 paired-block bootstrap 95% CI; 若 D_owner 主导则该贡献是
-> **架构**(owner-directed evidence), 若 D_pi 主导则是 **detection-deficit 任务协调**
+> 上运行 `A → B00(owner_arch_flat)→ B0(+task price)→ B1(+λ)→ C(+density admission)`,
+> 每个连续 Δ 配 pooled-estimand bootstrap CI(advice/018 §2)+ CI-aware 三态判定(§3,
+> 仅 CI_lo>0 才可称 certified gain),并额外输出 J_risk 误差感知 delay(§5)与
+> F0/F1/O0/O1 2×2 核心机制表(§8)以分离 owner 架构与 task price; 若 D_owner_bundle
+> 主导则该贡献是**架构 bundle**(owner-directed evidence + 移除 v2 局部 deficit price,
+> 非纯 routing), 若 D_pi 主导则是 **detection-deficit 任务协调**
 > —— 这两者都符合 advice/017 §7 的一级贡献定位。结果见
 > `results/p5a_ablation_ladder.json`。
 

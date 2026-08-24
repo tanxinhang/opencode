@@ -315,3 +315,45 @@ def test_dd_grid_leakage_changes_evidence():
                                         dd_grid=grid, dd_physics=mid)
         gs[grid] = max(g_reliable(sc, i, 0, sc["owner_of"]) for i in range(6))
     assert len(set(round(v, 6) for v in gs.values())) > 1
+
+
+def test_frids_v2_task_price_false_runs_flat_deterministic():
+    """advice/018 section 8 (2x2 core cell F0): ``task_price=False`` runs
+    the full-mesh FLAT index ``J_iq = g_iq`` (no local deficit price, no
+    mirror descent) deterministically and still reports the risk-adjusted
+    delay ledger used by the P5-A ladder."""
+    from uav_otfs_isac.crn_tape import build_exogenous_tape
+    sc = build_distributed_scenario(np.random.default_rng(0),
+                                    k_uavs=6, q_targets=3)
+    bt = calibrate_target_bounds(sc, n_runs=60, seed=100, verify_runs=0)
+    q, k = 3, int(sc["k"])
+    tape = build_exogenous_tape(44, 60, q, k, 40)
+    out = simulate_frids_v2(sc, bt, n_runs=60, seed=44, max_steps=40,
+                            price_mode="local", exog=tape,
+                            task_price=False)
+    assert 1.0 <= out["worst_target_delay"] <= 40.0
+    assert out["pool"]["n_h1"] is not None
+    assert len(out["pool"]["sum_h1_delay_risk"]) == 3
+    out2 = simulate_frids_v2(sc, bt, n_runs=60, seed=44, max_steps=40,
+                             price_mode="local", exog=tape,
+                             task_price=False)
+    assert np.allclose(out["pool"]["sum_h1_delay"],
+                       out2["pool"]["sum_h1_delay"])
+
+
+def test_frids_v2_task_price_true_is_default_path():
+    """advice/018 section 8: the ``task_price=True`` default keeps the
+    frozen v2 index byte-identical (score with local deficit weighting,
+    mirror descent active) -- the F0 flag must not change the default
+    scheduler."""
+    sc = build_distributed_scenario(np.random.default_rng(0),
+                                    k_uavs=6, q_targets=3)
+    bt = calibrate_target_bounds(sc, n_runs=60, seed=100, verify_runs=0)
+    default = simulate_frids_v2(sc, bt, n_runs=60, seed=45, max_steps=40,
+                                price_mode="local")
+    explicit = simulate_frids_v2(sc, bt, n_runs=60, seed=45, max_steps=40,
+                                 price_mode="local", task_price=True)
+    assert np.allclose(default["pool"]["sum_h1_delay"],
+                       explicit["pool"]["sum_h1_delay"])
+    assert np.allclose(default["worst_target_delay"],
+                       explicit["worst_target_delay"])
