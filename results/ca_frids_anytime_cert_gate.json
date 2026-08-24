@@ -39,9 +39,9 @@
     "calib_n_runs": 300,
     "scenario_hash": "a8cae99af909213a",
     "bounds_hash": "b794581abf42ba6d",
-    "git_commit": "8d5ddb8",
-    "git_tree": "10c139005e70a6a68955bfed6122f3e89bc643e5",
-    "git_dirty": true,
+    "git_commit": "273257e",
+    "git_tree": "bd2489d784cecf61762847a53b9499a7ea026025",
+    "git_dirty": false,
     "config_hash": "aa344c0c44dc9acf",
     "seed_scheme": "FRESH certification seed namespace: tape seed = cert_seed + mc (disjoint from P4.1b discovery seeds 7 and 100); ONE pre-registered stream, prefixes read cumulatively -- never four fresh randomizations",
     "capacity_model": "shared airtime primitive: sum tau_ij/T_air <= 1; offer -> admission -> link; v2 neutral, CA density admission (frozen P4.1b code)",
@@ -1236,11 +1236,11 @@
       "crn_tape_fingerprint": "b6913e958e4f5944"
     }
   ],
-  "runtime_s": 594.6,
+  "runtime_s": 673.0,
   "provenance": {
-    "git_commit": "8d5ddb8",
-    "git_tree": "10c139005e70a6a68955bfed6122f3e89bc643e5",
-    "git_dirty": true,
+    "git_commit": "273257e",
+    "git_tree": "bd2489d784cecf61762847a53b9499a7ea026025",
+    "git_dirty": false,
     "config_hash": "aa344c0c44dc9acf",
     "scenario_hash": "a8cae99af909213a",
     "bounds_hash": "b794581abf42ba6d"
