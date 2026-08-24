@@ -262,13 +262,16 @@ def main() -> None:
     first_cross = {"v2": None, "ca": None}
     done_at = None
     strong_gate_at = None
+    cell_fps = []                    # advice/016 s15B: EVERY cell fingerprint
+    prev_stage_cum = {"v2": _empty_acc(q), "ca": _empty_acc(q)}
 
     for mc in range(args.mc_seeds):
         cell_seed = args.cert_seed + mc          # ONE pre-registered stream
         tape = build_exogenous_tape(cell_seed, args.cell_runs, q, k,
                                     args.max_steps)
         fp = _tape_fingerprint(tape)
-        inc_v2 = _empty_acc(q)
+        cell_fps.append(fp)
+        inc_v2 = _empty_acc(q)       # counts of THIS cell (advice/016 s15A)
         inc_ca = _empty_acc(q)
         out_v2 = simulate_frids_v2(
             sc, bounds, n_runs=args.cell_runs, seed=cell_seed,
@@ -316,11 +319,28 @@ def main() -> None:
             v2_fail = status_v2 == "FAIL"
             ca_fail = status_ca == "FAIL"
             strong = ca_pass and v2_fail
+            # advice/016 s15A: the TRUE increment since the previous prefix
+            # (== this stage's accumulation gap); ``incremental`` was only
+            # the LATEST 1500-run cell.
+            stage_inc_v2 = {key: [a - b for a, b in
+                                  zip(acc_v2[key], prev_stage_cum["v2"][key])]
+                            for key in acc_v2}
+            stage_inc_ca = {key: [a - b for a, b in
+                                  zip(acc_ca[key], prev_stage_cum["ca"][key])]
+                            for key in acc_ca}
+            # advice/016 s15B: the cumulative CRN-tape fingerprint hash
+            # chain h_t = H(h_{t-1} || fp_t) pins the WHOLE 0:stage stream
+            # (not just the latest cell tape), derived from every cell's fp.
+            chain_fp = _sha16("".join(cell_fps))
+            prev_stage_cum = {"v2": dict(acc_v2), "ca": dict(acc_ca)}
             stages.append({
                 "stage": idx, "prefix_cells": mc + 1,
                 "episodes": (mc + 1) * args.cell_runs,
                 "delta_s": delta_s,
-                "incremental": {"v2": inc_v2, "ca": inc_ca},
+                # advice/016 s15A: ``latest_cell`` is the last 1500-run cell;
+                # ``stage_increment`` is the true 0:previous->0:stage gap.
+                "latest_cell": {"v2": inc_v2, "ca": inc_ca},
+                "stage_increment": {"v2": stage_inc_v2, "ca": stage_inc_ca},
                 "cumulative": {"v2": dict(acc_v2), "ca": dict(acc_ca)},
                 "streams": {"v2": st_v2, "ca": st_ca},
                 "status": {"v2": status_v2, "ca": status_ca},
@@ -329,7 +349,8 @@ def main() -> None:
                          "strong_gate": strong},
                 "j_v2_pooled": _j_pooled(pool_v2),
                 "j_ca_pooled": _j_pooled(pool_ca),
-                "crn_tape_fingerprint": fp,
+                "latest_cell_fp": fp,
+                "crn_tape_fingerprint_chain": chain_fp,
             })
             if strong and strong_gate_at is None:
                 strong_gate_at = idx
@@ -388,6 +409,7 @@ def main() -> None:
         "bounds_hash": _bounds_hash(bounds),
         "git_commit": _git_sha(), "git_tree": _git_tree(),
         "git_dirty": _git_dirty(), "config_hash": _config_hash(args),
+        "crn_fingerprints": list(cell_fps),
         "seed_scheme": ("FRESH certification seed namespace: "
                         "tape seed = cert_seed + mc (disjoint from "
                         "P4.1b discovery seeds 7 and 100); ONE "

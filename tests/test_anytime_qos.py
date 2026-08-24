@@ -21,6 +21,19 @@ SPEC = 0.05
 DELTA_S = SPEC / 32.0
 
 
+def _log_evalue_increment(k, n, x, p, a=0.5, b=0.5):
+    """Per-trial log-likelihood-ratio increment of the Beta-mixture
+    e-process ``M_n(p)`` when trial ``n+1`` returns ``x`` (lets the test
+    walk ``log M_n`` cheaply without per-step root finding): ``x=1`` adds
+    ``ln B(k+1+a, n-k+b) - ln B(k+a, n-k+b) - ln p``; ``x=0`` adds
+    ``ln B(k+a, n+1-k+b) - ln B(k+a, n-k+b) - ln(1-p)``."""
+    if x == 1:
+        return (betaln(k + 1 + a, n - k + b) - betaln(k + a, n - k + b)
+                - np.log(p))
+    return (betaln(k + a, n + 1 - k + b) - betaln(k + a, n - k + b)
+            - np.log1p(-p))
+
+
 def test_log_evalue_boundary_limits():
     # ``log M_n(p)`` tends to a FINITE limit as ``p -> 0+`` for ``k=0``
     # (and as ``p -> 1-`` for ``k=n``): the -k ln p (resp. (n-k) ln(1-p))
@@ -134,3 +147,57 @@ def test_anytime_qos_familywise_level_per_stream():
     # familywise budget), independently of how many targets are passed
     assert np.isclose(bnd["FA_hi"][0], beta_mixture_cs(2, 700, 0.05 / 32)[1])
     assert np.isclose(bnd["MD_hi"][1], beta_mixture_cs(3, 800, 0.05 / 32)[1])
+
+
+def test_anytime_pathwise_never_escape():
+    """advice/016 section 16: direct pathwise anytime test of the
+    EVERYSTING property ``Pr(forall n<=N: p in C_n) >= 1 - delta``, i.e.
+    ``Pr(exists n<=N: p outside C_n) <= delta`` (Ville bound at the
+    e-process level), without needing per-step root finding.  For each
+    ``p`` we walk ``log M_n(p)`` via the per-trial increments and flag a
+    crossing exactly when ``log M_n(p) >= -ln delta`` -- this is ``p not
+    in C_n`` by the definition ``C_n = {p : M_n(p) < 1/delta}``.  We also
+    cross-check a few sample points against the actual ``beta_mixture_cs``
+    interval inversion, i.e. that the root-finder implements exactly the
+    same set.
+    """
+    delta = 0.05
+    c_thr = -np.log(delta)
+    N = 600
+    paths = 500
+    for p in (0.01, 0.05, 0.1, 0.5):
+        rng = np.random.default_rng(11 + int(round(p * 100)))
+        crossed = 0
+        for _ in range(paths):
+            logM = 0.0          # M_0(p) == 1
+            k = 0
+            ever = False
+            for n in range(1, N + 1):
+                x = int(rng.random() < p)
+                logM += _log_evalue_increment(k, n - 1, x, p)
+                k += x
+                if logM >= c_thr:
+                    ever = True
+                    break       # once escaped, this path may stay escaped
+            if ever:
+                crossed += 1
+        rate = crossed / paths
+        # Ville: the escape probability is <= delta for EVERY p and n
+        # (finite N can make it well BELOW delta, so only the upper bound
+        # is a hard check); the lower sanity bound only ensures paths do
+        # actually cross (the MC test is not vacuous).
+        assert rate <= delta + 0.035        # hard anytime upper bound + MC margin
+        assert rate >= 0.004                # not vacuous: crossings do occur
+    # cross-check the interval root-finder against the direct e-value set
+    # at a random sample of (k, n):  p inside [lo, hi]  <==>  log M_n(p) < c
+    rng = np.random.default_rng(7)
+    a = b = 0.5
+    for _ in range(300):
+        n = int(rng.integers(1, 2000))
+        k = int(rng.integers(0, n + 1))
+        p = float(rng.uniform(0.0, 1.0))
+        lo, hi = beta_mixture_cs(k, n, delta)
+        logM = (betaln(k + a, n - k + b) - betaln(a, b)
+                - k * np.log(p) - (n - k) * np.log1p(-p)
+                if 0.0 < p < 1.0 else 0.0)
+        assert (logM < c_thr) == (lo < p < hi)

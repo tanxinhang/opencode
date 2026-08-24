@@ -1,5 +1,16 @@
 # 存在问题和可能的优化方案
 
+> **当前状态 (2026-08-24, P4-CLOSE / advice-016):** 本文档的日期(2026-08-17)与
+> 下方条目属于 P4 之前的历史问题清单。**当前最重要事实已改变**: 注册边界 cell
+> (geom2 congested) 上 CA-FRIDS 已 anytime-valid QoS PASS 而 FRIDS-v2 certified
+> FAIL (`results/ca_frids_anytime_cert_gate.json`); P4.2b QoS-matched frontier 给出
+> Case B(两个调度器都能校准到 certified 匹配 operating point,CA 取得更低的
+> matched-QoS 停止时延)。当前残余优先级(advice-016 §24): 文档对齐(P0)、
+> "v2 infeasible" 表述收紧(P0)、matched-QoS frontier(P1)、held-out geometry(P1)、
+> control-bus physical closure(P1)、CA admission-aware martingale bridge(P1)、
+> B00 architecture ablation 与 sparse certified control bus(P2); **停止继续调
+> λ/density**。旧条目保留为历史参考。
+
 - 日期: 2026-08-17
 - 配套文档: `docs/SYSTEM_RESEARCH_REPORT.md`(整体实验报告)、`docs/FORMAL_PROOFS.md`(形式化证明)、`docs/THEORY_DEVELOPMENT_HISTORY.md`(阶段记录与待办)
 

@@ -1,5 +1,15 @@
 # UAV-ISAC exact selective soft-information fusion simulator
 
+> **当前状态 (2026-08-24, P4-CLOSE / advice-016):** 本 README 的标题与下方列表是
+> 历史研究演化日志。**当前研究主线已收敛** ——
+> QoS-Certified Task-Oriented Dual-Bus Cooperative Detection：
+> CA-FRIDS（owner-directed evidence + task-price bus + receiver-capacity bus +
+> hard shared-airtime admission + sequential owner detection + anytime-valid
+> QoS certificate）为注册基准主调度器，FRIDS-v2 为 reference / ablation
+> baseline；项目级判决见 `results/p4_meta_cert.json`，统计闭环见
+> `results/ca_frids_anytime_cert_gate.json`，QoS-matched operating-point 前沿见
+> `results/ca_frids_qos_frontier_gate.json`。
+
 This repository implements the system model in
 `paper/submission.md` as a reproducible Python simulation. The current
 release focuses on the reviewed submission scope: correlated local evidence,
