@@ -16,8 +16,8 @@
     "pi_bits": 10,
     "lam_bits": 10,
     "price_mode": "global_simplex",
-    "git_commit": "d9114e7",
-    "git_dirty": true,
+    "git_commit": "6291cdc",
+    "git_dirty": false,
     "config_hash": "f3ab1730de6726af",
     "seed_scheme": "FRESH held-out seed namespace 400000+mc shared by ALL arms (disjoint from P4.2 cert 100000, P4.1b discovery 7, threshold calibration 100, P4.2b cal 200000 / test 300000), so every consecutive delta is a genuine PAIRED comparison",
     "frozen": [
@@ -103,40 +103,44 @@
     },
     "deltas": {
       "D_owner": {
-        "abs": 0.7708595556777896,
+        "point": 0.7708595556777896,
         "ci95": [
           0.7156086198033631,
           0.8248257088291343
         ],
         "rel": 0.15238126942880673,
-        "wording": "J_B00 < J_A by 0.7709 (15.2%; 95% CI [0.7156, 0.8248])"
+        "is_gain": true,
+        "wording": "J_B00 < J_A by 0.7709 (15.2%; 95% CI [0.7156, 0.8248]; the arm improves worst-target delay)"
       },
       "D_pi": {
-        "abs": 1.1510020370794112,
+        "point": 1.1510020370794112,
         "ci95": [
           1.0889353517645868,
           1.216400112179857
         ],
         "rel": 0.2684305084267536,
-        "wording": "J_B0 < J_B00 by 1.1510 (26.8%; 95% CI [1.0889, 1.2164])"
+        "is_gain": true,
+        "wording": "J_B0 < J_B00 by 1.1510 (26.8%; 95% CI [1.0889, 1.2164]; the arm improves worst-target delay)"
       },
       "D_lambda": {
-        "abs": -0.6105860621244539,
+        "point": -0.6105860621244539,
         "ci95": [
           -0.682467990742895,
           -0.536705759537449
         ],
         "rel": -0.19464671659436547,
-        "wording": "J_B1 < J_B0 by -0.6106 (-19.5%; 95% CI [-0.6825, -0.5367])"
+        "is_gain": false,
+        "wording": "J_B1 > J_B0 by 0.6106 (19.5%; 95% CI [-0.6825, -0.5367]; the arm HURTS worst-target delay (a loss mechanism))"
       },
       "D_admission": {
-        "abs": 0.05706010321087146,
+        "point": 0.05706010321087146,
         "ci95": [
           0.03654715176869161,
           0.07657006963194135
         ],
         "rel": 0.015226260470834016,
-        "wording": "J_C < J_B1 by 0.0571 (1.5%; 95% CI [0.0365, 0.0766])"
+        "is_gain": true,
+        "wording": "J_C < J_B1 by 0.0571 (1.5%; 95% CI [0.0365, 0.0766]; the arm improves worst-target delay)"
       }
     },
     "ladder": {
@@ -155,22 +159,23 @@
     },
     "dominant_mechanism": {
       "key": "D_pi",
-      "abs": 1.1510020370794112,
+      "point": 1.1510020370794112,
       "rel": 0.2684305084267536,
       "share_of_total_gain": 0.8406178807927432,
-      "note": "The DETECTION-DEFICIT task coordination (the detection-deficit price pi_q = y_q/(D_q+eps)) is the dominant mechanism -- a first-tier ALGORITHM contribution (advice/017 section 13)."
+      "note": "The DETECTION-DEFICIT task coordination (the detection-deficit price pi_q = y_q/(D_q+eps)) is the dominant positive mechanism -- a first-tier ALGORITHM contribution (advice/017 section 13)."
     },
     "interpretation": "The largest positive delta names the mechanism that explains most of the CA-FRIDS gain at the frozen operating point.  Whichever of {D_owner, D_pi, D_lambda, D_admission} dominates is the mechanism to lead with in the paper -- if D_owner dominates it is the ARCHITECTURE (owner-directed evidence), if D_pi it is the detection-deficit task coordination, if D_lambda it is the receiver-capacity steering, if D_admission it is the density admission; the dominant share is relative to the total CA-vs-v2 gain (advice/017 section 13).",
     "caveats": [
       "The ladder runs at the FROZEN policy-B operating point (delta=1, shared by every arm), so it answers the mechanism-attribution question ONLY at that operating point.  It is NOT the matched-QoS frontier (P4.2b answers that) and NOT an anytime-valid QoS certificate (P4.2/registered do that): every arm QoS is EXPECTED to be UNCERTAIN here.",
-      "D_lambda may be negative (the receiver airtime price steering can HURT worst-target E[T|H1] at the frozen point): per advice/017 section 7, lambda is registered as a feasibility/capacity-steering mechanism (and P4.1b found airtime value in the feasibility/comm-efficiency layer, not the delay layer), so a negative delay delta at one cell is the expected honest reading -- the paper must NOT claim lambda reduces stopping delay."
+      "D_lambda may be negative (the receiver airtime price steering can HURT worst-target E[T|H1] at the frozen point): per advice/017 section 7, lambda is registered as a feasibility/capacity-steering mechanism (and P4.1b found airtime value in the feasibility/comm-efficiency layer, not the delay layer), so a negative delay delta at one cell is the expected honest reading -- the paper must NOT claim lambda reduces stopping delay.",
+      "D_owner is NOT a pure architecture-only ablation (audit finding, advice/017 section 13): arm A (FRIDS-v2) is the full-mesh local-replica broadcast with its OWN local deficit price, while arm B00 is the CA owner-directed evidence plane WITH the deficit price removed (flat index).  Delta_owner bundles two changes: (i) topology full-mesh -> owner-point routing, (ii) dropping v2's local deficit price.  So the honest reading is \\\"owner-directed evidence plane (deficit price removed)\\\", NOT \\\"owner routing alone\\\".  If D_owner dominates, the paper must say: owner-directed architecture AND the removal of v2's local-deficit steering together explain the gain -- do NOT claim pure routing."
     ]
   },
-  "runtime_s": 255.5,
+  "runtime_s": 245.8,
   "provenance": {
-    "git_commit": "d9114e7",
-    "git_tree": "bdbdee3e3a95899dff9dcf0dc732a343afb90875",
-    "git_dirty": true,
+    "git_commit": "6291cdc",
+    "git_tree": "650a0b743a274c0d3c122fcf077233458655c0f3",
+    "git_dirty": false,
     "config_hash": "f3ab1730de6726af"
   }
 }
