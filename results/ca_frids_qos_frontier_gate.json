@@ -30,7 +30,7 @@
     "pi_bits": 10,
     "lam_bits": 10,
     "price_mode": "global_simplex",
-    "git_commit": "303b15c",
+    "git_commit": "d52f95a",
     "git_dirty": false,
     "config_hash": "256b78b7d0f61c5e",
     "seed_scheme": "frontier calibration seed = cal_seed+mc per scheduler (CRN-paired across the A-grid); held-out test seed = test_seed+mc shared by v2 and CA; BOTH namespaces fresh, disjoint from P4.2 cert 100000, P4.1b discovery 7, threshold calibration 100",
@@ -43,7 +43,7 @@
   },
   "metrics": {
     "case": "B",
-    "verdict": "CASE B: both schedulers reach certifiable matched operating points; held-out matched-QoS delay J_ca=4.5108 vs J_v2=7.4480 (CA lower) -> 'CA achieves a lower stopping delay at matched certified QoS'",
+    "verdict": "CASE B: both schedulers are CERTIFIED FEASIBLE at matched operating points; observed held-out matched-QoS delay J_ca=4.5108 vs J_v2=7.4480 (observed held-out reduction 39.4%; paired-block bootstrap 95% CI [39.0%, 39.8%]) -> 'CA achieves a lower stopping delay at matched certified QoS'",
     "v2_frontier": {
       "m_star": [
         2.0,
@@ -78,14 +78,45 @@
       "cert_u_md": [
         0.03620378037580946,
         0.027572708625680637,
-        0.020627722519959465,
+        0.02062772251995947,
         0.021885280449387364,
         0.048590388958930274,
         0.04072415919065483,
         0.03994305215867854,
         0.02943003278097566
       ],
-      "feasible": true
+      "target_state": [
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE"
+      ],
+      "lc_fa_at_max": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lc_md_at_min": [
+        5.373600600585218e-06,
+        4.995904377242016e-06,
+        5.044251717018674e-06,
+        0.0001954215319920955,
+        0.007440311834591331,
+        0.005487689408075359,
+        0.0007257003873019301,
+        0.000762965592002174
+      ],
+      "feasible": true,
+      "scheduler_state": "CERTIFIED FEASIBLE"
     },
     "ca_frontier": {
       "m_star": [
@@ -125,10 +156,41 @@
         0.029529489058925728,
         0.03670073508004369,
         0.03490405156523477,
-        0.020760268698690562,
+        0.020760268698690566,
         0.02943003278097566
       ],
-      "feasible": true
+      "target_state": [
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE",
+        "CERTIFIED FEASIBLE"
+      ],
+      "lc_fa_at_max": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lc_md_at_min": [
+        0.00019609417556895524,
+        4.995904377242016e-06,
+        0.0015690729214849132,
+        0.0001954215319920955,
+        0.004243494511050058,
+        0.0,
+        5.077006515149503e-06,
+        5.336920830883381e-06
+      ],
+      "feasible": true,
+      "scheduler_state": "CERTIFIED FEASIBLE"
     },
     "held_out": {
       "v2": {
@@ -227,6 +289,16 @@
           0.8,
           1.5,
           1.5
+        ],
+        "block_J": [
+          7.434383202099737,
+          7.40337224383917,
+          7.443569553805775,
+          7.449375866851595,
+          7.5069060773480665,
+          7.396174863387978,
+          7.459563543003851,
+          7.48989898989899
         ]
       },
       "ca": {
@@ -315,7 +387,17 @@
             0.011777879979375499,
             0.01876613573672334
           ]
-        }
+        },
+        "block_J": [
+          4.574803149606299,
+          4.4798962386511025,
+          4.484251968503937,
+          4.4674063800277395,
+          4.530386740331492,
+          4.415300546448087,
+          4.549422336328626,
+          4.577020202020202
+        ]
       }
     },
     "matched_j": {
@@ -325,12 +407,20 @@
     "held_out_qos": {
       "v2": "PASS",
       "ca": "PASS"
+    },
+    "held_out_reduction": {
+      "observed": 0.3944943664753001,
+      "ci95_paired": [
+        0.3903909372903067,
+        0.3984060988146424
+      ],
+      "wording": "observed held-out matched-QoS delay reduction (paired per-block bootstrap CI)"
     }
   },
-  "runtime_s": 562.1,
+  "runtime_s": 524.1,
   "provenance": {
-    "git_commit": "303b15c",
-    "git_tree": "a672b06378817dc51c68445573999fe7e99edcd4",
+    "git_commit": "d52f95a",
+    "git_tree": "c979dcfe64fea02bf9aba13c75589e48d6b91674",
     "git_dirty": false,
     "config_hash": "256b78b7d0f61c5e"
   }

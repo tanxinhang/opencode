@@ -24,7 +24,29 @@
     "p4_2b": {
       "file": "ca_frids_qos_frontier_gate.json",
       "case": "B",
-      "verdict": "CASE B: both schedulers reach certifiable matched operating points; held-out matched-QoS delay J_ca=4.5108 vs J_v2=7.4480 (CA lower) -> 'CA achieves a lower stopping delay at matched certified QoS'",
+      "verdict": "CASE B: both schedulers are CERTIFIED FEASIBLE at matched operating points; observed held-out matched-QoS delay J_ca=4.5108 vs J_v2=7.4480 (observed held-out reduction 39.4%; paired-block bootstrap 95% CI [39.0%, 39.8%]) -> 'CA achieves a lower stopping delay at matched certified QoS'",
+      "v2_frontier_state": "CERTIFIED FEASIBLE",
+      "ca_frontier_state": "CERTIFIED FEASIBLE",
+      "v2_m_star": [
+        2.0,
+        1.5,
+        2.0,
+        2.0,
+        1.5,
+        0.8,
+        1.5,
+        1.5
+      ],
+      "ca_m_star": [
+        2.0,
+        1.5,
+        2.0,
+        1.5,
+        1.5,
+        1.0,
+        1.0,
+        1.0
+      ],
       "matched_j": {
         "v2": 7.447956313089525,
         "ca": 4.510838987257984
@@ -32,20 +54,30 @@
       "held_out_qos": {
         "v2": "PASS",
         "ca": "PASS"
+      },
+      "held_out_reduction": {
+        "observed": 0.3944943664753001,
+        "ci95_paired": [
+          0.3903909372903067,
+          0.3984060988146424
+        ],
+        "wording": "observed held-out matched-QoS delay reduction (paired per-block bootstrap CI)"
       }
     }
   },
   "combined_registered_verdict": {
     "clause": "CA-FRIDS PROMOTED to registered-benchmark primary scheduler; FRIDS-v2 = reference / ablation baseline",
-    "strict_wording": "Under the frozen common policy-B operating point and matched shared-airtime capacity model, CA-FRIDS is anytime-valid QoS-certified at the registered congested boundary cell whereas FRIDS-v2 is certified to violate the false-alarm constraint.  'v2 fundamentally infeasible' is NOT claimed -- the P4.2b QoS-Matched Operating-Point Frontier experiment answered that question (Case B: both schedulers reach certifiable matched points; CA has the lower matched-QoS stopping delay)."
+    "p42b_supporting_wording": "matched-QoS frontier = Case B: both schedulers certified feasible at matched operating points; observed held-out matched-QoS delay reduction",
+    "strict_wording": "Under the frozen common policy-B operating point and matched shared-airtime capacity model, CA-FRIDS is anytime-valid QoS-certified at the registered congested boundary cell whereas FRIDS-v2 is certified to violate the false-alarm constraint at that FROZEN operating point.  'v2 fundamentally infeasible' is NOT claimed: the P4.2b QoS-Matched Operating-Point Frontier shows both schedulers reach CERTIFIED FEASIBLE matched operating points under their own recalibrated thresholds, with CA achieving the LOWER held-out matched-QoS delay (reported as an OBSERVED held-out reduction with a paired-block bootstrap CI; the CA matched multipliers are ALSO reported verbatim -- the registered CA m_star is [2,1.5,2,1.5,1.5,1,1,1], so 'CA basically 1.0x threshold' is NOT a claim."
   },
   "provenance": {
-    "git_commit": "2c474c5",
-    "git_tree": "7d6635ae0f74bf56b881f7438fe4675efb0029da",
-    "git_dirty": false,
+    "git_commit": "d52f95a",
+    "git_tree": "c979dcfe64fea02bf9aba13c75589e48d6b91674",
+    "git_dirty": true,
     "source_fingerprints": {
       "p4_1b": "d951c410d52f0d0e",
-      "p4_2": "6772087a7d7fe2a6"
+      "p4_2": "6772087a7d7fe2a6",
+      "p4_2b": "178fc16b8aa75d36"
     }
   }
 }
