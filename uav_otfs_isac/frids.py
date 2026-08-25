@@ -49,6 +49,7 @@ from uav_otfs_isac.distributed_audit import (
     uniform_quantizer,
 )
 from uav_otfs_isac.difficulty_decomposition import d_kl_binary
+from uav_otfs_isac.qos import pool_h1_delay_risk
 
 
 def simplex_projection(v: np.ndarray) -> np.ndarray:
@@ -1036,10 +1037,8 @@ def simulate_frids_v2(
         # (a miss) is charged T_max -- so a lower plain J can never be
         # bought by an EARLIER WRONG H0 decision.  J_risk = max_q
         # sum_h1_delay_risk[q]/n_h1[q].
-        "sum_h1_delay_risk": [float(np.sum(
-            np.where(declared_h1[:, qq] == 1.0, delays[:, qq],
-                     float(max_steps))[H_all[:, qq]]))
-            for qq in range(q)],
+        "sum_h1_delay_risk": pool_h1_delay_risk(
+            declared_h1, delays, H_all, float(max_steps)),
     }
     # P4.1 shared-capacity ledger (advice/012 section 5): the same split
     # offer/admitted/delivered/link-drop/capacity-drop accounting as

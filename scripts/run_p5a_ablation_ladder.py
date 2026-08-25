@@ -21,6 +21,15 @@ arm -- the fair scheduler-only / mechanism-only comparison):
     D_lambda    = J_B0  - J_B1    (receiver-capacity steering)
     D_admission = J_B1  - J_C     (density admission)
 
+    With ``--norm-free`` (advice/019 section 5) the B0 arm becomes B0-lite:
+    the global-simplex scalar normalizer ``Z`` cancels in the lambda-free
+    argmax (``argmax_q y_q g_iq/(D_q+eps) == argmax_q exp(theta_q)
+    g_iq/(D_q+eps)``), so it is NEVER computed/broadcast -- B0 control
+    plane drops from 90 to 80 bits/cycle and the control plane has NO
+    global reduction left (a strict policy-equivalent reparameterization,
+    not a new mechanism).  The D_pi delta then attributes the gain of the
+    normalization-free distributed deficit pricing.
+
     A / B00 / B0 are ALSO the F1 / O0 / O1 cells of the 2x2 core
     mechanism table (advice/018 section 8); a full-mesh FLAT arm F0
     (FRIDS-v2 with ``task_price=False``) completes the grid::
@@ -123,6 +132,7 @@ def _config_hash(args) -> str:
         "max_steps": args.max_steps, "alpha": args.alpha, "beta": args.beta,
         "pi_bits": args.pi_bits, "lam_bits": args.lam_bits,
         "price_mode": args.price_mode,
+        "norm_free": args.norm_free,
         "calib_seed": args.calib_seed, "calib_verify": args.calib_verify,
         "calib_n_runs": args.calib_n_runs,
     }
@@ -158,6 +168,7 @@ def _run_arm(runner, bounds, n_runs, seed, max_steps, exog_blocks):
     block_s = []          # per block: (q,) target H1 delay sums
     block_risk = []       # per block: (q,) target H1 risk-adjusted sums
     ctrl_bits = []
+    budget_feasible = []
     for mc, tape in enumerate(exog_blocks):
         out = runner(bounds, n_runs, seed + mc, tape)
         _acc(out, acc)
@@ -171,6 +182,7 @@ def _run_arm(runner, bounds, n_runs, seed, max_steps, exog_blocks):
         pool_n += b_n
         pool_risk += b_r
         ctrl_bits.append(float(out["comm"]["control_bits_per_cycle"]))
+        budget_feasible.append(float(out["comm"]["budget_feasible_fraction"]))
     J = float(np.max(pool_s / np.maximum(pool_n, 1.0)))
     J_risk = float(np.max(pool_risk / np.maximum(pool_n, 1.0)))
     qos, bounds_fam = anytime_qos_status(
@@ -188,6 +200,8 @@ def _run_arm(runner, bounds, n_runs, seed, max_steps, exog_blocks):
                         "MD_lo": bounds_fam["MD_lo"],
                         "MD_hi": bounds_fam["MD_hi"]},
         "ctrl_bits_per_cycle": float(np.mean(ctrl_bits)) if ctrl_bits else 0.0,
+        "budget_feasible": float(np.mean(budget_feasible))
+        if budget_feasible else 1.0,
     }
 
 
@@ -202,6 +216,19 @@ def _pooled_j(N, S):
     """The EXACT reported estimand: ``J = max_q S_q/N_q`` (pooled over
     blocks of one arm -- advice/018 section 2)."""
     return float(np.max(S / np.maximum(N, 1.0)))
+
+
+def _ci_state(lo: float, hi: float) -> str:
+    """CI-AWARE three-state verdict (advice/018 section 3): a point
+    estimate alone is NOT certification -- ``CERTIFIED_GAIN`` iff
+    ``CI_lo > 0``, ``CERTIFIED_LOSS`` iff ``CI_hi < 0``, else
+    ``UNRESOLVED``.  This is the single predicate behind every delta and
+    the dominant-mechanism pick."""
+    if lo > 0.0:
+        return "CERTIFIED_GAIN"
+    if hi < 0.0:
+        return "CERTIFIED_LOSS"
+    return "UNRESOLVED"
 
 
 def _pooled_delta_ci(prev_n, prev_v, cur_n, cur_v,
@@ -286,8 +313,13 @@ def main() -> None:
                         help="FRESH held-out seed namespace (disjoint from "
                              "P4.2 cert 100000, P4.1b discovery 7, threshold "
                              "calibration 100, P4.2b cal 200000 / test 300000)")
-    parser.add_argument("--test-cell-runs", type=int, default=1500)
-    parser.add_argument("--test-mc", type=int, default=8,
+    # advice/019 section 8: the bootstrap resampling unit is the BLOCK, so
+    # 8 x 1500 = 12000 episodes only gives 8 independent block-clusters for
+    # the percentile bootstrap of a non-smooth ``max_q`` estimand.  The same
+    # 12000 episodes split into 24 x 500 gives 3x the bootstrap resolution at
+    # the SAME total MC cost -- the registered final numbers use 24 blocks.
+    parser.add_argument("--test-cell-runs", type=int, default=500)
+    parser.add_argument("--test-mc", type=int, default=24,
                         help="held-out blocks = test_cell_runs * test_mc")
     parser.add_argument("--max-steps", type=int, default=40)
     parser.add_argument("--alpha", type=float, default=SPEC)
@@ -296,6 +328,14 @@ def main() -> None:
     parser.add_argument("--lam-bits", type=int, default=10)
     parser.add_argument("--price-mode", default="global_simplex",
                         choices=("global_simplex", "owner_local"))
+    parser.add_argument(
+        "--norm-free", action="store_true",
+        help="advice/019 section 5: B0-lite = Normalization-Free Distributed "
+             "Deficit Pricing -- the global-simplex scalar normalizer Z is "
+             "never computed/broadcast (it cancels in the lambda-free B0 "
+             "argmax), dropping B0 control bits from 90 to 80/cycle and "
+             "removing the only global reduction of the control plane.  "
+             "Applied to the B0 arm (task_price=True, airtime_price=False).")
     parser.add_argument("--calib-seed", type=int, default=100)
     parser.add_argument("--calib-verify", type=int, default=1000)
     parser.add_argument("--calib-n-runs", type=int, default=300)
@@ -350,11 +390,16 @@ def main() -> None:
 
     def run_b0(bounds, n_runs, seed, tape):
         # B00 + dynamic task price pi_q = y_q/(D_q+eps); no receiver price.
+        # ``norm_free`` (advice/019 section 5) is the B0-lite
+        # reparameterization: the global-simplex normalizer Z cancels in
+        # the lambda-free argmax, so it is never computed/broadcast and the
+        # control plane drops to 80 bits/cycle (no global reduction).
         return simulate_ca_frids(sc, bounds, am, n_runs, seed=seed,
                                  max_steps=args.max_steps, raw_counts=True,
                                  price_mode=args.price_mode,
                                  pi_bits=args.pi_bits, lam_bits=args.lam_bits,
                                  task_price=True, airtime_price=False,
+                                 norm_free=args.norm_free,
                                  admission_policy="neutral", exog=tape)
 
     def run_b1(bounds, n_runs, seed, tape):
@@ -379,7 +424,10 @@ def main() -> None:
         "A": (run_v2, "FRIDS-v2 (reference)"),
         "F0": (run_f0, "full-mesh + flat g (2x2 core cell)"),
         "B00": (run_b00, "owner_arch_flat (owner-directed evidence, flat index)"),
-        "B0": (run_b0, "owner-directed + task-deficit price"),
+        "B0": (run_b0, (
+            "B0-lite (owner-directed + task-deficit price, normalization-"
+            "free -- no global Z)" if args.norm_free else
+            "owner-directed + task-deficit price")),
         "B1": (run_b1, "owner-directed + task price + receiver price"),
         "C": (run_c, "full CA-FRIDS (+ density admission)"),
     }
@@ -414,12 +462,7 @@ def main() -> None:
             results[prev]["block_s"] / np.maximum(
                 results[prev]["block_n"], 1.0))) if results[prev]["block_s"] else 1.0
         rel = d / max(base, 1e-12)
-        if lo > 0.0:
-            state = "CERTIFIED_GAIN"
-        elif hi < 0.0:
-            state = "CERTIFIED_LOSS"
-        else:
-            state = "UNRESOLVED"
+        state = _ci_state(lo, hi)
         sign = ("a CERTIFIED gain mechanism" if state == "CERTIFIED_GAIN"
                 else "a CERTIFIED loss mechanism" if state == "CERTIFIED_LOSS"
                 else "unresolved (the point is not certified)")
@@ -454,12 +497,7 @@ def main() -> None:
                                         results[pv]["block_risk"],
                                         results[cv]["block_n"],
                                         results[cv]["block_risk"])
-        if rlo > 0.0:
-            rstate = "CERTIFIED_GAIN"
-        elif rhi < 0.0:
-            rstate = "CERTIFIED_LOSS"
-        else:
-            rstate = "UNRESOLVED"
+        rstate = _ci_state(rlo, rhi)
         risk_deltas[name] = {
             "point": rd, "ci95": [rlo, rhi],
             "state": rstate,
@@ -662,6 +700,7 @@ def main() -> None:
         "max_steps": args.max_steps, "alpha": args.alpha, "beta": args.beta,
         "pi_bits": args.pi_bits, "lam_bits": args.lam_bits,
         "price_mode": args.price_mode,
+        "norm_free": args.norm_free,
         "git_commit": _git_sha(), "git_dirty": _git_dirty(),
         "config_hash": _config_hash(args),
         "seed_scheme": (
@@ -669,6 +708,11 @@ def main() -> None:
             "(disjoint from P4.2 cert 100000, P4.1b discovery 7, threshold "
             "calibration 100, P4.2b cal 200000 / test 300000), so every "
             "consecutive delta is a genuine PAIRED comparison"),
+        "block_bootstrap": (
+            "24 x 500 = 12000 episodes (advice/019 section 8: the "
+            "resampling unit is the BLOCK, and 24 blocks give a 3x finer "
+            "percentile bootstrap of the non-smooth max_q estimand than "
+            "the historical 8 x 1500, at the same total MC cost)"),
         "frozen": ["geom=2 congested rho=1.8 (registered boundary cell)",
                    "FRIDS-v2 / CA-FRIDS schedulers unchanged",
                    "FIXED calibrated policy-B stopping thresholds "

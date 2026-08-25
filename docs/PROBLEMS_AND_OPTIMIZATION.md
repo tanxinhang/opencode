@@ -25,6 +25,59 @@
 > 非纯 routing), 若 D_pi 主导则是 **detection-deficit 任务协调**
 > —— 这两者都符合 advice/017 §7 的一级贡献定位。结果见
 > `results/p5a_ablation_ladder.json`。
+>
+> **P5-A 收敛(advice/019, 2026-08-25)**: ① `simulate_ca_frids` 新增 `norm_free`
+> 归一化自由 B0-lite 模式(§5) —— λ-free B0 的 argmax 对 global-simplex 归一化常数 Z
+> scale-invariant,故 Z 既不计算也不广播,控制面从 Qb_π+b_Z=90 降到 Qb_θ=80 bits/cycle、
+> 控制面不再有 global reduction(严格策略等价重参数化,非新机制; runner 用
+> `--norm-free` 开关,B0 控制位实测 80); ② runner 默认 bootstrap 分块 8×1500 → 24×500
+> (§8,总 MC 12000 不变,block bootstrap 对非光滑 max_q 更可信); ③ 新增 4 个小单测
+> (§9: synthetic pooled estimand / CI 三态 / J_risk H1 miss 记 T_max / factorial
+> identity `interaction = task_mesh − task_owner`)。
+>
+> **P5-A/P5-MIN 多 seed 验证(2026-08-25)**: 注册 ladder 只跑了单一 test-seed 400000,
+> 机制归因需要一个 seed 判定是否稳定 —— 新增三个 gate:
+> `scripts/run_p5a_multiseed_ladder.py`(同 cell geom2 rho=1.8 上 N 个不重叠 held-out
+> seed 重跑 ladder,输出 dominant 跨 seed 计数 + 每个 Δ 的符号/certified-gain 稳定性);
+> `scripts/run_p5min_robustness_gate.py`(P5-MIN Minimality gate,advice/019 §7:
+> B0-lite/B0-D/B1/C/B0 对照跨 geoms {0,1,2} × rho {0.7,1.2,1.8} × scales
+> {(16,8),(8,4)} × 3 test-seed,跨 seed 拼接 block 做 paired bootstrap CI,判据:
+> J_B0-lite ≤ J_C+δ_J 且 B0-lite~B0(非 certified loss)且控制位下降且 airtime 可行);
+> `scripts/run_p5a_bootstrap_seed_stability.py`(统计层: 8×1500 vs 24×500 vs 32×375
+> 同 12000 MC 下 max_q bootstrap 分布的分辨率 —— 24 块 resample 取值数全唯一、分位
+> bracketing step 降为 8 块的 ~7%,实证支持 §8)。smoke: 多 seed ladder D_pi 在两个
+> seed 上均 100% certified gain 且 dominant 稳定; P5-MIN smoke B0-lite~C
+> (mean_lite_minus_C≈-0.01,pooled D_C_minus_lite UNRESOLVED)。
+>
+> **多 seed 完整版结果 (2026-08-25, `results/p5a_multiseed_ladder.json`,
+> `results/p5min_robustness_gate.json`, `results/p5a_bootstrap_seed_stability.json`)**:
+>
+> **① 同 cell 多 seed ladder (geom2 rho=1.8, 4 个不重叠 held-out seed)**:
+> 机制归因**跨 seed 完全稳定** —— D_pi 4/4 seed 为 dominant 且 100% certified
+> gain(mean +1.151,[+1.143,+1.161]); D_owner_bundle 100% certified gain(+0.718);
+> D_lambda 4/4 全负(-0.588,0 certified gain); D_admission 100% certified gain
+> (+0.055)。→ **"detection-deficit task pricing 是一级算法贡献" 的 paper claim
+> 现在是跨 seed 证据,不再是单 seed 事故。**
+>
+> **② P5-MIN 跨 scale Minimality gate (3 geom × 3 ρ × 2 scale × 3 test-seed,
+> 18 cell, 每 cell 5 臂)**: 揭示**明确的 scale 依赖性**,这是单 cell ladder 无法
+> 看到的:
+> - **(16,8) 注册 scale**: B0-lite 在 8/9 cell 通过 verdict,pooled
+>   `D_C_minus_lite = +0.036 CERTIFIED_GAIN`(B0-lite 整体**快于** C);重拥塞下
+>   尤其强(g1/g2 ρ1.8 均 certified gain)。→ **在注册 scale 上 B0-lite minimality
+>   成立,支持 FREEZE B0-lite + 去掉 global Z。**
+> - **(8,4) 小 scale**: 9 cell 中 8 cell **certified loss**(B0-lite 慢于 C,
+>   pooled `D_C_minus_lite = -0.237 CERTIFIED_LOSS`;最差 g1 ρ1.2 差 -0.74)。
+>   → **λ+density admission 在小 K/Q 下确实买了 delay 收益,B0-lite 不是全局
+>   minimal 算法**;λ 必须保留为 overload-region extension(advice/019 §6 定位),
+>   论文不能写 "B0-lite 在所有 scale 上都冻结"。
+> - **结论修正**: advice/019 §7 的 "B0-lite 冻结" 应限定为 **注册 (16,8) scale /
+>   大 K/Q 场景**;论文应写 "normalization-free deficit pricing 在注册 scale 上
+>   certified 不比 full CA 慢且省 3x 控制位;λ+density 在小 scale 保留"。
+>
+> **③ bootstrap 分块验证**: 24×500 vs 8×1500 同 12000 MC,resample 取值数
+> 10000/10000 全唯一(8 块仅 5972/10000),分位 bracketing step 降到 8 块的
+> ~5-14%,**§8 推荐实证通过**。
 
 - 日期: 2026-08-17
 - 配套文档: `docs/SYSTEM_RESEARCH_REPORT.md`(整体实验报告)、`docs/FORMAL_PROOFS.md`(形式化证明)、`docs/THEORY_DEVELOPMENT_HISTORY.md`(阶段记录与待办)

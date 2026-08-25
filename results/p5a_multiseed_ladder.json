@@ -1,0 +1,342 @@
+{
+  "gate_id": "p5a-multiseed-ladder",
+  "params": {
+    "cell": "geom=2 congested rho=1.8 scale=(16,8)",
+    "test_seeds": [
+      400000,
+      400001,
+      400002,
+      400003
+    ],
+    "test_episodes_per_seed": 12000,
+    "ladder_extra": [],
+    "seed_scheme": "each seed is a disjoint held-out CRN namespace (same cell, same calibration 100, same frozen policy-B thresholds); the registered run used 400000, so 400000 may be included as one of the seeds to reproduce it"
+  },
+  "metrics": {
+    "per_seed": {
+      "400000": {
+        "ladder_J": {
+          "A": 5.031825795644891,
+          "B00": 4.302177554438861,
+          "B0": 3.1587939698492464,
+          "B1": 3.7348408710217758,
+          "C": 3.6780569514237857,
+          "cumulative_owner_to_full": 1.353768844221105,
+          "decomposition": {
+            "D_owner_bundle": 0.7296482412060294,
+            "D_pi": 1.143383584589615,
+            "D_lambda": -0.5760469011725293,
+            "D_admission": 0.05678391959799001
+          }
+        },
+        "deltas": {
+          "D_owner_bundle": {
+            "point": 0.7296482412060294,
+            "ci95": [
+              0.6751735213912344,
+              0.7851240707496705
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          },
+          "D_pi": {
+            "point": 1.143383584589615,
+            "ci95": [
+              1.088627187562861,
+              1.1987724867382379
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          },
+          "D_lambda": {
+            "point": -0.5760469011725293,
+            "ci95": [
+              -0.6330109149899082,
+              -0.5220312979361107
+            ],
+            "state": "CERTIFIED_LOSS",
+            "is_certified_gain": false
+          },
+          "D_admission": {
+            "point": 0.05678391959799001,
+            "ci95": [
+              0.03686548454658295,
+              0.07705446094270522
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          }
+        },
+        "dominant": {
+          "key": "D_pi",
+          "point": 1.143383584589615,
+          "rel": 0.2586224774666986,
+          "ratio_to_net_A_to_C_gain": 0.8445929225439253,
+          "note": "The DETECTION-DEFICIT task coordination (the detection-deficit price pi_q = y_q/(D_q+eps)) is the dominant positive mechanism -- a first-tier ALGORITHM contribution (advice/017 section 13)."
+        },
+        "qos": {
+          "A": "UNCERTAIN",
+          "B00": "UNCERTAIN",
+          "B0": "UNCERTAIN",
+          "B1": "UNCERTAIN",
+          "C": "UNCERTAIN"
+        }
+      },
+      "400001": {
+        "ladder_J": {
+          "A": 5.02152870493992,
+          "B00": 4.306575433911883,
+          "B0": 3.145694259012016,
+          "B1": 3.732476635514019,
+          "C": 3.680407209612817,
+          "cumulative_owner_to_full": 1.3411214953271027,
+          "decomposition": {
+            "D_owner_bundle": 0.7149532710280369,
+            "D_pi": 1.1608811748998669,
+            "D_lambda": -0.5867823765020028,
+            "D_admission": 0.05206942590120178
+          }
+        },
+        "deltas": {
+          "D_owner_bundle": {
+            "point": 0.7149532710280369,
+            "ci95": [
+              0.650108548242003,
+              0.7787199361700375
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          },
+          "D_pi": {
+            "point": 1.1608811748998669,
+            "ci95": [
+              1.1060138274715023,
+              1.2154267484835481
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          },
+          "D_lambda": {
+            "point": -0.5867823765020028,
+            "ci95": [
+              -0.6404345261931801,
+              -0.5333878802932452
+            ],
+            "state": "CERTIFIED_LOSS",
+            "is_certified_gain": false
+          },
+          "D_admission": {
+            "point": 0.05206942590120178,
+            "ci95": [
+              0.03402268178785882,
+              0.07027120999646924
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          }
+        },
+        "dominant": {
+          "key": "D_pi",
+          "point": 1.1608811748998669,
+          "rel": 0.2597776055719982,
+          "ratio_to_net_A_to_C_gain": 0.8656047784967649,
+          "note": "The DETECTION-DEFICIT task coordination (the detection-deficit price pi_q = y_q/(D_q+eps)) is the dominant positive mechanism -- a first-tier ALGORITHM contribution (advice/017 section 13)."
+        },
+        "qos": {
+          "A": "UNCERTAIN",
+          "B00": "UNCERTAIN",
+          "B0": "UNCERTAIN",
+          "B1": "UNCERTAIN",
+          "C": "UNCERTAIN"
+        }
+      },
+      "400002": {
+        "ladder_J": {
+          "A": 5.01998001998002,
+          "B00": 4.3038628038628035,
+          "B0": 3.147352647352647,
+          "B1": 3.746919746919747,
+          "C": 3.691142191142191,
+          "cumulative_owner_to_full": 1.3288378288378286,
+          "decomposition": {
+            "D_owner_bundle": 0.7161172161172162,
+            "D_pi": 1.1565101565101563,
+            "D_lambda": -0.5995670995670999,
+            "D_admission": 0.05577755577755594
+          }
+        },
+        "deltas": {
+          "D_owner_bundle": {
+            "point": 0.7161172161172162,
+            "ci95": [
+              0.6507514960821289,
+              0.7795051820180219
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          },
+          "D_pi": {
+            "point": 1.1565101565101563,
+            "ci95": [
+              1.1045757559125275,
+              1.2104568400189772
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          },
+          "D_lambda": {
+            "point": -0.5995670995670999,
+            "ci95": [
+              -0.6538724967758625,
+              -0.5480844000807054
+            ],
+            "state": "CERTIFIED_LOSS",
+            "is_certified_gain": false
+          },
+          "D_admission": {
+            "point": 0.05577755577755594,
+            "ci95": [
+              0.03704303556047769,
+              0.07422350637693807
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          }
+        },
+        "dominant": {
+          "key": "D_pi",
+          "point": 1.1565101565101563,
+          "rel": 0.25879947558269234,
+          "ratio_to_net_A_to_C_gain": 0.8703170028818443,
+          "note": "The DETECTION-DEFICIT task coordination (the detection-deficit price pi_q = y_q/(D_q+eps)) is the dominant positive mechanism -- a first-tier ALGORITHM contribution (advice/017 section 13)."
+        },
+        "qos": {
+          "A": "UNCERTAIN",
+          "B00": "UNCERTAIN",
+          "B0": "UNCERTAIN",
+          "B1": "UNCERTAIN",
+          "C": "UNCERTAIN"
+        }
+      },
+      "400003": {
+        "ladder_J": {
+          "A": 5.015448504983389,
+          "B00": 4.3023255813953485,
+          "B0": 3.157641196013289,
+          "B1": 3.7461794019933556,
+          "C": 3.690531561461794,
+          "cumulative_owner_to_full": 1.3249169435215946,
+          "decomposition": {
+            "D_owner_bundle": 0.7131229235880401,
+            "D_pi": 1.1446843853820594,
+            "D_lambda": -0.5885382059800666,
+            "D_admission": 0.05564784053156169
+          }
+        },
+        "deltas": {
+          "D_owner_bundle": {
+            "point": 0.7131229235880401,
+            "ci95": [
+              0.6471173067817645,
+              0.7751643616583855
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          },
+          "D_pi": {
+            "point": 1.1446843853820594,
+            "ci95": [
+              1.0942479138428856,
+              1.1960372811572773
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          },
+          "D_lambda": {
+            "point": -0.5885382059800666,
+            "ci95": [
+              -0.6433273574301128,
+              -0.5354996256004094
+            ],
+            "state": "CERTIFIED_LOSS",
+            "is_certified_gain": false
+          },
+          "D_admission": {
+            "point": 0.05564784053156169,
+            "ci95": [
+              0.03696215444352007,
+              0.07482569133431662
+            ],
+            "state": "CERTIFIED_GAIN",
+            "is_certified_gain": true
+          }
+        },
+        "dominant": {
+          "key": "D_pi",
+          "point": 1.1446843853820594,
+          "rel": 0.2561531491764049,
+          "ratio_to_net_A_to_C_gain": 0.863966900702106,
+          "note": "The DETECTION-DEFICIT task coordination (the detection-deficit price pi_q = y_q/(D_q+eps)) is the dominant positive mechanism -- a first-tier ALGORITHM contribution (advice/017 section 13)."
+        },
+        "qos": {
+          "A": "UNCERTAIN",
+          "B00": "UNCERTAIN",
+          "B0": "UNCERTAIN",
+          "B1": "UNCERTAIN",
+          "C": "UNCERTAIN"
+        }
+      }
+    },
+    "cross_seed": {
+      "dominant_counts": {
+        "D_pi": 4
+      },
+      "dominant_majority": "D_pi",
+      "dominant_stable": true,
+      "sign_stability": {
+        "D_owner_bundle": {
+          "point_mean": 0.7184604129848307,
+          "point_min": 0.7131229235880401,
+          "point_max": 0.7296482412060294,
+          "frac_positive": 1.0,
+          "frac_negative": 0.0,
+          "frac_certified_gain": 1.0,
+          "sign_stable": true
+        },
+        "D_pi": {
+          "point_mean": 1.1513648253454245,
+          "point_min": 1.143383584589615,
+          "point_max": 1.1608811748998669,
+          "frac_positive": 1.0,
+          "frac_negative": 0.0,
+          "frac_certified_gain": 1.0,
+          "sign_stable": true
+        },
+        "D_lambda": {
+          "point_mean": -0.5877336458054246,
+          "point_min": -0.5995670995670999,
+          "point_max": -0.5760469011725293,
+          "frac_positive": 0.0,
+          "frac_negative": 1.0,
+          "frac_certified_gain": 0.0,
+          "sign_stable": true
+        },
+        "D_admission": {
+          "point_mean": 0.055069685452077355,
+          "point_min": 0.05206942590120178,
+          "point_max": 0.05678391959799001,
+          "frac_positive": 1.0,
+          "frac_negative": 0.0,
+          "frac_certified_gain": 1.0,
+          "sign_stable": true
+        }
+      },
+      "interpretation": "dominant_stable=True means EVERY test seed selected the same dominant mechanism (the attribution is not a single-seed accident).  sign_stability tells, per consecutive delta, whether the DIRECTION (gain/loss) reproduces across seeds and how often it is CERTIFIED positive.  If D_pi is the stable dominant and always certified positive, the paper claim 'detection-deficit task pricing is the dominant algorithm-level mechanism' is cross-seed supported; if D_owner_bundle dominates instead, the paper must lead with the owner-directed architecture bundle (advice/019 section 2)."
+    }
+  },
+  "runtime_s": 1170.0,
+  "provenance": {
+    "git_commit": "ba26230",
+    "git_dirty": true
+  }
+}

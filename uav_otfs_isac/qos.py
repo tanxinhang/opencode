@@ -83,6 +83,20 @@ def pool_raw_counts(rows: list[dict]) -> dict:
     return out
 
 
+def pool_h1_delay_risk(declared_h1, delays, H_all, max_steps: float) -> list:
+    """Per-target ``sum_h1_delay_risk`` (advice/018 section 5, advice/019
+    section 9): under H1, a run that DECLARED H1 keeps its realized stop
+    time; a run that declared H0 (a miss) is charged EXACTLY ``T_max`` --
+    so a lower plain ``J = max_q E[T_q|H1]`` can never be bought by
+    EARLIER WRONG H0 stops.  ``J_risk = max_q
+    sum_h1_delay_risk[q]/n_h1[q]``.  ``declared_h1``/``delays`` are
+    ``(n_runs, q)`` and ``H_all`` is ``(n_runs, q)`` boolean."""
+    q = delays.shape[1]
+    return [float(np.sum(np.where(declared_h1[:, qq] == 1.0,
+                                  delays[:, qq], float(max_steps))[H_all[:, qq]]))
+            for qq in range(q)]
+
+
 # ---------------------------------------------------------------------------
 # P4.2 anytime-valid QoS certification (advice/015 section 2)
 # ---------------------------------------------------------------------------

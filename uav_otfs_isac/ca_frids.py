@@ -45,10 +45,11 @@ from uav_otfs_isac.distributed_audit import (
     quantize_llr,
     quantize_with,
 )
+from uav_otfs_isac.qos import pool_h1_delay_risk
 
 
 def _global_simplex(mu: float, ratios: np.ndarray, y: np.ndarray,
-                    undecided: list) -> np.ndarray:
+                    undecided: list, normalize: bool = True) -> np.ndarray:
     """P3.6 global-simplex mirror update (advice/009 section 7):
 
         y_q^+ = y_q * exp(-mu * r_q)  /  sum_p y_p * exp(-mu * r_p)
@@ -80,9 +81,26 @@ def _global_simplex(mu: float, ratios: np.ndarray, y: np.ndarray,
     ell = np.log(np.clip(y[und], 1e-300, None)) - mu * ratios[und]
     ell = ell - float(np.max(ell))
     w = np.exp(ell)
-    Z = float(np.sum(w))
     out = y.copy()
-    out[und] = w / max(Z, 1e-300)
+    if normalize:
+        Z = float(np.sum(w))
+        out[und] = w / max(Z, 1e-300)
+    else:
+        # Normalization-Free B0-lite (advice/019 section 5): in the
+        # ``lambda-free`` B0 (``airtime_price=False``) the score has NO
+        # additive ``-lambda_j c_ij`` term, so the common factor ``1/Z``
+        # cancels in the argmax:
+        #     J_iq = y_q g_iq/(D_q+eps) = (1/Z) exp(theta_q) g_iq/(D_q+eps)
+        #     argmax_q J_iq = argmax_q exp(theta_q) g_iq/(D_q+eps)
+        #              = argmax_q [ theta_q + log g_iq - log(D_q+eps) ].
+        # The global normalizer ``Z`` is therefore NEVER computed and
+        # NEVER broadcast (no global reduction / no global scalar on the
+        # price bus) -- ``w = exp(theta)`` (recentered, max = 1) IS the
+        # price weight, and the per-target price ``pi_q = w_q/(D_q+eps)``
+        # spans the same registered ``[0, 1/eps]`` range as the normalized
+        # price.  This is a strict policy-equivalent reparameterization
+        # of the lambda-free B0, not a new mechanism.
+        out[und] = w
     return out
 
 
@@ -244,6 +262,7 @@ def simulate_ca_frids(
     admission_policy: str = "density",
     airtime_price: bool = True,
     task_price: bool = True,
+    norm_free: bool = False,
     audit: bool = False,
     raw_counts: bool = False,
     exog: ExogenousTape | None = None,
@@ -274,10 +293,29 @@ def simulate_ca_frids(
     over their pre-registered ranges; ``audit`` records the ideal-vs-
     broadcast action-invariance certificate (``margin_ok`` fraction) --
     the price-quantization/staleness theory of advice/008 section 8.
+
+    ``norm_free`` (advice/019 section 5) enables the Normalization-Free
+    Distributed Deficit Pricing reparameterization of the lambda-free B0
+    arm: with ``airtime_price=False`` the task score has no additive
+    ``-lambda_j c_ij`` term, so the global-simplex scalar normalizer ``Z``
+    cancels in the argmax (``argmax_q y_q g_iq/(D_q+eps) == argmax_q
+    exp(theta_q) g_iq/(D_q+eps)``) and is neither computed nor broadcast.
+    This removes the only global reduction of the control plane and drops
+    the scalar ``b_Z`` from the control-bus ledger (B0: 90 -> 80
+    bits/cycle).  Requires ``airtime_price=False`` and
+    ``price_mode="global_simplex"`` (the additive lambda term and the
+    owner-local per-owner simplex both break the scale invariance).  The
+    default ``False`` keeps the registered frozen path byte-identical.
     """
     k = scenario["k"]
     q = scenario["q"]
     owner_of = scenario["owner_of"]
+    if norm_free and (airtime_price or price_mode != "global_simplex"):
+        raise ValueError(
+            "norm_free is the lambda-free B0 reparameterization: it "
+            "requires airtime_price=False and price_mode='global_simplex' "
+            "(the additive -lambda*c term / owner-local simplex break the "
+            "scale invariance that cancels Z; advice/019 section 5).")
     delivery = delivery_matrix if delivery_matrix is not None \
         else scenario["u2u_success"]
     acts, g_max, c_max = _g_and_c_actions(scenario, owner_of, airtime,
@@ -363,15 +401,19 @@ def simulate_ca_frids(
             comm_cycles[r] += 1.0
             # control-plane overhead (advice/010 section 4; ledger fix per
             # advice/018 section 6): only ENABLED price planes are charged.
-            # ``B_ctrl = 1_task (Q b_pi + b_Z) + 1_lambda K b_lambda`` -- when
-            # ``task_price=False`` (B00) the flat pi = 1/Q and ``Z`` are
-            # static, so NO dynamic price bits/cycle are broadcast; when
+            # ``B_ctrl = 1_task (Q b_pi + 1_normfree b_Z) + 1_lambda K b_lambda``
+            # -- when ``task_price=False`` (B00) the flat pi = 1/Q and ``Z``
+            # are static, so NO dynamic price bits/cycle are broadcast; when
             # ``airtime_price=False`` (B00/B0) lambda is frozen at 0 and no
             # K b_lambda is broadcast.  A disabled bus must not be billed.
+            # ``norm_free`` (advice/019 section 5): the global-simplex scalar
+            # ``Z`` is neither computed nor broadcast (it cancels in the
+            # argmax of the lambda-free B0 score), so its ``b_Z`` is dropped
+            # from the ledger -- B0 control plane 90 -> 80 bits/cycle.
             ctrl_bits = 0
             if task_price:
                 ctrl_bits += q * max(pi_bits, 1)
-                if price_mode == "global_simplex":
+                if price_mode == "global_simplex" and not norm_free:
                     ctrl_bits += max(pi_bits, 1)   # scalar Z
             if airtime_price:
                 ctrl_bits += k * max(lam_bits, 1)
@@ -579,7 +621,8 @@ def simulate_ca_frids(
                                for qq in range(q)])
             und = [qq for qq in range(q) if not decided[qq]]
             if task_price and price_mode == "global_simplex":
-                y = _global_simplex(mu, ratios, y, und)
+                y = _global_simplex(mu, ratios, y, und,
+                                    normalize=not norm_free)
             elif task_price:
                 # owner_local (P3.5-A baseline, byte-identical to the
                 # advice/008 owner-anchored variant): per-owner simplex
@@ -648,10 +691,8 @@ def simulate_ca_frids(
             # H0 (an MD error) is charged T_max -- ``E[T_q^risk | H1]`` so a
             # lower plain ``J`` can never be bought by earlier WRONG H0
             # decisions.  ``J_risk = max_q sum_h1_delay_risk[q]/n_h1[q]``.
-            "sum_h1_delay_risk": [float(np.sum(
-                np.where(declared_h1[:, qq] == 1.0, delays[:, qq],
-                         float(max_steps))[H_all[:, qq]]))
-                for qq in range(q)],
+            "sum_h1_delay_risk": pool_h1_delay_risk(
+                declared_h1, delays, H_all, float(max_steps)),
         },
         "comm": {
             "airtime_per_cycle": float(np.mean(comm_airtime / active)),

@@ -1,0 +1,90 @@
+{
+  "gate_id": "p5a-bootstrap-seed-stability",
+  "params": {
+    "estimand": "J = max_q sum_b S_bq / sum_b N_bq (pooled, non-smooth) -- exact runner _pooled_delta_ci",
+    "synthetic_cell": {
+      "q": 8,
+      "worst_target_mean": 4.0,
+      "per_block_sampling": "Binomial(runs, 0.5) counts, mean*Uniform(0.9,1.1) sums",
+      "data_seed": 100000
+    },
+    "n_boot": 10000,
+    "bootstrap_seeds": 30
+  },
+  "metrics": {
+    "configs": [
+      {
+        "blocks": 8,
+        "runs_per_block": 1500,
+        "total_runs": 12000,
+        "point_mean": 0.588968891522414,
+        "ci_lo_mean": 0.41783871358304,
+        "ci_hi_mean": 0.75903930353238,
+        "ci_width_mean": 0.3412005899493401,
+        "ci_lo_spread": 0.004591205496665196,
+        "ci_hi_spread": 0.006386672993438203,
+        "ci_width_spread": 0.009711295134793296,
+        "point_spread": 0.0,
+        "n_distinct_boot_values": 5971,
+        "n_distinct_ratio_to_n_boot": 0.5971,
+        "lo_quantile_step_rel_width": 0.0003398455874763197,
+        "hi_quantile_step_rel_width": 0.0028067489492453767
+      },
+      {
+        "blocks": 24,
+        "runs_per_block": 500,
+        "total_runs": 12000,
+        "point_mean": 0.46561425006357027,
+        "ci_lo_mean": 0.3336445969259824,
+        "ci_hi_mean": 0.5956474310279593,
+        "ci_width_mean": 0.26200283410197683,
+        "ci_lo_spread": 0.007820303547257823,
+        "ci_hi_spread": 0.007137862771017245,
+        "ci_width_spread": 0.012300743376469137,
+        "point_spread": 0.0,
+        "n_distinct_boot_values": 10000,
+        "n_distinct_ratio_to_n_boot": 1.0,
+        "lo_quantile_step_rel_width": 4.935728798141456e-05,
+        "hi_quantile_step_rel_width": 0.0012062102278343428,
+        "lo_spread_ratio_to_8": 1.703322483155692,
+        "hi_spread_ratio_to_8": 1.1176183246505387,
+        "width_spread_ratio_to_8": 1.2666429354410673,
+        "distinct_ratio_to_8": 1.6747613465081226,
+        "lo_step_ratio_to_8": 0.14523445294064252,
+        "hi_step_ratio_to_8": 0.4297535154181299
+      },
+      {
+        "blocks": 32,
+        "runs_per_block": 375,
+        "total_runs": 12000,
+        "point_mean": 0.4001139784739031,
+        "ci_lo_mean": 0.29023209661569355,
+        "ci_hi_mean": 0.5093584703801525,
+        "ci_width_mean": 0.21912637376445898,
+        "ci_lo_spread": 0.006844375093561117,
+        "ci_hi_spread": 0.006641733909176328,
+        "ci_width_spread": 0.00845075388039801,
+        "point_spread": 0.0,
+        "n_distinct_boot_values": 10000,
+        "n_distinct_ratio_to_n_boot": 1.0,
+        "lo_quantile_step_rel_width": 0.00019727649702449697,
+        "hi_quantile_step_rel_width": 0.0004573652134793534,
+        "lo_spread_ratio_to_8": 1.4907577320449938,
+        "hi_spread_ratio_to_8": 1.0399364294993936,
+        "width_spread_ratio_to_8": 0.8701984403831923,
+        "distinct_ratio_to_8": 1.6747613465081226,
+        "lo_step_ratio_to_8": 0.5804886227579551,
+        "hi_step_ratio_to_8": 0.16295194965774218
+      }
+    ],
+    "verdict": {
+      "pass": true,
+      "wording": "24x500 (and 32x375) produce a materially FINER bootstrap distribution of the non-smooth max_q estimand than 8x1500 at the SAME total MC cost: many more distinct resampled delta* values and a smaller 2.5/97.5 percentile bracketing step (relative to CI width).  The bootstrap CI is therefore not a coarse step-function artifact -- the advice/019 section 8 block-resolution recommendation is supported and the registered ladder should re-run on 24x500."
+    }
+  },
+  "runtime_s": 58.5,
+  "provenance": {
+    "git_commit": "ba26230",
+    "git_dirty": true
+  }
+}

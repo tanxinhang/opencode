@@ -19,3 +19,6 @@ venv/
 *.aux
 *.xdv
 *.out
+
+# P5-MIN raw-cell MC cache (regenerable; the gate script re-derives it).
+results/*.cells.json
