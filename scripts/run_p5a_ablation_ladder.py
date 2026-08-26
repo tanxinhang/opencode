@@ -202,6 +202,7 @@ def _run_arm(runner, bounds, n_runs, seed, max_steps, exog_blocks):
         "ctrl_bits_per_cycle": float(np.mean(ctrl_bits)) if ctrl_bits else 0.0,
         "budget_feasible": float(np.mean(budget_feasible))
         if budget_feasible else 1.0,
+        "audit": out.get("audit"),
     }
 
 
@@ -268,6 +269,96 @@ def _pooled_j_delta_ci(prev_n, prev_s, cur_n, cur_s,
                        n_boot=10000, seed=0):
     """The reported plain-delay delta (``V = sum_h1_delay``)."""
     return _pooled_delta_ci(prev_n, prev_s, cur_n, cur_s, n_boot, seed)
+
+
+def hierarchical_block_bootstrap(cells, n_boot=10000, seed=0):
+    """HIERARCHICAL per-block bootstrap over geometry/cell -> seed -> block
+    (advice/020 section 12).
+
+    The plain ``_pooled_delta_ci`` concatenates blocks ACROSS
+    ``(geom, rho, seed)`` and resamples them i.i.d. -- but that only
+    estimates a ``fixed registered-grid mixture estimand``; it does NOT
+    certify ``generalizes across scenarios`` (the audit finding: pooling
+    across geometry/cell is not the same as a cross-geometry CI).
+
+    This helper resamples HIERARCHICALLY: draw cells with replacement,
+    then seeds within each drawn cell, then blocks within each drawn seed,
+    and re-pool.  The resulting CI covers cell-level (scenario) variation,
+    not just block noise within the pooled mixture.
+
+    ``cells`` is a list of dicts ``{"seed_blocks": [(prev_n, prev_v, cur_n,
+    cur_v) per seed, ...]}`` where each seed's value is the per-block list
+    ``(list_of_prev_n, list_of_prev_v, list_of_cur_n, list_of_cur_v)``.
+
+    Returns ``(point, lo, hi)`` with ``point = J_prev - J_cur`` on the
+    FULL hierarchical pool (the estimand the table reports)."""
+    rng = np.random.default_rng(seed)
+
+    def _pool_j(prev_ns, prev_vs, cur_ns, cur_vs):
+        P_N = np.sum(np.stack(prev_ns, axis=0), axis=0)
+        P_V = np.sum(np.stack(prev_vs, axis=0), axis=0)
+        C_N = np.sum(np.stack(cur_ns, axis=0), axis=0)
+        C_V = np.sum(np.stack(cur_vs, axis=0), axis=0)
+        return _pooled_j(P_N, P_V) - _pooled_j(C_N, C_V)
+
+    all_prev_n, all_prev_v = [], []
+    all_cur_n, all_cur_v = [], []
+    for cell in cells:
+        for (pn, pv, cn, cv) in cell["seed_blocks"]:
+            all_prev_n += pn
+            all_prev_v += pv
+            all_cur_n += cn
+            all_cur_v += cv
+    point = _pool_j(all_prev_n, all_prev_v, all_cur_n, all_cur_v)
+
+    boot = np.empty(n_boot)
+    n_cells = len(cells)
+    for b in range(n_boot):
+        pn, pv, cn, cv = [], [], [], []
+        for _ in range(n_cells):
+            cell = cells[int(rng.integers(0, n_cells))]
+            seeds = cell["seed_blocks"]
+            for _ in range(len(seeds)):
+                (spn, spv, scn, scv) = seeds[int(rng.integers(0, len(seeds)))]
+                B = len(spn)
+                idx = rng.integers(0, B, size=B)
+                pn.append([spn[j] for j in idx])
+                pv.append([spv[j] for j in idx])
+                cn.append([scn[j] for j in idx])
+                cv.append([scv[j] for j in idx])
+        boot[b] = _pool_j(pn, pv, cn, cv)
+    lo, hi = np.percentile(boot, [2.5, 97.5])
+    return float(point), float(lo), float(hi)
+
+
+def cell_sign_consistency(cell_deltas):
+    """Per-cell sign consistency of a pooled delta (advice/020 section 12):
+    reports the fraction of cells whose point delta has the SAME sign as
+    the overall estimate, the per-cell signed deltas, and the count of
+    cells with a CERTIFIED (CI-excluding-zero) delta of each sign.  This
+    is the recommended primary cross-scenario summary -- the hierarchical
+    CI is the auxiliary."""
+    if not cell_deltas:
+        return {"n_cells": 0, "sign_consistency": 0.0,
+                "certified_gain_cells": 0, "certified_loss_cells": 0,
+                "unresolved_cells": 0}
+    overall = float(np.mean([d["point"] for d in cell_deltas]))
+    same = sum(
+        1 for d in cell_deltas
+        if (d["point"] >= 0.0) == (overall >= 0.0))
+    cg = sum(1 for d in cell_deltas
+             if d.get("state") == "CERTIFIED_GAIN")
+    cl = sum(1 for d in cell_deltas
+             if d.get("state") == "CERTIFIED_LOSS")
+    return {
+        "n_cells": len(cell_deltas),
+        "overall_sign": "positive" if overall >= 0.0 else "negative",
+        "sign_consistency": float(same) / len(cell_deltas),
+        "certified_gain_cells": cg,
+        "certified_loss_cells": cl,
+        "unresolved_cells": len(cell_deltas) - cg - cl,
+        "cell_points": [float(d["point"]) for d in cell_deltas],
+    }
 
 
 def _interaction_delta_ci(f0n, f0s, f1n, f1s, o0n, o0s, o1n, o1s,

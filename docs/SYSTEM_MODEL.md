@@ -1,230 +1,413 @@
-# Unified System Model and Notation
+# Unified System Model and Notation — CA-FRIDS Dual-Bus (P5 current)
 
-> **当前状态 (2026-08-24, P4-CLOSE / advice-017):** 下面的模型是历史演进中的
-> **旧论文时代模型**（fixed geometry + one fusion center + BSC/erasure +
-> expected-P_D fusion + RIS + global bit budget）。当前注册主系统已收敛到
-> **CA-FRIDS Dual-Bus 联合容量调度 + 顺序检测 + anytime-valid QoS 认证**
-> （`uav_otfs_isac/ca_frids.py`、`uav_otfs_isac/airtime.py`、`uav_otfs_isac/qos.py`；
-> 注册基准判决见 `results/p4_meta_cert.json`；P4.2b matched-QoS 前沿为三状态
-> 分类，P4-META promotion 不再使用历史的 `adopt_ca=false`）。本文档保留为历史
-> 参考，论文系统模型请以当前主线（owner-directed evidence + task-price bus +
-> receiver-capacity bus + hard airtime admission + sequential owner detection +
-> anytime-valid certificate）为准。
+> **当前状态 (2026-08-25, P5 / advice-020):** 本文档以 **当前注册主系统** 为正文：
+> owner-directed evidence plane + detection-deficit task pricing + receiver-capacity
+> dual bus + hard airtime admission + sequential owner detection + anytime-valid QoS
+> 认证，即 `uav_otfs_isac/ca_frids.py` + `uav_otfs_isac/airtime.py` + `uav_otfs_isac/qos.py`
+> 所实现并注册的模型（注册判决见 `results/p4_meta_cert.json`；P4.2b matched-QoS 前沿为
+> 三状态分类）。旧时代模型（fixed geometry + one fusion center + BSC/erasure +
+> expected-P_D fusion + RIS + global bit budget，即 G3-G5 链）已移入文末 **Legacy 附录**，
+> 仅供历史参考，**不作为** 论文主模型。
 
-This document centralizes the formal model used by the G3-G5 results so the
-paper can reference one consistent system model instead of scattered gate
+This document centralizes the formal model used by the P5 results so the paper
+can reference one consistent system model instead of scattered gate
 descriptions.  All quantities are defined exactly as implemented in
 `uav_otfs_isac/`.
 
+## 0. Unified optimization formulation (P5)
+
+The entire P5 system is **one hierarchical optimization** — not a bag of
+heuristics.  It has a single system-level objective, a per-cycle scheduling
+relaxation, a distributed dual solver, and a closed feasibility/QoS envelope.
+The "series" of optimization objectives are a **tiered decomposition** in which
+each level is the Lagrangian / dual of the level above; the "pile" of
+constraints are exactly the stationarity, feasibility and
+complementary-slackness conditions that make the decomposition exact and the
+deployed algorithm certified.
+
+### 0.1 Decision variables
+
+- `x_{iqa} in {0,1}`: UAV `i` takes action `a` on target `q` (sense + report).
+- `pi_i`: the local (owner-information) decision policy.
+- `(A_q, B_q)`: per-target two-threshold stopping boundaries.
+
+### 0.2 The series of optimization objectives (tiered)
+
+**Level 0 — system objective** (the one that must ultimately be minimized):
+
+```
+min_{pi, A, B}   J = max_{q in Q} E[T_q | H1]
+s.t.  C1 (QoS), C2 (capacity), C5 (information)
+```
+
+the worst-target stopping delay subject to the anytime-valid QoS spec.
+
+**Level 1 — per-cycle scheduling relaxation** (the inner joint
+sensing-communication LP that motivates the local index; the Dual-Bus does
+NOT solve this LP — it runs its **distributed dual decomposition**, Level 2-3):
+
+```
+max_{x} z
+s.t.  sum_{i,a} x_{iqa} g_{iqa}/(D_q+eps) >= z      (all q)  -> dual y_q
+      sum_{q,a} x_{iqa} <= 1                        (all i)   (one action/UAV)
+      sum_{i,q:o(q)=j,a} c_{iqa} x_{iqa} <= 1       (all j)  -> dual lambda_j
+      x in [0,1]
+```
+
+This is the CONTINUOUS relaxation (`x in [0,1]`, an LP); the original is
+integer (C3-C4).  The first row is the **detection-deficit coverage**
+constraint (each target's reliable delivered information must clear its
+residual deficit); the third row is the **receiver airtime capacity**
+constraint.  The dual of the coverage row is the price weight `y_q`; the
+deployed **task price** packages it with the deficit normalization,
+`pi_q = y_q/(D_q+eps)` (exactly the code's definition).  The strong-dual
+stationary point of this LP is the local index of Level 2; integrality is
+restored by the DISCRETE per-UAV best response (C3) plus the hard pathwise
+admission (C2).
+
+**Level 2 — distributed local best response** (each UAV solves its own):
+
+```
+(i,q,a)^* = argmax_{q,a} [ pi_q g_{iqa} - lambda_{o(q)} c_{iqa} ]   (idle = 0)
+```
+
+with `pi_q = y_q/(D_q+eps)`, i.e. the index is `y_q g_{iqa}/(D_q+eps) -
+lambda c` (sensing and communication enter the SAME score, not stitched) and
+the idle action `score 0` (without it a purely additive price is a no-op,
+Lemma 4.99).  In the lambda-free **normalization-free** form (B0-lite), with
+`theta_q = log y_q`:
+
+```
+q_i^* = argmax_q [ theta_q + log g_{iq} - log(D_q + eps) ],
+```
+
+(the common positive scale of the weights cancels, so the coverage-dual
+`y_q` is replaced by the owner-local log-price `theta_q` — C5, no global
+reduction).
+
+**Level 3 — price dynamics** (the dual update):
+
+- deficit pricing (mirror descent): `y_q <- y_q exp(-mu r_q)/Z` (normalized)
+  or the owner-local `theta_q <- theta_q - mu r_q` (normalization-free, no
+  global reduction);
+- capacity dual ascent: `lambda_j <- clamp(lambda_j + mu_c (rho_j - 1), 0, lam_cap)`.
+
+**Level 4 — threshold / QoS frontier:** choose `(A_q, B_q)` so that C1 holds
+with anytime-valid certification while minimizing `J` (three-state frontier:
+CERTIFIED FEASIBLE / UNRESOLVED / CERTIFIED INFEASIBLE).
+
+### 0.3 The constraints (a pile)
+
+| id | constraint | role |
+| --- | --- | --- |
+| C1 | `P_FA,q <= alpha`, `P_MD,q <= beta` (all q), anytime-valid certified | QoS spec |
+| C2 | `sum_{i,q:o(q)=j} x_{iq} tau_{ij} <= T_air` (all j), enforced PATHWISE by hard admission; `lambda_j` is the dual of the RELAXED offered-load (EMA) constraint it steers | receiver capacity |
+| C3 | `sum_{q,a} x_{iqa} <= 1` (all i) | one action per UAV |
+| C4 | `x_{iqa} in {0,1}`; idle score 0 allowed | feasibility / idle |
+| C5 | `a_{i,t} = pi_i(I_{i,t})`: each local decision uses only local info + broadcast prices.  Normalized form needs ONE global scalar `Z` (spanning-tree/gossip); the normalization-free B0-lite removes even `Z` (owner-local `theta_q`, no global sum/max reduction) | information / distributed |
+| C6 | broadcast `theta_q` quantized over `[theta_lo, theta_hi]`; action preserved iff `m_i > 2*eps_theta` | finite-bit control |
+| C7 | `L_q >= A_q => H1`, `L_q <= B_q => H0` | sequential detection |
+| C8 | `lambda_j (rho_j - 1) = 0`, `lambda_j >= 0` (limit of the dual-ascent update) | capacity-regime KKT |
+
+> **C2 two-layer note:** the LP (Level 1) relaxes C2 to the *expected/EMA*
+> offered-load constraint whose dual `lambda_j` STEERS the best response;
+> the deployed system then HARD-ADMITS a density-ranked subset under the
+> pathwise budget `sum tau/T_air <= 1` (the fuse).  So `lambda_j` is the dual
+> of the relaxed constraint (it sees the offered load that would overload),
+> while the hard admission enforces the exact pathwise constraint every
+> cycle.  C8 is the complementary-slackness LIMIT that the dual-ascent update
+> `lambda_j <- clamp(lambda_j + mu_c (rho_j-1), 0, lam_cap)` approximates at
+> convergence.
+
+### 0.4 The unification (why the tiers are not ad hoc)
+
+- Level 0 is the **true** objective; Level 1 is its **per-cycle relaxation**;
+  Levels 2-3 are the **distributed dual solver** (local best response + price
+  ascent); Level 4 **closes the QoS**.  Each level is the Lagrangian/dual of
+  the one above, so the decomposition is a single coherent optimization, not a
+  sequence of disconnected objectives.
+- The constraints are exactly the exactness conditions:
+  - **C8** is the KKT complementary slackness that makes the `lambda` activation
+    principled — the capacity-slack / capacity-binding phase diagram is the
+    solution of the Level-1 LP, not an empirical `(8,4)`-vs-`(16,8)` heuristic;
+  - **C6** is the finite-bit action-error certificate that makes the deployed
+    norm-free form exact-up-to-a-certified-approximation (quantize `theta_q`,
+    not the scale-dependent `pi_q`);
+  - **C5** is the information constraint that the owner-local `theta_q` form
+    satisfies with **no global reduction** on the control plane.
+
+### 0.5 What the advice/020 modifications "sublimate" into
+
+1. **Normalization-free (owner-local `theta_q`)** = the Level-2 index that
+   satisfies C5 (no global reduction) and makes C6 clean (quantize `theta_q`,
+   not `pi_q`) — with the certified action-error bound of Claim 0.2.
+2. **Capacity-regime gate** = C8 turned from an empirical scale observation
+   into a principled complementary-slackness phase diagram (Claim 0.3).
+3. **matched-QoS gate** = C1 as the freeze condition (Level 4): the minimal
+   B0-core is not certified slower than full C at matched certified QoS.
+
+Hence the whole system reduces to: *minimize the worst-target sequential
+stopping delay (Level 0) subject to the anytime-valid QoS (C1), the hard
+receiver airtime capacity (C2), the per-UAV action and idle feasibility
+(C3-C4), the distributed information constraint (C5), the finite-bit control
+certificate (C6), the sequential detection rule (C7), and the KKT
+capacity-regime condition (C8); solve it by the dual decomposition of the
+per-cycle joint LP (Level 1-3) and close the QoS threshold frontier
+(Level 4).*
+
 ## 1. Scope and assumptions
 
-- Fixed geometry and waveform parameters; aligned candidate targets; one
-  fusion center.
-- `M` transmitting UAVs, `Q` target hypotheses, one `L`-element receive
-  array.
-- The sensing channel is a direct path plus an RIS-cascaded path whose phase
-  profile is controllable.
-- Reports are quantized, pass through a binary symmetric channel (BSC), and
-  may be erased; the receiver fuses only the actually received reports.
-- The operating point is fixed false-alarm rate `P_FA`; the primary metric
-  is system-level detection probability `P_D` and its worst-target value.
+- `K` sensing UAVs, `Q` candidate targets, each target `q` assigned a fixed
+  OWNER `o(q)` (cyclic: `o(q) = q mod K`).  There is NO single fusion center.
+- Each UAV senses locally; each evidence token is reported ONLY to the target
+  OWNER (owner-directed evidence plane, not full mesh).
+- The system performs SEQUENTIAL detection: the owner accumulates its belief
+  until a two-threshold stop rule fires, then declares H1/H0.
+- The control plane is a real communication cost: `Q` task prices plus `K`
+  receiver airtime prices (plus one global-simplex scalar in the normalized
+  form) are broadcast every cycle.
+- The operating point is fixed false-alarm `P_FA = alpha` and miss
+  `P_MD = beta`; the primary metric is the worst-target stopping delay
+  `E[T_q | H1]` (pooled, risk-adjusted), and QoS is certified with anytime-valid
+  bounds.
 
-## 2. Geometry and scenario
+## 2. Local sensing and reliable detection information
 
-- UAV positions `p_m`, target positions `t_q`, receiver position `r`, RIS
-  position `s`.
-- Direct bistatic path for UAV `m` and target `q` has range sum
-  `R_dir = |p_m - t_q| + |t_q - r|`.
-- RIS cascaded path has legs `R_1 = |p_m - s|`, `R_2 = |s - t_q|`,
-  `R_3 = |t_q - r|`.
+Each UAV `i` hosts one report kernel per target `q` per sensing-power lever.
+The kernel is a quantized observation with H0/H1 distributions and an LLR
+per observation outcome.  The scheduler-believed reliable post-communication
+detection information of the deployed action is
 
-## 3. RIS channel
+```
+g_{iqa} = I^+_{iqa} * rel_{i,o(q)},
+rel_{i,j} = 1 if i == j else s_{i,j},
+```
 
-The controlled additive-power gain used in G5 is
+where `I^+_{iqa}` is the sensing information (post-communication reliable
+information) of action `a` and `s_{i,j}` is the U2U link success probability
+(owner-local evidence has `rel = 1`, so it is never taxed by a communication
+price it does not pay).
 
-`gain_mq = 1 + (strength_q * array_gain(theta_q))^2`,
+## 3. Owner belief and sequential detection
 
-where `strength_q` is the RIS illumination strength for target `q` and
-`array_gain(theta)` is the normalized phased-array response toward the target
-direction.
+The owner `o(q)` of target `q` accumulates the LLR of delivered evidence:
 
-The physics-based channel used in G5-P follows the two-way bistatic radar law
-for the direct path,
+```
+L_q(t+1) = L_q(t) + sum_i delta_{iq}(t) * ell_{iq}(t),
+```
 
-`P_dir = 1 / (R_dir_tx^2 R_dir_rx^2)`,
+with `delta_{iq}` the delivered-token indicator (physical Bernoulli +
+airtime-thinned) and `ell_{iq}` the quantized observation LLR.  The stopping
+rule on the OWNER belief is the unchanged two-threshold rule
 
-and a three-leg cascaded loss for the RIS path,
+```
+L_q >= A_q  => H1,
+L_q <= B_q  => H0.
+```
 
-`P_ris = N_ris^2 array_gain(theta)^2 aperture_scale /
-         (R_1^2 R_2^2 R_3^2)`,
+The residual detection deficit is
 
-so the evidence SNR gain is `1 + P_ris / P_dir`.  The weak target has an
-optional direct-path blockage that attenuates ONLY the direct term:
+```
+D_q(t) = [ A_q - L_q(t) ]_+.
+```
 
-`gain_weak = direct_blockage + P_ris / P_dir`,
+## 4. Task-price plane (detection-deficit pricing)
 
-with `direct_blockage in (0, 1]`; the RIS boost stays referenced to the
-unblocked `P_dir` and never re-scales the ratio by `1/direct_blockage`.
-The channel is monotone in array alignment, never amplifies a clean link
-above `1 + P_ris/P_dir`, and never drops a blocked link below
-`direct_blockage` (array alignment only ever adds RIS power).
+Each owner maintains its own task price.  In the global-simplex form the
+price is the entropic mirror descent
 
-## 4. OTFS evidence moments
+```
+y_q^+ = y_q * exp(-mu * r_q) / Z,
+r_q = S_q / (D_q + eps),
+```
 
-- DD grid with `N_d` Doppler bins and `N_l` delay bins; declared resolutions
-  `Delta_f` and `Delta_tau`.
-- Fractional Doppler leakage is modeled by `sinc^2(fractional_doppler)`.
-- Per-UAV evidence under H0/H1 is moment-matched Gaussian
-  `(mu0, mu1, Sigma0, Sigma1)` after non-coherent integration, quantization,
-  and BSC propagation.
-- Positive definiteness of `Sigma0` and `Sigma1` is enforced by shrinkage
-  regularization.
+over the undecided targets, with `Z` the global scalar normalizer (a
+spanning-tree/gossip reduction, the ONLY networked quantity).  In the
+NORMALIZATION-FREE form (advice/019-020) the owner keeps an OWNER-LOCAL
+log-price `theta_q` updated WITHOUT any global reduction:
 
-## 5. Reporting channel
+```
+theta_q(t+1) = theta_q(t) - mu * r_q(t),
+```
 
-- Per-UAV payload has `p_i` quantizer bits with `2^{p_i}` levels; the
-  transmitted report cost is `b_i = p_i + 2` bits (packet overhead; the
-  owner's own report costs `b_owner = 0`).  The BSC acts on the payload
-  word, so quantization levels are `2^{p_i} = 2^{b_i - 2}`, not `2^{b_i}`.
-- BSC transition with bit-flip probability `epsilon_i`.
-- Detectable erasure modeled by the reception law `gamma` over the scheduled
-  report set, which may be independent, common-state, or grouped.
+and broadcasts the QUANTIZED `theta_q`; the local rule is
 
-The sensing channel (UAV-to-target) and the communication channel
-(UAV-to-owner) are separate channels.  They are not assumed to share
-path-loss exponents, reference SNRs, shadowing, or outage thresholds.  The
-sensing channel determines the pre-report H0/H1 moments; the communication
-channel determines BSC flip probability and link success probability after
-quantization.  Consequently owner-only evidence is invariant to
-communication-channel parameters.
+```
+q_i^* = argmax_q [ theta_q + log g_{iq} - log(D_q + eps) ].
+```
 
-### 5.1 Physical report-link parameterization
+The broadcast price `pi_q` (normalized) or `theta_q` (norm-free) spans a
+pre-registered range and is quantized with `pi_bits` / `theta_bits`.
 
-`uav_otfs_isac/physical_link_model.py` optionally replaces the configuration
-interval with a geometry-derived reporting channel.  For report link `i`
-with range `d_i` from UAV `i` to its owner, the link SNR is
+## 5. Receiver-capacity plane (hard airtime admission)
 
-`SNR_db_i = SNR_ref - 10 alpha log10(d_i / d_ref)`,
+The physical per-token airtime is `tau_{ij} = b_tok / R_{ij}` seconds, with
+`R_{ij} = W_c log2(1 + gamma_{ij})` the Shannon link rate (an UPPER BOUND,
+never a claimed throughput).  The per-receiver budget is `T_air`, so a report
+consumes the fractional budget `c_{ij} = tau_{ij} / T_air`.
 
-the uncoded BPSK bit-flip probability is
+The receiver constraint is
 
-`epsilon_i = Q(sqrt(2 * 10^(SNR_db_i / 10)))`,
+```
+sum_{i,q:o(q)=j} x_{iq} tau_{ij} <= T_air,
+```
 
-and the log-normal outage survival above threshold `gamma_th` is
+with dual price `lambda_j >= 0`.  KKT complementary slackness
+`lambda_j (rho_j - 1) = 0` gives the capacity-regime phase diagram:
+capacity-slack `rho_j < 1 => lambda_j = 0` (the B0-lite regime), capacity-
+binding `rho_j ~ 1 => lambda_j > 0`.  The deployed system HARD-ADMITS a
+density-ranked subset per receiver under the pathwise budget (the fuse), while
+`lambda_j` is the dual-ascent STEERING price on the offered-load EMA.
 
-`s_i = Phi((SNR_db_i - gamma_th) / sigma_shadow)`.
+`T_air` is either explicit, or derived from the full-mesh always-report ratio
+`rho_target`, or from the owner-directed ratio `rho_owner` (advice/020
+section 5) so the capacity regime is controlled across scales.
 
-This keeps the reporting model tied to geometry, distance, path-loss
-exponent, link SNR, and shadowing instead of an uninterpreted range.
+## 6. Local best response and idle gate
 
-## 6. Fusion
+Each UAV computes the LOCAL best response over its own kernels and the
+undecided targets,
 
-For a received set `R`, the deflection-optimal linear score has weight
-`w = Sigma0_R^{-1} delta_R`, where `delta = mu1 - mu0`.  The Gate G3
-one-parameter family is
+```
+(i, q, a)^* = argmax [ pi_q g_{iqa} - lambda_{o(q)} c_{iqa} ],
+```
 
-`w(mu) = L^{-T} (Q + mu I)^{-1} L^{-1} delta`,
+with the idle option `score 0` (do not report).  Without the idle action a
+purely additive price is a no-op (Lemma 4.99); with it, the price decides
+report vs silence AND reorders the sensing target.  In the norm-free form the
+argmax is over `[ theta_q + log g_{iq} - log(D_q+eps) ]`.
 
-with `Sigma0 = L L^T` and `Q = L^{-1} Sigma1 L^{-T}`.  The KKT-optimal member
-maximizes `P_D` over linear scores at operating points with `P_D > 0.5`, and
-the resulting set function is monotone under report addition.
+## 7. Resource / control-bus ledger
 
-## 7. Selection objective
+Only ENABLED price planes are charged (advice/018 section 6):
 
-The system selects, for each target `q`, a scheduled report set `S_q` under
-the global bit budget.  The honest objective is expected `P_D` over the
-reception law:
+```
+B_ctrl = 1_task ( Q*pi_bits [+ Z]  |  Q*theta_bits if norm_free )
+         + 1_lambda K*lam_bits
+```
 
-`E_PD(q, S_q) = E_gamma[ P_D(owner union received(S_q, gamma)) ]`.
+per cycle.  B0-lite (norm-free, lambda OFF) bills `Q*theta_bits` bits/cycle
+(no global `Z`, no lambda bus) — at `(16,8), b=10` this is 80 bits/cycle vs
+250 for full C, a ~3x control-plane reduction with NO global reduction on the
+control plane.
 
-The G4 selector is a two-stage greedy: minimize normalized miss-deficit, then
-maximize expected-`P_D` gain per report bit.
+## 8. Performance metrics
 
-## 8. Resource identities
+- Pooled worst-target stopping delay `J = max_q sum_b S_bq / sum_b N_bq`
+  (per-target H1 delay sums and counts pooled over blocks).
+- Risk-aware delay `J_risk`: under H1, a run that declared H1 keeps its stop
+  time; an MD error is charged `T_max` — a lower `J` can never be bought by
+  earlier WRONG H0 stops.
+- Anytime-valid QoS certificate: simultaneous Clopper-Pearson bounds on
+  `P_FA` / `P_MD` across the family, reported per arm (three-state frontier:
+  `CERTIFIED FEASIBLE / UNRESOLVED / CERTIFIED INFEASIBLE`).
+- Paired per-block bootstrap 95% CIs (and, for cross-scenario claims, the
+  hierarchical cell->seed->block bootstrap + per-cell sign consistency,
+  advice/020 section 12).
 
-- Report bits: `B_report = sum_q sum_{i in S_q} b_i`, where `b_i = p_i + 2`
-  is the transmitted report cost in section 5 (`p_i` quantizer payload bits
-  plus 2 overhead bits) and the owner contributes `b_owner = 0`.
-- RIS control bits (amortized): `B_control = N_ris * phase_bits /
-  coherence_frames`.
-- Total bits per frame: `B_total = B_report + B_control`.
-- Time-bandwidth symbols (conservative 1-symbol-per-bit): report and control
-  TB equal their bit counts; sensing TB is `frames * N_d * N_l`; identity TB
-  is `M * N_d * N_l`.
-- Sensing energy (unit amplitude): `E_sensing = frames * M * amplitude^2`;
-  the passive RIS adds no transmit energy.
-
-## 9. Performance metrics
-
-- Mean expected `P_D`: `(1/Q) sum_q E_PD(q, S_q)`.
-- Worst-target expected `P_D`: `min_q E_PD(q, S_q)`.
-- QoS feasibility at threshold `tau`: all targets satisfy
-  `E_PD(q, S_q) >= tau`.
-- Paired bootstrap 95% CIs and win rates for gains over baselines.
-
-## 10. Notation table
+## 9. Notation table
 
 | Symbol | Meaning |
 | --- | --- |
-| `M`, `Q`, `L` | UAVs, target hypotheses, receive-array elements |
-| `p_m`, `t_q`, `r`, `s` | UAV, target, receiver, RIS positions |
-| `N_ris`, `phase_bits` | RIS elements and phase resolution |
-| `P_FA`, `P_D` | false-alarm and detection probability |
-| `mu0`, `mu1`, `Sigma0`, `Sigma1` | moment-matched evidence statistics |
-| `delta` | `mu1 - mu0` |
-| `b_i`, `epsilon_i` | report bits and BSC flip probability |
-| `gamma` | reception law over scheduled reports |
-| `B_report`, `B_control`, `B_total` | resource-bit ledger |
-| `S_total` | total time-bandwidth symbols per frame |
-| `E_PD(q, S_q)` | expected P_D of target q under schedule S_q |
+| `K`, `Q` | sensing UAVs, target hypotheses |
+| `o(q)` | fixed owner of target `q` |
+| `g_{iqa}` | reliable post-communication detection information of action |
+| `rel_{i,j}` | owner-direct delivery success (1 on the diagonal) |
+| `ell_{iq}` | quantized observation LLR |
+| `L_q`, `A_q`, `B_q` | owner belief and upper/lower thresholds |
+| `D_q` | residual detection deficit `[A_q - L_q]_+` |
+| `pi_q` / `theta_q` | task price / owner-local log-price |
+| `mu` | mirror-descent step |
+| `tau_{ij}`, `T_air`, `c_{ij}` | token airtime, receiver budget, fractional budget |
+| `lambda_j` | receiver airtime price (dual of capacity) |
+| `rho` | receiver offered-load ratio `L/T_air` |
+| `alpha`, `beta` | FA / MD QoS spec |
+| `B_ctrl` | control-bus bits per cycle |
+| `J`, `J_risk` | pooled / risk-aware worst-target stopping delay |
 
-## 11. Formal claims and proof sketches
+## 10. Formal claims and proof sketches (P5 current)
 
-### Claim 1 (G3, KKT family)
+### Claim A (normalization-free scale invariance)
 
-For a fixed received set, the `P_D`-optimal linear weight direction lies in
-`{(Q + mu I)^{-1} a : mu >= 0}` whenever the optimum has `P_D > 0.5`.
-Proof sketch: in whitened coordinates the shift is scale invariant; the KKT
-stationarity condition gives `(Q + mu I)y = (R/f) a` with `mu >= 0`.
+For `lambda = 0`, the local rule is unchanged by any common positive scale of
+the price weights: `argmax_q (w_q g_{iq}/(D_q+eps)) = argmax_q [ theta_q +
+log g_{iq} - log(D_q+eps) ]` where `theta_q = log w_q`.  Hence the global
+sum-normalizer `Z` (and any global `rbar`) cancels and is neither computed nor
+broadcast.  BEFORE finite-rate control quantization this is EXACTLY
+scale-equivalent to the normalized B0; the deployed finite-bit implementation
+is an APPROXIMATION whose action distortion must be certified (Claim B).
 
-### Claim 2 (G3, set monotonicity)
+### Claim B (finite-bit action-error bound)
 
-At operating points with `P_D > 0.5`, the G3-optimal `P_D` is monotone in the
-received set.  Proof sketch: the zero-extension of a subset-optimal weight is
-feasible for a superset, and the superset family contains the global linear
-optimum, so the max is nondecreasing.
+Only `theta_q` is quantized over the registered range `[theta_lo, theta_hi]`
+(mid-tread, `theta_lo` printed exactly) with `bits`; `log g_{iq}` and
+`log(D_q+eps)` are exact local quantities.  Let `m_i` be the ideal top-1 vs
+top-2 margin in log space.  The action is preserved whenever
+`m_i > 2*eps_theta`, `eps_theta = (theta_hi - theta_lo)/2^bits`
+(`norm_free_action_error_bound`).  This is a certified APPROXIMATION, NOT a
+strict policy-equivalent reparameterization of the finite-bit normalized B0
+(advice/020 section 2-3): the two quantizers distort different quantities and
+can differ at bin boundaries / near-tied actions / the idle gate.
 
-### Claim 3 (G4, expectation preserves monotonicity)
+### Claim C (capacity-regime phase diagram)
 
-`E_PD(q, S)` is monotone in `S` because every fixed-pattern `P_D` is
-monotone and the expectation is a nonnegative mixture.
+With `lambda_j` the dual of the receiver constraint, complementary slackness
+gives `rho_j < 1 => lambda_j = 0` (capacity-slack -> B0-lite) and
+`rho_j ~ 1 => lambda_j > 0` (capacity-binding -> full CA).  This is the
+KKT-grounded statement behind the `(8,4)` vs `(16,8)` empirical difference:
+it is a CONGESTION-REGIME transition, not an intrinsic scale dependence
+(advice/020 section 6-7).  A scale comparison must control the effective
+receiver load (fixed `T_air` or matched `rho_owner`) and use a nested master
+scenario (advice/020 section 8).
 
-### Claim 4 (G4, bounded-regime submodularity)
+## 11. Open modeling boundaries
 
-If `Sigma1 = c Sigma0` and `Sigma0` is diagonal, `D(S)` is modular and
-`P_D = Phi((sqrt(D) - z_FA)/sqrt(c))` is concave in `D` on the region
-`c + D - z_FA sqrt(D) >= 0`; expectation over any reception law preserves
-submodularity.  Cardinality-greedy then retains the classical `1 - 1/e`
-property.
+- The physical link rate is the Shannon upper bound; mutual coupling,
+  polarization and waveform-level RIS responses are NOT in the current main
+  model (they belong to the legacy RIS chain).
+- The owner-directed load estimate assumes balanced reporting; a per-cycle
+  realization may differ from the balanced `rho_owner` used for budgeting.
+- Hierarchical bootstrap quantifies scenario variation but the pool is still a
+  fixed registered-grid estimand unless the cell set is sampled as the
+  population (advice/020 section 12).
 
-### Claim 5 (G5-U, grid-search bound)
+---
 
-For an `L`-Lipschitz deployment objective, a grid with spacing `h` has
-deployment loss at most `L h sqrt(d)/2`.
+# Legacy Appendix (G3-G5, historical — NOT the paper main model)
 
-### Claim 6 (G5-V/W, branch-and-bound certificate)
+The following was the earlier paper-facing model (fixed geometry + one fusion
+center + BSC/erasure + expected-P_D fusion + RIS + global bit budget).  It is
+retained ONLY as history; the current model is the CA-FRIDS Dual-Bus system
+above.
 
-Each box upper bound `f(c) + L||h||_2` is valid for an `L`-Lipschitz
-objective; splitting only boxes that can beat the current best and stopping
-when `global_upper - best <= epsilon` yields an epsilon-optimality
-certificate.
+## L1. Legacy geometry / RIS channel
 
-## 12. Open modeling boundaries
+- One `L`-element receive array / fusion center `r`, `M` transmitting UAVs,
+  `Q` targets, RIS at `s`.
+- RIS additive-power gain `gain_mq = 1 + (strength_q * array_gain(theta_q))^2`;
+  physics-based two-way bistatic `P_dir = 1/(R_dir_tx^2 R_dir_rx^2)` and
+  three-leg cascaded `P_ris = N_ris^2 array_gain^2 aperture_scale/
+  (R_1^2 R_2^2 R_3^2)`; `gain = 1 + P_ris/P_dir`; optional weak-target
+  `direct_blockage`.
 
-- The RIS channel is a controlled path-loss model; per-element mutual
-  coupling, polarization, and waveform-level RIS responses are not modeled.
-- The 1-symbol-per-bit ledger is conservative but not waveform-derived.
-- Sensing OTFS-grid scaling under a fixed total time-bandwidth is still an
-  open ledger path.
-- Moment estimates are assumed exact in G3-G5; calibration error propagation
-  is covered separately by G1-A/B.
+## L2. Legacy reporting / fusion / selection
+
+- Report payload `p_i` bits, `b_i = p_i + 2` overhead, BSC flip `epsilon_i`,
+  erasure reception law `gamma`.
+- Deflection-optimal linear score `w = Sigma0_R^{-1} delta`; KKT family
+  `w(mu) = L^{-T}(Q + mu I)^{-1}L^{-1} delta`.
+- Global-bit-budget selection maximizing expected `P_D`
+  `E_PD(q, S_q) = E_gamma[ P_D(owner union received(S_q, gamma)) ]`; G4
+  two-stage greedy; G5-U grid-search and G5-V/W branch-and-bound Lipschitz
+  deployment certificates.
+
+## L3. Legacy claims (G3-G5)
+
+- G3 KKT family / set monotonicity; G4 expectation-preserved monotonicity and
+  bounded-regime submodularity (Sigma1 = c Sigma0, Sigma0 diagonal) with the
+  `1 - 1/e` greedy property; G5 grid/branch-and-bound Lipschitz bounds.
+
+These legacy mechanisms are superseded by the P5 owner-directed evidence +
+deficit-pricing + capacity-dual + anytime-valid-QoS system.  Any residual
+references to `expected-P_D`, central fusion, BSC/erasure, RIS, or the global
+bit budget in the G3-G5 appendices are historical.

@@ -73,6 +73,7 @@ from uav_otfs_isac.distributed_audit import (
     TOKEN_LLR_BITS,
     build_distributed_scenario,
     calibrate_target_bounds,
+    nested_scenario_subsets,
 )
 from scripts.run_p5a_ablation_ladder import (
     N_STREAMS,
@@ -81,6 +82,8 @@ from scripts.run_p5a_ablation_ladder import (
     _pooled_delta_ci,
     _pooled_j,
     _run_arm,
+    cell_sign_consistency,
+    hierarchical_block_bootstrap,
 )
 
 # FRESH held-out seed namespaces for the gate (disjoint from P4.2 cert
@@ -172,9 +175,10 @@ def _run_mc(args, scales, _scenario, _bounds, _airtime, t0):
                             max_steps=args.max_steps, raw_counts=True,
                             price_mode=args.price_mode,
                             pi_bits=args.pi_bits, lam_bits=args.lam_bits,
+                            theta_bits=args.pi_bits,
                             task_price=True, airtime_price=False,
                             norm_free=True, admission_policy="neutral",
-                            exog=tape)
+                            audit=args.audit, exog=tape)
 
                     def _b0d(bounds_, n_runs, seed_, tape):
                         return simulate_ca_frids(
@@ -213,7 +217,7 @@ def _run_mc(args, scales, _scenario, _bounds, _airtime, t0):
                             pi_bits=args.pi_bits, lam_bits=args.lam_bits,
                             task_price=True, airtime_price=False,
                             norm_free=False, admission_policy="neutral",
-                            exog=tape)
+                            audit=args.audit, exog=tape)
 
                     seed_res = {"test_seed": s, "arms": {}}
                     for name, runner in (
@@ -257,6 +261,51 @@ def main() -> None:
     parser.add_argument("--delta-j", type=float, default=0.05,
                         help="allow J_B0-lite <= J_C + delta_J (advice/019 "
                              "section 7)")
+    parser.add_argument("--audit", action="store_true",
+                        help="run the action-invariance audit (advice/020 "
+                             "section 2-3) on the B0-lite and B0 arms and "
+                             "certify the finite-bit action-error bound "
+                             "(norm-free is an approximation after "
+                             "quantization, not a strict reparameterization)")
+    parser.add_argument("--action-error-thresh", type=float, default=None,
+                        help="DEPRECATED name for --min-margin-ok: the "
+                             "required B0-lite margin_ok_fraction (the "
+                             "conservative P(margin>2*eps_theta) "
+                             "certificate) when --audit is on.  Default "
+                             "None = do not gate on margin; the primary "
+                             "finite-bit gate is --max-action-change")
+    parser.add_argument("--max-action-change", type=float, default=0.0,
+                        help="max allowed B0-lite action_change_rate for "
+                             "the finite-bit action-distortion certification "
+                             "when --audit is on (default 0.0 = no action is "
+                             "ever flipped by the finite-bit broadcast)")
+    parser.add_argument("--min-margin-ok", type=float, default=None,
+                        help="optional lower bound on the B0-lite "
+                             "margin_ok_fraction certificate when --audit "
+                             "is on (default None = not gated)")
+    parser.add_argument("--air-normalize", default="mesh",
+                        choices=("mesh", "owner"),
+                        help="airtime normalization (advice/020 section 5-7): "
+                             "'mesh' derives T_air from the full-mesh "
+                             "always-report load ratio rho_target (the "
+                             "legacy confound); 'owner' derives T_air from "
+                             "the balanced owner-directed offered load so "
+                             "that rho_owner is MATCHED at every scale -- "
+                             "the capacity-regime-controlled comparison")
+    parser.add_argument("--rho-owner", type=float, default=None,
+                        help="target owner-directed load ratio when "
+                             "--air-normalize owner (defaults to the same "
+                             "values as --rhos)")
+    parser.add_argument("--nested", action="store_true",
+                        help="build (8,4) as a nested subset of a (16,8) "
+                             "master scenario (same U2U/sensing "
+                             "realizations, advice/020 section 8) instead "
+                             "of two independent draws")
+    parser.add_argument("--hier-boot", type=int, default=10000,
+                        help="bootstrap repeats for the hierarchical "
+                             "(cell -> seed -> block) cross-scenario CI "
+                             "and cell sign consistency (advice/020 "
+                             "section 12)")
     parser.add_argument("--calib-seed", type=int, default=100)
     parser.add_argument("--calib-verify", type=int, default=1000)
     parser.add_argument("--calib-n-runs", type=int, default=300)
@@ -280,8 +329,18 @@ def main() -> None:
     # calibration depends only on (geom, scale) -- cache per (geom, scale)
     bound_cache: dict[tuple[int, tuple[int, int]], list] = {}
     air_cache: dict[tuple[int, tuple[int, int], float], dict] = {}
+    master_cache: dict[int, dict] = {}
 
     def _scenario(geom, k, q):
+        if args.nested:
+            # advice/020 section 8: one (16,8) master per geom, sliced to
+            # nested subsets so the two scales share U2U/sensing draws.
+            if geom not in master_cache:
+                master_cache[geom] = build_distributed_scenario(
+                    np.random.default_rng(geom), k_uavs=16, q_targets=8)
+            subs = nested_scenario_subsets(master_cache[geom])
+            if (k, q) in subs:
+                return subs[(k, q)]
         return build_distributed_scenario(np.random.default_rng(geom),
                                           k_uavs=k, q_targets=q)
 
@@ -298,10 +357,16 @@ def main() -> None:
         return bound_cache[key]
 
     def _airtime(geom, k, q, rho):
-        key = (geom, (k, q), rho)
+        key = (geom, (k, q), rho, args.air_normalize)
         if key not in air_cache:
-            air_cache[key] = build_airtime_model(
-                _scenario(geom, k, q), rho_target=rho)
+            if args.air_normalize == "owner":
+                air_cache[key] = build_airtime_model(
+                    _scenario(geom, k, q),
+                    rho_owner=args.rho_owner if args.rho_owner is not None
+                    else rho)
+            else:
+                air_cache[key] = build_airtime_model(
+                    _scenario(geom, k, q), rho_target=rho)
         return air_cache[key]
 
     cells = []
@@ -362,6 +427,8 @@ def main() -> None:
                 "qos": [r["arms"][name]["qos"] for r in sres],
                 "budget_feasible": float(np.mean([
                     _budget_feasible(r["arms"][name]) for r in sres])),
+                "audit": _pooled_audit(
+                    [r["arms"][name].get("audit") for r in sres]),
             }
         # pooled paired deltas across ALL test-seed blocks (the block is
         # the bootstrap unit, advice/019 section 8; blocks of every seed
@@ -389,7 +456,9 @@ def main() -> None:
         cell["minimality_frac"] = float(np.mean([
             1.0 if (a <= b + args.delta_j) else 0.0
             for a, b in zip(lite_j, c_j)]))
-        cell["verdict"] = _verdict(cell, args.delta_j)
+        cell["verdict"] = _verdict(cell, args.delta_j,
+                                   args.max_action_change,
+                                   args.min_margin_ok)
 
     # ---- overall aggregation ----------------------------------------------
     fracs = [c["minimality_frac"] for c in cells]
@@ -411,6 +480,17 @@ def main() -> None:
             [1.0 if c["verdict"]["pass"] else 0.0 for c in cells])),
     }
     if cells:
+        # HIERARCHICAL cross-scenario statistics (advice/020 section 12):
+        # the plain pooled CI is a fixed-grid-mixture estimand, NOT a
+        # cross-geometry generalization claim.  Report the hierarchical
+        # (cell -> seed -> block) bootstrap CI plus the per-cell sign
+        # consistency of D_C_minus_lite as the primary cross-scenario
+        # summary.
+        cell_sign_deltas = [c["deltas"]["D_C_minus_lite"] for c in cells]
+        overall["cell_sign_consistency"] = cell_sign_consistency(
+            cell_sign_deltas)
+        overall["hierarchical_D_C_minus_lite"] = hierarchical_delta_over_cells(
+            cells, n_boot=args.hier_boot, seed=777)
         # Pooled over the whole grid.  Blocks from DIFFERENT scales have
         # different target counts (q differs), so they cannot be stacked
         # together: pool per-scale, then report each scale separately
@@ -514,9 +594,68 @@ def _budget_feasible(arm_out) -> float:
     return float(arm_out.get("budget_feasible", 1.0))
 
 
-def _verdict(cell, delta_j) -> dict:
+def hierarchical_delta_over_cells(cells, n_boot=10000, seed=777):
+    """Build the hierarchical (cell -> seed -> block) bootstrap input for
+    ``D_C_minus_lite = J_C - J_B0-lite`` across the whole grid (advice/020
+    section 12).  Returns ``{point, ci95, state}`` where the CI covers
+    scenario (cell) variation, not just pooled-mixture block noise."""
+    hier_cells = []
+    for c in cells:
+        seed_blocks = []
+        for r in c["seed_results"]:
+            lite_n = _pooled_blocks([r["arms"]["B0-lite"]], "block_n")
+            lite_s = _pooled_blocks([r["arms"]["B0-lite"]], "block_s")
+            c_n = _pooled_blocks([r["arms"]["C"]], "block_n")
+            c_s = _pooled_blocks([r["arms"]["C"]], "block_s")
+            # hierarchical_block_bootstrap computes J_prev - J_cur with the
+            # FIRST pair as prev and the THIRD as cur.  We want
+            # D_C_minus_lite = J_C - J_B0-lite, so prev = C, cur = B0-lite.
+            seed_blocks.append((c_n, c_s, lite_n, lite_s))
+        hier_cells.append({"seed_blocks": seed_blocks})
+    d, lo, hi = hierarchical_block_bootstrap(hier_cells, n_boot, seed)
+    return {"point": d, "ci95": [lo, hi], "state": _ci_state(lo, hi)}
+
+
+
+def _pooled_audit(audits) -> dict | None:
+    """Pool the per-block action-invariance audit (advice/020 section 2-3)
+    across the blocks of all test seeds.  Each block audit carries the
+    aggregate ``margin_ok_fraction`` / ``action_change_rate`` and
+    ``margin_samples``; pooling weights by sample count so the pooled
+    fraction is the total-ok / total-samples over all blocks.  Returns
+    None when no audit was collected (``--audit`` off or no samples)."""
+    valid = [a for a in audits if a and a.get("margin_samples", 0) > 0]
+    if not valid:
+        return None
+    tot = float(sum(a["margin_samples"] for a in valid))
+    ok = float(sum(a["margin_ok_fraction"] * a["margin_samples"]
+                   for a in valid))
+    chg = float(sum(a["action_change_rate"] * a["margin_samples"]
+                    for a in valid))
+    return {
+        "margin_ok_fraction": ok / max(tot, 1.0),
+        "margin_samples": tot,
+        "action_change_rate": chg / max(tot, 1.0),
+        "eps_pi": valid[0].get("eps_pi", 0.0),
+        "eps_theta": valid[0].get("eps_theta", 0.0),
+        "n_cycles": float(sum(a["n_cycles"] for a in valid)),
+    }
+
+
+def _verdict(cell, delta_j, max_action_change=0.0,
+             min_margin_ok=None) -> dict:
     """Advice/019 section 7 final criteria, evaluated on the cross-seed
-    pooled deltas plus the per-seed consistency fraction."""
+    pooled deltas plus the per-seed consistency fraction.  When the
+    action-invariance audit was collected (``--audit``), criterion (v)
+    certifies the finite-bit action distortion of B0-lite: the deployed
+    norm-free form is an APPROXIMATION whose action distortion must be
+    certified (advice/020 section 2-3), NOT a strict reparameterization.
+
+    The PRIMARY freeze gate is the EMPIRICAL action preservation
+    ``action_change_rate <= max_action_change`` (default 0.0 = no action is
+    ever flipped by the finite-bit broadcast).  ``margin_ok_fraction`` (the
+    conservative ``P(margin > 2*eps_theta)`` certificate) is reported and,
+    when ``min_margin_ok`` is given, also gated."""
     reasons = []
     ok = True
     lite = cell["arms"]["B0-lite"]
@@ -534,12 +673,17 @@ def _verdict(cell, delta_j) -> dict:
         ok = False
         reasons.append(f"only {cell['minimality_frac']:.2f} of test seeds "
                        "satisfy J_B0-lite <= J_C + delta_J")
-    # (ii) norm-free is a reparameterization: B0-lite ~ B0
+    # (ii) norm-free vs normalized B0 delay: the finite-bit forms can
+    # legitimately differ at quantization-bin boundaries / near-tied
+    # actions (advice/020 section 2).  A certified LOSS is still a FAIL --
+    # the deployed equivalence is an approximation, not strict.
     d0 = cell["deltas"]["D_B0_minus_lite"]
     if d0["state"] == "CERTIFIED_LOSS":
         ok = False
         reasons.append("B0-lite is CERTIFIED slower than normalized B0 "
-                       "(norm-free is NOT a reparameterization here)")
+                       "(the finite-bit norm-free form is NOT an "
+                       "equivalent reparameterization here; advice/020 "
+                       "section 2)")
     # (iii) control bits must drop
     if lite["control_bits_per_cycle"] >= c["control_bits_per_cycle"]:
         ok = False
@@ -550,11 +694,27 @@ def _verdict(cell, delta_j) -> dict:
         ok = False
         reasons.append("budget feasibility not preserved (hard airtime "
                        "constraint broken)")
+    # (v) finite-bit action distortion certification (only when audited)
+    lite_audit = lite.get("audit")
+    if lite_audit is not None:
+        acr = lite_audit["action_change_rate"]
+        if acr > max_action_change:
+            ok = False
+            reasons.append(
+                f"B0-lite finite-bit action distortion not certified "
+                f"(action_change_rate {acr:.4f} > {max_action_change})")
+        if min_margin_ok is not None and \
+                lite_audit["margin_ok_fraction"] < min_margin_ok:
+            ok = False
+            reasons.append(
+                f"B0-lite margin certificate "
+                f"{lite_audit['margin_ok_fraction']:.3f} < "
+                f"{min_margin_ok}")
     return {
         "pass": ok,
         "reason": "; ".join(reasons) if reasons else
         "B0-lite minimality holds (delay, norm-free equivalence, control "
-        "bits, airtime feasibility)",
+        "bits, airtime feasibility, finite-bit action-error bound)",
     }
 
 

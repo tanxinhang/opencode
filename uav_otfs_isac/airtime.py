@@ -95,6 +95,7 @@ def build_airtime_model(
     shadowing_db: float = 3.0,
     t_air: float | None = None,
     rho_target: float | None = None,
+    rho_owner: float | None = None,
 ) -> dict:
     """Per-link SNR, rate, token airtime and the per-cycle airtime budget.
 
@@ -103,9 +104,24 @@ def build_airtime_model(
     ``T_air = max_i sum_{j != i} tau_ji / rho_target``.  Returns the
     ``tau`` (seconds), ``c_air = tau / T_air`` (fractional budget), and
     the ``rho_full`` load ratio of the always-report frame.
-    """
+
+    ``rho_owner`` (advice/020 section 5-7): the deployed system is an
+    owner-directed evidence plane, NOT a full mesh -- every sensing UAV's
+    token goes to the TARGET OWNER only, so the full-mesh-derived
+    ``rho_target`` overstates the congestion actually binding the current
+    algorithm by the factor ``(K/Q)/(K-1)``.  To run a matched
+    capacity-regime comparison (a ``capacity-binding`` vs
+    ``capacity-slack`` phase diagram rather than a K/Q ``scale`` effect),
+    give ``rho_owner``: ``T_air`` is then derived from the balanced
+    owner-directed offered load
+        L_owner[j] = (1/Q) * sum_{i != j} tau[i,j] * n_owned(j),
+    with ``n_owned(j)`` the number of targets owned by ``j``, so that
+    ``max_j L_owner[j] / T_air = rho_owner``.  ``rho_owner`` takes
+    precedence over ``rho_target`` when both are given; ``t_air`` beats
+    both."""
     k = scenario["k"]
-    b_tok = float(scenario.get("token_bits", token_bits_default(scenario["q"])))
+    q = int(scenario["q"])
+    b_tok = float(scenario.get("token_bits", token_bits_default(q)))
     s = np.asarray(scenario["u2u_success"], dtype=float)
     snr_db = np.asarray(
         snr_from_outage_success(s, threshold_db, shadowing_db), dtype=float)
@@ -114,9 +130,24 @@ def build_airtime_model(
     np.fill_diagonal(tau, 0.0)
     full_load = np.array([float(np.sum(tau[:, i])) for i in range(k)])
     if t_air is None:
-        if rho_target is None:
-            raise ValueError("give either t_air or rho_target")
-        t_air = float(np.max(full_load) / max(float(rho_target), 1e-12))
+        if rho_owner is not None:
+            # owner-directed capacity normalization (advice/020 section 5):
+            # balanced report -> each of the Q targets is owned by one UAV;
+            # UAV i reports to owner j with probability n_owned(j)/Q, so the
+            # expected offered load at receiver j is the tau_i_j sum weighted
+            # by n_owned(j)/Q.  Same-K/Q  =>  rho_eff = rho_owner exactly;
+            # changing K/Q at fixed rho_owner controls for the capacity
+            # regime (removes the K/Q confound of the full-mesh normalizer).
+            owner_of = np.asarray(scenario["owner_of"], dtype=int)
+            n_owned = np.bincount(owner_of, minlength=k).astype(float)
+            owner_load = np.array([
+                float(np.sum(tau[:, j] * (n_owned[j] / max(q, 1))))
+                for j in range(k)])
+            t_air = float(np.max(owner_load) / max(float(rho_owner), 1e-12))
+        elif rho_target is None:
+            raise ValueError("give t_air, rho_owner or rho_target")
+        else:
+            t_air = float(np.max(full_load) / max(float(rho_target), 1e-12))
     rho_full = float(np.max(full_load) / max(float(t_air), 1e-30))
     return {
         "snr_db": snr_db,

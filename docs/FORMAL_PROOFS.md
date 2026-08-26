@@ -1,23 +1,111 @@
 # Formal Proof Appendix
 
-This appendix states the formal claims used by Gates G3-G5 and gives proofs
-that match the implemented objects in `uav_otfs_isac/fusion.py`,
-`uav_otfs_isac/expected_pd.py`, and `uav_otfs_isac/deployment_search.py`.
-The notation follows `SYSTEM_MODEL.md`.
+This appendix states the formal claims used by the gates and gives proofs
+that match the implemented objects in `uav_otfs_isac/`.  The notation
+follows `SYSTEM_MODEL.md`.
 
-> **当前状态 (2026-08-24, P4-CLOSE / advice-016):** 本文档的定理主线在
-> P4-Closure 阶段前的 FRIDS-v2 时代（Theorem 4.95 `J_iq = y_q g_iq/D_iq`，
-> Theorem 4.109 local-vs-common action invariance，Theorem 4.110/4.111
-> service-delay bridge）。**当前主算法的理论链是 CA 的**
-> `J^CA_{iqa} = pi_q g_{iqa} - lambda_{o(q)} c_{iqa}` + hard admission
-> `sum_i tau_ij <= T_air`（offer→admission→link，pathwise），
-> 配 anytime-valid Beta-mixture e-process QoS 证书（`uav_otfs_isac/qos.py`）。
-> 本文档保留历史定理；P4 registered closure 已完成（advice/017）：P4.2
-> strong gate PASS(CA)/FAIL(v2)，P4.2b matched-QoS 前沿三状态分类，P4-META
-> promotion 只基于正向证据（见 `results/p4_meta_cert.json`）；CA m_star 如实
-> 报告，39.4% 只作为 observed held-out reduction 陈述。
+> **当前状态 (2026-08-25, P5 / advice-020):** 本文档大部分主体是历史时代的证明
+> （G3-G5 融合链、FRIDS-v2 时代 Theorem 4.95 `J_iq = y_q g_iq/D_iq`、
+> Theorem 4.109 local-vs-common action invariance、Theorem 4.110/4.111
+> service-delay bridge）。**当前主算法的理论链是 P5 CA-FRIDS Dual-Bus**，其核心
+> 三条声明见下方 **第 0 节**：
+>   1. **Normalization-Free scale invariance**(advice/020 §3)：`lambda=0` 时
+>      本地决策在价格权重任意公共尺度下不变，global sum-normalizer `Z` / 任意
+>      `rbar` 取消，无需计算或广播——owner-local `theta_q` 更新无任何 global
+>      reduction；
+>   2. **有限 bit action-error bound**(advice/020 §2-3)：量化 `theta_q` 后，
+>      action 在 log-space top-1 margin `> 2*eps_theta` 时保持——这是被认证的
+>      **近似**，不是严格 policy-equivalent reparameterization；
+>   3. **Capacity-regime 相图**(advice/020 §6-7)：receiver 容量约束对偶
+>      `lambda_j` 由 KKT complementary slackness 给出
+>      `rho_j<1 => lambda_j=0`(capacity-slack)、`rho_j~1 => lambda_j>0`
+>      (capacity-binding)——是 congestion-regime transition，不是 scale 相变。
+> 旧证明保留为历史（§1 之后）；P5 注册判决见 `results/p4_meta_cert.json` 与
+> `SYSTEM_RESEARCH_REPORT.md` §0/§4.18。这三条声明是
+> `SYSTEM_MODEL.md` 第 0 节统一优化表述中约束 C5 / C6 / C8 的形式化：Claim 0.1
+> ⟺ C5（分布式信息、无 global reduction），Claim 0.2 ⟺ C6（有限 bit 控制证书），
+> Claim 0.3 ⟺ C8（capacity-regime KKT complementary slackness）。
+
+## 0. P5 current-theory claims
+
+### Claim 0.1 (normalization-free scale invariance)
+
+For `lambda = 0` (no receiver airtime price), the local decision rule is
+invariant to any common positive scale of the task-price weights:
+
+```
+argmax_q ( w_q g_{iq} / (D_q + eps) )
+  = argmax_q [ theta_q + log g_{iq} - log(D_q + eps) ],
+      theta_q = log w_q.
+```
+
+Consequently the global sum-normalizer `Z = sum_p w_p` and any global
+`rbar` cancel in the argmax and are NEVER computed nor broadcast.  The
+owner keeps an owner-local log-price updated as
+
+```
+theta_q(t+1) = theta_q(t) - mu * r_q(t),   r_q = S_q/(D_q+eps),
+```
+
+which is PURELY owner-local (its own received service over its own
+deficit) — no global `max` shift, no sum normalizer, no spanning-tree /
+consensus reduction (`_owner_theta_update`).
+
+### Claim 0.2 (finite-bit action-error bound)
+
+Only `theta_q` is broadcast and quantized over the registered range
+`[theta_lo, theta_hi]` (mid-tread, `theta_lo` printed exactly) with `bits`;
+`log g_{iq}` and `log(D_q + eps)` are computed locally at full precision.
+Let `eps_theta = (theta_hi - theta_lo)/2^bits` and let `m_i` be the ideal
+top-1 vs top-2 margin of `[ theta_q + log g_{iq} - log(D_q+eps) ]` for UAV
+`i`.  The broadcast (quantized) rule preserves the true action whenever
+
+```
+m_i > 2 * eps_theta.
+```
+
+Proof sketch: a change in the selected target under the quantized score
+requires the top-1 and top-2 ideal log scores to lie within `2*eps_theta`
+of each other (the argmax flips only when their difference is less than
+twice the quantization step).  This is `norm_free_action_error_bound`.
+
+**Honesty note (advice/020 §2):** this certifies an APPROXIMATION.  The
+deployed finite-bit normalization-free form is NOT a strict
+policy-equivalent reparameterization of the finite-bit normalized B0: the
+two finite-bit quantizers distort different quantities (`theta_q` vs
+`pi_q = y_q/(D_q+eps)`) and can disagree at quantization-bin boundaries,
+near-tied actions and the idle gate.
+
+### Claim 0.3 (capacity-regime phase diagram)
+
+The receiver constraint with dual price `lambda_j >= 0`,
+
+```
+sum_{i,q:o(q)=j} x_{iq} tau_{ij} <= T_air,
+```
+
+has KKT complementary slackness `lambda_j (rho_j - 1) = 0`, hence
+
+```
+capacity slack   rho_j < 1   =>   lambda_j = 0   (B0-lite regime)
+capacity binding rho_j ~ 1   =>   lambda_j > 0   (full CA regime)
+```
+
+Proof sketch: standard stationarity of the receiver-load constraint; the
+dual is positive only when the constraint binds.  This is the
+KKT-grounded statement behind the `(8,4)` vs `(16,8)` empirical
+difference: a CONGESTION-REGIME transition, NOT an intrinsic scale
+dependence (advice/020 §6-7).  A scale comparison must control the
+effective receiver load (fixed `T_air` or matched `rho_owner`,
+`SYSTEM_MODEL.md` §5) and use a nested master scenario (advice/020 §8).
+
+---
 
 ## 1. Notation and standing assumptions
+
+> **历史标志:** 自本节起的证明(G3-G5 融合/选择/部署链、FRIDS-v2 时代的
+> Theorem 4.95-4.111)是历史时代证明,保留仅供追溯;当前主算法理论链见上方
+> **第 0 节**(P5 CA-FRIDS Dual-Bus)。
 
 - `Phi` and `phi` denote the standard Gaussian CDF and PDF.
 - `z = Phi^{-1}(1 - P_FA)` is the fixed false-alarm threshold, with

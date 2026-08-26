@@ -616,3 +616,183 @@ def test_p41a_four_arms_share_exogenous_tape(scenario, bounds, air_cong):
     b1_h1 = rows_b1[0]["raw_counts"]["n_H1"]
     c_h1 = rows_c[0]["raw_counts"]["n_H1"]
     assert a_h1 == b0_h1 == b1_h1 == c_h1
+# ---------------------------------------------------------------------------
+# advice/020 section 3: genuinely owner-local normalization-free theta path
+# ---------------------------------------------------------------------------
+
+
+def test_owner_theta_update_is_max_free_and_owner_local():
+    """advice/020 section 3: ``_owner_theta_update`` must NOT apply any
+    global max shift / sum normalizer -- each ``theta_q`` moves only by its
+    OWN ``-mu r_q``, so adding a constant to every ratio must change NO
+    owner's update (there is no recentering anywhere)."""
+    from uav_otfs_isac.ca_frids import _owner_theta_update
+    theta = np.array([np.log(0.5), np.log(0.3), np.log(0.2)])
+    ratios = np.array([1.0, 2.0, 3.0])
+    und = [0, 1, 2]
+    t1 = _owner_theta_update(theta, 0.5, ratios, und)
+    # exact additive update, no normalization: theta_q' = theta_q - mu*r_q
+    assert np.allclose(t1, theta - 0.5 * ratios, atol=1e-12)
+    # owner-locality: changing ONLY target 1's ratio must change ONLY
+    # target 1's theta -- no cross-target normalization / global coupling
+    ratios2 = np.array([1.0, 5.0, 3.0])
+    t2 = _owner_theta_update(theta, 0.5, ratios2, und)
+    assert t2[0] == pytest.approx(t1[0], abs=1e-12)
+    assert t2[2] == pytest.approx(t1[2], abs=1e-12)
+    assert t2[1] == pytest.approx(theta[1] - 0.5 * 5.0, abs=1e-12)
+    # undecided subset only
+    t3 = _owner_theta_update(theta, 0.5, ratios, [1])
+    assert t3[1] == pytest.approx(theta[1] - 1.0, abs=1e-12)
+    assert t3[0] == pytest.approx(theta[0], abs=1e-12)
+
+
+def test_norm_free_action_error_bound_certificate():
+    """advice/020 section 2-3: the log-domain action-invariance certificate
+    passes when the top-1 log margin exceeds twice the theta quantization
+    step, and fails when the margin is too small."""
+    from uav_otfs_isac.ca_frids import norm_free_action_error_bound
+    lo, hi, bits = -20.0, 0.0, 10
+    step = (hi - lo) / (2 ** bits)  # ~0.0195
+    assert norm_free_action_error_bound(hi, lo, bits, 10.0) is True
+    assert norm_free_action_error_bound(hi, lo, bits, 0.01) is False
+    # boundary: exactly 2*step is NOT certified (must be strictly greater)
+    assert norm_free_action_error_bound(hi, lo, bits, 2.0 * step) is False
+    assert norm_free_action_error_bound(hi, lo, bits, 2.0 * step + 1e-6) is True
+
+
+def test_norm_free_sim_runs_and_drops_scalar_z():
+    """advice/020 section 3: the genuinely normalization-free path runs
+    end-to-end deterministically, keeps ``airtime_price=False`` (lambda
+    free), and the control bus bills ONLY ``Q * theta_bits`` -- no global
+    ``pi`` vector and no scalar ``Z`` (no global reduction)."""
+    from uav_otfs_isac.ca_frids import simulate_ca_frids
+    from uav_otfs_isac.distributed_audit import build_distributed_scenario
+    from uav_otfs_isac.airtime import build_airtime_model
+    rng = np.random.default_rng(0)
+    sc = build_distributed_scenario(rng, 6, 3)
+    am = build_airtime_model(sc, rho_target=1.2)
+    bt = [(8.0, -8.0)] * 3
+    g = simulate_ca_frids(sc, bt, am, n_runs=60, seed=5, max_steps=40,
+                          price_mode="global_simplex", pi_bits=10,
+                          lam_bits=10, theta_bits=10,
+                          task_price=True, airtime_price=False,
+                          norm_free=True, admission_policy="neutral")
+    assert 0.0 < g["worst_target_delay"] <= 40.0
+    # lambda-free: B0-lite bills Q theta_bits = 3*10 = 30 bits/cycle
+    assert g["comm"]["control_bits_per_cycle"] == pytest.approx(30.0, abs=1e-9)
+    # a normalized global-simplex arm with lambda still bills Q*pi_bits + Z
+    g_norm = simulate_ca_frids(sc, bt, am, n_runs=30, seed=5, max_steps=40,
+                               price_mode="global_simplex", pi_bits=10,
+                               lam_bits=10, task_price=True,
+                               airtime_price=False, norm_free=False,
+                               admission_policy="neutral")
+    assert g_norm["comm"]["control_bits_per_cycle"] == pytest.approx(
+        3 * 10 + 10, abs=1e-9)
+
+
+def test_norm_free_audit_log_domain_certificate_runs():
+    """advice/020 section 2-3: the norm-free audit computes the log-domain
+    action-invariance certificate (eps_theta) instead of the pi-domain
+    bound."""
+    from uav_otfs_isac.ca_frids import simulate_ca_frids
+    from uav_otfs_isac.distributed_audit import build_distributed_scenario
+    from uav_otfs_isac.airtime import build_airtime_model
+    rng = np.random.default_rng(1)
+    sc = build_distributed_scenario(rng, 6, 3)
+    am = build_airtime_model(sc, rho_target=1.8)
+    bt = [(8.0, -8.0)] * 3
+    g = simulate_ca_frids(sc, bt, am, n_runs=40, seed=7, max_steps=40,
+                          price_mode="global_simplex", pi_bits=10,
+                          lam_bits=10, theta_bits=10,
+                          task_price=True, airtime_price=False,
+                          norm_free=True, admission_policy="neutral",
+                          audit=True)
+    assert 0.0 <= g["audit"]["margin_ok_fraction"] <= 1.0
+    assert g["audit"]["margin_samples"] > 0
+    assert g["audit"]["eps_pi"] == 0.0
+
+# ---------------------------------------------------------------------------
+# advice/020 sections 5-8: capacity-regime normalization + nested scenario
+# ---------------------------------------------------------------------------
+
+
+def test_airtime_owner_rho_normalization_controls_capacity_regime():
+    """advice/020 section 5-7: with the FULL-MESH-derived budget the
+    owner-directed system sees far lower effective congestion (the K/Q
+    confound -- the ``(16,8)`` network has ~2x more slack than ``(8,4)``
+    at the same nominal rho_target).  The ``rho_owner`` mode instead
+    derives ``T_air`` from the balanced owner-directed load so that the
+    owner-directed load ratio MATCHES rho_owner at every scale -- this is
+    the capacity-regime-controlled comparison that removes the scale
+    confound."""
+    from uav_otfs_isac.airtime import build_airtime_model
+    from uav_otfs_isac.distributed_audit import build_distributed_scenario
+    k, q = 16, 8
+    rng = np.random.default_rng(2)
+    sc = build_distributed_scenario(rng, k, q)
+
+    def _owner_ratio(am):
+        owner_of = sc["owner_of"]
+        n_owned = np.bincount(owner_of, minlength=k).astype(float)
+        owner_load = np.array([
+            float(np.sum(am["tau"][:, j] * (n_owned[j] / q)))
+            for j in range(k)])
+        return float(np.max(owner_load) / max(am["t_air"], 1e-15))
+
+    # (i) the mesh-derived budget leaves the owner-directed system with
+    # slack: effective owner ratio << nominal rho_target = 1.8
+    a_mesh = build_airtime_model(sc, rho_target=1.8)
+    r_eff = _owner_ratio(a_mesh)
+    assert r_eff < 1.8
+    # the audit's (K/Q)/(K-1) = (2)/(15) ~ 0.133 factor
+    assert r_eff == pytest.approx(1.8 * (2.0 / 15.0), rel=0.35)
+    # (ii) the rho_owner mode MATCHES the owner-directed load ratio exactly
+    a_owner = build_airtime_model(sc, rho_owner=1.8)
+    assert _owner_ratio(a_owner) == pytest.approx(1.8, rel=1e-6)
+    # (iii) explicit t_air always beats both
+    a_ex = build_airtime_model(sc, t_air=1.0, rho_owner=1.8)
+    assert a_ex["t_air"] == pytest.approx(1.0)
+
+
+def test_nested_scenario_subsets_share_realizations():
+    """advice/020 section 8: the (8,4) subset of a (16,8) master reuses the
+    SAME U2U top-left block and the SAME per-host kernels, so a scale
+    comparison is no longer confounded by fresh channel/sensing draws."""
+    from uav_otfs_isac.distributed_audit import (
+        build_distributed_scenario, nested_scenario_subsets)
+    rng = np.random.default_rng(3)
+    master = build_distributed_scenario(rng, 16, 8)
+    subs = nested_scenario_subsets(master)
+    s84 = subs[(8, 4)]
+    s168 = subs[(16, 8)]
+    assert s84["k"] == 8 and s84["q"] == 4
+    assert s168["k"] == 16 and s168["q"] == 8
+    # same U2U top-left block
+    assert np.allclose(s84["u2u_success"],
+                       master["u2u_success"][:8, :8])
+    # same per-host kernels
+    assert len(s84["by_host"][(3, 2)]) == \
+        len(master["by_host"][(3, 2)])
+    assert s84["by_host"][(3, 2)][0] is master["by_host"][(3, 2)][0]
+    # owner roles preserved on the subset
+    assert s84["owner_of"] == [int(o % 8) for o in range(4)]
+
+def test_norm_free_task_price_false_is_flat_architecture():
+    """advice/020: ``norm_free=True`` with ``task_price=False`` must fall
+    back to the flat 1/Q architecture score (B00 semantics) -- the theta
+    plane is neither broadcast nor billed, and theta is never updated."""
+    from uav_otfs_isac.ca_frids import simulate_ca_frids
+    from uav_otfs_isac.distributed_audit import build_distributed_scenario
+    from uav_otfs_isac.airtime import build_airtime_model
+    rng = np.random.default_rng(4)
+    sc = build_distributed_scenario(rng, 6, 3)
+    am = build_airtime_model(sc, rho_target=1.2)
+    bt = [(8.0, -8.0)] * 3
+    g = simulate_ca_frids(sc, bt, am, n_runs=40, seed=5, max_steps=40,
+                          price_mode="global_simplex", pi_bits=10,
+                          lam_bits=10, theta_bits=10,
+                          task_price=False, airtime_price=False,
+                          norm_free=True, admission_policy="neutral")
+    assert 0.0 < g["worst_target_delay"] <= 40.0
+    # flat architecture: no dynamic price bus broadcast at all
+    assert g["comm"]["control_bits_per_cycle"] == pytest.approx(0.0, abs=1e-9)

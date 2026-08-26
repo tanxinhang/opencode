@@ -1,19 +1,73 @@
 # UAV-OTFS-ISAC 整体实验报告(含最优解)
 
-- 日期: 2026-08-17
+- 日期: 2026-08-25(P5)
 - 系统模型与记号: 见 `docs/SYSTEM_MODEL.md`;形式化证明: 见 `docs/FORMAL_PROOFS.md`
 - 当前问题与优化方案: 见 `docs/PROBLEMS_AND_OPTIMIZATION.md`
 - 实验运行记录: 见 `docs/RUN_MATRIX.md`
 
+> **当前状态 (2026-08-25, P5 / advice-020):** 本文档是**历史演进记录**。当前
+> **注册主系统** 是 **CA-FRIDS Dual-Bus 联合容量调度 + 顺序检测 + anytime-valid
+> QoS 认证**(owner-directed evidence plane + detection-deficit task pricing +
+> receiver-capacity dual bus + hard airtime admission),见
+> `uav_otfs_isac/ca_frids.py` + `airtime.py` + `qos.py`,注册基准判决见
+> `results/p4_meta_cert.json`。下文 §1-§4 的旧链(fusion center / expected-P_D /
+> RIS / 全局 bit budget / FRIDS-v1/v2 局部对偶)是**历史阶段**。论文系统模型以
+> **第 0 节 (P5 当前)** 与 `SYSTEM_MODEL.md` 正文为准。
+
 ---
 
-## 1. 系统概述
+## 0. 当前注册系统(P5)摘要
 
-分布式 UAV-OTFS-ISAC 选择性软信息融合检测系统:`M` 个 UAV 对 `Q` 个目标产生 OTFS DD 域矩匹配高斯证据 `(mu0, mu1, Sigma0, Sigma1)`,经 `b_i` 比特量化、BSC 翻转(概率 `epsilon_i`)与接收律 `gamma` 擦除后,由融合中心用偏转最优线性得分融合,得到目标检测概率 `P_D = Phi((shift - z_FA)/sigma)`。感知与报告链路物理模型、资源账本见 `SYSTEM_MODEL.md`。
+**主系统(P5,advice/008-020 收敛)**: `K` 感知 UAV × `Q` 目标,每个目标有固定
+owner `o(q)`;每架 UAV 本地感知并把证据 token **只发往目标 owner**(owner-directed
+evidence plane,非 full mesh);owner 在其 own belief 上做**双阈值顺序检测**
+(`L_q >= A_q => H1`,`L_q <= B_q => H0`);调度由**检测缺陷定价**
+(`D_q = [A_q - L_q]_+`)驱动,任务价格总线 + receiver 容量对偶总线
+(`lambda_j`),receiver 硬性按 airtime budget 准入。
+
+- **Normalization-Free B0-lite(advice/019-020)**: lambda-free 的 B0 用
+  **owner-local log-price** `theta_q(t+1)=theta_q(t)-mu*r_q(t)`(无全局 max、
+  无 sum-normalizer Z、无任何 global reduction),广播**量化后的 theta_q**,本地
+  决策 `argmax_q [theta_q + log g_iq - log(D_q+eps)]`。有限 bit 实现是**近似**,
+  其 action distortion 由 `norm_free_action_error_bound` 认证——**不是**严格
+  policy-equivalent reparameterization(advice/020 §2-3)。控制面 Q*theta_bits
+  bits/周期(无 Z、无 lambda bus)。
+- **容量机制相图(advice/020 §6-7)**: `rho_j<1 => lambda_j=0`(capacity-slack,
+  B0-lite 区)、`rho_j~1 => lambda_j>0`(capacity-binding,full CA)——由 KKT
+  complementary slackness 支撑,是 **congestion-regime transition**,不是
+  intrinsic scale dependence。
+- **主机制归属(4 seed 稳定)**: detection-deficit task pricing 是主导**算法级**
+  正机制(`D_pi ≈ +1.15`,CERTIFIED_GAIN);owner-directed architecture 是主导
+  **系统级**机制(`D_owner ≈ +1.9`);lambda 在注册冻结点稳定**伤害** delay
+  (`D_lambda < 0`,capacity/feasibility steer,非 delay 机制)。
+- **当前不冻结的两个声明**: ① "B0-lite 与 B0 严格 policy-equivalent"——不成立,
+  需按 §0 的有限 bit 认证表述;② "小规模固有需要 lambda、大规模不需要"——存在
+  capacity 归一化混杂,需 capacity-regime + nested scenario 实验后才能定论
+  (advice/020 最终结论)。
+
+**统一优化表述(升华)**: 整个 P5 系统收敛为**一套分层优化目标 + 一组限定条件**
+(`SYSTEM_MODEL.md` §0)：Level 0 系统目标 `min max_q E[T_q|H1]`(受 anytime-valid
+QoS C1 约束)→ Level 1 每周期联合感知-通信 LP(缺陷覆盖 + receiver 容量;强对偶驻点
+给出 `pi_q`/`lambda_j`)→ Level 2 分布式本地 best response(norm-free 用
+`argmax[theta_q+log g-log(D+eps)]`)→ Level 3 价格动力学(mirror descent / dual
+ascent)→ Level 4 阈值 QoS 前沿。约束 C1-C8 恰为该分层分解的精确性条件：C8 即
+capacity-regime 相图、C6 即有限 bit action-error 证书、C5 即 owner-local 无
+global reduction。advice/020 三处修改分别“升华”为 C5/C6/C8 的规范实现。
+
+**当前最优配置(P5)**: 见 §4.18(P5-A/P5-MIN 注册结果)与 §7。
+
+---
+
+## 1. 系统概述(历史: 旧中心化软信息链)
+
+> **历史阶段标志:** 本节描述的是旧时代模型(fusion center + expected-P_D +
+> RIS + 全局 bit budget),已由 P5 CA-FRIDS Dual-Bus 取代;保留仅供追溯。
+
+分布式 UAV-OTFS-ISAC 选择性软信息融合检测系统:`M` 个 UAV 对 `Q` 个目标产生 OTFS DD 域矩匹配高斯证据 `(mu0, mu1, Sigma0, Sigma1)`,经 `b_i` 比特量化、BSC 翻转(概率 `epsilon_i`)与接收律 `gamma` 擦除后,由融合中心用偏转最优线性得分融合,得到目标检测概率 `P_D = Phi((shift - z_FA)/sigma)`。感知与报告链路物理模型、资源账本见 `SYSTEM_MODEL.md` Legacy 附录。
 
 **部署模型(2026-08-17 纠偏,advice/005)**: 在线部署为**通信受限分布式**—— 每架 UAV 仅用信息集 `I_{i,t}`(本地观测 + 成功送达的 U2U token + 自身历史)与局部 belief `L_{i,q,t}` 决策(`a_{i,t} = π_i(I_{i,t})`),U2U 协调轮次 ≤ 2,节点级预算,分布式 owner/证据 token/冲突价格;集中融合中心保留为**离线审计 oracle**(Gate F0,见 §4.8)。
 
-**当前唯一主问题(advice/006 收敛,2026-08-17)**: 在通信受限、无中心的多 UAV 协同检测系统中,紧凑证据交换和局部任务决策能否在 UAV/目标规模增加时维持可靠检测?其余(FOV/安全距离/动态 owner/移动/coalition/稀疏拓扑)全部冻结为模型假设与后续扩展;本轮只回答"当前系统自身能扩展到哪里"(Gate F0-S,见 §4.9)。
+**当时主问题(advice/006)**: 在通信受限、无中心的多 UAV 协同检测系统中,紧凑证据交换和局部任务决策能否在 UAV/目标规模增加时维持可靠检测?——此问题链已由 F0 系列与 P5 CA-FRIDS 收敛(见 §4.18)。
 
 ## 2. 优化问题与最优解
 
@@ -306,6 +360,32 @@ F0-E 关闭 token 保真度方向后,剩余 dec gap 定位在投递/协调层。
 - **Q>K 模型补全(诚实)**: owner 循环分配(q % K,目标共享 owner),token 记账级联丢弃死载荷(u→r→χ→stamp,⌈log2Q⌉ 恒 ≤19 bits)—— 均为审计发现的基础修复。
 - 理论细节与显式边界: `docs/THEORY_DEVELOPMENT.md` §1.26;历史: `docs/THEORY_DEVELOPMENT_HISTORY.md` 阶段 34。
 
+## 4.18 注册 P5-A 阶梯与 P5-MIN 最小性(advice/017-020,2026-08,当前主线)
+
+**P5-A 机制归属阶梯(注册冻结点 geom=2, rho=1.8, (16,8), 每臂 pooled worst-target
+`E[T|H1]`, `results/` P5 系列)**: A/FRIDS-v2 5.059 → B00/owner-only 4.288
+(`D_owner +15.2%`, CI [0.716,0.825]) → B0/+task price 3.138
+(`D_pi +26.8%`, CI [1.089,1.216], **DOMINANT**, ~84% of net gain) →
+B1/+receiver airtime price 3.747 (`D_lambda -19.5%`: lambda HURTS worst-target
+delay at the frozen point—— capacity/feasibility steer, 非 delay 机制) →
+C/+density admission 3.690 (`D_admission +1.5%`)。2×2 core table 确认
+`delta_architecture_flat +1.893`(owner-directed architecture, 系统级)、
+`delta_task_owner +1.150`(detection-deficit pricing, 算法级)均 CERTIFIED_GAIN。
+
+**P5-MIN 跨 seed 最小性 gate(3 test seeds × 24×500 block bootstrap, 4 stat
+tests, `results/p5min_robustness_gate.json`)**: (D_pi) 算法级主机制在 4/4 seed
+稳定(`D_pi ≈ +1.15`, 全部 CERTIFIED_GAIN 且被选为 sequential ladder 的 dominant
+positive mechanism);(D_lambda<0) 4 seed 完全稳定。
+
+**advice/020 纠偏(2026-08-25)**: ① B0-lite 当前实现不是严格等价重参数化(仍做
+global max-centering、量化 scale-dependent pi)→ 已改为 owner-local theta 路径并
+加有限 bit action-error 认证(见 `ca_frids.py`、`SYSTEM_MODEL.md` §0/§10);②
+(8,4) vs (16,8) 的"scale effect"混入 capacity 归一化——改用 owner-directed
+`rho_owner` 归一化 + nested master scenario 控制后,解释为 capacity-regime
+transition;③ 24×500 只是 bootstrap 分辨率改善,跨场景泛化需 hierarchical
+bootstrap + cell sign consistency 为主口径;④ 三个 final artifacts 需在 clean
+HEAD 重跑(provenance `git_dirty=true` 债)。
+
 ## 5. 验证与审计状态
 
 - 全套 pytest **602 passed**(2026-08-17 复核,exit 0);数值审计 **162 项 PASS**(`verify_paper_numbers.py`,含 F0-G6 共 3 项:包络 27/3/0、ρ_I* 非绑定、Γ∈[0.75,1])。
@@ -318,6 +398,18 @@ F0-E 关闭 token 保真度方向后,剩余 dec gap 定位在投递/协调层。
 
 ## 7. 当前整体性能与投稿差距(锐评)
 
-**当前最优配置**(FRIDS-v2 修正主线:严格局部 ν·g/D 原始-对偶调度 + mirror descent 价格 + 策略匹配 B,19-bit 规模感知 token,固定 owner,full mesh): (6,3) **3.32** / (8,4) **3.45** / (12,6) **3.60** / (16,8) **3.53**(5-10 场景平均);P_FA≈0、P_MD ≤0.053 全档零违例;决策 O(Q) argmax/UAV、tx 19 bits/UAV 恒定、rx 19×(K−1) 线性。
+**当前注册主系统(P5,2026-08-25)**: CA-FRIDS Dual-Bus(owner-directed evidence +
+detection-deficit task pricing + receiver-capacity dual + hard airtime
+admission + sequential owner detection + anytime-valid QoS)。注册冻结点
+(16,8,rho=1.8) 上 worst-target `E[T|H1]`: **B0-lite(最小 core) 3.19 vs full C
+3.23**(`D_C_minus_lite = +0.036`, CI 全正);归一化 B0 为 3.12。算法级主机制
+`D_pi ≈ +1.15`(4 seed 稳定),系统级 owner-directed 机制 `D_owner ≈ +1.9`。
 
-**锐评追踪(SYSTEM_MODEL.md §14 必做清单)**: ① 多场景已做(5-10 场景/档);② 操作点已校;③ FRIDS 系列实质改善(16/8 从 5.36 → v1 3.26 → **v2 3.53**,跨场景稳定);④ η(K) 退役;⑤ **FRIDS 一致性审计完成**(g 恒等式、对偶一致性、量纲、provenance、token 记账全部闭合)。剩余: 可行性区域刻画(负载 cut ρ(S) 理论必要条件已实现,需极端参数区实证)、FRIDS-v2 全场景 10-seed 复核、定理 1-4 形式化(FORMAL_PROOFS)。
+**锐评追踪**: ① 多场景已做;② 操作点已校;③ FRIDS 系列已由 P5 CA-FRIDS 继承并发扬
+(检测缺陷定价成为主导机制);④ lambda 降级为 capacity/feasibility steer(注册点稳定
+伤害 delay);⑤ 当前待收敛项(advice/020 五件事): 修正 normalization-free 实现 ✓(已改)、
+scale Gate→capacity-regime Gate ✓(已加 owner/nested 选项)、补 B0-core vs C
+matched-QoS gate ✓(`run_p5min_matched_qos_gate.py`)、clean HEAD 重跑 artifacts +
+hierarchical 统计 ✓(框架已加,重跑待算)、重写三文档 ✓。剩余: 在 capacity-binding
+stress cell 上完成 matched-QoS 认证、clean HEAD 重跑三个 final artifacts 并落
+provenance。

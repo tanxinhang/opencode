@@ -157,6 +157,46 @@ def build_distributed_scenario(
     }
 
 
+def nested_scenario_subsets(master: dict):
+    """Nested scaling subsets of a master scenario (advice/020 section 8).
+
+    The ``(8,4) -> (16,8)`` comparison in the current P5-MIN gate is NOT a
+    clean scaling experiment: it changes network size, weak-target
+    composition (``weak_targets=(0,)`` makes 1/4 of a 4-target grid weak
+    but only 1/8 of an 8-target grid), the U2U realization, the sensing
+    realization and the airtime physical scale all at once.
+
+    ``nested_scenario_subsets`` returns the nested subset scenarios
+        (k, q) = (8,4) subset of the master (16,8)
+    that remove the realization confounds: the ``(8,4)`` subset reuses the
+    SAME U2U matrix top-left block (same channel realization), the SAME
+    per-host kernels (same sensing realization), and the SAME per-target
+    weak labels (target 0 is equally weak in both -- per-target difficulty
+    composition is held constant).  The only thing that legitimately
+    changes is the network size and, unavoidably, the weak-target FRACTION
+    (1/4 vs 1/8 for ``weak_targets=(0,)``) -- so any remaining difference
+    is a ``congestion-regime`` / capacity effect, not a confound of the
+    channel/sensing realizations.  ``master`` is expected to have ``k>=8``
+    and ``q>=4`` (build it at the (16,8) resolution)."""
+    from copy import deepcopy
+    k_m, q_m = master["k"], master["q"]
+    out = {}
+    for (k, q) in ((8, 4), (k_m, q_m)):
+        sc = deepcopy(master)
+        sc["k"], sc["q"] = int(k), int(q)
+        u2u = np.asarray(master["u2u_success"], dtype=float)
+        sc["u2u_success"] = u2u[:k, :k]
+        sc["owner_of"] = [int(o % k) for o in range(q)]
+        sc["links"] = {qq: [] for qq in range(q)}
+        sc["by_host"] = {(i, qq): [] for i in range(k) for qq in range(q)}
+        for (i, qq), acts in master["by_host"].items():
+            if i < k and qq < q:
+                sc["by_host"][(i, qq)] = acts
+                sc["links"][qq] += acts
+        out[(k, q)] = sc
+    return out
+
+
 def _wald_grid(alpha: float, beta: float, margin: float = 1.0,
                points: int = 7):
     """The (A, B) scan grid around the Wald values used by the

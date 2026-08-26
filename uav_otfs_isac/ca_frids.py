@@ -86,22 +86,78 @@ def _global_simplex(mu: float, ratios: np.ndarray, y: np.ndarray,
         Z = float(np.sum(w))
         out[und] = w / max(Z, 1e-300)
     else:
-        # Normalization-Free B0-lite (advice/019 section 5): in the
-        # ``lambda-free`` B0 (``airtime_price=False``) the score has NO
-        # additive ``-lambda_j c_ij`` term, so the common factor ``1/Z``
-        # cancels in the argmax:
-        #     J_iq = y_q g_iq/(D_q+eps) = (1/Z) exp(theta_q) g_iq/(D_q+eps)
-        #     argmax_q J_iq = argmax_q exp(theta_q) g_iq/(D_q+eps)
-        #              = argmax_q [ theta_q + log g_iq - log(D_q+eps) ].
-        # The global normalizer ``Z`` is therefore NEVER computed and
-        # NEVER broadcast (no global reduction / no global scalar on the
-        # price bus) -- ``w = exp(theta)`` (recentered, max = 1) IS the
-        # price weight, and the per-target price ``pi_q = w_q/(D_q+eps)``
-        # spans the same registered ``[0, 1/eps]`` range as the normalized
-        # price.  This is a strict policy-equivalent reparameterization
-        # of the lambda-free B0, not a new mechanism.
+        # LEGACY Normalization-Free branch (advice/019 section 5).  The
+        # global-simplex scalar ``Z`` is not divided out, so ``w =
+        # exp(theta)`` (still RECENTERED by the global ``max`` below) is
+        # the price weight.  NOTE (advice/020 section 2-3): this branch
+        # STILL performs the global ``ell -= max_p ell_p`` recenter, which
+        # IS a global reduction, and it quantizes the scale-dependent
+        # ``pi_q = w_q/(D_q+eps)`` rather than ``theta_q`` -- so it is NOT
+        # the genuinely normalization-free form and must NOT be claimed a
+        # ``strict policy-equivalent reparameterization``.  The owner-local
+        # max-free theta form is ``_owner_theta_update`` (used by
+        # ``simulate_ca_frids`` with ``norm_free=True``), which quantizes
+        # ``theta_q`` directly.
         out[und] = w
     return out
+
+
+def _owner_theta_update(theta: np.ndarray, mu: float, ratios: np.ndarray,
+                        undecided: list) -> np.ndarray:
+    """Owner-local normalization-free mirror state update (advice/020
+    section 3): ``theta_q(t+1) = theta_q(t) - mu * r_q(t)``.
+
+    Each owner keeps an OWN ``theta_q`` (its own log-weight / log-price
+    over the undecided simplex).  ``r_q = S_q/(D_q+eps)`` is owner-local
+    (its own received reliable service over its own residual deficit), so
+    the update is PURELY owner-local: it needs NO global ``max`` shift, NO
+    global ``sum`` normalizer ``Z``, NO global ``rbar``, and NO spanning
+    tree / consensus exchange.  This is the genuinely
+    Normalization-Free Distributed Deficit Pricing of advice/020 section
+    3 (the earlier advice/019 ``_global_simplex(normalize=False)`` still
+    applied the global ``ell -= max_p ell_p`` recenter, which IS a global
+    reduction -- see the audit finding)."""
+    und = list(undecided)
+    if not und:
+        return theta.copy()
+    out = theta.copy()
+    out[und] = out[und] - float(mu) * ratios[und]
+    return out
+
+
+def norm_free_action_error_bound(theta_hi: float, theta_lo: float,
+                                 bits: int, top_margin_log: float) -> bool:
+    """Finite-bit action-invariance certificate of the normalization-free
+    local rule (advice/020 section 3):
+
+        q_i^star = argmax_q [ theta_q + log g_iq - log(D_q+eps) ].
+
+    Only ``theta_q`` is broadcast and it is quantized over the registered
+    range ``[theta_lo, theta_hi]`` (mid-tread, ``theta_lo`` printed
+    exactly) with ``bits``; ``log g_iq`` and ``log(D_q+eps)`` are computed
+    locally at full precision.  The action stays the true argmax whenever
+    the ideal top-1 margin in log space exceeds twice the quantization
+    step ``eps_theta = (theta_hi - theta_lo)/2^bits``:
+
+        P( action preserved ) >= P( m_log > 2 * eps_theta ),
+
+    because a change in the selected ``q`` under the broadcast (quantized)
+    score requires at least two targets whose log scores differ by less
+    than ``2*eps_theta`` (the argmax flips only when the top-1 and top-2
+    ideal scores are within ``2*eps_theta`` of each other).
+
+    NOTE (advice/020 section 2): this is an EXACT scale-equivalence BEFORE
+    the finite-rate control quantization, and an APPROXIMATION (certified
+    here) after it.  It is NOT a ``strict policy-equivalent
+    reparameterization`` of the finite-bit normalized B0 -- the two
+    finite-bit quantizers distort different quantities and can differ at
+    quantization-bin boundaries, near-tied actions and the idle gate, so
+    the deployed equivalence must be certified per operating point."""
+    levels = int(2 ** max(0, int(bits)))
+    if levels <= 1:
+        return True
+    eps_theta = (float(theta_hi) - float(theta_lo)) / max(levels, 1)
+    return float(top_margin_log) > 2.0 * eps_theta
 
 
 def _g_and_c_actions(scenario: dict, owner_of: list,
@@ -212,11 +268,17 @@ def _density_sorted_offers(
 
 
 def _audit_cycle(act_lists, choices, ideal, perturbed, g_max, c_max,
-                 eps_pi, eps_lambda, aud, owner_anchor):
+                 eps_pi, eps_lambda, aud, owner_anchor, eps_theta=0.0):
     """Advice/008 section 8: the ideal joint score vs the broadcast
     (quantized) score, the ideal top-1 margin ``m_i`` and the
     action-invariance certificate
-    ``P(m_i > 2 (g_max eps_pi + c_max eps_lambda))``."""
+    ``P(m_i > 2 (g_max eps_pi + c_max eps_lambda))``.
+
+    ``eps_theta > 0`` selects the normalization-free (advice/020 section
+    2-3) log-domain certificate: the margin is the top-1 minus top-2 of
+    the LOG score ``theta + log g - log(D+eps)`` and the threshold is
+    ``2*eps_theta`` (only the quantized ``theta`` is broadcast; ``g`` and
+    ``D`` are exact local quantities)."""
     k = len(ideal)
     q = choices["q"]
     for i in range(k):
@@ -228,8 +290,14 @@ def _audit_cycle(act_lists, choices, ideal, perturbed, g_max, c_max,
         a1 = qs[0]
         if len(qs) < 2:
             continue
-        m_i = float(ide[a1] - ide[qs[1]])
-        e_i = g_max * eps_pi + c_max * eps_lambda
+        if eps_theta > 0.0:
+            # log-domain margin (normalization-free theta quantization)
+            m_i = float(np.log(max(ide[a1], 1e-300))
+                        - np.log(max(ide[qs[1]], 1e-300)))
+            e_i = eps_theta
+        else:
+            m_i = float(ide[a1] - ide[qs[1]])
+            e_i = g_max * eps_pi + c_max * eps_lambda
         aud["margin_total"] += 1.0
         if m_i > 2.0 * e_i:
             aud["margin_ok"] += 1.0
@@ -256,6 +324,9 @@ def simulate_ca_frids(
     s_for_g: np.ndarray | None = None,
     pi_bits: int = 10,
     lam_bits: int = 10,
+    theta_bits: int = 10,
+    theta_lo: float = -20.0,
+    theta_hi: float = 0.0,
     lam_cap: float = 2.0,
     power_cap: np.ndarray | None = None,
     price_mode: str = "owner_local",
@@ -294,18 +365,23 @@ def simulate_ca_frids(
     broadcast action-invariance certificate (``margin_ok`` fraction) --
     the price-quantization/staleness theory of advice/008 section 8.
 
-    ``norm_free`` (advice/019 section 5) enables the Normalization-Free
-    Distributed Deficit Pricing reparameterization of the lambda-free B0
-    arm: with ``airtime_price=False`` the task score has no additive
-    ``-lambda_j c_ij`` term, so the global-simplex scalar normalizer ``Z``
-    cancels in the argmax (``argmax_q y_q g_iq/(D_q+eps) == argmax_q
-    exp(theta_q) g_iq/(D_q+eps)``) and is neither computed nor broadcast.
-    This removes the only global reduction of the control plane and drops
-    the scalar ``b_Z`` from the control-bus ledger (B0: 90 -> 80
-    bits/cycle).  Requires ``airtime_price=False`` and
-    ``price_mode="global_simplex"`` (the additive lambda term and the
-    owner-local per-owner simplex both break the scale invariance).  The
-    default ``False`` keeps the registered frozen path byte-identical.
+    ``norm_free`` (advice/019 section 5; corrected per advice/020 section
+    2-3) enables the Normalization-Free Distributed Deficit Pricing form
+    of the lambda-free B0 arm: with ``airtime_price=False`` the task score
+    has no additive ``-lambda_j c_ij`` term, so the common weight scale
+    cancels in the argmax.  The genuinely normalization-free form
+    maintains an OWNER-LOCAL mirror state ``theta_q`` (log-weight),
+    updates it as ``theta_q(t+1) = theta_q(t) - mu r_q(t)`` (NO global max
+    shift, NO sum normalizer ``Z``, NO global reduction; ``_owner_theta_update``),
+    broadcasts the QUANTIZED ``theta_q`` (not the scale-dependent
+    ``pi_q``), and makes the local decision in log space
+    ``argmax_q [ theta_q + log g_iq - log(D_q+eps) ]``.  The finite-bit
+    action-invariance certificate is ``norm_free_action_error_bound`` --
+    the deployed finite-bit form is an APPROXIMATION of the continuous
+    normalized B0 whose action distortion must be certified, NOT a strict
+    policy-equivalent reparameterization.  ``theta_bits`` / ``theta_lo`` /
+    ``theta_hi`` register the broadcast theta range; the default
+    ``False`` keeps the registered frozen path byte-identical.
     """
     k = scenario["k"]
     q = scenario["q"]
@@ -384,6 +460,10 @@ def simulate_ca_frids(
         L = np.zeros((k, q))
         decided = np.zeros(q, dtype=bool)
         y = np.full(q, 1.0 / q)
+        # owner-local log-price state for the genuinely normalization-free
+        # form (advice/020 section 3): ``theta_q = log y_q`` at t=0 (the
+        # uniform weight); updated owner-locally, broadcast quantized.
+        theta = np.full(q, np.log(1.0 / q))
         # P4.1a (advice/013 section 3): the ``airtime_price=False`` arm (B0)
         # keeps the airtime price at zero -- it measures the CA
         # architecture + task-price gain WITHOUT the congestion price, so
@@ -412,9 +492,17 @@ def simulate_ca_frids(
             # from the ledger -- B0 control plane 90 -> 80 bits/cycle.
             ctrl_bits = 0
             if task_price:
-                ctrl_bits += q * max(pi_bits, 1)
-                if price_mode == "global_simplex" and not norm_free:
-                    ctrl_bits += max(pi_bits, 1)   # scalar Z
+                if norm_free:
+                    # advice/020 section 3: the normalization-free control
+                    # plane broadcasts Q quantized owner-local ``theta_q``
+                    # (NO global pi vector, NO scalar ``Z``, NO global
+                    # reduction).  B0-lite control plane = Q * theta_bits
+                    # bits/cycle (at Q=8, b=10 -> 80 bits/cycle).
+                    ctrl_bits += q * max(theta_bits, 1)
+                else:
+                    ctrl_bits += q * max(pi_bits, 1)
+                    if price_mode == "global_simplex":
+                        ctrl_bits += max(pi_bits, 1)   # scalar Z
             if airtime_price:
                 ctrl_bits += k * max(lam_bits, 1)
             comm_control_bits[r] += ctrl_bits
@@ -429,11 +517,44 @@ def simulate_ca_frids(
             # NOT enter the local decision index.
             D = np.maximum(a_thr - np.array(
                 [L[owner_of[qq], qq] for qq in range(q)]), 0.0)
-            pi = (np.full(q, 1.0 / q) if not task_price else y / (D + eps))
-            pi_b = _quantize_price(pi, 0.0, pi_hi, pi_bits)
-            lam_b = _quantize_price(lam, 0.0, lam_cap, lam_bits)
-            eps_pi = pi_hi / max(int(2 ** pi_bits), 1)
-            eps_lam = lam_cap / max(int(2 ** lam_bits), 1)
+            # task-price plane.  ``task_price=False`` (P5-A B00 arm,
+            # advice/017 section 13): there is NO deficit weighting --
+            # ``pi_q`` is flat, so the action index reduces to the bare
+            # reliable information ``g_eff`` (plus the receiver price when
+            # ``airtime_price``), isolating the owner-directed EVIDENCE
+            # ARCHITECTURE from the task-coordination mechanism.  ``D``/
+            # ``y`` are still tracked (the stopping rule needs the owner
+            # threshold), but they do NOT enter the local decision index.
+            if task_price and norm_free:
+                # owner-local, max-free, normalization-free price
+                # (advice/020 section 3): broadcast the QUANTIZED
+                # ``theta_q`` (scale-independent) and derive the weight
+                # ``exp(theta_b)`` locally.  No ``pi`` vector is broadcast;
+                # ``exp``/``(D+eps)`` are exact local operations, so the
+                # only finite-bit distortion is the ``theta`` quantization
+                # whose step ``eps_theta`` drives the action-error bound.
+                theta_b = _quantize_price(theta, theta_lo, theta_hi,
+                                          theta_bits)
+                pi_b = np.exp(theta_b) / (D + eps)
+                pi = np.exp(np.clip(theta, theta_lo, theta_hi)) / (D + eps)
+                lam_b = np.zeros(k)   # norm_free requires airtime_price=False
+                eps_pi = 0.0
+                eps_theta = (theta_hi - theta_lo) / max(
+                    int(2 ** theta_bits), 1)
+                eps_lam = lam_cap / max(int(2 ** lam_bits), 1)
+            else:
+                # normalized price (or the flat architecture price when
+                # ``task_price=False`` -- which is ALSO the consistent
+                # ``norm_free + task_price=False`` form: theta is never
+                # updated and the flat 1/Q architecture score is used,
+                # exactly the B00-arm semantics).
+                pi = (np.full(q, 1.0 / q) if not task_price
+                      else y / (D + eps))
+                pi_b = _quantize_price(pi, 0.0, pi_hi, pi_bits)
+                lam_b = _quantize_price(lam, 0.0, lam_cap, lam_bits)
+                eps_pi = pi_hi / max(int(2 ** pi_bits), 1)
+                eps_theta = 0.0
+                eps_lam = lam_cap / max(int(2 ** lam_bits), 1)
             # per-UAV local best response with the idle option
             choices = [None] * k
             ideal = [None] * k
@@ -467,7 +588,8 @@ def simulate_ca_frids(
                 perturbed[uav] = sc_per
             if audit:
                 _audit_cycle(acts, {"q": q}, ideal, perturbed, g_max,
-                             c_max, eps_pi, eps_lam, aud, owner_of)
+                             c_max, eps_pi, eps_lam, aud, owner_of,
+                             eps_theta=eps_theta)
             # sensing (the chosen kernel is still sensed exactly once;
             # the joint price decided WHETHER and on WHAT)
             obs_target = np.full(k, -1, dtype=int)
@@ -620,7 +742,12 @@ def simulate_ca_frids(
             ratios = np.array([S[qq] / max(D[qq] + eps, 1e-12)
                                for qq in range(q)])
             und = [qq for qq in range(q) if not decided[qq]]
-            if task_price and price_mode == "global_simplex":
+            if norm_free and task_price:
+                # genuinely owner-local, max-free, normalization-free
+                # mirror update (advice/020 section 3): theta_q -= mu r_q.
+                # No global max, no Z, no spanning tree / consensus.
+                theta = _owner_theta_update(theta, mu, ratios, und)
+            elif task_price and price_mode == "global_simplex":
                 y = _global_simplex(mu, ratios, y, und,
                                     normalize=not norm_free)
             elif task_price:
@@ -752,6 +879,7 @@ def simulate_ca_frids(
             "c_max": float(c_max),
             "eps_pi": float(eps_pi),
             "eps_lambda": float(eps_lam),
+            "eps_theta": float(eps_theta),
             "n_cycles": float(aud["n_cycles"]),
         }
     if raw_counts:
