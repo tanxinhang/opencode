@@ -175,7 +175,7 @@ def _run_mc(args, scales, _scenario, _bounds, _airtime, t0):
                             max_steps=args.max_steps, raw_counts=True,
                             price_mode=args.price_mode,
                             pi_bits=args.pi_bits, lam_bits=args.lam_bits,
-                            theta_bits=args.pi_bits,
+                            psi_bits=args.pi_bits, psi_lo=args.psi_lo, psi_hi=args.psi_hi,
                             task_price=True, airtime_price=False,
                             norm_free=True, admission_policy="neutral",
                             audit=args.audit, exog=tape)
@@ -256,6 +256,11 @@ def main() -> None:
     parser.add_argument("--beta", type=float, default=SPEC)
     parser.add_argument("--pi-bits", type=int, default=10)
     parser.add_argument("--lam-bits", type=int, default=10)
+    parser.add_argument("--psi-lo", type=float, default=-12.0,
+                        help="registered psi_bus lower range (advice/001 "
+                             "P0-4: a tighter range gives finer resolution "
+                             "but risks saturation)")
+    parser.add_argument("--psi-hi", type=float, default=2.5)
     parser.add_argument("--price-mode", default="global_simplex",
                         choices=("global_simplex", "owner_local"))
     parser.add_argument("--delta-j", type=float, default=0.05,
@@ -270,7 +275,7 @@ def main() -> None:
     parser.add_argument("--action-error-thresh", type=float, default=None,
                         help="DEPRECATED name for --min-margin-ok: the "
                              "required B0-lite margin_ok_fraction (the "
-                             "conservative P(margin>2*eps_theta) "
+                             "conservative P(margin>2*eps_psi) "
                              "certificate) when --audit is on.  Default "
                              "None = do not gate on margin; the primary "
                              "finite-bit gate is --max-action-change")
@@ -283,6 +288,11 @@ def main() -> None:
                         help="optional lower bound on the B0-lite "
                              "margin_ok_fraction certificate when --audit "
                              "is on (default None = not gated)")
+    parser.add_argument("--max-psi-sat", type=float, default=0.0,
+                        help="max allowed B0-lite psi_sat_rate (clipping "
+                             "fraction) for the finite-bit certificate "
+                             "when --audit is on (advice/001 P0-4; default "
+                             "0.0 = no saturation is certified)")
     parser.add_argument("--air-normalize", default="mesh",
                         choices=("mesh", "owner"),
                         help="airtime normalization (advice/020 section 5-7): "
@@ -458,7 +468,8 @@ def main() -> None:
             for a, b in zip(lite_j, c_j)]))
         cell["verdict"] = _verdict(cell, args.delta_j,
                                    args.max_action_change,
-                                   args.min_margin_ok)
+                                   args.min_margin_ok,
+                                   args.max_psi_sat)
 
     # ---- overall aggregation ----------------------------------------------
     fracs = [c["minimality_frac"] for c in cells]
@@ -637,13 +648,16 @@ def _pooled_audit(audits) -> dict | None:
         "margin_samples": tot,
         "action_change_rate": chg / max(tot, 1.0),
         "eps_pi": valid[0].get("eps_pi", 0.0),
-        "eps_theta": valid[0].get("eps_theta", 0.0),
+        "eps_psi": valid[0].get("eps_psi", 0.0),
+        "psi_sat_rate": float(sum(
+            a.get("psi_sat_rate", 0.0) * a["margin_samples"] for a in valid)
+            / max(tot, 1.0)),
         "n_cycles": float(sum(a["n_cycles"] for a in valid)),
     }
 
 
 def _verdict(cell, delta_j, max_action_change=0.0,
-             min_margin_ok=None) -> dict:
+             min_margin_ok=None, max_psi_sat=0.0) -> dict:
     """Advice/019 section 7 final criteria, evaluated on the cross-seed
     pooled deltas plus the per-seed consistency fraction.  When the
     action-invariance audit was collected (``--audit``), criterion (v)
@@ -654,8 +668,10 @@ def _verdict(cell, delta_j, max_action_change=0.0,
     The PRIMARY freeze gate is the EMPIRICAL action preservation
     ``action_change_rate <= max_action_change`` (default 0.0 = no action is
     ever flipped by the finite-bit broadcast).  ``margin_ok_fraction`` (the
-    conservative ``P(margin > 2*eps_theta)`` certificate) is reported and,
-    when ``min_margin_ok`` is given, also gated."""
+    conservative ``P(margin > 2*eps_psi)`` certificate) is reported and,
+    when ``min_margin_ok`` is given, also gated; ``psi_sat_rate`` (clipping)
+    is gated by ``max_psi_sat`` because the certificate is only valid while
+    ``psi`` stays in range (advice/001 P0-4)."""
     reasons = []
     ok = True
     lite = cell["arms"]["B0-lite"]
@@ -710,6 +726,17 @@ def _verdict(cell, delta_j, max_action_change=0.0,
                 f"B0-lite margin certificate "
                 f"{lite_audit['margin_ok_fraction']:.3f} < "
                 f"{min_margin_ok}")
+        # (vi) psi saturation Gate (advice/001 P0-4): the finite-bit
+        # certificate m_i > 2*eps_psi is only valid while psi_q stays IN
+        # [psi_lo, psi_hi]; a non-negligible clipping rate means the
+        # registered-range certificate does NOT cover the actual distortion,
+        # so the cell must be rejected (or the range re-calibrated).
+        sat = lite_audit.get("psi_sat_rate", 0.0)
+        if sat > max_psi_sat:
+            ok = False
+            reasons.append(
+                f"B0-lite psi saturation not certified "
+                f"(psi_sat_rate {sat:.4f} > {max_psi_sat})")
     return {
         "pass": ok,
         "reason": "; ".join(reasons) if reasons else

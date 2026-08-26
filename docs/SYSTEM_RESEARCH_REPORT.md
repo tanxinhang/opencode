@@ -25,13 +25,16 @@ evidence plane,非 full mesh);owner 在其 own belief 上做**双阈值顺序检
 (`D_q = [A_q - L_q]_+`)驱动,任务价格总线 + receiver 容量对偶总线
 (`lambda_j`),receiver 硬性按 airtime budget 准入。
 
-- **Normalization-Free B0-lite(advice/019-020)**: lambda-free 的 B0 用
-  **owner-local log-price** `theta_q(t+1)=theta_q(t)-mu*r_q(t)`(无全局 max、
-  无 sum-normalizer Z、无任何 global reduction),广播**量化后的 theta_q**,本地
-  决策 `argmax_q [theta_q + log g_iq - log(D_q+eps)]`。有限 bit 实现是**近似**,
-  其 action distortion 由 `norm_free_action_error_bound` 认证——**不是**严格
-  policy-equivalent reparameterization(advice/020 §2-3)。控制面 Q*theta_bits
-  bits/周期(无 Z、无 lambda bus)。
+- **Normalization-Free B0-lite(advice/019-020 + advice/001 P0-3)**: lambda-free 的
+  B0 用 **owner-local log-price** `theta_q(t+1)=theta_q(t)-mu*r_q(t)`(无全局 max、
+  无 sum-normalizer Z、无任何 global reduction),owner 打包出
+  **deficit-embedded log price** `psi_q = theta_q - log(D_q+eps)` 并广播**量化后的
+  psi_q**,本地决策 `argmax_q [psi_q + log g_iq]`(非 owner UAV 不再访问 owner 私有
+  D_q,信息约束 C5 严格成立)。有限 bit 实现是**近似**,其 action distortion 由
+  `norm_free_action_error_bound` 认证,psi 饱和由 `psi_sat_rate` 门控
+  (advice/001 P0-4)——**不是**严格 policy-equivalent reparameterization
+  (advice/020 §2-3)。控制面 Q*psi_bits bits/周期(无 Z、无 lambda bus、无未计费
+  全局 D_q 通道)。
 - **容量机制相图(advice/020 §6-7)**: `rho_j<1 => lambda_j=0`(capacity-slack,
   B0-lite 区)、`rho_j~1 => lambda_j>0`(capacity-binding,full CA)——由 KKT
   complementary slackness 支撑,是 **congestion-regime transition**,不是
@@ -47,12 +50,15 @@ evidence plane,非 full mesh);owner 在其 own belief 上做**双阈值顺序检
 
 **统一优化表述(升华)**: 整个 P5 系统收敛为**一套分层优化目标 + 一组限定条件**
 (`SYSTEM_MODEL.md` §0)：Level 0 系统目标 `min max_q E[T_q|H1]`(受 anytime-valid
-QoS C1 约束)→ Level 1 每周期联合感知-通信 LP(缺陷覆盖 + receiver 容量;强对偶驻点
-给出 `pi_q`/`lambda_j`)→ Level 2 分布式本地 best response(norm-free 用
-`argmax[theta_q+log g-log(D+eps)]`)→ Level 3 价格动力学(mirror descent / dual
-ascent)→ Level 4 阈值 QoS 前沿。约束 C1-C8 恰为该分层分解的精确性条件：C8 即
-capacity-regime 相图、C6 即有限 bit action-error 证书、C5 即 owner-local 无
-global reduction。advice/020 三处修改分别“升华”为 C5/C6/C8 的规范实现。
+QoS C1 约束)→ Level 1 每周期 joint drift-surrogate LP(缺陷覆盖 + receiver
+容量;强对偶驻点给出 `pi_q`/`lambda_j`;**不是** Level 0 的 exact dual,是
+stopping-delay drift surrogate,见 Claim 0.4)→ Level 2 分布式本地 best response
+(norm-free 用 `argmax[psi_q+log g]`,owner 广播 `psi_q = theta_q-log(D_q+eps)`)
+→ Level 3 价格动力学(mirror descent / dual ascent)→ Level 4 阈值 QoS 前沿。
+约束 C1-C8 恰为该分层分解的精确性条件：C8 即 capacity-regime 相图(λ 用
+cap-hit/dual-residual 诊断限制解释范围)、C6 即有限 bit action-error 证书、C5
+即 owner-local 无 global reduction 且无未计费全局 D_q 通道。advice/020 +
+advice/001 的修改分别“升华”为 C5/C6/C8/Level0-1 的规范实现。
 
 **当前最优配置(P5)**: 见 §4.18(P5-A/P5-MIN 注册结果)与 §7。
 
@@ -386,9 +392,35 @@ transition;③ 24×500 只是 bootstrap 分辨率改善,跨场景泛化需 hiera
 bootstrap + cell sign consistency 为主口径;④ 三个 final artifacts 需在 clean
 HEAD 重跑(provenance `git_dirty=true` 债)。
 
+**advice/001 P0/P1 closure(2026-08-25)**: P0-1 matched-QoS false PASS 已修
+(held-out `core_qos==PASS && C_qos==PASS` 进入最终 `ok`,新增 `case B-NO-HELDOUT-PASS`);
+P0-2 stress cell 改用 `rho_owner` 归一化(真正 capacity-binding);P0-3 B0-lite 升级为
+**ψ-Bus**(owner 广播 `psi_q = theta_q - log(D_q+eps)`,非 owner UAV 不再访问全局
+`D_q`,信息约束 C5 严格成立,控制面仍 `Q*psi_bits`);P0-4 增加 `psi_sat_rate` audit
+与 `--max-psi-sat` Gate(饱和 error 进入有限-bit 证书);P1-1 SYSTEM_MODEL 删除
+"Level0→Level1 exact dual" 过度声明,改述为 stopping-delay drift surrogate 并补
+Claim 0.4 桥接定理;P1-2 增加 λ cap-hit/dual-residual/time-average 诊断(C8 只作
+stationary 参考);P1-3 matched-QoS bootstrap 改为 block sufficient statistics →
+re-pool → pooled worst-target estimand;P1-4 control ledger 明确为
+orthogonal reliable control channel 的逻辑 bits(物理化列为 open boundary)。
+
+**ψ-Bus 注册规模置信度检验(2026-08-25,geom=2,(16,8),3 seed×6 block×250 run,
+paired CRN + 1500 bootstrap CI + hierarchical CI + action/saturation audit)**:
+① **核心最小性成立**——`D_C_minus_lite = +2.07`(slack rho_owner=0.7, CI
+[1.94,2.22]) / `+1.73`(binding rho_owner=1.8, CI [1.46,2.02]),均 CERTIFIED_GAIN,
+per-seed minimality 100%,hierarchical CI 亦 GAIN;B0-lite 延迟 4.84/7.52 vs C
+6.91/9.26。② **norm-free 等价声明结构性不成立**——`D_B0_minus_lite = -0.40`
+(slack) / `-0.71`(binding),均 CERTIFIED_LOSS;B0-lite 比 normalized B0 慢 ~9-13%。
+14-bit 下量化失真几乎为零(action_chg 1.1e-4、eps_psi 6.4e-4、margin_ok 0.998)但
+差距仍存 → 结构性差异:normalized global-simplex 在目标停止后对剩余未决目标重归一化
+(提升难目标优先级),ψ-Bus 无重归一化(零全局归约的代价)。③ ψ 饱和 Gate 正常
+(sat=0.0)。**论文措辞**:B0-lite 是 minimal core,可声明"matched-QoS 下不慢于 full
+C"并获 certified;但**不得**声明"与 normalized B0 延迟等价"——该等价在此操作点
+未获认证(判据 ii 如实 FAIL)。
+
 ## 5. 验证与审计状态
 
-- 全套 pytest **602 passed**(2026-08-17 复核,exit 0);数值审计 **162 项 PASS**(`verify_paper_numbers.py`,含 F0-G6 共 3 项:包络 27/3/0、ρ_I* 非绑定、Γ∈[0.75,1])。
+- 全套 pytest **763 passed**(2026-08-25 P5/advice-001 复核,exit 0);数值审计 **162 项 PASS**(`verify_paper_numbers.py`,含 F0-G6 共 3 项:包络 27/3/0、ρ_I* 非绑定、Γ∈[0.75,1])。
 - `scripts/verify_paper_numbers.py` 全部通过;`scripts/audit_submission_completeness.py` 通过。
 - 论文手稿 `docs/paper/submission.md`(LaTeX `docs/paper/main.tex`,BibTeX 22 条)。
 

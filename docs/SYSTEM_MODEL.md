@@ -20,10 +20,11 @@ The entire P5 system is **one hierarchical optimization** — not a bag of
 heuristics.  It has a single system-level objective, a per-cycle scheduling
 relaxation, a distributed dual solver, and a closed feasibility/QoS envelope.
 The "series" of optimization objectives are a **tiered decomposition** in which
-each level is the Lagrangian / dual of the level above; the "pile" of
-constraints are exactly the stationarity, feasibility and
-complementary-slackness conditions that make the decomposition exact and the
-deployed algorithm certified.
+each level motivates the one below (Level 1 is the stopping-delay drift
+surrogate of Level 0; Levels 2-3 are its dual decomposition; Level 4 closes the
+QoS); the "pile" of constraints are exactly the stationarity, feasibility and
+complementary-slackness conditions that make the deployed algorithm certified.
+See §0.4 for the precise scope of the dual relationship (advice/001 P1-1).
 
 ### 0.1 Decision variables
 
@@ -74,16 +75,19 @@ admission (C2).
 with `pi_q = y_q/(D_q+eps)`, i.e. the index is `y_q g_{iqa}/(D_q+eps) -
 lambda c` (sensing and communication enter the SAME score, not stitched) and
 the idle action `score 0` (without it a purely additive price is a no-op,
-Lemma 4.99).  In the lambda-free **normalization-free** form (B0-lite), with
-`theta_q = log y_q`:
+Lemma 4.99).  In the lambda-free **normalization-free** form (B0-lite), the
+OWNER packages its residual deficit into a single owner-local sufficient
+control scalar `psi_q = theta_q - log(D_q+eps)` (`theta_q` the owner-local
+log-price) and broadcasts the QUANTIZED `psi_q`:
 
 ```
-q_i^* = argmax_q [ theta_q + log g_{iq} - log(D_q + eps) ],
+q_i^* = argmax_q [ psi_q + log g_{iq} ],
 ```
 
 (the common positive scale of the weights cancels, so the coverage-dual
-`y_q` is replaced by the owner-local log-price `theta_q` — C5, no global
-reduction).
+`y_q` and the owner's private `D_q` are replaced by the owner-generated
+`psi_q` — C5, no global reduction AND no uncharged global `D_q` channel,
+advice/001 P0-3).
 
 **Level 3 — price dynamics** (the dual update):
 
@@ -105,7 +109,7 @@ CERTIFIED FEASIBLE / UNRESOLVED / CERTIFIED INFEASIBLE).
 | C3 | `sum_{q,a} x_{iqa} <= 1` (all i) | one action per UAV |
 | C4 | `x_{iqa} in {0,1}`; idle score 0 allowed | feasibility / idle |
 | C5 | `a_{i,t} = pi_i(I_{i,t})`: each local decision uses only local info + broadcast prices.  Normalized form needs ONE global scalar `Z` (spanning-tree/gossip); the normalization-free B0-lite removes even `Z` (owner-local `theta_q`, no global sum/max reduction) | information / distributed |
-| C6 | broadcast `theta_q` quantized over `[theta_lo, theta_hi]`; action preserved iff `m_i > 2*eps_theta` | finite-bit control |
+| C6 | broadcast `psi_q` quantized over `[psi_lo, psi_hi]`; action preserved iff `m_i > 2*eps_psi` while `psi` stays IN range (saturation gated) | finite-bit control |
 | C7 | `L_q >= A_q => H1`, `L_q <= B_q => H0` | sequential detection |
 | C8 | `lambda_j (rho_j - 1) = 0`, `lambda_j >= 0` (limit of the dual-ascent update) | capacity-regime KKT |
 
@@ -123,28 +127,44 @@ CERTIFIED FEASIBLE / UNRESOLVED / CERTIFIED INFEASIBLE).
 
 - Level 0 is the **true** objective; Level 1 is its **per-cycle relaxation**;
   Levels 2-3 are the **distributed dual solver** (local best response + price
-  ascent); Level 4 **closes the QoS**.  Each level is the Lagrangian/dual of
-  the one above, so the decomposition is a single coherent optimization, not a
-  sequence of disconnected objectives.
+  ascent); Level 4 **closes the QoS**.  The tiers form a single coherent
+  optimization, not a sequence of disconnected objectives.
+- **Scope of the "dual" claim (advice/001 P1-1):** Level 1 is NOT the exact
+  Lagrangian of the Level-0 sequential-stopping problem (no proof that the
+  stopping-delay Lagrangian is the per-cycle max-min).  The precise statement
+  is: Level 1 is the **stopping-delay-oriented drift surrogate** -- under H1,
+  ``E[Delta L_q | F_t] = sum x p^adm s I+`` is the expected
+  detection-information drift, and with the residual-detection potential
+  ``V(t) = sum_q y_q(t) log(D_q(t)+eps)`` the per-cycle objective
+  ``max_x sum_q y_q g_q(x)/(D_q+eps)`` equals maximizing the expected decrease
+  rate of ``V`` (Claim 0.4).  The dual of THAT drift surrogate motivates the
+  local index and the prices -- not an exact dual of Level 0.
 - The constraints are exactly the exactness conditions:
   - **C8** is the KKT complementary slackness that makes the `lambda` activation
-    principled — the capacity-slack / capacity-binding phase diagram is the
+    principled -- the capacity-slack / capacity-binding phase diagram is the
     solution of the Level-1 LP, not an empirical `(8,4)`-vs-`(16,8)` heuristic;
   - **C6** is the finite-bit action-error certificate that makes the deployed
-    norm-free form exact-up-to-a-certified-approximation (quantize `theta_q`,
-    not the scale-dependent `pi_q`);
-  - **C5** is the information constraint that the owner-local `theta_q` form
-    satisfies with **no global reduction** on the control plane.
+    norm-free form exact-up-to-a-certified-approximation (quantize the
+    owner-local `psi_q`, not the scale-dependent `pi_q`);
+  - **C5** is the information constraint that the owner-local `psi_q` form
+    satisfies with **no global reduction** and **no uncharged global `D_q`
+    channel** (advice/001 P0-3).
 
-### 0.5 What the advice/020 modifications "sublimate" into
+### 0.5 What the advice/020 + advice/001 modifications "sublimate" into
 
-1. **Normalization-free (owner-local `theta_q`)** = the Level-2 index that
-   satisfies C5 (no global reduction) and makes C6 clean (quantize `theta_q`,
-   not `pi_q`) — with the certified action-error bound of Claim 0.2.
+1. **Normalization-free ψ-bus (owner-local `theta_q` -> broadcast
+   `psi_q = theta_q - log(D_q+eps)`)** = the Level-2 index that satisfies C5
+   (no global reduction, no uncharged global `D_q` channel) and makes C6 clean
+   (quantize `psi_q`, not `pi_q`) — with the certified action-error bound of
+   Claim 0.2 (valid only while `psi` stays in range; saturation gated,
+   Claim 0.4).
 2. **Capacity-regime gate** = C8 turned from an empirical scale observation
-   into a principled complementary-slackness phase diagram (Claim 0.3).
-3. **matched-QoS gate** = C1 as the freeze condition (Level 4): the minimal
-   B0-core is not certified slower than full C at matched certified QoS.
+   into a principled complementary-slackness phase diagram (Claim 0.3), with
+   the λ cap-hit / dual-residual / time-average diagnostics (advice/001 P1-2).
+3. **matched-QoS gate** = C1 as the freeze condition (Level 4), now requiring
+   HELD-OUT anytime-valid QoS PASS on both schedulers (advice/001 P0-1): the
+   minimal B0-core is not certified slower than full C at matched certified
+   QoS.
 
 Hence the whole system reduces to: *minimize the worst-target sequential
 stopping delay (Level 0) subject to the anytime-valid QoS (C1), the hard
@@ -152,8 +172,8 @@ receiver airtime capacity (C2), the per-UAV action and idle feasibility
 (C3-C4), the distributed information constraint (C5), the finite-bit control
 certificate (C6), the sequential detection rule (C7), and the KKT
 capacity-regime condition (C8); solve it by the dual decomposition of the
-per-cycle joint LP (Level 1-3) and close the QoS threshold frontier
-(Level 4).*
+per-cycle joint drift-surrogate LP (Level 1-3, the owner broadcasting
+`psi_q`) and close the QoS threshold frontier (Level 4).*
 
 ## 1. Scope and assumptions
 
@@ -236,8 +256,9 @@ and broadcasts the QUANTIZED `theta_q`; the local rule is
 q_i^* = argmax_q [ theta_q + log g_{iq} - log(D_q + eps) ].
 ```
 
-The broadcast price `pi_q` (normalized) or `theta_q` (norm-free) spans a
-pre-registered range and is quantized with `pi_bits` / `theta_bits`.
+The broadcast price `pi_q` (normalized) or `psi_q` (norm-free, the
+deficit-embedded log price) spans a pre-registered range and is quantized
+with `pi_bits` / `psi_bits`.
 
 ## 5. Receiver-capacity plane (hard airtime admission)
 
@@ -282,14 +303,24 @@ argmax is over `[ theta_q + log g_{iq} - log(D_q+eps) ]`.
 Only ENABLED price planes are charged (advice/018 section 6):
 
 ```
-B_ctrl = 1_task ( Q*pi_bits [+ Z]  |  Q*theta_bits if norm_free )
+B_ctrl = 1_task ( Q*pi_bits [+ Z]  |  Q*psi_bits if norm_free )
          + 1_lambda K*lam_bits
 ```
 
-per cycle.  B0-lite (norm-free, lambda OFF) bills `Q*theta_bits` bits/cycle
-(no global `Z`, no lambda bus) — at `(16,8), b=10` this is 80 bits/cycle vs
-250 for full C, a ~3x control-plane reduction with NO global reduction on the
-control plane.
+per cycle.  B0-lite (norm-free, lambda OFF) bills `Q*psi_bits` bits/cycle
+(no global `Z`, no lambda bus, and no separate `D_q` channel — the owner
+broadcasts the deficit-embedded `psi_q`, advice/001 P0-3) — at `(16,8),
+b=10` this is 80 bits/cycle vs 250 for full C, a ~3x control-plane reduction
+with NO global reduction on the control plane.
+
+> **P1-4 physicalization note (advice/001 P1-4):** `B_ctrl` counts LOGICAL
+> bits on an assumed **orthogonal, reliable control channel** — it does NOT
+> charge the control plane's own airtime, link loss or staleness.  The
+> evidence ledger is physical (Shannon-rate `tau_ij` + hard admission), but
+> the control ledger is logical.  A fully physical control-plane ledger
+> (control tokens over the same U2U physical channel, with their own
+> airtime/outage/staleness) is an OPEN modeling boundary, not claimed here;
+> the 80-vs-250 comparison is a logical-bits comparison only.
 
 ## 8. Performance metrics
 
@@ -339,15 +370,17 @@ is an APPROXIMATION whose action distortion must be certified (Claim B).
 
 ### Claim B (finite-bit action-error bound)
 
-Only `theta_q` is quantized over the registered range `[theta_lo, theta_hi]`
-(mid-tread, `theta_lo` printed exactly) with `bits`; `log g_{iq}` and
-`log(D_q+eps)` are exact local quantities.  Let `m_i` be the ideal top-1 vs
-top-2 margin in log space.  The action is preserved whenever
-`m_i > 2*eps_theta`, `eps_theta = (theta_hi - theta_lo)/2^bits`
-(`norm_free_action_error_bound`).  This is a certified APPROXIMATION, NOT a
-strict policy-equivalent reparameterization of the finite-bit normalized B0
-(advice/020 section 2-3): the two quantizers distort different quantities and
-can differ at bin boundaries / near-tied actions / the idle gate.
+Only the owner-generated `psi_q = theta_q - log(D_q+eps)` is quantized over
+the registered range `[psi_lo, psi_hi]` (mid-tread, `psi_lo` printed
+exactly) with `bits`; `log g_{iq}` is an exact local quantity and the
+owner's private `D_q` is never exposed to non-owner UAVs.  Let `m_i` be the
+ideal top-1 vs top-2 margin in log space.  The action is preserved
+whenever `m_i > 2*eps_psi`, `eps_psi = (psi_hi - psi_lo)/2^bits`
+(`norm_free_action_error_bound`) AND `psi` stays IN range (the clipping
+error is NOT covered -- saturation is gated via `psi_sat_rate`,
+advice/001 P0-4).  This is a certified APPROXIMATION, NOT a strict
+policy-equivalent reparameterization of the finite-bit normalized B0
+(advice/020 section 2-3).
 
 ### Claim C (capacity-regime phase diagram)
 

@@ -13,18 +13,22 @@ follows `SYSTEM_MODEL.md`.
 >      本地决策在价格权重任意公共尺度下不变，global sum-normalizer `Z` / 任意
 >      `rbar` 取消，无需计算或广播——owner-local `theta_q` 更新无任何 global
 >      reduction；
->   2. **有限 bit action-error bound**(advice/020 §2-3)：量化 `theta_q` 后，
->      action 在 log-space top-1 margin `> 2*eps_theta` 时保持——这是被认证的
->      **近似**，不是严格 policy-equivalent reparameterization；
+>   2. **有限 bit action-error bound**(advice/020 §2-3 + advice/001 P0-3/P0-4)：
+>      广播 owner-generated `psi_q = theta_q - log(D_q+eps)`（量化 `psi_q` 而非
+>      `pi_q`），action 在 log-space top-1 margin `> 2*eps_psi` 且 `psi` 在区间内
+>      时保持——这是被认证的**近似**，不是严格 policy-equivalent
+>      reparameterization；饱和由 `psi_sat_rate` 门控；
 >   3. **Capacity-regime 相图**(advice/020 §6-7)：receiver 容量约束对偶
 >      `lambda_j` 由 KKT complementary slackness 给出
 >      `rho_j<1 => lambda_j=0`(capacity-slack)、`rho_j~1 => lambda_j>0`
 >      (capacity-binding)——是 congestion-regime transition，不是 scale 相变。
 > 旧证明保留为历史（§1 之后）；P5 注册判决见 `results/p4_meta_cert.json` 与
-> `SYSTEM_RESEARCH_REPORT.md` §0/§4.18。这三条声明是
-> `SYSTEM_MODEL.md` 第 0 节统一优化表述中约束 C5 / C6 / C8 的形式化：Claim 0.1
-> ⟺ C5（分布式信息、无 global reduction），Claim 0.2 ⟺ C6（有限 bit 控制证书），
-> Claim 0.3 ⟺ C8（capacity-regime KKT complementary slackness）。
+> `SYSTEM_RESEARCH_REPORT.md` §0/§4.18。这些声明是
+> `SYSTEM_MODEL.md` 第 0 节统一优化表述的形式化：Claim 0.1 ⟺ C5（分布式信息、
+> 无 global reduction、无未计费全局 D_q 通道，advice/001 P0-3），Claim 0.2 ⟺ C6
+> （有限 bit 控制证书 + 饱和门），Claim 0.3 ⟺ C8（capacity-regime KKT
+> complementary slackness），Claim 0.4 是 Level0→Level1 的精确桥（stopping-delay
+> drift surrogate，advice/001 P1-1——不是 exact dual）。
 
 ## 0. P5 current-theory claims
 
@@ -35,7 +39,8 @@ invariant to any common positive scale of the task-price weights:
 
 ```
 argmax_q ( w_q g_{iq} / (D_q + eps) )
-  = argmax_q [ theta_q + log g_{iq} - log(D_q + eps) ],
+  = argmax_q [ theta_q + log g_{iq} - log(D_q + eps) ]
+  = argmax_q [ psi_q + log g_{iq} ],      psi_q = theta_q - log(D_q+eps),
       theta_q = log w_q.
 ```
 
@@ -49,30 +54,40 @@ theta_q(t+1) = theta_q(t) - mu * r_q(t),   r_q = S_q/(D_q+eps),
 
 which is PURELY owner-local (its own received service over its own
 deficit) — no global `max` shift, no sum normalizer, no spanning-tree /
-consensus reduction (`_owner_theta_update`).
+consensus reduction (`_owner_theta_update`).  The owner then packages its
+private residual deficit into the single owner-local sufficient control
+scalar `psi_q` and broadcasts the QUANTIZED `psi_q`; a non-owner UAV's
+local decision needs ONLY `psi_b` and its own `g` — the owner's `D_q` is
+NEVER accessed by non-owner UAVs (advice/001 P0-3), so the information
+constraint C5 holds with no uncharged global-D channel.
 
 ### Claim 0.2 (finite-bit action-error bound)
 
-Only `theta_q` is broadcast and quantized over the registered range
-`[theta_lo, theta_hi]` (mid-tread, `theta_lo` printed exactly) with `bits`;
-`log g_{iq}` and `log(D_q + eps)` are computed locally at full precision.
-Let `eps_theta = (theta_hi - theta_lo)/2^bits` and let `m_i` be the ideal
-top-1 vs top-2 margin of `[ theta_q + log g_{iq} - log(D_q+eps) ]` for UAV
-`i`.  The broadcast (quantized) rule preserves the true action whenever
+The OWNER broadcasts the deficit-embedded log price `psi_q = theta_q -
+log(D_q+eps)`, quantized over the registered range `[psi_lo, psi_hi]`
+(mid-tread, `psi_lo` printed exactly) with `bits`; `log g_{iq}` is computed
+locally at full precision and the owner's private `D_q` is NEVER exposed to
+non-owner UAVs (advice/001 P0-3).  Let
+`eps_psi = (psi_hi - psi_lo)/2^bits` and let `m_i` be the ideal top-1 vs
+top-2 margin of `[ psi_q + log g_{iq} ]` for UAV `i`.  The broadcast
+(quantized) rule preserves the true action whenever
 
 ```
-m_i > 2 * eps_theta.
+m_i > 2 * eps_psi
 ```
+
+AND `psi_q` stays IN `[psi_lo, psi_hi]` (the clipping error is NOT covered;
+saturation is gated via `psi_sat_rate`, advice/001 P0-4).
 
 Proof sketch: a change in the selected target under the quantized score
-requires the top-1 and top-2 ideal log scores to lie within `2*eps_theta`
+requires the top-1 and top-2 ideal log scores to lie within `2*eps_psi`
 of each other (the argmax flips only when their difference is less than
 twice the quantization step).  This is `norm_free_action_error_bound`.
 
 **Honesty note (advice/020 §2):** this certifies an APPROXIMATION.  The
 deployed finite-bit normalization-free form is NOT a strict
 policy-equivalent reparameterization of the finite-bit normalized B0: the
-two finite-bit quantizers distort different quantities (`theta_q` vs
+two finite-bit quantizers distort different quantities (`psi_q` vs
 `pi_q = y_q/(D_q+eps)`) and can disagree at quantization-bin boundaries,
 near-tied actions and the idle gate.
 
@@ -98,6 +113,46 @@ difference: a CONGESTION-REGIME transition, NOT an intrinsic scale
 dependence (advice/020 §6-7).  A scale comparison must control the
 effective receiver load (fixed `T_air` or matched `rho_owner`,
 `SYSTEM_MODEL.md` §5) and use a nested master scenario (advice/020 §8).
+
+### Claim 0.4 (stopping-delay drift surrogate -- the precise Level0->Level1 bridge)
+
+advice/001 P1-1: Level 1 is NOT the exact Lagrangian of the Level-0
+sequential-stopping problem; it is the **drift surrogate** of the
+residual-detection Lyapunov function.  Under H1, with a correct local
+observation kernel, the expected LLR increment of target `q` given the
+deployed actions is
+
+```
+E[Delta L_q | F_t] = sum_{i,a} x_{iqa} p^adm_{ij} s_{ij} I^+_{iqa}
+                   =: g_q(x),
+```
+
+the expected detection-information drift (post admission + U2U survival).
+Define the residual-detection potential
+
+```
+V(t) = sum_q y_q(t) log(D_q(t)+eps),
+```
+
+with `y_q` the owner price weight.  First-order expansion gives
+
+```
+E[V(t+1) - V(t) | F_t]  approx  - sum_q y_q(t) g_q(x) / (D_q(t)+eps),
+```
+
+so the per-cycle objective `max_x sum_q y_q g_q(x)/(D_q+eps)` is exactly
+"maximize the expected decrease rate of the residual-detection Lyapunov
+potential".  Under bounded increments, positive drift on the undecided set
+and valid stopping thresholds, an additive/optional-stopping drift argument
+gives the bridge to the Level-0 metric
+
+```
+E[T_q]  <~  D_q(0)/gbar_q + C,
+```
+
+i.e. minimizing the drift surrogate controls the worst-target stopping
+delay.  This is the honest Level0->Level1 link: LLR detection physics ->
+information drift -> deficit pricing -> stopping delay.
 
 ---
 

@@ -104,10 +104,11 @@ def main() -> None:
                         default="results/p5min_matched_qos_gate.json")
     parser.add_argument("--geom", type=int, default=2)
     parser.add_argument("--rho", type=float, default=1.8,
-                        help="registered (16,8) cell congestion")
+                        help="registered (16,8) cell owner-directed load "
+                             "ratio (rho_owner, advice/001 P0-2)")
     parser.add_argument("--stress-rho", type=float, default=None,
-                        help="capacity-binding stress cell rho; if None "
-                             "only the registered cell is run")
+                        help="capacity-binding stress cell rho_owner; if "
+                             "None only the registered cell is run")
     parser.add_argument("--scale", default="16,8", help="K,Q")
     parser.add_argument("--cal-seed", type=int, default=200000)
     parser.add_argument("--test-seed", type=int, default=300000)
@@ -122,7 +123,7 @@ def main() -> None:
     parser.add_argument("--grid", default="0.6,0.8,1.0,1.5,2.0,3.0,5.0")
     parser.add_argument("--pi-bits", type=int, default=10)
     parser.add_argument("--lam-bits", type=int, default=10)
-    parser.add_argument("--theta-bits", type=int, default=10)
+    parser.add_argument("--psi-bits", type=int, default=10)
     parser.add_argument("--price-mode", default="global_simplex",
                         choices=("global_simplex", "owner_local"))
     parser.add_argument("--calib-seed", type=int, default=100)
@@ -148,14 +149,14 @@ def main() -> None:
                                      seed=args.calib_seed,
                                      llr_bits=TOKEN_LLR_BITS,
                                      verify_runs=args.calib_verify)
-        am = build_airtime_model(sc, rho_target=rho)
+        am = build_airtime_model(sc, rho_owner=rho)
 
         def run_core(bounds_, n_runs, seed_, tape):
             return simulate_ca_frids(
                 sc, bounds_, am, n_runs, seed=seed_,
                 max_steps=args.max_steps, raw_counts=True,
                 price_mode=args.price_mode, pi_bits=args.pi_bits,
-                lam_bits=args.lam_bits, theta_bits=args.theta_bits,
+                lam_bits=args.lam_bits, psi_bits=args.psi_bits,
                 task_price=True, airtime_price=False, norm_free=True,
                 admission_policy="neutral", exog=tape)
 
@@ -218,7 +219,8 @@ def main() -> None:
         def held_out(runner, m_star):
             acc = _empty_acc(q)
             pool_s, pool_n = np.zeros(q), np.zeros(q)
-            block_J = []
+            block_n = []          # per block: (q,) H1 counts (sufficient stats)
+            block_s = []          # per block: (q,) H1 delay sums
             for mc in range(args.test_mc):
                 tape = build_exogenous_tape(args.test_seed + mc,
                                             args.test_cell_runs, q, k,
@@ -226,18 +228,19 @@ def main() -> None:
                 out = runner(_matched_bounds(bt, m_star, 1.0),
                              args.test_cell_runs, args.test_seed + mc, tape)
                 _acc(out, acc)
-                pool_s += np.asarray(out["pool"]["sum_h1_delay"], dtype=float)
-                pool_n += np.asarray(out["pool"]["n_h1"], dtype=float)
-                b_s = np.asarray(out["pool"]["sum_h1_delay"], dtype=float)
                 b_n = np.asarray(out["pool"]["n_h1"], dtype=float)
-                block_J.append(float(np.max(b_s / np.maximum(b_n, 1.0))))
+                b_s = np.asarray(out["pool"]["sum_h1_delay"], dtype=float)
+                block_n.append(b_n)
+                block_s.append(b_s)
+                pool_s += b_s
+                pool_n += b_n
             J = float(np.max(pool_s / np.maximum(pool_n, 1.0)))
             status, _ = anytime_qos_status(
                 acc["n_H0"], acc["n_H1"], acc["n_FA"], acc["n_MD"],
                 args.alpha, args.beta, delta_fam=0.05,
                 n_streams=N_STREAMS)
             return {"J": J, "qos": status, "m_star": list(m_star),
-                    "block_J": block_J}
+                    "block_n": block_n, "block_s": block_s}
 
         core_held = (held_out(run_core, core_frontier["m_star"])
                      if core_frontier["feasible"] else None)
@@ -246,8 +249,21 @@ def main() -> None:
 
         core_state = core_frontier["scheduler_state"]
         c_state = c_frontier["scheduler_state"]
+        # P0-1 (advice/001 section 2): the matched-QoS comparison is ONLY
+        # valid when BOTH schedulers are calibration CERTIFIED FEASIBLE AND
+        # the HELD-OUT anytime-valid QoS is PASS for both -- otherwise the
+        # frozen "matched certified QoS" premise itself is not certified and
+        # the gate must NOT pass (a calibration-feasible + held-out-UNCERTAIN
+        # + no-certified-delay-loss combination is a FALSE PASS).
+        heldout_pass = (
+            core_held is not None and c_held is not None
+            and core_held["qos"] == "PASS" and c_held["qos"] == "PASS"
+        )
         if core_state == "CERTIFIED FEASIBLE" and c_state == "CERTIFIED FEASIBLE":
-            case = "B"
+            if heldout_pass:
+                case = "B"
+            else:
+                case = "B-NO-HELDOUT-PASS"
         elif "CERTIFIED INFEASIBLE" in (core_state, c_state):
             case = "A-CERTIFIED-INFEASIBLE"
         else:
@@ -255,18 +271,28 @@ def main() -> None:
 
         matched = None
         if case == "B":
-            # paired per-block bootstrap on the matched-QoS delay DIFFERENCE
-            # J_C - J_core (CERTIFIED_GAIN if the core is faster; the gate
-            # PASSES as long as the core is not CERTIFIED slower).
-            delta = np.asarray(c_held["block_J"]) - np.asarray(
-                core_held["block_J"])
-            mean_delta = float(np.mean(delta))
+            # P1-3 (advice/001): the bootstrap resamples the BLOCK
+            # SUFFICIENT STATISTICS (per-target H1 counts and delay sums),
+            # re-pools them, and computes the pooled worst-target
+            # J = max_q sum_b S_bq / sum_b N_bq on every repeat -- the SAME
+            # estimand the paper reports (NOT a per-block-then-mean J, which
+            # answers a different statistic).  Blocks are paired (same CRN
+            # tape index for core and C), so one resampled index set drives
+            # both arms.
+            core_bn, core_bs = core_held["block_n"], core_held["block_s"]
+            c_bn, c_bs = c_held["block_n"], c_held["block_s"]
+            B = len(core_bn)
             rng = np.random.default_rng(12345)
             boot = np.empty(2000)
-            n = len(delta)
             for b in range(2000):
-                idx = rng.integers(0, n, size=n)
-                boot[b] = float(np.mean(delta[idx]))
+                idx = rng.integers(0, B, size=B)
+                cN = np.sum(np.stack([c_bn[j] for j in idx], axis=0), axis=0)
+                cS = np.sum(np.stack([c_bs[j] for j in idx], axis=0), axis=0)
+                kN = np.sum(np.stack([core_bn[j] for j in idx], axis=0), axis=0)
+                kS = np.sum(np.stack([core_bs[j] for j in idx], axis=0), axis=0)
+                boot[b] = float(np.max(cS / np.maximum(cN, 1.0))
+                                - np.max(kS / np.maximum(kN, 1.0)))
+            mean_delta = float(np.mean(boot))
             ci_lo, ci_hi = np.percentile(boot, [2.5, 97.5])
             if ci_lo > 0:
                 state = "CERTIFIED_GAIN"          # core strictly faster
@@ -287,12 +313,15 @@ def main() -> None:
         cells.append({
             "rho": rho, "scale": [k, q],
             "core_state": core_state, "C_state": c_state, "case": case,
+            "heldout_pass": bool(heldout_pass),
             "core_frontier": core_frontier, "C_frontier": c_frontier,
             "matched": matched,
-            "wording": _wording(core_state, c_state, matched),
+            "wording": _wording(core_state, c_state, matched, case),
         })
 
-    ok = all(c["case"] == "B" for c in cells) and all(
+    # P0-1: the final verdict explicitly requires held-out QoS PASS on every
+    # cell AND no certified delay LOSS of the minimal core at matched QoS.
+    ok = bool(cells) and all(c["case"] == "B" for c in cells) and all(
         c["matched"]["state"] != "CERTIFIED_LOSS" for c in cells)
     payload = {
         "pass": bool(ok),
@@ -312,10 +341,14 @@ def main() -> None:
     print("done", round(time.time() - t0, 1), "s")
 
 
-def _wording(core_state, c_state, matched):
+def _wording(core_state, c_state, matched, case):
     if core_state != "CERTIFIED FEASIBLE" or c_state != "CERTIFIED FEASIBLE":
         return ("no matched-QoS comparison: one or both schedulers are NOT "
                 f"certified feasible (core={core_state}, C={c_state})")
+    if case == "B-NO-HELDOUT-PASS":
+        return ("both schedulers are calibration CERTIFIED FEASIBLE but the "
+                "HELD-OUT anytime-valid QoS is NOT PASS for both -- the "
+                "matched-certified-QoS comparison is NOT certified")
     state = matched["state"]
     if state == "CERTIFIED_GAIN":
         return "B0-core is CERTIFIED faster than C at matched certified QoS"

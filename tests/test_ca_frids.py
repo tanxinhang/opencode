@@ -661,10 +661,12 @@ def test_norm_free_action_error_bound_certificate():
 
 
 def test_norm_free_sim_runs_and_drops_scalar_z():
-    """advice/020 section 3: the genuinely normalization-free path runs
-    end-to-end deterministically, keeps ``airtime_price=False`` (lambda
-    free), and the control bus bills ONLY ``Q * theta_bits`` -- no global
-    ``pi`` vector and no scalar ``Z`` (no global reduction)."""
+    """advice/020 section 3 + advice/001 P0-3: the genuinely
+    normalization-free path runs end-to-end deterministically, keeps
+    ``airtime_price=False`` (lambda free), broadcasts the owner-local
+    deficit-embedded ``psi`` bus and bills ONLY ``Q * psi_bits`` -- no
+    global ``pi`` vector, no scalar ``Z``, no separate ``D_q`` channel (no
+    global reduction)."""
     from uav_otfs_isac.ca_frids import simulate_ca_frids
     from uav_otfs_isac.distributed_audit import build_distributed_scenario
     from uav_otfs_isac.airtime import build_airtime_model
@@ -674,11 +676,11 @@ def test_norm_free_sim_runs_and_drops_scalar_z():
     bt = [(8.0, -8.0)] * 3
     g = simulate_ca_frids(sc, bt, am, n_runs=60, seed=5, max_steps=40,
                           price_mode="global_simplex", pi_bits=10,
-                          lam_bits=10, theta_bits=10,
+                          lam_bits=10, psi_bits=10,
                           task_price=True, airtime_price=False,
                           norm_free=True, admission_policy="neutral")
     assert 0.0 < g["worst_target_delay"] <= 40.0
-    # lambda-free: B0-lite bills Q theta_bits = 3*10 = 30 bits/cycle
+    # lambda-free: B0-lite bills Q psi_bits = 3*10 = 30 bits/cycle
     assert g["comm"]["control_bits_per_cycle"] == pytest.approx(30.0, abs=1e-9)
     # a normalized global-simplex arm with lambda still bills Q*pi_bits + Z
     g_norm = simulate_ca_frids(sc, bt, am, n_runs=30, seed=5, max_steps=40,
@@ -691,9 +693,9 @@ def test_norm_free_sim_runs_and_drops_scalar_z():
 
 
 def test_norm_free_audit_log_domain_certificate_runs():
-    """advice/020 section 2-3: the norm-free audit computes the log-domain
-    action-invariance certificate (eps_theta) instead of the pi-domain
-    bound."""
+    """advice/020 section 2-3 + advice/001 P0-3/P0-4: the norm-free audit
+    computes the log-domain action-invariance certificate (eps_psi) instead
+    of the pi-domain bound, and reports the psi saturation rate."""
     from uav_otfs_isac.ca_frids import simulate_ca_frids
     from uav_otfs_isac.distributed_audit import build_distributed_scenario
     from uav_otfs_isac.airtime import build_airtime_model
@@ -703,13 +705,15 @@ def test_norm_free_audit_log_domain_certificate_runs():
     bt = [(8.0, -8.0)] * 3
     g = simulate_ca_frids(sc, bt, am, n_runs=40, seed=7, max_steps=40,
                           price_mode="global_simplex", pi_bits=10,
-                          lam_bits=10, theta_bits=10,
+                          lam_bits=10, psi_bits=10,
                           task_price=True, airtime_price=False,
                           norm_free=True, admission_policy="neutral",
                           audit=True)
     assert 0.0 <= g["audit"]["margin_ok_fraction"] <= 1.0
     assert g["audit"]["margin_samples"] > 0
     assert g["audit"]["eps_pi"] == 0.0
+    assert g["audit"]["eps_psi"] > 0.0
+    assert 0.0 <= g["audit"]["psi_sat_rate"] <= 1.0
 
 # ---------------------------------------------------------------------------
 # advice/020 sections 5-8: capacity-regime normalization + nested scenario
@@ -779,7 +783,7 @@ def test_nested_scenario_subsets_share_realizations():
 
 def test_norm_free_task_price_false_is_flat_architecture():
     """advice/020: ``norm_free=True`` with ``task_price=False`` must fall
-    back to the flat 1/Q architecture score (B00 semantics) -- the theta
+    back to the flat 1/Q architecture score (B00 semantics) -- the psi
     plane is neither broadcast nor billed, and theta is never updated."""
     from uav_otfs_isac.ca_frids import simulate_ca_frids
     from uav_otfs_isac.distributed_audit import build_distributed_scenario
@@ -790,9 +794,36 @@ def test_norm_free_task_price_false_is_flat_architecture():
     bt = [(8.0, -8.0)] * 3
     g = simulate_ca_frids(sc, bt, am, n_runs=40, seed=5, max_steps=40,
                           price_mode="global_simplex", pi_bits=10,
-                          lam_bits=10, theta_bits=10,
+                          lam_bits=10, psi_bits=10,
                           task_price=False, airtime_price=False,
                           norm_free=True, admission_policy="neutral")
     assert 0.0 < g["worst_target_delay"] <= 40.0
     # flat architecture: no dynamic price bus broadcast at all
     assert g["comm"]["control_bits_per_cycle"] == pytest.approx(0.0, abs=1e-9)
+
+def test_lambda_diagnostics_reported_for_capacity_arm():
+    """advice/001 P1-2: the airtime-price arm reports cap-hit fraction,
+    dual residual and lambda/rho time-averages so the C8 phase-diagram
+    interpretation is not overstated (constant-step / EMA / capped dual)."""
+    from uav_otfs_isac.ca_frids import simulate_ca_frids
+    from uav_otfs_isac.distributed_audit import build_distributed_scenario
+    from uav_otfs_isac.airtime import build_airtime_model
+    rng = np.random.default_rng(6)
+    sc = build_distributed_scenario(rng, 6, 3)
+    am = build_airtime_model(sc, rho_owner=1.8)
+    bt = [(8.0, -8.0)] * 3
+    g = simulate_ca_frids(sc, bt, am, n_runs=40, seed=5, max_steps=40,
+                          price_mode="global_simplex", pi_bits=10,
+                          lam_bits=10, task_price=True, airtime_price=True,
+                          admission_policy="density")
+    c = g["comm"]
+    assert 0.0 <= c["lam_cap_hit_fraction"] <= 1.0
+    assert c["lam_dual_residual"] >= 0.0
+    assert c["lam_time_avg"] >= 0.0
+    assert c["rho_time_avg"] > 0.0
+    # the lambda-free B0 arm reports the same keys (frozen at zero)
+    b0 = simulate_ca_frids(sc, bt, am, n_runs=20, seed=5, max_steps=40,
+                           price_mode="global_simplex", pi_bits=10,
+                           lam_bits=10, task_price=True, airtime_price=False,
+                           norm_free=True, admission_policy="neutral")
+    assert b0["comm"]["lam_time_avg"] == pytest.approx(0.0, abs=1e-9)

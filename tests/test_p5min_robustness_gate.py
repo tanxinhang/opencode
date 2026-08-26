@@ -228,15 +228,16 @@ def test_pooled_audit_aggregates_and_skips_missing():
     audits = [
         {"margin_samples": 50, "margin_ok_fraction": 0.96,
          "action_change_rate": 0.04, "n_cycles": 5, "eps_pi": 0.0,
-         "eps_theta": 0.02},
+         "eps_psi": 0.02, "psi_sat_rate": 0.01},
         {"margin_samples": 50, "margin_ok_fraction": 1.0,
          "action_change_rate": 0.0, "n_cycles": 5, "eps_pi": 0.0,
-         "eps_theta": 0.02},
+         "eps_psi": 0.02, "psi_sat_rate": 0.0},
     ]
     pooled = _pooled_audit(audits)
     assert pooled["margin_samples"] == 100
     assert pooled["margin_ok_fraction"] == pytest.approx(0.98)
-    assert pooled["eps_theta"] == pytest.approx(0.02)
+    assert pooled["eps_psi"] == pytest.approx(0.02)
+    assert pooled["psi_sat_rate"] == pytest.approx(0.005)
     assert _pooled_audit([None, None]) is None
     assert _pooled_audit([{}]) is None
     # empty-sample audits are ignored (not collected)
@@ -321,3 +322,34 @@ def test_hierarchical_delta_over_cells_sign_matches_pooled():
     pooled_point, _, _ = _pooled_delta_ci(c_n, c_s, lite_n, lite_s)
     assert hier["point"] == pytest.approx(pooled_point, abs=1e-9)
     assert hier["point"] > 0.0
+
+def test_verdict_fails_on_psi_saturation():
+    """advice/001 P0-4: when --audit is on and the B0-lite psi_sat_rate
+    exceeds max_psi_sat, the finite-bit certificate (m > 2*eps_psi) does NOT
+    cover the clipped error and the verdict must fail."""
+    cell = {
+        "arms": {
+            "B0-lite": {"J": 3.0, "control_bits_per_cycle": 80.0,
+                        "budget_feasible": 1.0,
+                        "audit": {"margin_ok_fraction": 0.95,
+                                  "action_change_rate": 0.0,
+                                  "psi_sat_rate": 0.05,
+                                  "margin_samples": 100}},
+            "C": {"J": 2.98, "control_bits_per_cycle": 250.0,
+                  "budget_feasible": 1.0},
+            "B0": {"J": 3.0, "control_bits_per_cycle": 80.0,
+                   "budget_feasible": 1.0},
+        },
+        "deltas": {
+            "D_C_minus_lite": {"point": -0.02, "state": "UNRESOLVED"},
+            "D_B0_minus_lite": {"point": 0.0, "state": "UNRESOLVED"},
+        },
+        "minimality_frac": 1.0,
+    }
+    # psi_sat_rate 0.05 > max_psi_sat 0.0 -> FAIL
+    v = _verdict(cell, delta_j=0.05)
+    assert v["pass"] is False
+    assert "psi saturation" in v["reason"]
+    # within the tolerance it passes
+    v2 = _verdict(cell, delta_j=0.05, max_psi_sat=0.05)
+    assert v2["pass"] is True

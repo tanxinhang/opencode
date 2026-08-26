@@ -125,26 +125,34 @@ def _owner_theta_update(theta: np.ndarray, mu: float, ratios: np.ndarray,
     return out
 
 
-def norm_free_action_error_bound(theta_hi: float, theta_lo: float,
+def norm_free_action_error_bound(psi_hi: float, psi_lo: float,
                                  bits: int, top_margin_log: float) -> bool:
     """Finite-bit action-invariance certificate of the normalization-free
-    local rule (advice/020 section 3):
+    local rule (advice/020 section 3; advice/001 P0-3):
 
-        q_i^star = argmax_q [ theta_q + log g_iq - log(D_q+eps) ].
+        q_i^star = argmax_q [ psi_q + log g_iq ],   psi_q = theta_q - log(D_q+eps).
 
-    Only ``theta_q`` is broadcast and it is quantized over the registered
-    range ``[theta_lo, theta_hi]`` (mid-tread, ``theta_lo`` printed
-    exactly) with ``bits``; ``log g_iq`` and ``log(D_q+eps)`` are computed
-    locally at full precision.  The action stays the true argmax whenever
-    the ideal top-1 margin in log space exceeds twice the quantization
-    step ``eps_theta = (theta_hi - theta_lo)/2^bits``:
+    Only the OWNER-derived ``psi_q`` (deficit-embedded log price) is
+    broadcast, quantized over the registered range ``[psi_lo, psi_hi]``
+    (mid-tread, ``psi_lo`` printed exactly) with ``bits``; ``log g_iq`` is
+    computed locally at full precision and the owner's private ``D_q`` is
+    NEVER exposed to non-owner UAVs.  The action stays the true argmax
+    whenever the ideal top-1 margin in log space exceeds twice the
+    quantization step ``eps_psi = (psi_hi - psi_lo)/2^bits``:
 
-        P( action preserved ) >= P( m_log > 2 * eps_theta ),
+        P( action preserved ) >= P( m_log > 2 * eps_psi ),
 
     because a change in the selected ``q`` under the broadcast (quantized)
     score requires at least two targets whose log scores differ by less
-    than ``2*eps_theta`` (the argmax flips only when the top-1 and top-2
-    ideal scores are within ``2*eps_theta`` of each other).
+    than ``2*eps_psi`` (the argmax flips only when the top-1 and top-2
+    ideal scores are within ``2*eps_psi`` of each other).
+
+    VALIDITY CONDITION (advice/001 P0-4): this bound requires ``psi_q`` IN
+    ``[psi_lo, psi_hi]`` for every ``q`` -- the mid-tread quantizer only
+    guarantees ``|psi - Q(psi)| <= eps_psi`` inside the range.  A clipped
+    ``psi`` (saturation) carries an error >> eps_psi that this certificate
+    does NOT cover; the simulation audit reports ``psi_sat_rate`` and the
+    P5-MIN gate rejects cells whose saturation is non-negligible.
 
     NOTE (advice/020 section 2): this is an EXACT scale-equivalence BEFORE
     the finite-rate control quantization, and an APPROXIMATION (certified
@@ -156,8 +164,8 @@ def norm_free_action_error_bound(theta_hi: float, theta_lo: float,
     levels = int(2 ** max(0, int(bits)))
     if levels <= 1:
         return True
-    eps_theta = (float(theta_hi) - float(theta_lo)) / max(levels, 1)
-    return float(top_margin_log) > 2.0 * eps_theta
+    eps_psi = (float(psi_hi) - float(psi_lo)) / max(levels, 1)
+    return float(top_margin_log) > 2.0 * eps_psi
 
 
 def _g_and_c_actions(scenario: dict, owner_of: list,
@@ -268,17 +276,17 @@ def _density_sorted_offers(
 
 
 def _audit_cycle(act_lists, choices, ideal, perturbed, g_max, c_max,
-                 eps_pi, eps_lambda, aud, owner_anchor, eps_theta=0.0):
+                 eps_pi, eps_lambda, aud, owner_anchor, eps_psi=0.0):
     """Advice/008 section 8: the ideal joint score vs the broadcast
     (quantized) score, the ideal top-1 margin ``m_i`` and the
     action-invariance certificate
     ``P(m_i > 2 (g_max eps_pi + c_max eps_lambda))``.
 
-    ``eps_theta > 0`` selects the normalization-free (advice/020 section
-    2-3) log-domain certificate: the margin is the top-1 minus top-2 of
-    the LOG score ``theta + log g - log(D+eps)`` and the threshold is
-    ``2*eps_theta`` (only the quantized ``theta`` is broadcast; ``g`` and
-    ``D`` are exact local quantities)."""
+    ``eps_psi > 0`` selects the normalization-free (advice/020 section
+    2-3, advice/001 P0-3) log-domain certificate: the margin is the top-1
+    minus top-2 of the LOG score ``psi + log g`` (``psi = theta -
+    log(D+eps)``) and the threshold is ``2*eps_psi`` (only the quantized
+    owner-generated ``psi`` is broadcast; ``g`` is exact local)."""
     k = len(ideal)
     q = choices["q"]
     for i in range(k):
@@ -290,11 +298,11 @@ def _audit_cycle(act_lists, choices, ideal, perturbed, g_max, c_max,
         a1 = qs[0]
         if len(qs) < 2:
             continue
-        if eps_theta > 0.0:
-            # log-domain margin (normalization-free theta quantization)
+        if eps_psi > 0.0:
+            # log-domain margin (normalization-free psi quantization)
             m_i = float(np.log(max(ide[a1], 1e-300))
                         - np.log(max(ide[qs[1]], 1e-300)))
-            e_i = eps_theta
+            e_i = eps_psi
         else:
             m_i = float(ide[a1] - ide[qs[1]])
             e_i = g_max * eps_pi + c_max * eps_lambda
@@ -324,9 +332,9 @@ def simulate_ca_frids(
     s_for_g: np.ndarray | None = None,
     pi_bits: int = 10,
     lam_bits: int = 10,
-    theta_bits: int = 10,
-    theta_lo: float = -20.0,
-    theta_hi: float = 0.0,
+    psi_bits: int = 10,
+    psi_lo: float = -12.0,
+    psi_hi: float = 2.5,
     lam_cap: float = 2.0,
     power_cap: np.ndarray | None = None,
     price_mode: str = "owner_local",
@@ -366,21 +374,30 @@ def simulate_ca_frids(
     the price-quantization/staleness theory of advice/008 section 8.
 
     ``norm_free`` (advice/019 section 5; corrected per advice/020 section
-    2-3) enables the Normalization-Free Distributed Deficit Pricing form
-    of the lambda-free B0 arm: with ``airtime_price=False`` the task score
-    has no additive ``-lambda_j c_ij`` term, so the common weight scale
-    cancels in the argmax.  The genuinely normalization-free form
-    maintains an OWNER-LOCAL mirror state ``theta_q`` (log-weight),
-    updates it as ``theta_q(t+1) = theta_q(t) - mu r_q(t)`` (NO global max
-    shift, NO sum normalizer ``Z``, NO global reduction; ``_owner_theta_update``),
-    broadcasts the QUANTIZED ``theta_q`` (not the scale-dependent
-    ``pi_q``), and makes the local decision in log space
-    ``argmax_q [ theta_q + log g_iq - log(D_q+eps) ]``.  The finite-bit
-    action-invariance certificate is ``norm_free_action_error_bound`` --
-    the deployed finite-bit form is an APPROXIMATION of the continuous
-    normalized B0 whose action distortion must be certified, NOT a strict
-    policy-equivalent reparameterization.  ``theta_bits`` / ``theta_lo`` /
-    ``theta_hi`` register the broadcast theta range; the default
+    2-3 AND advice/001 P0-3) enables the Normalization-Free Distributed
+    Deficit Pricing form of the lambda-free B0 arm: with
+    ``airtime_price=False`` the task score has no additive
+    ``-lambda_j c_ij`` term, so the common weight scale cancels in the
+    argmax.  The genuinely normalization-free form maintains an
+    OWNER-LOCAL mirror state ``theta_q`` (log-weight) updated as
+    ``theta_q(t+1) = theta_q(t) - mu r_q(t)`` (NO global max shift, NO sum
+    normalizer ``Z``, NO global reduction; ``_owner_theta_update``), then
+    the OWNER packages its residual deficit into a single owner-local
+    sufficient control scalar
+        psi_q = theta_q - log(D_q + eps)
+    and broadcasts the QUANTIZED ``psi_q`` (``psi_bits``/``psi_lo``/
+    ``psi_hi`` register the range).  A NON-OWNER UAV's local decision then
+    needs ONLY ``psi_b`` and its own ``g``:
+        argmax_q [ psi_b + log g_iq - ... ]  ==  argmax_q exp(psi_b) g_iq,
+    so the owner's private residual ``D_q`` is NEVER accessed by non-owner
+    UAVs -- the information constraint C5 holds without an uncharged global
+    ``D`` channel (advice/001 P0-3).  The finite-bit action-invariance
+    certificate is ``norm_free_action_error_bound`` with step
+    ``eps_psi = (psi_hi - psi_lo)/2^psi_bits``, valid only while ``psi`` is
+    IN range; the audit tracks the ``psi_sat_rate`` (clipping fraction) so
+    the gate can reject saturation (advice/001 P0-4).  The deployed
+    finite-bit form is an APPROXIMATION of the continuous normalized B0,
+    NOT a strict policy-equivalent reparameterization.  The default
     ``False`` keeps the registered frozen path byte-identical.
     """
     k = scenario["k"]
@@ -439,6 +456,15 @@ def simulate_ca_frids(
     # separately to report the SYSTEM total (advice/010: 8*10+16*10 =
     # 240 bits/cycle at Q=8, K=16, b=10).
     comm_control_bits = np.zeros(n_runs)
+    # P1-2 (advice/001): lambda diagnostic accumulators -- cap-hit fraction,
+    # dual residual |lambda_j (rho_j-1)|, and time-averages of lambda/rho.
+    # These certify how close the dual-ascent iteration is to a true
+    # complementary-slackness point (a non-zero cap-hit or residual means
+    # the C8 phase-diagram interpretation is only approximate).
+    lam_cap_hit = np.zeros(n_runs)
+    lam_dual_res = np.zeros(n_runs)
+    lam_time_avg = np.zeros(n_runs)
+    rho_time_avg = np.zeros(n_runs)
     aud = {
         "margin_ok": 0.0, "margin_total": 0.0,
         "action_change": 0.0, "action_total": 0.0, "n_cycles": 0.0,
@@ -493,12 +519,13 @@ def simulate_ca_frids(
             ctrl_bits = 0
             if task_price:
                 if norm_free:
-                    # advice/020 section 3: the normalization-free control
-                    # plane broadcasts Q quantized owner-local ``theta_q``
-                    # (NO global pi vector, NO scalar ``Z``, NO global
-                    # reduction).  B0-lite control plane = Q * theta_bits
+                    # advice/001 P0-3: the normalization-free control plane
+                    # broadcasts Q quantized owner-local ``psi_q``
+                    # (deficit-embedded log price; NO global pi vector, NO
+                    # scalar ``Z``, NO global reduction, and NO separate D_q
+                    # channel).  B0-lite control plane = Q * psi_bits
                     # bits/cycle (at Q=8, b=10 -> 80 bits/cycle).
-                    ctrl_bits += q * max(theta_bits, 1)
+                    ctrl_bits += q * max(psi_bits, 1)
                 else:
                     ctrl_bits += q * max(pi_bits, 1)
                     if price_mode == "global_simplex":
@@ -526,22 +553,29 @@ def simulate_ca_frids(
             # ``y`` are still tracked (the stopping rule needs the owner
             # threshold), but they do NOT enter the local decision index.
             if task_price and norm_free:
-                # owner-local, max-free, normalization-free price
-                # (advice/020 section 3): broadcast the QUANTIZED
-                # ``theta_q`` (scale-independent) and derive the weight
-                # ``exp(theta_b)`` locally.  No ``pi`` vector is broadcast;
-                # ``exp``/``(D+eps)`` are exact local operations, so the
-                # only finite-bit distortion is the ``theta`` quantization
-                # whose step ``eps_theta`` drives the action-error bound.
-                theta_b = _quantize_price(theta, theta_lo, theta_hi,
-                                          theta_bits)
-                pi_b = np.exp(theta_b) / (D + eps)
-                pi = np.exp(np.clip(theta, theta_lo, theta_hi)) / (D + eps)
+                # psi-BUS (advice/001 P0-3): the OWNER packages its residual
+                # deficit into a single owner-local sufficient control scalar
+                #     psi_q = theta_q - log(D_q + eps)
+                # and broadcasts the QUANTIZED psi_q (Q * psi_bits/cycle).
+                # A non-owner UAV's local decision needs ONLY psi_b and its
+                # own g:  argmax_q exp(psi_b)*g  ==  argmax_q [psi_b + log g],
+                # so the owner's private D_q (its LLR residual) is NEVER
+                # accessed by non-owner UAVs -- C5 holds with no uncharged
+                # global-D channel.  ``exp`` is an exact local operation, so
+                # the only finite-bit distortion is the ``psi`` quantization
+                # step ``eps_psi``; the audit tracks the clipping rate
+                # (psi_sat_rate) because the certificate m_i > 2*eps_psi is
+                # only valid while psi stays IN [psi_lo, psi_hi] (P0-4).
+                psi = theta - np.log(np.maximum(D + eps, 1e-300))
+                psi_b = _quantize_price(psi, psi_lo, psi_hi, psi_bits)
+                pi_b = np.exp(psi_b)
+                pi = np.exp(np.clip(psi, psi_lo, psi_hi))
                 lam_b = np.zeros(k)   # norm_free requires airtime_price=False
                 eps_pi = 0.0
-                eps_theta = (theta_hi - theta_lo) / max(
-                    int(2 ** theta_bits), 1)
+                eps_psi = (psi_hi - psi_lo) / max(int(2 ** psi_bits), 1)
                 eps_lam = lam_cap / max(int(2 ** lam_bits), 1)
+                psi_sat_rate = float(np.mean(
+                    (psi > psi_hi - 1e-9) | (psi < psi_lo)))
             else:
                 # normalized price (or the flat architecture price when
                 # ``task_price=False`` -- which is ALSO the consistent
@@ -553,7 +587,8 @@ def simulate_ca_frids(
                 pi_b = _quantize_price(pi, 0.0, pi_hi, pi_bits)
                 lam_b = _quantize_price(lam, 0.0, lam_cap, lam_bits)
                 eps_pi = pi_hi / max(int(2 ** pi_bits), 1)
-                eps_theta = 0.0
+                eps_psi = 0.0
+                psi_sat_rate = 0.0
                 eps_lam = lam_cap / max(int(2 ** lam_bits), 1)
             # per-UAV local best response with the idle option
             choices = [None] * k
@@ -589,7 +624,7 @@ def simulate_ca_frids(
             if audit:
                 _audit_cycle(acts, {"q": q}, ideal, perturbed, g_max,
                              c_max, eps_pi, eps_lam, aud, owner_of,
-                             eps_theta=eps_theta)
+                             eps_psi=eps_psi)
             # sensing (the chosen kernel is still sensed exactly once;
             # the joint price decided WHETHER and on WHAT)
             obs_target = np.full(k, -1, dtype=int)
@@ -779,6 +814,14 @@ def simulate_ca_frids(
             # so only the task-price plane steers the best response.
             lam = (np.clip(lam + mu_c * (rho - 1.0), 0.0, lam_cap)
                    if airtime_price else lam)
+            if airtime_price:
+                # P1-2 lambda diagnostics (advice/001): how close is the
+                # dual ascent to a genuine complementary-slackness point?
+                lam_cap_hit[r] += float(np.mean(lam >= lam_cap - 1e-12))
+                lam_dual_res[r] += float(np.mean(
+                    np.abs(lam * (rho - 1.0))))
+                lam_time_avg[r] += float(np.mean(lam))
+                rho_time_avg[r] += float(np.mean(rho))
             # stopping on the owner belief (unchanged system rule)
             for qq in undecided:
                 l_own = L[owner_of[qq], qq]
@@ -866,6 +909,17 @@ def simulate_ca_frids(
             # alone would under-report the SYSTEM communication cost.
             "control_bits_per_cycle": float(
                 np.mean(comm_control_bits / active)),
+            # P1-2 lambda diagnostics (advice/001 P1-2): the dual-ascent
+            # iteration is a CONSTANT-step / EMA-demand / capped iterate,
+            # NOT an exact stationary dual -- report cap-hit fraction and
+            # the complementary-slackness residual so the C8 phase-diagram
+            # interpretation is not overstated.  Zero (or near-zero)
+            # cap-hit and |lambda(rho-1)| are the preconditions for reading
+            # the capacity-regime phase diagram from lambda alone.
+            "lam_cap_hit_fraction": float(np.mean(lam_cap_hit / active)),
+            "lam_dual_residual": float(np.mean(lam_dual_res / active)),
+            "lam_time_avg": float(np.mean(lam_time_avg / active)),
+            "rho_time_avg": float(np.mean(rho_time_avg / active)),
         },
     }
     if audit:
@@ -879,7 +933,8 @@ def simulate_ca_frids(
             "c_max": float(c_max),
             "eps_pi": float(eps_pi),
             "eps_lambda": float(eps_lam),
-            "eps_theta": float(eps_theta),
+            "eps_psi": float(eps_psi),
+            "psi_sat_rate": float(psi_sat_rate),
             "n_cycles": float(aud["n_cycles"]),
         }
     if raw_counts:
